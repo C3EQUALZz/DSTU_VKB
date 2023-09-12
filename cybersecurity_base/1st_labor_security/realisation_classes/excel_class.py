@@ -6,7 +6,7 @@ from typing import NoReturn
 
 import aspose.cells as ac
 
-from ..realisation_classes.word_class import WordBlock
+from .word_class import WordBlock
 
 
 class ExcelBlock(WordBlock):
@@ -125,3 +125,9 @@ class ExcelBlock(WordBlock):
         end_number = int(range_blocking[4])
 
         return start, start_number, end, end_number
+
+
+if __name__ == "__main__":
+    file = ExcelBlock(
+        "/home/c3equalz/Рабочий стол/Основы информационной безопасности/Лабораторная 1/files_for_test/ЭВМ_Ковалев_ВКБ12.xlsx")
+    file.block_file("123456")
