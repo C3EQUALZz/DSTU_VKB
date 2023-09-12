@@ -32,7 +32,7 @@ class BlockFile:
         return res
 
 
-def block_docx(path: str, password: str) -> NoReturn:
+def block_file_func(path: str, password: str) -> NoReturn:
     key_for_property = "1" if any(path.endswith(x) for x in ("docx", "doc")) else "2"
 
     match key_for_property:
@@ -126,7 +126,7 @@ def interact_with_user():
 
     match input(question_for_user):
         case "1":
-            block_docx(path_gl, password_gl)
+            block_file_func(path_gl, password_gl)
         case "2":
             unblock_all(path_gl, password_gl)
         case "3":
