@@ -56,7 +56,7 @@ class ExcelBlock(WordBlock):
     def block_list(self, number: int, password: str) -> NoReturn:
         """
         Метод, который блокирует отдельный лист, заданный пользователем
-        :param number: любое число, где задано количество листов
+        :param number: позиционный номер нашего листа
         :param password: пароль в строковом виде, удовлетворяющий определенным условиям
         :return: ничего не возвращает, только устанавливает полностью ограничения на определенный лист
         """
@@ -75,7 +75,7 @@ class ExcelBlock(WordBlock):
         sheet.unprotect(password)
         self.save_workbook()
 
-    def block_range(self, number_list: int, range_for_block: str, _lock=True) -> NoReturn:
+    def block_range(self, number_list: int = 0, range_for_block: str = "A1:C3", _lock=True) -> NoReturn:
         """
         Метод для блокировки определенного диапазона у определенного листа
         :param _lock: заглушка, пользователь не должен использовать это
@@ -125,9 +125,3 @@ class ExcelBlock(WordBlock):
         end_number = int(range_blocking[4])
 
         return start, start_number, end, end_number
-
-
-if __name__ == "__main__":
-    file = ExcelBlock(
-        "/home/c3equalz/Рабочий стол/Основы информационной безопасности/Лабораторная 1/files_for_test/ЭВМ_Ковалев_ВКБ12.xlsx")
-    file.block_file("123456")
