@@ -10,7 +10,7 @@ def first_question(string: str):
     На основании этой строки создайте новую, содержащую только слова больше 5 символов.
     Разделитель слов в строке - пробел.
     """
-    print(' '.join(filter(lambda x: len(x) > 5, string.split())))
+    print(' '.join(filter(lambda x: len(x.strip(",.!")) > 5, string.split())))
 
 
 def temporary_info(string: list[str]):
