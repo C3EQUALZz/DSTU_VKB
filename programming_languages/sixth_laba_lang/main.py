@@ -1,12 +1,16 @@
 #!/usr/bin/env python
 """
 Вариант 1 Ковалев Данил ВКБ22
+TODO:
+Сделать реализацию выборов лабораторных в backend
+Заблокировать изменять доступ, когда выбрали задание.
+
 """
 import npyscreen
 import os
 
 
-class TerminalForm(npyscreen.ActionFormV2):
+class TerminalForm(npyscreen.ActionPopupWide):
     """
     Наследуемся от класса форм, чтобы наполнить наше приложение объектами
     """
@@ -35,7 +39,7 @@ class TerminalForm(npyscreen.ActionFormV2):
             for j in range(1, 5):
                 parent_node.new_child(content=f"Подзадача {j}")
 
-        self.lab_tree = self.add(npyscreen.MLTree, max_height=10, name="Выберите лабораторную работу(и):",
+        self.lab_tree = self.add(npyscreen.MLTree, max_height=6, name="Выберите лабораторную работу(и):",
                                  values=lab_tree_data, scroll_exit=True)
         # self.lab_tree.get_selected_objects()
 
