@@ -1,7 +1,11 @@
-import os
+"""
+AUTHOR: 1 вариант Ковалев Данил ВКБ22
+"""
 import csv
-from mimesis import Person
+import os
 from random import randint
+
+from mimesis import Person
 from prettytable import PrettyTable
 
 

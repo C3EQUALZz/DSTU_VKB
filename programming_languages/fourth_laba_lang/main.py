@@ -1,8 +1,9 @@
 """
 AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
-import numpy as np
 from itertools import chain
+
+import numpy as np
 
 
 def first_question(n: int):
