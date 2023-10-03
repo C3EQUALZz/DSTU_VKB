@@ -2,9 +2,10 @@
 AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
 from prettytable import PrettyTable
+from typing import Generator
 
 
-def first_question(string: str):
+def first_question(string: str) -> None:
     """
     Пусть дана строка, состоящая из слов, пробелов и знаков препинания.
     На основании этой строки создайте новую, содержащую только слова больше 5 символов.
@@ -13,7 +14,7 @@ def first_question(string: str):
     print(' '.join(filter(lambda x: len(x.strip(",.!")) > 5, string.split())))
 
 
-def temporary_info(string: list[str]):
+def temporary_info(string: list[str]) -> Generator:
     temporary_storage, index_list = [], -1
     for information in string[3:]:
         if information[0].startswith("_"):
@@ -27,7 +28,7 @@ def temporary_info(string: list[str]):
     yield from temporary_storage
 
 
-def second_question():
+def second_question() -> None:
     """
     Пусть дана строковая переменная my_string, содержащая информацию о студентах.
     Вариант 1. Вывести информацию в виде таблицы
@@ -43,7 +44,7 @@ def second_question():
     print(my_table)
 
 
-def third_question():
+def third_question() -> None:
     """
     Пусть дана строковая переменная my_string, содержащая информацию о студентах.
     Вариант 1. Вывести построчно информацию о студентах, чья фамилия - "Петров".
@@ -57,7 +58,7 @@ def third_question():
           sep='\n')
 
 
-def fourth_question(string: str):
+def fourth_question(string: str) -> None:
     """
     Пусть дана строка произвольной длины. Выведите информацию о том, сколько в ней символов и слов.
     """
