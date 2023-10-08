@@ -49,7 +49,7 @@ def second_question():
     with open("students.csv", encoding="UTF-8") as csv_file:
         reader = csv.reader(csv_file, delimiter=";")
         table.field_names = reader.__next__()
-        result = sorted(reader, key=lambda row: row[1].split()[0])
+        result = sorted(reader, key=lambda row: row[1].split()[1])
         table.add_rows(result)
     return table, result
 
