@@ -4,9 +4,10 @@
 Ковалев Данил ВКБ22 Вариант 1
 """
 import sys
-from PyQt6 import QtCore, QtGui, QtWidgets
 import qdarktheme
-from tabdemo import MenuBarLabs
+
+from PyQt6 import QtCore, QtGui, QtWidgets
+from tabdemo import TabWidget
 
 
 class DlgMain(QtWidgets.QMainWindow):
@@ -16,12 +17,10 @@ class DlgMain(QtWidgets.QMainWindow):
         self._create_tabs()
 
     def _create_tabs(self):
-        self.central_widget = QtWidgets.QWidget()
-        self.setCentralWidget(self.central_widget)
-        layout = QtWidgets.QVBoxLayout(self.central_widget)
+        tabs = TabWidget()
+        tabs.create_tabs(4)
 
-        menu_bar = MenuBarLabs(self)
-        layout.addWidget(menu_bar)
+        self.setCentralWidget(tabs)
 
     def _init_ui(self):
         """
@@ -29,7 +28,8 @@ class DlgMain(QtWidgets.QMainWindow):
         Здесь добавляются виджеты и свойства приложения.
         """
         self.setWindowTitle("Ковалев Данил ВКБ22")
-        self.resize(500, 300)
+        self.setWindowIcon(QtGui.QIcon("icons8-окно-приложения-96.png"))
+        self.resize(800, 500)
         self.setFont(QtGui.QFont('Cantrell', 11))
         self._center()
 
