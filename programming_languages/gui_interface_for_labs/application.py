@@ -14,13 +14,8 @@ class DlgMain(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self._init_ui()
-        self._create_tabs()
-
-    def _create_tabs(self):
-        tabs = TabWidget()
-        tabs.create_tabs(4)
-
-        self.setCentralWidget(tabs)
+        self._create_tabs_vertical()
+        self._create_combobox()
 
     def _init_ui(self):
         """
@@ -41,6 +36,54 @@ class DlgMain(QtWidgets.QMainWindow):
         cp = QtGui.QGuiApplication.primaryScreen().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
+
+    def _create_tabs_vertical(self):
+        """
+        Метод, который создает боковое меню для выбора лабораторных работ
+        """
+        self.tabs = TabWidget()
+        self.tabs.create_tabs(4)
+        self.setCentralWidget(self.tabs)
+
+    def _create_combobox(self):
+        """
+        Метод, который создает выпадающий список
+        """
+        self.combobox = QtWidgets.QComboBox()
+        self.combobox.setFixedSize(180, 180)
+        self.combobox.addItems(["Задание 1", "Задание 2", "Задание 3", "Задание 4"])
+
+        layout = QtWidgets.QHBoxLayout()
+        layout.addWidget(self.combobox, 0, QtCore.Qt.AlignmentFlag.AlignTop | QtCore.Qt.AlignmentFlag.AlignRight)
+
+        # Создаем контейнер для размещения элементов
+        container = QtWidgets.QWidget()
+        container.setLayout(layout)
+
+        self.setMenuWidget(container)
+
+    # def _create_label(self):
+    #     self.label = QtWidgets.QLabel("Выбрано задание: Задание 1")
+    #     self.update_label()  # Установим начальное значение
+    #
+    #     label_layout = QtWidgets.QVBoxLayout()
+    #     label_layout.addWidget(self.label)
+    #
+    #     label_container = QtWidgets.QWidget()
+    #     label_container.setLayout(label_layout)
+    #
+    #     layout = QtWidgets.QHBoxLayout()
+    #     layout.addStretch(1)  # Добавляем пространство для выравнивания внизу и справа
+    #     layout.addWidget(label_container)
+    #
+    #     container = QtWidgets.QWidget()
+    #     container.setLayout(layout)
+    #     self.setCentralWidget(container)
+    #
+    # def update_label(self):
+    #     selected_task = self.combobox.currentText()
+    #     selected_lab = self.tabs.tabText(self.tabs.currentIndex())
+    #     self.label.setText(f"Выбрано задание: {selected_task} в лабораторной: {selected_lab}")
 
     def closeEvent(self, event):
         """
