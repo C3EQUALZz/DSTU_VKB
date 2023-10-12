@@ -4,6 +4,7 @@ from PyQt6 import QtGui, QtWidgets, QtCore
 
 
 class TabBar(QtWidgets.QTabBar):
+
     def tabSizeHint(self, index):
         s = QtWidgets.QTabBar.tabSizeHint(self, index)
         s.transpose()
@@ -32,13 +33,29 @@ class TabBar(QtWidgets.QTabBar):
             painter.restore()
 
 
+class Widget(QtWidgets.QWidget):
+    def __init__(self, num_lab):
+        super().__init__()
+
+        self.label = QtWidgets.QLabel(f"Лабораторная работа {num_lab}")
+        self.label.setStyleSheet("""
+            color: rgb(253, 253, 253); 
+            font-size: 24px;
+        """)
+        self.layout = QtWidgets.QVBoxLayout(self)
+        self.layout.addWidget(self.label,
+                              alignment=QtCore.Qt.AlignmentFlag.AlignHCenter | QtCore.Qt.AlignmentFlag.AlignTop)
+
+
 class TabWidget(QtWidgets.QTabWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setTabBar(TabBar())
+        self.setTabBar(TabBar(self))
+
         self.setTabPosition(QtWidgets.QTabWidget.TabPosition.West)
         self.setFont(QtGui.QFont('Cantrell', 11))
+        self.layout = QtWidgets.QVBoxLayout(self)
 
     def create_tabs(self, count):
         for i in range(1, count + 1):
-            self.addTab(QtWidgets.QWidget(), QtGui.QIcon("chemistry.png"), f"Лабораторная работа {i}")
+            self.addTab(Widget(i), QtGui.QIcon("chemistry.png"), f"Лабораторная работа {i}")

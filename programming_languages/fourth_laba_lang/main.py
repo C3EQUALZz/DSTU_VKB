@@ -42,7 +42,7 @@ def third_question():
     ]
 
     for group, humans in my_len:
-        print(group, *(f"\t{human}" for human in humans), sep='\n', end='\n\n')
+        print(f"{group: ^{len(max(humans, key=len))}}", *(f"{human}" for human in humans), sep='\n', end='\n\n')
 
 
 def fourth_question():

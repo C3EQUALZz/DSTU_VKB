@@ -2,6 +2,9 @@
 # -*- coding: utf-8 -*-
 """
 Ковалев Данил ВКБ22 Вариант 1
+TODO:
+Поставить хендлер на обновление меню
+
 """
 import sys
 
@@ -13,9 +16,8 @@ class DlgMain(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self._init_ui()
-        self._create_tabs_vertical()
+        self._create_tabs_vertical(6)
         self._create_combobox()
-        self._create_label()
 
     def _init_ui(self):
         self.setWindowTitle("Ковалев Данил ВКБ22")
@@ -30,9 +32,9 @@ class DlgMain(QtWidgets.QMainWindow):
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
-    def _create_tabs_vertical(self):
+    def _create_tabs_vertical(self, n):
         self.tabs = TabWidget()
-        self.tabs.create_tabs(4)
+        self.tabs.create_tabs(n)
 
         # Создаем левое меню с помощью QSplitter
         splitter = QtWidgets.QSplitter()
@@ -44,44 +46,13 @@ class DlgMain(QtWidgets.QMainWindow):
     def _create_combobox(self):
         self.combobox = QtWidgets.QComboBox()
         self.combobox.addItems(["Задание 1", "Задание 2", "Задание 3", "Задание 4"])
-        self.combobox.currentIndexChanged.connect(self.update_label)
 
-        layout = QtWidgets.QHBoxLayout()
-        layout.addWidget(self.combobox, 0, QtCore.Qt.AlignmentFlag.AlignTop | QtCore.Qt.AlignmentFlag.AlignRight)
+        self.tabs.layout.addWidget(self.combobox,
+                                   alignment=QtCore.Qt.AlignmentFlag.AlignRight | QtCore.Qt.AlignmentFlag.AlignTop)
 
-        container = QtWidgets.QWidget()
-        container.setLayout(layout)
-
-        # Создаем компоновщик для правой части
-        right_layout = QtWidgets.QVBoxLayout()
-        right_layout.addWidget(container)  # Добавляем QComboBox
-        right_layout.addStretch(1)  # Добавляем пространство для выравнивания внизу
-
-        # Создаем контейнер для правой части
-        right_container = QtWidgets.QWidget()
-        right_container.setLayout(right_layout)
-
-        # Добавляем контейнер правой части в левую часть
-        self.centralWidget().addWidget(right_container)
-
-    def _create_label(self):
-        self.label = QtWidgets.QLabel("Выбрано задание: Задание 1")
-        self.update_label()  # Установим начальное значение
-
-        label_layout = QtWidgets.QVBoxLayout()
-        label_layout.addWidget(self.label)
-
-        label_container = QtWidgets.QWidget()
-        label_container.setLayout(label_layout)
-
-        layout = QtWidgets.QHBoxLayout()
-        layout.addStretch(1)  # Добавляем пространство для выравнивания внизу и справа
-        layout.addWidget(label_container)  # Добавляем QLabel
-
-        container = QtWidgets.QWidget()
-        container.setLayout(layout)
-
-        self.centralWidget().addWidget(container)
+    def _create_question(self):
+        self.label = QtWidgets.QLabel(" ")
+        self.update_label()
 
     def update_label(self):
         selected_task = self.combobox.currentText()
