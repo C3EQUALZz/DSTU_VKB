@@ -23,6 +23,7 @@ class DlgMain(QtWidgets.QMainWindow):
         self._create_tabs_vertical(6)  # создание количества пунктов в боковом меню
         self._create_combobox()  # создание выпадающего списка
         self._create_question()
+        self._create_input_output_data()
 
         self.tabs.currentChanged.connect(self._update_condition)
         self.combobox.currentIndexChanged.connect(self._update_condition)
@@ -58,8 +59,9 @@ class DlgMain(QtWidgets.QMainWindow):
         """
         Создание выпадающего списка, предположительно должен находится в правом верхнем угле
         """
-        self.combobox = QtWidgets.QComboBox()
-        self.combobox.addItems(["Задание 1", "Задание 2", "Задание 3", "Задание 4"])
+        self.combobox = QtWidgets.QComboBox()  # создание выпадающего списка, гле будут задания
+        self.combobox.addItems(["Задание 1", "Задание 2", "Задание 3",
+                                "Задание 4"])  # в каждой лабораторной 4 задания, поэтому везде будет так
 
         self.tabs.layout.addWidget(self.combobox,
                                    alignment=QtCore.Qt.AlignmentFlag.AlignRight | QtCore.Qt.AlignmentFlag.AlignTop)
@@ -74,11 +76,27 @@ class DlgMain(QtWidgets.QMainWindow):
         self.tabs.layout.addWidget(self.label,
                                    alignment=QtCore.Qt.AlignmentFlag.AlignRight | QtCore.Qt.AlignmentFlag.AlignTop)
 
+    def _create_input_output_data(self):
+        self.input_data = QtWidgets.QLineEdit()
+        self.input_data.setPlaceholderText("Input data: ")
+
+        self.output_data = QtWidgets.QTextEdit()
+        self.output_data.setPlaceholderText("Output data: ")
+        self.output_data.setReadOnly(True)
+
+        splitter = QtWidgets.QSplitter(QtCore.Qt.Orientation.Vertical)
+        splitter.addWidget(self.input_data)
+        splitter.addWidget(self.output_data)
+
+        self.tabs.layout.addWidget(splitter,
+                                   alignment=QtCore.Qt.AlignmentFlag.AlignTop | QtCore.Qt.AlignmentFlag.AlignRight)
+
     def _update_condition(self):
         current_laboratory = self.tabs.currentIndex() + 1
         current_number_question = self.combobox.currentIndex() + 1
         condition = TaskChooser(current_laboratory, current_number_question).condition
         self.label.setText(condition)
+        self.input_data.clear()
 
     def closeEvent(self, event):
         """
