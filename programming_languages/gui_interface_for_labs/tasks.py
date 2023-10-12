@@ -100,3 +100,8 @@ class TaskChooser:
     def condition(self):
         return dictionary.get(f"Лабораторная работа {self.number_laboratory} Подзадача {self.number_question}",
                               ("Не выполнял ещё", " "))[0]
+
+    @property
+    def function(self):
+        return dictionary.get(f"Лабораторная работа {self.number_laboratory} Подзадача {self.number_question}",
+                              (" ", None))[1]

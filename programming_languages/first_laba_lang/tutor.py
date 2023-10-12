@@ -15,7 +15,7 @@ def first_question(string: str) -> float | str:
 def second_question(lst: list[str | int]) -> str:
     # print(*lst[1::2], sep='\n') if isinstance(lst, list) else print("Вы ввели не список")
     lst = eval(lst)
-    return ' '.join(str(x) for x in lst[1::2]) if isinstance(lst, list) else "Вы ввели не список"
+    return '\n'.join(str(x) for x in lst[1::2]) if isinstance(lst, list) else "Вы ввели не список"
 
 
 def third_question(lst: list[int]) -> int:
