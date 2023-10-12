@@ -1,3 +1,7 @@
+"""
+Здесь описана логика создания бокового меню
+Ответ, с которого получилась реализация: https://inlnk.ru/QwLLpD
+"""
 __all__ = ["TabWidget"]
 
 from PyQt6 import QtGui, QtWidgets, QtCore
