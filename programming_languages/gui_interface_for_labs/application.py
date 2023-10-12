@@ -16,7 +16,6 @@ class DlgMain(QtWidgets.QMainWindow):
     """
     Главный класс, здесь описывается основное окно, с которым взаимодействуем.
     """
-
     def __init__(self):
         super().__init__()
         self._init_ui()  # установка параметров для приложения
@@ -61,9 +60,7 @@ class DlgMain(QtWidgets.QMainWindow):
         Создание выпадающего списка, предположительно должен находится в правом верхнем угле
         """
         self.combobox = QtWidgets.QComboBox()  # создание выпадающего списка, гле будут задания
-        self.combobox.addItems(["Задание 1", "Задание 2", "Задание 3",
-                                "Задание 4"])  # в каждой лабораторной 4 задания, поэтому везде будет так
-
+        self.combobox.addItems([f"Задание {i}" for i in range(1, 5)])
         self.tabs.layout.addWidget(self.combobox,
                                    alignment=QtCore.Qt.AlignmentFlag.AlignRight | QtCore.Qt.AlignmentFlag.AlignTop)
 
