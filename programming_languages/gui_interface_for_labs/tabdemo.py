@@ -43,7 +43,6 @@ class Widget(QtWidgets.QWidget):
 
         self.label = QtWidgets.QLabel(f"Лабораторная работа {num_lab}")
         self.label.setStyleSheet("""
-            color: rgb(253, 253, 253); 
             font-size: 24px;
         """)
         self.layout = QtWidgets.QVBoxLayout(self)

@@ -68,7 +68,9 @@ class DlgMain(QtWidgets.QMainWindow):
         """
         Создание места для условия, динамически должен обновляться в зависимости от выбора в combobox и TabWidget
         """
-        self.label = QtWidgets.QLabel(" ")
+        self.label = QtWidgets.QLabel(
+            "Напишите программу для решения примера. Есть переменные: a,b,c,k: Предусмотрите деление на 0. "
+            "\nВсе необходимые переменные вводите ниже.")
         self.tabs.layout.addWidget(self.label,
                                    alignment=QtCore.Qt.AlignmentFlag.AlignRight | QtCore.Qt.AlignmentFlag.AlignTop)
 
