@@ -30,7 +30,7 @@ class DlgMain(QtWidgets.QMainWindow):
         # создание количества пунктов в боковом меню
         self._create_page(11)
         # сигнал для отслеживания изменений
-        self.tabs.currentChanged.connect(self._update_condition)
+        self.tabs.currentChanged.connect(self.update_condition)
 
     def _init_ui(self):
         """
@@ -66,7 +66,7 @@ class DlgMain(QtWidgets.QMainWindow):
         self.tabs.create_tabs(n)
         self.setCentralWidget(self.tabs)
 
-    def _update_condition(self):
+    def update_condition(self):
         """
         Обновление условия задачи при изменении страницы.
         """
@@ -75,7 +75,7 @@ class DlgMain(QtWidgets.QMainWindow):
         widget.label.setText(condition)
         widget.input_data.clear()
 
-    def _on_ok_button_clicked(self):
+    def on_ok_button_clicked(self):
         """
         Обработка сигнала нажатия "Ok"
         """
@@ -84,7 +84,7 @@ class DlgMain(QtWidgets.QMainWindow):
         text = "Выполнено" if func is None else str(func(widget.input_data.text()))
         widget.output_data.setText(text)
 
-    def _on_cancel_button_clicked(self):
+    def on_cancel_button_clicked(self):
         """
         Обработка сигнала нажатия "Cancel"
         """

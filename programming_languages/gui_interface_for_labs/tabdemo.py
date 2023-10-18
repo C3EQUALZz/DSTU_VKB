@@ -78,9 +78,9 @@ class TabWidget(QtWidgets.QTabWidget):
             widget = Page(i)
             # Привязываем сигналы изменения индекса выпадающего списка, кнопки "Ok" и "Cancel" к методам
             # родительского объекта
-            widget.combobox.currentIndexChanged.connect(self.parent._update_condition)
-            widget.ok_button.clicked.connect(self.parent._on_ok_button_clicked)
-            widget.cancel_button.clicked.connect(self.parent._on_cancel_button_clicked)
+            widget.combobox.currentIndexChanged.connect(self.parent.update_condition)
+            widget.ok_button.clicked.connect(self.parent.on_ok_button_clicked)
+            widget.cancel_button.clicked.connect(self.parent.on_cancel_button_clicked)
             # Добавляем созданный виджет с лабораторной работой как закладку в TabWidget
             self.addTab(widget, QtGui.QIcon("chemistry.png"), f"Лабораторная работа {i}")
             # Добавляем объект Page в список list_widget
