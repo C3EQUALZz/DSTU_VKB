@@ -41,7 +41,7 @@ class Page(QtWidgets.QWidget):
         Создает блоки для ввода и вывода данных.
         """
         # Создаем поле для ввода данных (однострочное)
-        self.input_data = QtWidgets.QLineEdit()
+        self.input_data = QtWidgets.QLineEdit("1 2 3 4")
         self.input_data.setPlaceholderText("Input data: ")
 
         # Создаем блок для вывода данных (многострочное)
@@ -85,7 +85,15 @@ class Page(QtWidgets.QWidget):
         Создает кнопки "Ок" и "Отмена" и добавляет их в QDialogButtonBox.
         """
         buttons = QtWidgets.QDialogButtonBox()
-
+        buttons.setStyleSheet(buttons.styleSheet() +
+                              """
+                              border-style: outset;
+                              border-width: 1px;
+                              border-radius: 15px;
+                              border-color: rgb(20, 20, 20);
+                              padding: 4px;
+                              """
+                              )
         self.ok_button = buttons.addButton(QtWidgets.QDialogButtonBox.StandardButton.Ok)
         self.cancel_button = buttons.addButton(QtWidgets.QDialogButtonBox.StandardButton.Cancel)
 

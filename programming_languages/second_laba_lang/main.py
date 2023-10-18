@@ -14,7 +14,7 @@ def first_question(my_number: int):
     """
     while (user_number := int(input("Вводите user_number "))) > my_number:
         continue
-    print(f"{my_number=}, {user_number=}")
+    return f"{my_number=}, {user_number=}"
 
 
 def second_question(my_list: list):
@@ -22,16 +22,16 @@ def second_question(my_list: list):
     Пусть задан список, содержащий строки.
     Вариант 1. Выведите построчно все строки размером от 5 до 10 символов.
     """
-    print(*filter(lambda x: 5 <= len(str(x)) <= 10, my_list), sep='\n')
+    return '\n'.join(str(x) for x in filter(lambda x: 5 <= len(str(x)) <= 10, eval(my_list)))
 
 
-def third_question():
+def third_question(s=None):
     """
     Сгенерируйте и выведите:
     Вариант 1. Случайную строку, состоящую из 5 символов, содержащую
     только заглавные буквы русского алфавита.
     """
-    print(''.join(sample(ascii_uppercase, 5)))
+    return ''.join(sample(ascii_uppercase, 5))
 
 
 def fourth_question(string: str):
@@ -45,9 +45,9 @@ def fourth_question(string: str):
 def main():
     match input("Введите номер задания "):
         case "1":
-            first_question(int(input("Введите my_number ")))
+            print(first_question(int(input("Введите my_number "))))
         case "2":
-            second_question(eval(input("Введите список, как он выглядит в repr ")))
+            print(second_question(eval(input("Введите список, как он выглядит в repr "))))
         case "3":
             third_question()
         case "4":

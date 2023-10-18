@@ -36,6 +36,7 @@ class DlgMain(QtWidgets.QMainWindow):
         """
         Метод для инициализации параметров приложения
         """
+        self.setStyleSheet(self.styleSheet() + "background-color:rgb(40, 40, 40)")
         # установка названия приложения
         self.setWindowTitle("Ковалев Данил ВКБ22")
         # установка окна приложения
@@ -61,6 +62,7 @@ class DlgMain(QtWidgets.QMainWindow):
         Создание вертикального меню, где находятся лабораторные работы
         """
         self.tabs = TabWidget(self)
+        self.tabs.setStyleSheet(self.tabs.styleSheet() + "background-color:rgb(40, 40, 40)")
         self.tabs.create_tabs(n)
         self.setCentralWidget(self.tabs)
 
