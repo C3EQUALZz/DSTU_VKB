@@ -39,7 +39,7 @@ def fourth_question(string: str):
     Пусть дана строка:
     Вариант 1. На основе данной строки сформируйте новую, содержащую только цифры. Выведите новую строку.
     """
-    print(f"Цифры - {''.join(filter(lambda x: x.isdigit(), string))}")
+    return f"Цифры - {''.join(filter(lambda x: x.isdigit(), string))}"
 
 
 def main():
@@ -49,9 +49,9 @@ def main():
         case "2":
             print(second_question(eval(input("Введите список, как он выглядит в repr "))))
         case "3":
-            third_question()
+            print(third_question())
         case "4":
-            fourth_question(input("Введите вашу строку, состоящую из цифр и чисел "))
+            print(fourth_question(input("Введите вашу строку, состоящую из цифр и чисел ")))
         case _:
             print("Вы выбрали неверный номер ")
 
