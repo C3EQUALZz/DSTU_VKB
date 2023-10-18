@@ -16,7 +16,7 @@ def first_question(path: str):
     """
     if path.isspace():
         path = os.getcwd()
-    print(sum(len(files) for root, dirs, files in os.walk(fr"{path}")))
+    return sum(len(files) for root, dirs, files in os.walk(fr"{path}"))
 
 
 def create_csv_file():
@@ -76,7 +76,7 @@ def fourth_question():
 def main():
     match input("Введите номер задания "):
         case "1":
-            first_question(input("Введите путь до файла. По умолчанию стоит текущая директория (нажмите пробел) "))
+            print(first_question(input("Введите путь до файла. По умолчанию стоит текущая директория (нажмите пробел) ")))
         case "2":
             print(second_question()[0])
         case "3":
