@@ -62,7 +62,7 @@ class DlgMain(QtWidgets.QMainWindow):
         Создание вертикального меню, где находятся лабораторные работы
         """
         self.tabs = TabWidget(self)
-        self.tabs.setStyleSheet(self.tabs.styleSheet() + "background-color:rgb(40, 40, 40)")
+        self.tabs.setStyleSheet(self.tabs.styleSheet() + "background-color:rgb(40, 40, 40); color: rgb(255, 255, 255)")
         self.tabs.create_tabs(n)
         self.setCentralWidget(self.tabs)
 
