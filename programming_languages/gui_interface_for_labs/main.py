@@ -4,7 +4,7 @@
 Ковалев Данил ВКБ22 Вариант 1
 
 Данный файл является основным, отсюда происходит запуск контента.
-Version: 1.0.0
+Version: 1.0.1
 """
 
 from PyQt6 import QtWidgets, QtGui, QtCore
@@ -19,8 +19,11 @@ class MainWindow(QtWidgets.QWidget):
 
     def __init__(self):
         super().__init__()
+        # создаем stacked_widget для добавления нескольких окон
         self.stacked_widget = QtWidgets.QStackedWidget(self)
+        # создание стартового экрана, который появляется в самом начале
         self.start_screen = StartScreen(self)
+        # основное меню, где выбор лабораторных
         self.dlg_main = DlgMain()
 
         self._create_stacked_widget()
@@ -48,7 +51,7 @@ class MainWindow(QtWidgets.QWidget):
         # установка окна приложения
         self.setWindowIcon(QtGui.QIcon("icons8-окно-приложения-96.png"))
         # Размеры по умолчанию при запуске
-        self.resize(850, 500)
+        self.setFixedSize(850, 500)
         # Установка шрифта и размеров
         self.setFont(QtGui.QFont('Cantrell', 11))
         # Центрирование приложение при запуске
@@ -62,8 +65,10 @@ class MainWindow(QtWidgets.QWidget):
         """
         Метод, который центрует положения появления окна при запуске.
         """
-        qr = self.frameGeometry()  # размеры нашего окна
-        cp = QtGui.QGuiApplication.primaryScreen().availableGeometry().center()  # определяем размеры окна приложения
+        # размеры нашего окна
+        qr = self.frameGeometry()
+        # определяем размеры окна приложения
+        cp = QtGui.QGuiApplication.primaryScreen().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
@@ -72,17 +77,22 @@ class MainWindow(QtWidgets.QWidget):
         Диалоговое окно, оно появляется, когда пользователь хочет закрыть приложение
         """
         res = QtWidgets.QMessageBox.question(self, "Выход", "Вы точно уверены, что хотите выйти? ")
+        # при нажатии на кнопку event становится bool, поэтому сделан такой костыль
+        if isinstance(event, bool):
+            sys.exit(0)
+        # при нажатии на крестик сверху приходится реализовать такую логику
         event.accept() if res == 16384 else event.ignore()
 
 
 class StartScreen(QtWidgets.QWidget):
     """
-
+    Стартовое меню с выбором: настройки, старт, выход
     """
     def __init__(self, parent):
         super().__init__()
-
+        # создание основного layout, где мы будем помещать остальные виджеты
         self.layout = QtWidgets.QVBoxLayout(self)
+        # добавили выравнивание для каждого элемента
         self.layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter | QtCore.Qt.AlignmentFlag.AlignVCenter)
         self.parent = parent
 
@@ -90,6 +100,9 @@ class StartScreen(QtWidgets.QWidget):
         self._create_button()
 
     def _create_button(self):
+        """
+        Метод для создания кнопок в меню
+        """
         start_button = QtWidgets.QPushButton("Начало")
         start_button.setMinimumSize(200, 50)
         start_button.clicked.connect(self.parent.switch_to_main_window)
@@ -99,6 +112,7 @@ class StartScreen(QtWidgets.QWidget):
 
         exit_button = QtWidgets.QPushButton("Выход из программы")
         exit_button.setMinimumSize(200, 50)
+        exit_button.clicked.connect(self.parent.closeEvent)
 
         for widget in (start_button, settings_button, exit_button):
             self.layout.addWidget(widget)
