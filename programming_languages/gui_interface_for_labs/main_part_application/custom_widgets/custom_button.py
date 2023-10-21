@@ -1,103 +1,68 @@
+__all__ = ["Button"]
 """
-Для реали
+Для реализации кнопок с анимацией.
+Оригинал: https://gist.github.com/ahmed4end/33183727317afd840f52385df66b4403
 """
 
 from PyQt6 import QtWidgets, QtCore, QtGui
 from colour import Color
 
 
-class Main(QtWidgets.QWidget):
-    def __init__(self):
-        super().__init__()
-        self.setStyleSheet("QPushButton{height: 30px;width: 200px;}")
-
-        layout = QtWidgets.QHBoxLayout()
-        btn = Button("2020 is an interesting year.")
-        layout.addStretch()
-        layout.addWidget(btn)
-        layout.addStretch()
-        self.setLayout(layout)
-
-
 class Button(QtWidgets.QPushButton):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.shadow = QtWidgets.QGraphicsDropShadowEffect()
+        self._shadow = QtWidgets.QGraphicsDropShadowEffect()
+        self._tm = QtCore.QBasicTimer()
 
-        self.tm = QtCore.QBasicTimer()
+        self._mouse = ''
 
-        self.mouse = ''
+        self._expand = 0
+        self._max_expand = 4
 
-        self.change_color(color="black")
+        self._shadow_settings()
 
-        self.expand = 0
-        self.maxExpand = 4
-        self.init_s_color = self.end_s_color = "black"
-        self.garding_s_seq = self.grade_color(c1=self.init_s_color,
-                                              c2=self.end_s_color,
-                                              steps=self.maxExpand)
+    def _shadow_settings(self):
+        """
+        Метод для настройки тени кнопки. Задает параметры тени, такие как смещение, радиус размытия и цвет.
+        """
+        self.setGraphicsEffect(self._shadow)
+        self._shadow.setOffset(0, 0)
+        self._shadow.setBlurRadius(20)
 
-        self.grade = 0
-        self.maxGrade = 15
-        self.init_bg_color = self.end_bg_color = self.init_s_color
-        self.gradding_bg_seq = self.grade_color(c1=self.init_bg_color,
-                                                c2=self.end_bg_color,
-                                                steps=self.maxGrade)
+    def enterEvent(self, e: QtGui.QEnterEvent) -> None:
+        """
+        Метод, который вызывается, когда курсор мыши входит в область кнопки.
+        Это начинает анимацию изменения цвета и тени.
+        """
+        self._mouse = 'on'
+        self.setGraphicsEffect(self._shadow)
+        self._tm.start(15, self)
 
-        self.shadow_settings()
+    def leaveEvent(self, e: QtGui.QEnterEvent) -> None:
+        """
+        Метод, который вызывается, когда курсор мыши покидает область кнопки.
+        Это завершает анимацию изменения цвета и тени.
+        """
+        self._mouse = 'off'
 
-    def shadow_settings(self):
-        self.setGraphicsEffect(self.shadow)
-        self.shadow.setOffset(0, 0)
-        self.shadow.setBlurRadius(20)
-        self.shadow.setColor(QtGui.QColor("#3F3F3F"))
+    def timerEvent(self, e: QtGui.QEnterEvent) -> None:
+        """
+        Метод, вызываемый таймером.
+        В этом методе выполняется анимация изменения цвета и тени в зависимости от положения мыши.
+        """
 
-    def change_color(self, color: str) -> None:
-        palette = self.palette()
-        palette.setColor(QtGui.QPalette.ColorGroup.Normal, QtGui.QPalette.ColorRole.ButtonText, QtGui.QColor(color))
-        self.setPalette(palette)
-
-    def enterEvent(self, e) -> None:
-        self.mouse = 'on'
-        self.setGraphicsEffect(self.shadow)
-        self.tm.start(15, self)
-
-    def leaveEvent(self, e) -> None:
-        self.mouse = 'off'
-
-    def timerEvent(self, e) -> None:
-
-        if self.mouse == 'on' and self.grade < self.maxGrade:
-            self.grade += 1
-            self.change_color(color=self.gradding_bg_seq[self.grade - 1])
-
-        elif self.mouse == 'off' and self.grade > 0:
-            self.change_color(color=self.gradding_bg_seq[self.grade - 1])
-            self.grade -= 1
-
-        if self.mouse == 'on' and self.expand < self.maxExpand:
-            self.expand += 1
-            self.shadow.setColor(QtGui.QColor(self.garding_s_seq[self.expand - 1]))
+        if self._mouse == 'on' and self._expand < self._max_expand:
+            self._expand += 1
             self.setGeometry(self.x() - 1, int(self.y() - 1), self.width() + 2, self.height() + 2)
 
-        elif self.mouse == 'off' and self.expand > 0:
-            self.expand -= 1
+        if self._mouse == 'off' and self._expand > 0:
+            self._expand -= 1
             self.setGeometry(self.x() + 1, int(self.y() + 1), self.width() - 2, self.height() - 2)
-
-        elif self.mouse == 'off' and self.expand in [0, self.maxExpand] and self.grade in [0, self.maxGrade]:
-            self.shadow.setColor(QtGui.QColor(self.init_s_color))
-            self.tm.stop()
 
     @staticmethod
     def grade_color(c1, c2, steps) -> list:
+        """
+        Статический метод, который возвращает список цветов между двумя заданными цветами c1 и c2 с
+        заданным количеством steps. Это используется для создания списков цветов для анимации изменения цвета.
+        """
         return [str(i) for i in Color(c1).range_to(Color(c2), steps)]
-
-
-if __name__ == '__main__':
-    import sys
-
-    app = QtWidgets.QApplication(sys.argv)
-    app.setStyle("Fusion")
-    main = Main()
-    main.show()
-    app.exec()

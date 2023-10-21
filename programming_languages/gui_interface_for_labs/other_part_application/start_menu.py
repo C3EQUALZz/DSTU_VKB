@@ -3,6 +3,7 @@
 """
 
 from PyQt6 import QtWidgets, QtCore, QtGui
+from programming_languages.gui_interface_for_labs.main_part_application.custom_widgets.custom_button import Button
 
 
 class StartScreen(QtWidgets.QWidget):
@@ -27,10 +28,22 @@ class StartScreen(QtWidgets.QWidget):
         Метод для создания кнопок в меню
         """
         # Создание кнопки, которая перемещает в основной интерфейс программы
-        start_button = QtWidgets.QPushButton("Начало")
+        start_button = Button("Начало")
+        start_button.setStyleSheet("""
+            border-style: outset;
+            border-width: 1px;
+            border-radius: 10px;
+            padding: 4px;
+        """)
         start_button.clicked.connect(self.parent.switch_to_main_window)
 
-        exit_button = QtWidgets.QPushButton("Выход из программы")
+        exit_button = Button("Выход из программы")
+        exit_button.setStyleSheet("""
+            border-style: outset;
+            border-width: 1px;
+            border-radius: 10px;
+            padding: 4px;
+        """)
         exit_button.clicked.connect(self.parent.closeEvent)
 
         for button in (start_button, exit_button):

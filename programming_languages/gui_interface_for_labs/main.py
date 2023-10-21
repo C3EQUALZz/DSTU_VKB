@@ -56,24 +56,10 @@ class MainWindow(QtWidgets.QWidget):
         font: Cantrell;
         font-size: 17px;
         
-        QPushButton {
-            background-color:rgb(40, 40, 40);
-            font-weight: bold;
-            border-style: outset;
-            border-width: 1px;
-            border-radius: 10px;
-            padding: 4px;
-        }
-        
-        QLabel {
-            font-size: 24px;
-        }
-        
         QTabWidget {
             background-color:rgb(40, 40, 40); 
             color: rgb(255, 255, 255);
         }
-        
         """)
         # установка названия приложения
         self.setWindowTitle("Ковалев Данил ВКБ22")
