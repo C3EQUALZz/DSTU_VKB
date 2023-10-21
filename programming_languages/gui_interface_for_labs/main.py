@@ -7,8 +7,9 @@
 Version: 1.0.1
 """
 
-from PyQt6 import QtWidgets, QtGui, QtCore
-from application import DlgMain
+from PyQt6 import QtWidgets, QtGui
+from programming_languages.gui_interface_for_labs.main_part_application.main_interface import DlgMain
+from programming_languages.gui_interface_for_labs.other_part_application.start_menu import StartScreen
 import sys
 
 
@@ -49,7 +50,7 @@ class MainWindow(QtWidgets.QWidget):
         # установка названия приложения
         self.setWindowTitle("Ковалев Данил ВКБ22")
         # установка окна приложения
-        self.setWindowIcon(QtGui.QIcon("icons8-окно-приложения-96.png"))
+        self.setWindowIcon(QtGui.QIcon("icons/window_icon.png"))
         # Размеры по умолчанию при запуске
         self.setFixedSize(850, 500)
         # Установка шрифта и размеров
@@ -82,59 +83,6 @@ class MainWindow(QtWidgets.QWidget):
             sys.exit(0)
         # при нажатии на крестик сверху приходится реализовать такую логику
         event.accept() if res == 16384 else event.ignore()
-
-
-class StartScreen(QtWidgets.QWidget):
-    """
-    Стартовое меню с выбором: настройки, старт, выход
-    """
-
-    def __init__(self, parent):
-        super().__init__()
-        # создание основного layout, где мы будем помещать остальные виджеты
-        self.layout = QtWidgets.QVBoxLayout(self)
-        # добавили выравнивание для каждого элемента
-        self.layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter | QtCore.Qt.AlignmentFlag.AlignVCenter)
-        # родительский класс
-        self.parent = parent
-
-        self._add_gif()
-        self._create_button()
-
-    def _create_button(self):
-        """
-        Метод для создания кнопок в меню
-        """
-        start_button = QtWidgets.QPushButton("Начало")
-        start_button.clicked.connect(self.parent.switch_to_main_window)
-
-        settings_button = QtWidgets.QPushButton("Настройки")
-
-        exit_button = QtWidgets.QPushButton("Выход из программы")
-        exit_button.clicked.connect(self.parent.closeEvent)
-
-        for button in (start_button, settings_button, exit_button):
-            button.setMinimumSize(200, 50)
-            button.setStyleSheet(button.styleSheet() +
-                                 """
-                                 border-style: outset;
-                                 border-width: 1px;
-                                 border-radius: 15px;
-                                 border-color: rgb(20, 20, 20);
-                                 padding: 4px;
-                                 """)
-            self.layout.addWidget(button)
-
-    def _add_gif(self):
-        label = QtWidgets.QLabel()
-        label.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter | QtCore.Qt.AlignmentFlag.AlignVCenter)
-        label.setMinimumSize(QtCore.QSize(200, 200))
-
-        movie = QtGui.QMovie("feature-open-source@2x.gif")
-        label.setMovie(movie)
-        movie.start()
-
-        self.layout.addWidget(label)
 
 
 def main():

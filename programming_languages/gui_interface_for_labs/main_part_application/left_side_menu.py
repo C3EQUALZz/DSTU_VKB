@@ -5,7 +5,7 @@
 __all__ = ["TabWidget"]
 
 from PyQt6 import QtGui, QtWidgets, QtCore
-from page_logic import Page
+from programming_languages.gui_interface_for_labs.main_part_application.page_logic import Page
 
 
 class TabBar(QtWidgets.QTabBar):
@@ -81,7 +81,7 @@ class TabWidget(QtWidgets.QTabWidget):
             widget.combobox.currentIndexChanged.connect(self.parent.update_condition)
             widget.ok_button.clicked.connect(self.parent.on_ok_button_clicked)
             widget.cancel_button.clicked.connect(self.parent.on_cancel_button_clicked)
-            # Добавляем созданный виджет с лабораторной работой как закладку в TabWidget
-            self.addTab(widget, QtGui.QIcon("chemistry.png"), f"Лабораторная работа {i}")
+            # Добавляем созданный виджет с лабораторной работой как закладку в TabWidget (не отображается почему-то...)
+            self.addTab(widget, QtGui.QIcon("icons/chemistry.png"), f"Лабораторная работа {i}")
             # Добавляем объект Page в список list_widget
             self.parent.list_widget.append(widget)

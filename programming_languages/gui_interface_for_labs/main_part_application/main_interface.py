@@ -1,6 +1,6 @@
 from PyQt6 import QtWidgets
-from tabdemo import TabWidget
-from tasks import TaskChooser
+from .left_side_menu import TabWidget
+from .tasks import TaskChooser
 
 
 class DlgMain(QtWidgets.QMainWindow):
