@@ -26,27 +26,21 @@ class StartScreen(QtWidgets.QWidget):
         """
         Метод для создания кнопок в меню
         """
+        # Создание кнопки, которая перемещает в основной интерфейс программы
         start_button = QtWidgets.QPushButton("Начало")
         start_button.clicked.connect(self.parent.switch_to_main_window)
-
-        settings_button = QtWidgets.QPushButton("Настройки")
 
         exit_button = QtWidgets.QPushButton("Выход из программы")
         exit_button.clicked.connect(self.parent.closeEvent)
 
-        for button in (start_button, settings_button, exit_button):
+        for button in (start_button, exit_button):
             button.setMinimumSize(200, 50)
-            button.setStyleSheet(button.styleSheet() +
-                                 """
-                                 border-style: outset;
-                                 border-width: 1px;
-                                 border-radius: 15px;
-                                 border-color: rgb(20, 20, 20);
-                                 padding: 4px;
-                                 """)
             self.layout.addWidget(button)
 
     def _add_gif(self):
+        """
+        Метод, который добавляет гиф анимацию в виде кота на главном меню
+        """
         label = QtWidgets.QLabel()
         label.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter | QtCore.Qt.AlignmentFlag.AlignVCenter)
         label.setMinimumSize(QtCore.QSize(200, 200))

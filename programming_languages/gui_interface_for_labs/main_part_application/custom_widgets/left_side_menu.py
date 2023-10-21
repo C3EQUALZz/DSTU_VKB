@@ -5,6 +5,7 @@
 __all__ = ["TabWidget"]
 
 from PyQt6 import QtGui, QtWidgets, QtCore
+
 from programming_languages.gui_interface_for_labs.main_part_application.page_logic import Page
 
 
@@ -67,7 +68,6 @@ class TabWidget(QtWidgets.QTabWidget):
         self.setTabBar(TabBar(self))  # Устанавливаем кастомный виджет для закладок
 
         self.setTabPosition(QtWidgets.QTabWidget.TabPosition.West)  # Устанавливаем положение закладок слева
-        self.setFont(QtGui.QFont('Cantrell', 11))  # Устанавливаем шрифт для текста на закладках
         self.layout = QtWidgets.QVBoxLayout(self)  # Создаем вертикальный макет для данного виджета
 
     def create_tabs(self, count):

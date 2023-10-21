@@ -1,5 +1,5 @@
 from PyQt6 import QtWidgets
-from .left_side_menu import TabWidget
+from programming_languages.gui_interface_for_labs.main_part_application.custom_widgets.left_side_menu import TabWidget
 from .tasks import TaskChooser
 
 
@@ -22,7 +22,6 @@ class DlgMain(QtWidgets.QMainWindow):
         Создание вертикального меню, где находятся лабораторные работы
         """
         self.tabs = TabWidget(self)
-        self.tabs.setStyleSheet(self.tabs.styleSheet() + "background-color:rgb(40, 40, 40); color: rgb(255, 255, 255)")
         self.tabs.create_tabs(n)
         self.setCentralWidget(self.tabs)
 

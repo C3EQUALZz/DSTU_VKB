@@ -18,9 +18,7 @@ class Page(QtWidgets.QWidget):
         super().__init__()
         # Создаем метку для названия лабораторной работы
         self.label = QtWidgets.QLabel(f"Лабораторная работа {num_lab}")
-        self.label.setStyleSheet("""
-            font-size: 24px;
-        """)
+
         self.layout = QtWidgets.QVBoxLayout(self)
         self.layout.addWidget(self.label,
                               alignment=QtCore.Qt.AlignmentFlag.AlignHCenter | QtCore.Qt.AlignmentFlag.AlignTop)
@@ -85,15 +83,7 @@ class Page(QtWidgets.QWidget):
         Создает кнопки "Ок" и "Отмена" и добавляет их в QDialogButtonBox.
         """
         buttons = QtWidgets.QDialogButtonBox()
-        buttons.setStyleSheet(buttons.styleSheet() +
-                              """
-                              border-style: outset;
-                              border-width: 1px;
-                              border-radius: 15px;
-                              border-color: rgb(20, 20, 20);
-                              padding: 4px;
-                              """
-                              )
+
         self.ok_button = buttons.addButton(QtWidgets.QDialogButtonBox.StandardButton.Ok)
         self.cancel_button = buttons.addButton(QtWidgets.QDialogButtonBox.StandardButton.Cancel)
 

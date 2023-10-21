@@ -4,13 +4,15 @@
 Ковалев Данил ВКБ22 Вариант 1
 
 Данный файл является основным, отсюда происходит запуск контента.
-Version: 1.0.1
+Version: 1.0.4
 """
 
-from PyQt6 import QtWidgets, QtGui
-from programming_languages.gui_interface_for_labs.main_part_application.main_interface import DlgMain
-from programming_languages.gui_interface_for_labs.other_part_application.start_menu import StartScreen
 import sys
+
+from PyQt6 import QtWidgets, QtGui
+
+from main_part_application.main_interface import DlgMain
+from other_part_application.start_menu import StartScreen
 
 
 class MainWindow(QtWidgets.QWidget):
@@ -26,66 +28,95 @@ class MainWindow(QtWidgets.QWidget):
         self.start_screen = StartScreen(self)
         # основное меню, где выбор лабораторных
         self.dlg_main = DlgMain()
+        # инициализация окон, которые видит пользователь
+        self._initialize_windows()
 
-        self._create_stacked_widget()
-
-    def _create_stacked_widget(self):
+    def _initialize_windows(self) -> None:
         """
         Создание основных виджетов, на которые остальные потом помещаются
         """
+        # Создание заготовленного шаблона Linear vertical layout
         layout = QtWidgets.QVBoxLayout(self)
-
+        # Добавление стартового меню
         self.stacked_widget.addWidget(self.start_screen)
+        # Добавление основного интерфейса приложения
         self.stacked_widget.addWidget(self.dlg_main)
-
+        # В Linear Vertical Layout добавляем наши слои приложений
         layout.addWidget(self.stacked_widget)
-        self.init_ui()
-        self.show()
+        # Добавляем наше оформление приложения на каждое окно
+        self._init_ui()
 
-    def init_ui(self):
+    def _init_ui(self) -> None:
         """
         Метод для инициализации параметров приложения
         """
-        self.setStyleSheet(self.styleSheet() + "background-color:rgb(40, 40, 40); color: rgb(255, 255, 255)")
+        self.setStyleSheet("""
+        background-color:rgb(40, 40, 40);
+        color: rgb(255, 255, 255);
+        font: Cantrell;
+        font-size: 17px;
+        
+        QPushButton {
+            background-color:rgb(40, 40, 40);
+            font-weight: bold;
+            border-style: outset;
+            border-width: 1px;
+            border-radius: 10px;
+            padding: 4px;
+        }
+        
+        QLabel {
+            font-size: 24px;
+        }
+        
+        QTabWidget {
+            background-color:rgb(40, 40, 40); 
+            color: rgb(255, 255, 255);
+        }
+        
+        """)
         # установка названия приложения
         self.setWindowTitle("Ковалев Данил ВКБ22")
         # установка окна приложения
         self.setWindowIcon(QtGui.QIcon("icons/window_icon.png"))
         # Размеры по умолчанию при запуске
         self.setFixedSize(850, 500)
-        # Установка шрифта и размеров
-        self.setFont(QtGui.QFont('Cantrell', 11))
         # Центрирование приложение при запуске
         self._center()
 
-    def switch_to_main_window(self):
+    def switch_to_main_window(self) -> None:
         # Переключите виджет на главное окно
         self.stacked_widget.setCurrentWidget(self.dlg_main)
 
-    def _center(self):
+    def _center(self) -> None:
         """
         Метод, который центрует положения появления окна при запуске.
         """
-        # размеры нашего окна
+        # Здесь qr представляет собой прямоугольник, который определяет геометрию (размер и положение)
+        # главного окна (вашего QMainWindow) до того, как оно отобразится на экране.
+        # Этот прямоугольник инициализируется текущими размерами и позицией окна.
         qr = self.frameGeometry()
-        # определяем размеры окна приложения
+        # Здесь вы получаете геометрию текущего доступного экрана (часть экрана, доступная для приложения)
+        # и затем находите центр этой геометрии. Это определяет центр экрана.
         cp = QtGui.QGuiApplication.primaryScreen().availableGeometry().center()
+        # Теперь мы перемещаем прямоугольник qr так, чтобы его центр совпадал с центром экрана,
+        # который мы определили в шаге 2.
         qr.moveCenter(cp)
+        # Затем мы перемещаем окно (self) так, чтобы его верхний левый угол находился в верхнем левом углу
+        # прямоугольника qr. Таким образом, окно становится центрированным относительно экрана.
         self.move(qr.topLeft())
 
-    def closeEvent(self, event):
+    def closeEvent(self, event) -> None:
         """
         Диалоговое окно, оно появляется, когда пользователь хочет закрыть приложение
         """
         res = QtWidgets.QMessageBox.question(self, "Выход", "Вы точно уверены, что хотите выйти? ")
-        # при нажатии на кнопку event становится bool, поэтому сделан такой костыль
-        if isinstance(event, bool):
+        # При нажатии на кнопку event становится bool, поэтому сделан такой костыль
+        if not not event or res == 16384:
             sys.exit(0)
-        # при нажатии на крестик сверху приходится реализовать такую логику
-        event.accept() if res == 16384 else event.ignore()
 
 
-def main():
+def main() -> None:
     app = QtWidgets.QApplication(sys.argv)
     start_screen = MainWindow()
     start_screen.show()
