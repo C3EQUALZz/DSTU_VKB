@@ -5,11 +5,11 @@ from .tasks import TaskChooser
 
 class DlgMain(QtWidgets.QMainWindow):
 
-    def __init__(self):
+    def __init__(self, parent):
         """
         Инициализация главного окна приложения.
         """
-        super().__init__()
+        super().__init__(parent)
         # создание всех страниц, которые мы инициализируем
         self.list_widget = []
         # создание количества пунктов в боковом меню

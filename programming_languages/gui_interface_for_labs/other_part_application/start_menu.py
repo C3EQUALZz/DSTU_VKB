@@ -11,7 +11,7 @@ class StartScreen(QtWidgets.QWidget):
     Стартовое меню с выбором: настройки, старт, выход
     """
 
-    def __init__(self, parent):
+    def __init__(self, parent, app_style):
         super().__init__()
         # создание основного layout, где мы будем помещать остальные виджеты
         self.layout = QtWidgets.QVBoxLayout(self)
@@ -19,6 +19,7 @@ class StartScreen(QtWidgets.QWidget):
         self.layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter | QtCore.Qt.AlignmentFlag.AlignVCenter)
         # родительский класс
         self.parent = parent
+        self.setStyleSheet(app_style)
 
         self._add_gif()
         self._create_button()
@@ -29,21 +30,9 @@ class StartScreen(QtWidgets.QWidget):
         """
         # Создание кнопки, которая перемещает в основной интерфейс программы
         start_button = Button("Начало")
-        start_button.setStyleSheet("""
-            border-style: outset;
-            border-width: 1px;
-            border-radius: 10px;
-            padding: 4px;
-        """)
         start_button.clicked.connect(self.parent.switch_to_main_window)
 
         exit_button = Button("Выход из программы")
-        exit_button.setStyleSheet("""
-            border-style: outset;
-            border-width: 1px;
-            border-radius: 10px;
-            padding: 4px;
-        """)
         exit_button.clicked.connect(self.parent.closeEvent)
 
         for button in (start_button, exit_button):

@@ -22,12 +22,14 @@ class MainWindow(QtWidgets.QWidget):
 
     def __init__(self):
         super().__init__()
+        # Добавляем наше оформление приложения на каждое окно
+        self._init_ui()
         # создаем stacked_widget для добавления нескольких окон
         self.stacked_widget = QtWidgets.QStackedWidget(self)
         # создание стартового экрана, который появляется в самом начале
-        self.start_screen = StartScreen(self)
+        self.start_screen = StartScreen(self, self.app_style)
         # основное меню, где выбор лабораторных
-        self.dlg_main = DlgMain()
+        self.dlg_main = DlgMain(self)
         # инициализация окон, которые видит пользователь
         self._initialize_windows()
 
@@ -43,14 +45,12 @@ class MainWindow(QtWidgets.QWidget):
         self.stacked_widget.addWidget(self.dlg_main)
         # В Linear Vertical Layout добавляем наши слои приложений
         layout.addWidget(self.stacked_widget)
-        # Добавляем наше оформление приложения на каждое окно
-        self._init_ui()
 
     def _init_ui(self) -> None:
         """
         Метод для инициализации параметров приложения
         """
-        self.setStyleSheet("""
+        self.app_style = """
         background-color:rgb(40, 40, 40);
         color: rgb(255, 255, 255);
         font: Cantrell;
@@ -60,7 +60,26 @@ class MainWindow(QtWidgets.QWidget):
             background-color:rgb(40, 40, 40); 
             color: rgb(255, 255, 255);
         }
-        """)
+        
+        QLabel {
+            font-size: 24px;
+        }
+        
+        QPushButton {
+            border-style: outset;
+            border-width: 1px;
+            border-radius: 10px;
+            padding: 4px;
+        }
+        
+        QDialogButtonBox {
+            border-style: outset;
+            border-width: 1px;
+            border-radius: 10px;
+            padding: 4px;
+        }
+        """
+        self.setStyleSheet(self.app_style)
         # установка названия приложения
         self.setWindowTitle("Ковалев Данил ВКБ22")
         # установка окна приложения

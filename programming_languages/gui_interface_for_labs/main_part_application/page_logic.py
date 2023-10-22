@@ -18,11 +18,6 @@ class Page(QtWidgets.QWidget):
         super().__init__()
         # Создаем метку для названия лабораторной работы
         self.label = QtWidgets.QLabel(f"Лабораторная работа {num_lab}")
-        self.label.setStyleSheet("""
-        QLabel {
-            font-size: 24px;
-        }
-        """)
 
         self.layout = QtWidgets.QVBoxLayout(self)
         self.layout.addWidget(self.label,
