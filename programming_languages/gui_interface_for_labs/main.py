@@ -27,7 +27,7 @@ class MainWindow(QtWidgets.QWidget):
         # создаем stacked_widget для добавления нескольких окон
         self.stacked_widget = QtWidgets.QStackedWidget(self)
         # создание стартового экрана, который появляется в самом начале
-        self.start_screen = StartScreen(self, self.app_style)
+        self.start_screen = StartScreen(self)
         # основное меню, где выбор лабораторных
         self.dlg_main = DlgMain(self)
         # инициализация окон, которые видит пользователь
@@ -59,24 +59,6 @@ class MainWindow(QtWidgets.QWidget):
         QTabWidget {
             background-color:rgb(40, 40, 40); 
             color: rgb(255, 255, 255);
-        }
-        
-        QLabel {
-            font-size: 24px;
-        }
-        
-        QPushButton {
-            border-style: outset;
-            border-width: 1px;
-            border-radius: 10px;
-            padding: 4px;
-        }
-        
-        QDialogButtonBox {
-            border-style: outset;
-            border-width: 1px;
-            border-radius: 10px;
-            padding: 4px;
         }
         """
         self.setStyleSheet(self.app_style)

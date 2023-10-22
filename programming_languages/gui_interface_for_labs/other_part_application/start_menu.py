@@ -11,7 +11,7 @@ class StartScreen(QtWidgets.QWidget):
     Стартовое меню с выбором: настройки, старт, выход
     """
 
-    def __init__(self, parent, app_style):
+    def __init__(self, parent):
         super().__init__()
         # создание основного layout, где мы будем помещать остальные виджеты
         self.layout = QtWidgets.QVBoxLayout(self)
@@ -19,7 +19,6 @@ class StartScreen(QtWidgets.QWidget):
         self.layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter | QtCore.Qt.AlignmentFlag.AlignVCenter)
         # родительский класс
         self.parent = parent
-        self.setStyleSheet(app_style)
 
         self._add_gif()
         self._create_button()
