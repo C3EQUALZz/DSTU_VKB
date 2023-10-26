@@ -25,6 +25,11 @@ from programming_languages.fifth_laba_lang.main import second_question as fifth_
 from programming_languages.fifth_laba_lang.main import third_question as fifth_laboratory_third_question
 from programming_languages.fifth_laba_lang.main import fourth_question as fifth_laboratory_fourth_question
 
+from programming_languages.seventh_laba_lang.main import first_question as seventh_laboratory_first_question
+from programming_languages.seventh_laba_lang.main import second_question as seventh_laboratory_second_question
+from programming_languages.seventh_laba_lang.main import third_question as seventh_laboratory_third_question
+from programming_languages.seventh_laba_lang.main import fourth_question as seventh_laboratory_fourth_question
+
 dictionary = {
     "Лабораторная работа 1 Подзадача 1": (
         "Напишите программу для решения примера. Есть переменные: a,b,c,k: Предусмотрите деление на 0. "
@@ -85,7 +90,23 @@ dictionary = {
     "Лабораторная работа 5 Подзадача 3": ("Добавить к задаче 2 пользовательский интерфейс.\nПо увеличению "
                                           "возраста всех студентов на 1", fifth_laboratory_third_question),
     "Лабораторная работа 5 Подзадача 4": ("Добавьте к пользовательскому интерфейсу из задачи возможность "
-                                          "сохранения новых данных обратно в файл", fifth_laboratory_fourth_question)
+                                          "сохранения новых данных обратно в файл", fifth_laboratory_fourth_question),
+    "Лабораторная работа 6 Подзадача 1": ("Реализовать лабораторные в виде приложения", None),
+    "Лабораторная работа 6 Подзадача 2": ("Реализовать лабораторные в виде приложения", None),
+    "Лабораторная работа 6 Подзадача 3": ("Реализовать лабораторные в виде приложения", None),
+    "Лабораторная работа 6 Подзадача 4": ("Реализовать лабораторные в виде приложения", None),
+    "Лабораторная работа 7 Подзадача 1": ("Пусть дан словарь. Посчитайте и выведите сколько в словаре ключей",
+                                          seventh_laboratory_first_question),
+    "Лабораторная работа 7 Подзадача 2": ("""
+    Пусть дан файл, в котором содержится информация о студентах в виде:
+        1;Иванов Иван Иванович;23;БО-111111
+        2;Сидоров Семен Семенович;23;БО-111111
+    Считайте информацию из файла в структуру: {№: [ФИО, Возраст, Группа], №: [....], №: [....]}
+    """, seventh_laboratory_second_question),
+    "Лабораторная работа 7 Подзадача 3": ("Добавьте к задаче №2 возможность увеличить возраст всех студентов на 1",
+                                          seventh_laboratory_third_question),
+    "Лабораторная работа 7 Подзадача 4": ("Добавьте к пользовательскому интерфейсу из задачи №3 возможность "
+                                          "сохранения новых данных в файл.", seventh_laboratory_fourth_question)
 }
 
 

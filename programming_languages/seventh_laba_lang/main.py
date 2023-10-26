@@ -8,17 +8,17 @@ from pprint import pprint
 import os
 
 
-def first_question() -> int:
+def first_question(k=None) -> int:
     person = Person()
     d = {"age": person.age(),
          "name": person.name(),
          "academic_degree": person.academic_degree(),
          "height": person.height(),
          "gender": person.gender()}
-    return len(d.keys())
+    return len(d)
 
 
-def second_question() -> dict:
+def second_question(k=None) -> dict:
     if not os.path.exists("students.csv"):
         create_csv_file()
     with open("students.csv", encoding="UTF-8") as csv_file:
@@ -27,14 +27,14 @@ def second_question() -> dict:
         return {x[0]: x[1:] for x in sorted(reader, key=lambda row: row[1].split()[1])}
 
 
-def third_question():
+def third_question(k: int):
     data = second_question()
     for key, value in data.items():
-        value[1] = int(value[1]) + 1
+        value[1] = int(value[1]) + int(k)
     return data
 
 
-def fourth_question():
+def fourth_question(k=None):
     with open("students_new.csv", mode="w", encoding="UTF-8") as csv_file:
         writer = csv.writer(csv_file, delimiter=";")
         writer.writerow(["№", "ФИО", "Возраст", "Группа"])
@@ -49,7 +49,7 @@ def main():
         case "2":
             pprint(second_question(), sort_dicts=False)
         case "3":
-            pprint(third_question(), sort_dicts=False)
+            pprint(third_question(1), sort_dicts=False)
         case "4":
             fourth_question()
         case _:
