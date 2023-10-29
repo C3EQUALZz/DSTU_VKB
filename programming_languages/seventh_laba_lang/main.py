@@ -38,7 +38,7 @@ def fourth_question(k=None):
     with open("students_new.csv", mode="w", encoding="UTF-8") as csv_file:
         writer = csv.writer(csv_file, delimiter=";")
         writer.writerow(["№", "ФИО", "Возраст", "Группа"])
-        data = third_question()
+        data = third_question(1)
         writer.writerows([[k, *data[k]] for k in data])
 
 
