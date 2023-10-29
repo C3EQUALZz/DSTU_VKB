@@ -23,8 +23,8 @@ def first_question(k=None) -> dict:
 
 
 class SecondQuestion:
-    def __init__(self, input_str: str, data: dict):
-        self.data = data
+    def __init__(self, input_str: str, data: dict = None):
+        self.data = data if data is not None else first_question()
         self.input_str = input_str
 
     def choice_question(self):
