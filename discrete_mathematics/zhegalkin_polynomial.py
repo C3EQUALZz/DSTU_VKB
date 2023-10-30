@@ -11,6 +11,7 @@ from itertools import pairwise, product, compress, islice
 import numpy as np
 from prettytable import PrettyTable
 from math import log2
+from typing import Iterable
 
 
 def counter(func):
@@ -33,13 +34,15 @@ class Polynom:
         """
         Args:
             vector (list): наша булева функция
-            table_without
         """
         self.vector: list = vector
         self.table = np.array([list(x) for x in product([0, 1], repeat=3)])
 
     @property
     def vector(self) -> list:
+        """
+        Свойство, которое возвращает вектор
+        """
         return self._boolean_vector
 
     @vector.setter
@@ -56,7 +59,7 @@ class Polynom:
     @counter
     def __xor_elements(self, vector) -> list:
         """
-        Метод, который проводит xor попарно между элементами
+        Метод, который проводит xor попарно между элементами. Используется для треугольника
         """
         print(f"{self.__xor_elements.count} строка треугольника -  {' '.join(map(str, vector)):^20}")
         vector = [x ^ y for x, y in pairwise(vector)]
@@ -73,12 +76,15 @@ class Polynom:
             vector = current_row
         return result
 
-    def make_polynom_fft(self):
-        first_raw = self._boolean_vector.copy()
-        counter_raw = 1
-        while counter_raw != int(log2(len(first_raw))) + 1:
-            print(list(self.chunked(first_raw, counter_raw * 2)))
-            counter_raw += 1
+    def __print_iter_res(self, argue):
+        """
+        Для DRY
+        """
+        res = ""
+        for value, raw in zip(argue, self.table):
+            if value == 1:
+                res += "1" * np.array_equal(raw, np.zeros(3)) + " ⊕ " + ''.join(compress(("x", "y", "z"), raw))
+        print(f"Результат полинома Жегалкина - {res.strip(' ⊕ ')}")
 
     def print_res(self) -> None:
         table = PrettyTable()
@@ -87,16 +93,40 @@ class Polynom:
             np.insert(self.table, len(self.table[0]), np.array(self._boolean_vector),
                       axis=1))
         print("Все булевы строки матрицы: ", table, sep='\n')
-        res = ""
-        for value, raw in zip(self.get_polynom_triangle(), self.table):
-            if value == 1:
-                res += "1" * np.array_equal(raw, np.zeros(3)) + " ⊕ " + ''.join(compress(("x", "y", "z"), raw))
-        print(f"Результат полинома Жегалкина - {res.strip(' ⊕ ')}")
 
-        self.make_polynom_fft()
+        self.__print_iter_res(self.get_polynom_triangle())
+
+        print(f"Матрица, которая была создана для преобразования Фурье \n {(res := self.make_fft_polynom())}")
+
+        self.__print_iter_res(res[-1])
+
+    def make_fft_polynom(self):
+        """
+        Не оптимизированная версия, но единственная, которую я смог придумать
+        Реализация Полинома Жегалкина, используя БПФ
+        https://ru.wikipedia.org/wiki/%D0%9F%D0%BE%D0%BB%D0%B8%D0%BD%D0%BE%D0%BC_%D0%96%D0%B5%D0%B3%D0%B0%D0%BB%D0%BA%D0%B8%D0%BD%D0%B0
+        """
+        # Создаю матрицу
+        matrix = [self._boolean_vector]
+        # Количество строк, то есть сколько раз мы повторим алгоритм
+        for count_row in range(1, int(log2(len(self._boolean_vector))) + 1):
+            # Временные контейнер данных и индекс
+            result, counter_index = [], 0
+            # Разбиваем, как на картинке в красные овалы
+            for list_slice in self.chunked(matrix[count_row - 1], 2 ** count_row):
+                for index, value in enumerate(list_slice):
+                    if index < len(list_slice) // 2:
+                        result.append(value)
+                    else:
+                        result.append(
+                            matrix[count_row - 1][counter_index] ^ matrix[count_row - 1][
+                                counter_index - len(list_slice) // 2])
+                    counter_index += 1
+            matrix.append(result)
+        return matrix
 
     @staticmethod
-    def chunked(iterable, n):
+    def chunked(iterable: Iterable, n: int):
         """
         Разбивает итерируемую последовательность на группы размером n.
         """
