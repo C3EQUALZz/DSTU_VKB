@@ -2,13 +2,15 @@
 Выполнил Ковалев Данил ВКБ22
 Лабораторная 2
 Для булевой функции от трех переменных вычислите матрицы:
-a) перехода от таблицы к многочлену Жегалкина и обратную (получить полином Жегалкина с помощью БМФ)
+a) перехода от таблицы к многочлену Жегалкина и обратную (получить полином Жегалкина с помощью БПФ)
+Пример для ввода: 0 1 1 1 0 0 1 1
 """
 from functools import wraps
-from itertools import pairwise, product, compress
+from itertools import pairwise, product, compress, islice
 
 import numpy as np
 from prettytable import PrettyTable
+from math import log2
 
 
 def counter(func):
@@ -27,70 +29,93 @@ def counter(func):
 
 
 class Polynom:
-    def __init__(self, vector: list) -> None:
+    def __init__(self, vector: list[int, ...]) -> None:
+        """
+        Args:
+            vector (list): наша булева функция
+            table_without
+        """
         self.vector: list = vector
-        self.result: list = [self._vector[0]]
-        self.table_without_vector = np.array([list(x) for x in product([0, 1], repeat=3)])
-        self.table = self.create_table().transpose()
+        self.table = np.array([list(x) for x in product([0, 1], repeat=3)])
 
     @property
     def vector(self) -> list:
-        return self._vector
+        return self._boolean_vector
 
     @vector.setter
     def vector(self, vec) -> None:
+        """
+        Свойство, которое проверяет длину вектора (вектор всегда кратен 2), проверяет значения
+        """
         if len(vec) % 2 != 0 or len(vec) % 6 == 0:
             raise ValueError("Ввели неправильный вектор по длине ")
         if not all(map(lambda x: 0 <= x <= 1, vec)):
             raise ValueError("Функция может содержать только 0 и 1")
-        self._vector = vec
-
-    def get_polynom_triangle(self) -> list:
-        """
-        Здесь мы получаем коэффициенты для
-        """
-        while len(current_row := self.__xor_elements()) > 0:
-            self.result.append(current_row[0])
-        return self.result
+        self._boolean_vector = vec
 
     @counter
-    def __xor_elements(self) -> list:
+    def __xor_elements(self, vector) -> list:
         """
         Метод, который проводит xor попарно между элементами
         """
-        print(f"{self.__xor_elements.count} строка треугольника -  {' '.join(map(str, self._vector)):^20}")
-        self._vector = [x ^ y for x, y in pairwise(self._vector)]
-        return self._vector
+        print(f"{self.__xor_elements.count} строка треугольника -  {' '.join(map(str, vector)):^20}")
+        vector = [x ^ y for x, y in pairwise(vector)]
+        return vector
 
-    def create_table(self):
+    def get_polynom_triangle(self) -> list:
         """
-        Метод, который вставляет функцию f в numpy матрицу
+        Здесь мы получаем коэффициенты для конечной записи полинома Жегалкина
         """
-        return np.insert(self.table_without_vector, 3, np.array(self._vector), axis=1)
+        result = [self._boolean_vector[0]]
+        vector = self._boolean_vector.copy()
+        while len(current_row := self.__xor_elements(vector)) > 0:
+            result.append(current_row[0])
+            vector = current_row
+        return result
 
-    def print_polynom(self) -> None:
-        res = ''
-        for value, raw in zip(self.get_polynom_triangle(), self.table_without_vector):
-            if value == 1:
-                res += " xor " + ''.join(compress(("x", "y", "z"), raw))
-        print(f"Результат полинома Жегалкина - {res.strip(' xor ')}")
+    def make_polynom_fft(self):
+        first_raw = self._boolean_vector.copy()
+        counter_raw = 1
+        while counter_raw != int(log2(len(first_raw))) + 1:
+            print(list(self.chunked(first_raw, counter_raw * 2)))
+            counter_raw += 1
 
-    def print_table(self) -> None:
+    def print_res(self) -> None:
         table = PrettyTable()
         table.field_names = ("x", "y", "z", "f")
-        table.add_rows(self.create_table())
+        table.add_rows(
+            np.insert(self.table, len(self.table[0]), np.array(self._boolean_vector),
+                      axis=1))
         print("Все булевы строки матрицы: ", table, sep='\n')
+        res = ""
+        for value, raw in zip(self.get_polynom_triangle(), self.table):
+            if value == 1:
+                res += "1" * np.array_equal(raw, np.zeros(3)) + " ⊕ " + ''.join(compress(("x", "y", "z"), raw))
+        print(f"Результат полинома Жегалкина - {res.strip(' ⊕ ')}")
+
+        self.make_polynom_fft()
+
+    @staticmethod
+    def chunked(iterable, n):
+        """
+        Разбивает итерируемую последовательность на группы размером n.
+        """
+        it = iter(iterable)
+        while True:
+            chunk = list(islice(it, n))
+            if not chunk:
+                return
+            yield chunk
 
 
 def main() -> None:
-    s = list(map(int, input("Введите функцию - вектор для Полинома Жегалкина ").split()))
-    result = Polynom(s)
-    result.print_table()
-    result.print_polynom()
-    print(f"Транспонированная матрица: \n\n {result.table}")
+    try:
+        s = list(map(int, input("Введите функцию - вектор для Полинома Жегалкина ").split()))
+        result = Polynom(s)
+        result.print_res()
+    except ValueError:
+        raise ValueError("Вы использовали не целые числа при записи")
 
 
 if __name__ == "__main__":
     main()
-
-# 0 1 1 1 0 0 1 1
