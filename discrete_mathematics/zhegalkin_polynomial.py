@@ -50,20 +50,17 @@ class Polynom:
         """
         Свойство, которое проверяет длину вектора (вектор всегда кратен 2), проверяет значения
         """
-        if len(vec) % 2 != 0 or len(vec) % 6 == 0:
-            raise ValueError("Ввели неправильный вектор по длине ")
-        if not all(map(lambda x: 0 <= x <= 1, vec)):
-            raise ValueError("Функция может содержать только 0 и 1")
+        if len(vec) % 2 != 0 or len(vec) % 6 == 0 or not all(0 <= x <= 1 for x in vec):
+            raise ValueError("Неправильный вектор функции")
         self._boolean_vector = vec
 
     @counter
-    def __xor_elements(self, vector) -> list:
+    def __xor_elements(self, vector: list) -> list:
         """
-        Метод, который проводит xor попарно между элементами. Используется для треугольника
+        Метод, который попарно xor-ит элементы списка
         """
         print(f"{self.__xor_elements.count} строка треугольника -  {' '.join(map(str, vector)):^20}")
-        vector = [x ^ y for x, y in pairwise(vector)]
-        return vector
+        return [x ^ y for x, y in pairwise(vector)]
 
     def get_polynom_triangle(self) -> list:
         """
@@ -80,24 +77,23 @@ class Polynom:
         """
         Для DRY
         """
-        res = ""
-        for value, raw in zip(argue, self.table):
-            if value == 1:
-                res += "1" * np.array_equal(raw, np.zeros(3)) + " ⊕ " + ''.join(compress(("x", "y", "z"), raw))
-        print(f"Результат полинома Жегалкина - {res.strip(' ⊕ ')}")
+        res = " ⊕ ".join("1" * np.array_equal(raw, np.zeros(3)) + ''.join(compress(("x", "y", "z"), raw))
+                         for value, raw in zip(argue, self.table) if value == 1)
+        print(f"Результат полинома Жегалкина - {res}")
 
-    def print_res(self) -> None:
+    def __print_table(self):
         table = PrettyTable()
         table.field_names = ("x", "y", "z", "f")
         table.add_rows(
             np.insert(self.table, len(self.table[0]), np.array(self._boolean_vector),
-                      axis=1))
+                      axis=1)
+        )
         print("Все булевы строки матрицы: ", table, sep='\n')
 
+    def print_res(self) -> None:
+        self.__print_table()
         self.__print_iter_res(self.get_polynom_triangle())
-
         print(f"Матрица, которая была создана для преобразования Фурье \n {(res := self.make_fft_polynom())}")
-
         self.__print_iter_res(res[-1])
 
     def make_fft_polynom(self):
@@ -115,12 +111,9 @@ class Polynom:
             # Разбиваем, как на картинке в красные овалы
             for list_slice in self.chunked(matrix[count_row - 1], 2 ** count_row):
                 for index, value in enumerate(list_slice):
-                    if index < len(list_slice) // 2:
-                        result.append(value)
-                    else:
-                        result.append(
-                            matrix[count_row - 1][counter_index] ^ matrix[count_row - 1][
-                                counter_index - len(list_slice) // 2])
+                    result.append(value if index < len(list_slice) // 2 else
+                                  matrix[count_row - 1][counter_index] ^ matrix[count_row - 1][
+                                      counter_index - len(list_slice) // 2])
                     counter_index += 1
             matrix.append(result)
         return matrix
