@@ -37,7 +37,7 @@ def create_csv_file():
         )
 
 
-def second_question():
+def second_question(k=None):
     """
     Пусть дан файл students.csv, в котором содержится информация о студентах в виде:
     №;ФИО;Возраст;Группа

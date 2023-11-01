@@ -30,6 +30,10 @@ from programming_languages.seventh_laba_lang.main import second_question as seve
 from programming_languages.seventh_laba_lang.main import third_question as seventh_laboratory_third_question
 from programming_languages.seventh_laba_lang.main import fourth_question as seventh_laboratory_fourth_question
 
+from programming_languages.eigth_laba_lang.main import first_question as eigth_laboratory_first_question
+from programming_languages.eigth_laba_lang.main import second_question as eigth_laboratory_second_question
+from programming_languages.eigth_laba_lang.main import third_question as eigth_laboratory_third_question
+
 dictionary = {
     "Лабораторная работа 1 Подзадача 1": (
         "Напишите программу для решения примера. Есть переменные: a,b,c,k: Предусмотрите деление на 0. "
@@ -106,7 +110,18 @@ dictionary = {
     "Лабораторная работа 7 Подзадача 3": ("Добавьте к задаче №2 возможность увеличить возраст всех студентов на 1",
                                           seventh_laboratory_third_question),
     "Лабораторная работа 7 Подзадача 4": ("Добавьте к пользовательскому интерфейсу из задачи №3 возможность "
-                                          "сохранения новых данных в файл.", seventh_laboratory_fourth_question)
+                                          "сохранения новых данных в файл.", seventh_laboratory_fourth_question),
+    "Лабораторная работа 8 Подзадача 1": (
+        "Пусть список студентов представлен в виде структуры [[№, ФИО, Возраст, Группа]...]. "
+        "Преобразовать список в словарь вида: {№:[ФИО, Возраст, Группа], ....}", eigth_laboratory_first_question),
+    "Лабораторная работа 8 Подзадача 2": (
+        "Добавить к задаче №1 для словаря возможность (без преобразования словаря обратно в список)"
+        " увеличить возраст конкретного студента на 1. Поиск по ФИО. Например, изменить возраст Phil Bowman на 1 ",
+        eigth_laboratory_second_question),
+    "Лабораторная работа 8 Подзадача 3": (
+        "Добавить возможность вывода из словаря вывод списка студентов группы БО - 111111",
+        eigth_laboratory_third_question),
+    "Лабораторная работа 8 Подзадача 4": ("Задания нет, сделано с целью осуществления заглушки", None)
 }
 
 

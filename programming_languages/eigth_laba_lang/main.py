@@ -7,7 +7,7 @@ import re
 import csv
 
 
-def read_file() -> list:
+def read_file(path=None) -> list:
     with open("students.csv") as csv_file:
         reader = csv.reader(csv_file, delimiter=";")
         reader.__next__()
@@ -98,7 +98,22 @@ class SecondQuestion:
             return "Нет такого ключа"
 
 
-def third_question():
+def second_question(string=None):
+    if not re.fullmatch(r"[иИ]зменить возраст \w+\s\w+ на \d+", string):
+        return "Неправильно ввели"
+    person = re.search(r'\b[A-Za-z]+\s[A-Za-z]+\b', string).group(0)
+    number_age = int(re.search(r'\d+', string).group(0))
+
+    for key, value in first_question().items():
+        if value[0] == person:
+            value[1] = int(value[1]) + number_age
+            return {key: value}
+
+
+def third_question(k=None):
+    """
+    Добавить возможность вывода из словаря вывод списка студентов группы БО - 111111
+    """
     data = first_question()
     return {x: data[x] for x in data if data[x][-1] == "БО - 111111"}
 
@@ -106,7 +121,7 @@ def third_question():
 def main() -> None:
     match input("Выберите номер задания "):
         case "1":
-            pprint(first_question())
+            pprint(first_question("students.csv"))
         case "2":
             print("Все студенты, у которых можно увеличить возраст представлены ниже ")
             pprint(data := first_question())
