@@ -108,6 +108,7 @@ class Polynom:
         """
         Красивый вывод результата Полинома Жегалкина
         """
+        # В начале проверяется с единицами. Потом мы просто сравниваем с переменными оставшимся.
         res: str = " ⊕ ".join("1" * np.array_equal(raw, np.zeros(3)) + ''.join(compress(("x", "y", "z"), raw))
                               for value, raw in zip(argue, self.table) if value == 1)
         print(f"Результат полинома Жегалкина - {res}")
@@ -125,13 +126,16 @@ class Polynom:
         print("Все булевы строки матрицы: ", table, sep='\n')
 
     def print_res(self) -> None:
+        """
+        Сделал отдельный метод для единичного вызова печати класса
+        """
         self.__print_table()
         self.__print_iter_res(self.get_polynom_triangle())
         res = self.make_fft_polynom()
         print(f"Матрица, которая была создана для преобразования Фурье \n {np.array(res)}")
         self.__print_iter_res(res[-1])
 
-    def make_fft_polynom(self):
+    def make_fft_polynom(self) -> list[list[int, ...]]:
         """
         Не оптимизированная версия, но единственная, которую я смог придумать
         Реализация Полинома Жегалкина, используя БПФ
@@ -145,7 +149,10 @@ class Polynom:
             result, counter_index = [], 0
             # Разбиваем, как на картинке в красные овалы
             for list_slice in self.chunked(matrix[count_row - 1], 2 ** count_row):
+                # Проходимся поэлементно в нашем блоке красном
                 for index, value in enumerate(list_slice):
+                    # Если до половины красного блока, то добавляем.
+                    # В ином случае элемент первой подгруппы (половина красного) с второй
                     result.append(value if index < len(list_slice) // 2 else
                                   matrix[count_row - 1][counter_index] ^ matrix[count_row - 1][
                                       counter_index - len(list_slice) // 2])
