@@ -13,6 +13,7 @@ from typing import TypeAlias, Generator
 
 import numpy as np
 from prettytable import PrettyTable
+from string import ascii_lowercase
 
 Vector: TypeAlias = list[int, ...]
 
@@ -50,6 +51,7 @@ class Polynom:
         self.vector: Vector = vector
         # Таблица вывода всех перестановок x, y, z. Ну там, где первая строчка "000", потом "001" и т.д
         self.table: np.ndarray = np.array([np.array(x) for x in product([0, 1], repeat=int(log2(len(vector))))])
+        self.name_columns = tuple(ascii_lowercase[-int(log2(len(vector))):])
 
     @property
     def vector(self) -> Vector:
@@ -91,10 +93,10 @@ class Polynom:
         Здесь мы получаем конечный вектор, который состоит из 1 первых элементов строки в треугольнике
         """
         # Сначала добавляем первый элемент из 1 строки
-        result: Vector = [self._boolean_vector[0]]
+        result: Vector = [self.vector[0]]
         # Создаю копию, так как если сделать обычное присвоение мы полностью потеряем первоначальный вектор
         # В Python ссылочная модель, прочитайте в Интернете
-        vector: Vector = self._boolean_vector.copy()
+        vector: Vector = self.vector.copy()
         # Цикл для реализации перехода к следующей строки треугольника. Ну как в ручном методе...
         # Здесь используется walrus operator, который присваивает, а потом возвращает значение
         while len(current_row := self.__xor_elements(vector)) > 0:
@@ -109,7 +111,7 @@ class Polynom:
         Красивый вывод результата Полинома Жегалкина
         """
         # В начале проверяется с единицами. Потом мы просто сравниваем с переменными оставшимся.
-        res: str = " ⊕ ".join("1" * np.array_equal(raw, np.zeros(3)) + ''.join(compress(("x", "y", "z"), raw))
+        res: str = " ⊕ ".join("1" * np.array_equal(raw, np.zeros(3)) + ''.join(compress(self.name_columns, raw))
                               for value, raw in zip(argue, self.table) if value == 1)
         print(f"Результат полинома Жегалкина - {res}")
 
@@ -118,7 +120,7 @@ class Polynom:
         Красивый вывод таблицы
         """
         table: PrettyTable = PrettyTable()
-        table.field_names = ("x", "y", "z", "f")
+        table.field_names = self.name_columns + ("f",)
         table.add_rows(
             np.insert(self.table, len(self.table[0]), np.array(self.vector),
                       axis=1)
@@ -144,7 +146,7 @@ class Polynom:
         # Создаю матрицу
         matrix: list[list[int, ...]] = [self._boolean_vector]
         # Количество строк, то есть сколько раз мы повторим алгоритм
-        for count_row in range(1, int(log2(len(self._boolean_vector))) + 1):
+        for count_row in range(1, int(np.log2(len(self._boolean_vector))) + 1):
             # Временные контейнер данных и индекс
             result, counter_index = [], 0
             # Разбиваем, как на картинке в красные овалы
