@@ -7,19 +7,21 @@ import re
 import csv
 
 
-def read_file(path=None) -> list:
-    with open("students.csv") as csv_file:
+def read_file(path: str = None) -> list:
+    if path.isspace():
+        path = "students.csv"
+    with open(path) as csv_file:
         reader = csv.reader(csv_file, delimiter=";")
         reader.__next__()
         return list(reader)
 
 
-def first_question(k=None) -> dict:
+def first_question(k="students.csv") -> dict:
     """
     Пусть список студентов представлен в виде структуры [[№, ФИО, Возраст, Группа]...].
     Преобразовать список в словарь вида: {№:[ФИО, Возраст, Группа], ....}
     """
-    return {person[0]: person[1:] for person in read_file()}
+    return {person[0]: person[1:] for person in read_file(k)}
 
 
 class SecondQuestion:

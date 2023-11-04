@@ -1,5 +1,5 @@
 from PyQt6 import QtWidgets
-from programming_languages.gui_interface_for_labs.main_part_application.custom_widgets.left_side_menu import TabWidget
+from programming_languages_python.gui_interface_for_labs.main_part_application.custom_widgets.left_side_menu import TabWidget
 from .tasks import TaskChooser
 
 

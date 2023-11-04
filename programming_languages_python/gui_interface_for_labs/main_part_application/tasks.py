@@ -1,35 +1,38 @@
-#!/usr/bin/env python
-# export PYTHONPATH=$PYTHONPATH:$(pwd)
-"""
-Вариант 1 Ковалев Данил ВКБ22
-"""
-import npyscreen
-import os
+__all__ = ["TaskChooser"]
 
-from programming_languages.first_laba_lang.tutor import first_question as first_laboratory_first_question
-from programming_languages.first_laba_lang.tutor import second_question as first_laboratory_second_question
-from programming_languages.first_laba_lang.tutor import third_question as first_laboratory_third_question
-from programming_languages.first_laba_lang.tutor import last_question as first_laboratory_fourth_question
+from programming_languages_python.first_laba_lang.tutor import first_question as first_laboratory_first_question
+from programming_languages_python.first_laba_lang.tutor import second_question as first_laboratory_second_question
+from programming_languages_python.first_laba_lang.tutor import third_question as first_laboratory_third_question
+from programming_languages_python.first_laba_lang.tutor import last_question as first_laboratory_fourth_question
 
-from programming_languages.second_laba_lang.main import first_question as second_laboratory_first_question
-from programming_languages.second_laba_lang.main import second_question as second_laboratory_second_question
-from programming_languages.second_laba_lang.main import third_question as second_laboratory_third_question
-from programming_languages.second_laba_lang.main import fourth_question as second_laboratory_fourth_question
+from programming_languages_python.second_laba_lang.main import first_question as second_laboratory_first_question
+from programming_languages_python.second_laba_lang.main import second_question as second_laboratory_second_question
+from programming_languages_python.second_laba_lang.main import third_question as second_laboratory_third_question
+from programming_languages_python.second_laba_lang.main import fourth_question as second_laboratory_fourth_question
 
-from programming_languages.third_laba_lang.main import first_question as third_laboratory_first_question
-from programming_languages.third_laba_lang.main import second_question as third_laboratory_second_question
-from programming_languages.third_laba_lang.main import third_question as third_laboratory_third_question
-from programming_languages.third_laba_lang.main import fourth_question as third_laboratory_fourth_question
+from programming_languages_python.third_laba_lang.main import first_question as third_laboratory_first_question
+from programming_languages_python.third_laba_lang.main import second_question as third_laboratory_second_question
+from programming_languages_python.third_laba_lang.main import third_question as third_laboratory_third_question
+from programming_languages_python.third_laba_lang.main import fourth_question as third_laboratory_fourth_question
 
-from programming_languages.fourth_laba_lang.main import first_question as fourth_laboratory_first_question
-from programming_languages.fourth_laba_lang.main import second_question as fourth_laboratory_second_question
-from programming_languages.fourth_laba_lang.main import third_question as fourth_laboratory_third_question
-from programming_languages.fourth_laba_lang.main import fourth_question as fourth_laboratory_fourth_question
+from programming_languages_python.fourth_laba_lang.main import first_question as fourth_laboratory_first_question
+from programming_languages_python.fourth_laba_lang.main import second_question as fourth_laboratory_second_question
+from programming_languages_python.fourth_laba_lang.main import third_question as fourth_laboratory_third_question
+from programming_languages_python.fourth_laba_lang.main import fourth_question as fourth_laboratory_fourth_question
 
-from programming_languages.fifth_laba_lang.main import first_question as fifth_laboratory_first_question
-from programming_languages.fifth_laba_lang.main import second_question as fifth_laboratory_second_question
-from programming_languages.fifth_laba_lang.main import third_question as fifth_laboratory_third_question
-from programming_languages.fifth_laba_lang.main import fourth_question as fifth_laboratory_fourth_question
+from programming_languages_python.fifth_laba_lang.main import first_question as fifth_laboratory_first_question
+from programming_languages_python.fifth_laba_lang.main import second_question as fifth_laboratory_second_question
+from programming_languages_python.fifth_laba_lang.main import third_question as fifth_laboratory_third_question
+from programming_languages_python.fifth_laba_lang.main import fourth_question as fifth_laboratory_fourth_question
+
+from programming_languages_python.seventh_laba_lang.main import first_question as seventh_laboratory_first_question
+from programming_languages_python.seventh_laba_lang.main import second_question as seventh_laboratory_second_question
+from programming_languages_python.seventh_laba_lang.main import third_question as seventh_laboratory_third_question
+from programming_languages_python.seventh_laba_lang.main import fourth_question as seventh_laboratory_fourth_question
+
+from programming_languages_python.eigth_laba_lang.main import first_question as eigth_laboratory_first_question
+from programming_languages_python.eigth_laba_lang.main import second_question as eigth_laboratory_second_question
+from programming_languages_python.eigth_laba_lang.main import third_question as eigth_laboratory_third_question
 
 dictionary = {
     "Лабораторная работа 1 Подзадача 1": (
@@ -91,50 +94,50 @@ dictionary = {
     "Лабораторная работа 5 Подзадача 3": ("Добавить к задаче 2 пользовательский интерфейс.\nПо увеличению "
                                           "возраста всех студентов на 1", fifth_laboratory_third_question),
     "Лабораторная работа 5 Подзадача 4": ("Добавьте к пользовательскому интерфейсу из задачи возможность "
-                                          "сохранения новых данных обратно в файл", fifth_laboratory_fourth_question)
+                                          "сохранения новых данных обратно в файл", fifth_laboratory_fourth_question),
+    "Лабораторная работа 6 Подзадача 1": ("Реализовать лабораторные в виде приложения", None),
+    "Лабораторная работа 6 Подзадача 2": ("Реализовать лабораторные в виде приложения", None),
+    "Лабораторная работа 6 Подзадача 3": ("Реализовать лабораторные в виде приложения", None),
+    "Лабораторная работа 6 Подзадача 4": ("Реализовать лабораторные в виде приложения", None),
+    "Лабораторная работа 7 Подзадача 1": ("Пусть дан словарь. Посчитайте и выведите сколько в словаре ключей",
+                                          seventh_laboratory_first_question),
+    "Лабораторная работа 7 Подзадача 2": ("""
+    Пусть дан файл, в котором содержится информация о студентах в виде:
+        1;Иванов Иван Иванович;23;БО-111111
+        2;Сидоров Семен Семенович;23;БО-111111
+    Считайте информацию из файла в структуру: {№: [ФИО, Возраст, Группа], №: [....], №: [....]}
+    """, seventh_laboratory_second_question),
+    "Лабораторная работа 7 Подзадача 3": ("Добавьте к задаче №2 возможность увеличить возраст всех студентов на 1",
+                                          seventh_laboratory_third_question),
+    "Лабораторная работа 7 Подзадача 4": ("Добавьте к пользовательскому интерфейсу из задачи №3 возможность "
+                                          "сохранения новых данных в файл.", seventh_laboratory_fourth_question),
+    "Лабораторная работа 8 Подзадача 1": (
+        "Пусть список студентов представлен в виде структуры [[№, ФИО, Возраст, Группа]...]. "
+        "Преобразовать список в словарь вида: {№:[ФИО, Возраст, Группа], ....}", eigth_laboratory_first_question),
+    "Лабораторная работа 8 Подзадача 2": (
+        "Добавить к задаче №1 для словаря возможность (без преобразования словаря обратно в список)"
+        " увеличить возраст конкретного студента на 1. Поиск по ФИО. Например, изменить возраст Phil Bowman на 1 ",
+        eigth_laboratory_second_question),
+    "Лабораторная работа 8 Подзадача 3": (
+        "Добавить возможность вывода из словаря вывод списка студентов группы БО - 111111",
+        eigth_laboratory_third_question),
+    "Лабораторная работа 8 Подзадача 4": ("Задания нет, сделано с целью осуществления заглушки", None)
 }
 
 
-class TerminalForm(npyscreen.ActionPopupWide):
+class TaskChooser:
+    __slots__ = ("number_laboratory", "number_question")
 
-    def create(self):
-        self.show_atx, self.show_aty = map(lambda x: (x[0] - x[1]) // 2,
-                                           zip(os.get_terminal_size(), self.useable_space()[::-1]))
-        self.add(npyscreen.TitleText, name="Выберите лабораторную работу: ", editable=False)
+    def __init__(self, number_laboratory: int, number_question: int):
+        self.number_laboratory = number_laboratory
+        self.number_question = number_question
 
-        lab_tree_data = npyscreen.TreeData(content="Лабораторные работы")
-        for i in range(1, 6):
-            parent_node = lab_tree_data.new_child(content=f"Лабораторная работа {i}")
-            for j in range(1, 5):
-                parent_node.new_child(content=f"Подзадача {j}")
+    @property
+    def condition(self):
+        return dictionary.get(f"Лабораторная работа {self.number_laboratory} Подзадача {self.number_question}",
+                              ("Не выполнял ещё", " "))[0]
 
-        self.lab_tree = self.add(npyscreen.MLTreeMultiSelect, max_height=8, name="Выберите лабораторную работу:",
-                                 values=lab_tree_data, scroll_exit=True)
-
-        self.description = self.add(npyscreen.MultiLineEdit, value=" ", editable=False, rely=1, relx=-130)
-        self.input_data = self.add(npyscreen.TitleText, value=" ", rely=5, relx=-130, name="Input data: ")
-
-    def on_ok(self):
-        question_value = (selected_node := list(self.lab_tree.get_selected_objects())[0]).content
-        parent_value = selected_node.get_parent().content
-        self.description.value = dictionary[parent_value + ' ' + question_value][0]
-        if not self.input_data.value.isspace():
-            self.description.value += f"Ответ: {dictionary[parent_value + ' ' + question_value][1](self.input_data.value)}"
-        self.input_data.value = " "
-        self.display()
-
-    def on_cancel(self):
-        if npyscreen.notify_yes_no("Вы хотите завершить работу программы? "):
-            self.parentApp.setNextForm(None)
-        else:
-            self.parentApp.setNextForm("MAIN")
-
-
-class Terminal(npyscreen.NPSAppManaged):
-    def onStart(self):
-        npyscreen.setTheme(npyscreen.Themes.ColorfulTheme)
-        self.addForm('MAIN', TerminalForm, name="Выполнил Ковалев Данил ВКБ22 Вариант 1")
-
-
-if __name__ == '__main__':
-    TestApp = Terminal().run()
+    @property
+    def function(self):
+        return dictionary.get(f"Лабораторная работа {self.number_laboratory} Подзадача {self.number_question}",
+                              (" ", None))[1]

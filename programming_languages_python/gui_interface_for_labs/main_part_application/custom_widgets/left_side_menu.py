@@ -6,7 +6,7 @@ __all__ = ["TabWidget"]
 
 from PyQt6 import QtGui, QtWidgets, QtCore
 
-from programming_languages.gui_interface_for_labs.main_part_application.page_logic import Page
+from programming_languages_python.gui_interface_for_labs.main_part_application.page_logic import Page
 
 
 class TabBar(QtWidgets.QTabBar):

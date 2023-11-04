@@ -101,7 +101,7 @@ class MainWindow(QtWidgets.QWidget):
         """
         res = QtWidgets.QMessageBox.question(self, "Выход", "Вы точно уверены, что хотите выйти? ")
         # При нажатии на кнопку event становится bool, поэтому сделан такой костыль
-        if not not event or res == 16384:
+        if event or res == 16384:
             sys.exit(0)
 
 
