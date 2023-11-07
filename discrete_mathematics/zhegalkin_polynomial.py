@@ -83,7 +83,8 @@ class Polynom:
         """
         # Вывод строки, здесь подсчет строки идет с помощью декоратора, каждый вызов увеличивает.
         # Во второй половине мы склеиваем наш вектор в строку и центрируем относительно 20 пустых ячеек (пробелов)
-        print(f"{self.__xor_elements.count} строка треугольника -  {' '.join(map(str, vector)):^20}")
+        print(
+            f"{self.__xor_elements.count} строка треугольника -  {' '.join(map(str, vector)):^{len(self.vector) * 2}}")
         # Пусть есть список [1,2,3], тогда pairwise([1,2,3]) -> iter((1,2), (2,3)).
         # Pairwise нужен, так как в треугольнике каждый соседний элемент надо xor-ить
         return [x ^ y for x, y in pairwise(vector)]
@@ -111,8 +112,9 @@ class Polynom:
         Красивый вывод результата Полинома Жегалкина
         """
         # В начале проверяется с единицами. Потом мы просто сравниваем с переменными оставшимся.
-        res: str = " ⊕ ".join("1" * np.array_equal(raw, np.zeros(3)) + ''.join(compress(self.name_columns, raw))
-                              for value, raw in zip(argue, self.table) if value == 1)
+        res: str = " ⊕ ".join(
+            "1" * np.array_equal(raw, np.zeros(len(self.name_columns))) + ''.join(compress(self.name_columns, raw))
+            for value, raw in zip(argue, self.table) if value == 1)
         print(f"Результат полинома Жегалкина - {res}")
 
     def __print_table(self) -> None:
@@ -131,6 +133,7 @@ class Polynom:
         """
         Сделал отдельный метод для единичного вызова печати класса
         """
+        np.set_printoptions(threshold=np.inf)
         self.__print_table()
         self.__print_iter_res(self.get_polynom_triangle())
         res = self.make_fft_polynom()
