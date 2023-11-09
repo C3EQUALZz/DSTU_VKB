@@ -11,3 +11,4 @@ npyscreen~=4.10.5
 matplotlib~=3.8.1
 networkx~=3.2.1
 colorama~=0.4.6
+sympy~=1.12

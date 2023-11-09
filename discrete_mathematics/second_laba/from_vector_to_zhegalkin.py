@@ -1,10 +1,3 @@
-"""
-Выполнил Ковалев Данил ВКБ22
-Лабораторная 2
-Для булевой функции от трех переменных вычислите матрицы:
-a) перехода от таблицы к многочлену Жегалкина и обратную (получить полином Жегалкина с помощью БПФ)
-Пример для ввода: 0 1 1 1 0 0 1 1
-"""
 from functools import wraps
 from itertools import pairwise, product, compress, islice
 from math import log2
@@ -179,18 +172,3 @@ class Polynom:
             if not (chunk := list(islice(it, n))):
                 return
             yield chunk
-
-
-def main() -> None:
-    """
-    Точка запуска программы, здесь происходит запуск программы
-    """
-    try:
-        result = Polynom(list(map(int, input("Введите функцию - вектор для Полинома Жегалкина ").split())))
-        result.print_res()
-    except ValueError:
-        raise ValueError("Вы использовали не целые числа при записи")
-
-
-if __name__ == "__main__":
-    main()
