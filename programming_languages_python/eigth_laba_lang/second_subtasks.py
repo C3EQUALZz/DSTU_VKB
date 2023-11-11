@@ -54,6 +54,7 @@ def change_group_by_name(data: dict, s: str) -> dict:
 def delete_student_by_number(data: dict, s: str) -> dict | str:
     """
     Удалить запись о студенте. Поиск по №
+    Пример: удалить запись о студенте под номером №3
     """
     try:
         if data.pop(re.search(r"\d+", s).group(0)):
