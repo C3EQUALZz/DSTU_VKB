@@ -16,21 +16,21 @@ def print_by_age(data: dict) -> dict:
     """
     Списка студентов в возрасте 22 лет
     """
-    return {x: data[x] for x in data if data[x][1] == 22}
+    return {x: data[x] for x in data if int(data[x][1]) == 22}
 
 
 def print_by_surname(data: dict) -> dict:
     """
     Список студентов с фамилией Иванов
     """
-    return {x: data[x] for x in data if data[0].split()[1] == "Иванов"}
+    return {x: data[x] for x in data if data[x][0].split()[1] == "Иванов"}
 
 
 def print_by_surname_end_a(data: dict) -> dict:
     """
     Списка студентов, чьи фамилии заканчиваются на 'a'
     """
-    return {x: data[x] for x in data if data[0].split()[1].endswith("a")}
+    return {x: data[x] for x in data if data[x][0].split()[1].endswith("a")}
 
 
 def print_by_age_even(data: dict) -> dict:

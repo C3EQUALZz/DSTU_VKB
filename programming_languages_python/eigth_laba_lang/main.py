@@ -2,8 +2,8 @@
 AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
 from pprint import pprint
-import third_subtasks
-import second_subtasks
+import programming_languages_python.eigth_laba_lang.third_subtasks as third_subtasks
+import programming_languages_python.eigth_laba_lang.second_subtasks as second_subtasks
 
 import re
 import csv
@@ -23,23 +23,29 @@ def first_question(k="students.csv") -> dict:
     Пусть список студентов представлен в виде структуры [[№, ФИО, Возраст, Группа]...].
     Преобразовать список в словарь вида: {№:[ФИО, Возраст, Группа], ....}
     """
+    if k == "":
+        k = "students.csv"
     return {person[0]: person[1:] for person in read_file(k)}
 
 
 def second_question(string=None):
-    # fixme дополнить условия для функций, тестов не было
     patterns_and_functions = {
         r"[иИ]зменить возраст \w+\s\w+ на \d+": second_subtasks.increase_age_by_name,
         r"[иИ]зменить ФИО студента с \w+\s\w+ на \w+\s\w+": second_subtasks.change_name,
         r"[уУ]величить возраст студента под номером №\d+ на \d+": second_subtasks.increase_age_by_number,
         r"[Ии]зменить группу студента \b[A-Za-z]+\s[A-Za-z]+\b на [a-zA-Zа-яА-ЯёЁ]+ - \d+":
             second_subtasks.change_group_by_name,
-        r"[Уу]далить запись о студенте под номером №\d+": second_subtasks.delete_student_by_number
+        r"[Уу]далить запись о студенте под номером №\d+": second_subtasks.delete_student_by_number,
+        r"Если возраст студента больше 22 уменьшить его на 1": second_subtasks.decrease_age_if_more_than_22,
+        r"Если возраст студента равен 23, удалить его из списка": second_subtasks.delete_student_if_age_eq_23,
+        r"У всех студентов с фамилией Иванов увеличить возраст на 1": second_subtasks.increase_if_surname_ivanov,
+        r"У студентов с фамилией Иванов изменить фамилию на Сидоров": second_subtasks.change_ivanov_sidorov,
+        r"Поменять ФИО и Группа местами": second_subtasks.swap_places
     }
 
-    for pattern, method in patterns_and_functions.items():
+    for pattern, function in patterns_and_functions.items():
         if re.fullmatch(pattern, string):
-            return method(first_question(), string)
+            return function(first_question(), string)
     return "Неправильно ввели"
 
 
@@ -67,7 +73,7 @@ def main() -> None:
         case "1":
             pprint(first_question("students.csv"))
         case "2":
-            pprint(second_question(input("Введите ваше пожелание: ")))
+            pprint(second_question(input("Введите ваше пожелание: ")), sort_dicts=False)
         case "3":
             pprint(third_question(input("Введите условие подпункта: ")))
 
