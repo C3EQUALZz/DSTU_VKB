@@ -1,0 +1,6 @@
+class BadStep(Exception):
+    ...
+
+
+class BadWord(Exception):
+    ...
