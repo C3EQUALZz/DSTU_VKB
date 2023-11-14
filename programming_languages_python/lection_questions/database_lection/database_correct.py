@@ -20,12 +20,12 @@ class Database:
         Database.inheritance.close()
 
 
-with Database("/home/c3equalz/Databases/tuple") as db:
-    cursor = db.cursor()
-    cursor.executescript("""
-        INSERT INTO tuple 
-        values (4, 'Artem', 'Ushenin', 'Vitalevich', 19)
-    """)
-    cursor.execute("SELECT * FROM tuple")
-    result = cursor.fetchall()
-    print(result)
+# with Database("/home/c3equalz/Databases/tuple") as db:
+#     cursor = db.cursor()
+#     cursor.executescript("""
+#         INSERT INTO tuple
+#         values (4, 'Artem', 'Ushenin', 'Vitalevich', 19)
+#     """)
+#     cursor.execute("SELECT * FROM tuple")
+#     result = cursor.fetchall()
+#     print(result)
