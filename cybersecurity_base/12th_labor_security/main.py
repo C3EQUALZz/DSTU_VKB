@@ -1,6 +1,7 @@
 from affine_cipher import Affine
 from classic_ceasar import CaesarCipher
 from key_caesar import CaesarWithWord
+from trithemius_cipher import TrithemiusCipher, TrithemiusAssocReplace
 
 
 def clear_text_from_tabs(text: str) -> str:
@@ -15,6 +16,10 @@ def ceaser_basically_interaction() -> None:
 
 def ceaser_word_interaction() -> None:
     word = input("Введите предложение, которое хотите зашифровать ")
+    key = input("Введите слово, которым будет кодироваться ")
+    step = int(input("Введите шаг смещения "))
+    cipher = CaesarWithWord(key=key, step=step)
+    print(f"{cipher.encode(word)}")
 
 
 def affine_interaction() -> None:
@@ -25,7 +30,11 @@ def affine_interaction() -> None:
 
 
 def trisemus_interaction() -> None:
-    word = input("Введите слово, которое вы хотите зашифровать ")
+    key = input("Введите ключ, который вы хотите использовать ")
+    cipher = TrithemiusCipher(key, TrithemiusAssocReplace)
+    crt_text = cipher.encrypt(input("Введите текст, который вы хотите зашифровать "))
+    plain_text = cipher.decrypt(crt_text)
+    print(crt_text, plain_text)
 
 
 def main() -> None:
