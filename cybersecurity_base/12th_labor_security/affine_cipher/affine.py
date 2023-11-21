@@ -7,6 +7,7 @@ import re
 from typing import NoReturn
 
 from .exceptions import NotValidNumbers, NoSupport
+from .enums import Letters
 
 
 class Affine:
@@ -67,29 +68,6 @@ class Affine:
             return 33
         raise NoSupport("Используется неподдерживаемый язык")
 
-    def _get_alphabet_starting_point(self, alpha: str):
-        """
-        Метод возвращает начальную точку алфавита для символа.
-
-        Args:
-            alpha (str): Символ
-
-        Returns:
-            int: Начальная точка алфавита для символа
-        """
-        # маленькая русская буква
-        if alpha.islower() and self.m == 33:
-            return ord("а")
-        # большая русская буква
-        if alpha.isupper() and self.m == 33:
-            return ord("А")
-        # маленькая английская буква
-        if alpha.islower() and self.m == 26:
-            return ord("a")
-        # большая английская буква
-        if alpha.isupper() and self.m == 26:
-            return ord("A")
-
     def _encrypt_char(self, t: str):
         """
         Метод шифрует символ.
@@ -103,10 +81,13 @@ class Affine:
         if not t.isalpha():
             return t
 
+        # a, b = self.key не рабочий вариант для кириллицы из-за буквы ё
+        # alphabet_start = self._get_alphabet_starting_point(t)
+        # encrypted_char = (a * (ord(t) - alphabet_start) + b) % self.m
+        # return chr(alphabet_start + encrypted_char)
+
         a, b = self.key
-        alphabet_start = self._get_alphabet_starting_point(t)
-        encrypted_char = (a * (ord(t) - alphabet_start) + b) % self.m
-        return chr(alphabet_start + encrypted_char)
+        return Affine._get_language(t)[((a * Affine._get_language(t).find(t) + b) % self.m)]
 
     def encrypt(self, string):
         """
@@ -135,8 +116,7 @@ class Affine:
             return t
 
         a, b = self.key
-        return chr(self._get_alphabet_starting_point(t) +
-                   self._find_modular_inverse(a) * (ord(t) - self._get_alphabet_starting_point(t) - b) % self.m)
+        return Affine._get_language(t)[self._find_modular_inverse(a) * (Affine._get_language(t).find(t) - b) % self.m]
 
     def decrypt(self, string):
         """
@@ -162,3 +142,15 @@ class Affine:
             if ((t % self.m) * (i % self.m)) % self.m == 1:
                 return i
         return None
+
+    @staticmethod
+    def _get_language(string: str) -> str:
+        words = re.findall(r'\w+', string, re.UNICODE)
+        if all(re.fullmatch(r"^[a-z]+$", word) for word in words):
+            return Letters.ENGLISH_SYMBOLS_LOWER.value
+        if all(re.fullmatch(r"^[а-яё]+$", word) for word in words):
+            return Letters.RUSSIAN_SYMBOLS_LOWER.value
+        if all(re.fullmatch(r"^[A-Z]+$", word) for word in words):
+            return Letters.ENGLISH_SYMBOLS_UPPER.value
+        if all(re.fullmatch(r"^[А-ЯЁ]+$", word) for word in words):
+            return Letters.RUSSIAN_SYMBOLS_UPPER.value
