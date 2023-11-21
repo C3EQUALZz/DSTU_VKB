@@ -1,1 +1,1 @@
-from .thritemius import TrithemiusCipher, TrithemiusAssocReplace
+from .thritemius import TrisemusCipher

@@ -100,12 +100,13 @@ class Affine:
         Returns:
             str: Зашифрованный символ
         """
-        if t.isspace():
-            return " "
+        if not t.isalpha():
+            return t
 
         a, b = self.key
-        return chr(self._get_alphabet_starting_point(t) +
-                   (a * (ord(t) - self._get_alphabet_starting_point(t)) + b) % self.m)
+        alphabet_start = self._get_alphabet_starting_point(t)
+        encrypted_char = (a * (ord(t) - alphabet_start) + b) % self.m
+        return chr(alphabet_start + encrypted_char)
 
     def encrypt(self, string):
         """
@@ -130,8 +131,8 @@ class Affine:
         Returns:
             str: Расшифрованный символ
         """
-        if t.isspace():
-            return " "
+        if not t.isalpha():
+            return t
 
         a, b = self.key
         return chr(self._get_alphabet_starting_point(t) +

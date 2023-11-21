@@ -1,7 +1,7 @@
 from affine_cipher import Affine
 from classic_ceasar import CaesarCipher
 from key_caesar import CaesarWithWord
-from trithemius_cipher import TrithemiusCipher, TrithemiusAssocReplace
+from trithemius_cipher import TrisemusCipher
 
 
 def clear_text_from_tabs(text: str) -> str:
@@ -9,31 +9,53 @@ def clear_text_from_tabs(text: str) -> str:
 
 
 def ceaser_basically_interaction() -> None:
+    """
+    МЫ ДОЛЖНЫ ПРИЗНАТЬ ОЧЕВИДНОЕ: ПОНИМАЮТ ЛИШЬ ТЕ, КТО ХОЧЕТ ПОНЯТЬ
+    9
+    """
     word = input("Введите слово, которое вы хотите зашифровать ")
     cypher: CaesarCipher = CaesarCipher(int(input("Введите число шифрования - целое число ")))
-    print(f"Результат шифрования - {(res := cypher.encode(word))}", f"Результат расшифровки: {cypher.decode(res)}")
+    print(f"Результат шифрования - {(res := cypher.encode(word))}",
+          f"Результат расшифровки: {cypher.decode(res)}", sep='\n')
 
 
 def ceaser_word_interaction() -> None:
+    """
+    РАЗУМА ЛИШАЕТ НЕ СОМНЕНИЕ, А УВЕРЕННОСТЬ
+    ПРОГРАММИРОВАНИЕ
+    9
+    """
     word = input("Введите предложение, которое хотите зашифровать ")
     key = input("Введите слово, которым будет кодироваться ")
     step = int(input("Введите шаг смещения "))
     cipher = CaesarWithWord(key=key, step=step)
-    print(f"{cipher.encode(word)}")
+    print(f"Результат шифрования - {(res := cipher.encrypt(word))}",
+          f"Результат расшифровки {cipher.decrypt(res)}", sep='\n')
 
 
 def affine_interaction() -> None:
+    """
+    СМЫСЛ ЖИЗНИ НАШЕЙ НЕПРЕРЫВНОЕ ДВИЖЕНИЕ
+    5 2
+    """
     word = input("Введите слово, которое вы хотите зашифровать ")
     tup: tuple[int, ...] = tuple(map(int, input("Введите два числовых ключа через пробел ").split()[:2]))
     affine = Affine(tup)
-    print(f"Результат шифрования - {(res := affine.encrypt(word))}", f"Результат расшифровки {affine.decrypt(res)}")
+    print(f"Результат шифрования - {(res := affine.encrypt(word))}",
+          f"Результат расшифровки {affine.decrypt(res)}", sep='\n')
 
 
 def trisemus_interaction() -> None:
+    """
+    ПРОГРАММИРОВАНИЕ
+    4x8
+    УСПЕХ - ЭТО КОГДА ТЫ ДЕВЯТЬ РАЗ УПАЛ, НО ДЕСЯТЬ РАЗ ПОДНЯЛСЯ
+    """
     key = input("Введите ключ, который вы хотите использовать ")
-    cipher = TrithemiusCipher(key, TrithemiusAssocReplace)
-    crt_text = cipher.encrypt(input("Введите текст, который вы хотите зашифровать "))
-    plain_text = cipher.decrypt(crt_text)
+    table = input("Введите размер таблицы через 'x' ")
+    cipher = TrisemusCipher(key, table)
+    crt_text = cipher.encode(input("Введите текст, который вы хотите зашифровать "))
+    plain_text = cipher.decode(crt_text)
     print(crt_text, plain_text)
 
 
