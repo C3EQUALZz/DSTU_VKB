@@ -1,16 +1,18 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session
-########################################################################################################################
-from .tables import Base, Teacher, Position, Department
+from typing import Callable
+import inspect
 ########################################################################################################################
 from mimesis import Generic, Locale
-from typing import Callable
+from sqlalchemy import create_engine, Engine
+from sqlalchemy.orm import sessionmaker, Session
+
+########################################################################################################################
+from .tables import Base, Teacher, Position, Department
 
 __all__ = ["create_database"]
 
 
 class DatabaseManager:
-    def __init__(self, engine):
+    def __init__(self, engine: Engine):
         # Абстракция для подключения к БД
         self.engine = engine
         self.Base = Base
@@ -19,22 +21,40 @@ class DatabaseManager:
 
     def create_tables(self) -> None:
         """
-        Здесь создаются наши таблицы неявно, декларативный подход
+        Здесь создаются наши таблицы неявно, декларативный подход.
+        Изначально в файле tables я инициализировал каждую таблицу, наследуясь от Base.
+        Теперь здесь происходит создание
         """
         self.Base.metadata.create_all(self.engine)
 
+    def populate_data(self, fill_functions: Callable[[Session], None]):
+        """
+        Метод, который заполняет нашу БД случайными данными
+        """
+        # контекстный менеджер сохранение не делает, такая реализация в классе Session
+        with self.Session() as session:
+            fill_functions(session)
+            session.flush()
+            session.commit()
+
     @staticmethod
     def fill_positions(session: Session) -> None:
-        positions_data = ('Декан', 'Заместитель декана',
-                          'Заведующий кафедрой', 'Старший преподаватель',
-                          'Ассистент', 'Лаборант', 'Доцент', 'Профессор')
+        """
+        Метод, который добавляет должности преподавателей
+        """
+        positions_data: tuple[str, ...] = ('Декан', 'Заместитель декана',
+                                           'Заведующий кафедрой', 'Старший преподаватель',
+                                           'Ассистент', 'Лаборант', 'Доцент', 'Профессор')
         for title in positions_data:
             position = Position(title=title)
             session.add(position)
 
     @staticmethod
     def fill_departments(session: Session) -> None:
-        departments_data = (
+        """
+        Метод, который добавляет кафедры и вуз
+        """
+        departments_data: tuple[dict[str, str], ...] = (
             {'title': 'Высшая математика', 'institute': 'DSTU'},
             {'title': 'Прикладная математика', 'institute': 'DSTU'},
             {'title': 'ПОВТиАС', 'institute': 'DSTU'},
@@ -51,6 +71,9 @@ class DatabaseManager:
 
     @staticmethod
     def fill_teachers(session: Session) -> None:
+        """
+        Метод, который заполняет данные на счет преподавателей
+        """
         fake = Generic(Locale.RU)
 
         for _ in range(10):
@@ -61,15 +84,6 @@ class DatabaseManager:
                 position_id=fake.random.randint(1, 4),
             )
             session.add(teacher)
-
-    def populate_data(self, fill_functions: Callable[[Session], None]):
-        """
-        Метод, который заполняет нашу БД случайными данными
-        """
-        with self.Session() as session:
-            fill_functions(session)
-            session.flush()
-            session.commit()
 
 
 def create_database() -> None:
@@ -82,3 +96,5 @@ def create_database() -> None:
     db_manager.populate_data(DatabaseManager.fill_positions)
     db_manager.populate_data(DatabaseManager.fill_departments)
     db_manager.populate_data(DatabaseManager.fill_teachers)
+
+

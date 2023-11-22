@@ -15,9 +15,9 @@ class Position(Base):
     # название таблицы
     __tablename__ = 'positions'
     # 1 колонка - целое число, является первичным ключом
-    id = Column(Integer, primary_key=True)
+    id: int = Column(Integer, primary_key=True)
     # 2 колонка - строка, здесь будет просто должность относительно id
-    title = Column(String)
+    title: str = Column(String)
 
 
 class Department(Base):
@@ -27,11 +27,11 @@ class Department(Base):
     # название таблицы
     __tablename__ = 'departments'
     # 1 колонка - целое число, первичный ключ
-    id = Column(Integer, primary_key=True)
+    id: int = Column(Integer, primary_key=True)
     # название кафедры
-    title = Column(String(25))
+    title: str = Column(String(25))
     # название института
-    institute = Column(String(50))
+    institute: str = Column(String(50))
 
 
 class Teacher(Base):
@@ -41,15 +41,15 @@ class Teacher(Base):
     # название таблицы
     __tablename__ = 'teachers'
     # первичный ключ
-    id = Column(Integer, primary_key=True)
+    id: int = Column(Integer, primary_key=True)
     # ФИО преподавателя
-    name = Column(String(50))
+    name: str = Column(String(50))
     # Возраст преподавателя
-    age = Column(Integer)
+    age: int = Column(Integer)
     # ID кафедры, здесь мы ставим относительно какого внешнего ключа тут идет связь
-    department_id = Column(Integer, ForeignKey('departments.id'))
+    department_id: int = Column(Integer, ForeignKey('departments.id'))
     # ID должности
-    position_id = Column(Integer, ForeignKey('positions.id'))
+    position_id: int = Column(Integer, ForeignKey('positions.id'))
 
 
 
