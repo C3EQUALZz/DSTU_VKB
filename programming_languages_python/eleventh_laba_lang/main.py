@@ -62,7 +62,7 @@ def second_question(string: str) -> str:
 
     for pattern, func in pattern_and_functions:
         if res := pattern.match(string):
-            if func(res.groups()[-1] if string.lower().strip().startswith("изменить") else res.groups()[-2:]):
+            if func(res.groups()):
                 return f"'{string}' - выполнено! "
             return "Нет такого значения в БД"
         return f"Неправильный ввод данных"

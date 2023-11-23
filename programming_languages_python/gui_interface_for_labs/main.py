@@ -99,9 +99,16 @@ class MainWindow(QtWidgets.QWidget):
         """
         Диалоговое окно, оно появляется, когда пользователь хочет закрыть приложение
         """
-        res = QtWidgets.QMessageBox.question(self, "Выход", "Вы точно уверены, что хотите выйти? ")
-        # При нажатии на кнопку event становится bool, поэтому сделан такой костыль
-        if event or res == 16384:
+        res = QtWidgets.QMessageBox.question(
+            self,
+            "Выход",
+            "Вы точно уверены, что хотите выйти?",
+            QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No
+        )
+
+        if res == QtWidgets.QMessageBox.StandardButton.No:
+            event.ignore()  # Игнорируем событие закрытия приложения
+        else:
             sys.exit(0)
 
 
