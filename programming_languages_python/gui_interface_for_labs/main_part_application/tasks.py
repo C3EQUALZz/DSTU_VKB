@@ -1,119 +1,94 @@
 __all__ = ["TaskChooser"]
 
-from programming_languages_python.first_laba_lang.tutor import first_question as first_laboratory_first_question
-from programming_languages_python.first_laba_lang.tutor import second_question as first_laboratory_second_question
-from programming_languages_python.first_laba_lang.tutor import third_question as first_laboratory_third_question
-from programming_languages_python.first_laba_lang.tutor import last_question as first_laboratory_fourth_question
+from typing import Callable
 
-from programming_languages_python.second_laba_lang.main import first_question as second_laboratory_first_question
-from programming_languages_python.second_laba_lang.main import second_question as second_laboratory_second_question
-from programming_languages_python.second_laba_lang.main import third_question as second_laboratory_third_question
-from programming_languages_python.second_laba_lang.main import fourth_question as second_laboratory_fourth_question
+import programming_languages_python.first_laba_lang as first_lab
+import programming_languages_python.second_laba_lang as second_lab
+import programming_languages_python.third_laba_lang as third_lab
+import programming_languages_python.fourth_laba_lang as fourth_lab
+import programming_languages_python.fifth_laba_lang as fifth_lab
+import programming_languages_python.seventh_laba_lang as seventh_lab
+import programming_languages_python.eigth_laba_lang as eight_lab
+import programming_languages_python.nineth_laba_lang as ninth_lab
+import programming_languages_python.tenth_laba_lang as tenth_lab
+import programming_languages_python.eleventh_laba_lang as eleventh_lab
 
-from programming_languages_python.third_laba_lang.main import first_question as third_laboratory_first_question
-from programming_languages_python.third_laba_lang.main import second_question as third_laboratory_second_question
-from programming_languages_python.third_laba_lang.main import third_question as third_laboratory_third_question
-from programming_languages_python.third_laba_lang.main import fourth_question as third_laboratory_fourth_question
-
-from programming_languages_python.fourth_laba_lang.main import first_question as fourth_laboratory_first_question
-from programming_languages_python.fourth_laba_lang.main import second_question as fourth_laboratory_second_question
-from programming_languages_python.fourth_laba_lang.main import third_question as fourth_laboratory_third_question
-from programming_languages_python.fourth_laba_lang.main import fourth_question as fourth_laboratory_fourth_question
-
-from programming_languages_python.fifth_laba_lang.main import first_question as fifth_laboratory_first_question
-from programming_languages_python.fifth_laba_lang.main import second_question as fifth_laboratory_second_question
-from programming_languages_python.fifth_laba_lang.main import third_question as fifth_laboratory_third_question
-from programming_languages_python.fifth_laba_lang.main import fourth_question as fifth_laboratory_fourth_question
-
-from programming_languages_python.seventh_laba_lang.main import first_question as seventh_laboratory_first_question
-from programming_languages_python.seventh_laba_lang.main import second_question as seventh_laboratory_second_question
-from programming_languages_python.seventh_laba_lang.main import third_question as seventh_laboratory_third_question
-from programming_languages_python.seventh_laba_lang.main import fourth_question as seventh_laboratory_fourth_question
-
-from programming_languages_python.eigth_laba_lang.main import first_question as eigth_laboratory_first_question
-from programming_languages_python.eigth_laba_lang.main import second_question as eigth_laboratory_second_question
-from programming_languages_python.eigth_laba_lang.main import third_question as eigth_laboratory_third_question
-
-dictionary = {
+dictionary: dict[str, tuple[str, Callable]] = {
     "Лабораторная работа 1 Подзадача 1": (
         "Напишите программу для решения примера. Есть переменные: a,b,c,k: Предусмотрите деление на 0. "
-        "\nВсе необходимые переменные вводите ниже. ", first_laboratory_first_question),
+        "\nВсе необходимые переменные вводите ниже. ", first_lab.first_question),
     "Лабораторная работа 1 Подзадача 2": ("Дан произвольный список, содержащий и строки, и числа. \n"
-                                          "Выведите все четные элементы построчно. ", first_laboratory_second_question),
+                                          "Выведите все четные элементы построчно. ", first_lab.second_question),
     "Лабораторная работа 1 Подзадача 3": ("Дан произвольный список, содержащий только числа. \n "
                                           "Выведите результат сложения чисел больше 10. ",
-                                          first_laboratory_third_question),
+                                          first_lab.third_question),
     "Лабораторная работа 1 Подзадача 4": ("Дан произвольный список, содержащий только числа. \n"
-                                          "Выведите максимальное число", first_laboratory_fourth_question),
+                                          "Выведите максимальное число", first_lab.fourth_question),
     "Лабораторная работа 2 Подзадача 1": ("Пусть задано некоторое число my_number. \n"
                                           "Запрашивайте у пользователя вводить число user_number до тех пор, "
-                                          "пока оно не будет меньше my_number", second_laboratory_first_question),
+                                          "пока оно не будет меньше my_number", second_lab.first_question),
     "Лабораторная работа 2 Подзадача 2": ("Пусть задан список, содержащий строки. \n"
                                           "Выведите построчно все строки размером от 5 до 10 символов. ",
-                                          second_laboratory_second_question),
+                                          second_lab.second_question),
     "Лабораторная работа 2 Подзадача 3": ("Сгенерируйте и выведите случайную строку, состоящую из 5 символов, \n"
                                           "содержащую только заглавные буквы русского алфавита",
-                                          second_laboratory_third_question),
+                                          second_lab.third_question),
     "Лабораторная работа 2 Подзадача 4": ("Пусть дана строка. На основе данной строки сформируйте новую, "
                                           "содержащую только цифры \nВыведите новую строку. ",
-                                          second_laboratory_fourth_question),
+                                          second_lab.fourth_question),
     "Лабораторная работа 3 Подзадача 1": ("Пусть дана строка, состоящая из слов, пробелов и знаков препинания. "
                                           "\n"
                                           "На основании этой строки создайте новую (и выведите её на консоль) \n"
                                           "Содержащую только слова больше 5 символов.",
-                                          third_laboratory_first_question),
+                                          third_lab.first_question),
     "Лабораторная работа 3 Подзадача 2": ("Пусть дана строковая переменная, содержащая информацию о студентах: "
                                           "\n"
                                           "my_string='Ф;И;О;Возраст;Категория;_Иванов;Иван;Иванович;23 года'",
-                                          third_laboratory_second_question),
+                                          third_lab.second_question),
     "Лабораторная работа 3 Подзадача 3": ("Дана строка из прошлого задания. Выведите построчно информацию о "
-                                          "студентах, чья фамилия 'Петров'", third_laboratory_third_question),
+                                          "студентах, чья фамилия 'Петров'", third_lab.third_question),
     "Лабораторная работа 3 Подзадача 4": ("Пусть дана строка произвольной длины. Выведите информацию о том, "
-                                          "сколько в ней символов и сколько строк.", third_laboratory_fourth_question),
+                                          "сколько в ней символов и сколько строк.", third_lab.fourth_question),
     "Лабораторная работа 4 Подзадача 1": ("Пусть дана матрица чисел размером NxN. Представьте данную матрицу в "
                                           "виде списка.\nВыведите результат сложения всех элементов матрицы.",
-                                          fourth_laboratory_first_question),
+                                          fourth_lab.first_question),
     "Лабораторная работа 4 Подзадача 2": ("Пусть дан список из 10 элементов. Удалите первые 2 элемента и "
                                           "добавьте 2 новых.\nВыведите список на экран",
-                                          fourth_laboratory_second_question),
+                                          fourth_lab.second_question),
     "Лабораторная работа 4 Подзадача 3": ("Пусть журнал по предмету 'Информационные технологии' представлен в "
                                           "Пусть дан журнал по предмету 'Информационные технологии' "
                                           "представлен в виде списка my_len."
                                           "Выведите список студентов конкретной группы построчно в "
                                           "виде:\n<Название группы>\n\t<ФИО>\n\t<ФИО>",
-                                          fourth_laboratory_third_question),
+                                          fourth_lab.third_question),
     "Лабораторная работа 4 Подзадача 4": ("Пусть журнал по предмету 'Информационные технологии' представлен в "
                                           "виде списка my_len."
                                           "Выведите всех студентов (и их группы), если фамилия студента "
-                                          "начинается на букву А.", fourth_laboratory_fourth_question),
+                                          "начинается на букву А.", fourth_lab.fourth_question),
     "Лабораторная работа 5 Подзадача 1": ("Пусть дана некоторая директория. Посчитайте количество файлов в "
-                                          "данной директории и выведите на экран", fifth_laboratory_first_question),
+                                          "данной директории и выведите на экран", fifth_lab.first_question),
     "Лабораторная работа 5 Подзадача 2": ("Пусть дан файл students.csv, в котором содержится информация о "
                                           "студентах в группе \n №;ФИО;Возраст;Группа\nВыведите информацию о "
-                                          "студентах, отсортировав их по фамилии.", fifth_laboratory_second_question),
+                                          "студентах, отсортировав их по фамилии.", fifth_lab.second_question),
     "Лабораторная работа 5 Подзадача 3": ("Добавить к задаче 2 пользовательский интерфейс.\nПо увеличению "
-                                          "возраста всех студентов на 1", fifth_laboratory_third_question),
+                                          "возраста всех студентов на 1", fifth_lab.third_question),
     "Лабораторная работа 5 Подзадача 4": ("Добавьте к пользовательскому интерфейсу из задачи возможность "
-                                          "сохранения новых данных обратно в файл", fifth_laboratory_fourth_question),
-    "Лабораторная работа 6 Подзадача 1": ("Реализовать лабораторные в виде приложения", None),
-    "Лабораторная работа 6 Подзадача 2": ("Реализовать лабораторные в виде приложения", None),
-    "Лабораторная работа 6 Подзадача 3": ("Реализовать лабораторные в виде приложения", None),
-    "Лабораторная работа 6 Подзадача 4": ("Реализовать лабораторные в виде приложения", None),
+                                          "сохранения новых данных обратно в файл", fifth_lab.fourth_question),
     "Лабораторная работа 7 Подзадача 1": ("Пусть дан словарь. Посчитайте и выведите сколько в словаре ключей",
-                                          seventh_laboratory_first_question),
+                                          seventh_lab.first_question),
     "Лабораторная работа 7 Подзадача 2": ("""
     Пусть дан файл, в котором содержится информация о студентах в виде:
         1;Иванов Иван Иванович;23;БО-111111
         2;Сидоров Семен Семенович;23;БО-111111
     Считайте информацию из файла в структуру: {№: [ФИО, Возраст, Группа], №: [....], №: [....]}
-    """, seventh_laboratory_second_question),
+    """, seventh_lab.second_question),
     "Лабораторная работа 7 Подзадача 3": ("Добавьте к задаче №2 возможность увеличить возраст всех студентов на 1",
-                                          seventh_laboratory_third_question),
+                                          seventh_lab.third_question),
     "Лабораторная работа 7 Подзадача 4": ("Добавьте к пользовательскому интерфейсу из задачи №3 возможность "
-                                          "сохранения новых данных в файл.", seventh_laboratory_fourth_question),
+                                          "сохранения новых данных в файл.", seventh_lab.fourth_question),
     "Лабораторная работа 8 Подзадача 1": (
         "Пусть список студентов представлен в виде структуры [[№, ФИО, Возраст, Группа]...]. "
-        "Преобразовать список в словарь вида: {№:[ФИО, Возраст, Группа], ....}", eigth_laboratory_first_question),
+        "Преобразовать список в словарь вида: {№:[ФИО, Возраст, Группа], ....}", eight_lab.first_question),
     "Лабораторная работа 8 Подзадача 2": (
         "Добавить к задаче №1 для словаря возможность (без преобразования словаря обратно в список)\n"
         "1.Увеличить возраст конкретного студента на 1;\n"
@@ -123,7 +98,7 @@ dictionary = {
         "8.У всех студентов с фамилией Иванов увеличить возраст на 1;\n"
         "9.У студентов с фамилией Иванов изменить фамилию на Сидоров;\n"
         "10.Поменять ФИО и Группа местами;",
-        eigth_laboratory_second_question),
+        eight_lab.second_question),
     "Лабораторная работа 8 Подзадача 3": (
         "1.Вывести список студентов группы БО - 111111;\n"
         "2.Вывести список студентов с номерами от 1 до 10;\n"
@@ -135,8 +110,56 @@ dictionary = {
         "8.Список студентов, если их номера группы длиннее 7 символов;\n"
         "9.Список студентов (а также информацию о них), если их № - четное число;\n"
         "10.Список студентов, если их номер группы заканчивается на '1'",
-        eigth_laboratory_third_question),
-    "Лабораторная работа 8 Подзадача 4": ("Задания нет, сделано с целью осуществления заглушки", None)
+        eight_lab.third_question),
+    "Лабораторная работа 9 Подзадача 1": (
+        "Пусть список студентов представлен в виде структуры {№: [ФИО, Возраст, группа]}.\n"
+        "Реализуйте функционал по добавлению нового студента (данные вводятся через консоль).\n"
+        "Пример ввода: 15 Василий Теркин 28 ВМО-42", ninth_lab.first_question),
+    "Лабораторная работа 9 Подзадача 2": (
+        "Пусть список студентов представлен в виде структуры {№: [ФИО, Возраст, группа]}.\n"
+        "Реализуйте функционал по изменению всех данных о студенте (поиск по №).\n"
+        "Пример ввода: 3 Егор Гришков 18 ВПР-22", ninth_lab.second_question),
+    "Лабораторная работа 9 Подзадача 3": (
+        "Пусть список студентов представлен в виде структуры {№: [ФИО, Возраст, группа]}.\n"
+        "Реализуйте функционал по удалению данных о студенте (поиск по №).\n"
+        "Пример ввода: 0", ninth_lab.third_question),
+    "Лабораторная работа 9 Подзадача 4": (
+        "Пусть список студентов представлен в виде структуры {№: [ФИО, Возраст, группа]}.\n"
+        "Выведите информацию о студенте с конкретным №.\n"
+        "Пример ввода: 3", ninth_lab.fourth_question
+    ),
+    "Лабораторная работа 10 Подзадача 1": (
+        "Напишите функцию возведения всех элементов матрицы в квадрат", tenth_lab.first_var_first_question
+    ),
+    "Лабораторная работа 10 Подзадача 2": (
+        "Напишите функцию нахождения суммы по элементам строк", tenth_lab.second_var_first_question
+    ),
+    "Лабораторная работа 10 Подзадача 3": (
+        "Напишите функцию возведения в квадрат всех элементов, которые находятся в четных столбцах.",
+        tenth_lab.third_var_first_question
+    ),
+    "Лабораторная работа 10 Подзадача 4": (
+        "Напишите функцию умножения по строкам.",
+        tenth_lab.fourth_var_first_question
+    ),
+    "Лабораторная работа 10 Подзадача 5": (
+        "Напишите функцию замены всех четных элементов матрицы на 0",
+        tenth_lab.fourth_var_first_question
+    ),
+    "Лабораторная работа 10 Подзадача 6": (
+        "Пусть пользователь через консоль вводит число. \n"
+        "Напишите функцию удаления строки в матрице, чей номер равен введенному числу.",
+        tenth_lab.fifth_var_first_question
+    ),
+    "Лабораторная работа 10 Подзадача 7": (
+        "Напишете функцию, которая поменяет первую и последнюю строку матрицы местами",
+        tenth_lab.sixth_var_first_question
+    ),
+    "Лабораторная работа 10 Подзадача 8": (
+        "Пусть пользователь через консоль вводит два числа: первое - номер строки, второе - номер столбца.\n"
+        "Напишите функцию, которая найдет число в данной позиции.",
+        tenth_lab.seventh_var_first_question
+    )
 }
 
 
@@ -148,7 +171,7 @@ class TaskChooser:
         self.number_question = number_question
 
     @property
-    def condition(self):
+    def condition(self) -> str:
         return dictionary.get(f"Лабораторная работа {self.number_laboratory} Подзадача {self.number_question}",
                               ("Не выполнял ещё", " "))[0]
 

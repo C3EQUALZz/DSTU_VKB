@@ -86,6 +86,9 @@ class DlgMain(QtWidgets.QMainWindow):
         elif current_laboratory == 11:
             widget.combobox.addItems([f"Задание {x}" for x in range(1, 6)])
 
+        elif current_laboratory == 8:
+            widget.combobox.addItems([f"Задание {x}" for x in range(1, 4)])
+
         else:
             widget.combobox.addItems([f"Задание {x}" for x in range(1, 5)])
 

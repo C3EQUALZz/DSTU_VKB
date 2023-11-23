@@ -74,6 +74,9 @@ class TabWidget(QtWidgets.QTabWidget):
         # Инициализируем список list_widget в родительском объекте
         self.parent.list_widget = []
         for i in range(1, count + 1):
+
+            if i == 6:
+                continue
             # Создаем объект Page с номером лабораторной работы
             widget = Page(i)
             # Привязываем сигналы изменения индекса выпадающего списка, кнопки "Ok" и "Cancel" к методам
