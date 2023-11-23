@@ -17,10 +17,9 @@ class Page(QtWidgets.QWidget):
         """
         super().__init__()
         # Создаем метку для названия лабораторной работы
-        self.label = QtWidgets.QLabel(f"Лабораторная работа {num_lab}")
 
         self.layout = QtWidgets.QVBoxLayout(self)
-        self.layout.addWidget(self.label,
+        self.layout.addWidget(QtWidgets.QLabel(f"Лабораторная работа {num_lab}"),
                               alignment=QtCore.Qt.AlignmentFlag.AlignHCenter | QtCore.Qt.AlignmentFlag.AlignTop)
         # Создаем выпадающий список (combobox) для выбора задания
         self._create_combobox()
