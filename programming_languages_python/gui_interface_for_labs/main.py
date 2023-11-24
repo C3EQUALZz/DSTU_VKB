@@ -105,11 +105,13 @@ class MainWindow(QtWidgets.QWidget):
             "Вы точно уверены, что хотите выйти?",
             QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No
         )
-
-        if res == QtWidgets.QMessageBox.StandardButton.No:
-            event.ignore()  # Игнорируем событие закрытия приложения
-        else:
-            sys.exit(0)
+        try:
+            if res == QtWidgets.QMessageBox.StandardButton.No:
+                event.ignore()  # Игнорируем событие закрытия приложения
+            else:
+                sys.exit(0)
+        except AttributeError:
+            pass
 
 
 def main() -> None:

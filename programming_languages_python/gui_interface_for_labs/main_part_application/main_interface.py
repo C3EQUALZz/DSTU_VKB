@@ -81,7 +81,7 @@ class DlgMain(QtWidgets.QMainWindow):
         widget.combobox.clear()  # Полная очистка
 
         if current_laboratory == 10:
-            widget.combobox.addItems([f"Задание {x}" for x in range(1, 11)])
+            widget.combobox.addItems([f"Задание {x}" for x in range(1, 9)])
 
         elif current_laboratory == 11:
             widget.combobox.addItems([f"Задание {x}" for x in range(1, 6)])
