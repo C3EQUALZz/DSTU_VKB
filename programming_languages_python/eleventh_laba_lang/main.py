@@ -51,21 +51,21 @@ def second_question(string: str) -> str:
         create_database()
 
     pattern_and_functions: list[tuple[re.Pattern, Callable]] = [
-        (re.compile(r'Удалить\s+(преподавателя|препода)?\s*(.+)', re.I | re.U), remove_by_name),
-        (re.compile(r"Удалить\s*всех\s*с\s*кафедры\s*(.+)", re.I | re.U), remove_by_department),
-        (re.compile(r"Удалить\s*всех\s*,?\s*кто\s*(.+)", re.I | re.U), remove_by_position),
-        (re.compile(r"Добавить\s*новое\s*звание\s*-\s*(.+)", re.I | re.U), add_new_position),
-        (re.compile(r"Добавить\s*новую\s*кафедру[:\-]?\s*(.+)", re.I | re.U), add_new_department),
-        (re.compile(r"Добавить\s*нового\s*преподавателя\s*(.+)", re.I | re.U), add_new_teacher),
-        (re.compile(r"Изменить\s*имя\s*преподавателя\s*с\s*(.+)\s*на\s*(.+)", re.I | re.U),)
+        (re.compile(r'^Удалить (преподавателя|препода)? (.+)$', re.I | re.U), remove_by_name),
+        (re.compile(r"^Удалить всех с кафедры (.+)$", re.I | re.U), remove_by_department),
+        (re.compile(r"^Удалить всех,? кто имеет звание -(.+)$", re.I | re.U), remove_by_position),
+        (re.compile(r"^Добавить новое звание - (.+)$", re.I | re.U), add_new_position),
+        (re.compile(r"^Добавить новую кафедру[:\-]? (.+) в университет (.+)$", re.I | re.U), add_new_department),
+        (re.compile(r"^Добавить нового преподавателя (.+) с возрастом (\d+) на кафедру (.+) в университет (.+)"
+                    r" на должность (.+)$", re.I | re.U), add_new_teacher),
+        (re.compile(r"^Изменить имя преподавателя с (.+) на (.+)$", re.I | re.U), change_teacher_name),
+        (re.compile(r"^Изменить название кафедры с (.+) на (.+)$", re.I | re.U), change_department)
     ]
 
     for pattern, func in pattern_and_functions:
-        if res := pattern.match(string):
-            if func(res.groups()):
-                return f"'{string}' - выполнено! "
-            return "Нет такого значения в БД"
-        return f"Неправильный ввод данных"
+        if res := pattern.fullmatch(string.strip()):
+            return f"'{string}' - выполнено! " if func(res.groups()) else "Не выполнено!"
+    return f"Неправильный ввод данных"
 
 
 def third_question(k=None):
@@ -79,6 +79,8 @@ def third_question(k=None):
     engine = create_engine('sqlite:///database.db', echo=False)
     session = sessionmaker(bind=engine)()
 
+    # SQL код выполняется не построчно, как Python.
+    # Здесь такая последовательность FROM -> JOIN -> SELECT
     query = text(
         """
         SELECT teachers.name, departments.title AS department_title, positions.title AS position_title
@@ -99,6 +101,10 @@ def third_question(k=None):
 
 
 def fourth_question(k=None):
+    """
+    Посчитайте и выведите результат:
+    Для каждой кафедры: сколько всего преподавателей.
+    """
     if not os.path.exists("database.db"):
         create_database()
 
@@ -120,11 +126,11 @@ def fourth_question(k=None):
 
 
 def main() -> None:
-    match input("Выберите номер задания "):
+    match input("Выберите номер задания: "):
         case "1":
             pprint(first_question())
         case "2":
-            pprint(second_question(input("Введите ваше пожелание, как описано в doc ")))
+            print(second_question(input("Введите ваше пожелание, как описано в doc ")))
         case "3":
             print(third_question())
         case "4":
