@@ -2,16 +2,15 @@ __all__ = ["TaskChooser"]
 
 from typing import Callable
 
-import programming_languages_python.first_laba_lang as first_lab
-import programming_languages_python.second_laba_lang as second_lab
-import programming_languages_python.third_laba_lang as third_lab
-import programming_languages_python.fourth_laba_lang as fourth_lab
-import programming_languages_python.fifth_laba_lang as fifth_lab
-import programming_languages_python.seventh_laba_lang as seventh_lab
-import programming_languages_python.eigth_laba_lang as eight_lab
-import programming_languages_python.nineth_laba_lang as ninth_lab
-import programming_languages_python.tenth_laba_lang as tenth_lab
-import programming_languages_python.eleventh_laba_lang as eleventh_lab
+import python_language.programming_languages_python.first_laba_lang as first_lab
+import python_language.programming_languages_python.second_laba_lang as second_lab
+import python_language.programming_languages_python.third_laba_lang as third_lab
+import python_language.programming_languages_python.fourth_laba_lang as fourth_lab
+import python_language.programming_languages_python.fifth_laba_lang as fifth_lab
+import python_language.programming_languages_python.seventh_laba_lang as seventh_lab
+import python_language.programming_languages_python.eigth_laba_lang as eight_lab
+import python_language.programming_languages_python.nineth_laba_lang as ninth_lab
+import python_language.programming_languages_python.tenth_laba_lang as tenth_lab
 
 dictionary: dict[str, tuple[str, Callable]] = {
     "Лабораторная работа 1 Подзадача 1": (

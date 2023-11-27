@@ -2,8 +2,8 @@
 AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
 from pprint import pprint
-import programming_languages_python.eigth_laba_lang.third_subtasks as third_subtasks
-import programming_languages_python.eigth_laba_lang.second_subtasks as second_subtasks
+import python_language.programming_languages_python.eigth_laba_lang.third_subtasks as third_subtasks
+import python_language.programming_languages_python.eigth_laba_lang.second_subtasks as second_subtasks
 
 import re
 import csv

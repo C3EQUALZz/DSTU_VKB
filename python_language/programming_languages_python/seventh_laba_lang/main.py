@@ -2,7 +2,7 @@
 AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
 from mimesis import Person
-from programming_languages_python.fifth_laba_lang.main import create_csv_file
+from python_language.programming_languages_python.fifth_laba_lang.main import create_csv_file
 import csv
 from pprint import pprint
 import os

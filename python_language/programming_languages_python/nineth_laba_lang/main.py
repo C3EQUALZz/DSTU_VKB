@@ -1,7 +1,7 @@
 """
 AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
-from programming_languages_python.eigth_laba_lang.main import first_question as students_dictionary
+from python_language.programming_languages_python.eigth_laba_lang.main import first_question as students_dictionary
 from pprint import pprint
 
 

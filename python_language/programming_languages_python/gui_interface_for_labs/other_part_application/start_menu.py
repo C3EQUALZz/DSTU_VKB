@@ -3,7 +3,7 @@
 """
 
 from PyQt6 import QtWidgets, QtCore, QtGui
-from programming_languages_python.gui_interface_for_labs.main_part_application.custom_widgets.custom_button import Button
+from python_language.programming_languages_python.gui_interface_for_labs.main_part_application.custom_widgets.custom_button import Button
 
 
 class StartScreen(QtWidgets.QWidget):

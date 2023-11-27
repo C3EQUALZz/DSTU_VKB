@@ -10,7 +10,7 @@
 """
 
 from typing import Any
-from algorithms_and_data_structures.linked_list_python.node import Node
+from python_language.algorithms_and_data_structures.linked_list_python.node import Node
 import sys
 
 sys.tracebacklimit = 0

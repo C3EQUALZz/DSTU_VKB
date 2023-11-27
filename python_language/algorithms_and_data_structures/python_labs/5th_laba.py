@@ -1,7 +1,6 @@
-import numpy as np
-from algorithms_and_data_structures.python_labs.sorts import *
-from algorithms_and_data_structures.python_labs.search import *
-from algorithms_and_data_structures.python_labs.work_stats import *
+from python_language.algorithms_and_data_structures.python_labs.sorts import *
+from python_language.algorithms_and_data_structures.python_labs.search import *
+from python_language.algorithms_and_data_structures.python_labs.work_stats import *
 
 
 def question():
