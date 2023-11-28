@@ -1,0 +1,10 @@
+#MainWindow {
+    border: none;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    padding: 0;
+    margin: 0;
+    color: #fff;
+}

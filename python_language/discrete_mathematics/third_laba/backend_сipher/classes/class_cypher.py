@@ -1,3 +1,10 @@
+"""
+Файл, где описан интерфейс для взаимодействия с шифром Рубика для изображения
+
+https://github.com/dannyi96/Image-Cryptography
+https://github.com/klanec/RubiksCipher/blob/master/rubikscipher.py
+https://klanec.github.io/rgbctf/2020/07/22/rgbctf-RubiksCBC.html
+"""
 import numpy as np
 from PIL import Image
 
