@@ -1,3 +1,8 @@
+"""
+Лабораторная работа 12
+Ковалев Данил ВКБ22
+Вариант 9
+"""
 from affine_cipher import Affine
 from classic_ceasar import CaesarCipher
 from key_caesar import CaesarWithWord
@@ -15,8 +20,8 @@ def ceaser_basically_interaction() -> None:
     """
     word = input("Введите слово, которое вы хотите зашифровать ")
     cypher: CaesarCipher = CaesarCipher(int(input("Введите число шифрования - целое число ")))
-    print(f"Результат шифрования - {(res := cypher.encode(word))}",
-          f"Результат расшифровки: {cypher.decode(res)}", sep='\n')
+    print(f"Результат шифрования - {(res := cypher.encrypt(word))}",
+          f"Результат расшифровки: {cypher.decrypt(res)}", sep='\n')
 
 
 def ceaser_word_interaction() -> None:
@@ -54,8 +59,8 @@ def trisemus_interaction() -> None:
     key = input("Введите ключ, который вы хотите использовать ")
     table = input("Введите размер таблицы через 'x' ")
     cipher = TrisemusCipher(key, table)
-    crt_text = cipher.encode(input("Введите текст, который вы хотите зашифровать "))
-    plain_text = cipher.decode(crt_text)
+    crt_text = cipher.encrypt(input("Введите текст, который вы хотите зашифровать "))
+    plain_text = cipher.decrypt(crt_text)
     print(crt_text, plain_text)
 
 

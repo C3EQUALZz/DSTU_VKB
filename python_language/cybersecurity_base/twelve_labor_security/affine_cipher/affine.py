@@ -7,10 +7,11 @@ import re
 from typing import NoReturn
 
 from .exceptions import NotValidNumbers, NoSupport
-from .enums import Letters
+
+from python_language.cybersecurity_base.twelve_labor_security.abstract_class_cyphers import Cypher
 
 
-class Affine:
+class Affine(Cypher):
     """
     Класс реализует аффинный шифр.
 
@@ -89,7 +90,7 @@ class Affine:
         a, b = self.key
         return Affine._get_language(t)[((a * Affine._get_language(t).find(t) + b) % self.m)]
 
-    def encrypt(self, string):
+    def encrypt(self, string: str):
         """
         Метод шифрует строку.
 
@@ -142,15 +143,3 @@ class Affine:
             if ((t % self.m) * (i % self.m)) % self.m == 1:
                 return i
         return None
-
-    @staticmethod
-    def _get_language(string: str) -> str:
-        words = re.findall(r'\w+', string, re.UNICODE)
-        if all(re.fullmatch(r"^[a-z]+$", word) for word in words):
-            return Letters.ENGLISH_SYMBOLS_LOWER.value
-        if all(re.fullmatch(r"^[а-яё]+$", word) for word in words):
-            return Letters.RUSSIAN_SYMBOLS_LOWER.value
-        if all(re.fullmatch(r"^[A-Z]+$", word) for word in words):
-            return Letters.ENGLISH_SYMBOLS_UPPER.value
-        if all(re.fullmatch(r"^[А-ЯЁ]+$", word) for word in words):
-            return Letters.RUSSIAN_SYMBOLS_UPPER.value

@@ -2,12 +2,13 @@
 Здесь логика обычного шифра Цезаря
 
 """
-from .enums import Letters
+from python_language.cybersecurity_base.twelve_labor_security.enums import Letters
 from .exceptions import NoSupport
+from python_language.cybersecurity_base.twelve_labor_security.abstract_class_cyphers import Cypher
 import re
 
 
-class CaesarCipher:
+class CaesarCipher(Cypher):
     """
     Данный класс описывает логику стандартного шифра Цезаря
     Args:
@@ -48,7 +49,7 @@ class CaesarCipher:
             raise NoSupport("Не добавлена поддержка данного языка")
         return abc
 
-    def encode(self, string: str) -> str:
+    def encrypt(self, string: str) -> str:
         """
         Метод, используя готовый словарь, переводит в новую строку
         Args:
@@ -56,7 +57,7 @@ class CaesarCipher:
         """
         return str.translate(string, self._encode_abc(string))
 
-    def decode(self, string: str) -> str:
+    def decrypt(self, string: str) -> str:
         """
         Метод, который из зашифрованного возвращает исходный текст.
         Тут мы разворачиваем словарь, чтобы перевести {a: d} -> {d: a}
