@@ -59,6 +59,9 @@ class Affine(Cypher):
         Returns:
             int | NoSupport: Длина алфавита или исключение, если язык не поддерживается
         """
+        if not(math.gcd(self.key[0], 26) == 1 or math.gcd(self.key[0], 33) == 1):
+            raise ValueError("Не взаимно простые числа a и количество букв в алфавите ")
+
         words = re.findall(r'\w+', sentence, re.UNICODE)
         if (all(re.fullmatch(r"^[a-z]+$", word, re.I) for word in words)
                 and math.gcd(self.key[0], 26) == 1):
