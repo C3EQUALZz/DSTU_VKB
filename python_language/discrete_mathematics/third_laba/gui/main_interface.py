@@ -1,20 +1,67 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+"""
+Ковалев Данил ВКБ22 Вариант 1
+
+Данный файл является основным, отсюда происходит запуск контента.
+Version: 1.0.0
+"""
+
 import sys
 
-from Custom_Widgets.Widgets import QtWidgets, QtGui
+from PyQt6 import QtWidgets, QtGui, QtCore
+
+from .side_panels import LeftSidePanel, RightSidePanel
 
 
 class MainWindow(QtWidgets.QMainWindow):
+    """
+    Главный класс, здесь описывается основное окно, с которым взаимодействуем.
+    """
+
     def __init__(self):
         super().__init__()
+        # Добавляем наше оформление приложения на каждое окно
+        self._init_ui()
 
-    def _init_ui(self):
+    def _create_splitter(self) -> None:
+        """
+        Создание основных виджетов, на которые остальные потом помещаются
+        """
+        # Создаем QSplitter
+        splitter = QtWidgets.QSplitter(QtCore.Qt.Orientation.Horizontal)
+
+        # Создаем виджет для левой части
+        left_panel = LeftSidePanel(self)
+
+        # Создаем виджет для правой части
+        right_panel = RightSidePanel(self)
+
+        # Добавляем виджеты в Splitter
+        splitter.addWidget(left_panel)
+        splitter.addWidget(right_panel)
+
+        splitter.setSizes([self.width() // 2, self.width() // 2])
+        splitter.setHandleWidth(0)
+        splitter.setCollapsible(0, False)
+
+        # Устанавливаем Splitter в качестве центрального виджета
+        self.setCentralWidget(splitter)
+
+    def _init_ui(self) -> None:
+        """
+        Метод для инициализации параметров приложения
+        """
+        # установка названия приложения
         self.setWindowTitle("Ковалев Данил ВКБ22")
         # установка окна приложения
-        self.setWindowIcon(QtGui.QIcon("icons/software-application.png"))
+        self.setWindowIcon(QtGui.QIcon("icons/window_icon.png"))
         # Размеры по умолчанию при запуске
         self.setFixedSize(850, 500)
         # Центрирование приложение при запуске
         self._center()
+
+        self._create_splitter()
 
     def _center(self) -> None:
         """
@@ -51,14 +98,3 @@ class MainWindow(QtWidgets.QMainWindow):
                 sys.exit(0)
         except AttributeError:
             pass
-
-
-def main() -> None:
-    app = QtWidgets.QApplication(sys.argv)
-    start_screen = MainWindow()
-    start_screen.show()
-    sys.exit(app.exec())
-
-
-if __name__ == "__main__":
-    main()
