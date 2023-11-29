@@ -1,3 +1,4 @@
+from PIL import Image, ImageQt
 from PyQt6 import QtWidgets, QtCore, QtGui
 
 
@@ -5,6 +6,7 @@ class RightSidePanel(QtWidgets.QWidget):
     """
     Можно было унаследоваться от LeftSide, но у меня происходят циклы импорта
     """
+
     def __init__(self, parent=None):
         super().__init__(parent)
 
@@ -39,12 +41,11 @@ class RightSidePanel(QtWidgets.QWidget):
         self.photo_label.setLineWidth(2)
         # Сделал фиксированные размеры, так как костыль
         self.photo_label.setFixedSize(400, 400)
-        self.photo_label.isVisible()
+        self.photo_label.setVisible(True)
         return self.photo_label
 
-    def set_image(self, image_path):
-        pixmap = QtGui.QPixmap(image_path)
+    def set_image(self, file_name):
+        pixmap = QtGui.QPixmap(file_name)
         scaled_pixmap = pixmap.scaled(self.photo_label.size(), QtCore.Qt.AspectRatioMode.KeepAspectRatio)
         self.photo_label.setPixmap(scaled_pixmap)
         self.photo_label.show()
-

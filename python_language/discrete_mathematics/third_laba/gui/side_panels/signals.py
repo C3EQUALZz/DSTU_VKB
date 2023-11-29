@@ -1,17 +1,20 @@
 import os
+
 from PyQt6 import QtWidgets, QtGui, QtCore
+
 from .rigth_side_panel import RightSidePanel
 from .threads_signals import CipherThread
+
 
 class Signals(QtCore.QObject):
     encryption_finished = QtCore.pyqtSignal(str)  # Сигнал для завершения операции шифрования
     decryption_finished = QtCore.pyqtSignal(str)  # Сигнал для завершения операции дешифрования
 
-    def __init__(self, parent):
+    def __init__(self, parent, right_panel: RightSidePanel):
         super().__init__(parent)
         self.parent = parent
         self.file_name = None
-        self.right_panel = RightSidePanel()
+        self.right_panel = right_panel
         self.cipher_thread = None
 
     def show_file_dialog(self, photo_label: QtWidgets.QLabel):

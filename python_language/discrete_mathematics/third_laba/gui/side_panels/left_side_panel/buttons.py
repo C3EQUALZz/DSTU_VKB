@@ -6,6 +6,7 @@ from functools import partial
 
 from PyQt6 import QtWidgets
 from python_language.discrete_mathematics.third_laba.gui.side_panels.signals import Signals
+from python_language.discrete_mathematics.third_laba.gui.side_panels.rigth_side_panel import RightSidePanel
 
 
 class ButtonPanel(QtWidgets.QWidget):
@@ -18,7 +19,7 @@ class ButtonPanel(QtWidgets.QWidget):
         :param parent: Родительский класс, к которому мы привязываем кнопки
         """
         super().__init__(parent)
-        self.signal = Signals(parent)
+        self.signal = Signals(parent, right_panel=RightSidePanel(parent))
         self.init_ui()
 
     def init_ui(self):
