@@ -5,7 +5,6 @@ import os
 
 from PyQt6 import QtWidgets, QtGui, QtCore
 
-from .rigth_side_panel import RightSidePanel
 from .threads_signals import CipherThread
 
 
@@ -16,14 +15,14 @@ class Signals(QtCore.QObject):
     encryption_finished = QtCore.pyqtSignal(str)  # Сигнал для завершения операции шифрования
     decryption_finished = QtCore.pyqtSignal(str)  # Сигнал для завершения операции дешифрования
 
-    def __init__(self, parent, right_panel: RightSidePanel):
+    def __init__(self, parent, right_panel):
         super().__init__(parent)
         self.parent = parent
         self.right_panel = right_panel
 
         self.file_name = self.cipher_thread = None
 
-    def show_file_dialog(self, photo_label: QtWidgets.QLabel):
+    def show_file_dialog(self, photo_label: QtWidgets.QLabel) -> None:
         """
         Данный метод отвечает за отображение окна выбора фотографий.
         Будет запущен стандартный файловый менеджер, который выбран в ОС.
@@ -44,7 +43,7 @@ class Signals(QtCore.QObject):
             photo_label.setPixmap(scaled_pixmap)
             photo_label.show()
 
-    def crypt_photo(self):
+    def crypt_photo(self) -> None:
         """
         Метод, который отвечает за шифрование фото
         Отсюда происходит запуск потока для шифрования
@@ -66,9 +65,12 @@ class Signals(QtCore.QObject):
         self.cipher_thread.start()
 
     def decrypt_photo(self):
+        """
+        Расшифровка фото. Здесь происходит запуск логики по дешифрованию с использованием кубика Рубика
+        """
         if self.file_name is None:
             return
-
+        # получаем путь, к которому
         target_directory = self.__get_path()
 
         # Проверяем, завершен ли предыдущий поток
@@ -83,9 +85,11 @@ class Signals(QtCore.QObject):
         self.cipher_thread.start()
 
     # Добавляем метод обработки сигнала завершения операции
-    def handle_finished(self, is_encryption):
+    def handle_finished(self, is_encryption: bool) -> None:
         image_path = self.save_path(self.file_name, self.__get_path(), encrypted=is_encryption)
+        print(image_path)
         self.right_panel.set_image(image_path)
+
         if is_encryption:
             self.encryption_finished.emit(image_path)
         else:

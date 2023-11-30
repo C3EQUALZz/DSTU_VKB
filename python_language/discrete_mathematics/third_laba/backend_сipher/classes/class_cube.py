@@ -38,7 +38,7 @@ class Cube:
             sign = np.where(np.sum(self.rgb_array[i, :, :], axis=1) % 2 == 0, -1, 1)
             # Вычисление количества позиций, на которое нужно сдвинуть элементы в строке
             # sign как раз задает направление сдвига
-            roll_amount = direction * sign * self.key_manager.key_columns[i]
+            roll_amount = direction * sign * self.key_manager.key_rows[i]
             self.rgb_array[i, :, :] = np.roll(self.rgb_array[i, :, :], roll_amount, axis=0)
 
     @cache

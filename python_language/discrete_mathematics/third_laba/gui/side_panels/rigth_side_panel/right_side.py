@@ -14,6 +14,7 @@ class RightSidePanel(QtWidgets.QWidget):
         super().__init__(parent)
         # Создание frame, на котором мы будем размещать все виджеты
         self.frame = QtWidgets.QFrame()
+        self.photo_label = QtWidgets.QLabel(self)
         # Инициализация всех виджетов на frame
         self.init_ui()
 
@@ -38,7 +39,6 @@ class RightSidePanel(QtWidgets.QWidget):
         """
         Метод, который добавляет фото для отображения
         """
-        self.photo_label = QtWidgets.QLabel(self)
         # Устанавливаем окантовку
         self.photo_label.setFrameShape(QtWidgets.QFrame.Shape.Box)
         # Толщина линии

@@ -21,6 +21,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def __init__(self):
         super().__init__()
+        self.right_panel = RightSidePanel(self)
+        # Создаем виджет для левой части
+        self.left_panel = LeftSidePanel(self)
         # Добавляем наше оформление приложения на каждое окно
         self._init_ui()
 
@@ -31,15 +34,9 @@ class MainWindow(QtWidgets.QMainWindow):
         # Создаем QSplitter
         splitter = QtWidgets.QSplitter(QtCore.Qt.Orientation.Horizontal)
 
-        # Создаем виджет для левой части
-        left_panel = LeftSidePanel(self)
-
-        # Создаем виджет для правой части
-        right_panel = RightSidePanel(self)
-
         # Добавляем виджеты в Splitter
-        splitter.addWidget(left_panel)
-        splitter.addWidget(right_panel)
+        splitter.addWidget(self.left_panel)
+        splitter.addWidget(self.right_panel)
 
         splitter.setSizes([self.width() // 2, self.width() // 2])
         splitter.setHandleWidth(0)

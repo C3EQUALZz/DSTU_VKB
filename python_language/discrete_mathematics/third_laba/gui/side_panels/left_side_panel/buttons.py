@@ -19,7 +19,7 @@ class ButtonPanel(QtWidgets.QWidget):
         :param parent: Родительский класс, к которому мы привязываем кнопки
         """
         super().__init__(parent)
-        self.signal = Signals(parent, right_panel=RightSidePanel(parent))
+        self.signal = Signals(parent, right_panel=parent.parent().children()[1])
         self.init_ui()
 
     def init_ui(self):
