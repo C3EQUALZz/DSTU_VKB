@@ -17,7 +17,7 @@ def first_question(my_number: int):
     return f"{my_number=}, {user_number=}"
 
 
-def second_question(my_list: list):
+def second_question(my_list: str):
     """
     Пусть задан список, содержащий строки.
     Вариант 1. Выведите построчно все строки размером от 5 до 10 символов.
@@ -47,7 +47,7 @@ def main():
         case "1":
             print(first_question(int(input("Введите my_number "))))
         case "2":
-            print(second_question(eval(input("Введите список, как он выглядит в repr "))))
+            print(second_question(input("Введите список, как он выглядит в repr ")))
         case "3":
             print(third_question())
         case "4":

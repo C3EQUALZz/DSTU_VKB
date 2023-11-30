@@ -18,9 +18,9 @@ class Cube:
 
     def __init__(self, array: np.array, key_manager: KeyManager) -> None:
         # работать с изображением только можно, если это матрица
-        self.rgb_array = array
+        self.rgb_array: np.array = array
         # наш другой класс, где мы будем получать наши ключи
-        self.key_manager = key_manager
+        self.key_manager: KeyManager = key_manager
 
     @cache
     def roll_row(self, encryption: bool = True) -> None:
@@ -30,7 +30,7 @@ class Cube:
         :encryption: параметр, который определяет поведение метода.
         """
         # Если 1, то повороты идут в правую сторону, в ином случае налево
-        direction = 1 if encryption else -1
+        direction: int = 1 if encryption else -1
         # Здесь уже идут повороты кубика,
         for i in np.arange(self.rgb_array.shape[0]):
             # В алгоритме описана идея, что надо смотреть на сумму четности строки
@@ -48,12 +48,20 @@ class Cube:
         :param encryption: Отвечает за то, происходит ли шифрование или нет.
         :return: Ничего не возвращает, изменяет только нашу матрицу с цветами
         """
-        # Если 1, то повороты идут в правую сторону, в ином случае налево
-        direction = 1 if encryption else -1
+        # Если 1, то повороты идут в правую сторону, в ином случае налево.
+        # Так задумано при шифровании с использованием данного метода. 
+        direction: int = 1 if encryption else -1
         # Здесь уже идут повороты кубика
         for i in np.arange(self.rgb_array.shape[1]):
-            sign = np.where(np.sum(self.rgb_array[:, i, :], axis=1) % 2 == 0, -1, 1)
-            roll_amount = direction * sign * self.key_manager.key_columns[i]
+            # Здесь появляется массив numpy, в котором содержится 3 числа со знаками для значения key_columns.
+            # Знаки key_columns определяются вообще для этого, опять-таки так шифровал dannyi96 (GitHub).
+            # key_columns у автора - KC.
+            sign: np.ndarray[int] = np.where(np.sum(self.rgb_array[:, i, :], axis=1) % 2 == 0, -1, 1)
+            # Здесь такая логика: направление вращения кубика (-1 или 1) * массив sign (содержит значения для
+            # key_column). Массивы numpy поддерживают умножения на список (поэлементно умножаются значения),
+            # не как в математике
+            roll_amount: np.ndarray[int] = direction * self.key_manager.key_columns[i] * sign
+            # происходит поворот
             self.rgb_array[:, i, :] = np.roll(self.rgb_array[:, i, :], roll_amount, axis=0)
 
     @cache

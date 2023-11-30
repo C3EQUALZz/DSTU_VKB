@@ -17,6 +17,9 @@ def read_styles(filename: str) -> str:
 
 
 def main():
+    """
+    Точка входа в лабораторную работу
+    """
     app = QtWidgets.QApplication(sys.argv)
     styles = read_styles("gui/icons/styles.qss")
     app.setStyleSheet(styles)

@@ -57,12 +57,12 @@ def fourth_question(k=None):
     my_len = [
         ["БО-331101", ["Акулова Алена", "Бабушкина Ксения"]],
         ["БОВ-421102", ["Карпов Роман", "Лёза Алексей"]],
-        ["БО-331103", ["Крячков Игнат", "Ибрагим Гусейнов"]],
-        ["ВПМК-41", ["Егор Гришков", "Анисимов Ярослав"]]
+        ["БО-331103", ["Крячков Игнат", "Гусейнов Ибрагим"]],
+        ["ВПМК-41", ["Гришков Егор", "Анисимов Ярослав"]]
     ]
     res_str = ''
     for group, humans in my_len:
-        if temporary_storage := [surname for surname in humans if surname.startswith("А")]:
+        if temporary_storage := [human for human in humans if human.startswith("А")]:
             print(group, *(f"\t{human}" for human in temporary_storage), sep='\n', end='\n\n')
             res_str += f"{group: ^{len(max(temporary_storage, key=len))}}\n" + '\n'.join(
                 f"{human}" for human in temporary_storage) + "\n\n"

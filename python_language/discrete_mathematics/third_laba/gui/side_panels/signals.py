@@ -1,3 +1,6 @@
+"""
+В данном модуле реализованы отдельно сигналы, которые используются для обработки нажатия кнопок.
+"""
 import os
 
 from PyQt6 import QtWidgets, QtGui, QtCore
@@ -7,31 +10,45 @@ from .threads_signals import CipherThread
 
 
 class Signals(QtCore.QObject):
+    """
+    Класс, который осуществляет за реализацию нажатия кнопок.
+    """
     encryption_finished = QtCore.pyqtSignal(str)  # Сигнал для завершения операции шифрования
     decryption_finished = QtCore.pyqtSignal(str)  # Сигнал для завершения операции дешифрования
 
     def __init__(self, parent, right_panel: RightSidePanel):
         super().__init__(parent)
         self.parent = parent
-        self.file_name = None
         self.right_panel = right_panel
-        self.cipher_thread = None
+
+        self.file_name = self.cipher_thread = None
 
     def show_file_dialog(self, photo_label: QtWidgets.QLabel):
+        """
+        Данный метод отвечает за отображение окна выбора фотографий.
+        Будет запущен стандартный файловый менеджер, который выбран в ОС.
+        """
+        # Создание диалогового окна
         dialog = QtWidgets.QFileDialog(parent=self.parent)
+        # Данные параметры взял с Интернета, пояснить не могу
         options = dialog.options()
         options |= QtWidgets.QFileDialog.Option.ReadOnly
         self.file_name, _ = QtWidgets.QFileDialog.getOpenFileName(self.parent, "Выберите фото", "",
                                                                   "Images (*.png *.xpm *.jpg *.bmp);;All Files (*)",
                                                                   options=options)
-
+        # Если все-таки нашел файл, то будет запущена обработка по сжатию фото
         if self.file_name:
+            # Создание объекта Pixmap, который умеет сжимать фотографии (более подробно в doc PyQt6)
             pixmap = QtGui.QPixmap(self.file_name)
             scaled_pixmap = pixmap.scaled(photo_label.size(), QtCore.Qt.AspectRatioMode.KeepAspectRatio)
             photo_label.setPixmap(scaled_pixmap)
             photo_label.show()
 
     def crypt_photo(self):
+        """
+        Метод, который отвечает за шифрование фото
+        Отсюда происходит запуск потока для шифрования
+        """
         if self.file_name is None:
             return
 
@@ -75,13 +92,13 @@ class Signals(QtCore.QObject):
             self.decryption_finished.emit(image_path)
 
     @staticmethod
-    def __get_path():
+    def __get_path() -> str:
         current_path = os.path.dirname(__file__)
         relative_path = "../../"
         return os.path.abspath(os.path.join(current_path, relative_path))
 
     @staticmethod
-    def save_path(file_name, target_directory, encrypted=True):
+    def save_path(file_name, target_directory, encrypted=True) -> str:
         word = "encrypted" if encrypted else "decrypted"
         base_name = os.path.basename(file_name)
         return f"{target_directory}/trash_for_data/{os.path.splitext(base_name)[0]}_{word}.png"

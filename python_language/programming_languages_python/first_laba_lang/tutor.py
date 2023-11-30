@@ -28,7 +28,7 @@ def last_question(lst) -> int:
 def interact_with_user():
     match input("Какое задание вы хотите? Введите число от 1 до 4 "):
         case "1":
-            print(first_question(*map(int, (input(f"Введите {letter} ") for letter in "abck"))))
+            print(first_question(input(f"Введите a,b,c,k ")))
         case "2":
             print(second_question(eval(input("Введите список, как он выглядит в repr "))))
         case "3":

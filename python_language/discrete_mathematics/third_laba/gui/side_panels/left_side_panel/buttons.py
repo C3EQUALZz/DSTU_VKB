@@ -35,7 +35,7 @@ class ButtonPanel(QtWidgets.QWidget):
         Метод, который добавляет кнопку для выбора фото
         """
         # Создание кнопки
-        choose_button = QtWidgets.QPushButton('Выбрать фото', self)
+        choose_button: QtWidgets.QPushButton = QtWidgets.QPushButton('Выбрать фото', self)
         # Подключение кнопки к диалоговому окну с выбором фото
         show_dialog = partial(self.signal.show_file_dialog, self.parent().photo_label)
         choose_button.clicked.connect(show_dialog)
@@ -48,7 +48,7 @@ class ButtonPanel(QtWidgets.QWidget):
         Метод, который создает кнопку для шифрования фото
         """
         # Создание кнопки
-        crypt_button = QtWidgets.QPushButton('Зашифровать', self)
+        crypt_button: QtWidgets.QPushButton = QtWidgets.QPushButton('Зашифровать', self)
         # Подключение кнопки к моему классу Crypt
         crypt_button.clicked.connect(self.signal.crypt_photo)
         # Устанавливаем фиксированные размеры, мне не хочется считать по-умному, поэтому подобрал
@@ -60,7 +60,7 @@ class ButtonPanel(QtWidgets.QWidget):
         Метод, который создает кнопку для дешифрования фото
         """
         # Создание кнопки
-        decrypt_button = QtWidgets.QPushButton("Расшифровать", self)
+        decrypt_button: QtWidgets.QPushButton = QtWidgets.QPushButton("Расшифровать", self)
         # Подключение кнопки к моему классу Crypt
         decrypt_button.clicked.connect(self.signal.decrypt_photo)
         # Устанавливаем фиксированные размеры, мне не хочется считать по-умному, поэтому подобрал
