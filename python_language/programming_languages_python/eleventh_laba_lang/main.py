@@ -10,11 +10,11 @@ from typing import Callable
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 
+from csv_interaction import db_to_csv, csv_to_db
 ########################################################################################################################
 from db_creation import create_database
 from db_creation.tables import Position, Department, Teacher
 from db_interface import *
-from csv_interaction import db_to_csv
 
 
 def first_question(k=None):
@@ -126,7 +126,7 @@ def fourth_question(k=None):
     return '\n'.join(f"Кафедра: {row[0]}, Количество преподавателей: {row[1]}" for row in result)
 
 
-def fifth_question(decree: str) -> str:
+def fifth_question(decree: str) -> str | dict:
     """
     Реализуйте функционал по сохранению данных в файлы формата .csv и считыванию информации из файлов
     :param decree: ввод от пользователя, то есть что он хочет сделать.
@@ -136,10 +136,10 @@ def fifth_question(decree: str) -> str:
         db_to_csv(res)
         return "Готово"
 
-    elif re.fullmatch(r"(Считать|Прочитать)\s?(данные)?", decree, re.I):
-        ...
+    if re.fullmatch(r"(Считать|Прочитать)\s?(данные)?", decree, re.I):
+        return csv_to_db()
 
-
+    return "Неправильно ввели данные"
 
 
 def main() -> None:
@@ -153,7 +153,7 @@ def main() -> None:
         case "4":
             print(fourth_question())
         case "5":
-            print(fifth_question(input("Введите что вы сделать: записать или считать данные ")))
+            pprint(fifth_question(input("Введите что вы сделать: записать или считать данные ")))
         case _:
             print("Вы выбрали неверное задание ")
 

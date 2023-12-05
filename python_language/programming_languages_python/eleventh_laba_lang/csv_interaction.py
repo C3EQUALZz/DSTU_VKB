@@ -34,9 +34,20 @@ def db_to_csv(data: dict) -> None:
 
 
 def csv_to_db() -> dict:
-    with open("output.csv", "r") as file:
-        reader = csv.reader(file)
-        keys_dict = reader.__next__()
-        for line in reader:
-            ...
+    data_dict = {}
 
+    with open("output.csv", 'r', newline='') as csv_file:
+        csv_reader = csv.reader(csv_file)
+        next(csv_reader)  # Пропуск заголовков
+
+        for row in csv_reader:
+            teacher_id, name, age, position_id, position_title, department_id, department_title, institute = row
+
+            data_dict[teacher_id] = {
+                'name': name,
+                'age': age,
+                'position': {'id': position_id, 'title': position_title},
+                'department': {'id': department_id, 'title': department_title, 'institute': institute}
+            }
+
+    return data_dict
