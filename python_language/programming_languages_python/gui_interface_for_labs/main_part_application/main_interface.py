@@ -7,7 +7,7 @@ from PyQt6 import QtWidgets
 
 from .custom_widgets.left_side_menu import TabWidget
 from .page_logic import Page
-from .tasks import TaskChooser
+from .tasks import TaskChooser, info_cur_dir_modules
 
 
 class DlgMain(QtWidgets.QMainWindow):
@@ -19,8 +19,9 @@ class DlgMain(QtWidgets.QMainWindow):
         super().__init__(parent)
         # создание всех страниц, которые мы инициализируем
         self.list_widget = []
+        self.__all_questions = info_cur_dir_modules()
         # создание количества пунктов в боковом меню
-        self._create_page(14)
+        self._create_page(len(self.__all_questions))
         # сигнал для отслеживания изменений
         self.tabs.currentChanged.connect(self.update_condition)
 
@@ -71,8 +72,7 @@ class DlgMain(QtWidgets.QMainWindow):
         current_number_question: int = widget.combobox.currentIndex() + 1
         return widget, current_laboratory, current_number_question
 
-    @staticmethod
-    def __change_combobox(widget: Page, current_laboratory: int):
+    def __change_combobox(self, widget: Page, current_laboratory: int):
         """
         Метод для обновления данных в combobox
         Встроенный метод clear() вызывает ошибку памяти
@@ -81,16 +81,10 @@ class DlgMain(QtWidgets.QMainWindow):
         widget.combobox.blockSignals(True)  # Блокировка сигналов
         widget.combobox.clear()  # Полная очистка
 
-        task_ranges = {
-            10: range(1, 9),
-            11: range(1, 6),
-            8: range(1, 4),
-            12: range(1, 4),
-            13: range(1, 14),
-        }
+        functions_count = len([func for func in self.__all_questions[current_laboratory - 1].__dict__.values()
+                               if callable(func)])
 
-        tasks = task_ranges.get(current_laboratory, range(1, 5))
-        widget.combobox.addItems([f"Задание {x}" for x in tasks])
+        widget.combobox.addItems([f"Задание {x}" for x in range(1, functions_count + 1)])
 
         widget.combobox.setCurrentIndex(current_index)
         widget.combobox.blockSignals(False)  # Разблокировка сигналов

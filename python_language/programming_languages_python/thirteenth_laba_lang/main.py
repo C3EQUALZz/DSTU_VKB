@@ -89,7 +89,7 @@ def eighth_question(string: str) -> bool:
     return bool(re.fullmatch(pattern, string.strip()))
 
 
-def ninth_question(string: str) -> bool:
+def ninth_question(password: str) -> bool:
     """
     Проверить, надежно ли составлен пароль.
     Пароль считается надежным, если он состоит из 8 или более символов.
@@ -97,7 +97,8 @@ def ninth_question(string: str) -> bool:
     Пароль должен содержать хотя бы одну заглавную букву, одну маленькую букву и одну цифру.
     – пример правильных выражений: C00l_Pass, SupperPas1.– пример неправильных выражений: Cool_pass, C00l.
     """
-    ...
+    # используются положительные просмотры вперед
+    return bool(re.match(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z0-9_]{8,}$', password))
 
 
 def tenth_question(string: str) -> bool:
@@ -107,30 +108,39 @@ def tenth_question(string: str) -> bool:
     – пример правильных выражений: 123456, 234567.
     – пример неправильных выражений: 1234567, 12345.
     """
-    ...
+    return bool(re.match(r'^[1-9]\d{5}$', string))
 
 
-def eleventh_question(string: str) -> bool:
+def eleventh_question(string: str) -> list:
     """
     Есть текст со списками цен. Извлечь из него цены в USD, RUR, EU.
     – пример правильных выражений: 23.78 USD.
     – пример неправильных выражений: 22 UDD, 0.002 USD.
     """
-    ...
+    pattern = r'(\d+(?:\.\d+)?)\s+(USD|RUR|EU)'
+    matches = re.findall(pattern, string)
+    return [(float(price), currency) for price, currency in matches]
 
 
 def twelve_question(string: str) -> bool:
     """
-
+    Проверить существуют ли в тексте цифры, за которыми не стоит «+».
+    – пример правильных выражений: (3 + 5) – 9 * 4.
+    – пример неправильных выражений: 2 * 9 – 6 * 5.
     """
-    ...
+    # (?!\s*\+) - негативное взглядование вперед, проверяющее, что за цифрами не следует "+" с возможными пробелами.
+    pattern = r'\b\d+(?!\s*\+)'  # Цифры, за которыми не стоит "+"
+    return bool(re.search(pattern, string))
 
 
-def thirteenth_question(string: str) -> bool:
+def thirteenth_question(string: str) -> list:
     """
-
+    Вывести только правильно написанные выражения со скобками.
+    – пример правильных выражений: (3 + 5) – 9 × 4.
+    – пример неправильных выражений: ((3 + 5) – 9 × 4.
     """
-    ...
+    pattern = r'\([^()]*\)'  # Поиск выражений в скобках
+    return re.findall(pattern, string)
 
 
 def main():
@@ -153,6 +163,14 @@ def main():
             print(eighth_question(input("Введите вашу строку для проверки ")))
         case "9":
             print(ninth_question(input("Введите вашу строку для проверки ")))
+        case "10":
+            print(tenth_question(input("Введите вашу строку для проверки ")))
+        case "11":
+            print(eleventh_question(input("Введите вашу строку для проверки ")))
+        case "12":
+            print(twelve_question(input("Введите вашу строку для проверки ")))
+        case "13":
+            print(thirteenth_question(input("Введите вашу строку для проверки ")))
         case _:
             print("Вы выбрали неверное задание ")
 

@@ -1,17 +1,20 @@
 """
 AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
-from pprint import pprint
-import python_language.programming_languages_python.eighth_laba_lang.third_subtasks as third_subtasks
-import python_language.programming_languages_python.eighth_laba_lang.second_subtasks as second_subtasks
-
-import re
 import csv
+import os
+import re
+from pprint import pprint
+
+import python_language.programming_languages_python.eighth_laba_lang.second_subtasks as second_subtasks
+import python_language.programming_languages_python.eighth_laba_lang.third_subtasks as third_subtasks
+
+FILE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "students.csv")
 
 
 def read_file(path: str = None) -> list:
     if path.isspace():
-        path = "students.csv"
+        path = FILE_PATH
     with open(path) as csv_file:
         reader = csv.reader(csv_file, delimiter=";")
         reader.__next__()
@@ -24,7 +27,7 @@ def first_question(k="students.csv") -> dict:
     Преобразовать список в словарь вида: {№:[ФИО, Возраст, Группа], ....}
     """
     if k == "":
-        k = "students.csv"
+        k = FILE_PATH
     return {person[0]: person[1:] for person in read_file(k)}
 
 
