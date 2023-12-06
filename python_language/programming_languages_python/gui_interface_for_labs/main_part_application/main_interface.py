@@ -4,9 +4,10 @@
 """
 
 from PyQt6 import QtWidgets
+
 from .custom_widgets.left_side_menu import TabWidget
-from .tasks import TaskChooser
 from .page_logic import Page
+from .tasks import TaskChooser
 
 
 class DlgMain(QtWidgets.QMainWindow):
@@ -19,7 +20,7 @@ class DlgMain(QtWidgets.QMainWindow):
         # создание всех страниц, которые мы инициализируем
         self.list_widget = []
         # создание количества пунктов в боковом меню
-        self._create_page(11)
+        self._create_page(14)
         # сигнал для отслеживания изменений
         self.tabs.currentChanged.connect(self.update_condition)
 
@@ -80,17 +81,16 @@ class DlgMain(QtWidgets.QMainWindow):
         widget.combobox.blockSignals(True)  # Блокировка сигналов
         widget.combobox.clear()  # Полная очистка
 
-        if current_laboratory == 10:
-            widget.combobox.addItems([f"Задание {x}" for x in range(1, 9)])
+        task_ranges = {
+            10: range(1, 9),
+            11: range(1, 6),
+            8: range(1, 4),
+            12: range(1, 4),
+            13: range(1, 14),
+        }
 
-        elif current_laboratory == 11:
-            widget.combobox.addItems([f"Задание {x}" for x in range(1, 6)])
-
-        elif current_laboratory == 8:
-            widget.combobox.addItems([f"Задание {x}" for x in range(1, 4)])
-
-        else:
-            widget.combobox.addItems([f"Задание {x}" for x in range(1, 5)])
+        tasks = task_ranges.get(current_laboratory, range(1, 5))
+        widget.combobox.addItems([f"Задание {x}" for x in tasks])
 
         widget.combobox.setCurrentIndex(current_index)
         widget.combobox.blockSignals(False)  # Разблокировка сигналов

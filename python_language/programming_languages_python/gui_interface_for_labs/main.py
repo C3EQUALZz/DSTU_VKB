@@ -4,7 +4,7 @@
 Ковалев Данил ВКБ22 Вариант 1
 
 Данный файл является основным, отсюда происходит запуск контента.
-Version: 1.0.6
+Version: 1.0.7
 TODO:
 1. Попробовать скомпилировать GUI программу по гайду: https://youtu.be/c4anm9QQV80?si=6K_sDnAQMkAdC7v1
 """
@@ -52,18 +52,6 @@ class MainWindow(QtWidgets.QWidget):
         """
         Метод для инициализации параметров приложения
         """
-        self.app_style = """
-        background-color:rgb(40, 40, 40);
-        color: rgb(255, 255, 255);
-        font: Cantrell;
-        font-size: 17px;
-        
-        QTabWidget {
-            background-color:rgb(40, 40, 40); 
-            color: rgb(255, 255, 255);
-        }
-        """
-        self.setStyleSheet(self.app_style)
         # установка названия приложения
         self.setWindowTitle("Ковалев Данил ВКБ22")
         # установка окна приложения
@@ -114,8 +102,14 @@ class MainWindow(QtWidgets.QWidget):
             pass
 
 
+def read_styles(filename):
+    with open(filename, "r") as file:
+        return file.read()
+
+
 def main() -> None:
     app = QtWidgets.QApplication(sys.argv)
+    app.setStyleSheet(read_styles("icons/hookmark.qss"))
     start_screen = MainWindow()
     start_screen.show()
     sys.exit(app.exec())
