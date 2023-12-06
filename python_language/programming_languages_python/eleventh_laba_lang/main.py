@@ -10,11 +10,12 @@ from typing import Callable
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 
-from csv_interaction import db_to_csv, csv_to_db
+from python_language.programming_languages_python.eleventh_laba_lang.csv_interaction import db_to_csv, csv_to_db
 ########################################################################################################################
-from db_creation import create_database
-from db_creation.tables import Position, Department, Teacher
-from db_interface import *
+from python_language.programming_languages_python.eleventh_laba_lang.db_creation import create_database
+from python_language.programming_languages_python.eleventh_laba_lang.db_creation.tables import (Position, Department,
+                                                                                                Teacher)
+from python_language.programming_languages_python.eleventh_laba_lang.db_interface import *
 
 
 def first_question(k=None):

@@ -27,7 +27,7 @@ def first_var_first_question(s=None) -> np.ndarray:
 
 def second_var_first_question(s=None) -> np.ndarray:
     """
-    Сумма по элементам строк
+    Напишите функцию нахождения суммы по элементам строк
     """
     # axis = 0 (столбец), axis = 1 (строка), axis = 2 (ширина, если большая мерность) и т.д.
     return np.sum(array, axis=1)

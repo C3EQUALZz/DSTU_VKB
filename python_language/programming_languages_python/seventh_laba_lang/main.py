@@ -9,6 +9,9 @@ import os
 
 
 def first_question(k=None) -> int:
+    """
+    Пусть дан словарь. Посчитайте и выведите сколько в словаре ключей
+    """
     person = Person()
     d = {"age": person.age(),
          "name": person.name(),
@@ -19,6 +22,12 @@ def first_question(k=None) -> int:
 
 
 def second_question(k=None) -> dict:
+    """
+    Пусть дан файл, в котором содержится информация о студентах в виде:
+    1;Иванов Иван Иванович;23;БО-111111
+    2;Сидоров Семен Семенович;23;БО-111111
+    Считайте информацию из файла в структуру: {№: [ФИО, Возраст, Группа], №: [....], №: [....]}
+    """
     if not os.path.exists("students.csv"):
         create_csv_file()
     with open("students.csv", encoding="UTF-8") as csv_file:
@@ -28,6 +37,9 @@ def second_question(k=None) -> dict:
 
 
 def third_question(k: int):
+    """
+    Добавьте к задаче №2 возможность увеличить возраст всех студентов на 1
+    """
     data = second_question()
     for key, value in data.items():
         value[1] = int(value[1]) + int(k)
@@ -35,6 +47,9 @@ def third_question(k: int):
 
 
 def fourth_question(k=None):
+    """
+    Добавьте к пользовательскому интерфейсу из задачи №3 возможность сохранения новых данных в файл.
+    """
     with open("students_new.csv", mode="w", encoding="UTF-8") as csv_file:
         writer = csv.writer(csv_file, delimiter=";")
         writer.writerow(["№", "ФИО", "Возраст", "Группа"])

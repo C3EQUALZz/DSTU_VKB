@@ -67,6 +67,9 @@ def third_question():
 
 
 def fourth_question():
+    """
+    Добавьте к пользовательскому интерфейсу из задачи возможность сохранения новых данных обратно в файл
+    """
     with open("students_new.csv", mode="w", encoding="UTF-8") as csv_file:
         writer = csv.writer(csv_file, delimiter=";")
         writer.writerow(third_question()[0].field_names)

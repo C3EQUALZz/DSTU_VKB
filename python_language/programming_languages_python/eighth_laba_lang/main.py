@@ -2,8 +2,8 @@
 AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
 from pprint import pprint
-import python_language.programming_languages_python.eigth_laba_lang.third_subtasks as third_subtasks
-import python_language.programming_languages_python.eigth_laba_lang.second_subtasks as second_subtasks
+import python_language.programming_languages_python.eighth_laba_lang.third_subtasks as third_subtasks
+import python_language.programming_languages_python.eighth_laba_lang.second_subtasks as second_subtasks
 
 import re
 import csv
@@ -29,6 +29,19 @@ def first_question(k="students.csv") -> dict:
 
 
 def second_question(string=None):
+    """
+    Добавить к задаче №1 для словаря возможность (без преобразования словаря обратно в список).
+    1. Увеличить возраст конкретного студента на 1;
+    2. Изменить ФИО студента;
+    3 Увеличить возраст студента по номеру;
+    4. Изменить группу студента. Поиск по ФИО;
+    5. Удалить запись о студенте. Поиск по №;
+    6. Если возраст студента больше 22 уменьшить его на 1;
+    7. Если возраст студента равен 23, удалить его из списка;
+    8. У всех студентов с фамилией Иванов увеличить возраст на 1;
+    9. У студентов с фамилией Иванов изменить фамилию на Сидоров;
+    10. Поменять ФИО и Группа местами;
+    """
     patterns_and_functions = {
         r"[иИ]зменить возраст \w+\s\w+ на \d+": second_subtasks.increase_age_by_name,
         r"[иИ]зменить ФИО студента с \w+\s\w+ на \w+\s\w+": second_subtasks.change_name,
