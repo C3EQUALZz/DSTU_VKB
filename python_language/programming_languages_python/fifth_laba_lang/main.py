@@ -8,6 +8,8 @@ from random import randint
 from mimesis import Person
 from prettytable import PrettyTable
 
+FILE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "students.csv")
+
 
 def first_question(path: str):
     """
@@ -21,7 +23,7 @@ def first_question(path: str):
 
 def create_csv_file():
     person = Person()
-    with open("students.csv", mode='w', encoding="UTF-8", newline='') as csv_file:
+    with open(FILE_PATH, mode='w', encoding="UTF-8", newline='') as csv_file:
         writer = csv.writer(csv_file, delimiter=";")
         writer.writerow(['№', "ФИО", "Возраст", "Группа"])
         writer.writerows(
@@ -44,7 +46,7 @@ def second_question(k=None):
     Вариант 1. Выведите информацию о студентах, отсортировав их по фамилии.
     """
     table = PrettyTable()
-    if not os.path.exists("students.csv"):
+    if not os.path.exists(FILE_PATH):
         create_csv_file()
     with open("students.csv", encoding="UTF-8") as csv_file:
         reader = csv.reader(csv_file, delimiter=";")
@@ -70,7 +72,7 @@ def fourth_question():
     """
     Добавьте к пользовательскому интерфейсу из задачи возможность сохранения новых данных обратно в файл
     """
-    with open("students_new.csv", mode="w", encoding="UTF-8") as csv_file:
+    with open(FILE_PATH, mode="w", encoding="UTF-8") as csv_file:
         writer = csv.writer(csv_file, delimiter=";")
         writer.writerow(third_question()[0].field_names)
         writer.writerows(third_question()[1])
@@ -79,7 +81,8 @@ def fourth_question():
 def main():
     match input("Введите номер задания "):
         case "1":
-            print(first_question(input("Введите путь до файла. По умолчанию стоит текущая директория (нажмите пробел) ")))
+            print(
+                first_question(input("Введите путь до файла. По умолчанию стоит текущая директория (нажмите пробел) ")))
         case "2":
             print(second_question()[0])
         case "3":

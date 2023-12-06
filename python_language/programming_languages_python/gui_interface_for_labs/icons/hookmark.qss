@@ -1,11 +1,3 @@
-QMainWindow {
-
-    background-color: rgb(40, 40, 40);
-    color: rgb(255, 255, 255);
-    font-family: "Cantrell";
-    font-size: 17px;
-}
-
 QWidget {
     background-color: rgb(40, 40, 40);
     color: rgb(255, 255, 255);

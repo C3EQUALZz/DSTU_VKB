@@ -1,11 +1,15 @@
 """
 AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
-from mimesis import Person
-from python_language.programming_languages_python.fifth_laba_lang.main import create_csv_file
 import csv
-from pprint import pprint
 import os
+from pprint import pprint
+
+from mimesis import Person
+
+from python_language.programming_languages_python.fifth_laba_lang.main import create_csv_file
+
+FILE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "students.csv")
 
 
 def first_question(k=None) -> int:
@@ -28,9 +32,9 @@ def second_question(k=None) -> dict:
     2;Сидоров Семен Семенович;23;БО-111111
     Считайте информацию из файла в структуру: {№: [ФИО, Возраст, Группа], №: [....], №: [....]}
     """
-    if not os.path.exists("students.csv"):
+    if not os.path.exists(FILE_PATH):
         create_csv_file()
-    with open("students.csv", encoding="UTF-8") as csv_file:
+    with open(FILE_PATH, encoding="UTF-8") as csv_file:
         reader = csv.reader(csv_file, delimiter=";")
         reader.__next__()
         return {x[0]: x[1:] for x in sorted(reader, key=lambda row: row[1].split()[1])}
@@ -50,7 +54,7 @@ def fourth_question(k=None):
     """
     Добавьте к пользовательскому интерфейсу из задачи №3 возможность сохранения новых данных в файл.
     """
-    with open("students_new.csv", mode="w", encoding="UTF-8") as csv_file:
+    with open(FILE_PATH[:-4] + "_new.csv", mode="w", encoding="UTF-8") as csv_file:
         writer = csv.writer(csv_file, delimiter=";")
         writer.writerow(["№", "ФИО", "Возраст", "Группа"])
         data = third_question(1)

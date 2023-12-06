@@ -2,6 +2,10 @@
 Данный модуль предназначен для реализации логики взаимодействия с csv файлами относительно БД
 """
 import csv
+import os
+
+# поиск абсолютного пути для приложения
+CSV_FILE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output.csv")
 
 
 def db_to_csv(data: dict) -> None:
@@ -9,7 +13,7 @@ def db_to_csv(data: dict) -> None:
     Функция, которая считывает данные из БД и записывает в csv.
     :data: словарь, взятый с 1 задания, который мы обрабатываем для сохранения.
     """
-    with open('output.csv', 'w', newline='') as csv_file:
+    with open(CSV_FILE_PATH, 'w', newline='') as csv_file:
         csv_writer = csv.writer(csv_file)
 
         # Запись заголовков
@@ -18,7 +22,7 @@ def db_to_csv(data: dict) -> None:
                    'department_id', 'department_title', 'institute']
         csv_writer.writerow(headers)
 
-        # Запись данных
+        # Запись данных в файл
         for teacher_id, teacher_data in data.items():
             row = [
                 teacher_id,
@@ -34,12 +38,15 @@ def db_to_csv(data: dict) -> None:
 
 
 def csv_to_db() -> dict:
+    """
+    Функция, которая считывает информацию из csv и переносит в словарь Python
+    """
     data_dict = {}
 
-    with open("output.csv", 'r', newline='') as csv_file:
+    with open(CSV_FILE_PATH, 'r', newline='') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)  # Пропуск заголовков
-
+        # Распаковал так имена для удобства, чтобы можно было нормально добавлять
         for row in csv_reader:
             teacher_id, name, age, position_id, position_title, department_id, department_title, institute = row
 

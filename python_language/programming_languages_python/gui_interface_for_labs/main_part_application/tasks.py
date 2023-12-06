@@ -3,11 +3,13 @@
 """
 __all__ = ["TaskChooser"]
 
-import pkgutil
 import importlib
-from number_parser import parse_ordinal
-import python_language.programming_languages_python as lang_module
+import pkgutil
 from typing import Callable
+
+from number_parser import parse_ordinal
+
+import python_language.programming_languages_python as lang_module
 
 
 def clear_text_from_tabs(text: str) -> str:
@@ -24,7 +26,7 @@ def create_description(function: Callable) -> str:
     :param function: функция, у которой есть docstring.
     :returns: Возвращает форматированную строку с docstring.
     """
-    return clear_text_from_tabs(function.__doc__) if function.__doc__ else "No description available"
+    return clear_text_from_tabs(function.__doc__) if function.__doc__ else "Не добавил условия"
 
 
 def key_generation(module, counter: int):

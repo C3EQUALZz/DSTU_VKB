@@ -1,3 +1,6 @@
+"""
+AUTHOR: 1 вариант Ковалев Данил ВКБ22
+"""
 import re
 
 
@@ -112,6 +115,20 @@ def eleventh_question(string: str) -> bool:
     Есть текст со списками цен. Извлечь из него цены в USD, RUR, EU.
     – пример правильных выражений: 23.78 USD.
     – пример неправильных выражений: 22 UDD, 0.002 USD.
+    """
+    ...
+
+
+def twelve_question(string: str) -> bool:
+    """
+
+    """
+    ...
+
+
+def thirteenth_question(string: str) -> bool:
+    """
+
     """
     ...
 

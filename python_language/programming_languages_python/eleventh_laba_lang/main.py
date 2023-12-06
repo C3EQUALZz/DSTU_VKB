@@ -17,19 +17,21 @@ from python_language.programming_languages_python.eleventh_laba_lang.db_creation
                                                                                                 Teacher)
 from python_language.programming_languages_python.eleventh_laba_lang.db_interface import *
 
+file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "database.db")
+
+if not os.path.exists(file_path):
+    create_database()
+
+SESSION = sessionmaker(bind=create_engine(f'sqlite:///{file_path}', echo=False))()
+
 
 def first_question(k=None):
     """
     Представить таблицы в виде структур языка Python
     """
-    if not os.path.exists("database.db"):
-        create_database()
-
-    engine = create_engine('sqlite:///database.db', echo=False)
-    session = sessionmaker(bind=engine)()
     # SQL-запрос для извлечения данных из нескольких таблиц
     # Join объединяет наши данные, чтобы они были вместе
-    query_result = session.query(Teacher, Position, Department).join(Position).join(Department).all()
+    query_result = SESSION.query(Teacher, Position, Department).join(Position).join(Department).all()
 
     data_dict = {}
     for teacher, position, department in query_result:
@@ -49,9 +51,6 @@ def second_question(string: str) -> str:
     Имейте в виду, что связанные операции (удаление, добавление, изменение) для связанных таблиц,
     должны изменять данные во всех связанных структурах.
     """
-    if not os.path.exists("database.db"):
-        create_database()
-
     pattern_and_functions: list[tuple[re.Pattern, Callable]] = [
         (re.compile(r'^Удалить (преподавателя|препода)? (.+)$', re.I | re.U), remove_by_name),
         (re.compile(r"^Удалить всех с кафедры (.+)$", re.I | re.U), remove_by_department),
@@ -75,12 +74,6 @@ def third_question(k=None):
     Вывести построчно информацию для каждого преподавателя:
     "ФИО преподавателя", "название кафедры", "должность"
     """
-    if not os.path.exists("database.db"):
-        create_database()
-
-    engine = create_engine('sqlite:///database.db', echo=False)
-    session = sessionmaker(bind=engine)()
-
     # SQL код выполняется не построчно, как Python.
     # Здесь такая последовательность FROM -> JOIN -> SELECT
     query = text(
@@ -92,7 +85,7 @@ def third_question(k=None):
         """
     )
 
-    result = session.execute(query)
+    result = SESSION.execute(query)
 
     return "\n".join(
         f"ФИО - {row[0]}\n"
@@ -107,12 +100,6 @@ def fourth_question(k=None):
     Посчитайте и выведите результат:
     Для каждой кафедры: сколько всего преподавателей.
     """
-    if not os.path.exists("database.db"):
-        create_database()
-
-    engine = create_engine('sqlite:///database.db', echo=False)
-    session = sessionmaker(bind=engine)()
-
     query = text(
         """
         SELECT departments.title AS department_title, COUNT(teachers.id) AS teacher_count
@@ -122,7 +109,7 @@ def fourth_question(k=None):
         """
     )
 
-    result = session.execute(query)
+    result = SESSION.execute(query)
 
     return '\n'.join(f"Кафедра: {row[0]}, Количество преподавателей: {row[1]}" for row in result)
 
@@ -132,12 +119,12 @@ def fifth_question(decree: str) -> str | dict:
     Реализуйте функционал по сохранению данных в файлы формата .csv и считыванию информации из файлов
     :param decree: ввод от пользователя, то есть что он хочет сделать.
     """
-    if re.fullmatch(r"(Записать|Вписать)\s?(данные)?", decree, re.I):
+    if re.fullmatch(r"(Записать|Вписать)\s?(данные|информацию)?", decree, re.I):
         res: dict = first_question()
         db_to_csv(res)
         return "Готово"
 
-    if re.fullmatch(r"(Считать|Прочитать)\s?(данные)?", decree, re.I):
+    if re.fullmatch(r"(Считать|Прочитать)\s?(данные|информацию)?", decree, re.I):
         return csv_to_db()
 
     return "Неправильно ввели данные"
