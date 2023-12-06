@@ -48,7 +48,7 @@ def second_question(k=None):
     table = PrettyTable()
     if not os.path.exists(FILE_PATH):
         create_csv_file()
-    with open("students.csv", encoding="UTF-8") as csv_file:
+    with open(FILE_PATH, encoding="UTF-8") as csv_file:
         reader = csv.reader(csv_file, delimiter=";")
         table.field_names = reader.__next__()
         result = sorted(reader, key=lambda row: row[1].split()[1])
