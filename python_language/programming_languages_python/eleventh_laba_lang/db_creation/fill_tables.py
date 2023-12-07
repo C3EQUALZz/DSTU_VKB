@@ -1,4 +1,3 @@
-import os
 from typing import Callable
 
 ########################################################################################################################
@@ -92,7 +91,7 @@ def create_database() -> None:
     Функция, которая создает БД
     """
     # подключение к БД
-    engine = create_engine(f'sqlite:///{os.path.join(os.path.dirname(os.path.abspath(__file__)), "database.db")}',
+    engine = create_engine('sqlite:///database.db',
                            echo=False)
     # Передаем нашей БД для создания таблиц и значений
     db_manager = DatabaseManager(engine)

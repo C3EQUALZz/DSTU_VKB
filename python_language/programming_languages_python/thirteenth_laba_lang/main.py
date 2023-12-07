@@ -2,6 +2,7 @@
 AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
 import re
+import arrow
 
 
 def first_question(string: str) -> bool:
@@ -16,6 +17,8 @@ def second_question(string: str) -> bool:
     """
     Написать регулярное выражение, определяющее является ли данная строка GUID с или без скобок.
     Где GUID это строчка, состоящая из 8, 4, 4, 4, 12 шестнадцатеричных цифр разделенных тире.
+    – пример правильных выражений: e02fd0e4-00fd-090A-ca30-0d00a0038ba0.
+    – пример неправильных выражений: e02fd0e400fd090Aca300d00a0038ba0.
     """
     pattern = r"^(\{?[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\}?)$"
     return bool(re.fullmatch(pattern, string.strip()))
@@ -24,6 +27,8 @@ def second_question(string: str) -> bool:
 def third_question(string: str) -> bool:
     """
     Написать регулярное выражение, определяющее является ли заданная строка правильным MAC-адресом.
+    – пример правильных выражений: aE:dC:cA:56:76:54.
+    – пример неправильных выражений: 01:23:45:67:89:Az.
     """
     pattern = r"^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$"
     return bool(re.fullmatch(pattern, string.strip()))
@@ -39,10 +44,10 @@ def fourth_question(string: str) -> bool:
     Одно буквенные домены считаются запрещенными. Запрещены спецсимволы, например «–» в начале и конце имени домена.
     Запрещен символ «_» и пробел в имени домена. При составлении регулярного выражения ориентируйтесь на
     список правильных и неправильных выражений заданных ниже.
-    – пример правильных выражений:http://www.example.com, http://example.com.
+    – пример правильных выражений: http://www.example.com, http://example.com.
     – пример неправильных выражений: Just Text, http://a.com.
     """
-    pattern = r"https?:\/\/(?:www\.)?[a-z0-9]{2,}\.com/gi"
+    pattern = r"^https?:\/\/(?:www\.)?[a-z0-9]{2,}\.(com|ru)$"
     return bool(re.fullmatch(pattern, string.strip()))
 
 
@@ -64,7 +69,14 @@ def sixth_question(string: str) -> bool:
     – пример правильных выражений: 29/02/2000, 30/04/2003, 01/01/2003.
     – пример неправильных выражений: 29/02/2001, 30-04-2003, 1/1/1899.
     """
-    pattern = r"^(0[1-9]|[12]\d|3[01])/(0[1-9]|1[0-2])/((?:16|[2-9]\d)\d{2})$"
+    # try:
+    #     arrow.get(string, 'DD/MM/YYYY')
+    #     return True
+    # except arrow.parser.ParserError:
+    #     return False
+
+    pattern = r'^(0[1-9]|1\d|2[0-8])/(0[1-9]|1[0-2])/((?:1[6-9]|[2-9]\d)?\d{2})$|^29/02/(?:(?:(?:1[6-9]|[2-9]\d)(?:0[' \
+              r'48]|[2468][048]|[13579][26]))|(?:16|[2468][048]|[3579][26])00)$'
     return bool(re.fullmatch(pattern, string.strip()))
 
 
@@ -75,7 +87,7 @@ def seventh_question(string: str) -> bool:
     – пример правильных выражений: user@example.com, root@localhost
     – пример неправильных выражений: bug@@@com.ru, @val.ru, Just Text2.
     """
-    pattern = r"^\w+@\w+\.\w+$"
+    pattern = r"^\w+@\w+(\.)?\w+$"
     return bool(re.fullmatch(pattern, string.strip()))
 
 
@@ -95,7 +107,8 @@ def ninth_question(password: str) -> bool:
     Пароль считается надежным, если он состоит из 8 или более символов.
     Где символом может быть английская буква, цифра и знак подчеркивания.
     Пароль должен содержать хотя бы одну заглавную букву, одну маленькую букву и одну цифру.
-    – пример правильных выражений: C00l_Pass, SupperPas1.– пример неправильных выражений: Cool_pass, C00l.
+    – пример правильных выражений: C00l_Pass, SupperPas1
+    .– пример неправильных выражений: Cool_pass, C00l.
     """
     # используются положительные просмотры вперед
     return bool(re.match(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z0-9_]{8,}$', password))
@@ -138,6 +151,7 @@ def thirteenth_question(string: str) -> list:
     Вывести только правильно написанные выражения со скобками.
     – пример правильных выражений: (3 + 5) – 9 × 4.
     – пример неправильных выражений: ((3 + 5) – 9 × 4.
+    FIXME
     """
     pattern = r'\([^()]*\)'  # Поиск выражений в скобках
     return re.findall(pattern, string)

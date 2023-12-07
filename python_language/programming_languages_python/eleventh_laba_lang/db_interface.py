@@ -20,7 +20,7 @@ def remove_by_name(data: tuple[str, ...]) -> bool:
         data[tuple[str]] - переменное количество аргументов, здесь мне нужно будет только имя
     Пример ввода: удалить преподавателя Роман Лапина (постоянно меняется значение)
     """
-    name_to_delete = data[-1].strip().capitalize()
+    name_to_delete = data[-1].strip().title()
     teacher_to_delete = session.query(Teacher).filter_by(name=name_to_delete).first()
     if teacher_to_delete:
         session.delete(teacher_to_delete)
@@ -35,7 +35,7 @@ def remove_by_department(data: tuple[str, ...]) -> bool:
         data[tuple[str]] - информация после match.groups(), здесь мне нужно будет взять всех, кто с определенной кафедры
     Пример ввода: удалить всех с кафедры КБИС
     """
-    department_to_delete = data[-1].strip().capitalize()
+    department_to_delete = data[-1].strip()
     # Получаем объект кафедры из базы данных
     if department := session.query(Department).filter_by(title=department_to_delete).first():
         # Получаем всех преподавателей, связанных с кафедрой
@@ -59,7 +59,7 @@ def remove_by_position(data: tuple[str, ...]) -> bool:
         data[tuple[str]] - информация после match.groups(), здесь мне нужны те, кого удалить по определенной должности
     Пример ввода: удалить всех, кто имеет звание - Декан
     """
-    position_to_delete = data[-1].strip().capitalize()
+    position_to_delete = data[-1].strip().title()
     # Получаем объект должности из базы данных
     if position := session.query(Position).filter_by(title=position_to_delete).first():
         # Получаем всех преподавателей, связанных с должностью
