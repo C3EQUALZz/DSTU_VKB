@@ -2,7 +2,6 @@
 AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
 import re
-import arrow
 
 
 def first_question(string: str) -> bool:
@@ -20,7 +19,7 @@ def second_question(string: str) -> bool:
     – пример правильных выражений: e02fd0e4-00fd-090A-ca30-0d00a0038ba0.
     – пример неправильных выражений: e02fd0e400fd090Aca300d00a0038ba0.
     """
-    pattern = r"^(\{?[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\}?)$"
+    pattern = r"^(\{?[0-9a-fA-F]{8}-(?:[0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}\}?)$"
     return bool(re.fullmatch(pattern, string.strip()))
 
 
@@ -30,7 +29,7 @@ def third_question(string: str) -> bool:
     – пример правильных выражений: aE:dC:cA:56:76:54.
     – пример неправильных выражений: 01:23:45:67:89:Az.
     """
-    pattern = r"^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$"
+    pattern = r"^(?:[0-9A-Fa-f]{2}[:-]){5}(?:[0-9A-Fa-f]{2})$"
     return bool(re.fullmatch(pattern, string.strip()))
 
 
@@ -44,8 +43,8 @@ def fourth_question(string: str) -> bool:
     Одно буквенные домены считаются запрещенными. Запрещены спецсимволы, например «–» в начале и конце имени домена.
     Запрещен символ «_» и пробел в имени домена. При составлении регулярного выражения ориентируйтесь на
     список правильных и неправильных выражений заданных ниже.
-    – пример правильных выражений: http://www.example.com, http://example.com.
-    – пример неправильных выражений: Just Text, http://a.com.
+    – пример правильных выражений: https://www.example.com, https://example.com.
+    – пример неправильных выражений: Just Text, https://a.com.
     """
     pattern = r"^https?:\/\/(?:www\.)?[a-z0-9]{2,}\.(com|ru)$"
     return bool(re.fullmatch(pattern, string.strip()))
@@ -107,11 +106,11 @@ def ninth_question(password: str) -> bool:
     Пароль считается надежным, если он состоит из 8 или более символов.
     Где символом может быть английская буква, цифра и знак подчеркивания.
     Пароль должен содержать хотя бы одну заглавную букву, одну маленькую букву и одну цифру.
-    – пример правильных выражений: C00l_Pass, SupperPas1
-    .– пример неправильных выражений: Cool_pass, C00l.
+    – пример правильных выражений: C00l_Pass, SupperPas1.
+    – пример неправильных выражений: Cool_pass, C00l.
     """
     # используются положительные просмотры вперед
-    return bool(re.match(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z0-9_]{8,}$', password))
+    return bool(re.match(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z0-9_]{8,}$', password.strip()))
 
 
 def tenth_question(string: str) -> bool:
@@ -121,7 +120,7 @@ def tenth_question(string: str) -> bool:
     – пример правильных выражений: 123456, 234567.
     – пример неправильных выражений: 1234567, 12345.
     """
-    return bool(re.match(r'^[1-9]\d{5}$', string))
+    return bool(re.match(r'^[1-9]\d{5}$', string.strip()))
 
 
 def eleventh_question(string: str) -> list:
@@ -131,7 +130,7 @@ def eleventh_question(string: str) -> list:
     – пример неправильных выражений: 22 UDD, 0.002 USD.
     """
     pattern = r'(\d+(?:\.\d+)?)\s+(USD|RUR|EU)'
-    matches = re.findall(pattern, string)
+    matches = re.findall(pattern, string.strip())
     return [(float(price), currency) for price, currency in matches]
 
 
@@ -143,18 +142,17 @@ def twelve_question(string: str) -> bool:
     """
     # (?!\s*\+) - негативное взглядование вперед, проверяющее, что за цифрами не следует "+" с возможными пробелами.
     pattern = r'\b\d+(?!\s*\+)'  # Цифры, за которыми не стоит "+"
-    return bool(re.search(pattern, string))
+    return bool(re.search(pattern, string.strip()))
 
 
-def thirteenth_question(string: str) -> list:
+def thirteenth_question(string: str) -> bool:
     """
     Вывести только правильно написанные выражения со скобками.
     – пример правильных выражений: (3 + 5) – 9 × 4.
     – пример неправильных выражений: ((3 + 5) – 9 × 4.
-    FIXME
     """
-    pattern = r'\([^()]*\)'  # Поиск выражений в скобках
-    return re.findall(pattern, string)
+    match = re.fullmatch(r'[^()]*((\([^()]*\)[^()]*)*)', string.strip())
+    return match and match.group(0).count('(') == match.group(0).count(')')
 
 
 def main():
