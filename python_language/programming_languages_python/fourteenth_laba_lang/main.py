@@ -2,6 +2,7 @@
 AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
 import re
+
 ########################################################################################################################
 import numpy as np
 from mimesis import Person, Address, Datetime
@@ -9,7 +10,8 @@ from mimesis.locales import Locale
 from prettytable import PrettyTable
 
 ########################################################################################################################
-from python_language.programming_languages_python.fourteenth_laba_lang.classes import Student, Train, Trains
+from python_language.programming_languages_python.fourteenth_laba_lang.classes import Student, Train, Trains, \
+    TwoVariables
 from python_language.programming_languages_python.fourteenth_laba_lang.help_functions import generate_table
 
 
@@ -69,13 +71,24 @@ def second_question(what_to_do: str) -> str | PrettyTable:
     return "Вы неправильно ввели"
 
 
-def third_question(k=None):
+def third_question(string: str):
     """
-    Создать класс с двумя переменными. Добавить функцию вывода на экран и функцию изменения этих переменных.
+    Создать класс с двумя переменными.
+    Добавить функцию вывода на экран и функцию изменения этих переменных.
     Добавить функцию, которая находит сумму значений этих переменных.
     Функцию, которая находит наибольшее значение из этих двух переменных.
     """
-    ...
+    if res := re.fullmatch(r"^Найти сумму значений (?:переменных)?(\d+) (\d+)$", string.strip(), re.I):
+        var = TwoVariables(*map(int, res.groups()))
+        return var.sum()
+
+    if res := re.fullmatch(r"^Найти наибольшее значение (\d+) (\d+)$", string.strip(), re.I):
+        var = TwoVariables(*map(int, res.groups()))
+        return var.max_variable()
+
+    if res := re.fullmatch(r"^Изменить переменные с (\d+ \d+) на (\d+ \d+)$", string.strip(), re.I):
+        var = TwoVariables(*map(int, res.group(1).split()))
+        return var.modify(*map(int, res.group(2).split()))
 
 
 def fourth_question(k=None):
@@ -132,9 +145,9 @@ def main() -> None:
         case "1":
             print(first_question())
         case "2":
-            print(second_question(input("Введите ")))
+            print(second_question(input("Введите что вы хотите сделать: ")))
         case "3":
-            print(third_question())
+            print(third_question(input("Введите что вы хотите сделать: ")))
         case "4":
             print(fourth_question())
         case "5":
