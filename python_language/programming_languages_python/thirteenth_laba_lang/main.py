@@ -29,7 +29,7 @@ def third_question(string: str) -> bool:
     – пример правильных выражений: aE:dC:cA:56:76:54.
     – пример неправильных выражений: 01:23:45:67:89:Az.
     """
-    pattern = r"^(?:[0-9A-Fa-f]{2}[:-]){5}(?:[0-9A-Fa-f]{2})$"
+    pattern = r"^(?:[0-9A-Fa-f]{2}:){5}(?:[0-9A-Fa-f]{2})$"
     return bool(re.fullmatch(pattern, string.strip()))
 
 
@@ -96,7 +96,7 @@ def eighth_question(string: str) -> bool:
     – пример правильных выражений: 127.0.0.1, 255.255.255.0.
     – пример неправильных выражений: 1300.6.7.8, abc.def.gha.bcd.
     """
-    pattern = r"^([0-9]{1,3}[\.]){3}[0-9]{1,3}$"
+    pattern = r'((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
     return bool(re.fullmatch(pattern, string.strip()))
 
 
@@ -151,8 +151,8 @@ def thirteenth_question(string: str) -> bool:
     – пример правильных выражений: (3 + 5) – 9 × 4.
     – пример неправильных выражений: ((3 + 5) – 9 × 4.
     """
-    match = re.fullmatch(r'[^()]*((\([^()]*\)[^()]*)*)', string.strip())
-    return match and match.group(0).count('(') == match.group(0).count(')')
+    match = re.fullmatch(r'((\([^()]*\)[^()]*)*)', string.strip())
+    return bool(match) and match.group(0).count('(') == match.group(0).count(')')
 
 
 def main():

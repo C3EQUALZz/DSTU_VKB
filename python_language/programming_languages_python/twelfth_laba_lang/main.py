@@ -1,6 +1,9 @@
 """
 AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
+
+__all__ = ["first_question", "second_question", "third_question"]
+
 import os
 from pprint import pprint
 
