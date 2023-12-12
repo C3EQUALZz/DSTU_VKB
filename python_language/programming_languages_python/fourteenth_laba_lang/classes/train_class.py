@@ -96,6 +96,7 @@ class Trains:
         Метод, который ищет поезд по номеру. Используется бинарный поиск для определения номера.
         """
         index = bisect_left([train.number for train in self.trains], target_number)
-        if 0 <= index < len(self.trains) and self.trains[index].number == target_number:
+        # if 0 <= index < len(self.trains) and self.trains[index].number == target_number:
+        if 0 <= index < len(self.trains):
             return index
         raise IndexError("Ошибка с выбором индекса для поезда")

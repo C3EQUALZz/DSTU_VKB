@@ -10,8 +10,10 @@ from mimesis.locales import Locale
 from prettytable import PrettyTable
 
 ########################################################################################################################
-from python_language.programming_languages_python.fourteenth_laba_lang.classes import Student, Train, Trains, \
-    TwoVariables
+from python_language.programming_languages_python.fourteenth_laba_lang.classes import (Student,
+                                                                                       Train,
+                                                                                       Trains,
+                                                                                       TwoVariables)
 from python_language.programming_languages_python.fourteenth_laba_lang.help_functions import generate_table
 
 
