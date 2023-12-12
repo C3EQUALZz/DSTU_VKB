@@ -1,6 +1,7 @@
 """
 AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
+import re
 ########################################################################################################################
 import numpy as np
 from mimesis import Person, Address, Datetime
@@ -8,19 +9,16 @@ from mimesis.locales import Locale
 from prettytable import PrettyTable
 
 ########################################################################################################################
-from student_class import Student
-from train_class import Train
+from python_language.programming_languages_python.fourteenth_laba_lang.classes import Student, Train, Trains
+from python_language.programming_languages_python.fourteenth_laba_lang.help_functions import generate_table
 
 
-def first_question(k=None):
+def first_question(k=None) -> PrettyTable:
     """
     Создать класс Student, содержащий поля: фамилия и инициалы, номер группы, успеваемость (массив из пяти элементов).
     Создать массив из десяти элементов такого типа, упорядочить записи по возрастанию среднего балла.
     Добавить возможность вывода фамилий и номеров групп студентов, имеющих оценки, равные только 4 или 5.
     """
-    table = PrettyTable()
-    table.field_names = ["Фамилия", "Инициалы", "Номер группы", "Оценки", "Средний балл"]
-
     # mimesis не поддерживает отчества, так как в английском их нет, поэтому такая затычка будет.
     students: np.ndarray[Student, ...] = np.array([
         Student(
@@ -34,26 +32,10 @@ def first_question(k=None):
         if (person := Person(Locale.RU))
     ])
 
-    # создаем массив со средними баллами, чтобы можно было сделать сортировку
-    sorting_key = [np.mean(student.grades) for student in students]
-    # получаем индексы, как мы будем сортировать (по умолчанию идет по возрастанию
-    sorting_indexes = np.argsort(sorting_key)
-    # добавляем в таблицу все наши значения
-    table.add_rows(
-        [
-            student.last_name,
-            student.initials,
-            student.number_group,
-            ', '.join(map(str, student.grades)),
-            np.mean(student.grades).round(3)
-        ]
-        for student in students[sorting_indexes]
-    )
-
-    return table
+    return generate_table(students)
 
 
-def second_question(k=None):
+def second_question(what_to_do: str) -> str | PrettyTable:
     """
     Создать класс с именем Train, содержащий поля: название пункта назначения, номер поезда, время отправления.
     Ввести данные в массив из пяти элементов типа train, упорядочить элементы по номерам поездов.
@@ -61,18 +43,30 @@ def second_question(k=None):
     Добавить возможность сортировки массива по пункту назначения, причем поезда с одинаковыми пунктами назначения
     должны быть упорядочены по времени отправления.
     """
-    trains = np.array([
+    list_trains = np.array([
         Train(
             dest=f"{destination.federal_subject()} г.{destination.city()}",
-            number=np.random.randint(1, 50),
-            departure=Datetime().time()
+            number=number,
+            departure=Datetime().time().replace(microsecond=0)
         )
 
-        for _ in range(5)
+        for number in range(1, 6)
         if (destination := Address(Locale.RU))
     ])
 
-    return trains
+    trains = Trains(trains=list_trains)
+
+    if reg := re.fullmatch(r"^Вывести информацию о поезде под номером (\d+)$", what_to_do.strip(), re.I):
+        return trains[trains.find(int(reg.group(1)))].info
+
+    elif re.fullmatch(r"^Отсортировать поезда по пункту назначения|Отсортировать$", what_to_do.strip(), re.I):
+        trains.sort(lambda train: (train.dest, train.departure))
+        return generate_table(trains.trains)
+
+    elif re.fullmatch(r"^Вывести всю таблицу расписания поездов$", what_to_do.strip(), re.I):
+        return generate_table(trains.trains)
+
+    return "Вы неправильно ввели"
 
 
 def third_question(k=None):
@@ -138,7 +132,7 @@ def main() -> None:
         case "1":
             print(first_question())
         case "2":
-            print(second_question())
+            print(second_question(input("Введите ")))
         case "3":
             print(third_question())
         case "4":
