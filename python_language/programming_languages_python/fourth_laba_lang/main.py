@@ -2,6 +2,8 @@
 AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
 from itertools import chain
+import re
+from python_language.programming_languages_python.first_laba_lang.tutor import safe_eval
 
 import numpy as np
 
@@ -10,6 +12,7 @@ def first_question(n: int):
     """
     Пусть дана матрица чисел размером NxN. Представьте данную матрицу в виде списка.
     Выведите результат сложения всех элементов матрицы.
+    Ничего вводить не надо, генерируется случайная матрица
     """
     matrix = np.random.randint(1000, size=(n, n))
 
@@ -18,15 +21,14 @@ def first_question(n: int):
                       f"Представление данной матрицы в виде строки: {list(chain.from_iterable(matrix))}"))
 
 
-def second_question(lst: list, for_add: str = None):
+def second_question(raw_string: str):
     """
     Пусть дан список из десяти элементов.
     Вариант 1. Удалите первые 2 элемента и добавьте 2 новых. Выведите список на экран
+    Пример ввода [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] [1, 2]
     """
-    if isinstance(lst, str) or for_add is None:
-        for_add = lst[lst.find("]") + 1:]
-        lst = eval(lst[:lst.find("]") + 1])
-    return f"До: {lst}\n" + f"После: {lst[2:] + for_add.split()}"
+    old_list, items_to_add = map(safe_eval, re.findall(r"\[.*?\]", raw_string))
+    return f"До: {old_list}\nПосле: {old_list[2:] + items_to_add}"
 
 
 def third_question(k=None) -> str:
@@ -36,6 +38,7 @@ def third_question(k=None) -> str:
     <Название группы>
         <ФИО>
         <ФИО>
+    Ничего вводить не надо
     """
     my_len = [
         ["БО-331101", ["Акулова Алена", "Бабушкина Ксения"]],
@@ -53,6 +56,7 @@ def fourth_question(k=None):
     """
     Пусть журнал по предмету "Информационные технологии" представлен в виде списка my_len.
     Вариант 1. Выведите всех студентов (и их группы), если фамилия студента начинается на букву А.
+    Ничего вводить не надо
     """
     my_len = [
         ["БО-331101", ["Акулова Алена", "Бабушкина Ксения"]],
@@ -63,7 +67,6 @@ def fourth_question(k=None):
     res_str = ''
     for group, humans in my_len:
         if temporary_storage := [human for human in humans if human.startswith("А")]:
-            print(group, *(f"\t{human}" for human in temporary_storage), sep='\n', end='\n\n')
             res_str += f"{group: ^{len(max(temporary_storage, key=len))}}\n" + '\n'.join(
                 f"{human}" for human in temporary_storage) + "\n\n"
     return res_str
@@ -74,8 +77,7 @@ def main():
         case "1":
             print(first_question(int(input("Введите размерность матрицы. "))))
         case "2":
-            print(second_question(eval(input("Введите список, состоящий из 10 элементов, как в repr ")),
-                                  input("Введите два элемента через пробел для добавления ")))
+            print(second_question(input("Введите список, состоящий из 10 элементов и через пробел второй, как в repr ")))
         case "3":
             print(third_question())
         case "4":
