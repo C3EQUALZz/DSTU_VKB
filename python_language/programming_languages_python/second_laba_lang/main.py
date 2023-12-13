@@ -3,12 +3,14 @@ AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
 from random import sample
 from string import ascii_uppercase
+from python_language.programming_languages_python.first_laba_lang.tutor import safe_eval
 
 
 def first_question(my_number: int):
     """
     Пусть задано некоторое число my_number. Пользователь вводит с клавиатуры свое число user_number.
     Вариант 1. Запрашивайте у пользователя вводить число user_number до тех пор, пока оно не будет меньше my_number.
+    FIXME не знаю как сделать для приложения перенаправления ввода нормально!
     """
     while (user_number := int(input("Вводите user_number "))) > my_number:
         continue
@@ -19,14 +21,16 @@ def second_question(my_list: str):
     """
     Пусть задан список, содержащий строки.
     Вариант 1. Выведите построчно все строки размером от 5 до 10 символов.
+    Пример ввода: ["abaaadj", "jadfuauf", "ok", "fuf"]
     """
-    return '\n'.join(str(x) for x in filter(lambda x: 5 <= len(str(x)) <= 10, eval(my_list)))
+    return '\n'.join(str(x) for x in filter(lambda x: 5 <= len(str(x)) <= 10, safe_eval(my_list)))
 
 
 def third_question(s=None):
     """
     Сгенерируйте и выведите:
     Вариант 1. Случайную строку, состоящую из 5 символов, содержащую только заглавные буквы русского алфавита.
+    Ничего вводить не надо
     """
     return ''.join(sample(ascii_uppercase, 5))
 
@@ -35,6 +39,7 @@ def fourth_question(string: str):
     """
     Пусть дана строка:
     Вариант 1. На основе данной строки сформируйте новую, содержащую только цифры. Выведите новую строку.
+    Пример ввода: привет мир! 123 - это мое счастье
     """
     return f"Цифры - {''.join(filter(lambda x: x.isdigit(), string))}"
 
