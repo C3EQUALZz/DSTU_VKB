@@ -23,9 +23,9 @@ def first_question(path: str):
     return sum(len(files) for root, dirs, files in os.walk(fr"{path}"))
 
 
-def create_csv_file():
+def create_csv_file(path):
     person = Person()
-    with open(FILE_PATH, mode='w', encoding="UTF-8", newline='') as csv_file:
+    with open(path, mode='w', encoding="UTF-8", newline='') as csv_file:
         writer = csv.writer(csv_file, delimiter=";")
         writer.writerow(['№', "ФИО", "Возраст", "Группа"])
         writer.writerows(
@@ -49,7 +49,7 @@ def second_question(k=None):
     """
     table = PrettyTable()
     if not os.path.exists(FILE_PATH):
-        create_csv_file()
+        create_csv_file(FILE_PATH)
     with open(FILE_PATH, encoding="UTF-8") as csv_file:
         reader = csv.reader(csv_file, delimiter=";")
         table.field_names = reader.__next__()
