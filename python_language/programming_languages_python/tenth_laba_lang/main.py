@@ -21,6 +21,7 @@ array = np.array(
 def first_var_first_question(s=None) -> np.ndarray:
     """
     Напишите функцию возведения всех элементов матрицы в квадрат
+    Ничего вводить не надо
     """
     return array ** 2
 
@@ -28,6 +29,7 @@ def first_var_first_question(s=None) -> np.ndarray:
 def second_var_first_question(s=None) -> np.ndarray:
     """
     Напишите функцию нахождения суммы по элементам строк
+    Ничего вводить не надо
     """
     # axis = 0 (столбец), axis = 1 (строка), axis = 2 (ширина, если большая мерность) и т.д.
     return np.sum(array, axis=1)
@@ -36,6 +38,7 @@ def second_var_first_question(s=None) -> np.ndarray:
 def third_var_first_question(s=None) -> np.ndarray:
     """
     Напишите функцию возведения в квадрат всех элементов, которые находятся в четных столбцах.
+    Ничего вводить не надо
     """
     array[:, ::2] = array[:, ::2] ** 2
     return array
@@ -44,6 +47,7 @@ def third_var_first_question(s=None) -> np.ndarray:
 def fourth_var_first_question(k=None) -> np.ndarray:
     """
     Напишите функцию умножения по строкам.
+    Ничего вводить не надо
     """
     return np.prod(array, axis=1)
 
@@ -51,6 +55,7 @@ def fourth_var_first_question(k=None) -> np.ndarray:
 def fifth_var_first_question(k=None) -> np.ndarray:
     """
     Напишите функцию замены всех четных элементов матрицы на 0
+    Ничего вводить не надо
     """
     return np.where(array % 2 == 0, 0, array)
 
@@ -59,6 +64,7 @@ def sixth_var_first_question(ind: str) -> np.ndarray | str:
     """
     Пусть пользователь через консоль вводит число.
     Напишите функцию удаления строки в матрице, чей номер равен введенному числу.
+    Пример ввода: 0
     """
     try:
         return np.delete(array, int(ind), axis=0)
@@ -68,18 +74,20 @@ def sixth_var_first_question(ind: str) -> np.ndarray | str:
 
 def seventh_var_first_question(k=None) -> np.ndarray:
     """
-    Напишете функцию, которая поменяет первую и последнюю строку матрицы местами
+    Напишете функцию, которая поменяет первую и последнюю строку матрицы местами.
+    Ничего вводить не надо
     """
     array[[0, len(array) - 1]] = array[[len(array) - 1, 0]]
     return array
 
 
-def eight_var_first_question(data: list[str, str]) -> np.ndarray:
+def eight_var_first_question(data: str) -> np.ndarray:
     """
     Пусть пользователь через консоль вводит два числа: первое - номер строки,
     второе - номер столбца. Напишите функцию, которая найдет число в данной позиции.
+    Пример ввода: 0 1
     """
-    string, column = map(int, data)
+    string, column = map(int, data.split())
     return array[string, column]
 
 
@@ -100,7 +108,7 @@ def main():
         case "7":
             print(seventh_var_first_question())
         case "8":
-            print(eight_var_first_question(input("Введите два числа через пробел ").split()))
+            print(eight_var_first_question(input("Введите два числа через пробел ")))
         case _:
             print("Вы выбрали неверный номер ")
 
