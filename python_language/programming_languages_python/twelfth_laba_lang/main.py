@@ -28,6 +28,7 @@ def first_question(k=None) -> list:
     """
     Пусть дана база данных. Используйте нужные структуры данных для её хранения.
     Заполните БД. Выведите все страны, чье название начинается на букву А.
+    Ничего не надо вводить
     """
     return [country.name for country in SESSION.query(Country).filter(Country.name.like('A%')).all()]
 
@@ -35,6 +36,7 @@ def first_question(k=None) -> list:
 def second_question(k=None) -> str:
     """
     Для БД из задания 1, выведите все улицы, которые встречаются более чем в 5 городах.
+    Ничего не надо вводить
     """
     query = text("""
     SELECT main.cities.name
@@ -48,7 +50,8 @@ def second_question(k=None) -> str:
 
 def third_question(k=None):
     """
-    Для БД из задания 6 выведите все улицы, для страны РФ
+    Для БД из задания 6 выведите все улицы, для страны РФ.
+    Ничего не надо вводить
     """
     country_name = 'РФ'  # Замените на фактическое название страны
 
