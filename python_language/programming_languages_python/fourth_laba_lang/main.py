@@ -8,13 +8,13 @@ from python_language.programming_languages_python.first_laba_lang.tutor import s
 import numpy as np
 
 
-def first_question(n: int):
+def first_question(n: str):
     """
     Пусть дана матрица чисел размером NxN. Представьте данную матрицу в виде списка.
     Выведите результат сложения всех элементов матрицы.
-    Ничего вводить не надо, генерируется случайная матрица
+    Ввести только одну цифру, генерируется случайная квадратная матрица с введенным размером
     """
-    matrix = np.random.randint(1000, size=(n, n))
+    matrix = np.random.randint(1000, size=(int(n), int(n)))
 
     # linear = lambda data: [data] if isinstance(data, np.int64) else sum(map(linear, data), [])
     return '\n'.join((f"Наша матрица:\n {np.matrix(matrix)}", f"Cумма: {matrix.sum()}",
@@ -75,7 +75,7 @@ def fourth_question(k=None):
 def main():
     match input("Введите номер задания "):
         case "1":
-            print(first_question(int(input("Введите размерность матрицы. "))))
+            print(first_question(input("Введите размерность матрицы. ")))
         case "2":
             print(second_question(input("Введите список, состоящий из 10 элементов и через пробел второй, как в repr ")))
         case "3":

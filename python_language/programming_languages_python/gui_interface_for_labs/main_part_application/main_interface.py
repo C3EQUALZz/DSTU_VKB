@@ -57,10 +57,16 @@ class DlgMain(QtWidgets.QMainWindow):
         # FIXME для 5 лабы нужно сделать вывод только таблицы, а не всего
         if func is None:
             widget.output_data.setText("Выполнено")
-        elif isinstance(res := func(widget.input_data.text()), PrettyTable):
-            widget.output_data.setHtml(self.pretty_print_table(res))
-        else:
-            widget.output_data.setText(str(func(widget.input_data.text())))
+
+        res = func(widget.input_data.text())
+
+        match type(res).__name__:
+            case "PrettyTable":
+                widget.output_data.setHtml(self.pretty_print_table(res))
+            case "tuple":
+                widget.output_data.setText(self.pretty_print_table(res[0]))
+            case _:
+                widget.output_data.setText(str(func(widget.input_data.text())))
 
     def on_cancel_button_clicked(self):
         """
@@ -123,4 +129,3 @@ class DlgMain(QtWidgets.QMainWindow):
 
         html += "</table>"
         return html
-

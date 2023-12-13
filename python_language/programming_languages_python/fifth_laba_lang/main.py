@@ -14,7 +14,9 @@ FILE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "students.c
 def first_question(path: str):
     """
     Пусть дана некоторая директория (папка). Подсчитайте количество файлов в данной директории (папке).
-    Выведите на экран
+    Выведите на экран.
+    По умолчанию стоит текущая директория (нажмите пробел).
+    Вводить надо абсолютный путь для поиска файлов в директории.
     """
     if path.isspace():
         path = os.getcwd()
@@ -76,6 +78,7 @@ def fourth_question(k=None):
         writer = csv.writer(csv_file, delimiter=";")
         writer.writerow(third_question()[0].field_names)
         writer.writerows(third_question()[1])
+        return "Выполнено!"
 
 
 def main():
@@ -88,7 +91,7 @@ def main():
         case "3":
             print(third_question()[0])
         case "4":
-            fourth_question()
+            print(fourth_question())
         case _:
             print("Вы выбрали неверный номер ")
 
