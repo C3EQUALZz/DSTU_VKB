@@ -124,7 +124,7 @@ def fifth_question(what_to_do: str):
         return '\n\n'.join(map(str, filter(lambda buyer: min_num <= buyer.credit_card_number <= max_num, buyers)))
 
 
-def sixth_question(k=None):
+def sixth_question(what_to_do: str):
     """
     Класс Абонент: Идентификационный номер, Фамилия, Имя, Отчество, Адрес, Номер кредитной карточки, Дебет, Кредит,
     Время междугородных и городских переговоров; Конструктор;
@@ -134,7 +134,16 @@ def sixth_question(k=None):
     Сведения относительно абонентов, которые пользовались междугородной связью.
     Список абонентов в алфавитном порядке.
     """
-    ...
+    subscribers = [generate_subscriber() for _ in range(10)]
+
+    if res := re.fullmatch(r"Вывести сведения относительно абонентов, у которых время превышает (\d+)",
+                           what_to_do.strip()):
+        talkative_subscribers = [subscriber for subscriber in subscribers if subscriber.local_call_time > res.group(1)]
+        return '\n\n'.join(map(str, talkative_subscribers))
+
+    if res := re.fullmatch(r"Вывести сведения относительно абонентов, которые пользовались междугородной связью (\d+)",
+                           what_to_do.strip()):
+        ...
 
 
 def seventh_question(k=None):

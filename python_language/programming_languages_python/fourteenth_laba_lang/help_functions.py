@@ -117,3 +117,5 @@ def generate_book():
         author=RussianNames().name,
         year=Datetime().year()
     )
+
+
