@@ -7,6 +7,7 @@ __all__ = ["first_question", "second_question", "third_question", "fourth_questi
 import re
 from functools import partial
 
+import arrow
 ########################################################################################################################
 import numpy as np
 from prettytable import PrettyTable
@@ -136,14 +137,22 @@ def sixth_question(what_to_do: str):
     """
     subscribers = [generate_subscriber() for _ in range(10)]
 
-    if res := re.fullmatch(r"Вывести сведения относительно абонентов, у которых время превышает (\d+)",
-                           what_to_do.strip()):
-        talkative_subscribers = [subscriber for subscriber in subscribers if subscriber.local_call_time > res.group(1)]
-        return '\n\n'.join(map(str, talkative_subscribers))
+    patterns = [
+        (r"Вывести сведения относительно абонентов, у которых время превышает (\d{2}:\d{2}:\d{2})",
+         lambda x, mat: x.local_call_time > arrow.get(mat.group(1)).time()),
+        (r"Вывести сведения относительно абонентов, которые пользовались междугородной связью",
+         lambda x, _: x.intercity_call_time > arrow.get("00:01:00", "HH:mm:ss").time()),
+        (r"Вывести список абонентов в алфавитном порядке", None)
+    ]
 
-    if res := re.fullmatch(r"Вывести сведения относительно абонентов, которые пользовались междугородной связью (\d+)",
-                           what_to_do.strip()):
-        ...
+    for pattern, condition in patterns:
+        if match := re.fullmatch(pattern, what_to_do.strip()):
+            if condition is None:
+                return '\n\n'.join(map(str, sorted(subscribers, key=lambda x: x.full_name)))
+            else:
+                return '\n\n'.join(map(str, filter(lambda x: condition(x, match), subscribers)))
+
+    return "Неверный формат ввода"
 
 
 def seventh_question(k=None):
@@ -176,7 +185,7 @@ def main() -> None:
         case "5":
             print(fifth_question(input("Введите что вы хотите сделать: ")))
         case "6":
-            print(sixth_question())
+            print(sixth_question(input("Введите что вы хотите сделать: ")))
         case "7":
             print(seventh_question())
         case _:

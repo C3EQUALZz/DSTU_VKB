@@ -74,8 +74,8 @@ def generate_subscriber():
         credit_card_number=np.random.randint(1000, 9999),
         debit=np.random.uniform(1000, 10000),
         credit=np.random.uniform(0, 5000),
-        intercity_call_time=np.random.uniform(0, 50),
-        local_call_time=np.random.uniform(0, 100))
+        intercity_call_time=Datetime().time().replace(microsecond=0),
+        local_call_time=Datetime().time().replace(microsecond=0))
 
 
 def generate_buyer():
