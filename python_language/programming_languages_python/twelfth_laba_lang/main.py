@@ -19,7 +19,7 @@ from python_language.programming_languages_python.twelfth_laba_lang.db_creation.
 file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "database.db")
 
 if not os.path.exists(file_path):
-    create_database()
+    create_database(file_path)
 
 SESSION = sessionmaker(bind=create_engine(f'sqlite:///{file_path}', echo=False))()
 

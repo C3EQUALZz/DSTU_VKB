@@ -29,8 +29,8 @@ def fill_random_data(session: Session) -> None:
     session.add_all(countries + cities + streets)
 
 
-def create_database() -> None:
-    engine = create_engine('sqlite:///database.db', echo=False)
+def create_database(path) -> None:
+    engine = create_engine(f"sqlite:///{path}", echo=False)
     db_manager = DatabaseManager(engine)
     db_manager.create_tables()
     db_manager.populate_data(fill_random_data)

@@ -86,13 +86,12 @@ class DatabaseManager:
             session.add(teacher)
 
 
-def create_database() -> None:
+def create_database(path) -> None:
     """
     Функция, которая создает БД
     """
     # подключение к БД
-    engine = create_engine('sqlite:///database.db',
-                           echo=False)
+    engine = create_engine(f"sqlite:///{path}", echo=False)
     # Передаем нашей БД для создания таблиц и значений
     db_manager = DatabaseManager(engine)
     db_manager.create_tables()
