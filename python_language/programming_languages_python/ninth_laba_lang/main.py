@@ -1,8 +1,18 @@
 """
 AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
-from python_language.programming_languages_python.eighth_laba_lang.main import first_question as students_dictionary
+########################################################################################################################
+import os
 from pprint import pprint
+########################################################################################################################
+from python_language.programming_languages_python.eighth_laba_lang.main import first_question as students_dictionary
+from python_language.programming_languages_python.seventh_laba_lang.main import create_csv_file
+
+
+FILE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "students.csv")
+
+if not os.path.exists(FILE_PATH):
+    create_csv_file(FILE_PATH)
 
 
 def first_question(string: str) -> dict:
@@ -13,7 +23,7 @@ def first_question(string: str) -> dict:
     """
     string = string.split()
     string[1:3] = [' '.join(string[1:3])]
-    return students_dictionary("../eighth_laba_lang/students.csv") | {string[0]: string[1:]}
+    return students_dictionary(FILE_PATH) | {string[0]: string[1:]}
 
 
 def second_question(string: str) -> dict:
@@ -22,7 +32,7 @@ def second_question(string: str) -> dict:
     Реализуйте функционал по изменению всех данных о студенте (поиск по №).
     Пример ввода: 3 Егор Гришков 18 ВПР-22
     """
-    data = students_dictionary("../eighth_laba_lang/students.csv")
+    data = students_dictionary(FILE_PATH)
     string = string.split()
     string[1:3] = [' '.join(string[1:3])]
     data[string[0]] = string[1:]
@@ -35,7 +45,7 @@ def third_question(index: str):
     Реализуйте функционал по удалению данных о студенте (поиск по №).
     Пример ввода: 0
     """
-    data = students_dictionary("../eighth_laba_lang/students.csv")
+    data = students_dictionary(FILE_PATH)
     return data.pop(index)
 
 
@@ -45,7 +55,7 @@ def fourth_question(index: str):
     Выведите информацию о студенте с конкретным №.
     Пример ввода: 3
     """
-    return students_dictionary("../eighth_laba_lang/students.csv")[index]
+    return students_dictionary(FILE_PATH)[index]
 
 
 def main() -> None:

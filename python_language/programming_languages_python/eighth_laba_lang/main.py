@@ -1,34 +1,36 @@
 """
 AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
+########################################################################################################################
 import csv
 import os
 import re
 from pprint import pprint
-
+########################################################################################################################
 import python_language.programming_languages_python.eighth_laba_lang.second_subtasks as second_subtasks
 import python_language.programming_languages_python.eighth_laba_lang.third_subtasks as third_subtasks
+from python_language.programming_languages_python.seventh_laba_lang.main import create_csv_file
 
 FILE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "students.csv")
 
 
 def read_file(path: str = None) -> list:
-    if path.isspace():
-        path = FILE_PATH
+    if not os.path.exists(path):
+        create_csv_file(path)
+
     with open(path) as csv_file:
         reader = csv.reader(csv_file, delimiter=";")
         reader.__next__()
         return list(reader)
 
 
-def first_question(k="students.csv") -> dict:
+def first_question(s=None) -> dict:
     """
     Пусть список студентов представлен в виде структуры [[№, ФИО, Возраст, Группа]...].
     Преобразовать список в словарь вида: {№:[ФИО, Возраст, Группа], ....}
+    Ничего вводить не надо
     """
-    if k == "":
-        k = FILE_PATH
-    return {person[0]: person[1:] for person in read_file(k)}
+    return {person[0]: person[1:] for person in read_file(FILE_PATH)}
 
 
 def second_question(string=None):
@@ -68,13 +70,16 @@ def second_question(string=None):
 def third_question(s: str):
     """
     Добавьте к пользовательскому интерфейсу из задачи 2 возможность вывода из словаря:
-        1. Списка студентов группы БО - 111111;
-        2. Списка студентов с номерами от 1 до 10;
-        3. Списка студентов в возрасте 22 лет;
-        4. Списка студентов с фамилией 'Иванов';
-        5. Списка студентов, чьи фамилии заканчиваются на 'a';
-        6. Списка студентов, чей возраст - четное число;
-        7. 
+    1. Списка студентов группы БО - 111111
+    2. Списка студентов с номерами от 1 до 10
+    3. Списка студентов в возрасте 22 лет
+    4. Списка студентов с фамилией 'Иванов'
+    5. Списка студентов, чьи фамилии заканчиваются на 'a'
+    6. Списка студентов, чей возраст - четное число
+    7. Список студентов, если в возрасте студента встречается число 5
+    8. Список студентов, если их номера группы длиннее 7 символов
+    9. Список студентов (а также информацию о них), если их № - четное число
+    10. Список студентов, если их номер группы заканчивается на '1'
     """
     data = first_question()
     return {"Вывести список студентов группы БО - 111111": third_subtasks.print_by_group(data),
