@@ -9,15 +9,11 @@ from functools import partial
 
 ########################################################################################################################
 import numpy as np
-from faker import Faker
-from mimesis import Person, Address, Datetime, Locale
-from mimesis.builtins import RussiaSpecProvider
 from prettytable import PrettyTable
-from russian_names import RussianNames
 
 ########################################################################################################################
 from python_language.programming_languages_python.fourteenth_laba_lang.classes import *
-from python_language.programming_languages_python.fourteenth_laba_lang.help_functions import generate_table
+from python_language.programming_languages_python.fourteenth_laba_lang.help_functions import *
 
 
 def first_question(k=None) -> PrettyTable:
@@ -27,18 +23,7 @@ def first_question(k=None) -> PrettyTable:
     Добавить возможность вывода фамилий и номеров групп студентов, имеющих оценки, равные только 4 или 5.
     """
     # mimesis не поддерживает отчества, так как в английском их нет, поэтому такая затычка будет.
-    students: np.ndarray[Student, ...] = np.array([
-        Student(
-            last_name=person.surname(),
-            initials=f"{person.name()[0]}.{person.name()[-1].upper()}",
-            number_group=np.random.randint(1, 10),
-            grades=np.random.uniform(2.0, 5.0, 5).round(2)
-        )
-
-        for _ in range(10)
-        if (person := Person(Locale.RU))
-    ])
-
+    students: np.ndarray[Student, ...] = np.array([generate_student() for _ in range(10)])
     return generate_table(students)
 
 
@@ -50,27 +35,18 @@ def second_question(what_to_do: str) -> str | PrettyTable:
     Добавить возможность сортировки массива по пункту назначения, причем поезда с одинаковыми пунктами назначения
     должны быть упорядочены по времени отправления.
     """
-    list_trains = np.array([
-        Train(
-            dest=f"{destination.federal_subject()} г.{destination.city()}",
-            number=number,
-            departure=Datetime().time().replace(microsecond=0)
-        )
-
-        for number in range(1, 6)
-        if (destination := Address(Locale.RU))
-    ])
+    list_trains = np.array([generate_train(number) for number in range(1, 6)])
 
     trains = Trains(trains=list_trains)
 
     if reg := re.fullmatch(r"^Вывести информацию о поезде под номером (\d+)$", what_to_do.strip(), re.I):
         return trains[trains.find(int(reg.group(1)))].info
 
-    elif re.fullmatch(r"^Отсортировать поезда по пункту назначения|Отсортировать$", what_to_do.strip(), re.I):
+    if re.fullmatch(r"^Отсортировать поезда по пункту назначения|Отсортировать$", what_to_do.strip(), re.I):
         trains.sort(lambda train: (train.dest, train.departure))
         return generate_table(trains.trains)
 
-    elif re.fullmatch(r"^Вывести всю таблицу расписания поездов$", what_to_do.strip(), re.I):
+    if re.fullmatch(r"^Вывести всю таблицу расписания поездов$", what_to_do.strip(), re.I):
         return generate_table(trains.trains)
 
     return "Вы неправильно ввели"
@@ -115,15 +91,7 @@ def fourth_question(what_to_do: str):
         (re.compile(r"Отсортировать книги по названиям"), partial(Library.sort_books, key=lambda book: book.title))
     ]
 
-    books = [
-        Book(
-            title=fake.catch_phrase(),
-            author=fake.name(),
-            year=fake.year()
-        )
-        for _ in range(5)
-        if (fake := Faker())
-    ]
+    books = [generate_book().title() for _ in range(5)]
 
     library = Library(books=books)
 
@@ -143,19 +111,7 @@ def fifth_question(what_to_do: str):
     Вывести список покупателей, у которых номер кредитной карточки находится в диапазоне от 100 до 10000000
     """
 
-    buyers = [
-        Buyer(
-            name=person[0],
-            patronymic=person[1],
-            surname=person[2],
-            address=Address(Locale.RU).address(),
-            credit_card_number=int(RussiaSpecProvider().kpp()) // 100,
-            bank_account_number=int(RussiaSpecProvider().bic()) // 100
-        )
-
-        for _ in range(10)
-        if (person := RussianNames().get_person().split())
-    ]
+    buyers = [generate_buyer() for _ in range(10)]
 
     if re.fullmatch(r"Вывести список покупателей в алфавитном порядке", what_to_do.strip()):
         buyers.sort(key=lambda x: x.full_name)
