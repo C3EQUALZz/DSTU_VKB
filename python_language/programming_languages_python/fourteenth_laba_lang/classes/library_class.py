@@ -2,6 +2,7 @@
 Класс, который описывает библиотеку
 """
 from dataclasses import dataclass
+from prettytable import PrettyTable
 
 
 @dataclass
@@ -13,17 +14,14 @@ class Book:
     author: str
     year: int
 
-    def __str__(self):
-        return f"Книга {self.title} написана {self.author} в ({self.year})"
-
 
 class Library:
     """
     Данный класс описывает библиотеку книг
     """
 
-    def __init__(self) -> None:
-        self.books = []
+    def __init__(self, books=None) -> None:
+        self.books = [] if books is None else books
 
     def append(self, book: Book) -> None:
         """
@@ -49,8 +47,11 @@ class Library:
         """
         self.books.sort(key=lambda x: getattr(x, key, None))
 
-    def __str__(self) -> str:
+    def __str__(self) -> PrettyTable:
         """
         Метод для вывода данных о библиотеке
         """
-        return "\n".join([book.__str__() for book in self.books])
+        table = PrettyTable()
+        table.field_names = ["Название", "Автор", "Год написания"]
+        table.add_rows([[book.title, book.author, book.year] for book in self.books])
+        return table

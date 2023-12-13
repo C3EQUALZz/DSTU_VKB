@@ -2,18 +2,17 @@
 AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
 import re
+from functools import partial
 
 ########################################################################################################################
 import numpy as np
 from mimesis import Person, Address, Datetime
 from mimesis.locales import Locale
 from prettytable import PrettyTable
+from faker import Faker
 
 ########################################################################################################################
-from python_language.programming_languages_python.fourteenth_laba_lang.classes import (Student,
-                                                                                       Train,
-                                                                                       Trains,
-                                                                                       TwoVariables)
+from python_language.programming_languages_python.fourteenth_laba_lang.classes import *
 from python_language.programming_languages_python.fourteenth_laba_lang.help_functions import generate_table
 
 
@@ -93,13 +92,39 @@ def third_question(string: str):
         return var.modify(*map(int, res.group(2).split()))
 
 
-def fourth_question(k=None):
+def fourth_question(what_to_do: str):
     """
     Класс «Домашняя библиотека». Предусмотреть возможность работы с произвольным числом книг, поиска книги по
     какому-либо признаку (например, по автору или по году издания), добавления книг в библиотеку,
     удаления книг из нее, сортировки книг по разным полям.
     """
-    ...
+    patterns: list = [
+        (re.compile(r"Добавить книгу (\w+)"), Library.append),
+        (re.compile(r"Удалить книгу (\w+)"), Library.remove),
+        (re.compile(r"Найти книгу по автору - (\w+)"), Library.search_books),
+        (re.compile(r"Найти книгу по названию - (\w+)"), Library.search_books),
+        (re.compile(r"Найти книгу по году - (\d+)"), Library.search_books),
+        (re.compile(r"Отсортировать книги по годам"), partial(Library.sort_books, key=lambda book: book.year)),
+        (re.compile(r"Отсортировать книги по авторам"), partial(Library.sort_books, key=lambda book: book.author)),
+        (re.compile(r"Отсортировать книги по названиям"), partial(Library.sort_books, key=lambda book: book.title))
+    ]
+
+    books = [
+        Book(
+            title=fake.catch_phrase(),
+            author=fake.name(),
+            year=fake.year()
+        )
+        for _ in range(5)
+        if (fake := Faker())
+    ]
+
+    library = Library(books=books)
+
+    for pattern, method in patterns:
+        if res := re.fullmatch(pattern, what_to_do.strip(), re.I):
+            if re.match("Отсортировать", what_to_do.strip(), re.I):
+                method(library)
 
 
 def fifth_question(k=None):
@@ -151,7 +176,7 @@ def main() -> None:
         case "3":
             print(third_question(input("Введите что вы хотите сделать: ")))
         case "4":
-            print(fourth_question())
+            print(fourth_question(input("Введите что вы хотите сделать: ")))
         case "5":
             print(fifth_question())
         case "6":

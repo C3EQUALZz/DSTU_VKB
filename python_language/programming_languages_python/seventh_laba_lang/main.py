@@ -40,7 +40,7 @@ def second_question(k=None) -> dict:
         return {x[0]: x[1:] for x in sorted(reader, key=lambda row: row[1].split()[1])}
 
 
-def third_question(k: int):
+def third_question(k: int = 1):
     """
     Добавьте к задаче №2 возможность увеличить возраст всех студентов на 1
     """

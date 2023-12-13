@@ -1,11 +1,25 @@
-# 1 вариант Ковалев Данил ВКБ22
+"""
+AUTHOR: 1 вариант Ковалев Данил ВКБ22
+"""
 from math import fabs
+import ast
+
+
+def safe_eval(expression: str):
+    """
+    Функция для безопасной работы с eval, потому что пользователь может так удалить папку или т.п важные папки
+    """
+    try:
+        return ast.literal_eval(expression)
+    except (SyntaxError, ValueError) as e:
+        raise ValueError(f"Произошла ошибка при обработке eval: {e}")
 
 
 def first_question(string: str) -> float | str:
     """
     Напишите программу для решения примера. Есть переменные: a,b,c,k: Предусмотрите деление на 0.
     Все необходимые переменные вводите ниже.
+    Пример ввода: 1 2 3 4
     """
     a, b, c, k = map(int, string.split())
     try:
@@ -14,31 +28,32 @@ def first_question(string: str) -> float | str:
         return "Деление на ноль"
 
 
-def second_question(lst: list[str | int]) -> str:
+def second_question(custom_string: str) -> str:
     """
     Дан произвольный список, содержащий и строки, и числа.
     Выведите все четные элементы построчно.
+    Пример ввода: ["a", "b", 3, 5, 7, "aba"]
     """
-    lst = eval(lst)
+    lst = safe_eval(custom_string)
     return '\n'.join(str(x) for x in lst[1::2]) if isinstance(lst, list) else "Вы ввели не список"
 
 
-def third_question(lst: list[int]) -> int:
+def third_question(custom_string: str) -> int:
     """
     Дан произвольный список, содержащий только числа.
     Выведите результат сложения чисел больше 10.
+    Пример ввода: [1, 2, 3, 4, 15, 18, 20, -5]
     """
-    lst = eval(lst)
-    return sum(filter(lambda x: x > 10, map(int, lst)))
+    return sum(filter(lambda x: x > 10, map(int, safe_eval(custom_string))))
 
 
 def last_question(lst) -> int:
     """
     Дан произвольный список, содержащий только числа.
     Выведите максимальное число
+    Пример ввода: [1, 2, 3, 4, 15, 18, 20, -5]
     """
-    lst = eval(lst)
-    return max(map(int, lst))
+    return max(map(int, safe_eval(lst)))
 
 
 def interact_with_user():
@@ -46,11 +61,11 @@ def interact_with_user():
         case "1":
             print(first_question(input(f"Введите a,b,c,k ")))
         case "2":
-            print(second_question(eval(input("Введите список, как он выглядит в repr "))))
+            print(second_question(input("Введите список, как он выглядит в repr ")))
         case "3":
-            print(third_question(eval(input("Введите список, как он выглядит в repr "))))
+            print(third_question(input("Введите список, как он выглядит в repr ")))
         case "4":
-            print(last_question(eval(input("Введите список, как он выглядит в repr "))))
+            print(last_question(input("Введите список, как он выглядит в repr ")))
         case _:
             print("Вы выбрали неверный вариант")
 

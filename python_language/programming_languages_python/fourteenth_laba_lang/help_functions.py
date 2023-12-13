@@ -1,6 +1,7 @@
 """
 В данном модуле описаны вспомогательные функции для вывода таблиц на печать
 """
+__all__ = ["generate_table", "append"]
 #####################################################################
 import numpy as np
 from prettytable import PrettyTable
@@ -53,3 +54,5 @@ def _generate_table_trains(table: PrettyTable, trains: np.ndarray) -> None:
     """
     table.add_rows([train.number, train.dest, train.departure] for train in trains)
 
+def append():
+    ...

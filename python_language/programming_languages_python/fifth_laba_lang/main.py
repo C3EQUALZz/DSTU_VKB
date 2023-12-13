@@ -56,7 +56,7 @@ def second_question(k=None):
     return table, result
 
 
-def third_question():
+def third_question(k=None):
     """
     Добавьте к задаче 2 интерфейс.
     Вариант 1. По увеличению возраста всех студентов на 1.
@@ -68,11 +68,11 @@ def third_question():
     return table, result
 
 
-def fourth_question():
+def fourth_question(k=None):
     """
     Добавьте к пользовательскому интерфейсу из задачи возможность сохранения новых данных обратно в файл
     """
-    with open(FILE_PATH, mode="w", encoding="UTF-8") as csv_file:
+    with open(FILE_PATH[:-4] + "_new.csv", mode="w", encoding="UTF-8") as csv_file:
         writer = csv.writer(csv_file, delimiter=";")
         writer.writerow(third_question()[0].field_names)
         writer.writerows(third_question()[1])

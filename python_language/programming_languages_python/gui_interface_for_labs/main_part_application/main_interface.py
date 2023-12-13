@@ -51,6 +51,9 @@ class DlgMain(QtWidgets.QMainWindow):
         """
         widget, current_laboratory, current_number_question = self.__get_info()
         func = TaskChooser(current_laboratory, current_number_question).function
+        # if func is None:
+        #     text = "Выполнено"
+        # FIXME для 5 лабы нужно сделать вывод только таблицы, а не всего
         text = "Выполнено" if func is None else str(func(widget.input_data.text()))
         widget.output_data.setText(text)
 
