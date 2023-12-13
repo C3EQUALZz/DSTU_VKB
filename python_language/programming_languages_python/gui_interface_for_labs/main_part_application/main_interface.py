@@ -2,9 +2,10 @@
 Главный интерфейс приложения.
 Здесь описаны интерфейсы взаимодействия, сигналы и т.п.
 """
-from prettytable import PrettyTable
+import random
 
 from PyQt6 import QtWidgets
+from prettytable import PrettyTable
 
 from .custom_widgets.left_side_menu import TabWidget
 from .page_logic import Page
@@ -55,15 +56,18 @@ class DlgMain(QtWidgets.QMainWindow):
         if func is None:
             widget.output_data.setText("Выполнено")
 
-        res = func(widget.input_data.text())
+        elif current_laboratory == 2 and current_number_question == 1:
+            widget.output_data.setText(self.__input_for_2nd_laboratory(widget))
 
-        match type(res).__name__:
-            case "PrettyTable":
-                widget.output_data.setHtml(self.pretty_print_table(res))
-            case "tuple":
-                widget.output_data.setText(self.pretty_print_table(res[0]))
-            case _:
-                widget.output_data.setText(str(func(widget.input_data.text())))
+        else:
+            res = func(widget.input_data.text())
+            match type(res).__name__:
+                case "PrettyTable":
+                    widget.output_data.setHtml(self.pretty_print_table(res))
+                case "tuple":
+                    widget.output_data.setText(self.pretty_print_table(res[0]))
+                case _:
+                    widget.output_data.setText(str(func(widget.input_data.text())))
 
     def on_cancel_button_clicked(self):
         """
@@ -99,6 +103,14 @@ class DlgMain(QtWidgets.QMainWindow):
 
         widget.combobox.setCurrentIndex(current_index)
         widget.combobox.blockSignals(False)  # Разблокировка сигналов
+
+    @staticmethod
+    def __input_for_2nd_laboratory(widget: Page, my_number=random.randint(1, 5)):
+        """
+        Костыль для 1 задания 2 лабораторной, чтобы был бесконечный ввод
+        """
+        return (f"Ваше число меньше, чем {my_number}", "Ваше число больше или равно загаданного")[
+            int(widget.input_data.text()) >= my_number]
 
     @staticmethod
     def pretty_print_table(pretty_table: PrettyTable):

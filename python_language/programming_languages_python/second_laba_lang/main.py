@@ -10,7 +10,6 @@ def first_question(my_number: int):
     """
     Пусть задано некоторое число my_number. Пользователь вводит с клавиатуры свое число user_number.
     Вариант 1. Запрашивайте у пользователя вводить число user_number до тех пор, пока оно не будет меньше my_number.
-    FIXME не знаю как сделать для приложения перенаправления ввода нормально!
     """
     while (user_number := int(input("Вводите user_number "))) > my_number:
         continue
