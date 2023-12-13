@@ -1,9 +1,13 @@
+import os
+########################################################################################################################
 from sqlalchemy.engine import create_engine
 from sqlalchemy.orm import sessionmaker
-
+########################################################################################################################
 from .db_creation.tables import Teacher, Department, Position
 
-engine = create_engine('sqlite:///database.db', echo=False)
+file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "database.db")
+
+engine = create_engine(f'sqlite:///{file_path}', echo=False)
 session = sessionmaker(bind=engine)()
 
 __all__ = [
@@ -100,7 +104,7 @@ def add_new_department(data: tuple[str, ...]) -> bool:
         data[tuple[str]] - информация после match.groups(), здесь я беру названия кафедры
     Пример: добавить новую кафедру ФИИТ в университет SFEDU
     """
-    department_to_add, university = map(str.capitalize, map(str.strip, data[-2:]))
+    department_to_add, university = map(lambda x: x.strip().capitalize(), data[-2:])
     # Если уже существует в таблице, то мы добавлять не будем
     if session.query(Department).filter_by(title=department_to_add, institute=university).first():
         return True
