@@ -1,15 +1,19 @@
 """
 AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
+__all__ = ["first_question", "second_question", "third_question", "fourth_question", "fifth_question", "sixth_question",
+           "seventh_question"]
+
 import re
 from functools import partial
 
 ########################################################################################################################
 import numpy as np
-from mimesis import Person, Address, Datetime
-from mimesis.locales import Locale
-from prettytable import PrettyTable
 from faker import Faker
+from mimesis import Person, Address, Datetime, Locale
+from mimesis.builtins import RussiaSpecProvider
+from prettytable import PrettyTable
+from russian_names import RussianNames
 
 ########################################################################################################################
 from python_language.programming_languages_python.fourteenth_laba_lang.classes import *
@@ -97,9 +101,11 @@ def fourth_question(what_to_do: str):
     Класс «Домашняя библиотека». Предусмотреть возможность работы с произвольным числом книг, поиска книги по
     какому-либо признаку (например, по автору или по году издания), добавления книг в библиотеку,
     удаления книг из нее, сортировки книг по разным полям.
+    Пример ввода: Добавить книгу 66 стоп времени май-июль 2023г м. Плакин
+    FIXME
     """
     patterns: list = [
-        (re.compile(r"Добавить книгу (\w+)"), Library.append),
+        (re.compile(r"Добавить книгу ([\d\-\.А-Яa-я\s]+)"), Library.append),
         (re.compile(r"Удалить книгу (\w+)"), Library.remove),
         (re.compile(r"Найти книгу по автору - (\w+)"), Library.search_books),
         (re.compile(r"Найти книгу по названию - (\w+)"), Library.search_books),
@@ -127,14 +133,39 @@ def fourth_question(what_to_do: str):
                 method(library)
 
 
-def fifth_question(k=None):
+def fifth_question(what_to_do: str):
     """
     Класс Покупатель: Фамилия, Имя, Отчество, Адрес, Номер кредитной карточки, Номер банковского счета;
     Методы: установка значений атрибутов, получение значений атрибутов, вывод информации.
     Создать массив объектов данного класса. Вывести список покупателей в алфавитном порядке и список покупателей,
     у которых номер кредитной карточки находится в заданном диапазоне.
+    Пример ввода:
+    Вывести список покупателей, у которых номер кредитной карточки находится в диапазоне от 100 до 10000000
     """
-    ...
+
+    buyers = [
+        Buyer(
+            name=person[0],
+            patronymic=person[1],
+            surname=person[2],
+            address=Address(Locale.RU).address(),
+            credit_card_number=int(RussiaSpecProvider().kpp()) // 100,
+            bank_account_number=int(RussiaSpecProvider().bic()) // 100
+        )
+
+        for _ in range(10)
+        if (person := RussianNames().get_person().split())
+    ]
+
+    if re.fullmatch(r"Вывести список покупателей в алфавитном порядке", what_to_do.strip()):
+        buyers.sort(key=lambda x: x.full_name)
+        return '\n\n'.join(map(str, buyers))
+
+    if res := re.fullmatch(
+            r"Вывести список покупателей, у которых номер кредитной карточки находится в диапазоне от (\d+) до (\d+)",
+            what_to_do.strip()):
+        min_num, max_num = map(int, res.groups())
+        return '\n\n'.join(map(str, filter(lambda buyer: min_num <= buyer.credit_card_number <= max_num, buyers)))
 
 
 def sixth_question(k=None):
@@ -178,7 +209,7 @@ def main() -> None:
         case "4":
             print(fourth_question(input("Введите что вы хотите сделать: ")))
         case "5":
-            print(fifth_question())
+            print(fifth_question(input("Введите что вы хотите сделать: ")))
         case "6":
             print(sixth_question())
         case "7":

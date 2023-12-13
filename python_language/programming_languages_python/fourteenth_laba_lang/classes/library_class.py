@@ -3,6 +3,9 @@
 """
 from dataclasses import dataclass
 from prettytable import PrettyTable
+from typing import TypeVar
+
+Book = TypeVar('Book')
 
 
 @dataclass
@@ -14,6 +17,10 @@ class Book:
     author: str
     year: int
 
+    @classmethod
+    def from_string(cls, string: str) -> Book:
+        return Book(*string.split())
+
 
 class Library:
     """
@@ -23,11 +30,11 @@ class Library:
     def __init__(self, books=None) -> None:
         self.books = [] if books is None else books
 
-    def append(self, book: Book) -> None:
+    def append(self, book: str) -> None:
         """
         Метод, который добавляет книгу в библиотеку
         """
-        self.books.append(book)
+        self.books.append(Book.from_string(book))
 
     def remove(self, title: str) -> None:
         """
