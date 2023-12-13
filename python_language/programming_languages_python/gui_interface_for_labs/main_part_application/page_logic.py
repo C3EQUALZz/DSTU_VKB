@@ -42,7 +42,7 @@ class Page(QtWidgets.QWidget):
         self.input_data.setPlaceholderText("Input data: ")
 
         # Создаем блок для вывода данных (многострочное)
-        self.output_data = QtWidgets.QTextEdit()
+        self.output_data = QtWidgets.QTextBrowser()
         self.output_data.setPlaceholderText("Output data: ")
         self.output_data.setReadOnly(True)
 

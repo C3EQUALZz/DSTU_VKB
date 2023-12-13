@@ -4,7 +4,7 @@
 Ковалев Данил ВКБ22 Вариант 1
 
 Данный файл является основным, отсюда происходит запуск контента.
-Version: 1.0.7
+Version: 1.0.8
 TODO:
 1. Попробовать скомпилировать GUI программу по гайду: https://youtu.be/c4anm9QQV80?si=6K_sDnAQMkAdC7v1
 """
@@ -57,7 +57,7 @@ class MainWindow(QtWidgets.QWidget):
         # установка окна приложения
         self.setWindowIcon(QtGui.QIcon("icons/window_icon.png"))
         # Размеры по умолчанию при запуске
-        self.setFixedSize(850, 500)
+        self.setFixedSize(950, 600)
         # Центрирование приложение при запуске
         self._center()
 

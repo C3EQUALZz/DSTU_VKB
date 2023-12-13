@@ -2,6 +2,7 @@
 Главный интерфейс приложения.
 Здесь описаны интерфейсы взаимодействия, сигналы и т.п.
 """
+from prettytable import PrettyTable
 
 from PyQt6 import QtWidgets
 
@@ -54,8 +55,12 @@ class DlgMain(QtWidgets.QMainWindow):
         # if func is None:
         #     text = "Выполнено"
         # FIXME для 5 лабы нужно сделать вывод только таблицы, а не всего
-        text = "Выполнено" if func is None else str(func(widget.input_data.text()))
-        widget.output_data.setText(text)
+        if func is None:
+            widget.output_data.setText("Выполнено")
+        elif isinstance(res := func(widget.input_data.text()), PrettyTable):
+            widget.output_data.setHtml(self.pretty_print_table(res))
+        else:
+            widget.output_data.setText(str(func(widget.input_data.text())))
 
     def on_cancel_button_clicked(self):
         """
@@ -91,3 +96,31 @@ class DlgMain(QtWidgets.QMainWindow):
 
         widget.combobox.setCurrentIndex(current_index)
         widget.combobox.blockSignals(False)  # Разблокировка сигналов
+
+    @staticmethod
+    def pretty_print_table(pretty_table: PrettyTable):
+        """
+        Отображает PrettyTable в QTextBrowser.
+
+        Args:
+            pretty_table (PrettyTable): Объект PrettyTable с данными.
+
+        Returns:
+            html разметку для таблицы
+        """
+        # Создаем HTML-разметку вручную
+        html = "<table border='1'>"
+        html += "<tr>"
+        for field in pretty_table.field_names:
+            html += f"<th>{field}</th>"
+        html += "</tr>"
+
+        for row in pretty_table._rows:
+            html += "<tr>"
+            for value in row:
+                html += f"<td>{value}</td>"
+            html += "</tr>"
+
+        html += "</table>"
+        return html
+

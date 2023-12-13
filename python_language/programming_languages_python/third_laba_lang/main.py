@@ -10,8 +10,9 @@ def first_question(string: str) -> str:
     Пусть дана строка, состоящая из слов, пробелов и знаков препинания.
     На основании этой строки создайте новую, содержащую только слова больше 5 символов.
     Разделитель слов в строке - пробел.
+    Пример ввода: Привет, дружище! Как дела?
     """
-    return ' '.join(filter(lambda x: len(x.strip(",.!")) > 5, string.split()))
+    return ' '.join(filter(lambda x: len(x.strip(",.!:;")) > 5, string.split()))
 
 
 def temporary_info(string: list[str]) -> Generator:
@@ -32,6 +33,7 @@ def second_question(k=None) -> PrettyTable:
     """
     Пусть дана строковая переменная my_string, содержащая информацию о студентах.
     Вариант 1. Вывести информацию в виде таблицы
+    Ничего вводить не надо
     """
     my_table = PrettyTable()
     my_string = ("Ф;И;О;Возраст;Категория;_Иванов;Иван;Иванович;23 года;Студент 3 курса;_Петров;Семен;Игоревич;22 "
@@ -48,22 +50,22 @@ def third_question(k=None) -> str:
     """
     Пусть дана строковая переменная my_string, содержащая информацию о студентах.
     Вариант 1. Вывести построчно информацию о студентах, чья фамилия - "Петров".
+    Ничего вводить не надо
     """
     my_string = ("ФИО;Возраст;Категория;_Иванов Иван Иванович;23 года;Студент 3 курса;_Петров Семен Игоревич;22 "
                  "года;Студент 2 курса;_Акибов Ярослав Наумович;23 года;Студент 3 курса;_Борков Станислав Максимович;"
                  "21 год;Студент 1 курса;_Петров Семен Семенович;21 год;Студент 1 курса;_Романов Станислав Андреевич;"
                  "23 года;Студент 3 курса;_Петров Всеволод Борисович;21 год;Студент 2 курса").split(";")
-    return '\n'.join(map(lambda human: human[0], filter(lambda x: x[0].startswith("Петров"), temporary_info(my_string))))
+    return '\n'.join(
+        map(lambda human: human[0], filter(lambda x: x[0].startswith("Петров"), temporary_info(my_string))))
 
 
 def fourth_question(string: str) -> str:
     """
     Пусть дана строка произвольной длины. Выведите информацию о том, сколько в ней символов и слов.
+    Пример ввода: привет, как дела там у тебя?
     """
-    print(f"Количество слов - {len(string.split())}",
-          f"Количество символов - {sum(symbol.isalpha() for symbol in string)}", sep='\n')
-
-    return f"Количество слов - {len(string.split())}" + '\n' + f"Количество символов - {sum(symbol.isalpha() for symbol in string)}"
+    return f"Количество слов - {len(string.split())}\nКоличество символов - {sum(symbol.isalpha() for symbol in string)}"
 
 
 def main():
