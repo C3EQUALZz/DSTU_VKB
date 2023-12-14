@@ -1,13 +1,14 @@
 """
 AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
+import csv
 ########################################################################################################################
 import os
 from pprint import pprint
+
 ########################################################################################################################
 from python_language.programming_languages_python.eighth_laba_lang.main import first_question as students_dictionary
 from python_language.programming_languages_python.seventh_laba_lang.main import create_csv_file
-
 
 FILE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "students.csv")
 
@@ -23,7 +24,17 @@ def first_question(string: str) -> dict:
     """
     string = string.split()
     string[1:3] = [' '.join(string[1:3])]
-    return students_dictionary(FILE_PATH) | {string[0]: string[1:]}
+    new_dictionary = students_dictionary(FILE_PATH) | {string[0]: string[1:]}
+
+    with open(FILE_PATH, 'w') as f:
+        csv_writer = csv.writer(f, delimiter=';')
+        csv_writer.writerow(["№", "ФИО", "Возраст", "Группа"])
+        csv_writer.writerows([
+            [key, *value]
+            for key, value in new_dictionary.items()
+        ])
+
+    return students_dictionary(FILE_PATH)
 
 
 def second_question(string: str) -> dict:
@@ -32,11 +43,20 @@ def second_question(string: str) -> dict:
     Реализуйте функционал по изменению всех данных о студенте (поиск по №).
     Пример ввода: 3 Егор Гришков 18 ВПР-22
     """
-    data = students_dictionary(FILE_PATH)
     string = string.split()
+
     string[1:3] = [' '.join(string[1:3])]
-    data[string[0]] = string[1:]
-    return data
+    new_dictionary = students_dictionary(FILE_PATH) | {string[0]: string[1:]}
+
+    with open(FILE_PATH, 'w', encoding="UTF-8", newline="") as csv_file:
+        csv_writer = csv.writer(csv_file, delimiter=';')
+        csv_writer.writerow(["№", "ФИО", "Возраст", "Группа"])
+        csv_writer.writerows([
+            [key, *value]
+            for key, value in new_dictionary.items()
+        ])
+
+    return students_dictionary(FILE_PATH)
 
 
 def third_question(index: str):
@@ -46,7 +66,18 @@ def third_question(index: str):
     Пример ввода: 0
     """
     data = students_dictionary(FILE_PATH)
-    return data.pop(index)
+    data.pop(index)
+
+    with open(FILE_PATH, 'w', encoding="UTF-8", newline="") as csv_file:
+        csv_writer = csv.writer(csv_file, delimiter=";")
+
+        csv_writer.writerow(["№", "ФИО", "Возраст", "Группа"])
+        csv_writer.writerows([
+            [key, *value]
+            for key, value in data.items()
+        ])
+
+    return students_dictionary(FILE_PATH)
 
 
 def fourth_question(index: str):
@@ -65,7 +96,7 @@ def main() -> None:
         case "2":
             pprint(second_question(input("Введите значение у студента, как в docstring ")), sort_dicts=False)
         case "3":
-            pprint(third_question(input("Введите номер студента ")))
+            pprint(third_question(input("Введите номер студента ")), sort_dicts=False)
         case "4":
             pprint(fourth_question(input("Введите номер студента ")))
 

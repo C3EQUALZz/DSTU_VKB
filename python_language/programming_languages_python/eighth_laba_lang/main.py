@@ -24,13 +24,15 @@ def read_file(path: str = None) -> list:
         return list(reader)
 
 
-def first_question(s=None) -> dict:
+def first_question(path: str) -> dict:
     """
     Пусть список студентов представлен в виде структуры [[№, ФИО, Возраст, Группа]...].
     Преобразовать список в словарь вида: {№:[ФИО, Возраст, Группа], ....}
     Ничего вводить не надо
     """
-    return {person[0]: person[1:] for person in read_file(FILE_PATH)}
+    if path.isspace() or path == "":
+        path = FILE_PATH
+    return {person[0]: person[1:] for person in read_file(path)}
 
 
 def second_question(string=None):

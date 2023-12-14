@@ -11,7 +11,7 @@ from mimesis.builtins import RussiaSpecProvider
 from prettytable import PrettyTable
 from russian_names import RussianNames
 
-from classes import *
+from python_language.programming_languages_python.fourteenth_laba_lang.classes import *
 
 
 ########################################################################################################################

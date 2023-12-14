@@ -6,18 +6,16 @@ __all__ = ["first_question", "second_question", "third_question", "fourth_questi
 
 import re
 from functools import partial
-
-import arrow
 ########################################################################################################################
 import numpy as np
 from prettytable import PrettyTable
-
+import arrow
 ########################################################################################################################
 from python_language.programming_languages_python.fourteenth_laba_lang.classes import *
 from python_language.programming_languages_python.fourteenth_laba_lang.help_functions import *
 
 
-def first_question(k=None) -> PrettyTable:
+def first_question(what_to_do: str) -> PrettyTable | str:
     """
     Создать класс Student, содержащий поля: фамилия и инициалы, номер группы, успеваемость (массив из пяти элементов).
     Создать массив из десяти элементов такого типа, упорядочить записи по возрастанию среднего балла.
@@ -25,6 +23,13 @@ def first_question(k=None) -> PrettyTable:
     """
     # mimesis не поддерживает отчества, так как в английском их нет, поэтому такая затычка будет.
     students: np.ndarray[Student, ...] = np.array([generate_student() for _ in range(10)])
+
+    if re.fullmatch("Вывести всех студентов имеющих только оценки 4 или 5", what_to_do.strip()):
+        students = np.array([student for student in students if all(grade in (4.0, 5.0) for grade in student.grades)])
+
+        if students.size == 0:
+            return "Нет таких учеников"
+
     return generate_table(students)
 
 
@@ -175,7 +180,7 @@ def seventh_question(k=None):
 def main() -> None:
     match input("Выберите номер задания: "):
         case "1":
-            print(first_question())
+            print(first_question(input("Введите что вы хотите сделать: ")))
         case "2":
             print(second_question(input("Введите что вы хотите сделать: ")))
         case "3":
