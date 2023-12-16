@@ -6,6 +6,7 @@ __all__ = ["first_question", "second_question", "third_question", "fourth_questi
 
 import re
 from functools import partial
+from pprint import pprint
 
 ########################################################################################################################
 import arrow
@@ -182,24 +183,29 @@ def seventh_question(what_to_do: str):
     animals = [generate_animal(i) for i in range(10)]
 
     patterns_and_functions = [
-        (r"Упорядочить всю последовательность животных по убыванию количества пищи.", lambda: sorted(animals)),
-        (r"Вывести первые 5 имен животных из полученного в пункте а) списка", lambda: sorted(animals)[:5]),
-        (r"Вывести последние 3 идентификатора животных из полученного в пункте а) списка",
-         lambda: sorted(animals)[-3:]),
-        (r"Прочитать json файл", read_from_file(),
-         r"Записать в json файл", write_to_file(animals))
+        (r"Упорядочить всю последовательность животных по убыванию количества пищи.",
+         lambda: sorted(map(lambda x: x.food_requirements(), animals))),
 
+        (r"Вывести первые 5 имен животных из полученного в пункте а\) списка.",
+         lambda: sorted(map(lambda x: x.food_requirements(), animals))[:5]),
+
+        (r"Вывести последние 3 идентификатора животных из полученного в пункте а\) списка.",
+         lambda: sorted(map(lambda x: x.food_requirements(), animals))[-3:]),
+
+        (r"Прочитать json файл", read_from_file),
+
+        (r"Записать в json файл", partial(write_to_file, map(lambda x: x.food_requirements(), animals)))
     ]
 
     for pattern, function in patterns_and_functions:
         if re.fullmatch(pattern, what_to_do.strip(), re.IGNORECASE | re.MULTILINE):
-            print(function())
+            return function()
 
 
 def main() -> None:
     match input("Выберите номер задания: "):
         case "1":
-            print(first_question(input("Введите что вы хотите сделать: ")))
+            pprint(first_question(input("Введите что вы хотите сделать: ")))
         case "2":
             print(second_question(input("Введите что вы хотите сделать: ")))
         case "3":

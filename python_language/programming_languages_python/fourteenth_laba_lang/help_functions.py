@@ -8,7 +8,7 @@ __all__ = ["generate_table", "generate_train", "generate_student",
 import json
 import random
 from typing import List
-
+########################################################################################################################
 import numpy as np
 import requests
 from environs import Env
@@ -16,7 +16,7 @@ from mimesis import Address, Locale, Datetime, Text
 from mimesis.builtins import RussiaSpecProvider
 from prettytable import PrettyTable
 from russian_names import RussianNames
-
+########################################################################################################################
 from python_language.programming_languages_python.fourteenth_laba_lang.classes import *
 
 ENV = Env()
@@ -127,20 +127,22 @@ def generate_book():
 
 
 def generate_animal(identifier: int):
-    animals = requests.get('http://davidbau.com/data/animals').text.strip().splitlines()
-    random_animal = random.choice(animals)
-
-    res = requests.get(f"https://api.api-ninjas.com/v1/animals?name={random_animal}",
-                       headers={'X-Api-Key': ENV('ANIMALS')})
-
-    if res.status_code != 200:
-        raise Exception(f"Вы не добавили в env файл API_ANIMALS с сайта api-ninjas")
-
     dictionary = {"Herbivore": Herbivore,
                   "Omnivore": Omnivore,
                   "Carnivore": Carnivore}
 
-    return dictionary[res.json()[0]["characteristics"]["diet"]](identifier=identifier, name=random_animal)
+    while True:
+        animals = requests.get('http://davidbau.com/data/animals').text.strip().splitlines()
+        random_animal = random.choice(animals)
+
+        res = requests.get(f"https://api.api-ninjas.com/v1/animals?name={random_animal}",
+                           headers={'X-Api-Key': ENV('ANIMALS')})
+
+        if res.status_code != 200:
+            raise Exception(f"Вы не добавили в env файл API_ANIMALS с сайта api-ninjas")
+
+        if data := res.json():
+            return dictionary[data[0]["characteristics"]["diet"]](identifier=identifier, name=random_animal)
 
 
 def animals_to_json(animals: List[Animal]):
