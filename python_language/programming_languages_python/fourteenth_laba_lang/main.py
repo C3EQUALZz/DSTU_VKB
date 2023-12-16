@@ -6,10 +6,12 @@ __all__ = ["first_question", "second_question", "third_question", "fourth_questi
 
 import re
 from functools import partial
+
 ########################################################################################################################
+import arrow
 import numpy as np
 from prettytable import PrettyTable
-import arrow
+
 ########################################################################################################################
 from python_language.programming_languages_python.fourteenth_laba_lang.classes import *
 from python_language.programming_languages_python.fourteenth_laba_lang.help_functions import *
@@ -87,7 +89,7 @@ def fourth_question(what_to_do: str):
     FIXME
     """
     patterns: list = [
-        (re.compile(r"Добавить книгу ([\d\-\.А-Яa-я\s]+)"), Library.append),
+        (re.compile(r'Добавить книгу ([\d\-\.А-Яa-яA-Za-z\s]+)'), Library.append),
         (re.compile(r"Удалить книгу (\w+)"), Library.remove),
         (re.compile(r"Найти книгу по автору - (\w+)"), Library.search_books),
         (re.compile(r"Найти книгу по названию - (\w+)"), Library.search_books),
@@ -123,9 +125,8 @@ def fifth_question(what_to_do: str):
         buyers.sort(key=lambda x: x.full_name)
         return '\n\n'.join(map(str, buyers))
 
-    if res := re.fullmatch(
-            r"Вывести список покупателей, у которых номер кредитной карточки находится в диапазоне от (\d+) до (\d+)",
-            what_to_do.strip()):
+    pattern = r"Вывести список покупателей, у которых номер кредитной карточки находится в диапазоне от (\d+) до (\d+)"
+    if res := re.fullmatch(pattern, what_to_do.strip()):
         min_num, max_num = map(int, res.groups())
         return '\n\n'.join(map(str, filter(lambda buyer: min_num <= buyer.credit_card_number <= max_num, buyers)))
 
@@ -153,14 +154,16 @@ def sixth_question(what_to_do: str):
     for pattern, condition in patterns:
         if match := re.fullmatch(pattern, what_to_do.strip()):
             if condition is None:
-                return '\n\n'.join(map(str, sorted(subscribers, key=lambda x: x.full_name)))
+                iterable = sorted(subscribers, key=lambda x: x.full_name)
             else:
-                return '\n\n'.join(map(str, filter(lambda x: condition(x, match), subscribers)))
+                iterable = filter(lambda x: condition(x, match), subscribers)
+
+            return '\n\n'.join(map(str, iterable))
 
     return "Неверный формат ввода"
 
 
-def seventh_question(k=None):
+def seventh_question(what_to_do: str):
     """
     Построить три класса (базовый и 3 потомка), описывающих некоторых хищных животных (один из потомков),
     всеядных(второй потомок) и травоядных (третий потомок).
@@ -173,8 +176,24 @@ def seventh_question(k=None):
     c) Вывести последние 3 идентификатора животных из полученного в пункте а) списка.
     d) Организовать запись и чтение коллекции в/из файла.
     e) Организовать обработку некорректного формата входного файла.
+    FIXME
     """
-    ...
+
+    animals = [generate_animal(i) for i in range(10)]
+
+    patterns_and_functions = [
+        (r"Упорядочить всю последовательность животных по убыванию количества пищи.", lambda: sorted(animals)),
+        (r"Вывести первые 5 имен животных из полученного в пункте а) списка", lambda: sorted(animals)[:5]),
+        (r"Вывести последние 3 идентификатора животных из полученного в пункте а) списка",
+         lambda: sorted(animals)[-3:]),
+        (r"Прочитать json файл", read_from_file(),
+         r"Записать в json файл", write_to_file(animals))
+
+    ]
+
+    for pattern, function in patterns_and_functions:
+        if re.fullmatch(pattern, what_to_do.strip(), re.IGNORECASE | re.MULTILINE):
+            print(function())
 
 
 def main() -> None:
@@ -192,7 +211,7 @@ def main() -> None:
         case "6":
             print(sixth_question(input("Введите что вы хотите сделать: ")))
         case "7":
-            print(seventh_question())
+            print(seventh_question(input("Введите что вы хотите сделать: ")))
         case _:
             print("Вы выбрали неверное задание ")
 

@@ -2,10 +2,16 @@
 В данном модуле описаны вспомогательные функции для вывода таблиц на печать
 """
 __all__ = ["generate_table", "generate_train", "generate_student",
-           "generate_subscriber", "generate_buyer", "generate_book"]
+           "generate_subscriber", "generate_buyer", "generate_book",
+           "generate_animal", "read_from_file", "write_to_file"]
 
-########################################################################################################################
+import json
+import random
+from typing import List
+
 import numpy as np
+import requests
+from environs import Env
 from mimesis import Address, Locale, Datetime, Text
 from mimesis.builtins import RussiaSpecProvider
 from prettytable import PrettyTable
@@ -13,8 +19,9 @@ from russian_names import RussianNames
 
 from python_language.programming_languages_python.fourteenth_laba_lang.classes import *
 
+ENV = Env()
+ENV.read_env()
 
-########################################################################################################################
 
 def generate_table(array: np.ndarray) -> PrettyTable:
     """
@@ -119,3 +126,37 @@ def generate_book():
     )
 
 
+def generate_animal(identifier: int):
+    animals = requests.get('http://davidbau.com/data/animals').text.strip().splitlines()
+    random_animal = random.choice(animals)
+
+    res = requests.get(f"https://api.api-ninjas.com/v1/animals?name={random_animal}",
+                       headers={'X-Api-Key': ENV('ANIMALS')})
+
+    if res.status_code != 200:
+        raise Exception(f"Вы не добавили в env файл API_ANIMALS с сайта api-ninjas")
+
+    dictionary = {"Herbivore": Herbivore,
+                  "Omnivore": Omnivore,
+                  "Carnivore": Carnivore}
+
+    return dictionary[res.json()[0]["characteristics"]["diet"]](identifier=identifier, name=random_animal)
+
+
+def animals_to_json(animals: List[Animal]):
+    return json.dumps(animals, default=Animal.animal_to_dict, indent=2)
+
+
+def animals_from_json(json_data: str):
+    return json.loads(json_data, object_hook=Animal.dict_to_animal)
+
+
+def write_to_file(animals: List[Animal]):
+    json_data = animals_to_json(animals)
+    with open('animals.json', 'w') as f:
+        f.write(json_data)
+
+
+def read_from_file():
+    with open('animals.json', 'r') as f:
+        return animals_from_json(f.read())
