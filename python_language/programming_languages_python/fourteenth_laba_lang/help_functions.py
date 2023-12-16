@@ -7,14 +7,16 @@ __all__ = ["generate_table", "generate_train", "generate_student",
 
 import json
 import random
+
 ########################################################################################################################
 import numpy as np
 import requests
 from environs import Env
-from mimesis import Address, Locale, Datetime, Text
+from mimesis import Address, Locale, Datetime
 from mimesis.builtins import RussiaSpecProvider
 from prettytable import PrettyTable
 from russian_names import RussianNames
+
 ########################################################################################################################
 from python_language.programming_languages_python.fourteenth_laba_lang.classes import *
 
@@ -149,9 +151,12 @@ def generate_book() -> Book:
     Функция, которая создает книжку.
     :returns: Возвращает случайную книгу.
     """
+    # тут запрос идет к API, который генерирует случайные книги
+    books = requests.get("http://titlegen.us-east-1.elasticbeanstalk.com/api/v1/titlegen?type=song&no=4").json()['data']
+
     return Book(
-        title=Text().word(),
-        author=RussianNames().name,
+        title=random.choice(books),
+        author=RussianNames().get_person(),
         year=Datetime().year()
     )
 
@@ -184,7 +189,7 @@ def generate_animal(identifier: int) -> Herbivore | Omnivore | Carnivore:
             return dictionary[data[0]["characteristics"]["diet"]](identifier=identifier, name=random_animal)
 
 
-def write_to_file(animals: list[Animal]):
+def write_to_file(animals: list[Animal]) -> None:
     """
     Функция, которая записывает всех животных в json файл для сохранения
     """

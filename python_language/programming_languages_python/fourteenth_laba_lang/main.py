@@ -86,28 +86,36 @@ def fourth_question(what_to_do: str):
     Класс «Домашняя библиотека». Предусмотреть возможность работы с произвольным числом книг, поиска книги по
     какому-либо признаку (например, по автору или по году издания), добавления книг в библиотеку,
     удаления книг из нее, сортировки книг по разным полям.
-    Пример ввода: Добавить книгу 66 стоп времени май-июль 2023г м. Плакин
-    FIXME
+    Пример ввода: Добавить книгу Ульрика-в-Торгейте Королёв И.А 2021
+    Пример ввода: Удалить книгу Муму Тургенев Иван Сергеевич 1852
+    Пример ввода: Найти книгу по автору - Тургенев Иван Сергеевич
     """
-    patterns: list = [
-        (re.compile(r'Добавить книгу ([\d\-\.А-Яa-яA-Za-z\s]+)'), Library.append),
-        (re.compile(r"Удалить книгу (\w+)"), Library.remove),
-        (re.compile(r"Найти книгу по автору - (\w+)"), Library.search_books),
-        (re.compile(r"Найти книгу по названию - (\w+)"), Library.search_books),
-        (re.compile(r"Найти книгу по году - (\d+)"), Library.search_books),
-        (re.compile(r"Отсортировать книги по годам"), partial(Library.sort_books, key=lambda book: book.year)),
-        (re.compile(r"Отсортировать книги по авторам"), partial(Library.sort_books, key=lambda book: book.author)),
-        (re.compile(r"Отсортировать книги по названиям"), partial(Library.sort_books, key=lambda book: book.title))
-    ]
-
-    books = [generate_book().title() for _ in range(5)]
+    books = [generate_book() for _ in range(5)] + [Book(title="Муму", author="Тургенев Иван Сергеевич", year=1852)]
 
     library = Library(books=books)
 
+    patterns: list = [
+        (r'Добавить книгу ([\d\-\.A-Яа-яA-Za-z\s]+)', library.append),
+        (r"Удалить книгу ([\d\-\.A-Яа-яA-Za-z\s]+)", library.remove),
+        (r"Найти книгу по автору - ([\d\-\.A-Яа-яA-Za-z\s]+)", partial(library.search_books, "author")),
+        (r"Найти книгу по названию - ([\d\-\.A-Яа-яA-Za-z\s]+)", partial(library.search_books, "title")),
+        (r"Найти книгу по году - (\d+)", partial(library.search_books, "year")),
+        (r"Отсортировать книги по годам", partial(Library.sort_books, key=lambda book: book.year)),
+        (r"Отсортировать книги по авторам", partial(Library.sort_books, key=lambda book: book.author)),
+        (r"Отсортировать книги по названиям", partial(Library.sort_books, key=lambda book: book.title))
+    ]
+
     for pattern, method in patterns:
         if res := re.fullmatch(pattern, what_to_do.strip(), re.I):
+
             if re.match("Отсортировать", what_to_do.strip(), re.I):
-                method(library)
+                return method(library)
+
+            result = method(res.group(1))
+
+            return result if result is not None else library.to_pretty_table()
+
+    return "Не выполнено"
 
 
 def fifth_question(what_to_do: str):
@@ -212,7 +220,7 @@ def main() -> None:
         case "3":
             print(third_question(input("Введите что вы хотите сделать: ")))
         case "4":
-            print(fourth_question(input("Введите что вы хотите сделать: ")))
+            pprint(fourth_question(input("Введите что вы хотите сделать: ")))
         case "5":
             print(fifth_question(input("Введите что вы хотите сделать: ")))
         case "6":

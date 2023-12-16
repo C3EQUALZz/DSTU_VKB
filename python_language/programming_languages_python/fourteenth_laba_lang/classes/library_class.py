@@ -2,8 +2,9 @@
 Класс, который описывает библиотеку
 """
 from dataclasses import dataclass
-from prettytable import PrettyTable
 from typing import TypeVar
+
+from prettytable import PrettyTable
 
 Book = TypeVar('Book')
 
@@ -20,7 +21,6 @@ class Book:
     @classmethod
     def from_string(cls, string: str) -> Book:
         return Book(*string.split())
-
 
 class Library:
     """
@@ -40,21 +40,23 @@ class Library:
         """
         Метод, который удаляет книгу
         """
-        self.books.remove(next(book for book in self.books if book.title == title))
+        for index, book in enumerate(self.books):
+            if book.title == title.split()[0]:
+                self.books.pop(index)
 
     def search_books(self, key, value) -> list:
         """
         Метод, который ищет книгу по названию
         """
-        return [book for book in self.books if getattr(book, key, None) == value]
+        return [book for book in self.books if str(getattr(book, key, None)) == str(value)]
 
-    def sort_books(self, key) -> None:
+    def sort_books(self, key) -> list:
         """
         Метод, который сортирует по ключу
         """
-        self.books.sort(key=lambda x: getattr(x, key, None))
+        return sorted(self.books, key=key)
 
-    def __str__(self) -> PrettyTable:
+    def to_pretty_table(self) -> PrettyTable:
         """
         Метод для вывода данных о библиотеке
         """
