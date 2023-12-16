@@ -177,7 +177,6 @@ def seventh_question(what_to_do: str):
     c) Вывести последние 3 идентификатора животных из полученного в пункте а) списка.
     d) Организовать запись и чтение коллекции в/из файла.
     e) Организовать обработку некорректного формата входного файла.
-    FIXME
     """
 
     animals = [generate_animal(i) for i in range(10)]
@@ -194,12 +193,14 @@ def seventh_question(what_to_do: str):
 
         (r"Прочитать json файл", read_from_file),
 
-        (r"Записать в json файл", partial(write_to_file, map(lambda x: x.food_requirements(), animals)))
+        (r"Записать в json файл", partial(write_to_file, list(map(lambda x: x.food_requirements(), animals))))
     ]
 
     for pattern, function in patterns_and_functions:
         if re.fullmatch(pattern, what_to_do.strip(), re.IGNORECASE | re.MULTILINE):
-            return function()
+            return function() if function is not None else "Выполнено!"
+
+    return "Ввели неверное задание"
 
 
 def main() -> None:
@@ -217,7 +218,7 @@ def main() -> None:
         case "6":
             print(sixth_question(input("Введите что вы хотите сделать: ")))
         case "7":
-            print(seventh_question(input("Введите что вы хотите сделать: ")))
+            pprint(seventh_question(input("Введите что вы хотите сделать: ")))
         case _:
             print("Вы выбрали неверное задание ")
 

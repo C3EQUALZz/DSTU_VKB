@@ -39,14 +39,18 @@ class Animal(ABC):
     @abstractmethod
     def food_requirements(self) -> str:
         """
-        Аб
+        Абстрактный метод, который мы должны переопределить для вывода информации и животном
         """
         ...
 
     @abstractmethod
     def serialize_data(self):
+        """
+
+        """
         ...
 
+    @abstractmethod
     def deserialize_data(self, data: dict) -> Self:
         ...
 

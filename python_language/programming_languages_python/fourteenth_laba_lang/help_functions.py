@@ -7,7 +7,6 @@ __all__ = ["generate_table", "generate_train", "generate_student",
 
 import json
 import random
-from typing import List
 ########################################################################################################################
 import numpy as np
 import requests
@@ -25,7 +24,9 @@ ENV.read_env()
 
 def generate_table(array: np.ndarray) -> PrettyTable:
     """
-    Функция, которая создает таблицу, служит интерфейсом для взаимодействия
+    Функция, которая создает таблицу, служит интерфейсом для генерации таблицы.
+    :param array: Массив, который мы хотим поместить в нашу таблицу.
+    :return: Таблица с исходными данными.
     """
     table = PrettyTable()
 
@@ -43,7 +44,9 @@ def generate_table(array: np.ndarray) -> PrettyTable:
 
 def _generate_table_students(table: PrettyTable, students: np.ndarray) -> None:
     """
-    Функция, которая печатает таблицу со студентами
+    Функция, которая печатает таблицу со студентами.
+    :param table: Таблица, которая будет использоваться для заполнения.
+    :param students: Все студенты, которых мы хотим добавить в таблицу.
     """
     # создаем массив со средними баллами, чтобы можно было сделать сортировку
     sorting_key = [np.mean(student.grades) for student in students]
@@ -64,12 +67,19 @@ def _generate_table_students(table: PrettyTable, students: np.ndarray) -> None:
 
 def _generate_table_trains(table: PrettyTable, trains: np.ndarray) -> None:
     """
-    Функция, которая печатает таблицу с поездами
+    Функция, которая печатает таблицу с поездами.
+    :param table: Таблица, которая будет использоваться для заполнения.
+    :param trains: Все поезда, которые мы хотим добавить в таблицу
     """
     table.add_rows([train.number, train.dest, train.departure] for train in trains)
 
 
-def generate_subscriber():
+def generate_subscriber() -> Subscriber:
+    """
+    Функция, которая генерирует абонента для заполнения в массив
+    :return: возвращает подписчика.
+    """
+    # Генерируется русское имя в формате ИОФ
     person = RussianNames().get_person().split()
 
     return Subscriber(
@@ -85,7 +95,12 @@ def generate_subscriber():
         local_call_time=Datetime().time().replace(microsecond=0))
 
 
-def generate_buyer():
+def generate_buyer() -> Buyer:
+    """
+    Функция, которая генерирует покупателя для заполнения в массив
+    :return: возвращает покупателя.
+    """
+    # Генерируется русское имя в формате ИОФ
     person = RussianNames().get_person().split()
 
     return Buyer(
@@ -98,7 +113,12 @@ def generate_buyer():
     )
 
 
-def generate_student():
+def generate_student() -> Student:
+    """
+    Функция, которая генерирует студента.
+    :return: Возвращает студента.
+    """
+    # Генерируется русское имя в формате ИОФ
     person = RussianNames().get_person().split()
 
     return Student(
@@ -109,7 +129,13 @@ def generate_student():
     )
 
 
-def generate_train(number):
+def generate_train(number: int) -> Train:
+    """
+    Функция, которая генерирует поезд.
+    :param number: Номер поезда.
+    :return: Возвращает поезд.
+    """
+    # генерируем случайный адрес куда отправится наш поезд в России
     destination = Address(Locale.RU)
     return Train(
         dest=f"{destination.federal_subject()} г.{destination.city()}",
@@ -118,7 +144,11 @@ def generate_train(number):
     )
 
 
-def generate_book():
+def generate_book() -> Book:
+    """
+    Функция, которая создает книжку.
+    :returns: Возвращает случайную книгу.
+    """
     return Book(
         title=Text().word(),
         author=RussianNames().name,
@@ -126,13 +156,22 @@ def generate_book():
     )
 
 
-def generate_animal(identifier: int):
+def generate_animal(identifier: int) -> Herbivore | Omnivore | Carnivore:
+    """
+    Функция, которая генерирует случайное животное. Здесь идет запрос к одному сайту, где находится список животных.
+    После этого передается api ninjas для генерации фактов о данном животном, дальше идет только ручной парсинг данных.
+    Работает достаточно медленно из-за requests. В асинхронном стиле писать все не хочется ради этого...
+    :param identifier: Идентификатор животного.
+    :returns: Возвращает животное
+    """
     dictionary = {"Herbivore": Herbivore,
                   "Omnivore": Omnivore,
                   "Carnivore": Carnivore}
 
     while True:
+        # делаем запрос, чтобы получить список с животными
         animals = requests.get('http://davidbau.com/data/animals').text.strip().splitlines()
+        #
         random_animal = random.choice(animals)
 
         res = requests.get(f"https://api.api-ninjas.com/v1/animals?name={random_animal}",
@@ -145,20 +184,17 @@ def generate_animal(identifier: int):
             return dictionary[data[0]["characteristics"]["diet"]](identifier=identifier, name=random_animal)
 
 
-def animals_to_json(animals: List[Animal]):
-    return json.dumps(animals, default=Animal.animal_to_dict, indent=2)
+def write_to_file(animals: list[Animal]):
+    """
+    Функция, которая записывает всех животных в json файл для сохранения
+    """
+    with open('animals.json', 'w', encoding="utf-8") as f:
+        json.dump(animals, f, default=Animal.animal_to_dict, indent=4, ensure_ascii=False)
 
 
-def animals_from_json(json_data: str):
-    return json.loads(json_data, object_hook=Animal.dict_to_animal)
-
-
-def write_to_file(animals: List[Animal]):
-    json_data = animals_to_json(animals)
-    with open('animals.json', 'w') as f:
-        f.write(json_data)
-
-
-def read_from_file():
-    with open('animals.json', 'r') as f:
-        return animals_from_json(f.read())
+def read_from_file() -> list[Animal]:
+    """
+    Функция, которая считывает данные о животных с файла
+    """
+    with open('animals.json', 'r', encoding="utf-8") as f:
+        return json.loads(f.read(), object_hook=Animal.dict_to_animal)

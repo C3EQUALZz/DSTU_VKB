@@ -6,6 +6,9 @@ from dataclasses import dataclass
 
 @dataclass
 class Buyer:
+    """
+    Класс, который описывает покупателя
+    """
     surname: str
     name: str
     patronymic: str
@@ -14,15 +17,16 @@ class Buyer:
     bank_account_number: int
 
     @property
-    def full_name(self):
+    def full_name(self) -> list[str]:
         """
-        Метод, который нам возвращает ФИО
+        Метод, который нам возвращает ФИО в виде списка. Используется для сортировки.
         """
         return [self.surname, self.name, self.patronymic]
 
-    def __str__(self):
+    def __str__(self) -> str:
         """
-        Метод, который возвращает всю информацию о человеке
+        Метод, который возвращает всю информацию о человеке.
+        Данный магический метод показывает как будет обрабатываться класс, если его переведут в строку.
         """
         return (f"ФИО: {' '.join(self.full_name)}\n"
                 f"Адрес: {self.address}\n"
