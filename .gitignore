@@ -258,7 +258,6 @@ dkms.conf
 hs_err_pid*
 replay_pid*
 .idea
-main
 
 
 Skip to content
@@ -1149,7 +1148,6 @@ FodyWeavers.xsd
 ##### Gradle
 .gradle
 **/build/
-!src/**/build/
 
 # Ignore Gradle GUI config
 gradle-app.setting
