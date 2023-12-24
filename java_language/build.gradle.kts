@@ -16,6 +16,8 @@ dependencies {
     // https://mavenlibs.com/maven/dependency/com.xiantrimble.combinatorics/combinatorics
     implementation("com.xiantrimble.combinatorics:combinatorics:0.2.0")
     implementation("com.google.guava:guava:32.0.0-android")
+    // https://mavenlibs.com/maven/dependency/com.googlecode.combinatoricslib/combinatoricslib
+    implementation("com.github.dpaukov:combinatoricslib3:3.3.3")
 }
 
 tasks.test {
