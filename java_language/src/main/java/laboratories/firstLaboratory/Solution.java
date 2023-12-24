@@ -1,8 +1,10 @@
 package laboratories.firstLaboratory;
 
+import java.math.BigInteger;
 import java.util.Scanner;
 import java.util.Random;
 import java.util.stream.IntStream;
+import com.google.common.math.BigIntegerMath;
 
 public class Solution {
     static final IntStream firstArray = new Random().ints(20, -100, 21);
@@ -16,6 +18,7 @@ public class Solution {
         Object result = switch (scanner.nextInt()) {
             case 1 -> firstQuestion();
             case 2 -> secondQuestion();
+            case 3 -> thirdQuestion();
             default -> "Вы выбрали неверное задание";
         };
         System.out.println(result);
@@ -29,8 +32,8 @@ public class Solution {
      */
 
     public static double firstQuestion() {
-        int max_x = Solution.firstArray.max().orElseThrow();
-        int max_y = Solution.secondArray.max().orElseThrow();
+        var max_x = Solution.firstArray.max().orElseThrow();
+        var max_y = Solution.secondArray.max().orElseThrow();
 
         return (Math.exp(Math.abs(max_x)) - Math.exp(Math.abs(max_y))) / Math.sqrt(Math.abs(max_x * max_y));
     }
@@ -50,8 +53,9 @@ public class Solution {
     /**
      * 3.	Даны целые числа m, n. Вычислить с = m!/(n! * (m-n)!). Для вычисления факториала использовать функцию.
      */
-    public static int thirdQuestion() {
-        return 1;
+    public static BigInteger thirdQuestion() {
+        int m = 4, n = 2;
+        return BigIntegerMath.factorial(m).divide(BigIntegerMath.factorial(n).multiply(BigIntegerMath.factorial(m - n)));
     }
 
 }
