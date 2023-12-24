@@ -1,4 +1,4 @@
-package zeroLaboratory;
+package laboratories.zeroLaboratory;
 
 import java.util.Scanner;
 
@@ -69,7 +69,7 @@ public class Solution {
     }
 
     /**
-     * Разкомментируйте одну или несколько строк чтобы вывести сначала 12, а потом 2
+     * Разкомментируйте одну или несколько строк, чтобы вывести сначала 12, а потом 2
      */
     public static void sixthQuestion() {
         int x = 2;
