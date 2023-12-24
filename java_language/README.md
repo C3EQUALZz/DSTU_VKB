@@ -7,3 +7,12 @@
 - https://youtu.be/3S-ybO97U04?si=Uti3Eytz5wtWnKYr
 
 ---
+Для установки gradle на Linux вам нужен sdkman.
+Скопируйте команду ниже:
+```bash
+curl -s "https://get.sdkman.io" | bash
+```
+После установки sdkman скачайте Gradle (вместо 8.5 самую последнюю версию посмотрите)
+```bash
+sdk install gradle 8.5 
+```
