@@ -16,3 +16,7 @@ curl -s "https://get.sdkman.io" | bash
 ```bash
 sdk install gradle 8.5 
 ```
+Вам IDEA должен предложить инициализировать Gradle проэкт, обязательно прожмите данные кнопки. 
+Параметры проекта:
+
+![img.png](photo_readme/img.png)
