@@ -6,6 +6,7 @@ package laboratories.firstLaboratory;
 
 import java.math.BigInteger;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Scanner;
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -33,6 +34,10 @@ public class Solution {
             case 5 -> fifthQuestion();
             case 6 -> sixthQuestion();
             case 7 -> seventhQuestion();
+            case 8 -> eighthQuestion();
+            case 9 -> ninthQuestion();
+            case 10 -> tenthQuestion();
+            case 11 -> eleventhQuestion();
             default -> "Вы выбрали неверное задание";
         };
         System.out.println(result);
@@ -71,7 +76,6 @@ public class Solution {
     /**
      * 3. Даны целые числа m, n. Вычислить с = m!/(n! * (m-n)!).
      * Для вычисления факториала использовать функцию.
-     *
      * @return Возвращает целое число, то есть результат сочетания.
      */
     public static BigInteger thirdQuestion() {
@@ -105,7 +109,7 @@ public class Solution {
     public static String fifthQuestion() {
         IntStream[] arrays = {firstIntStream, secondIntStream, thirdIntStream};
         // Нет аналога enumerate, поэтому воспользовался таким костылем.
-        return IntStream.range(0, arrays.length)
+        return "Реузльат 5 задания:\n" + IntStream.range(0, arrays.length)
                 .mapToObj(index -> "Среднее значение массива " + (index + 1) + ": " +
                         String.format("%.3f", arrays[index].filter(x -> x > 0).average().orElseThrow()))
                 .collect(Collectors.joining("\n"));
@@ -119,7 +123,7 @@ public class Solution {
         var result = Math.abs(firstIntStream.min().orElseThrow()) > 10 ?
                 secondIntStream.min().orElseThrow() + thirdIntStream.min().orElseThrow() :
                 1 + thirdIntStream.map(Math::abs).min().orElseThrow();
-        return String.format("Значение задания номер 6: %d", result);
+        return String.format("Результат 6 задания: %d", result);
     }
 
     /**
@@ -133,12 +137,63 @@ public class Solution {
                 1.0 / D.length
         );
 
-        return String.format("Значение задания номер 7: %.3f", result);
+        return String.format("Результат 7 задания: %.3f", result);
     }
 
     /**
-     * 8.	Дан массив А(80) целых  чисел. Найти сумму и количество теx элементов массива, которые отрицательны и нечетны. Использовать в качестве подпрограммы процедуру.
+     * 8. Дан массив А(80) целых  чисел.
+     * Найти сумму и количество теx элементов массива, которые отрицательны и нечетны.
+     * Использовать в качестве подпрограммы процедуру.
      */
+    public static String eighthQuestion() {
+        int[] A = new Random().ints(80).toArray();
+
+        var result = Arrays.stream(A).filter(n -> n < 0 && Math.abs(n) % 2 == 1).sum();
+        return "Результат 8 задания: " + result;
+    }
+
+    /**
+     * 9. Функция, вычисляющая среднее арифметическое элементов массива
+     * Написать функцию, которая вычисляет среднее арифметическое элементов массива,
+     * переданного ей в качестве аргумента
+     */
+    public static String ninthQuestion() {
+        return "Результат 9 задания: " + Solution.firstIntStream.average().orElseThrow();
+    }
+
+    /**
+     * 10. Отсортировать массив по возрастанию суммы цифр
+     * Дан одномерный массив, состоящий из натуральных чисел.
+     * Выполнить сортировку данного массива по возрастанию суммы цифр чисел.
+     * Например, дан массив чисел [14, 30, 103]. После сортировки он будет таким: [30, 103, 14],
+     * так как сумма цифр числа 30 составляет 3, числа 103 равна 4, числа 14 равна 5.
+     */
+    public static String tenthQuestion() {
+        IntStream stream = new Random().ints(50, 1, 10000);
+        var result = stream
+                .boxed()
+                .sorted(Comparator.comparingInt(n -> {
+
+                    int sumOfDigits = 0;
+                    n = Math.abs(n);
+
+                    while (n > 0) {
+                        sumOfDigits += n % 10;
+                        n /= 10;
+                    }
+                    return sumOfDigits;
+                }))
+                .toArray();
+
+        return "Результат 10 задания: " + Arrays.toString(result);
+    }
+
+    /**
+     *
+     */
+    public static String eleventhQuestion() {
+        return " ";
+    }
 
 }
 
