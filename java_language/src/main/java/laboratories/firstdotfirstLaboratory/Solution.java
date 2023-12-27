@@ -11,6 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.regex.Pattern;
 
 public class Solution {
 
@@ -38,7 +39,8 @@ public class Solution {
         System.out.println(result);
         scanner.close();
     }
-
+    // аннотация с собакой - просто указание IDE, что не надо ругаться, что данные методы не используются
+    // Здесь IDEA явно не видит запуск методов, он в main происходит для неё неявно
 
     /**
      * 1. Ввести n строк с консоли, найти самую короткую строку. Вывести эту строку и ее длину.
@@ -93,6 +95,7 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String fourthQuestion() {
+        // Каждый раз делаю новый сканер из-за моего запуска методов из-под нового экземпляра класса
         Scanner scanner = new Scanner(System.in);
 
         var sentences = getDataFromConsole();
@@ -110,7 +113,7 @@ public class Solution {
                 .map(word -> new StringBuilder(word).replace(index, index + 1, letter))
                 .collect(Collectors.joining("\n"));
 
-        return String.format("Результат 4 задания:\n,%s", result);
+        return String.format("Результат 4 задания:\n%s", result);
     }
 
     /**
@@ -145,15 +148,33 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String sixthQuestion() {
-        return "";
+
+        var result = String.join(" ", getDataFromConsole())
+                .chars()
+                .filter(Character::isLetter)
+                .mapToObj(number -> String.valueOf((char) number))
+                .collect(Collectors.joining(" "));
+
+        return String.format("Результат 6 задания:\n%s", result);
     }
 
     /**
      * 7. Из текста удалить все слова заданной длины, начинающиеся на согласную букву.
+     * TESTME
      */
     @SuppressWarnings("unused")
     public String seventhQuestion() {
-        return "";
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Введите длину слов, которые вы хотите удалить: ");
+        var length = scanner.nextInt();
+
+        var result = getDataFromConsole()
+                .stream()
+                .filter(word -> word.length() == length &&
+                        Pattern.matches("^[^aeiouAEIOUЙйУуЕеОоЭэИиЯяЫыАаЮю].*\"", word))
+                .collect(Collectors.joining(" "));
+        return String.format("Результат 7 задания:\n%s", result);
     }
 
     /**
