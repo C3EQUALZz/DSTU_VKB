@@ -38,6 +38,7 @@ public class Solution {
             case 9 -> ninthQuestion();
             case 10 -> tenthQuestion();
             case 11 -> eleventhQuestion();
+            case 12 -> twelfthQuestion();
             default -> "Вы выбрали неверное задание";
         };
         System.out.println(result);
@@ -141,7 +142,7 @@ public class Solution {
     }
 
     /**
-     * 8. Дан массив А(80) целых  чисел.
+     * 8. Дан массив А(80) целых чисел.
      * Найти сумму и количество теx элементов массива, которые отрицательны и нечетны.
      * Использовать в качестве подпрограммы процедуру.
      */
@@ -153,7 +154,7 @@ public class Solution {
     }
 
     /**
-     * 9. Функция, вычисляющая среднее арифметическое элементов массива
+     * 9. Функция, вычисляющая среднее арифметическое элементов массива.
      * Написать функцию, которая вычисляет среднее арифметическое элементов массива,
      * переданного ей в качестве аргумента
      */
@@ -189,10 +190,56 @@ public class Solution {
     }
 
     /**
-     *
+     * 11. Вывести на экран исходный массив, отсортированный массив,
+     * а также для контроля сумму цифр каждого числа отсортированного массива.
      */
     public static String eleventhQuestion() {
-        return " ";
+        var res = "Результат 11 задания:\n";
+        var array = new Random().ints(50, 1, 10000).toArray();
+        res += "Исходный массив: " + Arrays.toString(array) + "\n";
+        res += "Отсортированный массив: " + Arrays.stream(array).boxed().sorted().toList() + "\n";
+        res += "Сумма цифр каждого числа: " + Arrays.stream(array).map(n -> {
+
+            int sumOfDigits = 0;
+            n = Math.abs(n);
+
+            while (n > 0) {
+                sumOfDigits += n % 10;
+                n /= 10;
+            }
+            return sumOfDigits;
+        }).boxed().toList();
+
+        return res;
+    }
+
+    /**
+     * 12. Определить количество разрядов числа.
+     * Написать функцию, которая определяет количество разрядов введенного целого числа.
+     */
+    public static String twelfthQuestion() {
+        Scanner scanner = new Scanner(System.in);
+        var n = Math.abs(scanner.nextInt());
+        var p = n;
+
+        int count = 0;
+
+        while (n > 0) {
+            count += 1;
+            n /= 10;
+        }
+
+        return "Количество разрядов числа " + p + " равно: " + count;
+    }
+
+    /**
+     * 13. Сумма ряда с факториалом. Вычислить сумму ряда
+     */
+    public static String thirteenthQuestion() {
+        for (int i = 1; i < 6; i++) {
+            
+        }
+        return "";
     }
 
 }
