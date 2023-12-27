@@ -9,17 +9,13 @@ import com.ibm.icu.text.RuleBasedNumberFormat;
 import java.lang.reflect.Method;
 import java.lang.reflect.InvocationTargetException;
 
-import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Comparator;
-import java.util.Locale;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Solution {
-    static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
         // Перевод в англ слова, второе взял из stackoverflow.
         RuleBasedNumberFormat numberFormat = new RuleBasedNumberFormat(Locale.UK, RuleBasedNumberFormat.SPELLOUT);
@@ -28,10 +24,10 @@ public class Solution {
 
         System.out.print("Введите какое задание вы хотите выполнить: ");
         try {
-            // получение значения метода из цифры, задавая ему правила.
+            // Получение значения метода из цифры, задавая ему правила.
             // Все вот эти штуки называются отражениями, здесь нет удобного аналога eval, как в Python.
             // Как бы говоря есть, но там под капотом JS, который не может работать с Java напрямую.
-            var methodName = numberFormat.format(Solution.scanner.nextInt(), "%spellout-ordinal") + "Question";
+            var methodName = numberFormat.format(scanner.nextInt(), "%spellout-ordinal") + "Question";
             Method method = Solution.class.getMethod(methodName);
             result = method.invoke(new Solution());
 
@@ -67,10 +63,12 @@ public class Solution {
     public String secondQuestion() {
         // я не совсем понял "значений этих длин", мы изначально сортируем по длине, уже сравнивая значения
         // это в плане лексикографически что ли? Здесь это сделано
-        return getDataFromConsole()
+        var result = getDataFromConsole()
                 .stream()
                 .sorted(Comparator.comparing(String::length).thenComparing(Comparator.naturalOrder()))
                 .collect(Collectors.joining("\n"));
+
+        return String.format("Результат 2 задания: %s", result);
     }
 
     /**
@@ -78,11 +76,15 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String thirdQuestion() {
+        // Получаем среднюю длину, проходя по всему списку
         var averageLength = getDataFromConsole().stream().mapToInt(String::length).average().orElseThrow();
-        return getDataFromConsole()
+        // Собираем те предложения, которые больше по длине
+        var result = getDataFromConsole()
                 .stream()
                 .filter(row -> row.length() > averageLength)
                 .collect(Collectors.joining("\n"));
+
+        return String.format("Результат 3 задания: %s", result);
     }
 
     /**
@@ -91,7 +93,24 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String fourthQuestion() {
-        return "";
+        Scanner scanner = new Scanner(System.in);
+
+        var sentences = getDataFromConsole();
+
+        System.out.print("Введите индекс буквы, которую вы хотите заменить: ");
+        var index = scanner.nextInt();
+
+        System.out.print("Введите букву, на которую вы хотите поменять: ");
+        var letter = scanner.next();
+
+        scanner.close();
+
+        var result = sentences
+                .stream()
+                .map(word -> new StringBuilder(word).replace(index, index + 1, letter))
+                .collect(Collectors.joining("\n"));
+
+        return String.format("Результат 4 задания:\n,%s", result);
     }
 
     /**
@@ -101,7 +120,23 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String fifthQuestion() {
-        return "";
+        // Здесь я получаю символы.
+        // Метод chars переделывает в итератор с кодами ASCII символов
+        // получается аналог map(int.ord, symbol)
+        // map отличается от mapToObj тем, что один переделывает в новый тип данных, а другой нет
+        var symbols = String.join("", getDataFromConsole())
+                .chars()
+                .mapToObj(c -> (char) c)
+                .map(c -> centerString(String.valueOf(c)))
+                .collect(Collectors.joining(""));
+
+        var unicodeValuesOfChars = symbols
+                .chars()
+                .filter(n -> n != 32)
+                .mapToObj(c -> centerString(String.valueOf(c)))
+                .collect(Collectors.joining(""));
+
+        return String.format("Результат 5 задания:\n%s\n%s", symbols, unicodeValuesOfChars);
     }
 
     /**
@@ -173,12 +208,13 @@ public class Solution {
     }
 
     private static List<String> getDataFromConsole() {
+        Scanner scanner = new Scanner(System.in);
         // Создание списка в Java. Использование List вместо ArrayList в объявлении переменной — это пример принципа
         // программирования на уровне интерфейсов
         List<String> rowsFromConsole = new ArrayList<>();
 
         System.out.println("Вводите сколько хотите строк. Конец - это строка 'exit'");
-        String row = Solution.scanner.nextLine().strip();
+        String row = scanner.nextLine().strip();
 
         while (!row.equalsIgnoreCase("exit")) {
 
@@ -187,10 +223,21 @@ public class Solution {
             if (!row.isEmpty())
                 rowsFromConsole.add(row);
 
-            row = Solution.scanner.nextLine().strip();
+            row = scanner.nextLine().strip();
         }
+        scanner.close();
 
         return rowsFromConsole;
+    }
+
+    /**
+     * Вспомогательный метод для центрирования строки
+     *
+     * @param s - наша строка, которую мы хотим центрировать
+     * @return новая строка, которую отцентрировали
+     */
+    private static String centerString (String s) {
+        return String.format("%-" + 5 + "s", String.format("%" + (s.length() + (5 - s.length()) / 2) + "s", s));
     }
 
 }
