@@ -18,6 +18,8 @@ dependencies {
     implementation("com.google.guava:guava:32.0.0-android")
     // https://mavenlibs.com/maven/dependency/com.googlecode.combinatoricslib/combinatoricslib
     implementation("com.github.dpaukov:combinatoricslib3:3.3.3")
+    // https://mavenlibs.com/maven/dependency/com.ibm.icu/icu4j
+    implementation("com.ibm.icu:icu4j:73.2")
 }
 
 tasks.test {
