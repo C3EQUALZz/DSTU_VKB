@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.InvocationTargetException;
 
 import java.util.*;
+import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 import java.util.regex.Pattern;
 
@@ -179,6 +180,7 @@ public class Solution {
 
     /**
      * 8. В тексте найти все пары слов, из которых одно является обращением другого.
+     * TESME
      */
     @SuppressWarnings("unused")
     public String eighthQuestion() {
@@ -204,7 +206,29 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String ninthQuestion() {
-        return "";
+        // Здесь мы собираем отдельные слова.
+        // Например, пользователь ввел так:
+        // привет как
+        // дела
+        // -> ["привет", "как", "дела"]
+        var words = getDataFromConsole()
+                .stream()
+                .flatMap(word -> Arrays.stream(word.split("\\s+")))
+                .toList();
+
+        var sentence = String.join(" ", words);
+        // Создание множества
+        Set<String> result = new HashSet<>();
+
+        for (var word : words) {
+            // Поиск слов с помощью регулярного выражения, я сразу буду добавлять слово и количество
+            result.add(
+                    String.format("Слово: '%s' появляется %d раза в тексте",
+                    word, findAll(sentence, String.format("\\b%s\\b", word)).size())
+            );
+        }
+
+        return String.format("Результат 9 задания: \n%s", String.join("\n", result));
     }
 
     /**
@@ -255,7 +279,7 @@ public class Solution {
 
             // есть ошибка, что пустая строка добавляется в самое начало, а потом слово
             // не совсем понимаю почему
-            if (!row.isEmpty())
+            if (!row.isBlank())
                 rowsFromConsole.add(row);
 
             row = scanner.nextLine().strip();
@@ -271,8 +295,24 @@ public class Solution {
      * @param s - наша строка, которую мы хотим центрировать
      * @return новая строка, которую отцентрировали
      */
-    private static String centerString (String s) {
+    private static String centerString(String s) {
         return String.format("%-" + 5 + "s", String.format("%" + (s.length() + (5 - s.length()) / 2) + "s", s));
+    }
+
+    /**
+     * В Java нет аналога re.findall из Python, поэтому написал своё, так сказать.
+     */
+    private static List<String> findAll(String sentence, String regex) {
+        List<String> matches = new ArrayList<>();
+        // Здесь флаги немного по-другому называются относительно Python, тут добавляю поддержку UNICODE и игнорирую регистр
+        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CHARACTER_CLASS);
+        Matcher matcher = pattern.matcher(sentence);
+
+        while (matcher.find()) {
+            matches.add(matcher.group());
+        }
+
+        return matches;
     }
 
 }
