@@ -13,6 +13,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 public class Solution {
 
@@ -224,7 +225,7 @@ public class Solution {
             // Поиск слов с помощью регулярного выражения, я сразу буду добавлять слово и количество
             result.add(
                     String.format("Слово: '%s' появляется %d раза в тексте",
-                    word, findAll(sentence, String.format("\\b%s\\b", word)).size())
+                            word, findAll(sentence, String.format("\\b%s\\b", word)).size())
             );
         }
 
@@ -236,7 +237,20 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String tenthQuestion() {
-        return "";
+        var result = new StringBuilder();
+        // Пользователь в одной строке может ввести предложение с точкой, поэтому такой костыль
+        var sentences = String.join(".", getDataFromConsole()).split("\\. ");
+
+        for (String sentence : sentences) {
+            var vowelsCount = countVowels(sentence);
+            var consonantsCount = countConsonants(sentence);
+
+            result.append(String.format("В предложении '%s' %s букв: гласных - %d, согласных - %d%n",
+                    sentence, (vowelsCount > consonantsCount) ? "гласных больше" : "согласных больше",
+                    vowelsCount, consonantsCount));
+        }
+
+        return String.format("Результат 10 задания: %s", result);
     }
 
     /**
@@ -313,6 +327,37 @@ public class Solution {
         }
 
         return matches;
+    }
+
+    /**
+     * Вспомогательный метод для подсчета количества гласных букв
+     * @param str строка, которую передал пользователь
+     * @return количество гласных символов
+     */
+
+    private static long countVowels(String str) {
+        Set<Character> vowels = Stream.of('а', 'о', 'у', 'ы', 'э', 'е', 'ё', 'и', 'ю', 'я',
+                'a', 'e', 'i', 'o', 'u').collect(Collectors.toSet());
+        //Locale.ROOT представляет собой константу в классе Locale в Java, предназначенную для представления
+        // нейтральной локали.
+        // Нейтральная локаль означает отсутствие спецификации конкретного региона, языка или варианта.
+        return str.toLowerCase(Locale.ROOT).chars()
+                .mapToObj(c -> (char) c)
+                .filter(vowels::contains)
+                .count();
+    }
+
+    /**
+     * Вспомогательный метод для нахождения количества согласных букв
+     * @param str Строка, которую передал наш пользователь.
+     * @return Возвращает количество согласных букв.
+     */
+
+    private static long countConsonants(String str) {
+        return str.toLowerCase(Locale.ROOT).chars()
+                .mapToObj(c -> (char) c)
+                .filter(c -> Character.isLetter(c) && countVowels(String.valueOf(c)) != 1)
+                .count();
     }
 
 }
