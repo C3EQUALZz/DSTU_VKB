@@ -4,14 +4,13 @@
 package laboratories.firstLaboratory;
 
 
-import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Scanner;
-import java.util.Random;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Collectors;
 
+import com.ibm.icu.text.RuleBasedNumberFormat;
 import org.paukov.combinatorics3.Generator;
 
 import com.google.common.math.BigIntegerMath;
@@ -24,24 +23,26 @@ public class Solution {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Введите номер задания, чье решения вы хотите получить");
+        // Перевод в англ слова, второе взял из stackoverflow.
+        RuleBasedNumberFormat numberFormat = new RuleBasedNumberFormat(Locale.UK, RuleBasedNumberFormat.SPELLOUT);
 
-        Object result = switch (scanner.nextInt()) {
-            case 1 -> firstQuestion();
-            case 2 -> secondQuestion();
-            case 3 -> thirdQuestion();
-            case 4 -> fourthQuestion();
-            case 5 -> fifthQuestion();
-            case 6 -> sixthQuestion();
-            case 7 -> seventhQuestion();
-            case 8 -> eighthQuestion();
-            case 9 -> ninthQuestion();
-            case 10 -> tenthQuestion();
-            case 11 -> eleventhQuestion();
-            case 12 -> twelfthQuestion();
-            default -> "Вы выбрали неверное задание";
-        };
+        Object result;
+
+        System.out.print("Введите какое задание вы хотите выполнить: ");
+        try {
+            // Получение значения метода из цифры, задавая ему правила.
+            // Все вот эти штуки называются отражениями, здесь нет удобного аналога eval, как в Python.
+            // Как бы говоря есть, но там под капотом JS, который не может работать с Java напрямую.
+            var methodName = numberFormat.format(scanner.nextInt(), "%spellout-ordinal") + "Question";
+            Method method = laboratories.firstdotfirstLaboratory.Solution.class.getMethod(methodName);
+            result = method.invoke(new laboratories.firstdotfirstLaboratory.Solution());
+
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            result = "Вы выбрали неверное задание";
+        }
+
         System.out.println(result);
+        scanner.close();
     }
 
     /**
@@ -51,13 +52,14 @@ public class Solution {
      *
      * @return значение после вычисления
      */
-
-    public static double firstQuestion() {
+    @SuppressWarnings("unused")
+    public String firstQuestion() {
         // orElseTrow возвращает значение, если оно существует, в ином случае будет возмущена ошибка
         var max_x = Solution.firstIntStream.max().orElseThrow();
         var max_y = Solution.secondIntStream.max().orElseThrow();
+        var result = (Math.exp(Math.abs(max_x)) - Math.exp(Math.abs(max_y))) / Math.sqrt(Math.abs(max_x * max_y));
 
-        return (Math.exp(Math.abs(max_x)) - Math.exp(Math.abs(max_y))) / Math.sqrt(Math.abs(max_x * max_y));
+        return String.format("Результат 1 задания: %f", result);
     }
 
     /**
@@ -66,25 +68,30 @@ public class Solution {
      *
      * @return значение полученного выражения
      */
-
-    public static double secondQuestion() {
+    @SuppressWarnings("unused")
+    public String secondQuestion() {
         // -> - это лямбда выражение, как в .net
-        return (Solution.firstIntStream.filter(n -> n > 0).sum() +
+        var result = (Solution.firstIntStream.filter(n -> n > 0).sum() +
                 Solution.secondIntStream.filter(n -> n > 0).sum() +
                 Solution.thirdIntStream.filter(n -> n > 0).sum()) / 2.0;
+
+        return String.format("Результат 2 задания: %f", result);
     }
 
     /**
      * 3. Даны целые числа m, n. Вычислить с = m!/(n! * (m-n)!).
      * Для вычисления факториала использовать функцию.
+     *
      * @return Возвращает целое число, то есть результат сочетания.
      */
-    public static BigInteger thirdQuestion() {
+    @SuppressWarnings("unused")
+    public String thirdQuestion() {
         int m = 4, n = 2;
         // в Java, к сожалению, нет перегрузки операторов, поэтому тут математические действия делаются через методы
         // Взято с библиотеки
-        return BigIntegerMath.factorial(m).divide(
+        var result = BigIntegerMath.factorial(m).divide(
                 BigIntegerMath.factorial(n).multiply(BigIntegerMath.factorial(m - n)));
+        return String.format("Результат 3 задания: %d", result);
     }
 
     /**
@@ -92,13 +99,15 @@ public class Solution {
      * Math.sqrt(pow_x + pow_y + Math.pow(Math.sin(x * y), 2)) + Math.sqrt(pow_x + pow_z + Math.pow(Math.sin(x * z), 2))
      * + Math.sqrt(pow_z + pow_y + Math.pow(Math.sin(z * y), 2))
      */
-    public static double fourthQuestion() {
+    @SuppressWarnings("unused")
+    public String fourthQuestion() {
         // Здесь я нашел библиотеку, которая генерирует комбинации из (1, 2, 3) по 2 элемента.
         // map здесь делается то же самое, но есть небольшие разновидности, которые переделывают нам элементы к
         // нужному типу данных. По умолчанию generator возвращает итератор, где каждый элемент - это список с числами.
-        return Generator.combination(1, 2, 3).simple(2).stream().mapToDouble(x ->
+        var result = Generator.combination(1, 2, 3).simple(2).stream().mapToDouble(x ->
                 Math.sqrt(Math.pow(x.getFirst(), 2) + Math.pow(x.getLast(), 2) +
                         Math.pow(Math.sin(x.getFirst() * x.getLast()), 2))).sum();
+        return String.format("Результат 4 задания: %f", result);
     }
 
     /**
@@ -107,7 +116,8 @@ public class Solution {
      *
      * @return Возвращает строку, где написаны средние значения в каждом массиве.
      */
-    public static String fifthQuestion() {
+    @SuppressWarnings("unused")
+    public String fifthQuestion() {
         IntStream[] arrays = {firstIntStream, secondIntStream, thirdIntStream};
         // Нет аналога enumerate, поэтому воспользовался таким костылем.
         return "Реузльат 5 задания:\n" + IntStream.range(0, arrays.length)
@@ -120,7 +130,8 @@ public class Solution {
      * 6. Даны массивы А(15), Y(15), C(12).
      * Вычислить l = min(b_i) + min(c_i) if abs(min(a_i)) > 10 else 1 + min(abs(c_i))
      */
-    public static String sixthQuestion() {
+    @SuppressWarnings("unused")
+    public String sixthQuestion() {
         var result = Math.abs(firstIntStream.min().orElseThrow()) > 10 ?
                 secondIntStream.min().orElseThrow() + thirdIntStream.min().orElseThrow() :
                 1 + thirdIntStream.map(Math::abs).min().orElseThrow();
@@ -131,7 +142,8 @@ public class Solution {
      * 7. Дан массив D(40) вещественных чисел. Найти среднее геометрическое его элементов,
      * которые удовлетворяют условию 0 < di <12. Для вычислений использовать функцию.
      */
-    public static String seventhQuestion() {
+    @SuppressWarnings("unused")
+    public String seventhQuestion() {
         double[] D = new Random().doubles(40).toArray();
         var result = Math.pow(
                 Arrays.stream(D).filter(x -> x > 0 && x < 12).reduce(1, (a, b) -> a * b),
@@ -146,7 +158,8 @@ public class Solution {
      * Найти сумму и количество теx элементов массива, которые отрицательны и нечетны.
      * Использовать в качестве подпрограммы процедуру.
      */
-    public static String eighthQuestion() {
+    @SuppressWarnings("unused")
+    public String eighthQuestion() {
         int[] A = new Random().ints(80).toArray();
 
         var result = Arrays.stream(A).filter(n -> n < 0 && Math.abs(n) % 2 == 1).sum();
@@ -158,7 +171,8 @@ public class Solution {
      * Написать функцию, которая вычисляет среднее арифметическое элементов массива,
      * переданного ей в качестве аргумента
      */
-    public static String ninthQuestion() {
+    @SuppressWarnings("unused")
+    public String ninthQuestion() {
         return "Результат 9 задания: " + Solution.firstIntStream.average().orElseThrow();
     }
 
@@ -169,7 +183,8 @@ public class Solution {
      * Например, дан массив чисел [14, 30, 103]. После сортировки он будет таким: [30, 103, 14],
      * так как сумма цифр числа 30 составляет 3, числа 103 равна 4, числа 14 равна 5.
      */
-    public static String tenthQuestion() {
+    @SuppressWarnings("unused")
+    public String tenthQuestion() {
         IntStream stream = new Random().ints(50, 1, 10000);
         var result = stream
                 .boxed()
@@ -193,7 +208,8 @@ public class Solution {
      * 11. Вывести на экран исходный массив, отсортированный массив,
      * а также для контроля сумму цифр каждого числа отсортированного массива.
      */
-    public static String eleventhQuestion() {
+    @SuppressWarnings("unused")
+    public String eleventhQuestion() {
         var res = "Результат 11 задания:\n";
         var array = new Random().ints(50, 1, 10000).toArray();
         res += "Исходный массив: " + Arrays.toString(array) + "\n";
@@ -217,7 +233,8 @@ public class Solution {
      * 12. Определить количество разрядов числа.
      * Написать функцию, которая определяет количество разрядов введенного целого числа.
      */
-    public static String twelfthQuestion() {
+    @SuppressWarnings("unused")
+    public String twelfthQuestion() {
         Scanner scanner = new Scanner(System.in);
         var n = Math.abs(scanner.nextInt());
         var p = n;
@@ -235,12 +252,143 @@ public class Solution {
     /**
      * 13. Сумма ряда с факториалом. Вычислить сумму ряда
      */
-    public static String thirteenthQuestion() {
+    @SuppressWarnings("unused")
+    public String thirteenthQuestion() {
         for (int i = 1; i < 6; i++) {
-            
+            BigIntegerMath.factorial(3);
         }
         return "";
     }
 
+    /**
+     * 14. Изменить порядок слов в строке на обратный.
+     * Вводится строка, состоящая из слов, разделенных пробелами.
+     * Следует заменить ее на строку, в которой слова идут в обратном порядке по сравнению с
+     * исходной строкой. Вывести измененную строку на экран.
+     */
+    @SuppressWarnings("unused")
+    public String fourteenthQuestion() {
+        return "";
+    }
+
+    /**
+     * 15. Функция бинарного поиска в массиве
+     * Пользователь вводит число. Сообщить, есть ли оно в массиве,
+     * элементы которого расположены по возрастанию значений, а также, если есть,
+     * в каком месте находится.
+     * При решении задачи использовать бинарный (двоичный) поиск, который оформить в виде отдельной
+     * функции.
+     */
+    @SuppressWarnings("unused")
+    public String fifteenthQuestion() {
+        return "";
+    }
+
+    /**
+     * 16. Вычисление наибольших общих делителей.
+     * Найти наибольшие общие делители (НОД) для множества пар чисел.
+     */
+    @SuppressWarnings("unused")
+    public String sixteenthQuestion() {
+        return "";
+    }
+
+    /**
+     * 17. Найти площади разных фигур. В зависимости от выбора пользователя вычислить площадь круга,
+     * прямоугольника или треугольника. Для вычисления площади каждой фигуры должна быть написана
+     * отдельная функция.
+     */
+    @SuppressWarnings("unused")
+    public String seventeenthQuestion() {
+        return "";
+    }
+
+    /**
+     * 18.	Найти массив с максимальной суммой элементов.
+     * Сгенерировать десять массивов из случайных чисел.
+     * Вывести их и сумму их элементов на экран.
+     * Найти среди них один с максимальной суммой элементов.
+     * Указать какой он по счету, повторно вывести этот массив и сумму его элементов.
+     * Заполнение массива и подсчет суммы его элементов оформить в виде отдельной функции.
+     */
+    @SuppressWarnings("unused")
+    public String eighteenthQuestion() {
+        return "";
+    }
+
+    /**
+     * 19. Вычислить сумму элементов главной или побочной диагонали матрицы.
+     * Дана квадратная матрица. Вычислить сумму элементов главной или побочной диагонали в зависимости от выбора пользователя. Сумма элементов любой диагонали должна вычисляться в одной и той же функции.
+     */
+    @SuppressWarnings("unused")
+    public String nineteenthQuestion() {
+        return "";
+    }
+
+    /**
+     * 20. Функция перевода десятичного числа в двоичное.
+     * Переводить в двоичную систему счисления вводимые в десятичной системе счисления числа до тех пор,
+     * пока не будет введен 0. Для перевода десятичного числа в двоичное написать функцию.
+     */
+    @SuppressWarnings("unused")
+    public String twentiethQuestion() {
+        return "";
+    }
+
+    /**
+     * 21. Вычислить значения функции y=f(x) на заданном диапазоне.
+     * Вычислить значения нижеприведенной функции в диапазоне значений x от -10 до 10
+     * включительно с шагом, равным 1.
+     * y = x2 при -5 <= x <= 5;
+     * y = 2*|x|-1 при x < -5;
+     * y = 2x при x > 5.
+     * Вычисление значения функции оформить в виде программной функции, которая принимает значение x,
+     * а возвращает полученное значение функции (y).
+     */
+    @SuppressWarnings("unused")
+    public String twentyFirstQuestion() {
+        return "";
+    }
+
+    /**
+     * 22.	Функция заполнения массива случайными числами.
+     * Написать функцию, которая заполняет массив случайными числами в диапазоне,
+     * указанном пользователем.
+     * Функция должна принимать два аргумента - начало диапазона и его конец, при этом ничего не возвращать.
+     * Вывод значений элементов массива должен происходить в основной ветке программы.
+     */
+    @SuppressWarnings("unused")
+    public String twentySecondQuestion() {
+        return "";
+    }
+
+    /**
+     * 23. Написать функцию вычисления величины силы тока на участке электрической
+     * цепи сопротивлением R Ом при напряжении U В.
+     */
+    @SuppressWarnings("unused")
+    public String twentyThirdQuestion() {
+        return "";
+    }
+
+    /**
+     * 24.	Написать функцию вычисления напряжения на каждом из последовательно
+     * соединенных участков электрической цепи сопротивлением R1, R2, R3 Ом, если сила
+     * тока при напряжении U В составляет I А.
+     */
+    @SuppressWarnings("unused")
+    public String twentyFourthQuestion() {
+        return "";
+    }
+
+    /**
+     * 25. Составить программу для ввода на экран номера дня недели и вывода соответствующего
+     * ему дня недели на русском языке.
+     */
+    @SuppressWarnings("unused")
+    public String twentyFifthQuestion() {
+        return "";
+    }
 }
+
 
