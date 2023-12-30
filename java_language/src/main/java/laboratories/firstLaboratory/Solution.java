@@ -34,8 +34,8 @@ public class Solution {
             // Все вот эти штуки называются отражениями, здесь нет удобного аналога eval, как в Python.
             // Как бы говоря есть, но там под капотом JS, который не может работать с Java напрямую.
             var methodName = numberFormat.format(scanner.nextInt(), "%spellout-ordinal") + "Question";
-            Method method = laboratories.firstdotfirstLaboratory.Solution.class.getMethod(methodName);
-            result = method.invoke(new laboratories.firstdotfirstLaboratory.Solution());
+            Method method = Solution.class.getMethod(methodName);
+            result = method.invoke(new Solution());
 
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             result = "Вы выбрали неверное задание";
