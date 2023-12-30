@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import java.awt.Point;
+
 public class Solution {
 
     public static void main(String[] args) {
@@ -162,7 +164,6 @@ public class Solution {
 
     /**
      * 7. Из текста удалить все слова заданной длины, начинающиеся на согласную букву.
-     * TESTME
      */
     @SuppressWarnings("unused")
     public String seventhQuestion() {
@@ -173,8 +174,8 @@ public class Solution {
 
         var result = getDataFromConsole()
                 .stream()
-                .filter(word -> word.length() == length &&
-                        Pattern.matches("^[^aeiouAEIOUЙйУуЕеОоЭэИиЯяЫыАаЮю].*\"", word))
+                .filter(word -> !(word.length() == length &&
+                        Pattern.matches("^[^aeiouAEIOUЙйУуЕеОоЭэИиЯяЫыАаЮю].*", word)))
                 .collect(Collectors.joining(" "));
         return String.format("Результат 7 задания:\n%s", result);
     }
@@ -256,10 +257,53 @@ public class Solution {
     /**
      * 11. Выбрать три разные точки заданного на плоскости множества точек,
      * составляющие треугольник наибольшего периметра.
+     * FIXME
      */
     @SuppressWarnings("unused")
     public String eleventhQuestion() {
-        return "";
+
+        // Я не совсем понимаю почему streamApi код возвращает Object[], тут приходится вручную кастовать к (Point[])
+        var points = (Point[]) getDataFromConsole().stream().map(cord -> {
+
+            var pattern = Pattern.compile("(\\d+)");
+            var matcher = pattern.matcher(cord);
+
+            if (matcher.find()) {
+                var coordinates = matcher.group(1).split(",");
+                return new Point(Integer.parseInt(coordinates[0].strip()), Integer.parseInt(coordinates[1].strip()));
+            }
+            // Если код не найдет цифры, то следует явно указать, что возвращает null.
+            // Видимо, в Java нет неявного возвращения null (None), как в Python.
+            return null;
+        }).toArray();
+
+
+        List<Triangle> triangles = new ArrayList<>();
+        // Как сделать за O(n^2) я за весь день и не придумал, очень тяжелая для этого задача
+        for (int i = 0; i < points.length - 2; i++) {
+            for (int j = i + 1; j < points.length - 1; j++) {
+                for (int k = j + 1; k < points.length; k++) {
+                    Triangle triangle = new Triangle(points[i], points[j], points[k]);
+                    triangles.add(triangle);
+                }
+            }
+        }
+
+        // Найдите треугольник с максимальным периметром
+        Triangle maxPerimeterTriangle = triangles.stream()
+                .max(Comparator.comparingDouble(Triangle::getPerimeter))
+                .orElse(null);
+
+
+        assert maxPerimeterTriangle != null;
+
+        return String.format(
+                "Результат 11 задания:\nМаксимальный периметр: %f\nТочки: %s, %s, %s",
+                maxPerimeterTriangle.getPerimeter(),
+                maxPerimeterTriangle.getX(),
+                maxPerimeterTriangle.getY(),
+                maxPerimeterTriangle.getZ()
+        );
     }
 
     /**
@@ -279,6 +323,12 @@ public class Solution {
     public String thirteenthQuestion() {
         return "";
     }
+
+    /**
+     * Метод, с помощью которого мы получаем ввод пользователя с клавиатуры.
+     * Здесь пользователь вводит до того момента, пока не введет exit.
+     * @return список с содержимым, который ввел пользователь.
+     */
 
     private static List<String> getDataFromConsole() {
         Scanner scanner = new Scanner(System.in);
@@ -331,6 +381,7 @@ public class Solution {
 
     /**
      * Вспомогательный метод для подсчета количества гласных букв
+     *
      * @param str строка, которую передал пользователь
      * @return количество гласных символов
      */
@@ -349,10 +400,10 @@ public class Solution {
 
     /**
      * Вспомогательный метод для нахождения количества согласных букв
+     *
      * @param str Строка, которую передал наш пользователь.
      * @return Возвращает количество согласных букв.
      */
-
     private static long countConsonants(String str) {
         return str.toLowerCase(Locale.ROOT).chars()
                 .mapToObj(c -> (char) c)

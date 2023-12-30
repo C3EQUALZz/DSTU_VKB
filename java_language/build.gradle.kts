@@ -20,6 +20,8 @@ dependencies {
     implementation("com.github.dpaukov:combinatoricslib3:3.3.3")
     // https://mavenlibs.com/maven/dependency/com.ibm.icu/icu4j
     implementation("com.ibm.icu:icu4j:73.2")
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-collections4
+    implementation("org.apache.commons:commons-collections4:4.3")
 }
 
 tasks.test {
