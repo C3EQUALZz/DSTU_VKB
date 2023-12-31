@@ -86,6 +86,7 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String thirdQuestion() {
+        // когда мы определяем так самые базовые типы, то нельзя var писать.
         int m = 4, n = 2;
         // в Java, к сожалению, нет перегрузки операторов, поэтому тут математические действия делаются через методы
         // Взято с библиотеки
@@ -118,9 +119,10 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String fifthQuestion() {
+        // var не дает прописать, надо явно указать
         IntStream[] arrays = {firstIntStream, secondIntStream, thirdIntStream};
         // Нет аналога enumerate, поэтому воспользовался таким костылем.
-        return "Реузльат 5 задания:\n" + IntStream.range(0, arrays.length)
+        return "Результат 5 задания:\n" + IntStream.range(0, arrays.length)
                 .mapToObj(index -> "Среднее значение массива " + (index + 1) + ": " +
                         String.format("%.3f", arrays[index].filter(x -> x > 0).average().orElseThrow()))
                 .collect(Collectors.joining("\n"));
@@ -144,7 +146,7 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String seventhQuestion() {
-        double[] D = new Random().doubles(40).toArray();
+        var D = new Random().doubles(40).toArray();
         var result = Math.pow(
                 Arrays.stream(D).filter(x -> x > 0 && x < 12).reduce(1, (a, b) -> a * b),
                 1.0 / D.length
@@ -155,12 +157,12 @@ public class Solution {
 
     /**
      * 8. Дан массив А(80) целых чисел.
-     * Найти сумму и количество теx элементов массива, которые отрицательны и нечетны.
+     * Найти сумму и количество тех элементов массива, которые отрицательны и нечетны.
      * Использовать в качестве подпрограммы процедуру.
      */
     @SuppressWarnings("unused")
     public String eighthQuestion() {
-        int[] A = new Random().ints(80).toArray();
+        var A = new Random().ints(80).toArray();
 
         var result = Arrays.stream(A).filter(n -> n < 0 && Math.abs(n) % 2 == 1).sum();
         return "Результат 8 задания: " + result;
@@ -236,7 +238,9 @@ public class Solution {
     @SuppressWarnings("unused")
     public String twelfthQuestion() {
         Scanner scanner = new Scanner(System.in);
+        System.out.print("Введите ваше число: ");
         var n = Math.abs(scanner.nextInt());
+        // копия числа, так как я изменяю n
         var p = n;
 
         int count = 0;
@@ -245,8 +249,9 @@ public class Solution {
             count += 1;
             n /= 10;
         }
+        scanner.close();
 
-        return "Количество разрядов числа " + p + " равно: " + count;
+        return String.format("Результат 12 задания:\nКоличество разрядов числа: %d равно: %d", p, count);
     }
 
     /**
@@ -254,10 +259,18 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String thirteenthQuestion() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Введите число: ");
+        int x = scanner.nextInt(), result = 0;
+
         for (int i = 1; i < 6; i++) {
-            BigIntegerMath.factorial(3);
+            result += (-1) * i * (x / BigIntegerMath.factorial(i).intValue());
         }
-        return "";
+
+        scanner.close();
+
+        return String.format("Результат 13 задания: %d", result);
     }
 
     /**
@@ -268,7 +281,20 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String fourteenthQuestion() {
-        return "";
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Введите строку:");
+        // List.of - переделывает в интерфейс List, потом приходится вручную кастовать к ArrayList
+        // Collections.swap просит изменяемый объект, что вполне логично, поэтому переделал к ArrayList.
+        var src = new ArrayList<>(List.of(scanner.nextLine().split(" ")));
+        var len = src.size();
+
+        for (var i = 0; i <= (len / 2); i++)
+            Collections.swap(src, len - i - 1, i);
+
+        scanner.close();
+
+        return String.format("Результат 14 задания: %s", String.join(" ", src));
     }
 
     /**
@@ -290,8 +316,17 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String sixteenthQuestion() {
-        return "";
+        // Здесь будет использоваться алгоритм Штейна для нахождения НОД. Его сложность O(n^2/log(n)^2)
+        // По сложности кажется, что он хуже Евклида O(log(min(a, b))), но он быстрее его за счет битовых сдвигов.
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Введите два числа через пробел: ");
+        int a = scanner.nextInt(), b = scanner.nextInt();
+        scanner.close();
+        return String.format("Результат 16 задания: %s",
+                "НОД: " + HelpMethods.algorithm_stein(a, b)
+        );
     }
+
 
     /**
      * 17. Найти площади разных фигур. В зависимости от выбора пользователя вычислить площадь круга,
