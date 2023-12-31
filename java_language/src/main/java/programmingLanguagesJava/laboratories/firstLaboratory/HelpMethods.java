@@ -1,4 +1,4 @@
-package laboratories.firstLaboratory;
+package programmingLanguagesJava.laboratories.firstLaboratory;
 
 public class HelpMethods {
     public static int algorithm_stein(int a, int b) {

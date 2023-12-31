@@ -1,4 +1,4 @@
-package laboratories.firstdotfirstLaboratory;
+package programmingLanguagesJava.laboratories.firstdotfirstLaboratory;
 
 import java.awt.Point;
 

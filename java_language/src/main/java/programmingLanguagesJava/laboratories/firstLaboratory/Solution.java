@@ -1,7 +1,7 @@
 /**
  * Автор: Данил Ковалев ВКБ22 Вариант -
  */
-package laboratories.firstLaboratory;
+package programmingLanguagesJava.laboratories.firstLaboratory;
 
 
 import java.lang.reflect.InvocationTargetException;

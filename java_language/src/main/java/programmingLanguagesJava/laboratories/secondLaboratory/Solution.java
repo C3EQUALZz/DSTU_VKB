@@ -1,4 +1,4 @@
-package laboratories.secondLaboratory;
+package programmingLanguagesJava.laboratories.secondLaboratory;
 
 import com.ibm.icu.text.RuleBasedNumberFormat;
 

@@ -1,4 +1,4 @@
-package laboratories.zeroLaboratory;
+package programmingLanguagesJava.laboratories.zeroLaboratory;
 
 import java.util.Scanner;
 

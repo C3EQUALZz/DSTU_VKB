@@ -1,7 +1,7 @@
 /**
  * Автор: Данил Ковалев ВКБ22 Вариант -
  */
-package laboratories.firstdotfirstLaboratory;
+package programmingLanguagesJava.laboratories.firstdotfirstLaboratory;
 // данная библиотека позволяет переводить числа в английские слова
 
 import com.ibm.icu.text.RuleBasedNumberFormat;
