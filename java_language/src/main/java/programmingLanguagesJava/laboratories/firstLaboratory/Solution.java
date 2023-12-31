@@ -433,18 +433,18 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String twentyFourthQuestion() {
-        Scanner keyboard = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         double[] R = new double[3], U = new double[3];
 
         System.out.println("Введите I:");
-        double I = keyboard.nextDouble();
+        double I = scanner.nextDouble();
 
         for (int i = 0; i < 3; i++){
             System.out.println("Введите R" + i + ": ");
-            R[i] = keyboard.nextDouble();
+            R[i] = scanner.nextDouble();
             U[i] = I * R[i];
         }
-
+        scanner.close();
         // Создаем строки с соответствующими напряжениями. Через Decimal есть только округление, которое мне нужно
         // Очень странно, что разработчики не сделали в том же самом Math для этого нужный статический метод.
         var UString = Arrays.stream(U)
