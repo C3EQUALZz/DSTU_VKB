@@ -257,6 +257,7 @@ public class Solution {
     @SuppressWarnings("unused")
     public String twelfthQuestion() {
         Scanner scanner = new Scanner(System.in);
+
         System.out.print("Введите ваше число: ");
         var n = Math.abs(scanner.nextInt());
         // копия числа, так как я изменяю n
@@ -342,16 +343,16 @@ public class Solution {
         int a = scanner.nextInt(), b = scanner.nextInt();
         scanner.close();
 
-        return String.format("Результат 16 задания: %s",
+        return String.format(
+                "Результат 16 задания: %s",
                 "НОД: " + HelpMethods.algorithm_stein(a, b)
         );
     }
 
 
     /**
-     * 17. Найти площади разных фигур. В зависимости от выбора пользователя вычислить площадь круга,
-     * прямоугольника или треугольника. Для вычисления площади каждой фигуры должна быть написана
-     * отдельная функция.
+     * 17. Найти площади разных фигур. В зависимости от выбора пользователя вычислить площадь круга, прямоугольника или
+     * треугольника. Для вычисления площади каждой фигуры должна быть написана отдельная функция.
      */
     @SuppressWarnings("unused")
     public String seventeenthQuestion() {
@@ -373,7 +374,8 @@ public class Solution {
 
     /**
      * 19. Вычислить сумму элементов главной или побочной диагонали матрицы.
-     * Дана квадратная матрица. Вычислить сумму элементов главной или побочной диагонали в зависимости от выбора пользователя. Сумма элементов любой диагонали должна вычисляться в одной и той же функции.
+     * Дана квадратная матрица. Вычислить сумму элементов главной или побочной диагонали в зависимости от
+     * выбора пользователя. Сумма элементов любой диагонали должна вычисляться в одной и той же функции.
      */
     @SuppressWarnings("unused")
     public String nineteenthQuestion() {
@@ -402,19 +404,37 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String twentyFirstQuestion() {
-        return "";
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Введите x:");
+        int x = scanner.nextInt(), y;
+        scanner.close();
+
+        if (x <= 5)
+            y = x >= -5 ? (int) Math.pow(x, 2) : 2 * Math.abs(x) - 1;
+        else
+            y = 2 * x;
+
+        return String.format("Результат 21 задания: %d", y);
     }
 
     /**
-     * 22.	Функция заполнения массива случайными числами.
-     * Написать функцию, которая заполняет массив случайными числами в диапазоне,
-     * указанном пользователем.
+     * 22. Функция заполнения массива случайными числами.
+     * Написать функцию, которая заполняет массив случайными числами в диапазоне, указанном пользователем.
      * Функция должна принимать два аргумента - начало диапазона и его конец, при этом ничего не возвращать.
      * Вывод значений элементов массива должен происходить в основной ветке программы.
      */
     @SuppressWarnings("unused")
     public String twentySecondQuestion() {
-        return "";
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Введите два числа через пробел: ");
+        int start = scanner.nextInt(), end = scanner.nextInt();
+        scanner.close();
+
+        var randomArray = new Random().ints(10, start, end).toArray();
+
+        return String.format("Результат 22 задания: %s", Arrays.toString(randomArray));
     }
 
     /**
@@ -423,7 +443,13 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String twentyThirdQuestion() {
-        return "";
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Введите U, R через пробел:");
+        double U = scanner.nextDouble(), R = scanner.nextDouble();
+
+        scanner.close();
+        return String.valueOf(U / R);
     }
 
     /**
@@ -436,11 +462,11 @@ public class Solution {
         Scanner scanner = new Scanner(System.in);
         double[] R = new double[3], U = new double[3];
 
-        System.out.println("Введите I:");
+        System.out.print("Введите I: ");
         double I = scanner.nextDouble();
 
-        for (int i = 0; i < 3; i++){
-            System.out.println("Введите R" + i + ": ");
+        for (int i = 0; i < 3; i++) {
+            System.out.print("Введите R" + i + ": ");
             R[i] = scanner.nextDouble();
             U[i] = I * R[i];
         }
