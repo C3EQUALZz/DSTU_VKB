@@ -6,6 +6,8 @@ package programmingLanguagesJava.laboratories.firstLaboratory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.DayOfWeek;
 import java.time.format.TextStyle;
 import java.util.*;
@@ -431,7 +433,25 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String twentyFourthQuestion() {
-        return "";
+        Scanner keyboard = new Scanner(System.in);
+        double[] R = new double[3], U = new double[3];
+
+        System.out.println("Введите I:");
+        double I = keyboard.nextDouble();
+
+        for (int i = 0; i < 3; i++){
+            System.out.println("Введите R" + i + ": ");
+            R[i] = keyboard.nextDouble();
+            U[i] = I * R[i];
+        }
+
+        // Создаем строки с соответствующими напряжениями. Через Decimal есть только округление, которое мне нужно
+        // Очень странно, что разработчики не сделали в том же самом Math для этого нужный статический метод.
+        var UString = Arrays.stream(U)
+                .mapToObj(number -> BigDecimal.valueOf(number).setScale(6, RoundingMode.HALF_UP).toString())
+                .collect(Collectors.joining(" "));
+
+        return String.format("Результат 24 задания: %s", UString);
     }
 
     /**
