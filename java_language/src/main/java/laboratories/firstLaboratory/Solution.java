@@ -6,9 +6,13 @@ package laboratories.firstLaboratory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.time.DayOfWeek;
+import java.time.format.TextStyle;
 import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Collectors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.ibm.icu.text.RuleBasedNumberFormat;
 import org.paukov.combinatorics3.Generator;
@@ -34,7 +38,20 @@ public class Solution {
             // Все вот эти штуки называются отражениями, здесь нет удобного аналога eval, как в Python.
             // Как бы говоря есть, но там под капотом JS, который не может работать с Java напрямую.
             var methodName = numberFormat.format(scanner.nextInt(), "%spellout-ordinal") + "Question";
-            Method method = Solution.class.getMethod(methodName);
+            // В случае больше двадцати methodName может вернуть типа: twenty-first
+
+            Pattern pattern = Pattern.compile("-(\\w)");
+            Matcher matcher = pattern.matcher(methodName);
+
+            StringBuilder str = new StringBuilder();
+
+            // Находим и заменяем каждое вхождение
+            while (matcher.find()) {
+                matcher.appendReplacement(str, matcher.group(1).toUpperCase());
+            }
+            matcher.appendTail(str);
+
+            Method method = Solution.class.getMethod(str.toString());
             result = method.invoke(new Solution());
 
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
@@ -322,6 +339,7 @@ public class Solution {
         System.out.println("Введите два числа через пробел: ");
         int a = scanner.nextInt(), b = scanner.nextInt();
         scanner.close();
+
         return String.format("Результат 16 задания: %s",
                 "НОД: " + HelpMethods.algorithm_stein(a, b)
         );
@@ -422,7 +440,18 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String twentyFifthQuestion() {
-        return "";
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Введите номер дня недели (от 1 до 7):");
+        int dayNumber = scanner.nextInt();
+        scanner.close();
+
+        // Проверка, чтобы номер дня недели был в пределах от 1 до 7
+        if (dayNumber >= 1 && dayNumber <= 7) {
+            DayOfWeek dayOfWeek = DayOfWeek.of(dayNumber);
+            String result = dayOfWeek.getDisplayName(TextStyle.FULL, Locale.forLanguageTag("ru"));
+            return String.format("Результат 25 задания: День недели: %s", result);
+        }
+        return "Результат 25 задания: Некорректный номер дня недели.";
     }
 }
 
