@@ -182,23 +182,24 @@ public class Solution {
 
     /**
      * 8. В тексте найти все пары слов, из которых одно является обращением другого.
-     * TESME
      */
     @SuppressWarnings("unused")
     public String eighthQuestion() {
-        Scanner scanner = new Scanner(System.in);
         StringBuilder result = new StringBuilder();
 
         System.out.println("Введите ваше предложение, где вы хотите искать слова и их обращения: ");
-        var sentence = scanner.nextLine();
+        // В консоли в одной строке могут ввести целое предложение, поэтому мы все объединяем, а потом смотрим на слова
+        var sentence = String.join(" ", getDataFromConsole());
 
-        for (var word : getDataFromConsole()) {
+        for (var word : sentence.split(" ")) {
             // Разворачиваем слово. Я так понимаю в Java для взаимодействия со строками используется StringBuilder
             // Обычный String просто, как литералы что ли?
             var reversedWord = new StringBuilder(word).reverse().toString();
             // Создаем паттерн для поиска слов
-            var pattern = Pattern.compile(String.format("\\b%s\\b", reversedWord));
-            result.append("Результат для поиска слова word: ").append(pattern.matcher(reversedWord).group()).append("\n");
+            var pattern = Pattern.compile(String.format("%s", reversedWord));
+            var matcher = pattern.matcher(sentence);
+            if (matcher.find())
+                result.append(String.format("Результат для поиска слова %s: ", word)).append(matcher.group()).append("\n");
         }
         return String.format("Результат 8 задания:\n%s", result);
     }
