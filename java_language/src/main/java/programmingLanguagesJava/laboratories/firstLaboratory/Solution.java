@@ -523,7 +523,7 @@ public class Solution {
         double U = scanner.nextDouble(), R = scanner.nextDouble();
 
         scanner.close();
-        return String.valueOf(U / R);
+        return String.format("Результат 23 задания: %f", U / R);
     }
 
     /**
