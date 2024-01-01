@@ -336,7 +336,7 @@ public class Solution {
         var value = scanner.nextInt();
         scanner.close();
 
-
+        // В Java есть встроенный бинарный поиск, зачем писать свой?
         int index = Arrays.binarySearch(sortedRandArr, value);
 
 
@@ -395,7 +395,39 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String nineteenthQuestion() {
-        return "";
+        Scanner scanner = new Scanner(System.in);
+        // Создаем генератор случайных чисел
+        Random random = new Random();
+
+        // Создаем матрицу с использованием Stream API и заполняем случайными числами
+        var matrix = Arrays.stream(new int[5][5])
+                .map(row -> Arrays.stream(row)
+                        .map(col -> random.nextInt(100)) // Здесь 100 - верхняя граница случайных чисел
+                        .toArray())
+                .toArray(int[][]::new);
+
+        // Просто вывод матрицы в консоль
+        Arrays.stream(matrix)
+                .forEach(row -> {
+                    Arrays.stream(row)
+                            .forEach(cell -> System.out.print(cell + " "));
+                    System.out.println(); // Переход на новую строку для каждой строки матрицы
+                });
+
+        System.out.print("Введите что вы хотите сделать: " +
+                "(1) вычислить сумму главной диагонали, " +
+                "(2) вычислить сумму побочной диагонали: ");
+
+        var userChoice = scanner.nextInt();
+
+        var result = Arrays.stream(matrix)
+                    .mapToInt(row ->
+                            row[userChoice == 1 ?
+                                    Arrays.asList(matrix).indexOf(row) :
+                                    matrix.length - 1 - Arrays.asList(matrix).indexOf(row)])
+                    .sum();
+
+        return String.format("Результат 19 задания: %d", result);
     }
 
     /**
