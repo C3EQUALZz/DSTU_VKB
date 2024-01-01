@@ -376,7 +376,7 @@ public class Solution {
     }
 
     /**
-     * 18.	Найти массив с максимальной суммой элементов.
+     * 18. Найти массив с максимальной суммой элементов.
      * Сгенерировать десять массивов из случайных чисел.
      * Вывести их и сумму их элементов на экран.
      * Найти среди них один с максимальной суммой элементов.
@@ -385,7 +385,22 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String eighteenthQuestion() {
-        return "";
+
+        var matrix = HelpMethods.generateRandomMatrix(5, 5);
+        HelpMethods.printMatrix(matrix);
+
+        // Наш список с суммами.
+        var sums = Arrays.stream(matrix).mapToInt(row -> Arrays.stream(row).sum()).boxed().toList();
+        System.out.println(sums);
+
+        // Странно, что в обычном массиве не реализован indexOf, только в списках есть данный метод.
+        var index = sums.indexOf(sums.stream().max(Integer::compare).orElseThrow());
+
+        return String.format("Результат 18 задания:\n" +
+                "Строка, где максимальная сумма %s, с индексом %d, сумма - %d",
+                Arrays.toString(matrix[index]),
+                index,
+                Arrays.stream(matrix[index]).sum());
     }
 
     /**
@@ -395,24 +410,18 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String nineteenthQuestion() {
+        // Хотел на самом деле поискать аналог Numpy, но здесь так много библиотек, что вообще непонятно какую можно исп.
+        // Пришлось вот так вручную через StreamApi делать, долго мучался, чтобы заработало.
+
         Scanner scanner = new Scanner(System.in);
         // Создаем генератор случайных чисел
         Random random = new Random();
 
         // Создаем матрицу с использованием Stream API и заполняем случайными числами
-        var matrix = Arrays.stream(new int[5][5])
-                .map(row -> Arrays.stream(row)
-                        .map(col -> random.nextInt(100)) // Здесь 100 - верхняя граница случайных чисел
-                        .toArray())
-                .toArray(int[][]::new);
+        var matrix = HelpMethods.generateRandomMatrix(5, 5);
 
         // Просто вывод матрицы в консоль
-        Arrays.stream(matrix)
-                .forEach(row -> {
-                    Arrays.stream(row)
-                            .forEach(cell -> System.out.print(cell + " "));
-                    System.out.println(); // Переход на новую строку для каждой строки матрицы
-                });
+        HelpMethods.printMatrix(matrix);
 
         System.out.print("Введите что вы хотите сделать: " +
                 "(1) вычислить сумму главной диагонали, " +
@@ -471,7 +480,7 @@ public class Solution {
     public String twentyFirstQuestion() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Введите x:");
+        System.out.print("Введите x: ");
         int x = scanner.nextInt(), y;
         scanner.close();
 

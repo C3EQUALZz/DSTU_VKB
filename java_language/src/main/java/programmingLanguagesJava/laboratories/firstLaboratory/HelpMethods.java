@@ -1,5 +1,8 @@
 package programmingLanguagesJava.laboratories.firstLaboratory;
 
+import java.util.Arrays;
+import java.util.Random;
+
 public class HelpMethods {
     public static int algorithm_stein(int a, int b) {
 
@@ -47,5 +50,37 @@ public class HelpMethods {
 
         // restore common factors of 2
         return a << k;
+    }
+
+    /**
+     * Вспомогательный статический метод, который используется для создания случайной матрицы.
+     * @param CountRows количество строк в матрице.
+     * @param CountColumns количество колонок в матрице.
+     * @return Возвращает матрицу
+     */
+
+    public static int[][] generateRandomMatrix(int CountRows, int CountColumns) {
+        Random random = new Random();
+        // map: Этот метод используется для преобразования элементов потока в примитивные типы данных (int, long, double).
+        // Например, если вы имеете дело с IntStream, LongStream или DoubleStream,
+        // то map применяется для преобразования элементов в другой примитивный тип данных.
+        return Arrays.stream(new int[CountRows][CountColumns])
+                .map(row -> Arrays.stream(row)
+                        .map(col -> random.nextInt(100)) // Здесь 100 - верхняя граница случайных чисел
+                        .toArray())
+                .toArray(int[][]::new);
+    }
+
+    /**
+     * Вспомогательный статический метод для вывода матрицы в консоль
+     * @param matrix матрица, которую хотим распечатать
+     */
+    public static void printMatrix(int[][] matrix) {
+        Arrays.stream(matrix)
+                .forEach(row -> {
+                    Arrays.stream(row)
+                            .forEach(cell -> System.out.print(cell + " "));
+                    System.out.println(); // Переход на новую строку для каждой строки матрицы
+                });
     }
 }
