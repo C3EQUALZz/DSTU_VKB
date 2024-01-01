@@ -327,7 +327,23 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String fifteenthQuestion() {
-        return "";
+        Scanner scanner = new Scanner(System.in);
+        var sortedRandArr = new Random().ints(10, 0, 100).sorted().toArray();
+
+        System.out.printf("Наш массив: %s\n", Arrays.toString(sortedRandArr));
+
+        System.out.print("Введите ваше число, которое вы хотите найти: ");
+        var value = scanner.nextInt();
+        scanner.close();
+
+
+        int index = Arrays.binarySearch(sortedRandArr, value);
+
+
+        return String.format(
+                "15 задание: Элемент %d %s", value,
+                index >= 0 ? "найден в массиве на позиции " + index : "не найден в массиве"
+        );
     }
 
     /**
@@ -404,6 +420,7 @@ public class Solution {
             var binaryNumber = Integer.toString(number, 2);
             strBuilder.append(String.format("Результат перевода двоичного числа %d - %s\n", number, binaryNumber));
         }
+        scanner.close();
 
         return String.format("Результат 20 задания:\n%s", strBuilder);
     }
