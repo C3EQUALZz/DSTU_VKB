@@ -389,7 +389,23 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String twentiethQuestion() {
-        return "";
+        Scanner scanner = new Scanner(System.in);
+        var strBuilder = new StringBuilder();
+
+        while (true) {
+            System.out.print("Введите число (для завершения введите 0): ");
+            var number = scanner.nextInt();
+
+            if (number == 0)
+                break;
+
+            // Встроенная функция для перевода в различные системы исчисления.
+            // Может переводить в СС от 2 до 36 включительно.
+            var binaryNumber = Integer.toString(number, 2);
+            strBuilder.append(String.format("Результат перевода двоичного числа %d - %s\n", number, binaryNumber));
+        }
+
+        return String.format("Результат 20 задания:\n%s", strBuilder);
     }
 
     /**
