@@ -10,10 +10,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.InvocationTargetException;
 
 import java.util.*;
-import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 import java.awt.Point;
 
@@ -52,7 +50,7 @@ public class Solution {
     @SuppressWarnings("unused")
     public String firstQuestion() {
 
-        var stringWithMinimalLength = getDataFromConsole()
+        var stringWithMinimalLength = HelpMethods.getDataFromConsole()
                 .stream()
                 .min(Comparator.comparing(String::length))
                 .orElse("Вы не ввели строки для нахождения! ");
@@ -69,7 +67,7 @@ public class Solution {
     public String secondQuestion() {
         // я не совсем понял "значений этих длин", мы изначально сортируем по длине, уже сравнивая значения
         // это в плане лексикографически что ли? Здесь это сделано
-        var result = getDataFromConsole()
+        var result = HelpMethods.getDataFromConsole()
                 .stream()
                 .sorted(Comparator.comparing(String::length).thenComparing(Comparator.naturalOrder()))
                 .collect(Collectors.joining("\n"));
@@ -83,9 +81,9 @@ public class Solution {
     @SuppressWarnings("unused")
     public String thirdQuestion() {
         // Получаем среднюю длину, проходя по всему списку
-        var averageLength = getDataFromConsole().stream().mapToInt(String::length).average().orElseThrow();
+        var averageLength = HelpMethods.getDataFromConsole().stream().mapToInt(String::length).average().orElseThrow();
         // Собираем те предложения, которые больше по длине
-        var result = getDataFromConsole()
+        var result = HelpMethods.getDataFromConsole()
                 .stream()
                 .filter(row -> row.length() > averageLength)
                 .collect(Collectors.joining("\n"));
@@ -102,7 +100,7 @@ public class Solution {
         // Каждый раз делаю новый сканер из-за моего запуска методов из-под нового экземпляра класса
         Scanner scanner = new Scanner(System.in);
 
-        var sentences = getDataFromConsole();
+        var sentences = HelpMethods.getDataFromConsole();
 
         System.out.print("Введите индекс буквы, которую вы хотите заменить: ");
         var index = scanner.nextInt();
@@ -131,16 +129,16 @@ public class Solution {
         // Метод chars переделывает в итератор с кодами ASCII символов
         // получается аналог map(int.ord, symbol)
         // map отличается от mapToObj тем, что один переделывает в новый тип данных, а другой нет
-        var symbols = String.join("", getDataFromConsole())
+        var symbols = String.join("", HelpMethods.getDataFromConsole())
                 .chars()
                 .mapToObj(c -> (char) c)
-                .map(c -> centerString(String.valueOf(c)))
+                .map(c -> HelpMethods.centerString(String.valueOf(c)))
                 .collect(Collectors.joining(""));
 
         var unicodeValuesOfChars = symbols
                 .chars()
                 .filter(n -> n != 32)
-                .mapToObj(c -> centerString(String.valueOf(c)))
+                .mapToObj(c -> HelpMethods.centerString(String.valueOf(c)))
                 .collect(Collectors.joining(""));
 
         return String.format("Результат 5 задания:\n%s\n%s", symbols, unicodeValuesOfChars);
@@ -153,7 +151,7 @@ public class Solution {
     @SuppressWarnings("unused")
     public String sixthQuestion() {
 
-        var result = String.join(" ", getDataFromConsole())
+        var result = String.join(" ", HelpMethods.getDataFromConsole())
                 .chars()
                 .filter(Character::isLetter)
                 .mapToObj(number -> String.valueOf((char) number))
@@ -172,7 +170,7 @@ public class Solution {
         System.out.print("Введите длину слов, которые вы хотите удалить: ");
         var length = scanner.nextInt();
 
-        var result = getDataFromConsole()
+        var result = HelpMethods.getDataFromConsole()
                 .stream()
                 .filter(word -> !(word.length() == length &&
                         Pattern.matches("^[^aeiouAEIOUЙйУуЕеОоЭэИиЯяЫыАаЮю].*", word)))
@@ -189,7 +187,7 @@ public class Solution {
 
         System.out.println("Введите ваше предложение, где вы хотите искать слова и их обращения: ");
         // В консоли в одной строке могут ввести целое предложение, поэтому мы все объединяем, а потом смотрим на слова
-        var sentence = String.join(" ", getDataFromConsole());
+        var sentence = String.join(" ", HelpMethods.getDataFromConsole());
 
         for (var word : sentence.split(" ")) {
             // Разворачиваем слово. Я так понимаю в Java для взаимодействия со строками используется StringBuilder
@@ -214,7 +212,7 @@ public class Solution {
         // привет как
         // дела
         // -> ["привет", "как", "дела"]
-        var words = getDataFromConsole()
+        var words = HelpMethods.getDataFromConsole()
                 .stream()
                 .flatMap(word -> Arrays.stream(word.split("\\s+")))
                 .toList();
@@ -227,7 +225,7 @@ public class Solution {
             // Поиск слов с помощью регулярного выражения, я сразу буду добавлять слово и количество
             result.add(
                     String.format("Слово: '%s' появляется %d раза в тексте",
-                            word, findAll(sentence, String.format("\\b%s\\b", word)).size())
+                            word, HelpMethods.findAll(sentence, String.format("\\b%s\\b", word)).size())
             );
         }
 
@@ -241,11 +239,11 @@ public class Solution {
     public String tenthQuestion() {
         var result = new StringBuilder();
         // Пользователь в одной строке может ввести предложение с точкой, поэтому такой костыль
-        var sentences = String.join(".", getDataFromConsole()).split("\\. ");
+        var sentences = String.join(".", HelpMethods.getDataFromConsole()).split("\\. ");
 
         for (String sentence : sentences) {
-            var vowelsCount = countVowels(sentence);
-            var consonantsCount = countConsonants(sentence);
+            var vowelsCount = HelpMethods.countVowels(sentence);
+            var consonantsCount = HelpMethods.countConsonants(sentence);
 
             result.append(String.format("В предложении '%s' %s букв: гласных - %d, согласных - %d%n",
                     sentence, (vowelsCount > consonantsCount) ? "гласных больше" : "согласных больше",
@@ -264,7 +262,7 @@ public class Solution {
     public String eleventhQuestion() {
 
         // Я не совсем понимаю почему streamApi код возвращает Object[], тут приходится вручную кастовать к (Point[])
-        var points = (Point[]) getDataFromConsole().stream().map(cord -> {
+        var points = (Point[]) HelpMethods.getDataFromConsole().stream().map(cord -> {
 
             var pattern = Pattern.compile("(\\d+)");
             var matcher = pattern.matcher(cord);
@@ -325,92 +323,6 @@ public class Solution {
         return "";
     }
 
-    /**
-     * Метод, с помощью которого мы получаем ввод пользователя с клавиатуры.
-     * Здесь пользователь вводит до того момента, пока не введет exit.
-     * @return список с содержимым, который ввел пользователь.
-     */
-
-    private static List<String> getDataFromConsole() {
-        Scanner scanner = new Scanner(System.in);
-        // Создание списка в Java. Использование List вместо ArrayList в объявлении переменной — это пример принципа
-        // программирования на уровне интерфейсов
-        List<String> rowsFromConsole = new ArrayList<>();
-
-        System.out.println("Вводите сколько хотите строк. Конец - это строка 'exit'");
-        String row = scanner.nextLine().strip();
-
-        while (!row.equalsIgnoreCase("exit")) {
-
-            // есть ошибка, что пустая строка добавляется в самое начало, а потом слово
-            // не совсем понимаю почему
-            if (!row.isBlank())
-                rowsFromConsole.add(row);
-
-            row = scanner.nextLine().strip();
-        }
-        scanner.close();
-
-        return rowsFromConsole;
-    }
-
-    /**
-     * Вспомогательный метод для центрирования строки
-     *
-     * @param s - наша строка, которую мы хотим центрировать
-     * @return новая строка, которую отцентрировали
-     */
-    private static String centerString(String s) {
-        return String.format("%-" + 5 + "s", String.format("%" + (s.length() + (5 - s.length()) / 2) + "s", s));
-    }
-
-    /**
-     * В Java нет аналога re.findall из Python, поэтому написал своё, так сказать.
-     */
-    private static List<String> findAll(String sentence, String regex) {
-        List<String> matches = new ArrayList<>();
-        // Здесь флаги немного по-другому называются относительно Python, тут добавляю поддержку UNICODE и игнорирую регистр
-        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CHARACTER_CLASS);
-        Matcher matcher = pattern.matcher(sentence);
-
-        while (matcher.find()) {
-            matches.add(matcher.group());
-        }
-
-        return matches;
-    }
-
-    /**
-     * Вспомогательный метод для подсчета количества гласных букв
-     *
-     * @param str строка, которую передал пользователь
-     * @return количество гласных символов
-     */
-
-    private static long countVowels(String str) {
-        Set<Character> vowels = Stream.of('а', 'о', 'у', 'ы', 'э', 'е', 'ё', 'и', 'ю', 'я',
-                'a', 'e', 'i', 'o', 'u').collect(Collectors.toSet());
-        //Locale.ROOT представляет собой константу в классе Locale в Java, предназначенную для представления
-        // нейтральной локали.
-        // Нейтральная локаль означает отсутствие спецификации конкретного региона, языка или варианта.
-        return str.toLowerCase(Locale.ROOT).chars()
-                .mapToObj(c -> (char) c)
-                .filter(vowels::contains)
-                .count();
-    }
-
-    /**
-     * Вспомогательный метод для нахождения количества согласных букв
-     *
-     * @param str Строка, которую передал наш пользователь.
-     * @return Возвращает количество согласных букв.
-     */
-    private static long countConsonants(String str) {
-        return str.toLowerCase(Locale.ROOT).chars()
-                .mapToObj(c -> (char) c)
-                .filter(c -> Character.isLetter(c) && countVowels(String.valueOf(c)) != 1)
-                .count();
-    }
 
 }
 
