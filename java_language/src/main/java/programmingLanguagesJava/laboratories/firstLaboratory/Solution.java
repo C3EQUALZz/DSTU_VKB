@@ -372,7 +372,19 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String seventeenthQuestion() {
-        return "";
+        Scanner keyboard = new Scanner(System.in);
+        System.out.println("Введите номер фигуры:");
+        System.out.println("1.Круг");
+        System.out.println("2.Прямоугольник");
+        System.out.println("3.Треугольник");
+        int param = keyboard.nextInt();
+
+        return switch (param) {
+            case 1 -> Circle.square();
+            case 2 -> Rect.square();
+            case 3 -> Triangle.square();
+            default -> "Выбрали неверное задание";
+        };
     }
 
     /**
@@ -397,7 +409,7 @@ public class Solution {
         var index = sums.indexOf(sums.stream().max(Integer::compare).orElseThrow());
 
         return String.format("Результат 18 задания:\n" +
-                "Строка, где максимальная сумма %s, с индексом %d, сумма - %d",
+                        "Строка, где максимальная сумма %s, с индексом %d, сумма - %d",
                 Arrays.toString(matrix[index]),
                 index,
                 Arrays.stream(matrix[index]).sum());
@@ -430,11 +442,11 @@ public class Solution {
         var userChoice = scanner.nextInt();
 
         var result = Arrays.stream(matrix)
-                    .mapToInt(row ->
-                            row[userChoice == 1 ?
-                                    Arrays.asList(matrix).indexOf(row) :
-                                    matrix.length - 1 - Arrays.asList(matrix).indexOf(row)])
-                    .sum();
+                .mapToInt(row ->
+                        row[userChoice == 1 ?
+                                Arrays.asList(matrix).indexOf(row) :
+                                matrix.length - 1 - Arrays.asList(matrix).indexOf(row)])
+                .sum();
 
         return String.format("Результат 19 задания: %d", result);
     }
