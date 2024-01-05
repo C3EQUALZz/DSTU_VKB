@@ -256,19 +256,23 @@ public class Solution {
     /**
      * 11. Выбрать три разные точки заданного на плоскости множества точек,
      * составляющие треугольник наибольшего периметра.
-     * FIXME
      */
     @SuppressWarnings("unused")
     public String eleventhQuestion() {
 
         // Я не совсем понимаю почему streamApi код возвращает Object[], тут приходится вручную кастовать к (Point[])
-        var points = (Point[]) HelpMethods.getDataFromConsole().stream().map(cord -> {
+        var points = HelpMethods.getDataFromConsole().stream().map(cord -> {
 
-            var pattern = Pattern.compile("(\\d+)");
+            var pattern = Pattern.compile("\\(?\\d+, \\d+\\)?");
             var matcher = pattern.matcher(cord);
 
             if (matcher.find()) {
-                var coordinates = matcher.group(1).split(",");
+                var coordinates = matcher
+                        .group(0)
+                        .replace("(", "")
+                        .replace(")", "")
+                        .split(",");
+
                 return new Point(Integer.parseInt(coordinates[0].strip()), Integer.parseInt(coordinates[1].strip()));
             }
             // Если код не найдет цифры, то следует явно указать, что возвращает null.
@@ -277,16 +281,7 @@ public class Solution {
         }).toArray();
 
 
-        List<Triangle> triangles = new ArrayList<>();
-        // Как сделать за O(n^2) я за весь день и не придумал, очень тяжелая для этого задача
-        for (int i = 0; i < points.length - 2; i++) {
-            for (int j = i + 1; j < points.length - 1; j++) {
-                for (int k = j + 1; k < points.length; k++) {
-                    Triangle triangle = new Triangle(points[i], points[j], points[k]);
-                    triangles.add(triangle);
-                }
-            }
-        }
+        List<Triangle> triangles = HelpMethods.getTriangleList(points);
 
         // Найдите треугольник с максимальным периметром
         Triangle maxPerimeterTriangle = triangles.stream()
@@ -311,6 +306,26 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String twelfthQuestion() {
+        var points = HelpMethods.getDataFromConsole().stream().map(cord -> {
+
+            var pattern = Pattern.compile("\\(?\\d+, \\d+\\)?");
+            var matcher = pattern.matcher(cord);
+
+            if (matcher.find()) {
+                var coordinates = matcher
+                        .group(0)
+                        .replace("(", "")
+                        .replace(")", "")
+                        .split(",");
+
+                return new Point(Integer.parseInt(coordinates[0].strip()), Integer.parseInt(coordinates[1].strip()));
+            }
+            // Если код не найдет цифры, то следует явно указать, что возвращает null.
+            // Видимо, в Java нет неявного возвращения null (None), как в Python.
+            return null;
+        }).toArray();
+
+
         return "";
     }
 

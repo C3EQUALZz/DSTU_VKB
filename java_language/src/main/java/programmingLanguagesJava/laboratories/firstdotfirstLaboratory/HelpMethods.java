@@ -1,6 +1,8 @@
 package programmingLanguagesJava.laboratories.firstdotfirstLaboratory;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -92,5 +94,24 @@ public class HelpMethods {
         scanner.close();
 
         return rowsFromConsole;
+    }
+
+    /**
+     * Образую всевозможные треугольники, проходясь за O(n^3)
+     * @param points массив с точками.
+     * @return список с треугольниками.
+     */
+    public static List<Triangle> getTriangleList(Object[] points) {
+        List<Triangle> triangles = new ArrayList<>();
+        // Как сделать за O(n^2) я за весь день и не придумал, очень тяжелая для этого задача
+        for (int i = 0; i < points.length - 2; i++) {
+            for (int j = i + 1; j < points.length - 1; j++) {
+                for (int k = j + 1; k < points.length; k++) {
+                    Triangle triangle = new Triangle((Point) points[i], (Point) points[j], (Point) points[k]);
+                    triangles.add(triangle);
+                }
+            }
+        }
+        return triangles;
     }
 }
