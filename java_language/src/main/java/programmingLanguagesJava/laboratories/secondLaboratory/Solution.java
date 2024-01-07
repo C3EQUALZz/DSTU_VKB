@@ -76,7 +76,7 @@ public class Solution {
     @SuppressWarnings("unused")
     public String fourthQuestion() {
         double d = (short) 2.50256e2d;
-        char c =  'd';
+        char c = 'd';
         short s = (short) 2.22;
         int i = 150000;
         float f = 0.50f;
@@ -89,10 +89,10 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String fifthQuestion() {
-        long l =  1234_564_890L;
-        int x =  0b1000_1100_1010; //бинарность
-        double m =  (byte) 110_987_654_6299.123_34;
-        float f =  l++ + 10 + ++x - (float) m;
+        long l = 1234_564_890L;
+        int x = 0b1000_1100_1010; //бинарность
+        double m = (byte) 110_987_654_6299.123_34;
+        float f = l++ + 10 + ++x - (float) m;
         l = (long) f / 1000;
         return String.format("Результат 5 задания: %d", l);
     }
@@ -105,7 +105,7 @@ public class Solution {
     public String sixthQuestion() {
         int a = 50;
         int b = 17;
-        double d = (double)a / b;
+        double d = (double) a / b;
         return String.format("Результат 6 задания: %f", d);
     }
 
@@ -115,11 +115,11 @@ public class Solution {
     @SuppressWarnings("unused")
     public String seventhQuestion() {
         int a = 257;
-        System.out.println((byte)a);
+        System.out.println((byte) a);
         int b = 4;
         int c = 3;
         int e = 2;
-        double d = (byte)a + b / c / e;
+        double d = (byte) a + b / c / e;
 
         return String.format("Результат 7 задания: %f", d);
     }
@@ -133,7 +133,7 @@ public class Solution {
         int b = 4;
         int c = 3;
         int e = 2;
-        double d = a + (float)(b / c) / e;
+        double d = a + (float) (b / c) / e;
         return String.format("Результат 8 задания: %f", d);
     }
 }

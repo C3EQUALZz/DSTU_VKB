@@ -16,8 +16,7 @@ public class HelpMethods {
         // Finding K, where K is the greatest
         // power of 2 that divides both a and b
         int k;
-        for (k = 0; ((a | b) & 1) == 0; ++k)
-        {
+        for (k = 0; ((a | b) & 1) == 0; ++k) {
             a >>= 1;
             b >>= 1;
         }
@@ -27,8 +26,7 @@ public class HelpMethods {
             a >>= 1;
 
         // From here on, 'a' is always odd.
-        do
-        {
+        do {
             // If b is even, remove
             // all factor of 2 in b
             while ((b & 1) == 0)
@@ -37,8 +35,7 @@ public class HelpMethods {
             // Now a and b are both odd. Swap
             // if necessary so a <= b, then set
             // b = b - a (which is even)
-            if (a > b)
-            {
+            if (a > b) {
                 // Swap u and v.
                 int temp = a;
                 a = b;
@@ -54,7 +51,8 @@ public class HelpMethods {
 
     /**
      * Вспомогательный статический метод, который используется для создания случайной матрицы.
-     * @param CountRows количество строк в матрице.
+     *
+     * @param CountRows    количество строк в матрице.
      * @param CountColumns количество колонок в матрице.
      * @return Возвращает матрицу
      */
@@ -73,6 +71,7 @@ public class HelpMethods {
 
     /**
      * Вспомогательный статический метод для вывода матрицы в консоль
+     *
      * @param matrix матрица, которую хотим распечатать
      */
     public static void printMatrix(int[][] matrix) {

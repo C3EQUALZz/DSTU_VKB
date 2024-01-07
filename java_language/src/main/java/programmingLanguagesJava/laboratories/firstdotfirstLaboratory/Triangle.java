@@ -1,6 +1,6 @@
 package programmingLanguagesJava.laboratories.firstdotfirstLaboratory;
 
-import java.awt.Point;
+import java.awt.*;
 
 public class Triangle {
     private final Point point1;
@@ -16,6 +16,7 @@ public class Triangle {
     public double getPerimeter() {
         return calculatePerimeter();
     }
+
     public Point getX() {
         return point1;
     }
@@ -27,6 +28,7 @@ public class Triangle {
     public Point getZ() {
         return point3;
     }
+
     private double calculatePerimeter() {
         return distance(point1, point2) + distance(point2, point3) + distance(point3, point1);
     }

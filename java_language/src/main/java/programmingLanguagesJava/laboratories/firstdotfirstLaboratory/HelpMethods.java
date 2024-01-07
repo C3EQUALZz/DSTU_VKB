@@ -1,8 +1,8 @@
 package programmingLanguagesJava.laboratories.firstdotfirstLaboratory;
 
 import java.awt.*;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -70,6 +70,7 @@ public class HelpMethods {
     /**
      * Метод, с помощью которого мы получаем ввод пользователя с клавиатуры.
      * Здесь пользователь вводит до того момента, пока не введет exit.
+     *
      * @return список с содержимым, который ввел пользователь.
      */
 
@@ -98,6 +99,7 @@ public class HelpMethods {
 
     /**
      * Образую всевозможные треугольники, проходясь за O(n^3)
+     *
      * @param points массив с точками.
      * @return список с треугольниками.
      */

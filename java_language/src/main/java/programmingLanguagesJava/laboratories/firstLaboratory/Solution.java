@@ -4,6 +4,10 @@
 package programmingLanguagesJava.laboratories.firstLaboratory;
 
 
+import com.google.common.math.BigIntegerMath;
+import com.ibm.icu.text.RuleBasedNumberFormat;
+import org.paukov.combinatorics3.Generator;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -11,15 +15,10 @@ import java.math.RoundingMode;
 import java.time.DayOfWeek;
 import java.time.format.TextStyle;
 import java.util.*;
-import java.util.stream.IntStream;
-import java.util.stream.Collectors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.ibm.icu.text.RuleBasedNumberFormat;
-import org.paukov.combinatorics3.Generator;
-
-import com.google.common.math.BigIntegerMath;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Solution {
     static final IntStream firstIntStream = new Random().ints(20, -100, 21);
@@ -34,7 +33,7 @@ public class Solution {
 
         Object result;
 
-        System.out.print("Введите какое задание вы хотите выполнить: ");
+        System.out.print("Введите какое задание хотите выполнить: ");
         try {
             // Получение значения метода из цифры, задавая ему правила.
             // Все вот эти штуки называются отражениями, здесь нет удобного аналога eval, как в Python.
