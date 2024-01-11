@@ -322,10 +322,27 @@ public class Solution {
             // Если код не найдет цифры, то следует явно указать, что возвращает null.
             // Видимо, в Java нет неявного возвращения null (None), как в Python.
             return null;
-        }).toArray();
+        }).toList();
 
+        double minSum = Double.MAX_VALUE;
+        Point minPoint = null;
 
-        return "";
+        for (Point point : points) {
+            double sum = 0;
+            for (Point other : points) {
+                if (!point.equals(other))
+                    sum += Math.hypot(point.x - other.x, point.y - other.y);
+            }
+
+            if (sum < minSum) {
+                minSum = sum;
+                minPoint = point;
+            }
+
+        }
+
+        assert minPoint != null;
+        return String.format("Результат 12 задания:\nТочка, где расстояние минимально: (%d, %d) ", minPoint.x, minPoint.y);
     }
 
     /**
