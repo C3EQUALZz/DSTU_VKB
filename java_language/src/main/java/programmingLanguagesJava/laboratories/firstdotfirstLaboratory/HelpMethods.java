@@ -8,14 +8,14 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class HelpMethods {
+class HelpMethods {
     /**
      * Вспомогательный метод для центрирования строки
      *
      * @param s - наша строка, которую мы хотим центрировать
      * @return новая строка, которую отцентрировали
      */
-    public static String centerString(String s) {
+    static String centerString(String s) {
         return String.format("%-" + 5 + "s", String.format("%" + (s.length() + (5 - s.length()) / 2) + "s", s));
     }
 
@@ -25,7 +25,7 @@ public class HelpMethods {
      * @param str Строка, которую передал наш пользователь.
      * @return Возвращает количество согласных букв.
      */
-    public static long countConsonants(String str) {
+    static long countConsonants(String str) {
         return str.toLowerCase(Locale.ROOT).chars()
                 .mapToObj(c -> (char) c)
                 .filter(c -> Character.isLetter(c) && countVowels(String.valueOf(c)) != 1)
@@ -39,7 +39,7 @@ public class HelpMethods {
      * @return количество гласных символов
      */
 
-    public static long countVowels(String str) {
+    static long countVowels(String str) {
         Set<Character> vowels = Stream.of('а', 'о', 'у', 'ы', 'э', 'е', 'ё', 'и', 'ю', 'я',
                 'a', 'e', 'i', 'o', 'u').collect(Collectors.toSet());
         //Locale.ROOT представляет собой константу в классе Locale в Java, предназначенную для представления
@@ -54,7 +54,7 @@ public class HelpMethods {
     /**
      * В Java нет аналога re.findall из Python, поэтому написал своё, так сказать.
      */
-    public static List<String> findAll(String sentence, String regex) {
+    static List<String> findAll(String sentence, String regex) {
         List<String> matches = new ArrayList<>();
         // Здесь флаги немного по-другому называются относительно Python, тут добавляю поддержку UNICODE и игнорирую регистр
         Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CHARACTER_CLASS);
@@ -74,7 +74,7 @@ public class HelpMethods {
      * @return список с содержимым, который ввел пользователь.
      */
 
-    public static List<String> getDataFromConsole() {
+    static List<String> getDataFromConsole() {
         Scanner scanner = new Scanner(System.in);
         // Создание списка в Java. Использование List вместо ArrayList в объявлении переменной — это пример принципа
         // программирования на уровне интерфейсов
@@ -103,7 +103,7 @@ public class HelpMethods {
      * @param points массив с точками.
      * @return список с треугольниками.
      */
-    public static List<Triangle> getTriangleList(Object[] points) {
+    static List<Triangle> getTriangleList(Object[] points) {
         List<Triangle> triangles = new ArrayList<>();
         // Как сделать за O(n^2) я за весь день и не придумал, очень тяжелая для этого задача
         for (int i = 0; i < points.length - 2; i++) {
@@ -120,7 +120,7 @@ public class HelpMethods {
     /**
      * Преобразование точек из строк в java.awt.Point
      */
-    public static Stream<java.awt.Point> cordsFromConsole() {
+    static Stream<java.awt.Point> cordsFromConsole() {
         return HelpMethods.getDataFromConsole().stream().map(cord -> {
 
             var pattern = Pattern.compile("\\(?\\d+, \\d+\\)?");
@@ -131,6 +131,7 @@ public class HelpMethods {
                         .group(0)
                         .replace("(", "")
                         .replace(")", "")
+                        .replace(" ", "")
                         .split(",");
 
                 return new Point(Integer.parseInt(coordinates[0].strip()), Integer.parseInt(coordinates[1].strip()));
@@ -140,4 +141,41 @@ public class HelpMethods {
             return null;
         });
     }
+
+    static double CrossProduct(double[][] A) {
+        double X1 = (A[1][0] - A[0][0]);
+        double Y1 = (A[1][1] - A[0][1]);
+        double X2 = (A[2][0] - A[0][0]);
+        double Y2 = (A[2][1] - A[0][1]);
+        return (X1 * Y2 - Y1 * X2);
+    }
+
+    /**
+     * https://www.geeksforgeeks.org/check-if-given-polygon-is-a-convex-polygon-or-not/
+     *
+     * @param points список с точками, которые передал пользователь в консоли.
+     * @return правду, если является выпуклым
+     */
+
+    static boolean isConvex(List<Point> points) {
+        int N = points.size();
+        double prev = 0;
+        double curr = 0;
+        for (int i = 0; i < N; i++) {
+            double[][] temp = {
+                    {points.get(i).x, points.get(i).y},
+                    {points.get((i + 1) % N).x, points.get((i + 1) % N).y},
+                    {points.get((i + 2) % N).x, points.get((i + 2) % N).y}
+            };
+            curr = CrossProduct(temp);
+            if (curr * prev < 0) {
+                return false;
+            } else {
+                prev = curr;
+            }
+        }
+        return true;
+    }
+
+
 }

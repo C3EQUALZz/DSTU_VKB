@@ -2,7 +2,6 @@
  * Автор: Данил Ковалев ВКБ22 Вариант -
  */
 package programmingLanguagesJava.laboratories.firstdotfirstLaboratory;
-// данная библиотека позволяет переводить числа в английские слова
 
 import programmingLanguagesJava.laboratories.ConsoleReader;
 
@@ -294,7 +293,19 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String thirteenthQuestion() {
-        return "";
+        var points = HelpMethods.cordsFromConsole().toList();
+
+        if (!HelpMethods.isConvex(points))
+            return "Результат 13 задания: многоугольник не является выпуклым";
+        // https://www.mathopenref.com/coordpolygonarea.html
+        int countPoints = points.size();
+        double sum = 0;
+        for (int i = 0; i < countPoints; i += 1)
+
+            sum += points.get(i).x * points.get((i + 1) % countPoints).y -
+                    points.get((i + 1) % countPoints).x * points.get(i).y;
+
+        return String.format("Результат 13 задания: %f", Math.abs(sum / 2.0));
     }
 }
 
