@@ -1,64 +1,12 @@
 package programmingLanguagesJava.laboratories.thirddotfirstLaboratory;
 
-import com.ibm.icu.text.RuleBasedNumberFormat;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Locale;
-import java.util.Scanner;
+import programmingLanguagesJava.laboratories.ConsoleReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Solution {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        // Перевод в англ слова, второе взял из stackoverflow.
-        RuleBasedNumberFormat numberFormat = new RuleBasedNumberFormat(Locale.UK, RuleBasedNumberFormat.SPELLOUT);
-
-        Object result;
-
-        System.out.print("Введите какое задание вы хотите выполнить: ");
-        try {
-            // Получение значения метода из цифры, задавая ему правила.
-            // Все вот эти штуки называются отражениями, здесь нет удобного аналога eval, как в Python.
-            // Как бы говоря есть, но там под капотом JS, который не может работать с Java напрямую.
-            var methodName = numberFormat.format(scanner.nextInt(), "%spellout-ordinal") + "Question";
-            // В случае больше двадцати methodName может вернуть типа: twenty-first
-
-            // Метод nextInt() читает следующее целое число, но не читает символ новой строки,
-            // который вы вводите после этого числа.
-            // Это оставляет символ новой строки в буфере ввода, который затем читается методом nextLine().
-            // Когда вы вызываете nextLine() сразу после nextInt(), он находит символ новой строки в буфере и возвращает
-            // его, как если бы это было введено пользователем.
-            // Это может привести к тому, что ваш метод nextLine() будет пропущен,
-            // поскольку он получает пустую строку вместо того, чтобы ждать ввода пользователя
-            scanner.nextLine();
-
-            System.out.print("Введите входные данные, которые нужны для данного метода: ");
-            var param = scanner.nextLine();
-
-            Pattern pattern = Pattern.compile("-(\\w)");
-            Matcher matcher = pattern.matcher(methodName);
-
-            StringBuilder str = new StringBuilder();
-
-            // Находим и заменяем каждое вхождение
-            while (matcher.find()) {
-                matcher.appendReplacement(str, matcher.group(1).toUpperCase());
-            }
-            matcher.appendTail(str);
-
-            // Находим метод, 1 аргумент - это строка
-            Method method = Solution.class.getMethod(str.toString(), String.class);
-            result = method.invoke(new Solution(), param);
-
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            result = "Вы выбрали неверное задание";
-        }
-
-        System.out.println(result);
-        scanner.close();
+        System.out.println(ConsoleReader.executeTask(Solution.class));
     }
 
     /**

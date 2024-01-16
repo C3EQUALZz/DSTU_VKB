@@ -5,18 +5,14 @@ package programmingLanguagesJava.laboratories.firstLaboratory;
 
 
 import com.google.common.math.BigIntegerMath;
-import com.ibm.icu.text.RuleBasedNumberFormat;
 import org.paukov.combinatorics3.Generator;
+import programmingLanguagesJava.laboratories.ConsoleReader;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.DayOfWeek;
 import java.time.format.TextStyle;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -26,41 +22,7 @@ public class Solution {
     static final IntStream thirdIntStream = new Random().ints(10, -100, 11);
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        // Перевод в англ слова, второе взял из stackoverflow.
-        RuleBasedNumberFormat numberFormat = new RuleBasedNumberFormat(Locale.UK, RuleBasedNumberFormat.SPELLOUT);
-
-        Object result;
-
-        System.out.print("Введите какое задание хотите выполнить: ");
-        try {
-            // Получение значения метода из цифры, задавая ему правила.
-            // Все вот эти штуки называются отражениями, здесь нет удобного аналога eval, как в Python.
-            // Как бы говоря есть, но там под капотом JS, который не может работать с Java напрямую.
-            var methodName = numberFormat.format(scanner.nextInt(), "%spellout-ordinal") + "Question";
-            // В случае больше двадцати methodName может вернуть типа: twenty-first
-
-            Pattern pattern = Pattern.compile("-(\\w)");
-            Matcher matcher = pattern.matcher(methodName);
-
-            StringBuilder str = new StringBuilder();
-
-            // Находим и заменяем каждое вхождение
-            while (matcher.find()) {
-                matcher.appendReplacement(str, matcher.group(1).toUpperCase());
-            }
-            matcher.appendTail(str);
-
-            Method method = Solution.class.getMethod(str.toString());
-            result = method.invoke(new Solution());
-
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            result = "Вы выбрали неверное задание";
-        }
-
-        System.out.println(result);
-        scanner.close();
+        System.out.println(ConsoleReader.executeTask(Solution.class));
     }
 
     /**
