@@ -160,7 +160,7 @@ class HelpMethods {
     static boolean isConvex(List<Point> points) {
         int N = points.size();
         double prev = 0;
-        double curr = 0;
+        double curr;
         for (int i = 0; i < N; i++) {
             double[][] temp = {
                     {points.get(i).x, points.get(i).y},
