@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-class HelpMethods {
+public class HelpMethods {
     /**
      * Вспомогательный метод для центрирования строки
      *
@@ -74,7 +74,7 @@ class HelpMethods {
      * @return список с содержимым, который ввел пользователь.
      */
 
-    static List<String> getDataFromConsole() {
+    public static List<String> getDataFromConsole() {
         Scanner scanner = new Scanner(System.in);
         // Создание списка в Java. Использование List вместо ArrayList в объявлении переменной — это пример принципа
         // программирования на уровне интерфейсов

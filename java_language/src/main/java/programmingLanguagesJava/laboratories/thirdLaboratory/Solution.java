@@ -2,6 +2,10 @@ package programmingLanguagesJava.laboratories.thirdLaboratory;
 
 
 import programmingLanguagesJava.laboratories.ConsoleReader;
+import programmingLanguagesJava.laboratories.firstdotfirstLaboratory.HelpMethods;
+
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 public class Solution {
     public static void main(String[] args) {
@@ -13,7 +17,13 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String firstQuestion() {
-        return "";
+        var stringWithMinimalLength = HelpMethods.getDataFromConsole()
+                .stream()
+                .min(Comparator.comparing(String::length))
+                .orElse("Вы не ввели строки для нахождения! ");
+
+        return String.format("Результат 1 задания:\nМинимальная строка - %s с длиной: %d",
+                stringWithMinimalLength, stringWithMinimalLength.length());
     }
 
     /**
@@ -21,7 +31,11 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String secondQuestion() {
-        return "";
+        var strings = HelpMethods.getDataFromConsole()
+                .stream()
+                .sorted(Comparator.comparing(String::length))
+                .collect(Collectors.joining("\n"));
+        return String.format("Результат 2 задания:\n%s", strings);
     }
 
     /**
@@ -29,7 +43,22 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String thirdQuestion() {
-        return "";
+        // Наш список со строками, которые ввел пользователь
+        var ListStrings = HelpMethods.getDataFromConsole();
+        // Находим среднюю длину строк
+        var averageLength = ListStrings.stream().mapToInt(String::length).average().orElseThrow();
+        // Решил сделать так, а не через StreamApi, чтобы за один проход расположить элементы по контейнерам.
+        // В одном случае сложность O(n), а в другом O(2*n), но 2 не учитывается как мы помним, но уже поступил так.
+        var stringThatAreLonger = new StringBuilder(String.format("Строки, которые больше по длине, чем %f", averageLength));
+        var stringWhereLengthLessAverage = new StringBuilder(String.format("Строки, которые меньше по длине, чем %f", averageLength));
+
+        for (var row: ListStrings) {
+            if (row.length() >= averageLength)
+                stringThatAreLonger.append(String.format("\n%s", row));
+            else
+                stringWhereLengthLessAverage.append(String.format("\n%s", row));
+        }
+        return String.format("Результат 13 задания:\n%s\n%s", stringWhereLengthLessAverage, stringThatAreLonger);
     }
 
     /**
