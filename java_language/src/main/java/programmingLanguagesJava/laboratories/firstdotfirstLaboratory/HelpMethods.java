@@ -116,4 +116,28 @@ public class HelpMethods {
         }
         return triangles;
     }
+
+    /**
+     * Преобразование точек из строк в java.awt.Point
+     */
+    public static Stream<java.awt.Point> cordsFromConsole() {
+        return HelpMethods.getDataFromConsole().stream().map(cord -> {
+
+            var pattern = Pattern.compile("\\(?\\d+, \\d+\\)?");
+            var matcher = pattern.matcher(cord);
+
+            if (matcher.find()) {
+                var coordinates = matcher
+                        .group(0)
+                        .replace("(", "")
+                        .replace(")", "")
+                        .split(",");
+
+                return new Point(Integer.parseInt(coordinates[0].strip()), Integer.parseInt(coordinates[1].strip()));
+            }
+            // Если код не найдет цифры, то следует явно указать, что возвращает null.
+            // Видимо, в Java нет неявного возвращения null (None), как в Python.
+            return null;
+        });
+    }
 }

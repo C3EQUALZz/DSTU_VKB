@@ -260,24 +260,7 @@ public class Solution {
     public String eleventhQuestion() {
 
         // Я не совсем понимаю почему streamApi код возвращает Object[], тут приходится вручную кастовать к (Point[])
-        var points = HelpMethods.getDataFromConsole().stream().map(cord -> {
-
-            var pattern = Pattern.compile("\\(?\\d+, \\d+\\)?");
-            var matcher = pattern.matcher(cord);
-
-            if (matcher.find()) {
-                var coordinates = matcher
-                        .group(0)
-                        .replace("(", "")
-                        .replace(")", "")
-                        .split(",");
-
-                return new Point(Integer.parseInt(coordinates[0].strip()), Integer.parseInt(coordinates[1].strip()));
-            }
-            // Если код не найдет цифры, то следует явно указать, что возвращает null.
-            // Видимо, в Java нет неявного возвращения null (None), как в Python.
-            return null;
-        }).toArray();
+        var points = HelpMethods.cordsFromConsole().toArray();
 
 
         List<Triangle> triangles = HelpMethods.getTriangleList(points);
@@ -305,24 +288,7 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String twelfthQuestion() {
-        var points = HelpMethods.getDataFromConsole().stream().map(cord -> {
-
-            var pattern = Pattern.compile("\\(?\\d+, \\d+\\)?");
-            var matcher = pattern.matcher(cord);
-
-            if (matcher.find()) {
-                var coordinates = matcher
-                        .group(0)
-                        .replace("(", "")
-                        .replace(")", "")
-                        .split(",");
-
-                return new Point(Integer.parseInt(coordinates[0].strip()), Integer.parseInt(coordinates[1].strip()));
-            }
-            // Если код не найдет цифры, то следует явно указать, что возвращает null.
-            // Видимо, в Java нет неявного возвращения null (None), как в Python.
-            return null;
-        }).toList();
+        var points = HelpMethods.cordsFromConsole().toList();
 
         double minSum = Double.MAX_VALUE;
         Point minPoint = null;
