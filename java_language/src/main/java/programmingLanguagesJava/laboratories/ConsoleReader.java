@@ -4,6 +4,8 @@ import com.ibm.icu.text.RuleBasedNumberFormat;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -37,5 +39,28 @@ public class ConsoleReader {
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
             return "Вы выбрали неверное задание";
         }
+    }
+
+    public static List<String> inputDataList() {
+        Scanner scanner = new Scanner(System.in);
+        // Создание списка в Java. Использование List вместо ArrayList в объявлении переменной — это пример принципа
+        // программирования на уровне интерфейсов
+        List<String> rowsFromConsole = new ArrayList<>();
+
+        System.out.println("Вводите сколько хотите строк. Конец - это строка 'exit'");
+        String row = scanner.nextLine().strip();
+
+        while (!row.equalsIgnoreCase("exit")) {
+
+            // есть ошибка, что пустая строка добавляется в самое начало, а потом слово
+            // не совсем понимаю почему
+            if (!row.isBlank())
+                rowsFromConsole.add(row);
+
+            row = scanner.nextLine().strip();
+        }
+        scanner.close();
+
+        return rowsFromConsole;
     }
 }

@@ -69,7 +69,7 @@ public class Solution {
     public String fourthQuestion() {
         var ListWithRows = HelpMethods.getDataFromConsole();
 
-        int maxLenSymbols = 0;
+        int minLenSymbols = Integer.MAX_VALUE;
         String wordWithMaxLength = "";
 
         for(var word: ListWithRows) {
@@ -78,8 +78,8 @@ public class Solution {
             // коллекции? Java странный язык...)
             var wordLength = word.chars().mapToObj(i->(char)i).distinct().count();
 
-            if (wordLength > maxLenSymbols) {
-                maxLenSymbols = (int) wordLength;
+            if (wordLength < minLenSymbols) {
+                minLenSymbols = (int) wordLength;
                 wordWithMaxLength = word;
             }
 
@@ -88,7 +88,7 @@ public class Solution {
                 (
                         "Результат 4 задания: слово - %s, с количеством разных символов - %d",
                         wordWithMaxLength,
-                        maxLenSymbols
+                        minLenSymbols
                 );
     }
 
@@ -117,8 +117,28 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String sixthQuestion() {
-        var result = HelpMethods.getDataFromConsole();
-        return "";
+        var result = HelpMethods.getDataFromConsole()
+                .stream()
+                .filter(word -> word.chars().sorted()
+                        /*
+                        Метод collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                        используется для преобразования потока кодовых точек символов обратно в строку. Вот что делает
+                        каждый из аргументов этого метода:
+                        StringBuilder::new - это функция, которая создает новый экземпляр StringBuilder.
+                         Это используется как начальное значение для аккумулятора.
+                        StringBuilder::appendCodePoint - это функция, которая принимает текущее значение аккумулятора
+                         (в данном случае, StringBuilder) и элемент потока (кодовую точку символа), и добавляет символ,
+                          соответствующий кодовой точке, в StringBuilder.
+                        StringBuilder::append - это функция, которая используется для объединения двух StringBuilder
+                         в одну строку при параллельном выполнении потока. В данном случае, она используется для
+                          объединения частей строки, созданных в разных потоках.
+                         */
+                        .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                        .toString().equals(word))
+                .findFirst()
+                .orElse("Нет такой строки");
+
+        return String.format("Результат 6 задания: %s", result);
     }
 
     /**
@@ -127,6 +147,7 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String seventhQuestion() {
+        var result = HelpMethods.getDataFromConsole();
         return "";
     }
 
