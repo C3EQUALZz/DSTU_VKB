@@ -1,6 +1,14 @@
 plugins {
     id("java")
+    id("application")
+    id("org.openjfx.javafxplugin") version "0.1.0"
 }
+
+javafx {
+    version = "21.0.2"
+    modules("javafx.controls", "javafx.fxml")
+}
+
 
 group = "org.example"
 version = "1.0-SNAPSHOT"
@@ -26,4 +34,8 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+application {
+    mainClass = "programmingLanguagesJava.laboratories.GUI.Main"
 }

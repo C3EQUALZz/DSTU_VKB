@@ -29,7 +29,6 @@ public class Solution {
      * 1. Вычислить z = Math.exp(Math.abs(max_x)) - Math.exp(Math.abs(max_y))) / Math.sqrt((Math.abs(max_x * max_y)))
      * где - наибольший элемент массива X(20); - наибольший элемент массива Y(15).
      * Для вычисления наибольшего элемента массива использовать функцию.
-     *
      * @return значение после вычисления
      */
     @SuppressWarnings("unused")
