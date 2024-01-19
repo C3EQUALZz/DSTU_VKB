@@ -4,7 +4,7 @@ package programmingLanguagesJava.laboratories.thirdLaboratory;
 import programmingLanguagesJava.laboratories.ConsoleReader;
 import programmingLanguagesJava.laboratories.firstdotfirstLaboratory.HelpMethods;
 
-import java.util.Comparator;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Solution {
@@ -67,7 +67,29 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String fourthQuestion() {
-        return "";
+        var ListWithRows = HelpMethods.getDataFromConsole();
+
+        int minLenSymbols = Integer.MAX_VALUE;
+        String wordWithMaxLength = "";
+
+        for(var word: ListWithRows) {
+            // c помощью StreamApi мы можем перевести в массив char-ов, тут встроенные методы, чтобы находить
+            // вывести разные элементы, в конце подсчитываем их просто (почему нельзя было назвать size, как другие
+            // коллекции? Java странный язык...)
+            var wordLength = word.chars().mapToObj(i->(char)i).distinct().count();
+
+            if (wordLength < minLenSymbols) {
+                minLenSymbols = (int) wordLength;
+                wordWithMaxLength = word;
+            }
+
+        }
+        return String.format
+                (
+                        "Результат 4 задания: слово - %s, с количеством разных символов - %d",
+                        wordWithMaxLength,
+                        minLenSymbols
+                );
     }
 
     /**
@@ -76,7 +98,17 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String fifthQuestion() {
-        return "";
+        var result = HelpMethods.getDataFromConsole()
+                        .stream()
+                        .filter(word -> word.matches("^[a-zA-Z0-9]+$"))
+                        .filter(word -> {
+                            var countConsonants = word.replaceAll("(?i)[^aeiouy]", "").length();
+                            var countVowels = word.length() - countConsonants;
+                            return countVowels == countConsonants;
+                        })
+                        .count();
+
+        return String.format("Результат 5 задания: %d", result);
     }
 
     /**
@@ -85,7 +117,28 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String sixthQuestion() {
-        return "";
+        var result = HelpMethods.getDataFromConsole()
+                .stream()
+                .filter(word -> word.chars().sorted()
+                        /*
+                        Метод collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                        используется для преобразования потока кодовых точек символов обратно в строку. Вот что делает
+                        каждый из аргументов этого метода:
+                        StringBuilder::new - это функция, которая создает новый экземпляр StringBuilder.
+                         Это используется как начальное значение для аккумулятора.
+                        StringBuilder::appendCodePoint - это функция, которая принимает текущее значение аккумулятора
+                         (в данном случае, StringBuilder) и элемент потока (кодовую точку символа), и добавляет символ,
+                          соответствующий кодовой точке, в StringBuilder.
+                        StringBuilder::append - это функция, которая используется для объединения двух StringBuilder
+                         в одну строку при параллельном выполнении потока. В данном случае, она используется для
+                          объединения частей строки, созданных в разных потоках.
+                         */
+                        .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                        .toString().equals(word))
+                .findFirst()
+                .orElse("Нет такой строки");
+
+        return String.format("Результат 6 задания: %s", result);
     }
 
     /**
@@ -94,6 +147,7 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String seventhQuestion() {
+        var result = HelpMethods.getDataFromConsole();
         return "";
     }
 

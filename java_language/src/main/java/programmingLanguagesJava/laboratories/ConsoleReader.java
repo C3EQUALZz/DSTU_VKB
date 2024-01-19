@@ -38,6 +38,4 @@ public class ConsoleReader {
             return "Вы выбрали неверное задание";
         }
     }
-
-
 }
