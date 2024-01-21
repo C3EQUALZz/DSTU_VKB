@@ -1,9 +1,21 @@
 package programmingLanguagesJava.laboratories.fourthLaboratory;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Collection;
 
-public class SingleLinkedList<T> implements CustomList<T> {
+public class SingleLinkedList<T extends Comparable<T>> implements CustomList<T> {
+    private int size;
+    private Node<T> head;
+    private Node<T> tail;
+
     public SingleLinkedList() {
+        this.size = 0;
+        this.head = this.tail = null;
+    }
+
+    public SingleLinkedList(Collection<? extends T> collection) {
+        this.size = collection.size();
     }
 
 
@@ -11,10 +23,19 @@ public class SingleLinkedList<T> implements CustomList<T> {
      * Метод добавления элемента в конец списка
      *
      * @param obj элемент, который мы хотим добавить в конец списка
+     * @return
      */
     @Override
     public void add(T obj) {
+        var newNode = new Node<>(obj, null);
+        // Если список пуст, тогда нашей головой станет элемент, который мы добавили.
+        if (this.size == 0) {
+            this.head = newNode;
+        }
 
+        this.tail.next = newNode;
+        this.tail = newNode;
+        this.size++;
     }
 
     /**
@@ -36,7 +57,7 @@ public class SingleLinkedList<T> implements CustomList<T> {
      */
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     /**
@@ -46,7 +67,7 @@ public class SingleLinkedList<T> implements CustomList<T> {
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return this.size == 0;
     }
 
     /**
@@ -58,8 +79,8 @@ public class SingleLinkedList<T> implements CustomList<T> {
      * @return возвращает true, если получилось удалить элемент, в ином случае false.
      */
     @Override
-    public boolean remove(int index) {
-        return false;
+    public T remove(int index) {
+        return null;
     }
 
     /**
@@ -69,7 +90,7 @@ public class SingleLinkedList<T> implements CustomList<T> {
      * @return возвращает true, если получилось удалить элемент, в ином случае false.
      */
     @Override
-    public boolean remove(T obj) {
+    public boolean remove(Object obj) {
         return false;
     }
 
@@ -80,7 +101,7 @@ public class SingleLinkedList<T> implements CustomList<T> {
      * @return возвращает индекс элемента, который мы нашли, в ином случае возвращает -1.
      */
     @Override
-    public int indexOf(T obj) {
+    public int indexOf(Object obj) {
         return 0;
     }
 
@@ -111,7 +132,7 @@ public class SingleLinkedList<T> implements CustomList<T> {
      * @return возвращает true, если размер коллекции поменялся в течение вызова.
      */
     @Override
-    public boolean removeAll(Collection<? extends T> collection) {
+    public boolean removeAll(@NotNull Collection<?> collection) {
         return false;
     }
 

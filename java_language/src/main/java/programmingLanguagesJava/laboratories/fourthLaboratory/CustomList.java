@@ -1,12 +1,16 @@
 package programmingLanguagesJava.laboratories.fourthLaboratory;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Collection;
+import java.util.List;
 
 public interface CustomList<T> {
     /**
      * Метод добавления элемента в конец списка
      *
      * @param obj элемент, который мы хотим добавить в конец списка
+     * @return
      */
     void add(T obj);
 
@@ -49,7 +53,7 @@ public interface CustomList<T> {
      * @param index целое число (от 0 до size - 1).
      * @return возвращает true, если получилось удалить элемент, в ином случае false.
      */
-    boolean remove(int index);
+    T remove(int index);
 
     /**
      * Удаление элемента списка с данным значением
@@ -57,7 +61,7 @@ public interface CustomList<T> {
      * @param obj элемент, который мы хотим удалить в односвязном списке.
      * @return возвращает true, если получилось удалить элемент, в ином случае false.
      */
-    boolean remove(T obj);
+    boolean remove(Object obj);
 
     /**
      * Поиск данного значения в списке
@@ -65,7 +69,7 @@ public interface CustomList<T> {
      * @param obj элемент, который мы хотим найти в списке
      * @return возвращает индекс элемента, который мы нашли, в ином случае возвращает -1.
      */
-    int indexOf(T obj);
+    int indexOf(Object obj);
 
     /**
      * Поиск наибольшего значения в списке
@@ -87,7 +91,7 @@ public interface CustomList<T> {
      * @param collection любая коллекция, в которой находятся элементы для удаления.
      * @return возвращает true, если размер коллекции поменялся в течение вызова.
      */
-    boolean removeAll(Collection<? extends T> collection);
+    boolean removeAll(@NotNull Collection<?> collection);
 
     /**
      * Изменение всех элементов списка с данным значением на новое.
