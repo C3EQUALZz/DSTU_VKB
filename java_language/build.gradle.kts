@@ -30,6 +30,7 @@ dependencies {
     implementation("com.ibm.icu:icu4j:73.2")
     // https://mvnrepository.com/artifact/org.apache.commons/commons-collections4
     implementation("org.apache.commons:commons-collections4:4.3")
+    implementation("org.jetbrains:annotations:16.0.2")
 }
 
 tasks.test {

@@ -28,3 +28,9 @@ sdk install gradle 8.5
 Если вы на Windows, то у вас возможно будут проблемы с кодировкой. Мне помогло это:
 ![img.png](photo_readme/img.png)
 
+---
+Если хотите запустить GUI, то открывайте Gradle и прописывайте 
+```bash
+gradle run
+```
+![img.png](photo_readme/executeGUI.png)

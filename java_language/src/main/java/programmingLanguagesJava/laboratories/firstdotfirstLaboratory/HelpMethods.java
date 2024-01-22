@@ -151,7 +151,7 @@ public class HelpMethods {
     }
 
     /**
-     * https://www.geeksforgeeks.org/check-if-given-polygon-is-a-convex-polygon-or-not/
+     * <a href="https://www.geeksforgeeks.org/check-if-given-polygon-is-a-convex-polygon-or-not/">...</a>
      *
      * @param points список с точками, которые передал пользователь в консоли.
      * @return правду, если является выпуклым
