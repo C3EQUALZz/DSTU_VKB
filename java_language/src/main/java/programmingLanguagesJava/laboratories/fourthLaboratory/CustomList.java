@@ -1,18 +1,11 @@
 package programmingLanguagesJava.laboratories.fourthLaboratory;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Collection;
-import java.util.List;
-
-public interface CustomList<T> {
+public interface CustomList<T> extends CustomQueue<T> {
     /**
-     * Метод добавления элемента в конец списка
-     *
-     * @param obj элемент, который мы хотим добавить в конец списка
-     * @return
+     * Данный метод добавляет в начало связного списка. Все-таки нужен для реализации интерфейса очереди.
+     * @param obj объект, который добавляет в начало списка.
      */
-    void add(T obj);
+    void addFirst(T obj);
 
     /**
      * Метод вставки элемента в список.
@@ -22,14 +15,6 @@ public interface CustomList<T> {
      * @param index индекс, по которому осуществится вставка.
      */
     void add(T obj, int index);
-
-    /**
-     * Показ всех элементов списка
-     *
-     * @return возвращает строку, которая нужна для отображения в консоли
-     */
-    @Override
-    String toString();
 
     /**
      * Определение количества элементов списка
@@ -64,6 +49,11 @@ public interface CustomList<T> {
     boolean remove(Object obj);
 
     /**
+     * Удаляет элемент с конца списка.
+     */
+    T delLast();
+
+    /**
      * Поиск данного значения в списке
      *
      * @param obj элемент, который мы хотим найти в списке
@@ -88,10 +78,10 @@ public interface CustomList<T> {
     /**
      * Удаление всех элементов списка с данным значением
      *
-     * @param collection любая коллекция, в которой находятся элементы для удаления.
+     * @param object объект, который полностью хотим удалить из списка.
      * @return возвращает true, если размер коллекции поменялся в течение вызова.
      */
-    boolean removeAll(@NotNull Collection<?> collection);
+    boolean removeAll(Object object);
 
     /**
      * Изменение всех элементов списка с данным значением на новое.

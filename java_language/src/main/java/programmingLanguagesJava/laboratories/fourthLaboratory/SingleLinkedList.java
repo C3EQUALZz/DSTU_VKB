@@ -2,224 +2,295 @@ package programmingLanguagesJava.laboratories.fourthLaboratory;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
 
-public class SingleLinkedList<T extends Comparable<T>> implements CustomList<T> {
+import java.util.Iterator;
+import java.util.Spliterator;
+import java.util.function.Consumer;
+
+public class SingleLinkedList<T extends Comparable<T>> implements CustomList<T>, Iterable<T> {
     private int size;
     private Node<T> head;
     private Node<T> tail;
 
+    /**
+     * Мой класс, который реализует структуру данных LinkedList, здесь происходит
+     */
     public SingleLinkedList() {
         this.size = 0;
         this.head = this.tail = null;
     }
 
-    public SingleLinkedList(Collection<? extends T> collection) {
-        this.size = collection.size();
-    }
-
-
-    /**
-     * Метод добавления элемента в конец списка
-     *
-     * @param obj элемент, который мы хотим добавить в конец списка
-     * @return
-     */
     @Override
     public void add(T obj) {
         var newNode = new Node<>(obj, null);
         // Если список пуст, тогда нашей головой станет элемент, который мы добавили.
-        if (this.size == 0) {
-            this.head = newNode;
+        if (this.size == 0)
+            this.head = this.tail = newNode;
+        else {
+            this.tail.next = newNode;
+            this.tail = newNode;
         }
 
-        this.tail.next = newNode;
-        this.tail = newNode;
         this.size++;
     }
 
-    /**
-     * Метод вставки элемента в список.
-     * Замечание: не вижу смысла в реализации отдельных методов addFirst, addLast, когда можно пользоваться этим.
-     *
-     * @param obj   элемент, который мы хотим вставить в список на определенную позицию.
-     * @param index индекс, по которому осуществится вставка.
-     */
+    @Override
+    public void addFirst(T obj) {
+        var newNode = new Node<>(obj, null);
+
+        if (this.size == 0)
+            this.head = this.tail = newNode;
+
+        else {
+            newNode.next = this.head;
+            this.head = newNode;
+        }
+
+        this.size++;
+    }
+
     @Override
     public void add(T obj, int index) {
+        if (index == 0) {
+            addFirst(obj);
+            return;
+        }
 
+        if (index == this.size) {
+            add(obj);
+            return;
+        }
+
+        var previousNode = getNode(index - 1);
+        previousNode.next = new Node<>(obj, previousNode.next);
     }
 
-    /**
-     * Определение количества элементов списка
-     *
-     * @return возвращает количество элементов в списке, целое число
-     */
+
     @Override
     public int size() {
-        return size;
+        return this.size;
     }
 
-    /**
-     * Проверка списка на пустоту
-     *
-     * @return возвращает true, если список пустой, в ином случае false
-     */
+
     @Override
     public boolean isEmpty() {
         return this.size == 0;
     }
 
-    /**
-     * Метод, который удаляет элемент по индексу.
-     * Замечание: не вижу смысла писать отдельные методы для удаления первого и последнего элемента,
-     * когда можно просто вписать индекс здесь
-     *
-     * @param index целое число (от 0 до size - 1).
-     * @return возвращает true, если получилось удалить элемент, в ином случае false.
-     */
+
+    @Override
+    public T delLast() {
+        var removed = this.tail;
+        this.tail = getNode(this.size - 2);
+        this.tail.next = null;
+        this.size--;
+        return removed.data;
+    }
+
+
+    @Override
+    public T delFirst() {
+        var firstNode = this.head;
+        this.head = firstNode.next;
+        firstNode.next = null;
+        this.size--;
+        return firstNode.data;
+    }
+
     @Override
     public T remove(int index) {
-        return null;
+
+        if (index == 0)
+            return delFirst();
+
+        if (index == this.size - 1)
+            return delLast();
+
+        var previousNode = getNode(index - 1);
+        var currentNode = previousNode.next;
+        previousNode.next = currentNode.next;
+        return currentNode.data;
     }
 
-    /**
-     * Удаление элемента списка с данным значением
-     *
-     * @param obj элемент, который мы хотим удалить в односвязном списке.
-     * @return возвращает true, если получилось удалить элемент, в ином случае false.
-     */
     @Override
     public boolean remove(Object obj) {
+        int index = indexOf(obj);
+        if (index != -1) {
+            this.remove(index);
+            return true;
+        }
         return false;
     }
 
-    /**
-     * Поиск данного значения в списке
-     *
-     * @param obj элемент, который мы хотим найти в списке
-     * @return возвращает индекс элемента, который мы нашли, в ином случае возвращает -1.
-     */
     @Override
     public int indexOf(Object obj) {
-        return 0;
+
+        var node = this.head;
+        for (int i = 0; i < size; i++) {
+
+            if (node.data.equals(obj))
+                return i;
+
+            node = node.next;
+        }
+
+        return -1;
     }
 
-    /**
-     * Поиск наибольшего значения в списке
-     *
-     * @return возвращает максимальный элемент (значение) в списке.
-     */
     @Override
     public T max() {
-        return null;
+        var biggestNode = this.head;
+        var nodeForCycle = this.head;
+
+        for (int i = 0; i < this.size; i++) {
+
+            if (nodeForCycle.compareTo(biggestNode) > 0)
+                biggestNode = nodeForCycle;
+
+            nodeForCycle = nodeForCycle.next;
+        }
+
+        return biggestNode.data;
     }
 
-    /**
-     * Поиск наименьшего значения в списке.
-     *
-     * @return возвращает минимальный элемент (значение) в списке.
-     */
+
     @Override
     public T min() {
-        return null;
+        var minimalNode = this.head;
+        var nodeForCycle = this.head;
+
+        for (int i = 0; i < this.size; i++) {
+
+            if (nodeForCycle.compareTo(minimalNode) < 0)
+                minimalNode = nodeForCycle;
+
+            nodeForCycle = nodeForCycle.next;
+        }
+
+        return minimalNode.data;
     }
 
-    /**
-     * Удаление всех элементов списка с данным значением
-     *
-     * @param collection любая коллекция, в которой находятся элементы для удаления.
-     * @return возвращает true, если размер коллекции поменялся в течение вызова.
-     */
     @Override
-    public boolean removeAll(@NotNull Collection<?> collection) {
-        return false;
+    public boolean removeAll(Object object) {
+        Node<T> current = head;
+        Node<T> prev = null;
+
+        while (current != null) {
+            if (current.data.equals(object)) {
+                if (prev == null) {
+                    head = current.next;
+                } else {
+                    prev.next = current.next;
+                }
+            } else {
+                prev = current;
+            }
+            current = current.next;
+        }
+        return true;
     }
 
-    /**
-     * Изменение всех элементов списка с данным значением на новое.
-     *
-     * @param obj элемент из списка, который мы хотим заменить на новое.
-     */
     @Override
     public void replace(T obj) {
 
     }
 
-    /**
-     * Определение, является ли список симметричным.
-     *
-     * @return возвращает true, если длина size % 2 == 0
-     */
     @Override
     public boolean isSymmetric() {
-        return false;
+        return this.size % 2 == 0;
     }
 
-    /**
-     * Определение, можно ли удалить из списка каких-нибудь два элемента так, чтобы новый список оказался упорядоченным.
-     *
-     * @return определяет возможно ли такое...
-     */
+
     @Override
     public boolean checkSorted() {
         return false;
     }
 
-    /**
-     * Определение, сколько различных значений содержится в списке.
-     *
-     * @return возвращает целое число - количество различных элементов в списке.
-     */
+
     @Override
     public int countDistinct() {
         return 0;
     }
 
-    /**
-     * Удаление из списка элементов, значения которых уже встречались в предыдущих элементах.
-     *
-     * @return возвращает новый список, где нет повторяющихся элементов.
-     */
+
     @Override
     public CustomList<T> distinct() {
         return null;
     }
 
-    /**
-     * Изменение порядка элементов на обратный.
-     *
-     * @return возвращает новый список, который развернули полностью
-     */
+
     @Override
     public CustomList<T> reversed() {
         return null;
     }
 
-    /**
-     * Сортировка элементов списка двумя способами (изменение указателей, изменение значений элементов)
-     *
-     * @param key - ключ сортировки (изменение указателей - "changePointer", изменение значение - "changeValue").
-     * @return возвращает отсортированный список.
-     */
+
     @Override
     public CustomList<T> sort(String key) {
         return null;
     }
 
-    /**
-     * Обращение к элементу списка с помощью индексации.
-     *
-     * @param index целое число от 0 до size - 1
-     * @return возвращает элемент списка
-     */
     @Override
     public T get(int index) {
-        return null;
+        return getNode(index).data;
     }
 
     @Override
     public void clear() {
-
+        this.head = this.tail = null;
+        this.size = 0;
     }
+
+    @Override
+    public String toString() {
+        var curr = head;
+        StringBuilder str = new StringBuilder();
+        while (curr != null) {
+            str.append(curr.data).append(" ");
+            curr = curr.next;
+        }
+        return str.toString();
+    }
+
+    @Override
+    public @NotNull Iterator<T> iterator() {
+        return new Iterator<>() {
+            private Node<T> node = head;
+
+            @Override
+            public boolean hasNext() {
+                return node != null;
+            }
+
+            @Override
+            public T next() {
+                T value = node.data;
+                node = node.next;
+                return value;
+            }
+        };
+    }
+
+    @Override
+    public void forEach(Consumer<? super T> action) {
+        Iterable.super.forEach(action);
+    }
+
+    @Override
+    public Spliterator<T> spliterator() {
+        return Iterable.super.spliterator();
+    }
+
+    private Node<T> getNode(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+        var node = head;
+        for (int i = 0; i < index; i++) {
+            node = node.next;
+        }
+        return node;
+    }
+
+
 }
