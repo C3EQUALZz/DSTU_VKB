@@ -2,7 +2,6 @@ package programmingLanguagesJava.laboratories.fourthLaboratory;
 
 import org.jetbrains.annotations.NotNull;
 
-
 import java.util.Iterator;
 import java.util.Spliterator;
 import java.util.function.Consumer;
@@ -177,14 +176,13 @@ public class SingleLinkedList<T extends Comparable<T>> implements CustomList<T>,
 
         while (current != null) {
             if (current.data.equals(object)) {
-                if (prev == null) {
-                    head = current.next;
-                } else {
+
+                if (prev == null)
+                    this.head = current.next;
+                else
                     prev.next = current.next;
-                }
-            } else {
-                prev = current;
-            }
+            } else prev = current;
+
             current = current.next;
         }
         return true;
@@ -220,8 +218,18 @@ public class SingleLinkedList<T extends Comparable<T>> implements CustomList<T>,
 
 
     @Override
-    public CustomList<T> reversed() {
-        return null;
+    public void reversed() {
+        Node<T> previous = null;
+        Node<T> current = this.head;
+
+        while (current != null) {
+            var nextElement = current.next;
+            current.next = previous;
+            previous = current;
+            current = nextElement;
+        }
+        this.head = previous;
+        this.tail = getNode(size - 1);
     }
 
 
@@ -282,15 +290,16 @@ public class SingleLinkedList<T extends Comparable<T>> implements CustomList<T>,
     }
 
     private Node<T> getNode(int index) {
-        if (index < 0 || index >= size) {
+        if (index < 0 || index >= size)
             throw new IndexOutOfBoundsException();
-        }
+
+
         var node = head;
-        for (int i = 0; i < index; i++) {
+
+        for (int i = 0; i < index; i++)
             node = node.next;
-        }
+
         return node;
     }
-
 
 }

@@ -22,7 +22,56 @@ public class Solution {
     static final IntStream thirdIntStream = new Random().ints(10, -100, 11);
 
     public static void main(String[] args) {
-        System.out.println(ConsoleReader.executeTask(Solution.class));
+        Scanner scanner = new Scanner(System.in);
+
+        Object result = switch (scanner.nextInt()) {
+            case 1 -> firstQuestion();
+
+            case 2 -> secondQuestion();
+
+            case 3 -> thirdQuestion();
+
+            case 4 -> fourthQuestion();
+
+            case 5 -> fifthQuestion();
+
+            case 6 -> sixthQuestion();
+
+            case 7 -> seventhQuestion();
+
+            case 8 -> eighthQuestion();
+
+            case 9 -> ninthQuestion();
+
+            case 10 -> tenthQuestion();
+
+            case 11 -> eleventhQuestion();
+
+            case 12 -> {
+                System.out.print("Введите ваше число: ");
+                yield twelfthQuestion(scanner.next());
+            }
+
+            case 13 -> {
+                System.out.print("Введите число: ");
+                yield thirteenthQuestion(scanner.next());
+            }
+
+            case 14 -> {
+                System.out.print("Введите строку: ");
+                yield fourteenthQuestion(scanner.nextLine());
+            }
+
+            case 15 -> {
+                System.out.print("Введите строку: ");
+                yield fifteenthQuestion(scanner.next());
+            }
+
+            default -> "Вы выбрали неверное задание";
+        };
+
+        scanner.close();
+        System.out.println(result);
     }
 
     /**
@@ -31,8 +80,7 @@ public class Solution {
      * Для вычисления наибольшего элемента массива использовать функцию.
      * @return значение после вычисления
      */
-    @SuppressWarnings("unused")
-    public String firstQuestion() {
+    public static String firstQuestion() {
         // orElseTrow возвращает значение, если оно существует, в ином случае будет возмущена ошибка
         var max_x = Solution.firstIntStream.max().orElseThrow();
         var max_y = Solution.secondIntStream.max().orElseThrow();
@@ -47,8 +95,7 @@ public class Solution {
      *
      * @return значение полученного выражения
      */
-    @SuppressWarnings("unused")
-    public String secondQuestion() {
+    public static String secondQuestion() {
         // -> - это лямбда выражение, как в .net
         var result = (Solution.firstIntStream.filter(n -> n > 0).sum() +
                 Solution.secondIntStream.filter(n -> n > 0).sum() +
@@ -63,8 +110,7 @@ public class Solution {
      *
      * @return Возвращает целое число, то есть результат сочетания.
      */
-    @SuppressWarnings("unused")
-    public String thirdQuestion() {
+    public static String thirdQuestion() {
         // когда мы определяем так самые базовые типы, то нельзя var писать.
         int m = 4, n = 2;
         // в Java, к сожалению, нет перегрузки операторов, поэтому тут математические действия делаются через методы
@@ -79,8 +125,7 @@ public class Solution {
      * Math.sqrt(pow_x + pow_y + Math.pow(Math.sin(x * y), 2)) + Math.sqrt(pow_x + pow_z + Math.pow(Math.sin(x * z), 2))
      * + Math.sqrt(pow_z + pow_y + Math.pow(Math.sin(z * y), 2))
      */
-    @SuppressWarnings("unused")
-    public String fourthQuestion() {
+    public static String fourthQuestion() {
         // Здесь я нашел библиотеку, которая генерирует комбинации из (1, 2, 3) по 2 элемента.
         // map здесь делается то же самое, но есть небольшие разновидности, которые переделывают нам элементы к
         // нужному типу данных. По умолчанию generator возвращает итератор, где каждый элемент - это список с числами.
@@ -96,8 +141,7 @@ public class Solution {
      *
      * @return Возвращает строку, где написаны средние значения в каждом массиве.
      */
-    @SuppressWarnings("unused")
-    public String fifthQuestion() {
+    public static String fifthQuestion() {
         // var не дает прописать, надо явно указать
         IntStream[] arrays = {firstIntStream, secondIntStream, thirdIntStream};
         // Нет аналога enumerate, поэтому воспользовался таким костылем.
@@ -111,8 +155,7 @@ public class Solution {
      * 6. Даны массивы А(15), Y(15), C(12).
      * Вычислить l = min(b_i) + min(c_i) if abs(min(a_i)) > 10 else 1 + min(abs(c_i))
      */
-    @SuppressWarnings("unused")
-    public String sixthQuestion() {
+    public static String sixthQuestion() {
         var result = Math.abs(firstIntStream.min().orElseThrow()) > 10 ?
                 secondIntStream.min().orElseThrow() + thirdIntStream.min().orElseThrow() :
                 1 + thirdIntStream.map(Math::abs).min().orElseThrow();
@@ -123,8 +166,7 @@ public class Solution {
      * 7. Дан массив D(40) вещественных чисел. Найти среднее геометрическое его элементов,
      * которые удовлетворяют условию 0 < di <12. Для вычислений использовать функцию.
      */
-    @SuppressWarnings("unused")
-    public String seventhQuestion() {
+    public static String seventhQuestion() {
         var D = new Random().doubles(40).toArray();
         var result = Math.pow(
                 Arrays.stream(D).filter(x -> x > 0 && x < 12).reduce(1, (a, b) -> a * b),
@@ -139,8 +181,7 @@ public class Solution {
      * Найти сумму и количество тех элементов массива, которые отрицательны и нечетны.
      * Использовать в качестве подпрограммы процедуру.
      */
-    @SuppressWarnings("unused")
-    public String eighthQuestion() {
+    public static String eighthQuestion() {
         var A = new Random().ints(80).toArray();
 
         var result = Arrays.stream(A).filter(n -> n < 0 && Math.abs(n) % 2 == 1).sum();
@@ -152,8 +193,7 @@ public class Solution {
      * Написать функцию, которая вычисляет среднее арифметическое элементов массива,
      * переданного ей в качестве аргумента
      */
-    @SuppressWarnings("unused")
-    public String ninthQuestion() {
+    public static String ninthQuestion() {
         return "Результат 9 задания: " + Solution.firstIntStream.average().orElseThrow();
     }
 
@@ -164,8 +204,7 @@ public class Solution {
      * Например, дан массив чисел [14, 30, 103]. После сортировки он будет таким: [30, 103, 14],
      * так как сумма цифр числа 30 составляет 3, числа 103 равна 4, числа 14 равна 5.
      */
-    @SuppressWarnings("unused")
-    public String tenthQuestion() {
+    public static String tenthQuestion() {
         IntStream stream = new Random().ints(50, 1, 10000);
         var result = stream
                 .boxed()
@@ -189,8 +228,7 @@ public class Solution {
      * 11. Вывести на экран исходный массив, отсортированный массив,
      * а также для контроля сумму цифр каждого числа отсортированного массива.
      */
-    @SuppressWarnings("unused")
-    public String eleventhQuestion() {
+    public static String eleventhQuestion() {
         var res = "Результат 11 задания:\n";
         var array = new Random().ints(50, 1, 10000).toArray();
         res += "Исходный массив: " + Arrays.toString(array) + "\n";
@@ -214,12 +252,8 @@ public class Solution {
      * 12. Определить количество разрядов числа.
      * Написать функцию, которая определяет количество разрядов введенного целого числа.
      */
-    @SuppressWarnings("unused")
-    public String twelfthQuestion() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Введите ваше число: ");
-        var n = Math.abs(scanner.nextInt());
+    public static String twelfthQuestion(String number) {
+        int n = Math.abs(Integer.parseInt(number));
         // копия числа, так как я изменяю n
         var p = n;
 
@@ -229,7 +263,6 @@ public class Solution {
             count += 1;
             n /= 10;
         }
-        scanner.close();
 
         return String.format("Результат 12 задания:\nКоличество разрядов числа: %d равно: %d", p, count);
     }
@@ -237,18 +270,13 @@ public class Solution {
     /**
      * 13. Сумма ряда с факториалом. Вычислить сумму ряда
      */
-    @SuppressWarnings("unused")
-    public String thirteenthQuestion() {
-        Scanner scanner = new Scanner(System.in);
+    public static String thirteenthQuestion(String number) {
 
-        System.out.println("Введите число: ");
-        int x = scanner.nextInt(), result = 0;
+        int x = Integer.parseInt(number), result = 0;
 
         for (int i = 1; i < 6; i++) {
             result += (-1) * i * (x / BigIntegerMath.factorial(i).intValue());
         }
-
-        scanner.close();
 
         return String.format("Результат 13 задания: %d", result);
     }
@@ -259,20 +287,14 @@ public class Solution {
      * Следует заменить ее на строку, в которой слова идут в обратном порядке по сравнению с
      * исходной строкой. Вывести измененную строку на экран.
      */
-    @SuppressWarnings("unused")
-    public String fourteenthQuestion() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Введите строку:");
+    public static String fourteenthQuestion(String words) {
         // List.of - переделывает в интерфейс List, потом приходится вручную кастовать к ArrayList
         // Collections.swap просит изменяемый объект, что вполне логично, поэтому переделал к ArrayList.
-        var src = new ArrayList<>(List.of(scanner.nextLine().split(" ")));
+        var src = new ArrayList<>(List.of(words.split(" ")));
         var len = src.size();
 
         for (var i = 0; i <= (len / 2); i++)
             Collections.swap(src, len - i - 1, i);
-
-        scanner.close();
 
         return String.format("Результат 14 задания: %s", String.join(" ", src));
     }
@@ -285,16 +307,11 @@ public class Solution {
      * При решении задачи использовать бинарный (двоичный) поиск, который оформить в виде отдельной
      * функции.
      */
-    @SuppressWarnings("unused")
-    public String fifteenthQuestion() {
-        Scanner scanner = new Scanner(System.in);
-        var sortedRandArr = new Random().ints(10, 0, 100).sorted().toArray();
-
-        System.out.printf("Наш массив: %s\n", Arrays.toString(sortedRandArr));
+    public static String fifteenthQuestion(String valueForSearch) {
+        var sortedRandArr = new Random().ints(10, 0, 11).sorted().toArray();
 
         System.out.print("Введите ваше число, которое вы хотите найти: ");
-        var value = scanner.nextInt();
-        scanner.close();
+        var value = Integer.parseInt(valueForSearch);
 
         // В Java есть встроенный бинарный поиск, зачем писать свой?
         int index = Arrays.binarySearch(sortedRandArr, value);
@@ -302,7 +319,7 @@ public class Solution {
 
         return String.format(
                 "15 задание: Элемент %d %s", value,
-                index >= 0 ? "найден в массиве на позиции " + index : "не найден в массиве"
+                index >= 0 ? "найден в массиве " + Arrays.toString(sortedRandArr) + " на позиции " + index : "не найден в массиве"
         );
     }
 
