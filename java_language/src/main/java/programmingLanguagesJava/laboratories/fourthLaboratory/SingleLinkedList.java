@@ -222,14 +222,21 @@ public class SingleLinkedList<T extends Comparable<T>> implements CustomList<T>,
         Node<T> previous = null;
         Node<T> current = this.head;
 
+        if (current == null)
+            return;
+
         while (current != null) {
             var nextElement = current.next;
             current.next = previous;
             previous = current;
+
+            if (current.next == null)
+                this.tail = current;
+
             current = nextElement;
         }
+
         this.head = previous;
-        this.tail = getNode(size - 1);
     }
 
 

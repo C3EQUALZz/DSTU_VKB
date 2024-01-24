@@ -6,7 +6,6 @@ package programmingLanguagesJava.laboratories.firstLaboratory;
 
 import com.google.common.math.BigIntegerMath;
 import org.paukov.combinatorics3.Generator;
-import programmingLanguagesJava.laboratories.ConsoleReader;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -25,27 +24,27 @@ public class Solution {
         Scanner scanner = new Scanner(System.in);
 
         Object result = switch (scanner.nextInt()) {
-            case 1 -> firstQuestion();
+            case 1 -> firstQuestion(" ");
 
-            case 2 -> secondQuestion();
+            case 2 -> secondQuestion(" ");
 
-            case 3 -> thirdQuestion();
+            case 3 -> thirdQuestion(" ");
 
-            case 4 -> fourthQuestion();
+            case 4 -> fourthQuestion(" ");
 
-            case 5 -> fifthQuestion();
+            case 5 -> fifthQuestion(" ");
 
-            case 6 -> sixthQuestion();
+            case 6 -> sixthQuestion(" ");
 
-            case 7 -> seventhQuestion();
+            case 7 -> seventhQuestion(" ");
 
-            case 8 -> eighthQuestion();
+            case 8 -> eighthQuestion(" ");
 
-            case 9 -> ninthQuestion();
+            case 9 -> ninthQuestion(" ");
 
-            case 10 -> tenthQuestion();
+            case 10 -> tenthQuestion(" ");
 
-            case 11 -> eleventhQuestion();
+            case 11 -> eleventhQuestion(" ");
 
             case 12 -> {
                 System.out.print("Введите ваше число: ");
@@ -67,6 +66,11 @@ public class Solution {
                 yield fifteenthQuestion(scanner.next());
             }
 
+            case 16 -> {
+                System.out.println("Введите два числа через пробел: ");
+                yield sixteenthQuestion(scanner.nextLine());
+            }
+
             default -> "Вы выбрали неверное задание";
         };
 
@@ -80,7 +84,7 @@ public class Solution {
      * Для вычисления наибольшего элемента массива использовать функцию.
      * @return значение после вычисления
      */
-    public static String firstQuestion() {
+    public static String firstQuestion(String ignoredUnused) {
         // orElseTrow возвращает значение, если оно существует, в ином случае будет возмущена ошибка
         var max_x = Solution.firstIntStream.max().orElseThrow();
         var max_y = Solution.secondIntStream.max().orElseThrow();
@@ -95,7 +99,7 @@ public class Solution {
      *
      * @return значение полученного выражения
      */
-    public static String secondQuestion() {
+    public static String secondQuestion(String ignoredUnused) {
         // -> - это лямбда выражение, как в .net
         var result = (Solution.firstIntStream.filter(n -> n > 0).sum() +
                 Solution.secondIntStream.filter(n -> n > 0).sum() +
@@ -110,7 +114,7 @@ public class Solution {
      *
      * @return Возвращает целое число, то есть результат сочетания.
      */
-    public static String thirdQuestion() {
+    public static String thirdQuestion(String ignoredUnused) {
         // когда мы определяем так самые базовые типы, то нельзя var писать.
         int m = 4, n = 2;
         // в Java, к сожалению, нет перегрузки операторов, поэтому тут математические действия делаются через методы
@@ -125,7 +129,7 @@ public class Solution {
      * Math.sqrt(pow_x + pow_y + Math.pow(Math.sin(x * y), 2)) + Math.sqrt(pow_x + pow_z + Math.pow(Math.sin(x * z), 2))
      * + Math.sqrt(pow_z + pow_y + Math.pow(Math.sin(z * y), 2))
      */
-    public static String fourthQuestion() {
+    public static String fourthQuestion(String ignoredUnused) {
         // Здесь я нашел библиотеку, которая генерирует комбинации из (1, 2, 3) по 2 элемента.
         // map здесь делается то же самое, но есть небольшие разновидности, которые переделывают нам элементы к
         // нужному типу данных. По умолчанию generator возвращает итератор, где каждый элемент - это список с числами.
@@ -141,7 +145,7 @@ public class Solution {
      *
      * @return Возвращает строку, где написаны средние значения в каждом массиве.
      */
-    public static String fifthQuestion() {
+    public static String fifthQuestion(String ignoredUnused) {
         // var не дает прописать, надо явно указать
         IntStream[] arrays = {firstIntStream, secondIntStream, thirdIntStream};
         // Нет аналога enumerate, поэтому воспользовался таким костылем.
@@ -155,7 +159,7 @@ public class Solution {
      * 6. Даны массивы А(15), Y(15), C(12).
      * Вычислить l = min(b_i) + min(c_i) if abs(min(a_i)) > 10 else 1 + min(abs(c_i))
      */
-    public static String sixthQuestion() {
+    public static String sixthQuestion(String ignoredUnused) {
         var result = Math.abs(firstIntStream.min().orElseThrow()) > 10 ?
                 secondIntStream.min().orElseThrow() + thirdIntStream.min().orElseThrow() :
                 1 + thirdIntStream.map(Math::abs).min().orElseThrow();
@@ -166,7 +170,7 @@ public class Solution {
      * 7. Дан массив D(40) вещественных чисел. Найти среднее геометрическое его элементов,
      * которые удовлетворяют условию 0 < di <12. Для вычислений использовать функцию.
      */
-    public static String seventhQuestion() {
+    public static String seventhQuestion(String ignoredUnused) {
         var D = new Random().doubles(40).toArray();
         var result = Math.pow(
                 Arrays.stream(D).filter(x -> x > 0 && x < 12).reduce(1, (a, b) -> a * b),
@@ -181,7 +185,7 @@ public class Solution {
      * Найти сумму и количество тех элементов массива, которые отрицательны и нечетны.
      * Использовать в качестве подпрограммы процедуру.
      */
-    public static String eighthQuestion() {
+    public static String eighthQuestion(String ignoredUnused) {
         var A = new Random().ints(80).toArray();
 
         var result = Arrays.stream(A).filter(n -> n < 0 && Math.abs(n) % 2 == 1).sum();
@@ -193,7 +197,7 @@ public class Solution {
      * Написать функцию, которая вычисляет среднее арифметическое элементов массива,
      * переданного ей в качестве аргумента
      */
-    public static String ninthQuestion() {
+    public static String ninthQuestion(String ignoredUnused) {
         return "Результат 9 задания: " + Solution.firstIntStream.average().orElseThrow();
     }
 
@@ -204,7 +208,7 @@ public class Solution {
      * Например, дан массив чисел [14, 30, 103]. После сортировки он будет таким: [30, 103, 14],
      * так как сумма цифр числа 30 составляет 3, числа 103 равна 4, числа 14 равна 5.
      */
-    public static String tenthQuestion() {
+    public static String tenthQuestion(String ignoredUnused) {
         IntStream stream = new Random().ints(50, 1, 10000);
         var result = stream
                 .boxed()
@@ -228,7 +232,7 @@ public class Solution {
      * 11. Вывести на экран исходный массив, отсортированный массив,
      * а также для контроля сумму цифр каждого числа отсортированного массива.
      */
-    public static String eleventhQuestion() {
+    public static String eleventhQuestion(String ignoredUnused) {
         var res = "Результат 11 задания:\n";
         var array = new Random().ints(50, 1, 10000).toArray();
         res += "Исходный массив: " + Arrays.toString(array) + "\n";
@@ -327,14 +331,11 @@ public class Solution {
      * 16. Вычисление наибольших общих делителей.
      * Найти наибольшие общие делители (НОД) для множества пар чисел.
      */
-    @SuppressWarnings("unused")
-    public String sixteenthQuestion() {
+    public static String sixteenthQuestion(String stringWithTwoNumbers) {
         // Здесь будет использоваться алгоритм Штейна для нахождения НОД. Его сложность O(n^2/log(n)^2)
         // По сложности кажется, что он хуже Евклида O(log(min(a, b))), но он быстрее его за счет битовых сдвигов.
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Введите два числа через пробел: ");
-        int a = scanner.nextInt(), b = scanner.nextInt();
-        scanner.close();
+        var res = stringWithTwoNumbers.split(" ");
+        int a = Integer.parseInt(res[0]), b = Integer.parseInt(res[1]);
 
         return String.format(
                 "Результат 16 задания: %s",
