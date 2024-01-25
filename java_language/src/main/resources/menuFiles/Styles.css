@@ -1,0 +1,12 @@
+/* CSS */
+.button {
+    /* Трансформация при наведении */
+    -fx-background-insets: 0, 0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-transition: all 0.3s ease;
+}
+
+.button:hover {
+    /* Эффект при наведении */
+    -fx-translate-y: -2px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.8) , 15, 0 , 0 , 8 );
+}

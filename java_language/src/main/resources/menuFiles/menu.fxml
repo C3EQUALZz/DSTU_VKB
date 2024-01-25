@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #2E3348;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+      <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="560.0" fitWidth="380.0" layoutX="20.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@rounded-in-photoretrica.png" />
+               </image>
+            </ImageView>
+            <GridPane layoutX="19.0" layoutY="39.0" prefHeight="152.0" prefWidth="375.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="177.0" minWidth="10.0" prefWidth="137.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="225.0" minWidth="10.0" prefWidth="137.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="225.0" minWidth="10.0" prefWidth="137.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Text fx:id="hoursTimer" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="121.1875" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font name="Comic Sans MS Bold Italic" size="96.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="15.0" left="5.0" right="15.0" top="15.0" />
+                     </GridPane.margin>
+                  </Text>
+                  <Text fx:id="MinutesTimer" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="00" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font name="Comic Sans MS Bold Italic" size="96.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="15.0" right="15.0" top="15.0" />
+                     </GridPane.margin>
+                  </Text>
+                  <Text fx:id="SecondsTimer" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="00" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font name="Comic Sans MS Bold Italic" size="96.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="15.0" left="2.0" right="15.0" top="15.0" />
+                     </GridPane.margin>
+                  </Text>
+               </children>
+            </GridPane>
+         </children>
+      </AnchorPane>
+   </left>
+   <right>
+      <AnchorPane prefHeight="600.0" prefWidth="415.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" layoutX="149.0" layoutY="42.0" prefHeight="56.0" prefWidth="118.0" text="Меню" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS Bold" size="40.0" />
+               </font>
+            </Label>
+            <AnchorPane layoutX="108.0" layoutY="96.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="4.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" />
+            <Button fx:id="ButtonLabs" layoutX="75.0" layoutY="190.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="75.0" prefWidth="280.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 15;" stylesheets="@Styles.css" text="Лабораторные работы" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="ButtonProject" layoutX="78.0" layoutY="329.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="75.0" prefWidth="280.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 15;" stylesheets="@Styles.css" text="Проект" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS Bold" size="20.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="264.0" layoutY="442.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@giphy.gif" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>

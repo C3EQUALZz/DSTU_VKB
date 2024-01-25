@@ -3,27 +3,15 @@
  */
 package programmingLanguagesJava.laboratories.zeroLaboratory;
 
+import programmingLanguagesJava.laboratories.ConsoleReader;
+
 import java.util.Scanner;
 
 public class Solution {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Введите задание: ");
-        Object result = switch (scanner.nextInt()) {
-            case 1 -> firstQuestion();
-            case 2 -> secondQuestion();
-            case 3 -> thirdQuestion();
-            case 4 -> fourthQuestion();
-            case 5 -> fifthQuestion();
-            case 6 -> sixthQuestion();
-            case 7 -> seventhQuestion();
-            default -> "Вы выбрали неверное задание";
-        };
-
-        scanner.close();
-
-        System.out.println(result);
+        System.out.print("Введите какое задание вы хотите выполнить (цифра): ");
+        System.out.println(ConsoleReader.executeTask(Solution.class, scanner.next(), " "));
     }
 
     /**
@@ -31,7 +19,8 @@ public class Solution {
      * «We have to get out of here»
      * «We need transport»
      */
-    public static String firstQuestion() {
+    @SuppressWarnings("unused")
+    public static String firstQuestion(String ignoredUnused) {
         return String.format("Результат 1 задания:\n%s", "We have to get out of here" + "\n" + "We need transport");
     }
 
@@ -39,7 +28,8 @@ public class Solution {
      * Требуется написать программу, выводящую на экран надпись "Destroy Droidekas!" 5 раз.
      * Каждый раз - с новой строки.
      */
-    public static String secondQuestion() {
+    @SuppressWarnings("unused")
+    public static String secondQuestion(String ignoredUnused) {
         // В примере достаточно большие разрывы, поэтому есть ещё перенос строки
         return "Результат 2 задания:\n" + "Destroy Droidekas! \n".repeat(5);
     }
@@ -47,7 +37,8 @@ public class Solution {
     /**
      * Напишите программу, которая посчитает и выведет сколько рабочих астродроидов осталось.
      */
-    public static String thirdQuestion() {
+    @SuppressWarnings("unused")
+    public static String thirdQuestion(String ignoredUnused) {
         // Зачем перевод в строку, когда print - это делает неявно ?
         return "Результат 3 задания:\n" + Integer.toString(4 - 3);
     }
@@ -56,7 +47,8 @@ public class Solution {
      * Напишите программу, которая в методе main объявляет такие переменные:
      * name типа String, height типа int и planet типа String.
      */
-    public static String fourthQuestion() {
+    @SuppressWarnings("unused")
+    public static String fourthQuestion(String ignoredUnused) {
         final String name = "Anakin";
         final int height = 188;
         final String planet = "Tatooine";
@@ -66,14 +58,16 @@ public class Solution {
     /**
      * Напишите программу, которая выводит на экран надпись: "You should take our money".
      */
-    public static String fifthQuestion() {
+    @SuppressWarnings("unused")
+    public static String fifthQuestion(String ignoredUnused) {
         return "Результат 5 задания:\n" + "You should take our money";
     }
 
     /**
      * Разкомментируйте одну или несколько строк, чтобы вывести сначала 12, а потом 2
      */
-    public static String sixthQuestion() {
+    @SuppressWarnings("unused")
+    public static String sixthQuestion(String ignoredUnused) {
         int x = 2;
         int y = 12;
 //        y = x * y;
@@ -86,7 +80,8 @@ public class Solution {
     /**
      * Закомментируйте одну или несколько строк, чтобы программа выводила фразу : «The car is ready for the race»
      */
-    public static String seventhQuestion() {
+    @SuppressWarnings("unused")
+    public static String seventhQuestion(String ignoredUnused) {
         // Я начал все оптимизировать под приложение, поэтому сразу переделываю некоторые лабораторные работы
         var a = "The";
 //        var b = "Starship";

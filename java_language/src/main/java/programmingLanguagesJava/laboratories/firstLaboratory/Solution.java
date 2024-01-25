@@ -6,6 +6,7 @@ package programmingLanguagesJava.laboratories.firstLaboratory;
 
 import com.google.common.math.BigIntegerMath;
 import org.paukov.combinatorics3.Generator;
+import programmingLanguagesJava.laboratories.ConsoleReader;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -23,52 +24,33 @@ public class Solution {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        Object result = switch (scanner.nextInt()) {
-            case 1 -> firstQuestion(" ");
+        System.out.print("Введите номер задания: ");
+        var question = scanner.nextInt();
 
-            case 2 -> secondQuestion(" ");
+        Object result = switch (question) {
+            case 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ->
+                    ConsoleReader.executeTask(Solution.class, String.valueOf(question), " ");
 
-            case 3 -> thirdQuestion(" ");
-
-            case 4 -> fourthQuestion(" ");
-
-            case 5 -> fifthQuestion(" ");
-
-            case 6 -> sixthQuestion(" ");
-
-            case 7 -> seventhQuestion(" ");
-
-            case 8 -> eighthQuestion(" ");
-
-            case 9 -> ninthQuestion(" ");
-
-            case 10 -> tenthQuestion(" ");
-
-            case 11 -> eleventhQuestion(" ");
-
-            case 12 -> {
+            case 12, 13 -> {
                 System.out.print("Введите ваше число: ");
-                yield twelfthQuestion(scanner.next());
+                yield ConsoleReader.executeTask(Solution.class, String.valueOf(question), scanner.next());
             }
 
-            case 13 -> {
-                System.out.print("Введите число: ");
-                yield thirteenthQuestion(scanner.next());
-            }
-
-            case 14 -> {
+            case 14, 15 -> {
                 System.out.print("Введите строку: ");
-                yield fourteenthQuestion(scanner.nextLine());
-            }
-
-            case 15 -> {
-                System.out.print("Введите строку: ");
-                yield fifteenthQuestion(scanner.next());
+                yield ConsoleReader.executeTask(Solution.class, String.valueOf(question), scanner.nextLine());
             }
 
             case 16 -> {
                 System.out.println("Введите два числа через пробел: ");
                 yield sixteenthQuestion(scanner.nextLine());
+            }
+
+            case 17 -> {
+                System.out.println("Введите номер фигуры:\n1.Круг\n2.Прямоугольник\n3.Треугольник");
+                var numberOfFigure = scanner.next();
+                yield seventhQuestion(numberOfFigure);
+
             }
 
             default -> "Вы выбрали неверное задание";
@@ -84,6 +66,7 @@ public class Solution {
      * Для вычисления наибольшего элемента массива использовать функцию.
      * @return значение после вычисления
      */
+    @SuppressWarnings("unused")
     public static String firstQuestion(String ignoredUnused) {
         // orElseTrow возвращает значение, если оно существует, в ином случае будет возмущена ошибка
         var max_x = Solution.firstIntStream.max().orElseThrow();
@@ -99,6 +82,7 @@ public class Solution {
      *
      * @return значение полученного выражения
      */
+    @SuppressWarnings("unused")
     public static String secondQuestion(String ignoredUnused) {
         // -> - это лямбда выражение, как в .net
         var result = (Solution.firstIntStream.filter(n -> n > 0).sum() +
@@ -114,6 +98,7 @@ public class Solution {
      *
      * @return Возвращает целое число, то есть результат сочетания.
      */
+    @SuppressWarnings("unused")
     public static String thirdQuestion(String ignoredUnused) {
         // когда мы определяем так самые базовые типы, то нельзя var писать.
         int m = 4, n = 2;
@@ -129,6 +114,7 @@ public class Solution {
      * Math.sqrt(pow_x + pow_y + Math.pow(Math.sin(x * y), 2)) + Math.sqrt(pow_x + pow_z + Math.pow(Math.sin(x * z), 2))
      * + Math.sqrt(pow_z + pow_y + Math.pow(Math.sin(z * y), 2))
      */
+    @SuppressWarnings("unused")
     public static String fourthQuestion(String ignoredUnused) {
         // Здесь я нашел библиотеку, которая генерирует комбинации из (1, 2, 3) по 2 элемента.
         // map здесь делается то же самое, но есть небольшие разновидности, которые переделывают нам элементы к
@@ -145,6 +131,7 @@ public class Solution {
      *
      * @return Возвращает строку, где написаны средние значения в каждом массиве.
      */
+    @SuppressWarnings("unused")
     public static String fifthQuestion(String ignoredUnused) {
         // var не дает прописать, надо явно указать
         IntStream[] arrays = {firstIntStream, secondIntStream, thirdIntStream};
@@ -159,6 +146,7 @@ public class Solution {
      * 6. Даны массивы А(15), Y(15), C(12).
      * Вычислить l = min(b_i) + min(c_i) if abs(min(a_i)) > 10 else 1 + min(abs(c_i))
      */
+    @SuppressWarnings("unused")
     public static String sixthQuestion(String ignoredUnused) {
         var result = Math.abs(firstIntStream.min().orElseThrow()) > 10 ?
                 secondIntStream.min().orElseThrow() + thirdIntStream.min().orElseThrow() :
@@ -170,6 +158,7 @@ public class Solution {
      * 7. Дан массив D(40) вещественных чисел. Найти среднее геометрическое его элементов,
      * которые удовлетворяют условию 0 < di <12. Для вычислений использовать функцию.
      */
+    @SuppressWarnings("unused")
     public static String seventhQuestion(String ignoredUnused) {
         var D = new Random().doubles(40).toArray();
         var result = Math.pow(
@@ -185,6 +174,7 @@ public class Solution {
      * Найти сумму и количество тех элементов массива, которые отрицательны и нечетны.
      * Использовать в качестве подпрограммы процедуру.
      */
+    @SuppressWarnings("unused")
     public static String eighthQuestion(String ignoredUnused) {
         var A = new Random().ints(80).toArray();
 
@@ -197,6 +187,7 @@ public class Solution {
      * Написать функцию, которая вычисляет среднее арифметическое элементов массива,
      * переданного ей в качестве аргумента
      */
+    @SuppressWarnings("unused")
     public static String ninthQuestion(String ignoredUnused) {
         return "Результат 9 задания: " + Solution.firstIntStream.average().orElseThrow();
     }
@@ -208,6 +199,7 @@ public class Solution {
      * Например, дан массив чисел [14, 30, 103]. После сортировки он будет таким: [30, 103, 14],
      * так как сумма цифр числа 30 составляет 3, числа 103 равна 4, числа 14 равна 5.
      */
+    @SuppressWarnings("unused")
     public static String tenthQuestion(String ignoredUnused) {
         IntStream stream = new Random().ints(50, 1, 10000);
         var result = stream
@@ -232,6 +224,7 @@ public class Solution {
      * 11. Вывести на экран исходный массив, отсортированный массив,
      * а также для контроля сумму цифр каждого числа отсортированного массива.
      */
+    @SuppressWarnings("unused")
     public static String eleventhQuestion(String ignoredUnused) {
         var res = "Результат 11 задания:\n";
         var array = new Random().ints(50, 1, 10000).toArray();
@@ -256,6 +249,7 @@ public class Solution {
      * 12. Определить количество разрядов числа.
      * Написать функцию, которая определяет количество разрядов введенного целого числа.
      */
+    @SuppressWarnings("unused")
     public static String twelfthQuestion(String number) {
         int n = Math.abs(Integer.parseInt(number));
         // копия числа, так как я изменяю n
@@ -274,6 +268,7 @@ public class Solution {
     /**
      * 13. Сумма ряда с факториалом. Вычислить сумму ряда
      */
+    @SuppressWarnings("unused")
     public static String thirteenthQuestion(String number) {
 
         int x = Integer.parseInt(number), result = 0;
@@ -291,6 +286,7 @@ public class Solution {
      * Следует заменить ее на строку, в которой слова идут в обратном порядке по сравнению с
      * исходной строкой. Вывести измененную строку на экран.
      */
+    @SuppressWarnings("unused")
     public static String fourteenthQuestion(String words) {
         // List.of - переделывает в интерфейс List, потом приходится вручную кастовать к ArrayList
         // Collections.swap просит изменяемый объект, что вполне логично, поэтому переделал к ArrayList.
@@ -311,6 +307,7 @@ public class Solution {
      * При решении задачи использовать бинарный (двоичный) поиск, который оформить в виде отдельной
      * функции.
      */
+    @SuppressWarnings("unused")
     public static String fifteenthQuestion(String valueForSearch) {
         var sortedRandArr = new Random().ints(10, 0, 11).sorted().toArray();
 
@@ -322,8 +319,8 @@ public class Solution {
 
 
         return String.format(
-                "15 задание: Элемент %d %s", value,
-                index >= 0 ? "найден в массиве " + Arrays.toString(sortedRandArr) + " на позиции " + index : "не найден в массиве"
+                "15 задание: \n" + "Массив: " + Arrays.toString(sortedRandArr) + "\nЭлемент %d %s", value,
+                index >= 0 ?   " на позиции " + index : " не найден в массиве"
         );
     }
 
@@ -331,6 +328,7 @@ public class Solution {
      * 16. Вычисление наибольших общих делителей.
      * Найти наибольшие общие делители (НОД) для множества пар чисел.
      */
+    @SuppressWarnings("unused")
     public static String sixteenthQuestion(String stringWithTwoNumbers) {
         // Здесь будет использоваться алгоритм Штейна для нахождения НОД. Его сложность O(n^2/log(n)^2)
         // По сложности кажется, что он хуже Евклида O(log(min(a, b))), но он быстрее его за счет битовых сдвигов.
@@ -349,15 +347,9 @@ public class Solution {
      * треугольника. Для вычисления площади каждой фигуры должна быть написана отдельная функция.
      */
     @SuppressWarnings("unused")
-    public String seventeenthQuestion() {
-        Scanner keyboard = new Scanner(System.in);
-        System.out.println("Введите номер фигуры:");
-        System.out.println("1.Круг");
-        System.out.println("2.Прямоугольник");
-        System.out.println("3.Треугольник");
-        int param = keyboard.nextInt();
-
-        return switch (param) {
+    public static String seventeenthQuestion(String param) {
+        // Подумать над вводом в GUI
+        return switch (Integer.parseInt(param)) {
             case 1 -> Circle.square();
             case 2 -> Rect.square();
             case 3 -> Triangle.square();

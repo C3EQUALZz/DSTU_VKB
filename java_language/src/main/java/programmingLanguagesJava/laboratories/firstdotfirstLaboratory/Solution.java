@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class Solution {
 
     public static void main(String[] args) {
-        System.out.println(ConsoleReader.executeTask(Solution.class));
+        // System.out.println(ConsoleReader.executeTask(Solution.class));
     }
     // аннотация с собакой - просто указание IDE, что не надо ругаться, что данные методы не используются
     // Здесь IDEA явно не видит запуск методов, он в main происходит для неё неявно
