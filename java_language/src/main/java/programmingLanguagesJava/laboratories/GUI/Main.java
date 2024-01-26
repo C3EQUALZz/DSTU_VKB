@@ -27,7 +27,6 @@ public class Main extends Application {
         Scene menu = new Scene(menuFile);
         this.primaryStage.setScene(menu);
         this.primaryStage.show();
-
     }
 
     /**

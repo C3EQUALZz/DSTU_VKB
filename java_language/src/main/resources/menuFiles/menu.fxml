@@ -34,7 +34,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Text fx:id="hoursTimer" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="99.1875" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Text fx:id="minutesTimer" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="99.1875" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Comic Sans MS Bold Italic" size="75.0" />
                      </font>
@@ -42,7 +42,7 @@
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                      </GridPane.margin>
                   </Text>
-                  <Text fx:id="MinutesTimer" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="98.552734375" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Text fx:id="hoursTimer" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="98.552734375" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Comic Sans MS Bold Italic" size="75.0" />
                      </font>
@@ -50,7 +50,7 @@
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                      </GridPane.margin>
                   </Text>
-                  <Text fx:id="SecondsTimer" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="96.552734375" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Text fx:id="secondsTimer" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="96.552734375" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Comic Sans MS Bold Italic" size="75.0" />
                      </font>

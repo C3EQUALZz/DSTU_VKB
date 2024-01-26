@@ -20,10 +20,10 @@ public class Menu implements Initializable {
     private Button ButtonProject;
 
     @FXML
-    private Text MinutesTimer;
+    private Text minutesTimer;
 
     @FXML
-    private Text SecondsTimer;
+    private Text secondsTimer;
 
     @FXML
     private Text hoursTimer;
@@ -45,9 +45,9 @@ public class Menu implements Initializable {
             public void handle(long now) {
                 Platform.runLater(() -> {
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-                    MinutesTimer.setText(LocalDateTime.now().format(formatter).substring(3, 5));
-                    SecondsTimer.setText(LocalDateTime.now().format(formatter).substring(6, 8));
                     hoursTimer.setText(LocalDateTime.now().format(formatter).substring(0, 2));
+                    minutesTimer.setText(LocalDateTime.now().format(formatter).substring(3, 5));
+                    secondsTimer.setText(LocalDateTime.now().format(formatter).substring(6, 8));
                 });
             }
         };
