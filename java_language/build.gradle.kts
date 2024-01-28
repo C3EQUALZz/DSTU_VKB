@@ -6,7 +6,7 @@ plugins {
 
 javafx {
     version = "21.0.2"
-    modules("javafx.controls", "javafx.fxml")
+    modules("javafx.controls", "javafx.fxml", "javafx.media")
 }
 
 

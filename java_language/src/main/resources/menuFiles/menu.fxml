@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #2E3348;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="programmingLanguagesJava.laboratories.GUI.controllers.Menu">
+<BorderPane fx:id="menuRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #2E3348;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="programmingLanguagesJava.laboratories.GUI.controllers.Menu">
    <left>
       <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" BorderPane.alignment="CENTER">
          <children>
@@ -42,7 +42,7 @@
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                      </GridPane.margin>
                   </Text>
-                  <Text fx:id="hoursTimer" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="98.552734375" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Text fx:id="hourTimer" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="98.552734375" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Comic Sans MS Bold Italic" size="75.0" />
                      </font>
@@ -97,6 +97,7 @@
                   <Image url="@giphy.gif" />
                </image>
             </ImageView>
+            <Button fx:id="exitButton" layoutX="355.0" layoutY="17.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" stylesheets="@Styles.css" />
          </children>
       </AnchorPane>
    </right>

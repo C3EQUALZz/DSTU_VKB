@@ -212,7 +212,7 @@ public class SingleLinkedList<T extends Comparable<T>> implements CustomList<T>,
 
 
     @Override
-    public CustomList<T> distinct() {
+    public CustomList<T> distinct() {   
         return null;
     }
 
