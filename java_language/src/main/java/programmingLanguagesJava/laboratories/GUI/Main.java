@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -49,7 +50,7 @@ public class Main extends Application {
         this.primaryStage.getIcons().add(imageStage);
 
         // Определяю так, чтобы не было системных Windows компонентов, так как с ними выглядит ужасно.
-        this.primaryStage.initStyle(StageStyle.UNDECORATED);
+        this.primaryStage.initStyle(StageStyle.TRANSPARENT);
     }
 
     /**
@@ -70,6 +71,8 @@ public class Main extends Application {
         });
 
         var menu = new Scene(menuFile);
+        // Костыль, чтобы нормально работали скругленные края.
+        menu.setFill(Color.TRANSPARENT);
         this.primaryStage.setScene(menu);
     }
 
