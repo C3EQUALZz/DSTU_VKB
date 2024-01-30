@@ -28,52 +28,59 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        this.primaryStage = stage;
-        initStage();
-        initMenu();
+        this.primaryStage = initStage(stage);
+        this.primaryStage.setScene(initMenu());
         this.primaryStage.show();
     }
 
     /**
      * Установка параметров на все приложение
      */
-    private void initStage() {
+    private Stage initStage(Stage primaryStage) {
         // Название приложения
-        this.primaryStage.setTitle("Ковалев Данил ВКБ22");
+        primaryStage.setTitle("Ковалев Данил ВКБ22");
 
         // Установка неизменяемости по размеру, так как я немного криво располагаю элементы.
         // Не умею в масштабируемое приложение, поэтому так.
-        this.primaryStage.setResizable(false);
+        primaryStage.setResizable(false);
 
         // Установка изображения для приложения
-        var imageStage = new Image("/menuFiles/desktop.png");
-        this.primaryStage.getIcons().add(imageStage);
+        primaryStage.getIcons().add(new Image("/menuFiles/desktop.png"));
 
         // Определяю так, чтобы не было системных Windows компонентов, так как с ними выглядит ужасно.
-        this.primaryStage.initStyle(StageStyle.TRANSPARENT);
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
+
+        return primaryStage;
     }
 
     /**
      * Инициализация меню приложения.
      * @throws IOException Java просит перманентно обрабатывать файлы через try catch, при считывании может возникнуть такая ошибка.
      */
-    private void initMenu() throws IOException {
+    private Scene initMenu() throws IOException {
         Parent menuFile = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/menuFiles/menu.fxml")));
 
-        menuFile.setOnMousePressed(event -> {
-            xOffset = event.getSceneX();
-            yOffset = event.getSceneY();
-        });
-
-        menuFile.setOnMouseDragged(event -> {
-            this.primaryStage.setX(event.getScreenX() - xOffset);
-            this.primaryStage.setY(event.getScreenY() - yOffset);
-        });
+        movableWindow(menuFile);
 
         var menu = new Scene(menuFile);
         // Костыль, чтобы нормально работали скругленные края.
         menu.setFill(Color.TRANSPARENT);
-        this.primaryStage.setScene(menu);
+
+        return menu;
+    }
+
+
+    private void movableWindow(Parent scene) {
+
+        scene.setOnMousePressed(event -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+
+        scene.setOnMouseDragged(event -> {
+            this.primaryStage.setX(event.getScreenX() - xOffset);
+            this.primaryStage.setY(event.getScreenY() - yOffset);
+        });
     }
 
 }
