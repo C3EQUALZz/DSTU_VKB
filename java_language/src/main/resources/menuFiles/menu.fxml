@@ -81,13 +81,13 @@
                   <Font name="Comic Sans MS Bold" size="40.0" />
                </font>
             </Label>
-            <AnchorPane layoutX="108.0" layoutY="96.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="4.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" />
-            <Button fx:id="ButtonLabs" layoutX="75.0" layoutY="190.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="75.0" prefWidth="280.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 15;" stylesheets="@Styles.css" text="Лабораторные работы" textFill="WHITE">
+            <AnchorPane layoutX="108.0" layoutY="96.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="4.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10;" />
+            <Button fx:id="ButtonLabs" layoutX="75.0" layoutY="190.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="75.0" prefWidth="280.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 15;" stylesheets="@../stageFiles/Styles.css" text="Лабораторные работы" textFill="WHITE">
                <font>
                   <Font name="Comic Sans MS Bold" size="20.0" />
                </font>
             </Button>
-            <Button fx:id="ButtonProject" layoutX="78.0" layoutY="329.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="75.0" prefWidth="280.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 15;" stylesheets="@Styles.css" text="Проект" textFill="WHITE">
+            <Button fx:id="ButtonProject" layoutX="78.0" layoutY="329.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="75.0" prefWidth="280.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 15;" stylesheets="@../stageFiles/Styles.css" text="Проект" textFill="WHITE">
                <font>
                   <Font name="Comic Sans MS Bold" size="20.0" />
                </font>
@@ -97,7 +97,7 @@
                   <Image url="@giphy.gif" />
                </image>
             </ImageView>
-            <Button fx:id="exitButton" layoutX="355.0" layoutY="17.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" stylesheets="@Styles.css" />
+            <Button fx:id="exitButton" layoutX="355.0" layoutY="17.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" stylesheets="@../stageFiles/Styles.css" />
          </children>
       </AnchorPane>
    </right>

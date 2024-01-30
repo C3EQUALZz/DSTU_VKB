@@ -16,6 +16,7 @@ import javafx.scene.text.Text;
 import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -46,6 +47,8 @@ public class Menu implements Initializable {
     private final AudioClip audioClipHover = new AudioClip(Objects.requireNonNull(getClass().getResource("/music/hover.mp3")).toExternalForm());
     private final AudioClip audioClipClick = new AudioClip(Objects.requireNonNull(getClass().getResource("/music/click.mp3")).toExternalForm());
 
+    private final SceneController controller = new SceneController();
+
     /**
      * Здесь вот точка запуска программы контроллеров происходит. Параметрами я даже не пользуюсь, но они нужны.
      */
@@ -66,6 +69,13 @@ public class Menu implements Initializable {
 
         ButtonLabs.setOnMouseClicked(event -> {
             audioClipClick.play();
+
+            try {
+                controller.switchFromMenuToLaboratories(event);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
         });
     }
 
@@ -77,6 +87,12 @@ public class Menu implements Initializable {
 
         ButtonProject.setOnMouseClicked(event -> {
             audioClipClick.play();
+
+            try {
+                controller.switchFromMenuToProject(event);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
 
     }

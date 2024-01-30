@@ -1,0 +1,66 @@
+/* CSS */
+.button {
+    /* Трансформация при наведении */
+    -fx-background-insets: 0, 0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-transition: all 0.3s ease;
+}
+
+.button:hover {
+    /* Эффект при наведении */
+    -fx-translate-y: -2px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.8) , 15, 0 , 0 , 8 );
+}
+
+.button:pressed {
+    /* Эффект при нажатии */
+    -fx-translate-y: +2px;
+    -fx-effect: null;
+}
+
+#exitButton {
+    /* Установите изображение в качестве фона */
+    -fx-background-image: url('/stageFiles/Cancel.png');
+    -fx-background-color: transparent;
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-border-radius: 50%;
+    -fx-transition: all 0.3s ease;
+}
+
+#exitButton:hover {
+    /* Эффект при наведении */
+    -fx-translate-y: -0.25px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.8) , 7, 0 , 0 , 4 );
+}
+
+#backButton {
+    -fx-background-image: url('/stageFiles/back.png');
+    -fx-background-color: transparent;
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-border-radius: 50%;
+    -fx-transition: all 0.3s ease;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: white;
+
+}
+
+.combo-box {
+    -fx-background-color: #9e5ce4; /* Цвет фона ComboBox */
+    -fx-border-width: 1px; /* Ширина границ ComboBox */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 2, 0, 0, 0); /* Тень для ComboBox */
+    -fx-border-radius: 30; /* Радиус скругления границ ComboBox */
+    -fx-background-radius: 18; /* Радиус скругления фона ComboBox */
+    -fx-font-family: "Comic Sans MS"; /* Шрифт текста в вашем ComboBox */
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+}
+
+.combo-box:hover {
+    -fx-translate-y: -2px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.8) , 15, 0 , 0 , 8 );
+}

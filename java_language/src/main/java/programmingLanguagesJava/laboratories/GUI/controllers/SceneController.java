@@ -6,8 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.scene.input.MouseEvent;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -26,9 +26,9 @@ public class SceneController {
         this.stage = stage;
     }
 
-    public SceneController() {}
+    public SceneController() {};
 
-    public void switchFromMenuToLaboratories(ActionEvent event) throws IOException  {
+    public void switchFromMenuToLaboratories(MouseEvent event) throws IOException {
 
         if (!flagWindowCreated) {
             createAllScenes(event);
@@ -37,7 +37,7 @@ public class SceneController {
         this.stage.setScene(laboratories);
     }
 
-    public void switchFromMenuToProject(ActionEvent event) throws IOException {
+    public void switchFromMenuToProject(MouseEvent event) throws IOException {
 
         if (!flagWindowCreated) {
             createAllScenes(event);
@@ -47,7 +47,7 @@ public class SceneController {
 
     }
 
-    public void switchToMenu(ActionEvent event) throws IOException {
+    public void switchToMenu(MouseEvent event) throws IOException {
 
         if (!flagWindowCreated) {
             createAllScenes(event);
@@ -57,22 +57,31 @@ public class SceneController {
     }
 
     public void switchToMenu() throws IOException {
+
         if (!flagWindowCreated) {
             this.menu = createWindow();
         }
+
         this.stage.setScene(this.menu);
     }
 
 
-    private void createAllScenes(ActionEvent event) throws IOException {
-        this.menu = createWindow("/menuFiles/menu.fxml", event);
-        this.laboratories = createWindow("/laboratoriesFiles/laboratories.fxml", event);
-        this.project = createWindow("/projectFiles/project.fxml", event);
+    private void createAllScenes(MouseEvent event) {
+
+        try {
+            this.menu = createWindow("/menuFiles/menu.fxml", event);
+            this.laboratories = createWindow("/laboratoriesFiles/laboratories.fxml", event);
+            this.project = createWindow("/projectFiles/project.fxml", event);
+
+        } catch (IOException e) {
+            throw new RuntimeException("Неправильные файлы или event");
+        }
+
         this.flagWindowCreated = true;
     }
 
 
-    private Scene createWindow(String filePath, ActionEvent event) throws IOException {
+    private Scene createWindow(String filePath, MouseEvent event) throws IOException {
         Parent windowFXML = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(filePath)));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
