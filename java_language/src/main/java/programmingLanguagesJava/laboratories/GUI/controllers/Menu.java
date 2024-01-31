@@ -106,7 +106,6 @@ public class Menu implements Initializable {
             new AudioClip(Objects.requireNonNull(getClass().getResource("/music/click.mp3")).toString()).play();
             eventHandler.handle(event); // Передача объекта MouseEvent в обработчике события
         });
-
     }
 
     /**

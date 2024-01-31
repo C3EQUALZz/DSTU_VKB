@@ -27,11 +27,14 @@
                      </font>
                   </Text>
                   <AnchorPane layoutX="225.0" layoutY="53.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="4.0" prefWidth="350.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10;" />
-                  <Button fx:id="exitButton" layoutX="761.0" layoutY="15.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" stylesheets="@../stageFiles/Styles.css" />
+                  <Button fx:id="exitButton" layoutX="761.0" layoutY="15.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="28.0" stylesheets="@../stageFiles/Styles.css" />
                   <Button fx:id="backButton" layoutX="19.0" layoutY="17.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="28.0" stylesheets="@../stageFiles/Styles.css" />
                </children>
             </AnchorPane>
-            <ComboBox fx:id="combobox" layoutX="593.0" layoutY="66.0" prefHeight="32.0" prefWidth="193.0" promptText="Выберите задание" stylesheets="@../stageFiles/Styles.css" />
+            <ComboBox fx:id="combobox" layoutX="593.0" layoutY="66.0" prefHeight="32.0" prefWidth="193.0" promptText="Выберите задание" stylesheets="@../stageFiles/Styles.css" visibleRowCount="5">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets></ComboBox>
             <Label fx:id="closeSlider" layoutX="14.0" layoutY="76.0" stylesheets="@../stageFiles/Styles.css" text="МЕНЮ" textFill="WHITE">
                <font>
                   <Font name="Comic Sans MS Bold" size="15.0" />

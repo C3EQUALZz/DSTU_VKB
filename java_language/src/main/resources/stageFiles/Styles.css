@@ -61,7 +61,22 @@
 
 .combo-box .list-cell {
     -fx-text-fill: white;
+    -fx-background-color: #9e5ce4;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-padding: 10px;
+}
 
+.combo-box .thumb {
+    -fx-opacity: 0;
+}
+
+.combo-box .list-view {
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-spacing: 10px;
 }
 
 .combo-box .arrow {
@@ -69,11 +84,12 @@
 }
 
 .combo-box {
+    -fx-text-fill: white;
     -fx-background-color: #9e5ce4; /* Цвет фона ComboBox */
     -fx-border-width: 1px; /* Ширина границ ComboBox */
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 2, 0, 0, 0); /* Тень для ComboBox */
     -fx-border-radius: 15; /* Радиус скругления границ ComboBox */
-    -fx-background-radius: 8; /* Радиус скругления фона ComboBox */
+    -fx-background-radius: 15; /* Радиус скругления фона ComboBox */
     -fx-font-family: "Comic Sans MS"; /* Шрифт текста в вашем ComboBox */
     -fx-font-weight: bold;
     -fx-font-size: 14;

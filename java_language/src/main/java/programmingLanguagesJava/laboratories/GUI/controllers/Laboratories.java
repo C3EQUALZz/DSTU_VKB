@@ -3,10 +3,13 @@ package programmingLanguagesJava.laboratories.GUI.controllers;
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
@@ -17,65 +20,48 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class Laboratories implements Initializable {
-    @FXML
-    private Button zeroButton;
 
     @FXML
-    private Button firstButton;
-
-
-    @FXML
-    private Button backButton;
+    private Button zeroButton, firstButton, firstDotFirstButton, secondButton, thirdButton, thirdDotFirstButton, fourthButton;
 
     @FXML
-    private Label closeSlider;
+    private Button backButton, exitButton;
 
     @FXML
-    private Button exitButton;
-
-    @FXML
-    private Label openSlider;
+    private Label openSlider, closeSlider;
 
     @FXML
     private AnchorPane slider;
 
-    private final AudioClip audioClipHover = new AudioClip(Objects.requireNonNull(getClass().getResource("/music/hover.mp3")).toExternalForm());
-    private final AudioClip audioClipClick = new AudioClip(Objects.requireNonNull(getClass().getResource("/music/click.mp3")).toExternalForm());
+    @FXML
+    private ComboBox<String> combobox;
+
     private final SceneController controller = new SceneController();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        buttonToMenuEvent();
-        buttonExitEvent();
+
         menuEvent();
-        zeroButtonEvent();
-    }
+        buttonsEvent();
 
-    private void buttonToMenuEvent() {
-        backButton.setOnMouseEntered(event -> audioClipHover.play());
-
-        backButton.setOnMouseClicked(event -> {
-            audioClipClick.play();
+        setupButtonEvent(backButton, event -> {
 
             try {
                 controller.switchToMenu(event);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
         });
-    }
 
-    private void buttonExitEvent() {
-
-        exitButton.setOnMouseEntered(event -> audioClipHover.play());
-
-        exitButton.setOnMouseClicked(event -> {
-            audioClipClick.play();
+        setupButtonEvent(exitButton, event -> {
 
             PauseTransition pause = new PauseTransition(Duration.millis(100));
             pause.setOnFinished(evt -> Platform.exit());
             pause.play();
+
         });
+
 
     }
 
@@ -83,8 +69,10 @@ public class Laboratories implements Initializable {
 
         slider.setTranslateX(-1000);
 
+        openSlider.setOnMouseEntered(event -> new AudioClip(Objects.requireNonNull(getClass().getResource("/music/hover.mp3")).toExternalForm()).play());
+
         openSlider.setOnMouseClicked(event -> {
-            audioClipClick.play();
+            new AudioClip(Objects.requireNonNull(getClass().getResource("/music/click.mp3")).toExternalForm()).play();
 
             TranslateTransition slide = new TranslateTransition();
              slide.setDuration(Duration.seconds(0.4));
@@ -101,9 +89,10 @@ public class Laboratories implements Initializable {
             });
         });
 
+        closeSlider.setOnMouseEntered(event -> new AudioClip(Objects.requireNonNull(getClass().getResource("/music/hover.mp3")).toExternalForm()).play());
 
         closeSlider.setOnMouseClicked(event -> {
-            audioClipClick.play();
+            new AudioClip(Objects.requireNonNull(getClass().getResource("/music/click.mp3")).toExternalForm()).play();
 
             TranslateTransition slide = new TranslateTransition();
             slide.setDuration(Duration.seconds(0.4));
@@ -119,26 +108,64 @@ public class Laboratories implements Initializable {
                 closeSlider.setVisible(false);
             });
         });
+    }
+
+    private void buttonsEvent() {
+
+        setupButtonEvent(zeroButton, event -> {
+            combobox.getItems().clear();
+
+            String[] questions = {"1 задание", "2 задание", "3 задание", "4 задание", "5 задание", "6 задание"};
+            combobox.getItems().addAll(questions);
+        });
+
+        setupButtonEvent(firstButton, event -> {
+            combobox.getItems().clear();
+
+            String[] questions = {"1 задание", "2 задание", "3 задание", "4 задание", "5 задание"};
+            combobox.getItems().addAll(questions);
+        });
+
+        setupButtonEvent(firstDotFirstButton, event -> {
+
+        });
+
+        setupButtonEvent(secondButton, event -> {
+
+        });
+
+        setupButtonEvent(thirdButton, event -> {
+
+        });
+
+        setupButtonEvent(thirdDotFirstButton, event -> {
+
+        });
+
+        setupButtonEvent(fourthButton, event -> {
+
+        });
+
 
     }
 
-    private void zeroButtonEvent() {
-        zeroButton.setOnMouseEntered(event -> audioClipHover.play());
+    /**
+     * Настройка кнопки с определенными параметрами.
+     *
+     * @param button       кнопка, на которую мы хотим назначить настройку по нажатию и т.п.
+     * @param eventHandler событие, которое мы хотим обработать.
+     */
+    private void setupButtonEvent(Button button, EventHandler<MouseEvent> eventHandler) {
+        // Обработка того момента, когда мышка наводится на кнопку.
+        button.setOnMouseEntered(event -> {
+            new AudioClip(Objects.requireNonNull(getClass().getResource("/music/hover.mp3")).toString()).play();
+        });
 
-        zeroButton.setOnMouseClicked(mouseEvent -> {
-            audioClipClick.play();
-
-
+        button.setOnMouseClicked(event -> {
+            new AudioClip(Objects.requireNonNull(getClass().getResource("/music/click.mp3")).toString()).play();
+            eventHandler.handle(event); // Передача объекта MouseEvent в обработчике события
         });
     }
 
-    private void firstButtonEvent() {
-        firstButton.setOnMouseEntered(event -> audioClipHover.play());
-
-        firstButton.setOnMouseClicked(mouseEvent -> {
-            audioClipClick.play();
-
-        });
-    }
 
 }

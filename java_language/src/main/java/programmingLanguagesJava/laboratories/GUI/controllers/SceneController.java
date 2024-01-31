@@ -83,8 +83,9 @@ public class SceneController {
     }
 
     /**
-     * Переключение с любого окна на меню
-     *
+     * Переключение с любого окна на меню.
+     * Здесь используется для удобства взаимодействия с самого начала приложения.
+     * При первом запуске
      * @throws IOException может броситься такая ошибка, так как считывает файлы
      */
     public void switchToMenu() throws IOException {
@@ -171,8 +172,8 @@ public class SceneController {
     }
 
     /**
-     * Метод, чтобы
-     * @param scene
+     * Метод, чтобы была анимация переключения между окнами приложения.
+     * @param scene окно, на которое мы хотим переключиться.
      */
     private void animationSlideWindow(Scene scene) {
         FadeTransition fadeOut = new FadeTransition(Duration.millis(750), this.stage.getScene().getRoot());
