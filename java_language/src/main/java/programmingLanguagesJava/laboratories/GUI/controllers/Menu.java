@@ -45,10 +45,6 @@ public class Menu implements Initializable {
     @FXML
     private Text hourTimer;
 
-    // AudioClip лучше, чем Media, так как подходит для коротких звуков, вручную перематывать не нужно.
-    private final AudioClip audioClipHover = new AudioClip(Objects.requireNonNull(getClass().getResource("/music/hover.mp3")).toExternalForm());
-    private final AudioClip audioClipClick = new AudioClip(Objects.requireNonNull(getClass().getResource("/music/click.mp3")).toExternalForm());
-
     private final SceneController controller = new SceneController();
 
     /**
@@ -56,7 +52,9 @@ public class Menu implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        clock();
+        clock().start();
+
+        // Обработка событий для кнопки с лабораторными
 
         setupButtonEvent(ButtonLabs, event -> {
 
@@ -68,7 +66,10 @@ public class Menu implements Initializable {
 
         });
 
+        // Обработка событий для кнопки с проектом
+
         setupButtonEvent(ButtonProject, event -> {
+
             try {
                 controller.switchFromMenuToProject(event);
             } catch (IOException e) {
@@ -76,6 +77,8 @@ public class Menu implements Initializable {
             }
 
         });
+
+        // Обработка событий для кнопки с выходом из меню
 
         setupButtonEvent(exitButton, event -> {
 
@@ -87,7 +90,14 @@ public class Menu implements Initializable {
 
     }
 
+    /**
+     * Настройка кнопки с определенными параметрами.
+     *
+     * @param button       кнопка, на которую мы хотим назначить настройку по нажатию и т.п.
+     * @param eventHandler событие, которое мы хотим обработать.
+     */
     private void setupButtonEvent(Button button, EventHandler<MouseEvent> eventHandler) {
+        // Обработка того момента, когда мышка наводится на кнопку.
         button.setOnMouseEntered(event -> {
             new AudioClip(Objects.requireNonNull(getClass().getResource("/music/hover.mp3")).toString()).play();
         });
@@ -96,16 +106,16 @@ public class Menu implements Initializable {
             new AudioClip(Objects.requireNonNull(getClass().getResource("/music/click.mp3")).toString()).play();
             eventHandler.handle(event); // Передача объекта MouseEvent в обработчике события
         });
-    }
 
+    }
 
     /**
      * Контроллер для часов.
      * Все изменения в UI нужно делать в одном потоке по правилам JavaFx.
      * Здесь создается анонимный класс, который определяет наши часы.
      */
-    private void clock() {
-        var timer = new AnimationTimer() {
+    private AnimationTimer clock() {
+        return new AnimationTimer() {
             @Override
             public void handle(long now) {
                 Platform.runLater(() -> {
@@ -116,6 +126,5 @@ public class Menu implements Initializable {
                 });
             }
         };
-        timer.start();
     }
 }
