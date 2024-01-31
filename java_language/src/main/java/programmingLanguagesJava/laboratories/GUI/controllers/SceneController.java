@@ -6,6 +6,8 @@
 
 package programmingLanguagesJava.laboratories.GUI.controllers;
 
+
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -13,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -46,7 +49,7 @@ public class SceneController {
             createAllScenes(event);
         }
 
-        this.stage.setScene(laboratories);
+        animationSlideWindow(laboratories);
     }
 
     /**
@@ -61,8 +64,7 @@ public class SceneController {
             createAllScenes(event);
         }
 
-        this.stage.setScene(this.project);
-
+        animationSlideWindow(this.project);
     }
 
     /**
@@ -77,7 +79,7 @@ public class SceneController {
             createAllScenes(event);
         }
 
-        this.stage.setScene(this.menu);
+        animationSlideWindow(this.menu);
     }
 
     /**
@@ -94,7 +96,11 @@ public class SceneController {
         this.stage.setScene(this.menu);
     }
 
-
+    /**
+     * Метод, который создает все окна сразу, чтобы каждый раз отдельное окно не подгружать в память
+     * Такой способ увеличивает быстродействие приложения, но больше расходуется память
+     * @param event MouseEvent, с помощью которого мы будем определять в каком Stage это происходит
+     */
     private void createAllScenes(MouseEvent event) {
 
         try {
@@ -110,6 +116,12 @@ public class SceneController {
     }
 
 
+    /**
+     * @param filePath Путь к файлу
+     * @param event MouseEvent, с помощью которого мы будем определять в каком Stage это происходит
+     * @return Возвращает созданную сцену
+     * @throws IOException может возникнуть ошибка при считывании файла с FXML
+     */
     private Scene createWindow(String filePath, MouseEvent event) throws IOException {
         Parent windowFXML = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(filePath)));
         var scene = new Scene(windowFXML);
@@ -127,7 +139,6 @@ public class SceneController {
             stage.setY(ev.getScreenY() - yOffset);
         });
 
-
         // Костыль, чтобы не было углов у приложения, которые видны в SceneBuilder
         scene.setFill(Color.TRANSPARENT);
 
@@ -144,6 +155,7 @@ public class SceneController {
             yOffset = ev.getSceneY();
         });
 
+        // Когда зажатое окно
         windowFXML.setOnMouseDragged(ev -> {
             this.stage.setX(ev.getScreenX() - xOffset);
             this.stage.setY(ev.getScreenY() - yOffset);
@@ -156,5 +168,25 @@ public class SceneController {
         scene.setFill(Color.TRANSPARENT);
 
         return scene;
+    }
+
+    /**
+     * Метод, чтобы
+     * @param scene
+     */
+    private void animationSlideWindow(Scene scene) {
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(750), this.stage.getScene().getRoot());
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+
+        fadeOut.setOnFinished(e -> {
+            FadeTransition fadeIn = new FadeTransition(Duration.millis(700), scene.getRoot());
+            fadeIn.setFromValue(0.0);
+            fadeIn.setToValue(1.0);
+            fadeIn.play();
+            this.stage.setScene(scene);
+        });
+
+        fadeOut.play();
     }
 }
