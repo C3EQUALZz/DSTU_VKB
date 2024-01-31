@@ -18,7 +18,6 @@
 }
 
 #exitButton {
-    /* Установите изображение в качестве фона */
     -fx-background-image: url('/stageFiles/Cancel.png');
     -fx-background-color: transparent;
     -fx-background-size: cover;
@@ -34,6 +33,11 @@
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.8) , 7, 0 , 0 , 4 );
 }
 
+#exitButton:pressed {
+    -fx-translate-y: +0.5px;
+    -fx-effect: null;
+}
+
 #backButton {
     -fx-background-image: url('/stageFiles/back.png');
     -fx-background-color: transparent;
@@ -44,17 +48,32 @@
     -fx-transition: all 0.3s ease;
 }
 
+#backButton:hover {
+    /* Эффект при наведении */
+    -fx-translate-y: -0.25px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.8) , 7, 0 , 0 , 4 );
+}
+
+#backButton:pressed {
+    -fx-translate-y: +0.5px;
+    -fx-effect: null;
+}
+
 .combo-box .list-cell {
     -fx-text-fill: white;
 
+}
+
+.combo-box .arrow {
+    -fx-background-color: white;
 }
 
 .combo-box {
     -fx-background-color: #9e5ce4; /* Цвет фона ComboBox */
     -fx-border-width: 1px; /* Ширина границ ComboBox */
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 2, 0, 0, 0); /* Тень для ComboBox */
-    -fx-border-radius: 30; /* Радиус скругления границ ComboBox */
-    -fx-background-radius: 18; /* Радиус скругления фона ComboBox */
+    -fx-border-radius: 15; /* Радиус скругления границ ComboBox */
+    -fx-background-radius: 8; /* Радиус скругления фона ComboBox */
     -fx-font-family: "Comic Sans MS"; /* Шрифт текста в вашем ComboBox */
     -fx-font-weight: bold;
     -fx-font-size: 14;
@@ -63,4 +82,36 @@
 .combo-box:hover {
     -fx-translate-y: -2px;
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.8) , 15, 0 , 0 , 8 );
+}
+
+#openSlider {
+    -fx-background-insets: 0, 0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-transition: all 0.3s ease;
+}
+
+#openSlider:hover {
+    -fx-translate-y: -1px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.8) , 15, 0 , 0 , 8 );
+}
+
+#openSlider:pressed {
+    /* Эффект при нажатии */
+    -fx-translate-y: +1px;
+    -fx-effect: null;
+}
+
+#closeSlider {
+    -fx-background-insets: 0, 0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-transition: all 0.3s ease;
+}
+
+#closeSlider:hover {
+    -fx-translate-y: -1px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.8) , 15, 0 , 0 , 8 );
+}
+
+#closeSlider:pressed {
+    /* Эффект при нажатии */
+    -fx-translate-y: +1px;
+    -fx-effect: null;
 }
