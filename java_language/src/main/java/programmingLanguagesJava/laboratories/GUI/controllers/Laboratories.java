@@ -21,6 +21,10 @@ public class Laboratories implements Initializable {
     private Button zeroButton;
 
     @FXML
+    private Button firstButton;
+
+
+    @FXML
     private Button backButton;
 
     @FXML
@@ -45,7 +49,6 @@ public class Laboratories implements Initializable {
         buttonExitEvent();
         menuEvent();
         zeroButtonEvent();
-
     }
 
     private void buttonToMenuEvent() {
@@ -125,6 +128,15 @@ public class Laboratories implements Initializable {
         zeroButton.setOnMouseClicked(mouseEvent -> {
             audioClipClick.play();
 
+
+        });
+    }
+
+    private void firstButtonEvent() {
+        firstButton.setOnMouseEntered(event -> audioClipHover.play());
+
+        firstButton.setOnMouseClicked(mouseEvent -> {
+            audioClipClick.play();
 
         });
     }
