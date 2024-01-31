@@ -18,6 +18,9 @@ import java.util.ResourceBundle;
 
 public class Laboratories implements Initializable {
     @FXML
+    private Button zeroButton;
+
+    @FXML
     private Button backButton;
 
     @FXML
@@ -41,6 +44,8 @@ public class Laboratories implements Initializable {
         buttonToMenuEvent();
         buttonExitEvent();
         menuEvent();
+        zeroButtonEvent();
+
     }
 
     private void buttonToMenuEvent() {
@@ -73,7 +78,11 @@ public class Laboratories implements Initializable {
 
     private void menuEvent() {
 
+        slider.setTranslateX(-1000);
+
         openSlider.setOnMouseClicked(event -> {
+            audioClipClick.play();
+
             TranslateTransition slide = new TranslateTransition();
              slide.setDuration(Duration.seconds(0.4));
              slide.setNode(slider);
@@ -91,6 +100,8 @@ public class Laboratories implements Initializable {
 
 
         closeSlider.setOnMouseClicked(event -> {
+            audioClipClick.play();
+
             TranslateTransition slide = new TranslateTransition();
             slide.setDuration(Duration.seconds(0.4));
             slide.setNode(slider);
@@ -106,6 +117,16 @@ public class Laboratories implements Initializable {
             });
         });
 
+    }
+
+    private void zeroButtonEvent() {
+        zeroButton.setOnMouseEntered(event -> audioClipHover.play());
+
+        zeroButton.setOnMouseClicked(mouseEvent -> {
+            audioClipClick.play();
+
+
+        });
     }
 
 }
