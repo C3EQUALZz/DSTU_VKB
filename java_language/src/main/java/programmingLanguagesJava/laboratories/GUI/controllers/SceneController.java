@@ -1,3 +1,9 @@
+/**
+ * SceneController - это мой класс, который управляет другими контроллерами.
+ * Был создан для того, чтобы можно было удобно переключаться между окнами.
+ * Здесь реализован удобный интерфейс, чтобы переключаться между окнами.
+ */
+
 package programmingLanguagesJava.laboratories.GUI.controllers;
 
 import javafx.fxml.FXMLLoader;
@@ -12,22 +18,28 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class SceneController {
-
+    // Параметры для определения координат мышки
     private double xOffset = 0, yOffset = 0;
-
+    // Наш Stage, с которым мы хотим взаимодействовать
     private Stage stage;
-
-    private Scene menu;
-    private Scene laboratories;
-    private Scene project;
+    // В данном приложении будет 3 окна, вот как раз они ниже
+    private Scene menu, laboratories, project;
+    // Костыль, который проверяет, что окна были созданы. Сделано с целью того, чтобы каждый раз не пересоздавать окно
     private boolean flagWindowCreated;
 
     public SceneController(Stage stage) {
         this.stage = stage;
     }
 
-    public SceneController() {};
+    public SceneController() {
+    }
 
+    /**
+     * Переключение с меню на лабораторные
+     *
+     * @param event MouseEvent, с помощью которого мы будем определять в каком Stage это происходит
+     * @throws IOException может броситься такая ошибка, так как считывает файлы.
+     */
     public void switchFromMenuToLaboratories(MouseEvent event) throws IOException {
 
         if (!flagWindowCreated) {
@@ -37,6 +49,12 @@ public class SceneController {
         this.stage.setScene(laboratories);
     }
 
+    /**
+     * Переключение с меню на проект
+     *
+     * @param event MouseEvent, с помощью которого мы будем определять в каком Stage это происходит
+     * @throws IOException может броситься такая ошибка, так как считывает файлы
+     */
     public void switchFromMenuToProject(MouseEvent event) throws IOException {
 
         if (!flagWindowCreated) {
@@ -47,6 +65,12 @@ public class SceneController {
 
     }
 
+    /**
+     * Переключение с любого окна на меню
+     *
+     * @param event MouseEvent, с помощью которого мы будем определять в каком Stage это происходит
+     * @throws IOException может броситься такая ошибка, так как считывает файлы
+     */
     public void switchToMenu(MouseEvent event) throws IOException {
 
         if (!flagWindowCreated) {
@@ -56,6 +80,11 @@ public class SceneController {
         this.stage.setScene(this.menu);
     }
 
+    /**
+     * Переключение с любого окна на меню
+     *
+     * @throws IOException может броситься такая ошибка, так как считывает файлы
+     */
     public void switchToMenu() throws IOException {
 
         if (!flagWindowCreated) {
@@ -83,6 +112,8 @@ public class SceneController {
 
     private Scene createWindow(String filePath, MouseEvent event) throws IOException {
         Parent windowFXML = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(filePath)));
+        var scene = new Scene(windowFXML);
+
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         // Возможность, чтобы окно могло передвигаться при зажатии мышки
@@ -96,7 +127,6 @@ public class SceneController {
             stage.setY(ev.getScreenY() - yOffset);
         });
 
-        var scene = new Scene(windowFXML);
 
         // Костыль, чтобы не было углов у приложения, которые видны в SceneBuilder
         scene.setFill(Color.TRANSPARENT);
