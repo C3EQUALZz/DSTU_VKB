@@ -148,6 +148,7 @@ public class Laboratories implements Initializable {
             combobox.setDisable(false);
             combobox.getItems().clear();
 
+
             String[] questions = {"1 задание", "2 задание", "3 задание", "4 задание", "5 задание", "6 задание"};
             combobox.getItems().addAll(questions);
         });
