@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #2E3348; -fx-border-radius: 30; -fx-background-radius: 18;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #2E3348; -fx-border-radius: 30; -fx-background-radius: 18;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="programmingLanguagesJava.laboratories.GUI.controllers.Laboratories">
    <top>
       <AnchorPane prefHeight="110.0" prefWidth="835.0" BorderPane.alignment="CENTER">
          <children>
@@ -26,31 +26,38 @@
                         <Font name="Comic Sans MS Bold" size="25.0" />
                      </font>
                   </Text>
-                  <AnchorPane layoutX="225.0" layoutY="53.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="4.0" prefWidth="350.0" style="-fx-background-color: #ffffff;" />
-                  <Button fx:id="exitButton" layoutX="761.0" layoutY="15.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" stylesheets="@../menuFiles/Styles.css" />
+                  <AnchorPane layoutX="225.0" layoutY="53.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="4.0" prefWidth="350.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10;" />
+                  <Button fx:id="exitButton" layoutX="761.0" layoutY="15.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="28.0" stylesheets="@../stageFiles/Styles.css" />
+                  <Button fx:id="backButton" layoutX="19.0" layoutY="17.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="28.0" stylesheets="@../stageFiles/Styles.css" />
                </children>
             </AnchorPane>
-            <ComboBox layoutX="636.0" layoutY="72.0" prefWidth="150.0" promptText="Выберите задание" style="-fx-background-color: #9e5ce4;" />
-            <Label fx:id="closeMenu" layoutX="14.0" layoutY="76.0" text="МЕНЮ" textFill="WHITE">
+            <ComboBox fx:id="combobox" layoutX="593.0" layoutY="66.0" prefHeight="32.0" prefWidth="193.0" promptText="Выберите задание" stylesheets="@../stageFiles/Styles.css" visibleRowCount="5">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets bottom="10.0" top="10.0" />
+               </padding></ComboBox>
+            <Label fx:id="closeSlider" layoutX="14.0" layoutY="76.0" stylesheets="@../stageFiles/Styles.css" text="МЕНЮ" textFill="WHITE">
                <font>
                   <Font name="Comic Sans MS Bold" size="15.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../AppData/Local/Temp/Icons8/Pichon/Menu.png" />
+                        <Image url="@icons8-menu-30.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Label>
-            <Label fx:id="openMenu" layoutX="14.0" layoutY="76.0" text="МЕНЮ" textFill="WHITE">
+            <Label fx:id="openSlider" layoutX="14.0" layoutY="76.0" stylesheets="@../stageFiles/Styles.css" text="МЕНЮ" textFill="WHITE">
                <font>
                   <Font name="Comic Sans MS Bold" size="15.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../AppData/Local/Temp/Icons8/Pichon/Menu.png" />
+                        <Image url="@icons8-menu-30.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -59,11 +66,11 @@
       </AnchorPane>
    </top>
    <left>
-      <AnchorPane fx:id="slider" prefHeight="500.0" prefWidth="240.0" style="-fx-border-radius: 30; -fx-background-radius: 18; -fx-background-color: #2E3350; -fx-border-color: WHITE;" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="slider" prefHeight="500.0" prefWidth="240.0" style="-fx-border-radius: 30; -fx-background-radius: 18; -fx-background-color: #2E3348; -fx-border-color: WHITE;" BorderPane.alignment="CENTER">
          <children>
             <VBox alignment="TOP_CENTER" layoutX="81.0" layoutY="59.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
                <children>
-                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: transparemt;" text="0 лабораторная" textFill="WHITE">
+                  <Button fx:id="zeroButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: transparent;" stylesheets="@../stageFiles/Styles.css" text="0 лабораторная" textFill="WHITE">
                      <font>
                         <Font name="Comic Sans MS Bold" size="20.0" />
                      </font>
@@ -75,7 +82,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: transparent;" text="1 лабораторная" textFill="WHITE">
+                  <Button fx:id="firstButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: transparent;" stylesheets="@../stageFiles/Styles.css" text="1 лабораторная" textFill="WHITE">
                      <font>
                         <Font name="Comic Sans MS Bold" size="20.0" />
                      </font>
@@ -87,7 +94,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: transparent;" text="1.1 лабораторная" textFill="WHITE">
+                  <Button fx:id="firstDotFirstButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: transparent;" stylesheets="@../stageFiles/Styles.css" text="1.1 лабораторная" textFill="WHITE">
                      <font>
                         <Font name="Comic Sans MS Bold" size="20.0" />
                      </font>
@@ -99,7 +106,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: transparent;" text="2 лабораторная" textFill="WHITE">
+                  <Button fx:id="secondButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: transparent;" stylesheets="@../stageFiles/Styles.css" text="2 лабораторная" textFill="WHITE">
                      <font>
                         <Font name="Comic Sans MS Bold" size="20.0" />
                      </font>
@@ -111,7 +118,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: transparent;" text="3 лабораторная" textFill="WHITE">
+                  <Button fx:id="thirdButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: transparent;" stylesheets="@../stageFiles/Styles.css" text="3 лабораторная" textFill="WHITE">
                      <font>
                         <Font name="Comic Sans MS Bold" size="20.0" />
                      </font>
@@ -123,7 +130,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button alignment="BOTTOM_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: transparent;" text="3.1 лабораторная" textFill="WHITE">
+                  <Button fx:id="thirdDotFirstButton" alignment="BOTTOM_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: transparent;" stylesheets="@../stageFiles/Styles.css" text="3.1 лабораторная" textFill="WHITE">
                      <font>
                         <Font name="Comic Sans MS Bold" size="20.0" />
                      </font>
@@ -135,7 +142,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button alignment="BOTTOM_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: transparent;" text="4 лабораторная" textFill="WHITE">
+                  <Button fx:id="fourthButton" alignment="BOTTOM_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="250.0" style="-fx-background-color: transparent;" stylesheets="@../stageFiles/Styles.css" text="4 лабораторная" textFill="WHITE">
                      <font>
                         <Font name="Comic Sans MS Bold" size="20.0" />
                      </font>

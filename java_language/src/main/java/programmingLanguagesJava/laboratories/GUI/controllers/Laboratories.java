@@ -1,22 +1,21 @@
+/**
+ * Контроллер, который отвечает за окно с лабораторными работами.
+ */
+
+
 package programmingLanguagesJava.laboratories.GUI.controllers;
 
-import javafx.animation.PauseTransition;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
+import programmingLanguagesJava.laboratories.GUI.Config.Configurator;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class Laboratories implements Initializable {
@@ -37,14 +36,16 @@ public class Laboratories implements Initializable {
     private ComboBox<String> combobox;
 
     private final SceneController controller = new SceneController();
+    private final Configurator configurator = new Configurator();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         menuEvent();
+        comboboxEvent();
         buttonsEvent();
 
-        setupButtonEvent(backButton, event -> {
+        configurator.setupButtonEvent(backButton, event -> {
 
             try {
                 controller.switchToMenu(event);
@@ -54,7 +55,7 @@ public class Laboratories implements Initializable {
 
         });
 
-        setupButtonEvent(exitButton, event -> {
+        configurator.setupButtonEvent(exitButton, event -> {
 
             PauseTransition pause = new PauseTransition(Duration.millis(100));
             pause.setOnFinished(evt -> Platform.exit());
@@ -65,23 +66,33 @@ public class Laboratories implements Initializable {
 
     }
 
+    /**
+     * Настройка slider меню, которое движется справа.
+     * Есть баг, что в начале почему-то сверху находится closeSlider, а не openSlider.
+     * В общем, поэтому с самого начала меню закрыто, а не открыто.
+     * Здесь под капотом, если что 2 кнопки, которые совпадают 1 в 1.
+     */
     private void menuEvent() {
 
-        slider.setTranslateX(-1000);
+        // Состояние закрытого меню
+        slider.setTranslateX(-500);
 
-        openSlider.setOnMouseEntered(event -> new AudioClip(Objects.requireNonNull(getClass().getResource("/music/hover.mp3")).toExternalForm()).play());
+        // Установка звука на тот момент, когда мы наводимся на кнопку меню.
+        openSlider.setOnMouseEntered(event -> configurator.hoverClip.play());
 
+        // Установка звука на тот момент, когда мы нажимаем кнопку.
         openSlider.setOnMouseClicked(event -> {
-            new AudioClip(Objects.requireNonNull(getClass().getResource("/music/click.mp3")).toExternalForm()).play();
 
+            configurator.clickClip.play();
+            // Са
             TranslateTransition slide = new TranslateTransition();
-             slide.setDuration(Duration.seconds(0.4));
-             slide.setNode(slider);
+            slide.setDuration(Duration.seconds(0.4));
+            slide.setNode(slider);
 
-             slide.setToX(0);
-             slide.play();
+            slide.setToX(0);
+            slide.play();
 
-            slider.setTranslateX(-1000);
+            slider.setTranslateX(-500);
 
             slide.setOnFinished(actionEvent -> {
                 openSlider.setVisible(false);
@@ -89,16 +100,16 @@ public class Laboratories implements Initializable {
             });
         });
 
-        closeSlider.setOnMouseEntered(event -> new AudioClip(Objects.requireNonNull(getClass().getResource("/music/hover.mp3")).toExternalForm()).play());
+        closeSlider.setOnMouseEntered(event -> configurator.hoverClip.play());
 
         closeSlider.setOnMouseClicked(event -> {
-            new AudioClip(Objects.requireNonNull(getClass().getResource("/music/click.mp3")).toExternalForm()).play();
+            configurator.clickClip.play();
 
             TranslateTransition slide = new TranslateTransition();
             slide.setDuration(Duration.seconds(0.4));
             slide.setNode(slider);
 
-            slide.setToX(-1000);
+            slide.setToX(-500);
             slide.play();
 
             slider.setTranslateX(0);
@@ -110,62 +121,65 @@ public class Laboratories implements Initializable {
         });
     }
 
+    private void comboboxEvent() {
+        combobox.setOnMouseEntered(event -> configurator.hoverClip.play());
+
+        combobox.setOnMouseClicked(event -> configurator.clickClip.play());
+
+        combobox.setCellFactory(param -> new ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item);
+                    setOnMouseEntered(event -> configurator.hoverClip.play());
+                    setOnMouseClicked(event -> configurator.clickClip.play());
+                }
+            }
+        });
+        combobox.setDisable(true);
+    }
+
     private void buttonsEvent() {
 
-        setupButtonEvent(zeroButton, event -> {
+        configurator.setupButtonEvent(zeroButton, event -> {
+            combobox.setDisable(false);
             combobox.getItems().clear();
 
             String[] questions = {"1 задание", "2 задание", "3 задание", "4 задание", "5 задание", "6 задание"};
             combobox.getItems().addAll(questions);
         });
 
-        setupButtonEvent(firstButton, event -> {
+        configurator.setupButtonEvent(firstButton, event -> {
+            combobox.setDisable(true);
             combobox.getItems().clear();
 
             String[] questions = {"1 задание", "2 задание", "3 задание", "4 задание", "5 задание"};
             combobox.getItems().addAll(questions);
         });
 
-        setupButtonEvent(firstDotFirstButton, event -> {
+        configurator.setupButtonEvent(firstDotFirstButton, event -> {
 
         });
 
-        setupButtonEvent(secondButton, event -> {
+        configurator.setupButtonEvent(secondButton, event -> {
 
         });
 
-        setupButtonEvent(thirdButton, event -> {
+        configurator.setupButtonEvent(thirdButton, event -> {
 
         });
 
-        setupButtonEvent(thirdDotFirstButton, event -> {
+        configurator.setupButtonEvent(thirdDotFirstButton, event -> {
 
         });
 
-        setupButtonEvent(fourthButton, event -> {
+        configurator.setupButtonEvent(fourthButton, event -> {
 
         });
 
 
     }
-
-    /**
-     * Настройка кнопки с определенными параметрами.
-     *
-     * @param button       кнопка, на которую мы хотим назначить настройку по нажатию и т.п.
-     * @param eventHandler событие, которое мы хотим обработать.
-     */
-    private void setupButtonEvent(Button button, EventHandler<MouseEvent> eventHandler) {
-        // Обработка того момента, когда мышка наводится на кнопку.
-        button.setOnMouseEntered(event -> {
-            new AudioClip(Objects.requireNonNull(getClass().getResource("/music/hover.mp3")).toString()).play();
-        });
-
-        button.setOnMouseClicked(event -> {
-            new AudioClip(Objects.requireNonNull(getClass().getResource("/music/click.mp3")).toString()).play();
-            eventHandler.handle(event); // Передача объекта MouseEvent в обработчике события
-        });
-    }
-
-
 }

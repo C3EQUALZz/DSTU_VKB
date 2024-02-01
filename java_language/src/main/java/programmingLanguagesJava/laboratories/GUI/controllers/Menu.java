@@ -9,20 +9,17 @@ package programmingLanguagesJava.laboratories.GUI.controllers;
 import javafx.animation.AnimationTimer;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
+import programmingLanguagesJava.laboratories.GUI.Config.Configurator;
 
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class Menu implements Initializable {
@@ -46,6 +43,7 @@ public class Menu implements Initializable {
     private Text hourTimer;
 
     private final SceneController controller = new SceneController();
+    private final Configurator configurator = new Configurator();
 
     /**
      * Здесь вот точка запуска программы контроллеров происходит. Параметрами я даже не пользуюсь, но они нужны.
@@ -56,7 +54,7 @@ public class Menu implements Initializable {
 
         // Обработка событий для кнопки с лабораторными
 
-        setupButtonEvent(ButtonLabs, event -> {
+        configurator.setupButtonEvent(ButtonLabs, event -> {
 
             try {
                 controller.switchFromMenuToLaboratories(event);
@@ -68,7 +66,7 @@ public class Menu implements Initializable {
 
         // Обработка событий для кнопки с проектом
 
-        setupButtonEvent(ButtonProject, event -> {
+        configurator.setupButtonEvent(ButtonProject, event -> {
 
             try {
                 controller.switchFromMenuToProject(event);
@@ -80,7 +78,7 @@ public class Menu implements Initializable {
 
         // Обработка событий для кнопки с выходом из меню
 
-        setupButtonEvent(exitButton, event -> {
+        configurator.setupButtonEvent(exitButton, event -> {
 
             PauseTransition pause = new PauseTransition(Duration.millis(100));
             pause.setOnFinished(evt -> Platform.exit());
@@ -88,24 +86,6 @@ public class Menu implements Initializable {
 
         });
 
-    }
-
-    /**
-     * Настройка кнопки с определенными параметрами.
-     *
-     * @param button       кнопка, на которую мы хотим назначить настройку по нажатию и т.п.
-     * @param eventHandler событие, которое мы хотим обработать.
-     */
-    private void setupButtonEvent(Button button, EventHandler<MouseEvent> eventHandler) {
-        // Обработка того момента, когда мышка наводится на кнопку.
-        button.setOnMouseEntered(event -> {
-            new AudioClip(Objects.requireNonNull(getClass().getResource("/music/hover.mp3")).toString()).play();
-        });
-
-        button.setOnMouseClicked(event -> {
-            new AudioClip(Objects.requireNonNull(getClass().getResource("/music/click.mp3")).toString()).play();
-            eventHandler.handle(event); // Передача объекта MouseEvent в обработчике события
-        });
     }
 
     /**
