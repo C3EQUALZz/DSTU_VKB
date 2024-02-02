@@ -84,7 +84,7 @@ public class Laboratories implements Initializable {
         openSlider.setOnMouseClicked(event -> {
 
             configurator.clickClip.play();
-            // Са
+
             TranslateTransition slide = new TranslateTransition();
             slide.setDuration(Duration.seconds(0.4));
             slide.setNode(slider);
@@ -134,8 +134,8 @@ public class Laboratories implements Initializable {
                     setText(null);
                 } else {
                     setText(item);
-                    setOnMouseEntered(event -> configurator.hoverClip.play());
                     setOnMouseClicked(event -> configurator.clickClip.play());
+                    setOnMouseEntered(event -> configurator.hoverClip.play());
                 }
             }
         });
@@ -154,7 +154,7 @@ public class Laboratories implements Initializable {
         });
 
         configurator.setupButtonEvent(firstButton, event -> {
-            combobox.setDisable(true);
+            combobox.setDisable(false);
             combobox.getItems().clear();
 
             String[] questions = {"1 задание", "2 задание", "3 задание", "4 задание", "5 задание"};
