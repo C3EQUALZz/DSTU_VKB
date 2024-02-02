@@ -45,7 +45,7 @@
                <graphic>
                   <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@icons8-menu-30.png" />
+                        <Image url="@Menu.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -57,7 +57,7 @@
                <graphic>
                   <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@icons8-menu-30.png" />
+                        <Image url="@Menu.png" />
                      </image>
                   </ImageView>
                </graphic>
