@@ -1,18 +1,23 @@
 package programmingLanguagesJava.laboratories.GUI.Config;
 
+import com.ibm.icu.text.RuleBasedNumberFormat;
+
 import java.io.File;
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.util.*;
 
 public class Parser {
     public static void main(String[] args) throws MalformedURLException, ClassNotFoundException {
 
-        var classes = new ArrayList<Class<?>>();
-        var dir = new File("java_language/src/main/java/programmingLanguagesJava/laboratories");
-        findClasses(dir, classes);
+        var dirWhereAllLaboratories = new File("java_language/src/main/java/programmingLanguagesJava/laboratories");
 
+        var classes = new ArrayList<Class<?>>();
+
+        findClasses(dirWhereAllLaboratories, classes);
+
+        uwu(classes);
         System.out.println(classes);
     }
 
@@ -31,24 +36,38 @@ public class Parser {
             else if (file.getName().startsWith("Solution")) {
                 // Получаем абсолютный путь к файлу
                 Class<?> clazz;
-                try {
-                    clazz = getaClass(file);
-                } catch (MalformedURLException | ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+                clazz = ClassFinder.getaClass(file);
                 // Добавляем загруженный класс в список
                 classes.add(clazz);
             }
         }
     }
 
-    private static Class<?> getaClass(File file) throws MalformedURLException, ClassNotFoundException {
-        // Преобразуем абсолютный путь в URL
-        URL url = file.toURI().toURL();
-        // Создаем URLClassLoader с одним элементом - URL к файлу класса
-        URLClassLoader classLoader = new URLClassLoader(new URL[]{url});
-        // Загружаем класс
-        return classLoader.loadClass(file.getName().substring(0, file.getName().length() - 5));
-    }
+    private static void uwu(ArrayList<Class<?>> arrayList) {
+        Class<?> clazz = arrayList.getFirst();
+        Method[] methods = clazz.getDeclaredMethods();
+        for (Method method : methods) {
+            if (method.getName().endsWith("Question"))
+                System.out.println(method.getName());
+        }
 
+        List<String> list = Arrays.asList("third", "first", "second");
+        list.sort(new Comparator<>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return Integer.compare(numberFromString(o1), numberFromString(o2));
+            }
+
+            private int numberFromString(String number) {
+
+                RuleBasedNumberFormat numberFormat = new RuleBasedNumberFormat(Locale.UK, RuleBasedNumberFormat.SPELLOUT);
+                try {
+                    return numberFormat.parse(number).intValue();
+                } catch (ParseException e) {
+                    return -1;
+                }
+            }
+        });
+        System.out.println(list);
+    }
 }

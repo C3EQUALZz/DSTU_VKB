@@ -134,11 +134,17 @@ public class Laboratories implements Initializable {
                     setText(null);
                 } else {
                     setText(item);
-                    setOnMouseClicked(event -> configurator.clickClip.play());
-                    setOnMouseEntered(event -> configurator.hoverClip.play());
+                    setOnMouseEntered(event1 -> configurator.hoverClip.play());
                 }
             }
         });
+
+        combobox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                configurator.clickClip.play();
+            }
+        });
+
         combobox.setDisable(true);
     }
 
