@@ -59,29 +59,63 @@
     -fx-effect: null;
 }
 
+.combo-box {
+    -fx-background-color: #9e5ce4;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 3px;
+    -fx-padding: 5px;
+    -fx-text-fill: white;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.combo-box .arrow-button .arrow {
+    -fx-background-color: white;
+    -fx-shape: "M 0 0 L 4 5 L 8 0 Z";
+    -fx-translate-x: -2px;
+    -fx-translate-y: 1px;
+    -fx-transition: transform 0.3s ease-in-out;
+}
+
+.combo-box .list-view {
+    -fx-background-color: #9e5ce4;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 3px;
+}
+
 .combo-box .list-cell {
     -fx-text-fill: white;
-
-}
-
-.combo-box .arrow {
-    -fx-background-color: white;
-}
-
-.combo-box {
-    -fx-background-color: #9e5ce4; /* Цвет фона ComboBox */
-    -fx-border-width: 1px; /* Ширина границ ComboBox */
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 2, 0, 0, 0); /* Тень для ComboBox */
-    -fx-border-radius: 15; /* Радиус скругления границ ComboBox */
-    -fx-background-radius: 8; /* Радиус скругления фона ComboBox */
-    -fx-font-family: "Comic Sans MS"; /* Шрифт текста в вашем ComboBox */
-    -fx-font-weight: bold;
+    -fx-font-family: "Comic Sans MS";
     -fx-font-size: 14;
 }
 
-.combo-box:hover {
+.combo-box .list-view .list-cell {
+    -fx-padding: 5px;
+    -fx-background-color: #9e5ce4;
+}
+
+.combo-box .list-view .list-cell:hover {
     -fx-translate-y: -2px;
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.8) , 15, 0 , 0 , 8 );
+}
+
+
+
+.combo-box .increment-arrow, .combo-box .decrement-arrow {
+    -fx-background-color: #9e5ce4; /* Цвет стрелочек у ползунка ползунка */
+    -fx-border-width: 1px;
+}
+
+.combo-box .thumb {
+    -fx-background-color: #9e5ce4;
+
+}
+
+.combo-box .track {
+    -fx-background-color: transparent;
+    -fx-opacity: 0;
 }
 
 #openSlider {

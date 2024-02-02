@@ -34,7 +34,10 @@
             <ComboBox fx:id="combobox" layoutX="593.0" layoutY="66.0" prefHeight="32.0" prefWidth="193.0" promptText="Выберите задание" stylesheets="@../stageFiles/Styles.css" visibleRowCount="5">
                <opaqueInsets>
                   <Insets />
-               </opaqueInsets></ComboBox>
+               </opaqueInsets>
+               <padding>
+                  <Insets bottom="10.0" top="10.0" />
+               </padding></ComboBox>
             <Label fx:id="closeSlider" layoutX="14.0" layoutY="76.0" stylesheets="@../stageFiles/Styles.css" text="МЕНЮ" textFill="WHITE">
                <font>
                   <Font name="Comic Sans MS Bold" size="15.0" />
