@@ -1,4 +1,4 @@
-package programmingLanguagesJava.laboratories.GUI.Config;
+package programmingLanguagesJava.laboratories.GUI.config.ParserLabs;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 class ClassFinder {
-    public static Class<?> getaClass(File file) {
+    static Class<?> getaClass(File file) {
 
         Class<?> result = null;
 

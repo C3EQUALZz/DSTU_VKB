@@ -14,7 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import programmingLanguagesJava.laboratories.GUI.Config.Configurator;
+import programmingLanguagesJava.laboratories.GUI.config.ButtonConfigurator;
 
 import java.io.IOException;
 import java.net.URL;
@@ -43,7 +43,7 @@ public class Menu implements Initializable {
     private Text hourTimer;
 
     private final SceneController controller = new SceneController();
-    private final Configurator configurator = new Configurator();
+    private final ButtonConfigurator buttonConfigurator = new ButtonConfigurator();
 
     /**
      * Здесь вот точка запуска программы контроллеров происходит. Параметрами я даже не пользуюсь, но они нужны.
@@ -54,7 +54,7 @@ public class Menu implements Initializable {
 
         // Обработка событий для кнопки с лабораторными
 
-        configurator.setupButtonEvent(ButtonLabs, event -> {
+        buttonConfigurator.setupButtonEvent(ButtonLabs, event -> {
 
             try {
                 controller.switchFromMenuToLaboratories(event);
@@ -66,7 +66,7 @@ public class Menu implements Initializable {
 
         // Обработка событий для кнопки с проектом
 
-        configurator.setupButtonEvent(ButtonProject, event -> {
+        buttonConfigurator.setupButtonEvent(ButtonProject, event -> {
 
             try {
                 controller.switchFromMenuToProject(event);
@@ -78,7 +78,7 @@ public class Menu implements Initializable {
 
         // Обработка событий для кнопки с выходом из меню
 
-        configurator.setupButtonEvent(exitButton, event -> {
+        buttonConfigurator.setupButtonEvent(exitButton, event -> {
 
             PauseTransition pause = new PauseTransition(Duration.millis(100));
             pause.setOnFinished(evt -> Platform.exit());

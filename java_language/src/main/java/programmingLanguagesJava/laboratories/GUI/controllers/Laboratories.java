@@ -12,7 +12,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
-import programmingLanguagesJava.laboratories.GUI.Config.Configurator;
+import programmingLanguagesJava.laboratories.GUI.config.ButtonConfigurator;
+import programmingLanguagesJava.laboratories.GUI.config.ComboboxConfigurator;
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,16 +37,18 @@ public class Laboratories implements Initializable {
     private ComboBox<String> combobox;
 
     private final SceneController controller = new SceneController();
-    private final Configurator configurator = new Configurator();
+    private final ButtonConfigurator buttonConfigurator = new ButtonConfigurator();
+    private final ComboboxConfigurator comboboxConfigurator = new ComboboxConfigurator();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         menuEvent();
-        comboboxEvent();
         buttonsEvent();
 
-        configurator.setupButtonEvent(backButton, event -> {
+        comboboxConfigurator.defaultConfiguration(combobox);
+
+        buttonConfigurator.setupButtonEvent(backButton, event -> {
 
             try {
                 controller.switchToMenu(event);
@@ -55,7 +58,7 @@ public class Laboratories implements Initializable {
 
         });
 
-        configurator.setupButtonEvent(exitButton, event -> {
+        buttonConfigurator.setupButtonEvent(exitButton, event -> {
 
             PauseTransition pause = new PauseTransition(Duration.millis(100));
             pause.setOnFinished(evt -> Platform.exit());
@@ -78,12 +81,12 @@ public class Laboratories implements Initializable {
         slider.setTranslateX(-500);
 
         // Установка звука на тот момент, когда мы наводимся на кнопку меню.
-        openSlider.setOnMouseEntered(event -> configurator.hoverClip.play());
+        openSlider.setOnMouseEntered(event -> buttonConfigurator.hoverClip.play());
 
         // Установка звука на тот момент, когда мы нажимаем кнопку.
         openSlider.setOnMouseClicked(event -> {
 
-            configurator.clickClip.play();
+            buttonConfigurator.clickClip.play();
 
             TranslateTransition slide = new TranslateTransition();
             slide.setDuration(Duration.seconds(0.4));
@@ -100,10 +103,10 @@ public class Laboratories implements Initializable {
             });
         });
 
-        closeSlider.setOnMouseEntered(event -> configurator.hoverClip.play());
+        closeSlider.setOnMouseEntered(event -> buttonConfigurator.hoverClip.play());
 
         closeSlider.setOnMouseClicked(event -> {
-            configurator.clickClip.play();
+            buttonConfigurator.clickClip.play();
 
             TranslateTransition slide = new TranslateTransition();
             slide.setDuration(Duration.seconds(0.4));
@@ -121,72 +124,16 @@ public class Laboratories implements Initializable {
         });
     }
 
-    private void comboboxEvent() {
-        combobox.setOnMouseEntered(event -> configurator.hoverClip.play());
-
-        combobox.setOnMouseClicked(event -> configurator.clickClip.play());
-
-        combobox.setCellFactory(param -> new ListCell<>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    setText(item);
-                    setOnMouseEntered(event1 -> configurator.hoverClip.play());
-                }
-            }
-        });
-
-        combobox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                configurator.clickClip.play();
-            }
-        });
-
-        combobox.setDisable(true);
-    }
-
     private void buttonsEvent() {
 
-        configurator.setupButtonEvent(zeroButton, event -> {
-            combobox.setDisable(false);
-            combobox.getItems().clear();
+        Button[] allButtons = {
+                zeroButton, firstButton, firstDotFirstButton,
+                secondButton, thirdButton, thirdDotFirstButton, fourthButton
+        };
 
-
-            String[] questions = {"1 задание", "2 задание", "3 задание", "4 задание", "5 задание", "6 задание"};
-            combobox.getItems().addAll(questions);
-        });
-
-        configurator.setupButtonEvent(firstButton, event -> {
-            combobox.setDisable(false);
-            combobox.getItems().clear();
-
-            String[] questions = {"1 задание", "2 задание", "3 задание", "4 задание", "5 задание"};
-            combobox.getItems().addAll(questions);
-        });
-
-        configurator.setupButtonEvent(firstDotFirstButton, event -> {
-
-        });
-
-        configurator.setupButtonEvent(secondButton, event -> {
-
-        });
-
-        configurator.setupButtonEvent(thirdButton, event -> {
-
-        });
-
-        configurator.setupButtonEvent(thirdDotFirstButton, event -> {
-
-        });
-
-        configurator.setupButtonEvent(fourthButton, event -> {
-
-        });
-
+        for (var button : allButtons) {
+            buttonConfigurator.setupButtonEvent(button, event -> comboboxConfigurator.setupComboboxEvent(combobox, button));
+        }
 
     }
 }

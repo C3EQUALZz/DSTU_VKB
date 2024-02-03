@@ -1,4 +1,4 @@
-package programmingLanguagesJava.laboratories.GUI.Config;
+package programmingLanguagesJava.laboratories.GUI.config;
 
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -7,8 +7,7 @@ import javafx.scene.media.AudioClip;
 
 import java.util.Objects;
 
-public class Configurator {
-
+public class ButtonConfigurator {
     public final AudioClip hoverClip = new AudioClip(Objects.requireNonNull(getClass().getResource("/music/hover.mp3")).toExternalForm());
     public final AudioClip clickClip = new AudioClip(Objects.requireNonNull(getClass().getResource("/music/click.mp3")).toExternalForm());
 
