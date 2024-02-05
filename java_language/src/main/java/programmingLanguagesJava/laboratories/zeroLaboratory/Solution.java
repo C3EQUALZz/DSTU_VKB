@@ -13,7 +13,12 @@ public class Solution {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите какое задание вы хотите выполнить (цифра): ");
-        System.out.println(ConsoleReader.executeTask(Solution.class, scanner.next(), " "));
+
+        String numberOfQuestion = scanner.next();
+
+        System.out.printf("Результат %s задания: ", numberOfQuestion);
+
+        System.out.println(ConsoleReader.executeTask(Solution.class, numberOfQuestion, " "));
     }
 
     /**

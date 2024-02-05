@@ -9,6 +9,7 @@ import org.paukov.combinatorics3.Generator;
 import programmingLanguagesJava.laboratories.ConsoleReader;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.time.DayOfWeek;
 import java.time.format.TextStyle;
@@ -17,15 +18,17 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Solution {
-    static final IntStream firstIntStream = new Random().ints(20, -100, 21);
-    static final IntStream secondIntStream = new Random().ints(15, -100, 16);
-    static final IntStream thirdIntStream = new Random().ints(10, -100, 11);
+    static final int[] firstIntStream = new Random().ints(20, -100, 21).toArray();
+    static final int[] secondIntStream = new Random().ints(15, -100, 16).toArray();
+    static final int[] thirdIntStream = new Random().ints(10, -100, 11).toArray();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Введите номер задания: ");
         var question = scanner.nextInt();
+
+        System.out.printf("Результат %d задания: ", question);
 
         Object result = switch (question) {
             case 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ->
@@ -62,51 +65,48 @@ public class Solution {
 
     /**
      * 1. Вычислить z = Math.exp(Math.abs(max_x)) - Math.exp(Math.abs(max_y))) / Math.sqrt((Math.abs(max_x * max_y)))
-     * где - наибольший элемент массива X(20); - наибольший элемент массива Y(15).
+     * где - max_x наибольший элемент массива X(20); max_y - наибольший элемент массива Y(15).
      * Для вычисления наибольшего элемента массива использовать функцию.
-     * @return значение после вычисления
      */
     @SuppressWarnings("unused")
     public static String firstQuestion(String ignoredUnused) {
         // orElseTrow возвращает значение, если оно существует, в ином случае будет возмущена ошибка
-        var max_x = Solution.firstIntStream.max().orElseThrow();
-        var max_y = Solution.secondIntStream.max().orElseThrow();
+        var max_x = Arrays.stream(Solution.firstIntStream).max().orElseThrow();
+        var max_y = Arrays.stream(Solution.secondIntStream).max().orElseThrow();
         var result = (Math.exp(Math.abs(max_x)) - Math.exp(Math.abs(max_y))) / Math.sqrt(Math.abs(max_x * max_y));
 
-        return String.format("Результат 1 задания: %f", result);
+        return String.format("z = ( e ^ |%d| - e ^ |%d| ) / sqrt(| %d * %d |) = %f", max_x, max_y, max_x, max_y, result);
     }
 
     /**
-     * 2. Вычислить M = (S+T+K)/2, где S, T, K – суммы положительных элементов массивов А, В, С соответственно.
+     * 2. Даны массивы действительных чисел А(20), B(15), C(10).
+     * Вычислить M = (S+T+K)/2, где S, T, K – суммы положительных элементов массивов А, В, С соответственно.
      * Для вычисления суммы положительных элементов использовать функцию.
-     *
-     * @return значение полученного выражения
      */
     @SuppressWarnings("unused")
     public static String secondQuestion(String ignoredUnused) {
         // -> - это лямбда выражение, как в .net
-        var result = (Solution.firstIntStream.filter(n -> n > 0).sum() +
-                Solution.secondIntStream.filter(n -> n > 0).sum() +
-                Solution.thirdIntStream.filter(n -> n > 0).sum()) / 2.0;
+        var s = Arrays.stream(Solution.firstIntStream).filter(n -> n > 0).sum();
+        var t = Arrays.stream(Solution.secondIntStream).filter(n -> n > 0).sum();
+        var k = Arrays.stream(Solution.thirdIntStream).filter(n -> n > 0).sum();
+        var result = (s + t + k) / 2.0;
 
-        return String.format("Результат 2 задания: %f", result);
+        return String.format("М = (%d + %d + %d) / 2 = %f", s, t, k, result);
     }
 
     /**
      * 3. Даны целые числа m, n. Вычислить с = m!/(n! * (m-n)!).
      * Для вычисления факториала использовать функцию.
-     *
-     * @return Возвращает целое число, то есть результат сочетания.
      */
     @SuppressWarnings("unused")
     public static String thirdQuestion(String ignoredUnused) {
         // когда мы определяем так самые базовые типы, то нельзя var писать.
         int m = 4, n = 2;
+        BigInteger factorialM = BigIntegerMath.factorial(m), factorialN = BigIntegerMath.factorial(n), factDiff = BigIntegerMath.factorial(m - n);
         // в Java, к сожалению, нет перегрузки операторов, поэтому тут математические действия делаются через методы
         // Взято с библиотеки
-        var result = BigIntegerMath.factorial(m).divide(
-                BigIntegerMath.factorial(n).multiply(BigIntegerMath.factorial(m - n)));
-        return String.format("Результат 3 задания: %d", result);
+        var result = factorialM.divide(factorialN.multiply(factDiff));
+        return String.format("c = %d! / (%d! * (%d - %d)!) = %d", m, n, m, n, result);
     }
 
     /**
@@ -122,24 +122,31 @@ public class Solution {
         var result = Generator.combination(1, 2, 3).simple(2).stream().mapToDouble(x ->
                 Math.sqrt(Math.pow(x.getFirst(), 2) + Math.pow(x.getLast(), 2) +
                         Math.pow(Math.sin(x.getFirst() * x.getLast()), 2))).sum();
-        return String.format("Результат 4 задания: %f", result);
+        return String.format("s = sqrt(1 + 4 + sin(2)^2) + sqrt(1 + 9 + sin(9)^2) + sqrt(4 + 9 + sin(6)^2 = %f", result);
     }
 
     /**
      * 5. Составить программу для вычисления среднего арифметического положительных элементов массивов Х(20), Y(15),
      * Z(10), используя в качестве подпрограммы функцию.
-     *
-     * @return Возвращает строку, где написаны средние значения в каждом массиве.
      */
     @SuppressWarnings("unused")
     public static String fifthQuestion(String ignoredUnused) {
         // var не дает прописать, надо явно указать
-        IntStream[] arrays = {firstIntStream, secondIntStream, thirdIntStream};
+        int[][] arrays = {firstIntStream, secondIntStream, thirdIntStream};
         // Нет аналога enumerate, поэтому воспользовался таким костылем.
-        return "Результат 5 задания:\n" + IntStream.range(0, arrays.length)
-                .mapToObj(index -> "Среднее значение массива " + (index + 1) + ": " +
-                        String.format("%.3f", arrays[index].filter(x -> x > 0).average().orElseThrow()))
-                .collect(Collectors.joining("\n"));
+        try {
+
+            return "\n" + Arrays.stream(arrays).map(array ->
+                            "Среднее значение массива " +
+                                    Arrays.toString(array) + ": " +
+                                    String.format("%.3f", Arrays.stream(array).filter(x -> x > 0).average().orElseThrow()))
+
+                    .collect(Collectors.joining("\n"));
+
+        } catch (NoSuchElementException e) {
+            return "Перезапустите задание, в случайном массиве только отрицательные элементы";
+        }
+
     }
 
     /**
@@ -148,25 +155,33 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public static String sixthQuestion(String ignoredUnused) {
-        var result = Math.abs(firstIntStream.min().orElseThrow()) > 10 ?
-                secondIntStream.min().orElseThrow() + thirdIntStream.min().orElseThrow() :
-                1 + thirdIntStream.map(Math::abs).min().orElseThrow();
-        return String.format("Результат 6 задания: %d", result);
+
+        var min_a = Math.abs(Arrays.stream(firstIntStream).min().orElseThrow());
+
+        if (min_a > 10) {
+            var min_b = Arrays.stream(secondIntStream).min().orElseThrow();
+            var min_c = Arrays.stream(thirdIntStream).min().orElseThrow();
+            return String.format("min_a = %d -> %d + %d = %d", min_a, min_b, min_c, min_b + min_c);
+        }
+
+        var min_abc_c = Arrays.stream(thirdIntStream).map(Math::abs).min().orElseThrow();
+        return String.format("min_a = %d -> 1 + %d = %d", min_a, min_abc_c, 1 + min_abc_c);
     }
 
     /**
      * 7. Дан массив D(40) вещественных чисел. Найти среднее геометрическое его элементов,
-     * которые удовлетворяют условию 0 < di <12. Для вычислений использовать функцию.
+     * которые удовлетворяют условию 0 < di < 12. Для вычислений использовать функцию.
      */
     @SuppressWarnings("unused")
     public static String seventhQuestion(String ignoredUnused) {
         var D = new Random().doubles(40).toArray();
+
         var result = Math.pow(
                 Arrays.stream(D).filter(x -> x > 0 && x < 12).reduce(1, (a, b) -> a * b),
                 1.0 / D.length
         );
 
-        return String.format("Результат 7 задания: %.3f", result);
+        return String.format("Массив %s, где среднее геометрическое - %.3f", Arrays.toString(D), result);
     }
 
     /**
@@ -189,7 +204,7 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public static String ninthQuestion(String ignoredUnused) {
-        return "Результат 9 задания: " + Solution.firstIntStream.average().orElseThrow();
+        return "Результат 9 задания: " + Arrays.stream(Solution.firstIntStream).average().orElseThrow();
     }
 
     /**
@@ -320,7 +335,7 @@ public class Solution {
 
         return String.format(
                 "15 задание: \n" + "Массив: " + Arrays.toString(sortedRandArr) + "\nЭлемент %d %s", value,
-                index >= 0 ?   " на позиции " + index : " не найден в массиве"
+                index >= 0 ? " на позиции " + index : " не найден в массиве"
         );
     }
 
