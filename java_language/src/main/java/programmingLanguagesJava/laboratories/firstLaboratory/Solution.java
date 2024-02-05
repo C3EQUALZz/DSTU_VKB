@@ -1,5 +1,5 @@
 /**
- * Автор: Данил Ковалев ВКБ22 Вариант -
+ * Автор: Данил Ковалев ВКБ22
  */
 package programmingLanguagesJava.laboratories.firstLaboratory;
 
@@ -15,7 +15,6 @@ import java.time.DayOfWeek;
 import java.time.format.TextStyle;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Solution {
     static final int[] firstIntStream = new Random().ints(20, -100, 21).toArray();
@@ -28,10 +27,10 @@ public class Solution {
         System.out.print("Введите номер задания: ");
         var question = scanner.nextInt();
 
-        System.out.printf("Результат %d задания: ", question);
+        System.out.printf("Результат %d задания:\n", question);
 
         Object result = switch (question) {
-            case 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ->
+            case 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 18 ->
                     ConsoleReader.executeTask(Solution.class, String.valueOf(question), " ");
 
             case 12, 13 -> {
@@ -41,6 +40,7 @@ public class Solution {
 
             case 14, 15 -> {
                 System.out.print("Введите строку: ");
+                scanner.nextLine();
                 yield ConsoleReader.executeTask(Solution.class, String.valueOf(question), scanner.nextLine());
             }
 
@@ -52,8 +52,29 @@ public class Solution {
             case 17 -> {
                 System.out.println("Введите номер фигуры:\n1.Круг\n2.Прямоугольник\n3.Треугольник");
                 var numberOfFigure = scanner.next();
-                yield seventhQuestion(numberOfFigure);
+                // У Scanner бывает баг, что он не считывает, поэтому нужно иногда переносить вот так
+                scanner.nextLine();
 
+                var choice = switch (numberOfFigure) {
+                    case "1" -> "Введите радиус: ";
+                    case "2" -> "Введите ширину и длину через пробел: ";
+                    case "3" -> "Введите длину высоты и основания через пробел: ";
+                    default -> throw new RuntimeException("Ошибка. Неправильно выбрали вариант фигуры. ");
+                };
+
+                System.out.print(choice);
+                numberOfFigure += " " + scanner.nextLine();
+                yield seventeenthQuestion(numberOfFigure);
+            }
+
+            case 19 -> {
+                System.out.print("""
+                        Введите что вы хотите сделать:\s
+                        1. Вычислить сумму главной диагонали,\s
+                        2. Вычислить сумму побочной диагонали\s
+                        """);
+                // Не исправил до конца.
+                yield nineteenthQuestion(scanner.next());
             }
 
             default -> "Вы выбрали неверное задание";
@@ -181,7 +202,7 @@ public class Solution {
                 1.0 / D.length
         );
 
-        return String.format("Массив %s, где среднее геометрическое - %.3f", Arrays.toString(D), result);
+        return String.format("Массив: %s\nСреднее геометрическое - %.3f", Arrays.toString(D), result);
     }
 
     /**
@@ -194,7 +215,7 @@ public class Solution {
         var A = new Random().ints(80).toArray();
 
         var result = Arrays.stream(A).filter(n -> n < 0 && Math.abs(n) % 2 == 1).sum();
-        return "Результат 8 задания: " + result;
+        return String.format("Массив: %s\nСумма: %d", Arrays.toString(A), result);
     }
 
     /**
@@ -204,7 +225,14 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public static String ninthQuestion(String ignoredUnused) {
-        return "Результат 9 задания: " + Arrays.stream(Solution.firstIntStream).average().orElseThrow();
+        try {
+
+            var result = Arrays.stream(Solution.firstIntStream).average().orElseThrow();
+            return String.format("Массив: %s\nСреднее арифметическое - %f", Arrays.toString(Solution.firstIntStream), result);
+
+        } catch (NoSuchElementException e) {
+            return "Перезапустите метод, только отрицательные элементы";
+        }
     }
 
     /**
@@ -216,8 +244,8 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public static String tenthQuestion(String ignoredUnused) {
-        IntStream stream = new Random().ints(50, 1, 10000);
-        var result = stream
+        var array = new Random().ints(50, 1, 10000).toArray();
+        var result = Arrays.stream(array)
                 .boxed()
                 .sorted(Comparator.comparingInt(n -> {
 
@@ -232,7 +260,7 @@ public class Solution {
                 }))
                 .toArray();
 
-        return "Результат 10 задания: " + Arrays.toString(result);
+        return String.format("Массив: %s\nСортированный массив: %s", Arrays.toString(array), Arrays.toString(result));
     }
 
     /**
@@ -241,9 +269,8 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public static String eleventhQuestion(String ignoredUnused) {
-        var res = "Результат 11 задания:\n";
         var array = new Random().ints(50, 1, 10000).toArray();
-        res += "Исходный массив: " + Arrays.toString(array) + "\n";
+        var res = "Исходный массив: " + Arrays.toString(array) + "\n";
         res += "Отсортированный массив: " + Arrays.stream(array).boxed().sorted().toList() + "\n";
         res += "Сумма цифр каждого числа: " + Arrays.stream(array).map(n -> {
 
@@ -277,7 +304,7 @@ public class Solution {
             n /= 10;
         }
 
-        return String.format("Результат 12 задания:\nКоличество разрядов числа: %d равно: %d", p, count);
+        return String.format("Количество разрядов числа: %d равно: %d", p, count);
     }
 
     /**
@@ -292,7 +319,7 @@ public class Solution {
             result += (-1) * i * (x / BigIntegerMath.factorial(i).intValue());
         }
 
-        return String.format("Результат 13 задания: %d", result);
+        return String.format("sum(-1) * i * (x / i!) for i in range(1, 6) = %d", result);
     }
 
     /**
@@ -303,15 +330,17 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public static String fourteenthQuestion(String words) {
-        // List.of - переделывает в интерфейс List, потом приходится вручную кастовать к ArrayList
-        // Collections.swap просит изменяемый объект, что вполне логично, поэтому переделал к ArrayList.
-        var src = new ArrayList<>(List.of(words.split(" ")));
-        var len = src.size();
+        /*
+         List.of - переделывает в интерфейс List, потом приходится вручную кастовать к ArrayList
+         Collections.swap просит изменяемый объект, что вполне логично, поэтому переделал к ArrayList.
+                var src = new ArrayList<>(List.of(words.split(" ")));
+                var len = src.size();
 
-        for (var i = 0; i <= (len / 2); i++)
-            Collections.swap(src, len - i - 1, i);
+                for (var i = 0; i <= (len / 2); i++)
+                    Collections.swap(src, len - i - 1, i);
+        */
 
-        return String.format("Результат 14 задания: %s", String.join(" ", src));
+        return String.join(" ", new ArrayList<>(List.of(words.split(" ")).reversed()));
     }
 
     /**
@@ -326,7 +355,6 @@ public class Solution {
     public static String fifteenthQuestion(String valueForSearch) {
         var sortedRandArr = new Random().ints(10, 0, 11).sorted().toArray();
 
-        System.out.print("Введите ваше число, которое вы хотите найти: ");
         var value = Integer.parseInt(valueForSearch);
 
         // В Java есть встроенный бинарный поиск, зачем писать свой?
@@ -362,14 +390,23 @@ public class Solution {
      * треугольника. Для вычисления площади каждой фигуры должна быть написана отдельная функция.
      */
     @SuppressWarnings("unused")
-    public static String seventeenthQuestion(String param) {
+    public static String seventeenthQuestion(String parameters) {
         // Подумать над вводом в GUI
-        return switch (Integer.parseInt(param)) {
-            case 1 -> Circle.square();
-            case 2 -> Rect.square();
-            case 3 -> Triangle.square();
-            default -> "Выбрали неверное задание";
-        };
+        var splitParameters = parameters.split(" ");
+
+        try {
+
+            return switch (Integer.parseInt(splitParameters[0])) {
+                case 1 -> Circle.square(Double.parseDouble(splitParameters[1]));
+                case 2 -> Rect.square(Integer.parseInt(splitParameters[1]), Integer.parseInt(splitParameters[2]));
+                case 3 -> Triangle.square(Integer.parseInt(splitParameters[1]), Integer.parseInt(splitParameters[2]));
+                default -> "Выбрали неверное задание";
+            };
+
+        } catch (IndexOutOfBoundsException e) {
+            return "Вы ввели неверные данные";
+        }
+
     }
 
     /**
@@ -381,20 +418,25 @@ public class Solution {
      * Заполнение массива и подсчет суммы его элементов оформить в виде отдельной функции.
      */
     @SuppressWarnings("unused")
-    public String eighteenthQuestion() {
-
+    public String eighteenthQuestion(String ignoredUnused) {
         var matrix = HelpMethods.generateRandomMatrix(5, 5);
-        HelpMethods.printMatrix(matrix);
+
+        // Наш массив в строчном виде
+        var matrixString = Arrays.stream(matrix)
+                .map(x -> Arrays.stream(x).mapToObj(String::valueOf)
+                        .collect(Collectors.joining(" ")))
+                .collect(Collectors.joining(System.lineSeparator()));
 
         // Наш список с суммами.
         var sums = Arrays.stream(matrix).mapToInt(row -> Arrays.stream(row).sum()).boxed().toList();
-        System.out.println(sums);
 
         // Странно, что в обычном массиве не реализован indexOf, только в списках есть данный метод.
         var index = sums.indexOf(sums.stream().max(Integer::compare).orElseThrow());
 
-        return String.format("Результат 18 задания:\n" +
-                        "Строка, где максимальная сумма %s, с индексом %d, сумма - %d",
+        return String.format(
+                "Наша матрица:\n%s\nМассив с суммами:\n%s\nСтрока, где максимальная сумма %s, с индексом %d, сумма - %d",
+                matrixString,
+                sums,
                 Arrays.toString(matrix[index]),
                 index,
                 Arrays.stream(matrix[index]).sum());
@@ -406,10 +448,10 @@ public class Solution {
      * выбора пользователя. Сумма элементов любой диагонали должна вычисляться в одной и той же функции.
      */
     @SuppressWarnings("unused")
-    public String nineteenthQuestion() {
+    public static String nineteenthQuestion(String parameter) {
+
         // Хотел на самом деле поискать аналог Numpy, но здесь так много библиотек, что вообще непонятно какую можно исп.
         // Пришлось вот так вручную через StreamApi делать, долго мучался, чтобы заработало.
-
         Scanner scanner = new Scanner(System.in);
         // Создаем генератор случайных чисел
         Random random = new Random();
