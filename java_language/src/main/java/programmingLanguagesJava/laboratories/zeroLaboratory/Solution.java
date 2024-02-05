@@ -26,12 +26,74 @@ public class Solution {
     }
 
     /**
+     * Выведите на экран текст "We have to get out of here. We need transport".
+     */
+    @SuppressWarnings("unused")
+    public static String secondQuestion(String ignoreUnused) {
+        return "We have to get out of here\n" + "We need transport\n";
+    }
+
+    /**
+     * Вывести на экран текст "Destroy Droidekas!"
+     */
+    @SuppressWarnings("unused")
+    public static String thirdQuestion(String ignoreUnused) {
+        return "Destroy Droidekas!".repeat(5);
+    }
+
+    /**
+     * Вывести разницу между цифрами.
+     */
+    @SuppressWarnings("unused")
+    public static String fourthQuestion(String ignoreUnused) {
+        int a = 4;
+        int b = 3;
+        return String.valueOf(a - b);
+    }
+
+
+    /**
+     * Расставьте комментарии, чтобы получилось 12, 2
+     */
+    @SuppressWarnings("unused")
+    public static String fifthQuestion(String ignoreUnused) {
+        int x = 2;
+        int y = 12;
+
+        // y = x * y;
+        y = x + y;
+
+        x = y - x;
+        y = y - x;
+
+        return String.format("%d\n%d", x, y);
+    }
+
+    /**
+     * Поставьте комментарий, чтобы вывести предложение.
+     */
+    @SuppressWarnings("unused")
+    public static String sixthQuestion() {
+        String res = "The";
+        // res += "Starship";
+        // res += " car ";
+        res += " car";
+        res += " is ";
+        // res += "ready ";
+        res += "for";
+        // res += " the";
+        res += " the";
+        res += " race";
+        return res;
+    }
+
+    /**
      * Объявите переменную jedi типа String.
      * Сразу же в строке объявления присвойте ей какое-нибудь значение.
      * Выведите на экран переменную jedi
      */
     @SuppressWarnings("unused")
-    public static String secondQuestion(String ignoredUnused) {
+    public static String seventhQuestion(String ignoredUnused) {
         @SuppressWarnings("redunant")
         var jedi = "Привет";
         return jedi;
@@ -41,7 +103,7 @@ public class Solution {
      * Напишите программу, которая выводит на экран квадрат этой переменной (number * number)
      */
     @SuppressWarnings("unused")
-    public static String thirdQuestion(String ignoredUnused) {
+    public static String eighthQuestion(String ignoredUnused) {
         var number = 5;
         return String.format("%d", number * number);
     }
@@ -51,7 +113,7 @@ public class Solution {
      * "May the Force be with you" 10 раз.
      */
     @SuppressWarnings("unused")
-    public static String fourthQuestion(String ignoredUnused) {
+    public static String ninthQuestion(String ignoredUnused) {
         return "May the Force be with you".repeat(10);
     }
 
@@ -60,7 +122,7 @@ public class Solution {
      * name типа String, height типа int и planet типа String.
      */
     @SuppressWarnings("unused")
-    public static String fifthQuestion(String ignoredUnused) {
+    public static String tenthQuestion(String ignoredUnused) {
         var s = "Anakin ";
 /*
         s.append("how are you?");
@@ -80,7 +142,7 @@ public class Solution {
      * Внесите изменения в программу, чтобы переменная mol имела значение Mol
      */
     @SuppressWarnings("unused")
-    public static String sixthQuestion(String ignoredUnused) {
+    public static String eleventhQuestion(String ignoredUnused) {
         String mol = "Mol";
         return "Darth " + mol + "!";
     }
@@ -89,7 +151,7 @@ public class Solution {
      * Расставить знаки плюс и минус так, чтобы значение переменной result равнялось 20.
      */
     @SuppressWarnings("unused")
-    public static String seventhQuestion(String ignoredUnused) {
+    public static String twelfthQuestion(String ignoredUnused) {
         return String.format("%d", - a + b - c + d);
     }
 
@@ -97,7 +159,7 @@ public class Solution {
      * Напишите программу, которая выводит на экран квадрат числа 5.
      */
     @SuppressWarnings("unused")
-    public static String eighthQuestion(String ignoredUnused) {
+    public static String thirteenthQuestion(String ignoredUnused) {
         return String.format("%d", sqr());
     }
 
@@ -110,7 +172,7 @@ public class Solution {
      * Программа должна компилироваться.
      */
     @SuppressWarnings("unused")
-    public static String ninthQuestion(String ignoreUnused) {
+    public static String fourteenthQuestion(String ignoreUnused) {
 //        int a = 1;
         double b = 1.5;
         double c = b + 1.5;
@@ -131,7 +193,7 @@ public class Solution {
      * Строка — аргумент метода, то есть подаётся на входе.
      */
     @SuppressWarnings("unused")
-    public static String tenthQuestion(String ignoreUnused) {
+    public static String fifteenthQuestion(String ignoreUnused) {
         return print("The power is easy to use ") +
                 print("The power opens many opportunities");
     }
@@ -146,7 +208,7 @@ public class Solution {
      * и выведите на экран надпись: "Your speed is: <n+100> km/h."
      */
     @SuppressWarnings("unused")
-    public static String eleventhQuestion(String ignoreUnused) {
+    public static String sixteenthQuestion(String ignoreUnused) {
         return increaseSpeed(700);
     }
 
@@ -159,7 +221,7 @@ public class Solution {
      * Создайте также объект Dron и сохраните ссылку на него в переменную dron.
      */
     @SuppressWarnings("unused")
-    public static String twelveQuestion(String ignoreUnused) {
+    public static String seventeenthQuestion(String ignoreUnused) {
 
         var zam = new Zam();
         var dron = new Dron();
@@ -171,7 +233,7 @@ public class Solution {
     }
 
     @SuppressWarnings("unused")
-    public static String thirteenthQuestion(String ignoreUnused) {
+    public static String eighteenthQuestion(String ignoreUnused) {
         Jedi jedi1 = new Jedi();
         jedi1.name = "Obi-Wan";
 
@@ -188,7 +250,7 @@ public class Solution {
      * Создай 10 переменных типа Clone и 8 объектов типа Clone.
      */
     @SuppressWarnings("unused")
-    public static String fourteenthQuestion(String ignoreUnused) {
+    public static String nineteenthQuestion(String ignoreUnused) {
         Clone clone1 = new Clone();
         Clone clone2 = new Clone();
         Clone clone3 = new Clone();
@@ -210,7 +272,7 @@ public class Solution {
      * Присвой каждому клону владельца (owner).
      */
     @SuppressWarnings("unused")
-    public static String fifteenthQuestion(String ignoreUnused) {
+    public static String twentiethQuestion(String ignoreUnused) {
         var clone1 = new Clone1();
         var clone2 = new Clone2();
         var clone3 = new Clone3();
@@ -240,7 +302,7 @@ public class Solution {
      * весить на Луне (в Ньютонах).  Тип возвращаемого значения - double.
      */
     @SuppressWarnings("unused")
-    public static String sixteenthQuestion(String ignoreUnused) {
+    public static String twentyFirstQuestion(String ignoreUnused) {
         return String.valueOf(getWeight(888));
     }
 
@@ -254,7 +316,7 @@ public class Solution {
      * Метод должен вывести переданную строку (слово) на экран три раза через пробел.
      */
     @SuppressWarnings("unused")
-    public static String seventeenthQuestion(String ignoreUnused) {
+    public static String twentySecondQuestion(String ignoreUnused) {
         return print3("dump") + print3("cargo");
     }
 
@@ -269,7 +331,7 @@ public class Solution {
      * Напишите функцию, которая возвращает минимум из двух чисел.
      */
     @SuppressWarnings("unused")
-    public static String eighteenthQuestion(String ignoreUnused) {
+    public static String twentyThirdQuestion(String ignoreUnused) {
         return String.format("%d\n%d\n%d", min(12, 33), min(-20, 0), min(-10, -20));
     }
 
