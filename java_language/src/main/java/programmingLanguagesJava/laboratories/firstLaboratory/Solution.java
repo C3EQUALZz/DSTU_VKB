@@ -418,7 +418,7 @@ public class Solution {
      * Заполнение массива и подсчет суммы его элементов оформить в виде отдельной функции.
      */
     @SuppressWarnings("unused")
-    public String eighteenthQuestion(String ignoredUnused) {
+    public static String eighteenthQuestion(String ignoredUnused) {
         var matrix = HelpMethods.generateRandomMatrix(5, 5);
 
         // Наш массив в строчном виде
