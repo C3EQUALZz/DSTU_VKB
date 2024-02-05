@@ -34,11 +34,11 @@ public class Solution {
     }
 
     /**
-     * Вывести на экран текст "Destroy Droidekas!"
+     * Вывести на экран текст "Destroy Droidekas!" 5 раз
      */
     @SuppressWarnings("unused")
     public static String thirdQuestion(String ignoreUnused) {
-        return "Destroy Droidekas!".repeat(5);
+        return "Destroy Droidekas!\n".repeat(5);
     }
 
     /**
@@ -73,7 +73,7 @@ public class Solution {
      * Поставьте комментарий, чтобы вывести предложение.
      */
     @SuppressWarnings("unused")
-    public static String sixthQuestion() {
+    public static String sixthQuestion(String ignoreUnused) {
         String res = "The";
         // res += "Starship";
         // res += " car ";
@@ -114,7 +114,7 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public static String ninthQuestion(String ignoredUnused) {
-        return "May the Force be with you".repeat(10);
+        return "May the Force be with you\n".repeat(10);
     }
 
     /**
