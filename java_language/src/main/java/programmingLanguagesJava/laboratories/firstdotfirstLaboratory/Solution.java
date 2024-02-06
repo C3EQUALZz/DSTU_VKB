@@ -14,14 +14,14 @@ import java.util.stream.Collectors;
 public class Solution {
 
     static String text = """
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et 
-                dolore magna aliqua. Pellentesque adipiscing commodo elit at. Scelerisque purus semper eget duis. Purus
-                sit amet volutpat consequat mauris nunc congue nisi vitae. Quis hendrerit dolor magna eget est lorem 
-                ipsum. Molestie ac feugiat sed lectus vestibulum. Massa tincidunt dui ut ornare lectus sit. Sed 
-                ullamcorper morbi tincidunt ornare massa eget egestas. In ornare quam viverra orci sagittis eu.
-                Mauris rhoncus aenean vel elit. Sed arcu non odio euismod lacinia. Auctor augue mauris augue neque.
-                 Eleifend mi in nulla posuere sollicitudin aliquam
-                """;
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et 
+            dolore magna aliqua. Pellentesque adipiscing commodo elit at. Scelerisque purus semper eget duis. Purus
+            sit amet volutpat consequat mauris nunc congue nisi vitae. Quis hendrerit dolor magna eget est lorem 
+            ipsum. Molestie ac feugiat sed lectus vestibulum. Massa tincidunt dui ut ornare lectus sit. Sed 
+            ullamcorper morbi tincidunt ornare massa eget egestas. In ornare quam viverra orci sagittis eu.
+            Mauris rhoncus aenean vel elit. Sed arcu non odio euismod lacinia. Auctor augue mauris augue neque.
+             Eleifend mi in nulla posuere sollicitudin aliquam
+            """;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -35,7 +35,6 @@ public class Solution {
                     ConsoleReader.executeTask(Solution.class, String.valueOf(question), HelpMethods.getDataFromConsole());
 
             case 4 -> {
-
                 System.out.print("Введите индекс буквы, которую вы хотите заменить: ");
                 var index = scanner.next();
 
@@ -43,7 +42,6 @@ public class Solution {
                 var letter = scanner.next();
 
                 yield fourthQuestion(index + " " + letter);
-
             }
 
             case 7 -> {
@@ -51,19 +49,16 @@ public class Solution {
                 yield seventhQuestion(scanner.next());
             }
 
-            case 8 -> {
-                System.out.println("Введите ваше предложение, где вы хотите искать слова и их обращения: ");
+            case 8, 10 -> {
+                System.out.println("Введите ваше предложение (Пишите предложения с точками!) ");
                 scanner.nextLine();
-                yield eighthQuestion(scanner.nextLine());
+                yield ConsoleReader.executeTask(Solution.class, String.valueOf(question), scanner.nextLine());
             }
 
-            case 10 -> {
-                System.out.println("Вводите предложения через точку в одной строке!!!");
-                scanner.nextLine();
-                yield tenthQuestion(scanner.nextLine());
-
+            case 11, 12, 13 -> {
+                System.out.println("Вводите координаты по такому шаблону (3, 5): ");
+                yield ConsoleReader.executeTask(Solution.class, String.valueOf(question), HelpMethods.getDataFromConsole());
             }
-
 
             default -> "Вы выбрали неверное задание";
         };
@@ -184,7 +179,7 @@ public class Solution {
     public static String sixthQuestion(String strings) {
         return String.format(
                 "После удаления всех не нужных символов:\n%s",
-                strings.replaceAll("[^A-Za-zа-яА-Я\\s]","")
+                strings.replaceAll("[^A-Za-zа-яА-Я\\s]", "")
         );
     }
 
@@ -198,10 +193,10 @@ public class Solution {
 
                 .map(line -> Arrays.stream(line.split("\\s+"))
 
-                .filter(word -> !(word.length() == Integer.parseInt(lengthStr) &&
+                        .filter(word -> !(word.length() == Integer.parseInt(lengthStr) &&
                                 Pattern.matches("^[^aeiouAEIOUЙйУуЕеОоЭэИиЯяЫыАаЮю].*", word)))
 
-                .collect(Collectors.joining(" ")))
+                        .collect(Collectors.joining(" ")))
                 .collect(Collectors.joining("\n"));
 
         return String.format("Текст после удаления слов с длиной равной %s\n%s", lengthStr, result);
@@ -248,9 +243,9 @@ public class Solution {
         words.forEach(word ->
                 result.add(
                         String.format("Слово: '%s' появляется %d раза в тексте",
-                        word,
-                        HelpMethods.findAll(sentence, String.format("\\b%s\\b", word)).size())
-        ));
+                                word,
+                                HelpMethods.findAll(sentence, String.format("\\b%s\\b", word)).size())
+                ));
 
         return String.format("Содержимое множества:\n%s", String.join("\n", result));
     }
@@ -286,7 +281,6 @@ public class Solution {
         // Я не совсем понимаю почему streamApi код возвращает Object[], тут приходится вручную кастовать к (Point[])
         var points = HelpMethods.cordsFromConsole(strings).toArray();
 
-
         List<Triangle> triangles = HelpMethods.getTriangleList(points);
 
         // Найдите треугольник с максимальным периметром
@@ -298,7 +292,7 @@ public class Solution {
         assert maxPerimeterTriangle != null;
 
         return String.format(
-                "Результат 11 задания:\nМаксимальный периметр: %f\nТочки: %s, %s, %s",
+                "Максимальный периметр: %f\nТочки: %s, %s, %s",
                 maxPerimeterTriangle.getPerimeter(),
                 maxPerimeterTriangle.getX(),
                 maxPerimeterTriangle.getY(),
@@ -332,7 +326,7 @@ public class Solution {
         }
 
         assert minPoint != null;
-        return String.format("Результат 12 задания:\nТочка, где расстояние минимально: (%d, %d) ", minPoint.x, minPoint.y);
+        return String.format("Точка, где расстояние минимально: (%d, %d) ", minPoint.x, minPoint.y);
     }
 
     /**
@@ -342,9 +336,6 @@ public class Solution {
     @SuppressWarnings("unused")
     public static String thirteenthQuestion(String strings) {
         var points = HelpMethods.cordsFromConsole(strings).toList();
-
-        if (!HelpMethods.isConvex(points))
-            return "Результат 13 задания: многоугольник не является выпуклым";
         // https://www.mathopenref.com/coordpolygonarea.html
         int countPoints = points.size();
         double sum = 0;
@@ -353,7 +344,7 @@ public class Solution {
             sum += points.get(i).x * points.get((i + 1) % countPoints).y -
                     points.get((i + 1) % countPoints).x * points.get(i).y;
 
-        return String.format("Результат 13 задания: %f", Math.abs(sum / 2.0));
+        return String.format("Площадь многоугольника: %f", Math.abs(sum / 2.0));
     }
 }
 

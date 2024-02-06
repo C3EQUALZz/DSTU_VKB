@@ -121,7 +121,7 @@ public class HelpMethods {
      * Преобразование точек из строк в java.awt.Point
      */
     static Stream<java.awt.Point> cordsFromConsole(String strings) {
-        return Arrays.stream(strings.split("\\s+")).map(cord -> {
+        return Arrays.stream(strings.split("\n")).map(cord -> {
 
             var pattern = Pattern.compile("\\(?\\d+, \\d+\\)?");
             var matcher = pattern.matcher(cord);
@@ -141,41 +141,4 @@ public class HelpMethods {
             return null;
         });
     }
-
-    static double CrossProduct(double[][] A) {
-        double X1 = (A[1][0] - A[0][0]);
-        double Y1 = (A[1][1] - A[0][1]);
-        double X2 = (A[2][0] - A[0][0]);
-        double Y2 = (A[2][1] - A[0][1]);
-        return (X1 * Y2 - Y1 * X2);
-    }
-
-    /**
-     * <a href="https://www.geeksforgeeks.org/check-if-given-polygon-is-a-convex-polygon-or-not/">...</a>
-     *
-     * @param points список с точками, которые передал пользователь в консоли.
-     * @return правду, если является выпуклым
-     */
-
-    static boolean isConvex(List<Point> points) {
-        int N = points.size();
-        double prev = 0;
-        double curr;
-        for (int i = 0; i < N; i++) {
-            double[][] temp = {
-                    {points.get(i).x, points.get(i).y},
-                    {points.get((i + 1) % N).x, points.get((i + 1) % N).y},
-                    {points.get((i + 2) % N).x, points.get((i + 2) % N).y}
-            };
-            curr = CrossProduct(temp);
-            if (curr * prev < 0) {
-                return false;
-            } else {
-                prev = curr;
-            }
-        }
-        return true;
-    }
-
-
 }
