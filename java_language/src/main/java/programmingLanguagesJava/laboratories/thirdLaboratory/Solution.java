@@ -16,9 +16,8 @@ public class Solution {
      * 1. Ввести n строк с консоли, найти самую короткую и самую длинную строки. Вывести найденные строки и их длину.
      */
     @SuppressWarnings("unused")
-    public String firstQuestion() {
-        var stringWithMinimalLength = HelpMethods.getDataFromConsole()
-                .stream()
+    public String firstQuestion(String strings) {
+        var stringWithMinimalLength = Arrays.stream(strings.split("\\s+"))
                 .min(Comparator.comparing(String::length))
                 .orElse("Вы не ввели строки для нахождения! ");
 
@@ -30,23 +29,22 @@ public class Solution {
      * 2. Ввести n строк с консоли. Упорядочить и вывести строки в порядке возрастания (убывания) значений их длины.
      */
     @SuppressWarnings("unused")
-    public String secondQuestion() {
-        var strings = HelpMethods.getDataFromConsole()
-                .stream()
+    public String secondQuestion(String strings) {
+        var res = Arrays.stream(strings.split("\\s+"))
                 .sorted(Comparator.comparing(String::length))
                 .collect(Collectors.joining("\n"));
-        return String.format("Результат 2 задания:\n%s", strings);
+        return String.format("Результат 2 задания:\n%s", res);
     }
 
     /**
      * 3. Ввести n строк с консоли. Вывести на консоль те строки, длина которых меньше (больше) средней, а также длину.
      */
     @SuppressWarnings("unused")
-    public String thirdQuestion() {
+    public String thirdQuestion(String strings) {
         // Наш список со строками, которые ввел пользователь
-        var ListStrings = HelpMethods.getDataFromConsole();
+        var ListStrings = strings.split("\\s+");
         // Находим среднюю длину строк
-        var averageLength = ListStrings.stream().mapToInt(String::length).average().orElseThrow();
+        var averageLength = Arrays.stream(ListStrings).mapToInt(String::length).average().orElseThrow();
         // Решил сделать так, а не через StreamApi, чтобы за один проход расположить элементы по контейнерам.
         // В одном случае сложность O(n), а в другом O(2*n), но 2 не учитывается как мы помним, но уже поступил так.
         var stringThatAreLonger = new StringBuilder(String.format("Строки, которые больше по длине, чем %f", averageLength));
@@ -66,8 +64,8 @@ public class Solution {
      * Если таких слов несколько, найти первое из них.
      */
     @SuppressWarnings("unused")
-    public String fourthQuestion() {
-        var ListWithRows = HelpMethods.getDataFromConsole();
+    public String fourthQuestion(String strings) {
+        var ListWithRows = strings.split("\\s+");
 
         int minLenSymbols = Integer.MAX_VALUE;
         String wordWithMaxLength = "";
@@ -97,9 +95,8 @@ public class Solution {
      * а среди них – количество слов с равным числом гласных и согласных букв.
      */
     @SuppressWarnings("unused")
-    public String fifthQuestion() {
-        var result = HelpMethods.getDataFromConsole()
-                        .stream()
+    public String fifthQuestion(String strings) {
+        var result = Arrays.stream(strings.split("\\s+"))
                         .filter(word -> word.matches("^[a-zA-Z0-9]+$"))
                         .filter(word -> {
                             var countConsonants = word.replaceAll("(?i)[^aeiouy]", "").length();
@@ -116,9 +113,8 @@ public class Solution {
      * Если таких слов несколько, найти первое из них.
      */
     @SuppressWarnings("unused")
-    public String sixthQuestion() {
-        var result = HelpMethods.getDataFromConsole()
-                .stream()
+    public String sixthQuestion(String strings) {
+        var result = Arrays.stream(strings.split("\\s+"))
                 .filter(word -> word.chars().sorted()
                         /*
                         Метод collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)

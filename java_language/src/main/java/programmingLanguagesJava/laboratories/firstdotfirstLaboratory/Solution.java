@@ -12,9 +12,36 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Solution {
-
     public static void main(String[] args) {
-        // System.out.println(ConsoleReader.executeTask(Solution.class));
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Введите номер задания: ");
+        var question = scanner.nextInt();
+
+        System.out.printf("---------------------------------------------------\nРезультат %d задания:\n", question);
+
+        Object result = switch (question) {
+            case 1, 2, 3 ->
+                ConsoleReader.executeTask(Solution.class, String.valueOf(question), HelpMethods.getDataFromConsole());
+
+            case 4 -> {
+
+                System.out.print("Введите индекс буквы, которую вы хотите заменить: ");
+                var index = scanner.next();
+
+                System.out.print("Введите букву, на которую вы хотите поменять: ");
+                var letter = scanner.next();
+
+                yield fourthQuestion(index + " " + letter);
+
+            }
+
+
+            default -> "Вы выбрали неверное задание";
+        };
+
+        scanner.close();
+        System.out.println(result);
+
     }
     // аннотация с собакой - просто указание IDE, что не надо ругаться, что данные методы не используются
     // Здесь IDEA явно не видит запуск методов, он в main происходит для неё неявно
@@ -23,14 +50,13 @@ public class Solution {
      * 1. Ввести n строк с консоли, найти самую короткую строку. Вывести эту строку и ее длину.
      */
     @SuppressWarnings("unused")
-    public String firstQuestion() {
+    public static String firstQuestion(String strings) {
 
-        var stringWithMinimalLength = HelpMethods.getDataFromConsole()
-                .stream()
+        var stringWithMinimalLength = Arrays.stream(strings.split("\\s+"))
                 .min(Comparator.comparing(String::length))
                 .orElse("Вы не ввели строки для нахождения! ");
 
-        return String.format("Результат 1 задания:\nМинимальная строка - %s с длиной: %d",
+        return String.format("Минимальная строка - %s\nДлина самой короткой строки: %d",
                 stringWithMinimalLength, stringWithMinimalLength.length());
     }
 
@@ -39,31 +65,32 @@ public class Solution {
      * Упорядочить и вывести строки в порядке возрастания их длин, а также (второй приоритет) значений этих их длин.
      */
     @SuppressWarnings("unused")
-    public String secondQuestion() {
+    public static String secondQuestion(String strings) {
         // я не совсем понял "значений этих длин", мы изначально сортируем по длине, уже сравнивая значения
         // это в плане лексикографически что ли? Здесь это сделано
-        var result = HelpMethods.getDataFromConsole()
-                .stream()
+        var result = Arrays.stream(strings.split("\\s+"))
                 .sorted(Comparator.comparing(String::length).thenComparing(Comparator.naturalOrder()))
                 .collect(Collectors.joining("\n"));
 
-        return String.format("Результат 2 задания: %s", result);
+        return String.format("Отсортированные строки по длине:\n%s", result);
     }
 
     /**
      * 3. Ввести n строк с консоли. Вывести на консоль те строки, длина которых меньше средней, также их длины.
      */
     @SuppressWarnings("unused")
-    public String thirdQuestion() {
+    public static String thirdQuestion(String strings) {
+        var splitStrings = strings.split("\\s+");
+
         // Получаем среднюю длину, проходя по всему списку
-        var averageLength = HelpMethods.getDataFromConsole().stream().mapToInt(String::length).average().orElseThrow();
+        var averageLength = Arrays.stream(splitStrings).mapToInt(String::length).average().orElseThrow();
+
         // Собираем те предложения, которые больше по длине
-        var result = HelpMethods.getDataFromConsole()
-                .stream()
+        var result = Arrays.stream(splitStrings)
                 .filter(row -> row.length() > averageLength)
                 .collect(Collectors.joining("\n"));
 
-        return String.format("Результат 3 задания: %s", result);
+        return String.format("Строки, длины которых меньше средней: %s", result);
     }
 
     /**
@@ -71,24 +98,33 @@ public class Solution {
      * Если k больше длины слова, корректировку не выполнять.
      */
     @SuppressWarnings("unused")
-    public String fourthQuestion() {
-        // Каждый раз делаю новый сканер из-за моего запуска методов из-под нового экземпляра класса
-        Scanner scanner = new Scanner(System.in);
+    public static String fourthQuestion(String strings) {
+        var text = """
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et 
+                dolore magna aliqua. Pellentesque adipiscing commodo elit at. Scelerisque purus semper eget duis. Purus
+                sit amet volutpat consequat mauris nunc congue nisi vitae. Quis hendrerit dolor magna eget est lorem 
+                ipsum. Molestie ac feugiat sed lectus vestibulum. Massa tincidunt dui ut ornare lectus sit. Sed 
+                ullamcorper morbi tincidunt ornare massa eget egestas. In ornare quam viverra orci sagittis eu.
+                Mauris rhoncus aenean vel elit. Sed arcu non odio euismod lacinia. Auctor augue mauris augue neque.
+                 Eleifend mi in nulla posuere sollicitudin aliquam
+                """;
 
-        var sentences = HelpMethods.getDataFromConsole();
+        var letterAndIndex = strings.split("\\s+");
 
-        System.out.print("Введите индекс буквы, которую вы хотите заменить: ");
-        var index = scanner.nextInt();
+        var index = Integer.parseInt(letterAndIndex[0]);
+        var letter = letterAndIndex[1];
 
-        System.out.print("Введите букву, на которую вы хотите поменять: ");
-        var letter = scanner.next();
+        var result = Arrays.stream(text.split("\\s+"))
+                .map(word -> {
 
-        scanner.close();
+                    if (index >=  0 && index < word.length()) {
+                        return new StringBuilder(word).replace(index, index +  1, letter).toString();
+                    } else {
+                        return word; // Возвращаем слово без изменений, если индекс вне диапазона
+                    }
 
-        var result = sentences
-                .stream()
-                .map(word -> new StringBuilder(word).replace(index, index + 1, letter))
-                .collect(Collectors.joining("\n"));
+                })
+                .collect(Collectors.joining(" "));
 
         return String.format("Результат 4 задания:\n%s", result);
     }
@@ -139,14 +175,13 @@ public class Solution {
      * 7. Из текста удалить все слова заданной длины, начинающиеся на согласную букву.
      */
     @SuppressWarnings("unused")
-    public String seventhQuestion() {
+    public String seventhQuestion(String strings) {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Введите длину слов, которые вы хотите удалить: ");
         var length = scanner.nextInt();
 
-        var result = HelpMethods.getDataFromConsole()
-                .stream()
+        var result = Arrays.stream(strings.split("\\s+"))
                 .filter(word -> !(word.length() == length &&
                         Pattern.matches("^[^aeiouAEIOUЙйУуЕеОоЭэИиЯяЫыАаЮю].*", word)))
                 .collect(Collectors.joining(" "));
@@ -181,14 +216,13 @@ public class Solution {
      * 9. Найти и напечатать, сколько раз повторяется в тексте каждое слово.
      */
     @SuppressWarnings("unused")
-    public String ninthQuestion() {
+    public String ninthQuestion(String strings) {
         // Здесь мы собираем отдельные слова.
         // Например, пользователь ввел так:
         // привет как
         // дела
         // -> ["привет", "как", "дела"]
-        var words = HelpMethods.getDataFromConsole()
-                .stream()
+        var words = Arrays.stream(strings.split("\\s+"))
                 .flatMap(word -> Arrays.stream(word.split("\\s+")))
                 .toList();
 

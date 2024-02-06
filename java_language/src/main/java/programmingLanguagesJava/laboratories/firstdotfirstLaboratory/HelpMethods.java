@@ -74,11 +74,11 @@ public class HelpMethods {
      * @return список с содержимым, который ввел пользователь.
      */
 
-    public static List<String> getDataFromConsole() {
+    public static String getDataFromConsole() {
         Scanner scanner = new Scanner(System.in);
         // Создание списка в Java. Использование List вместо ArrayList в объявлении переменной — это пример принципа
         // программирования на уровне интерфейсов
-        List<String> rowsFromConsole = new ArrayList<>();
+        var rowsFromConsole = new StringBuilder();
 
         System.out.println("Вводите сколько хотите строк. Конец - это строка 'exit'");
         String row = scanner.nextLine().strip();
@@ -88,13 +88,13 @@ public class HelpMethods {
             // есть ошибка, что пустая строка добавляется в самое начало, а потом слово
             // не совсем понимаю почему
             if (!row.isBlank())
-                rowsFromConsole.add(row);
+                rowsFromConsole.append(row).append("\n");
 
             row = scanner.nextLine().strip();
         }
         scanner.close();
 
-        return rowsFromConsole;
+        return rowsFromConsole.toString();
     }
 
     /**
@@ -121,7 +121,7 @@ public class HelpMethods {
      * Преобразование точек из строк в java.awt.Point
      */
     static Stream<java.awt.Point> cordsFromConsole() {
-        return HelpMethods.getDataFromConsole().stream().map(cord -> {
+        return Arrays.stream(getDataFromConsole().split("\\s+")).map(cord -> {
 
             var pattern = Pattern.compile("\\(?\\d+, \\d+\\)?");
             var matcher = pattern.matcher(cord);
