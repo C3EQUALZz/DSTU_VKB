@@ -2,9 +2,10 @@ package programmingLanguagesJava.laboratories.firstLaboratory;
 
 import java.util.Arrays;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class HelpMethods {
-    public static int algorithm_stein(int a, int b) {
+    static int algorithm_stein(int a, int b) {
 
         // GCD(0, b) == b; GCD(a, 0) == a,
         // GCD(0, 0) == 0
@@ -57,7 +58,7 @@ public class HelpMethods {
      * @return Возвращает матрицу
      */
 
-    public static int[][] generateRandomMatrix(int CountRows, int CountColumns) {
+    static int[][] generateRandomMatrix(int CountRows, int CountColumns) {
         Random random = new Random();
         // map: Этот метод используется для преобразования элементов потока в примитивные типы данных (int, long, double).
         // Например, если вы имеете дело с IntStream, LongStream или DoubleStream,
@@ -69,17 +70,10 @@ public class HelpMethods {
                 .toArray(int[][]::new);
     }
 
-    /**
-     * Вспомогательный статический метод для вывода матрицы в консоль
-     *
-     * @param matrix матрица, которую хотим распечатать
-     */
-    public static void printMatrix(int[][] matrix) {
-        Arrays.stream(matrix)
-                .forEach(row -> {
-                    Arrays.stream(row)
-                            .forEach(cell -> System.out.print(cell + " "));
-                    System.out.println(); // Переход на новую строку для каждой строки матрицы
-                });
+    static String ToString(int[][] matrix) {
+        return Arrays.stream(matrix)
+                .map(x -> Arrays.stream(x).mapToObj(String::valueOf)
+                        .collect(Collectors.joining(" ")))
+                .collect(Collectors.joining(System.lineSeparator()));
     }
 }

@@ -27,13 +27,13 @@ public class Solution {
         System.out.print("Введите номер задания: ");
         var question = scanner.nextInt();
 
-        System.out.printf("Результат %d задания:\n", question);
+        System.out.printf("---------------------------------------------------\nРезультат %d задания:\n", question);
 
         Object result = switch (question) {
             case 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 18 ->
                     ConsoleReader.executeTask(Solution.class, String.valueOf(question), " ");
 
-            case 12, 13 -> {
+            case 12, 13, 21 -> {
                 System.out.print("Введите ваше число: ");
                 yield ConsoleReader.executeTask(Solution.class, String.valueOf(question), scanner.next());
             }
@@ -44,9 +44,10 @@ public class Solution {
                 yield ConsoleReader.executeTask(Solution.class, String.valueOf(question), scanner.nextLine());
             }
 
-            case 16 -> {
-                System.out.println("Введите два числа через пробел: ");
-                yield sixteenthQuestion(scanner.nextLine());
+            case 16, 22, 23 -> {
+                System.out.print("Введите два числа через пробел: ");
+                scanner.nextLine();
+                yield ConsoleReader.executeTask(Solution.class, String.valueOf(question), scanner.nextLine());
             }
 
             case 17 -> {
@@ -73,8 +74,43 @@ public class Solution {
                         1. Вычислить сумму главной диагонали,\s
                         2. Вычислить сумму побочной диагонали\s
                         """);
-                // Не исправил до конца.
+
                 yield nineteenthQuestion(scanner.next());
+            }
+
+            case 20 -> {
+                var strBuilder = new StringBuilder();
+
+                while (true) {
+                    System.out.print("Вводите числа (для завершения введите 0): ");
+                    var number = scanner.next();
+
+                    strBuilder.append(number).append(" ");
+
+                    if (number.equals("0"))
+                        break;
+                }
+
+                yield twentiethQuestion(strBuilder.toString());
+            }
+
+            case 24 -> {
+                var strBuilder = new StringBuilder();
+
+                System.out.print("Введите I: ");
+                strBuilder.append(scanner.next()).append(" ");
+
+                for (int i = 0; i < 3; i++) {
+                    System.out.print("Введите R" + i + 1 + ": ");
+                    strBuilder.append(scanner.next()).append(" ");
+                }
+
+                yield twentyFourthQuestion(strBuilder.toString());
+            }
+
+            case 25 -> {
+                System.out.print("Введите номер дня недели (от 1 до 7): ");
+                yield twentyFifthQuestion(scanner.next());
             }
 
             default -> "Вы выбрали неверное задание";
@@ -379,8 +415,7 @@ public class Solution {
         int a = Integer.parseInt(res[0]), b = Integer.parseInt(res[1]);
 
         return String.format(
-                "Результат 16 задания: %s",
-                "НОД: " + HelpMethods.algorithm_stein(a, b)
+                "НОД чисел %s равен: %d", stringWithTwoNumbers, HelpMethods.algorithm_stein(a, b)
         );
     }
 
@@ -422,10 +457,7 @@ public class Solution {
         var matrix = HelpMethods.generateRandomMatrix(5, 5);
 
         // Наш массив в строчном виде
-        var matrixString = Arrays.stream(matrix)
-                .map(x -> Arrays.stream(x).mapToObj(String::valueOf)
-                        .collect(Collectors.joining(" ")))
-                .collect(Collectors.joining(System.lineSeparator()));
+        var matrixString = HelpMethods.ToString(matrix);
 
         // Наш список с суммами.
         var sums = Arrays.stream(matrix).mapToInt(row -> Arrays.stream(row).sum()).boxed().toList();
@@ -449,24 +481,13 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public static String nineteenthQuestion(String parameter) {
-
         // Хотел на самом деле поискать аналог Numpy, но здесь так много библиотек, что вообще непонятно какую можно исп.
         // Пришлось вот так вручную через StreamApi делать, долго мучался, чтобы заработало.
-        Scanner scanner = new Scanner(System.in);
-        // Создаем генератор случайных чисел
-        Random random = new Random();
 
         // Создаем матрицу с использованием Stream API и заполняем случайными числами
-        var matrix = HelpMethods.generateRandomMatrix(5, 5);
+        var matrix = HelpMethods.generateRandomMatrix(6, 6);
 
-        // Просто вывод матрицы в консоль
-        HelpMethods.printMatrix(matrix);
-
-        System.out.print("Введите что вы хотите сделать: " +
-                "(1) вычислить сумму главной диагонали, " +
-                "(2) вычислить сумму побочной диагонали: ");
-
-        var userChoice = scanner.nextInt();
+        var userChoice = Integer.parseInt(parameter);
 
         var result = Arrays.stream(matrix)
                 .mapToInt(row ->
@@ -475,7 +496,7 @@ public class Solution {
                                 matrix.length - 1 - Arrays.asList(matrix).indexOf(row)])
                 .sum();
 
-        return String.format("Результат 19 задания: %d", result);
+        return String.format("Наша матрица: %s\nСумма диагонали - %d", HelpMethods.ToString(matrix), result);
     }
 
     /**
@@ -484,13 +505,13 @@ public class Solution {
      * пока не будет введен 0. Для перевода десятичного числа в двоичное написать функцию.
      */
     @SuppressWarnings("unused")
-    public String twentiethQuestion() {
-        Scanner scanner = new Scanner(System.in);
+    public static String twentiethQuestion(String numbers) {
         var strBuilder = new StringBuilder();
 
+        var splitNumbers = Arrays.stream(numbers.split(" ")).mapToInt(Integer::parseInt).iterator();
+
         while (true) {
-            System.out.print("Введите число (для завершения введите 0): ");
-            var number = scanner.nextInt();
+            var number = splitNumbers.next();
 
             if (number == 0)
                 break;
@@ -500,9 +521,8 @@ public class Solution {
             var binaryNumber = Integer.toString(number, 2);
             strBuilder.append(String.format("Результат перевода двоичного числа %d - %s\n", number, binaryNumber));
         }
-        scanner.close();
 
-        return String.format("Результат 20 задания:\n%s", strBuilder);
+        return strBuilder.toString();
     }
 
     /**
@@ -516,19 +536,15 @@ public class Solution {
      * а возвращает полученное значение функции (y).
      */
     @SuppressWarnings("unused")
-    public String twentyFirstQuestion() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Введите x: ");
-        int x = scanner.nextInt(), y;
-        scanner.close();
+    public static String twentyFirstQuestion(String xString) {
+        int x = Integer.parseInt(xString), y;
 
         if (x <= 5)
             y = x >= -5 ? (int) Math.pow(x, 2) : 2 * Math.abs(x) - 1;
         else
             y = 2 * x;
 
-        return String.format("Результат 21 задания: %d", y);
+        return String.format("y = %d", y);
     }
 
     /**
@@ -538,16 +554,15 @@ public class Solution {
      * Вывод значений элементов массива должен происходить в основной ветке программы.
      */
     @SuppressWarnings("unused")
-    public String twentySecondQuestion() {
-        Scanner scanner = new Scanner(System.in);
+    public static String twentySecondQuestion(String numbers) {
 
-        System.out.print("Введите два числа через пробел: ");
-        int start = scanner.nextInt(), end = scanner.nextInt();
-        scanner.close();
+        var splitNumbers = Arrays.stream(numbers.split(" ")).map(Integer::parseInt).iterator();
+
+        int start = splitNumbers.next(), end = splitNumbers.next();
 
         var randomArray = new Random().ints(10, start, end).toArray();
 
-        return String.format("Результат 22 задания: %s", Arrays.toString(randomArray));
+        return String.format("Массив длиной 10 с случайными числами: %s", Arrays.toString(randomArray));
     }
 
     /**
@@ -555,42 +570,41 @@ public class Solution {
      * цепи сопротивлением R Ом при напряжении U В.
      */
     @SuppressWarnings("unused")
-    public String twentyThirdQuestion() {
-        Scanner scanner = new Scanner(System.in);
+    public static String twentyThirdQuestion(String numbers) {
 
-        System.out.println("Введите U, R через пробел:");
-        double U = scanner.nextDouble(), R = scanner.nextDouble();
+        var splitNumbers = Arrays.stream(numbers.split(" ")).map(Double::parseDouble).iterator();
 
-        scanner.close();
+        double U = splitNumbers.next(), R = splitNumbers.next();
+
         return String.format("Результат 23 задания: %f", U / R);
     }
 
     /**
-     * 24.	Написать функцию вычисления напряжения на каждом из последовательно
+     * 24. Написать функцию вычисления напряжения на каждом из последовательно
      * соединенных участков электрической цепи сопротивлением R1, R2, R3 Ом, если сила
      * тока при напряжении U В составляет I А.
      */
     @SuppressWarnings("unused")
-    public String twentyFourthQuestion() {
-        Scanner scanner = new Scanner(System.in);
+    public static String twentyFourthQuestion(String numbers) {
+
+        var splitNumbers = Arrays.stream(numbers.split(" ")).map(Double::parseDouble).iterator();
+
         double[] R = new double[3], U = new double[3];
 
-        System.out.print("Введите I: ");
-        double I = scanner.nextDouble();
+        double I = splitNumbers.next();
 
         for (int i = 0; i < 3; i++) {
-            System.out.print("Введите R" + i + ": ");
-            R[i] = scanner.nextDouble();
+            R[i] = splitNumbers.next();
             U[i] = I * R[i];
         }
-        scanner.close();
+
         // Создаем строки с соответствующими напряжениями. Через Decimal есть только округление, которое мне нужно
         // Очень странно, что разработчики не сделали в том же самом Math для этого нужный статический метод.
         var UString = Arrays.stream(U)
-                .mapToObj(number -> BigDecimal.valueOf(number).setScale(6, RoundingMode.HALF_UP).toString())
+                .mapToObj(number -> BigDecimal.valueOf(number).setScale(2, RoundingMode.HALF_UP).toString())
                 .collect(Collectors.joining(" "));
 
-        return String.format("Результат 24 задания: %s", UString);
+        return String.format("Напряжение на участках 1, 2, 3 соответственно равны: %s", UString);
     }
 
     /**
@@ -598,11 +612,9 @@ public class Solution {
      * ему дня недели на русском языке.
      */
     @SuppressWarnings("unused")
-    public String twentyFifthQuestion() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Введите номер дня недели (от 1 до 7):");
-        int dayNumber = scanner.nextInt();
-        scanner.close();
+    public static String twentyFifthQuestion(String number) {
+
+        int dayNumber = Integer.parseInt(number);
 
         // Проверка, чтобы номер дня недели был в пределах от 1 до 7
         if (dayNumber >= 1 && dayNumber <= 7) {
