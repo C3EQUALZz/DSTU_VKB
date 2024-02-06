@@ -1,12 +1,22 @@
 package programmingLanguagesJava.laboratories.thirddotfirstLaboratory;
 
 import programmingLanguagesJava.laboratories.ConsoleReader;
+
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Solution {
     public static void main(String[] args) {
-        // System.out.println(ConsoleReader.executeTask(Solution.class));
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Введите номер задания: ");
+        var question = scanner.next();
+
+        System.out.print("Введите ваше выражения для задания: ");
+        scanner.nextLine();
+
+        System.out.println(ConsoleReader.executeTask(Solution.class, question, scanner.nextLine()));
     }
 
     /**
