@@ -120,8 +120,8 @@ public class HelpMethods {
     /**
      * Преобразование точек из строк в java.awt.Point
      */
-    static Stream<java.awt.Point> cordsFromConsole() {
-        return Arrays.stream(getDataFromConsole().split("\\s+")).map(cord -> {
+    static Stream<java.awt.Point> cordsFromConsole(String strings) {
+        return Arrays.stream(strings.split("\\s+")).map(cord -> {
 
             var pattern = Pattern.compile("\\(?\\d+, \\d+\\)?");
             var matcher = pattern.matcher(cord);
