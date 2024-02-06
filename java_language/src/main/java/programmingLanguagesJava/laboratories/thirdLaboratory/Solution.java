@@ -9,7 +9,24 @@ import java.util.stream.Collectors;
 
 public class Solution {
     public static void main(String[] args) {
-       // System.out.println(ConsoleReader.executeTask(Solution.class));
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Введите номер задания: ");
+        var question = scanner.nextInt();
+
+        System.out.printf("---------------------------------------------------\nРезультат %d задания:\n", question);
+
+        Object result = switch (question) {
+            case 1, 2, 3, 4, 5, 6 ->
+                ConsoleReader.executeTask(Solution.class, String.valueOf(question), HelpMethods.getDataFromConsole());
+
+
+
+            default -> "Вы выбрали неверное задание";
+        };
+
+        scanner.close();
+        System.out.println(result);
     }
 
     /**
@@ -21,7 +38,7 @@ public class Solution {
                 .min(Comparator.comparing(String::length))
                 .orElse("Вы не ввели строки для нахождения! ");
 
-        return String.format("Результат 1 задания:\nМинимальная строка - %s с длиной: %d",
+        return String.format("Минимальная строка - %s с длиной: %d",
                 stringWithMinimalLength, stringWithMinimalLength.length());
     }
 
