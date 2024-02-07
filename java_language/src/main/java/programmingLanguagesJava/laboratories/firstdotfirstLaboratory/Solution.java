@@ -347,4 +347,3 @@ public class Solution {
         return String.format("Площадь многоугольника: %f", Math.abs(sum / 2.0));
     }
 }
-

@@ -17,7 +17,7 @@ public class Solution {
         System.out.printf("---------------------------------------------------\nРезультат %d задания:\n", question);
 
         Object result = switch (question) {
-            case 1, 2, 3, 4, 5, 6 ->
+            case 1, 2, 3, 4, 5, 6, 7, 8 ->
                 ConsoleReader.executeTask(Solution.class, String.valueOf(question), HelpMethods.getDataFromConsole());
 
 
@@ -36,7 +36,11 @@ public class Solution {
     public String firstQuestion(String strings) {
         var stringWithMinimalLength = Arrays.stream(strings.split("\\s+"))
                 .min(Comparator.comparing(String::length))
-                .orElse("Вы не ввели строки для нахождения! ");
+                .orElse("Вы не ввели строки для нахождения!");
+
+        if (stringWithMinimalLength.equals("Вы не ввели строки для нахождения!")) {
+            return stringWithMinimalLength;
+        }
 
         return String.format("Минимальная строка - %s с длиной: %d",
                 stringWithMinimalLength, stringWithMinimalLength.length());
@@ -159,9 +163,19 @@ public class Solution {
      * Если таких слов несколько, найти первое из них.
      */
     @SuppressWarnings("unused")
-    public String seventhQuestion() {
-        var result = HelpMethods.getDataFromConsole();
-        return "";
+    public String seventhQuestion(String strings) {
+        var firstWord = Arrays.stream(strings.split("\\s+"))
+                .filter(word -> {
+                    var set = new HashSet<String>();
+                    word.chars().forEach(number -> set.add(String.valueOf(number)));
+                    return set.size() == word.length();
+                }).findFirst().orElse("Нет такой строки");
+
+        if (firstWord.equals("Нет такой строки")) {
+            return firstWord;
+        }
+
+        return String.format("Первое слово состоящее из различных букв: %s", firstWord);
     }
 
     /**
@@ -169,7 +183,8 @@ public class Solution {
      * Если таких слов больше одного, найти второе из них.
      */
     @SuppressWarnings("unused")
-    public String eighthQuestion() {
+    public String eighthQuestion(String strings) {
+
         return "";
     }
 
