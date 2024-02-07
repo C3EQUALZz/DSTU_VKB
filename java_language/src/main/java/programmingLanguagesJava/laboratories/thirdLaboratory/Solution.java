@@ -18,8 +18,7 @@ public class Solution {
 
         Object result = switch (question) {
             case 1, 2, 3, 4, 5, 6, 7, 8 ->
-                ConsoleReader.executeTask(Solution.class, String.valueOf(question), HelpMethods.getDataFromConsole());
-
+                    ConsoleReader.executeTask(Solution.class, String.valueOf(question), HelpMethods.getDataFromConsole());
 
 
             default -> "Вы выбрали неверное задание";
@@ -51,10 +50,15 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public String secondQuestion(String strings) {
-        var res = Arrays.stream(strings.split("\\s+"))
+        var sortedIncreasingString = Arrays.stream(strings.split("\\s+"))
                 .sorted(Comparator.comparing(String::length))
                 .collect(Collectors.joining("\n"));
-        return String.format("Результат 2 задания:\n%s", res);
+
+        var sortedDecreasingString = Arrays.stream(strings.split("\\s+"))
+                .sorted(Comparator.comparing(x -> -1 * x.length()))
+                .collect(Collectors.joining("\n"));
+
+        return String.format("Сортировка по увеличению длины:\n%s\n\nСортировка по убыванию длины:\n%s", sortedIncreasingString, sortedDecreasingString);
     }
 
     /**
@@ -71,13 +75,15 @@ public class Solution {
         var stringThatAreLonger = new StringBuilder(String.format("Строки, которые больше по длине, чем %f", averageLength));
         var stringWhereLengthLessAverage = new StringBuilder(String.format("Строки, которые меньше по длине, чем %f", averageLength));
 
-        for (var row: ListStrings) {
+        Arrays.stream(ListStrings).forEach(row -> {
+
             if (row.length() >= averageLength)
-                stringThatAreLonger.append(String.format("\n%s", row));
+                stringThatAreLonger.append(String.format("\n%s с длиной %d", row, row.length()));
             else
-                stringWhereLengthLessAverage.append(String.format("\n%s", row));
-        }
-        return String.format("Результат 13 задания:\n%s\n%s", stringWhereLengthLessAverage, stringThatAreLonger);
+                stringWhereLengthLessAverage.append(String.format("\n%s с длиной %d", row, row.length()));
+        });
+
+        return String.format("Строки, длина которых больше средней:\n%s\n%s", stringWhereLengthLessAverage, stringThatAreLonger);
     }
 
     /**
@@ -88,24 +94,24 @@ public class Solution {
     public String fourthQuestion(String strings) {
         var ListWithRows = strings.split("\\s+");
 
-        int minLenSymbols = Integer.MAX_VALUE;
+        int minLenSymbols = Integer.MIN_VALUE;
         String wordWithMaxLength = "";
 
-        for(var word: ListWithRows) {
+        for (var word : ListWithRows) {
             // c помощью StreamApi мы можем перевести в массив char-ов, тут встроенные методы, чтобы находить
             // вывести разные элементы, в конце подсчитываем их просто (почему нельзя было назвать size, как другие
             // коллекции? Java странный язык...)
-            var wordLength = word.chars().mapToObj(i->(char)i).distinct().count();
+            var countDifferentSymbol = word.chars().mapToObj(i -> (char) i).distinct().count();
 
-            if (wordLength < minLenSymbols) {
-                minLenSymbols = (int) wordLength;
+            if (countDifferentSymbol > minLenSymbols) {
+                minLenSymbols = (int) countDifferentSymbol;
                 wordWithMaxLength = word;
             }
 
         }
         return String.format
                 (
-                        "Результат 4 задания: слово - %s, с количеством разных символов - %d",
+                        "Слово - %s, с количеством разных символов - %d",
                         wordWithMaxLength,
                         minLenSymbols
                 );
@@ -118,15 +124,15 @@ public class Solution {
     @SuppressWarnings("unused")
     public String fifthQuestion(String strings) {
         var result = Arrays.stream(strings.split("\\s+"))
-                        .filter(word -> word.matches("^[a-zA-Z0-9]+$"))
-                        .filter(word -> {
-                            var countConsonants = word.replaceAll("(?i)[^aeiouy]", "").length();
-                            var countVowels = word.length() - countConsonants;
-                            return countVowels == countConsonants;
-                        })
-                        .count();
+                .filter(word -> word.matches("^[a-zA-Z0-9]+$"))
+                .filter(word -> {
+                    var countConsonants = word.replaceAll("(?i)[^aeiouy]", "").length();
+                    var countVowels = word.length() - countConsonants;
+                    return countVowels == countConsonants;
+                })
+                .count();
 
-        return String.format("Результат 5 задания: %d", result);
+        return String.format("Количество слов, содержащие только латинские буквы, где количество гласных и согласных одинаково : %d", result);
     }
 
     /**
@@ -155,7 +161,7 @@ public class Solution {
                 .findFirst()
                 .orElse("Нет такой строки");
 
-        return String.format("Результат 6 задания: %s", result);
+        return String.format("Первое слово, где символы идут в порядке возрастания: %s", result);
     }
 
     /**
@@ -185,15 +191,23 @@ public class Solution {
     @SuppressWarnings("unused")
     public String eighthQuestion(String strings) {
 
-        return "";
+        var result = Arrays.stream(strings.split("\\s+")).filter(word -> word.matches("[0-9]+")).filter(number -> {
+            var reversedNumber = new StringBuilder(number).reverse().toString();
+            return reversedNumber.equals(number);
+        }).skip(1).findFirst().orElse("Не найдено палиндромов, состоящих только из цифр");
+
+        if (result.equals("Не найдено палиндромов, состоящих только из цифр"))
+            return result;
+
+        return String.format("Второе слово палиндром, состоящее только из цифр: %s", result);
     }
 
     /**
      * 9. Написать программы решения задач 1–8, осуществляя ввод строк как аргументов командной строки.
      */
     @SuppressWarnings("unused")
-    public String ninthQuestion() {
-        return "";
+    public String ninthQuestion(String ignoreUnused) {
+        return "Все команды осуществлены с вводом командной строки";
     }
 
     /**
@@ -210,8 +224,23 @@ public class Solution {
      * К) Вырезать строку Java c помощью метода String.substring().
      */
     @SuppressWarnings("unused")
-    public String tenthQuestion() {
-        return "";
+    public String tenthQuestion(String arguments) {
+        var argueMethod = arguments.substring(2);
+
+        return switch (String.valueOf(arguments.charAt(0)).toLowerCase()) {
+            case "а" -> TenthQuestionClass.takesString(argueMethod);
+            case "б" -> TenthQuestionClass.lastIndex(argueMethod);
+            case "в" -> TenthQuestionClass.endsWithExclamationMark(argueMethod);
+            case "г" -> TenthQuestionClass.startsWithILike(argueMethod);
+            case "д" -> TenthQuestionClass.containsJava(argueMethod);
+            case "е" -> TenthQuestionClass.indexOfILikeJava();
+            case "ж" -> TenthQuestionClass.replaceAtoO(argueMethod);
+            case "з" -> TenthQuestionClass.toUpperCase(argueMethod);
+            case "и" -> TenthQuestionClass.toLowerCase(argueMethod);
+            case "к" -> TenthQuestionClass.cutFromString(argueMethod);
+            default -> "Вы неправильно выбрали задание";
+        };
+
     }
 
     /**
@@ -225,8 +254,18 @@ public class Solution {
      * В) Замените символ “=” на слово “равно”. Используйте методы StringBuilder.replace().
      */
     @SuppressWarnings("unused")
-    public String eleventhQuestion() {
-        return "";
+    public String eleventhQuestion(String numbers) {
+        var splitNumbers = numbers.split("\\s+");
+
+        String firstNumber = splitNumbers[0], secondNumber = splitNumbers[1];
+
+        var stringBuilder = new StringBuilder();
+
+        stringBuilder.append(firstNumber + " + " + secondNumber + " = " + (Integer.parseInt(firstNumber) + Integer.parseInt(secondNumber)) + "\n");
+        stringBuilder.append(firstNumber + " - " + secondNumber + " = " + (Integer.parseInt(firstNumber) - Integer.parseInt(secondNumber)) + "\n");
+        stringBuilder.append(firstNumber + " * " + secondNumber + " = " + (Integer.parseInt(firstNumber) * Integer.parseInt(secondNumber)) + "\n");
+
+        return stringBuilder.toString();
     }
 
     /**
