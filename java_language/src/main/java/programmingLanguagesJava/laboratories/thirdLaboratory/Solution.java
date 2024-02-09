@@ -22,6 +22,12 @@ public class Solution {
             case 1, 2, 3, 4, 5, 6, 7, 8 ->
                     ConsoleReader.executeTask(Solution.class, String.valueOf(question), HelpMethods.getDataFromConsole());
 
+            case 11 -> {
+                System.out.print("Введите букву (вариант задания), а через пробел аргументы к заданию: ");
+                scanner.nextLine();
+                yield eleventhQuestion(scanner.nextLine());
+            }
+
             case 12, 15, 16, 17, 18 -> {
                 System.out.print("Введите ваше предложение для задания: ");
                 scanner.nextLine();
@@ -33,6 +39,8 @@ public class Solution {
                 scanner.nextLine();
                 yield thirteenthQuestion(scanner.nextLine());
             }
+
+            case 9 -> ninthQuestion(" ");
 
 
             case 14 -> {
@@ -275,18 +283,23 @@ public class Solution {
      * В) Замените символ “=” на слово “равно”. Используйте методы StringBuilder.replace().
      */
     @SuppressWarnings("unused")
-    public static String eleventhQuestion(String numbers) {
-        var splitNumbers = numbers.split("\\s+");
+    public static String eleventhQuestion(String args) {
 
-        String firstNumber = splitNumbers[0], secondNumber = splitNumbers[1];
+        var arguments = args.split("\\s+");
 
-        var stringBuilder = new StringBuilder();
+        var subTask = arguments[0].toLowerCase();
 
-        stringBuilder.append(firstNumber + " + " + secondNumber + " = " + (Integer.parseInt(firstNumber) + Integer.parseInt(secondNumber)) + "\n");
-        stringBuilder.append(firstNumber + " - " + secondNumber + " = " + (Integer.parseInt(firstNumber) - Integer.parseInt(secondNumber)) + "\n");
-        stringBuilder.append(firstNumber + " * " + secondNumber + " = " + (Integer.parseInt(firstNumber) * Integer.parseInt(secondNumber)) + "\n");
+        try {
+            return switch (subTask) {
+                case "a)", "a" -> EleventhQuestionClass.createRows(arguments[1], arguments[2]);
+                case "б)", "б" -> EleventhQuestionClass.insertDeleteCharAt(args.substring(2));
+                case "в)", "в" -> EleventhQuestionClass.replaceStr(args.substring(2));
+                default -> "Вы ввели неправильную букву";
+            };
+        } catch (IndexOutOfBoundsException e) {
+            return "Вы не ввели аргументов для задания";
+        }
 
-        return stringBuilder.toString();
     }
 
     /**
@@ -406,6 +419,7 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public static String eighteenthQuestion(String strings) {
+        // Если есть хвосты по дз, начните с 1 не сданного задания. 123 324 111 4554
         var result = Arrays.stream(strings.split("\\s+"))
                 .filter(word -> word.matches("[0-9]+"))
                 .filter(word -> new StringBuilder(word).reverse().toString().equals(word))
