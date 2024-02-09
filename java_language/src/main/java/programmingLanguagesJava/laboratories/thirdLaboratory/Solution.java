@@ -5,6 +5,8 @@ import programmingLanguagesJava.laboratories.ConsoleReader;
 import programmingLanguagesJava.laboratories.firstdotfirstLaboratory.HelpMethods;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Solution {
@@ -20,6 +22,25 @@ public class Solution {
             case 1, 2, 3, 4, 5, 6, 7, 8 ->
                     ConsoleReader.executeTask(Solution.class, String.valueOf(question), HelpMethods.getDataFromConsole());
 
+            case 12, 15, 16, 17, 18 -> {
+                System.out.print("Введите ваше предложение для задания: ");
+                scanner.nextLine();
+                yield ConsoleReader.executeTask(Solution.class, String.valueOf(question), scanner.nextLine());
+            }
+
+            case 13 -> {
+                System.out.print("Введите строку (одно слово) четной длины: ");
+                scanner.nextLine();
+                yield thirteenthQuestion(scanner.nextLine());
+            }
+
+
+            case 14 -> {
+                System.out.print("Введите фамилию, оценку, предмет: ");
+                scanner.nextLine();
+                yield fourteenthQuestion(scanner.nextLine());
+            }
+
 
             default -> "Вы выбрали неверное задание";
         };
@@ -32,7 +53,7 @@ public class Solution {
      * 1. Ввести n строк с консоли, найти самую короткую и самую длинную строки. Вывести найденные строки и их длину.
      */
     @SuppressWarnings("unused")
-    public String firstQuestion(String strings) {
+    public static String firstQuestion(String strings) {
         var stringWithMinimalLength = Arrays.stream(strings.split("\\s+"))
                 .min(Comparator.comparing(String::length))
                 .orElse("Вы не ввели строки для нахождения!");
@@ -49,7 +70,7 @@ public class Solution {
      * 2. Ввести n строк с консоли. Упорядочить и вывести строки в порядке возрастания (убывания) значений их длины.
      */
     @SuppressWarnings("unused")
-    public String secondQuestion(String strings) {
+    public static String secondQuestion(String strings) {
         var sortedIncreasingString = Arrays.stream(strings.split("\\s+"))
                 .sorted(Comparator.comparing(String::length))
                 .collect(Collectors.joining("\n"));
@@ -65,7 +86,7 @@ public class Solution {
      * 3. Ввести n строк с консоли. Вывести на консоль те строки, длина которых меньше (больше) средней, а также длину.
      */
     @SuppressWarnings("unused")
-    public String thirdQuestion(String strings) {
+    public static String thirdQuestion(String strings) {
         // Наш список со строками, которые ввел пользователь
         var ListStrings = strings.split("\\s+");
         // Находим среднюю длину строк
@@ -91,7 +112,7 @@ public class Solution {
      * Если таких слов несколько, найти первое из них.
      */
     @SuppressWarnings("unused")
-    public String fourthQuestion(String strings) {
+    public static String fourthQuestion(String strings) {
         var ListWithRows = strings.split("\\s+");
 
         int minLenSymbols = Integer.MIN_VALUE;
@@ -122,7 +143,7 @@ public class Solution {
      * а среди них – количество слов с равным числом гласных и согласных букв.
      */
     @SuppressWarnings("unused")
-    public String fifthQuestion(String strings) {
+    public static String fifthQuestion(String strings) {
         var result = Arrays.stream(strings.split("\\s+"))
                 .filter(word -> word.matches("^[a-zA-Z0-9]+$"))
                 .filter(word -> {
@@ -140,7 +161,7 @@ public class Solution {
      * Если таких слов несколько, найти первое из них.
      */
     @SuppressWarnings("unused")
-    public String sixthQuestion(String strings) {
+    public static String sixthQuestion(String strings) {
         var result = Arrays.stream(strings.split("\\s+"))
                 .filter(word -> word.chars().sorted()
                         /*
@@ -169,7 +190,7 @@ public class Solution {
      * Если таких слов несколько, найти первое из них.
      */
     @SuppressWarnings("unused")
-    public String seventhQuestion(String strings) {
+    public static String seventhQuestion(String strings) {
         var firstWord = Arrays.stream(strings.split("\\s+"))
                 .filter(word -> {
                     var set = new HashSet<String>();
@@ -189,7 +210,7 @@ public class Solution {
      * Если таких слов больше одного, найти второе из них.
      */
     @SuppressWarnings("unused")
-    public String eighthQuestion(String strings) {
+    public static String eighthQuestion(String strings) {
 
         var result = Arrays.stream(strings.split("\\s+")).filter(word -> word.matches("[0-9]+")).filter(number -> {
             var reversedNumber = new StringBuilder(number).reverse().toString();
@@ -206,7 +227,7 @@ public class Solution {
      * 9. Написать программы решения задач 1–8, осуществляя ввод строк как аргументов командной строки.
      */
     @SuppressWarnings("unused")
-    public String ninthQuestion(String ignoreUnused) {
+    public static String ninthQuestion(String ignoreUnused) {
         return "Все команды осуществлены с вводом командной строки";
     }
 
@@ -224,7 +245,7 @@ public class Solution {
      * К) Вырезать строку Java c помощью метода String.substring().
      */
     @SuppressWarnings("unused")
-    public String tenthQuestion(String arguments) {
+    public static String tenthQuestion(String arguments) {
         var argueMethod = arguments.substring(2);
 
         return switch (String.valueOf(arguments.charAt(0)).toLowerCase()) {
@@ -254,7 +275,7 @@ public class Solution {
      * В) Замените символ “=” на слово “равно”. Используйте методы StringBuilder.replace().
      */
     @SuppressWarnings("unused")
-    public String eleventhQuestion(String numbers) {
+    public static String eleventhQuestion(String numbers) {
         var splitNumbers = numbers.split("\\s+");
 
         String firstNumber = splitNumbers[0], secondNumber = splitNumbers[1];
@@ -277,8 +298,27 @@ public class Solution {
      * data rather than logic. OOP blabla.Object-oriented programming bla."
      */
     @SuppressWarnings("unused")
-    public String twelfthQuestion() {
-        return "";
+    public static String twelfthQuestion(String text) {
+
+        // Object-oriented programming is a programming language model organized around objects rather than "actions" and data rather than logic. Object-oriented programming blabla. Object-oriented programming bla.
+
+        var regex = "(?i)" + "object-oriented programming";
+        Pattern compiledPattern = Pattern.compile(regex);
+        Matcher matcher = compiledPattern.matcher(text);
+
+        int count = 0;
+        StringBuilder sb = new StringBuilder();
+
+        while (matcher.find()) {
+            if ((count % 2) == 1) { // Если это второе вхождение
+                matcher.appendReplacement(sb, "OOP");
+            }
+            count++;
+        }
+
+        matcher.appendTail(sb);
+
+        return sb.toString();
     }
 
     /**
@@ -286,8 +326,18 @@ public class Solution {
      * "code" → "od", "Practice"→"ct".
      */
     @SuppressWarnings("unused")
-    public String thirteenthQuestion() {
-        return "";
+    public static String thirteenthQuestion(String str) {
+
+        var length = str.length();
+        var midIndex = length / 2; // Индекс среднего символа
+
+        // Если длина строки четная, берем два символа с середины
+        if (length % 2 == 0)
+            return "Два символа с середины: " + str.substring(midIndex - 1, midIndex + 1);
+
+        // Если длина строки нечетная, берем один символ с середины
+        return "Длина строки не является четной";
+
     }
 
     /**
@@ -297,8 +347,15 @@ public class Solution {
      * Выделить под фамилию 15 символов, под оценку 3 символа, предмет – 10.
      */
     @SuppressWarnings("unused")
-    public String fourteenthQuestion() {
-        return "";
+    public static String fourteenthQuestion(String args) {
+
+        var iter = Arrays.stream(args.split("\\s+")).iterator();
+        try {
+            return new Student(iter.next(), iter.next(), iter.next()).toString();
+        } catch (NoSuchElementException e) {
+            return "Вы ввели неверные параметры";
+        }
+
     }
 
     /**
@@ -306,8 +363,18 @@ public class Solution {
      * Найти все подстроки "Java X" и распечатать их.
      */
     @SuppressWarnings("unused")
-    public String fifteenthQuestion() {
-        return "";
+    public static String fifteenthQuestion(String string) {
+        var pattern = Pattern.compile("Java X");
+
+        var matcher = pattern.matcher(string);
+
+        var stringBuilder = new StringBuilder();
+
+        while (matcher.find()) {
+            stringBuilder.append(matcher.group()).append("\n");
+        }
+
+        return stringBuilder.toString();
     }
 
     /**
@@ -316,8 +383,9 @@ public class Solution {
      * Например, в строке "fffff ab f 1234 jkjk" найденное слово должно быть "fffff".
      */
     @SuppressWarnings("unused")
-    public String sixteenthQuestion() {
-        return "";
+    public static String sixteenthQuestion(String strings) {
+        var result = Arrays.stream(strings.split("\\s+")).min(Comparator.comparingLong(o -> o.chars().distinct().count()));
+        return String.format("Найденное слово: %s", result);
     }
 
     /**
@@ -326,8 +394,10 @@ public class Solution {
      * Найти количество слов, содержащих только символы латинского алфавита.
      */
     @SuppressWarnings("unused")
-    public String seventeenthQuestion() {
-        return "";
+    public static String seventeenthQuestion(String strings) {
+        var result = Arrays.stream(strings.split("\\s+"))
+                .filter(word -> word.matches("[A-Za-z]+")).count();
+        return String.format("Количество слов, состоящих только из латинского алфавита: %d", result);
     }
 
     /**
@@ -335,8 +405,13 @@ public class Solution {
      * 123 324 111 4554". Среди слов, состоящих только из цифр, найти слово палиндром.
      */
     @SuppressWarnings("unused")
-    public String eighteenthQuestion() {
-        return "";
+    public static String eighteenthQuestion(String strings) {
+        var result = Arrays.stream(strings.split("\\s+"))
+                .filter(word -> word.matches("[0-9]+"))
+                .filter(word -> new StringBuilder(word).reverse().toString().equals(word))
+                .collect(Collectors.joining("\n"));
+
+        return String.format("Слова палиндромы:\n%s", result);
     }
 
 

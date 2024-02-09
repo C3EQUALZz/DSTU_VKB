@@ -25,7 +25,7 @@ public class Solution {
      * – пример неправильных выражений: abcdefghijklmnoasdfasdpqrstuv18340.
      */
     @SuppressWarnings("unused")
-    public String firstQuestion(String string) {
+    public static String firstQuestion(String string) {
         return String.valueOf(Pattern.matches("abcdefghijklmnopqrstuv18340", string.strip()));
     }
 
@@ -36,7 +36,7 @@ public class Solution {
      * – пример неправильных выражений: e02fd0e400fd090Aca300d00a0038ba0.
      */
     @SuppressWarnings("unused")
-    public String secondQuestion(String string) {
+    public static String secondQuestion(String string) {
         return String.valueOf(Pattern.matches("^(\\{?[0-9a-fA-F]{8}-(?:[0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}}?)$", string.strip()));
     }
 
@@ -46,7 +46,7 @@ public class Solution {
      * – пример неправильных выражений: 01:23:45:67:89:Az.
      */
     @SuppressWarnings("unused")
-    public String thirdQuestion(String string) {
+    public static String thirdQuestion(String string) {
         return String.valueOf(Pattern.matches("^(?:[0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$", string.strip()));
     }
 
@@ -63,7 +63,7 @@ public class Solution {
      * – пример неправильных выражений: Just Text, http://a.com.
      */
     @SuppressWarnings("unused")
-    public String fourthQuestion(String string) {
+    public static String fourthQuestion(String string) {
         return String.valueOf(Pattern.matches("^https?://(?:www\\.)?[a-z0-9]{2,}\\.(com|ru)$", string.strip()));
     }
 
@@ -74,7 +74,7 @@ public class Solution {
      * – пример неправильных выражений: 232323, f#fddee, #fd2.
      */
     @SuppressWarnings("unused")
-    public String fifthQuestion(String string) {
+    public static String fifthQuestion(String string) {
         return String.valueOf(Pattern.matches("^#[0-9a-fA-F]{6}$", string.strip()));
     }
 
@@ -85,7 +85,7 @@ public class Solution {
      * – пример неправильных выражений: 29/02/2001, 30-04-2003, 1/1/1899.
      */
     @SuppressWarnings("unused")
-    public String sixthQuestion(String string) {
+    public static String sixthQuestion(String string) {
         return String.valueOf(Pattern.matches("^(0[1-9]|1\\d|2[0-8])/(0[1-9]|1[0-2])/((?:1[6-9]|[2-9]\\d)?\\d{2})$" +
                         "|^29/02/(?:(?:1[6-9]|[2-9]\\d)(?:0[48]|[2468][048]|[13579][26])|(?:16|[2468][048]|[3579][26])00)$",
                 string.strip()));
@@ -98,7 +98,7 @@ public class Solution {
      * – пример неправильных выражений: bug@@@com.ru, @val.ru, Just Text2.
      */
     @SuppressWarnings("unused")
-    public String seventhQuestion(String string) {
+    public static String seventhQuestion(String string) {
         return String.valueOf(Pattern.matches("^\\w+@\\w+(\\.)?\\w+$", string.strip()));
     }
 
@@ -108,7 +108,7 @@ public class Solution {
      * – пример неправильных выражений: 1300.6.7.8, abc.def.gha.bcd.
      */
     @SuppressWarnings("unused")
-    public String eighthQuestion(String string) {
+    public static String eighthQuestion(String string) {
         var pattern_str = "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
         return String.valueOf(Pattern.matches(pattern_str, string.strip()));
     }
@@ -121,7 +121,7 @@ public class Solution {
      * – пример неправильных выражений: Cool_pass, C00l.
      */
     @SuppressWarnings("unused")
-    public String ninthQuestion(String string) {
+    public static String ninthQuestion(String string) {
         var pattern_str = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)[A-Za-z0-9_]{8,}$";
         return String.valueOf(Pattern.matches(pattern_str, string.strip()));
     }
@@ -133,7 +133,7 @@ public class Solution {
      * – пример неправильных выражений: 1234567, 12345.
      */
     @SuppressWarnings("unused")
-    public String tenthQuestion(String string) {
+    public static String tenthQuestion(String string) {
         var pattern_str = "^[1-9]\\d{5}$";
         return String.valueOf(Pattern.matches(pattern_str, string.strip()));
     }
@@ -144,7 +144,7 @@ public class Solution {
      * – пример неправильных выражений: 22 UDD, 0.002 USD.
      */
     @SuppressWarnings("unused")
-    public String eleventhQuestion(String string) {
+    public static String eleventhQuestion(String string) {
         var pattern_str = "(\\d+(?:\\.\\d+)?)\\s+(USD|RUR|EU)";
         return String.valueOf(Pattern.matches(pattern_str, string.strip()));
     }
@@ -155,7 +155,7 @@ public class Solution {
      * – пример неправильных выражений: 2 * 9 – 6 × 5.
      */
     @SuppressWarnings("unused")
-    public String twelfthQuestion(String string) {
+    public static String twelfthQuestion(String string) {
         var pattern_str = "\\b\\d+\\s*\\+";
         return String.valueOf(Pattern.matches(pattern_str, string.strip()));
     }
@@ -167,7 +167,7 @@ public class Solution {
      * – пример неправильных выражений: ((3 + 5) – 9 × 4.
      */
     @SuppressWarnings("unused")
-    public String thirteenthQuestion(String string) {
+    public static String thirteenthQuestion(String string) {
         Pattern pattern = Pattern.compile("((\\([^()]*\\)[^()]*)*)");
         Matcher matcher = pattern.matcher(string);
 

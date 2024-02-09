@@ -64,7 +64,7 @@ public class Solution {
         int i = 150000;
         float f = 0.50f;
         double result = f + ((double) i / c) - (d * s) - 500e-3;
-        return String.format("result = %f", result);
+        return String.format("result = %.1f", result);
     }
 
     /**
@@ -75,7 +75,7 @@ public class Solution {
         long l = 1234_564_890L;
         int x = 0b1000_1100_1010; //бинарность
         double m = (byte) 110_987_654_6299.123_34;
-        float f = l++ + 10 + ++x - (float) m;
+        float f = 10 + ++x - (float) m;
         l = (long) f / 1000;
         return String.format("Ответ: %d", l);
     }
