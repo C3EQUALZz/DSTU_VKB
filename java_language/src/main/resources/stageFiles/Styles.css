@@ -97,8 +97,8 @@
 }
 
 .combo-box .list-view .list-cell:hover {
-    -fx-translate-y: -2px;
-    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.8) , 15, 0 , 0 , 8 );
+    -fx-translate-y: -0.5px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.8) , 10, 0 , 0 , 4 );
 }
 
 
@@ -149,3 +149,26 @@
     -fx-translate-y: +1px;
     -fx-effect: null;
 }
+
+
+.text-area .content {
+    -fx-background-radius: 0;
+    -fx-background-color: #2E3348;
+}
+
+.text-area {
+    -fx-background-color: #2E3348;
+    -fx-text-fill: WHITE;
+    -fx-control-inner-background: #1b191a;
+    -fx-text-box-border: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-prompt-text-fill: WHITE;
+}
+
+.split-pane-divider {
+    -fx-padding: 0.5px; /* Устанавливаем толщину линии разделителя в пикселях */
+    -fx-background-color: WHITE; /* Цвет линии разделителя */
+    -fx-background-radius: 30;
+}
+

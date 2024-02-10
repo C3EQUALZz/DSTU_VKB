@@ -36,6 +36,11 @@ public class Laboratories implements Initializable {
     @FXML
     private ComboBox<String> combobox;
 
+    @FXML
+    private TextArea condition;
+
+    String buttonText;
+
     private final SceneController controller = new SceneController();
     private final ButtonConfigurator buttonConfigurator = new ButtonConfigurator();
     private final ComboboxConfigurator comboboxConfigurator = new ComboboxConfigurator();
@@ -43,6 +48,7 @@ public class Laboratories implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        // conditionUpdate();
         menuEvent();
         buttonsEvent();
 
@@ -132,7 +138,25 @@ public class Laboratories implements Initializable {
         };
 
         for (var button : allButtons) {
-            buttonConfigurator.setupButtonEvent(button, event -> comboboxConfigurator.setupComboboxEvent(combobox, button));
+            buttonConfigurator.setupButtonEvent(button, event -> {
+
+                buttonText = button.getText();
+                comboboxConfigurator.setupComboboxEvent(combobox, button);
+
+            });
+        }
+    }
+
+    private void conditionUpdate() {
+        condition.setEditable(false);
+
+        var comboboxValue = combobox.getValue();
+
+        switch (buttonText) {
+            case "0 лабораторная" -> {
+
+            }
+
         }
 
     }
