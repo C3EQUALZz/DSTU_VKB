@@ -14,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import programmingLanguagesJava.laboratories.GUI.config.ButtonConfigurator;
 import programmingLanguagesJava.laboratories.GUI.config.ComboboxConfigurator;
+import programmingLanguagesJava.laboratories.GUI.config.JsonSimpleParser;
 
 import java.io.IOException;
 import java.net.URL;
@@ -38,21 +39,22 @@ public class Laboratories implements Initializable {
 
     @FXML
     private TextArea condition;
-
-    String buttonText;
+    private String buttonText;
 
     private final SceneController controller = new SceneController();
     private final ButtonConfigurator buttonConfigurator = new ButtonConfigurator();
     private final ComboboxConfigurator comboboxConfigurator = new ComboboxConfigurator();
+    private final JsonSimpleParser data = new JsonSimpleParser();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        // conditionUpdate();
         menuEvent();
+
         buttonsEvent();
 
         comboboxConfigurator.defaultConfiguration(combobox);
+
 
         buttonConfigurator.setupButtonEvent(backButton, event -> {
 
@@ -72,6 +74,14 @@ public class Laboratories implements Initializable {
 
         });
 
+        condition.setEditable(false);
+
+        combobox.valueProperty().addListener((obs, oldVal, newVal) -> {
+
+            if (newVal != null)
+                condition.setText(data.get(buttonText, newVal));
+
+        });
 
     }
 
@@ -145,19 +155,8 @@ public class Laboratories implements Initializable {
 
             });
         }
-    }
-
-    private void conditionUpdate() {
-        condition.setEditable(false);
-
-        var comboboxValue = combobox.getValue();
-
-        switch (buttonText) {
-            case "0 лабораторная" -> {
-
-            }
-
-        }
 
     }
+
+
 }

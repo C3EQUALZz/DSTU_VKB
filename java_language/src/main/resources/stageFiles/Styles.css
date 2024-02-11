@@ -101,8 +101,6 @@
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.8) , 10, 0 , 0 , 4 );
 }
 
-
-
 .combo-box .increment-arrow, .combo-box .decrement-arrow {
     -fx-background-color: #9e5ce4; /* Цвет стрелочек у ползунка ползунка */
     -fx-border-width: 1px;
@@ -110,7 +108,6 @@
 
 .combo-box .thumb {
     -fx-background-color: #9e5ce4;
-
 }
 
 .combo-box .track {

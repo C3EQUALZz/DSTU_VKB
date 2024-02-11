@@ -31,6 +31,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.apache.commons/commons-collections4
     implementation("org.apache.commons:commons-collections4:4.3")
     implementation("org.jetbrains:annotations:16.0.2")
+    implementation("com.googlecode.json-simple:json-simple:1.1.1")
 }
 
 tasks.test {
