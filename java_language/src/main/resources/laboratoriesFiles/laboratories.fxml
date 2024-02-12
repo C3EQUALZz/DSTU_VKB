@@ -186,7 +186,7 @@
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                      <children>
-                        <TextArea fx:id="condition" layoutX="134.0" layoutY="-9.0" prefHeight="200.0" prefWidth="200.0" promptText="Для появления условия выберите лабораторную и задание" style="-fx-background-radius: 30;" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TextArea fx:id="condition" editable="false" layoutX="134.0" layoutY="-9.0" prefHeight="200.0" prefWidth="200.0" promptText="Для появления условия выберите лабораторную и задание" style="-fx-background-radius: 30;" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
@@ -203,7 +203,7 @@
                               <Font name="Comic Sans MS Bold" size="12.0" />
                            </font>
                         </TextField>
-                        <TextArea editable="false" layoutX="-2.0" layoutY="55.0" prefHeight="130.0" prefWidth="518.0" style="-fx-border-color: WHITE; -fx-border-width: 2;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-2.0">
+                        <TextArea fx:id="output" editable="false" layoutX="-2.0" layoutY="55.0" prefHeight="130.0" prefWidth="518.0" style="-fx-border-color: WHITE; -fx-border-width: 2;" stylesheets="@../stageFiles/console.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-2.0">
                            <font>
                               <Font name="Comic Sans MS Bold" size="12.0" />
                            </font>

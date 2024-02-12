@@ -94,9 +94,14 @@ public class ComboboxConfigurator {
      * @param button кнопка, на которую нажал пользователь.
      * @return ссылку на класс с лабораторной работой.
      */
-    private Class<?> getKeyButton(Button button) {
+    public Class<?> getKeyButton(Button button) {
         // Получаем текст с кнопки ("0 лабораторная") -> ["0", "лабораторная"] -> "0" -> 0 -> zeroLaboratory.Solution
         int index = numerator(button.getText().split(" ")[0]);
+        return (Class<?>) dictInfoLaboratories.keySet().toArray()[index];
+    }
+
+    public Class<?> getKeyButton(String text) {
+        int index = numerator(text.split(" ")[0]);
         return (Class<?>) dictInfoLaboratories.keySet().toArray()[index];
     }
 

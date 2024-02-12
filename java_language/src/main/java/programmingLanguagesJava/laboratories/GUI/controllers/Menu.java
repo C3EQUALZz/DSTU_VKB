@@ -6,7 +6,6 @@
 package programmingLanguagesJava.laboratories.GUI.controllers;
 
 
-import javafx.animation.AnimationTimer;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -18,8 +17,6 @@ import programmingLanguagesJava.laboratories.GUI.config.ButtonConfigurator;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class Menu implements Initializable {
@@ -50,7 +47,10 @@ public class Menu implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        clock().start();
+
+        // Класс, который описывает часы.
+
+        new ClockController(hourTimer, minutesTimer, secondsTimer).clock().start();
 
         // Обработка событий для кнопки с лабораторными
 
@@ -86,24 +86,5 @@ public class Menu implements Initializable {
 
         });
 
-    }
-
-    /**
-     * Контроллер для часов.
-     * Все изменения в UI нужно делать в одном потоке по правилам JavaFx.
-     * Здесь создается анонимный класс, который определяет наши часы.
-     */
-    private AnimationTimer clock() {
-        return new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                Platform.runLater(() -> {
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-                    hourTimer.setText(LocalDateTime.now().format(formatter).substring(0, 2));
-                    minutesTimer.setText(LocalDateTime.now().format(formatter).substring(3, 5));
-                    secondsTimer.setText(LocalDateTime.now().format(formatter).substring(6, 8));
-                });
-            }
-        };
     }
 }

@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
+import programmingLanguagesJava.laboratories.ConsoleReader;
 import programmingLanguagesJava.laboratories.GUI.config.ButtonConfigurator;
 import programmingLanguagesJava.laboratories.GUI.config.ComboboxConfigurator;
 import programmingLanguagesJava.laboratories.GUI.config.JsonSimpleParser;
@@ -22,25 +23,15 @@ import java.util.ResourceBundle;
 
 public class Laboratories implements Initializable {
 
-    @FXML
-    private Button zeroButton, firstButton, firstDotFirstButton, secondButton, thirdButton, thirdDotFirstButton, fourthButton;
+    @FXML private Button backButton, exitButton, clearInput, startQuestion;
+    @FXML private Button zeroButton, firstButton, firstDotFirstButton, secondButton, thirdButton, thirdDotFirstButton, fourthButton;
+    @FXML private Label openSlider, closeSlider;
+    @FXML private AnchorPane slider;
+    @FXML private ComboBox<String> combobox;
+    @FXML private TextArea condition, output;
+    @FXML private TextField inputArgs;
 
-    @FXML
-    private Button backButton, exitButton;
-
-    @FXML
-    private Label openSlider, closeSlider;
-
-    @FXML
-    private AnchorPane slider;
-
-    @FXML
-    private ComboBox<String> combobox;
-
-    @FXML
-    private TextArea condition;
     private String buttonText;
-
     private final SceneController controller = new SceneController();
     private final ButtonConfigurator buttonConfigurator = new ButtonConfigurator();
     private final ComboboxConfigurator comboboxConfigurator = new ComboboxConfigurator();
@@ -49,12 +40,42 @@ public class Laboratories implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        menuEvent();
+        new SliderController(slider, openSlider, closeSlider).sliderEvent();
 
-        buttonsEvent();
+        buttonLabsEvent();
+        buttonEvent();
 
         comboboxConfigurator.defaultConfiguration(combobox);
 
+        combobox.valueProperty().addListener((obs, oldVal, newVal) -> {
+
+            if (newVal != null)
+                condition.setText(data.get(buttonText, newVal));
+
+        });
+
+    }
+
+    private void buttonLabsEvent() {
+
+        Button[] allButtons = {
+                zeroButton, firstButton, firstDotFirstButton,
+                secondButton, thirdButton, thirdDotFirstButton, fourthButton
+        };
+
+        for (var button : allButtons) {
+            buttonConfigurator.setupButtonEvent(button, event -> {
+
+                buttonText = button.getText();
+                comboboxConfigurator.setupComboboxEvent(combobox, button);
+
+            });
+        }
+
+    }
+
+
+    private void buttonEvent() {
 
         buttonConfigurator.setupButtonEvent(backButton, event -> {
 
@@ -74,87 +95,26 @@ public class Laboratories implements Initializable {
 
         });
 
-        condition.setEditable(false);
 
-        combobox.valueProperty().addListener((obs, oldVal, newVal) -> {
-
-            if (newVal != null)
-                condition.setText(data.get(buttonText, newVal));
-
+        buttonConfigurator.setupButtonEvent(clearInput, event -> {
+            condition.clear();
+            inputArgs.clear();
+            output.clear();
         });
 
-    }
 
-    /**
-     * Настройка slider меню, которое движется справа.
-     * Есть баг, что в начале почему-то сверху находится closeSlider, а не openSlider.
-     * В общем, поэтому с самого начала меню закрыто, а не открыто.
-     * Здесь под капотом, если что 2 кнопки, которые совпадают 1 в 1.
-     */
-    private void menuEvent() {
+        buttonConfigurator.setupButtonEvent(startQuestion, event1 -> {
+            var value = combobox.getValue();
 
-        // Состояние закрытого меню
-        slider.setTranslateX(-500);
+            if (value != null) {
+                var classLaboratory = comboboxConfigurator.getKeyButton(buttonText);
+                var inputData = inputArgs.getText();
+                var comboboxData = value.split("\\s+")[0];
 
-        // Установка звука на тот момент, когда мы наводимся на кнопку меню.
-        openSlider.setOnMouseEntered(event -> buttonConfigurator.hoverClip.play());
+                output.setText((String) ConsoleReader.executeTask(classLaboratory, comboboxData, inputData));
+            }
 
-        // Установка звука на тот момент, когда мы нажимаем кнопку.
-        openSlider.setOnMouseClicked(event -> {
-
-            buttonConfigurator.clickClip.play();
-
-            TranslateTransition slide = new TranslateTransition();
-            slide.setDuration(Duration.seconds(0.4));
-            slide.setNode(slider);
-
-            slide.setToX(0);
-            slide.play();
-
-            slider.setTranslateX(-500);
-
-            slide.setOnFinished(actionEvent -> {
-                openSlider.setVisible(false);
-                closeSlider.setVisible(true);
-            });
         });
-
-        closeSlider.setOnMouseEntered(event -> buttonConfigurator.hoverClip.play());
-
-        closeSlider.setOnMouseClicked(event -> {
-            buttonConfigurator.clickClip.play();
-
-            TranslateTransition slide = new TranslateTransition();
-            slide.setDuration(Duration.seconds(0.4));
-            slide.setNode(slider);
-
-            slide.setToX(-500);
-            slide.play();
-
-            slider.setTranslateX(0);
-
-            slide.setOnFinished(actionEvent -> {
-                openSlider.setVisible(true);
-                closeSlider.setVisible(false);
-            });
-        });
-    }
-
-    private void buttonsEvent() {
-
-        Button[] allButtons = {
-                zeroButton, firstButton, firstDotFirstButton,
-                secondButton, thirdButton, thirdDotFirstButton, fourthButton
-        };
-
-        for (var button : allButtons) {
-            buttonConfigurator.setupButtonEvent(button, event -> {
-
-                buttonText = button.getText();
-                comboboxConfigurator.setupComboboxEvent(combobox, button);
-
-            });
-        }
 
     }
 
