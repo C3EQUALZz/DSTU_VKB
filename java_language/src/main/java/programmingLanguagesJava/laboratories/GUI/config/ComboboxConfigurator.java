@@ -46,7 +46,7 @@ public class ComboboxConfigurator {
         comboBox.setDisable(false);
 
         // Сохранение выбранного значения, если оно есть
-        String selectedValue = comboBox.getValue();
+        var selectedValue = comboBox.getValue();
 
         comboBox.getItems().clear();
 
@@ -62,7 +62,8 @@ public class ComboboxConfigurator {
             if (comboBox.getItems().contains(selectedValue))
                 comboBox.setValue(selectedValue);
 
-            else comboBox.getSelectionModel().selectFirst();
+            else
+                comboBox.getSelectionModel().selectFirst();
 
         }
     }

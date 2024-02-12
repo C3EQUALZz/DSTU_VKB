@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -30,7 +31,7 @@
                   <Button fx:id="backButton" layoutX="19.0" layoutY="17.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="28.0" stylesheets="@../stageFiles/Styles.css" />
                </children>
             </AnchorPane>
-            <ComboBox fx:id="combobox" layoutX="593.0" layoutY="66.0" prefHeight="32.0" prefWidth="193.0" promptText="Выберите задание" stylesheets="@../stageFiles/Styles.css" visibleRowCount="5">
+            <ComboBox fx:id="combobox" layoutX="593.0" layoutY="66.0" prefHeight="32.0" prefWidth="193.0" promptText="Выберите задание" stylesheets="@../stageFiles/combobox.css" visibleRowCount="5">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -169,12 +170,12 @@
          <children>
             <AnchorPane layoutX="2.0" layoutY="372.0" prefHeight="110.0" prefWidth="520.0" style="-fx-background-radius: 30;">
                <children>
-                  <Button fx:id="ButtonLabs" layoutX="17.0" layoutY="17.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="75.0" prefWidth="235.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 30;" stylesheets="@../stageFiles/Styles.css" text="Очистить консоль" textFill="WHITE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="269.0" AnchorPane.topAnchor="20.0">
+                  <Button fx:id="clearInput" layoutX="17.0" layoutY="17.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="75.0" prefWidth="235.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 30;" stylesheets="@../stageFiles/Styles.css" text="Очистить консоль" textFill="WHITE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="269.0" AnchorPane.topAnchor="20.0">
                      <font>
                         <Font name="Comic Sans MS Bold" size="20.0" />
                      </font>
                   </Button>
-                  <Button fx:id="ButtonLabs1" layoutX="269.0" layoutY="17.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="75.0" prefWidth="235.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 30;" stylesheets="@../stageFiles/Styles.css" text="Запуск" textFill="WHITE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="269.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="20.0">
+                  <Button fx:id="startQuestion" layoutX="269.0" layoutY="17.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="75.0" prefWidth="235.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 30;" stylesheets="@../stageFiles/Styles.css" text="Запуск" textFill="WHITE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="269.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="20.0">
                      <font>
                         <Font name="Comic Sans MS Bold" size="20.0" />
                      </font>
@@ -185,7 +186,7 @@
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                      <children>
-                        <TextArea fx:id="condition" layoutX="134.0" layoutY="-9.0" prefHeight="200.0" prefWidth="200.0" promptText="Для появления условия выберите лабораторную и задание" style="-fx-background-radius: 30;" stylesheets="@../stageFiles/Styles.css" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TextArea fx:id="condition" layoutX="134.0" layoutY="-9.0" prefHeight="200.0" prefWidth="200.0" promptText="Для появления условия выберите лабораторную и задание" style="-fx-background-radius: 30;" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
@@ -195,7 +196,19 @@
                         </TextArea>
                      </children>
                   </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="121.0" prefWidth="324.0" stylesheets="@../stageFiles/Styles.css" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="121.0" prefWidth="324.0" stylesheets="@../stageFiles/Styles.css">
+                     <children>
+                        <TextField fx:id="inputArgs" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="486.0" promptText="Введите параметры " style="-fx-background-color: transparent; -fx-border-color: WHITE; -fx-border-radius: 30; -fx-background-radius: 18;" stylesheets="@../stageFiles/console.css" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
+                           <font>
+                              <Font name="Comic Sans MS Bold" size="12.0" />
+                           </font>
+                        </TextField>
+                        <TextArea editable="false" layoutX="-2.0" layoutY="55.0" prefHeight="130.0" prefWidth="518.0" style="-fx-border-color: WHITE; -fx-border-width: 2;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-2.0">
+                           <font>
+                              <Font name="Comic Sans MS Bold" size="12.0" />
+                           </font>
+                        </TextArea>
+                     </children></AnchorPane>
               </items>
             </SplitPane>
          </children>

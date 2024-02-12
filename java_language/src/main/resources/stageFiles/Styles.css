@@ -59,61 +59,6 @@
     -fx-effect: null;
 }
 
-.combo-box {
-    -fx-background-color: #9e5ce4;
-    -fx-border-color: #ccc;
-    -fx-border-radius: 3px;
-    -fx-padding: 5px;
-    -fx-text-fill: white;
-}
-
-.combo-box .arrow-button {
-    -fx-background-color: transparent;
-}
-
-.combo-box .arrow-button .arrow {
-    -fx-background-color: white;
-    -fx-shape: "M 0 0 L 4 5 L 8 0 Z";
-    -fx-translate-x: -2px;
-    -fx-translate-y: 1px;
-    -fx-transition: transform 0.3s ease-in-out;
-}
-
-.combo-box .list-view {
-    -fx-background-color: #9e5ce4;
-    -fx-border-color: #ccc;
-    -fx-border-radius: 3px;
-}
-
-.combo-box .list-cell {
-    -fx-text-fill: white;
-    -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 14;
-}
-
-.combo-box .list-view .list-cell {
-    -fx-padding: 5px;
-    -fx-background-color: #9e5ce4;
-}
-
-.combo-box .list-view .list-cell:hover {
-    -fx-translate-y: -0.5px;
-    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.8) , 10, 0 , 0 , 4 );
-}
-
-.combo-box .increment-arrow, .combo-box .decrement-arrow {
-    -fx-background-color: #9e5ce4; /* Цвет стрелочек у ползунка ползунка */
-    -fx-border-width: 1px;
-}
-
-.combo-box .thumb {
-    -fx-background-color: #9e5ce4;
-}
-
-.combo-box .track {
-    -fx-background-color: transparent;
-    -fx-opacity: 0;
-}
 
 #openSlider {
     -fx-background-insets: 0, 0 0 5 0, 0 0 6 0, 0 0 7 0;
@@ -164,7 +109,7 @@
 }
 
 .split-pane-divider {
-    -fx-padding: 0.5px; /* Устанавливаем толщину линии разделителя в пикселях */
+    -fx-padding: 0.5; /* Устанавливаем толщину линии разделителя в пикселях */
     -fx-background-color: WHITE; /* Цвет линии разделителя */
     -fx-background-radius: 30;
 }
