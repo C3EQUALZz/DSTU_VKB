@@ -44,6 +44,10 @@ public class ComboboxConfigurator {
 
     public void setupComboboxEvent(ComboBox<String> comboBox, Button button) {
         comboBox.setDisable(false);
+
+        // Сохранение выбранного значения, если оно есть
+        String selectedValue = comboBox.getValue();
+
         comboBox.getItems().clear();
 
         var countOfMethods = dictInfoLaboratories.get(getKeyButton(button)).length;
@@ -52,6 +56,15 @@ public class ComboboxConfigurator {
         IntStream.range(1, countOfMethods + 1).forEach(number -> linkedList.add(number + " задание"));
 
         comboBox.getItems().addAll(linkedList);
+
+        if (selectedValue != null) {
+
+            if (comboBox.getItems().contains(selectedValue))
+                comboBox.setValue(selectedValue);
+
+            else comboBox.getSelectionModel().selectFirst();
+
+        }
     }
 
     private Class<?> getKeyButton(Button button) {
