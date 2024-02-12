@@ -1,3 +1,7 @@
+/**
+ * В json файле описаны
+ */
+
 package programmingLanguagesJava.laboratories.GUI.config;
 
 import org.json.simple.JSONObject;

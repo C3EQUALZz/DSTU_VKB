@@ -1,3 +1,9 @@
+/**
+ * Модуль, который предназначен для работы с кнопками. В основном я их часто настраиваю по звукам, сделано с той
+ * целью, чтобы не дублировать код.
+ *
+ */
+
 package programmingLanguagesJava.laboratories.GUI.config;
 
 import javafx.event.EventHandler;
@@ -22,6 +28,7 @@ public class ButtonConfigurator {
         // Обработка того момента, когда мышка наводится на кнопку.
         button.setOnMouseEntered(event -> new AudioClip(Objects.requireNonNull(getClass().getResource("/music/hover.mp3")).toString()).play());
 
+        // Обработка того момента, когда нажали на кнопку.
         button.setOnMouseClicked(event -> {
             new AudioClip(Objects.requireNonNull(getClass().getResource("/music/click.mp3")).toString()).play();
             eventHandler.handle(event); // Передача объекта MouseEvent в обработчике события

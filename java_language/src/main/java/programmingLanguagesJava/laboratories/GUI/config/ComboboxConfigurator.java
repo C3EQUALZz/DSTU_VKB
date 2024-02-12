@@ -1,3 +1,9 @@
+/**
+ * Данный класс является настройкой для combobox, здесь я выставляю конфигурационные параметры.
+ * Там удобная настройка звуков, анимаций и т.п. Сделано с той целью, чтобы избежать дублирования кода
+ * Не нарушать модульность программы.
+ */
+
 package programmingLanguagesJava.laboratories.GUI.config;
 
 import javafx.scene.control.Button;
@@ -12,14 +18,23 @@ import java.util.stream.IntStream;
 
 public class ComboboxConfigurator {
     private final ButtonConfigurator buttonConfigurator = new ButtonConfigurator();
+
+    // Словарь с лабораторными работами, где ключ - лабораторная работа, значение - ссылки на методы
     private final TreeMap<Class<?>, Method[]> dictInfoLaboratories = ParserLaboratories.parseLaboratories();
 
+    /**
+     * Конфигурация выпадающего списка по умолчанию. Тут только установка звуков.
+     * @param comboBox выпадающий список, который мы хотим настроить.
+     */
     public void defaultConfiguration(ComboBox<String> comboBox) {
 
+        // Обработчик событий, когда мышка попала на combobox.
         comboBox.setOnMouseEntered(event -> buttonConfigurator.hoverClip.play());
 
+        // Обработчик событий, когда нажали на combobox.
         comboBox.setOnMouseClicked(event -> buttonConfigurator.clickClip.play());
 
+        // Это было ради того, чтобы установить эффект hover звука на каждый элемент в combobox.
         comboBox.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(String item, boolean empty) {
@@ -33,12 +48,15 @@ public class ComboboxConfigurator {
             }
         });
 
+        // Самое интересное, что установить звук нажатия через setCellFactory не работало. Под капотом идеально
+        // устройство не разбирал, поэтому такой вариант для обработки звука.
         comboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 buttonConfigurator.clickClip.play();
             }
         });
 
+        // Отключаю с той целью, когда пользователь ещё не выбрал лабораторные
         comboBox.setDisable(true);
     }
 
@@ -68,11 +86,26 @@ public class ComboboxConfigurator {
         }
     }
 
+    /**
+     * Для чего нужен данный метод? Вся проблема в том, что у меня словарь содержит ссылки на классы. В зависимости от текста
+     * кнопки я придумал такой костыль, который помогает найти ссылку на класс.
+     * Например, нажали на кнопку "0 лабораторная" -> индекс лабораторной (0) -> массив лабораторных[0] ->
+     * ссылка на 0 лабораторную из словаря -> получаю информацию о данном классе (кол-во методов, ссылки на них и т.п).
+     * @param button кнопка, на которую нажал пользователь.
+     * @return ссылку на класс с лабораторной работой.
+     */
     private Class<?> getKeyButton(Button button) {
+        // Получаем текст с кнопки ("0 лабораторная") -> ["0", "лабораторная"] -> "0" -> 0 -> zeroLaboratory.Solution
         int index = numerator(button.getText().split(" ")[0]);
         return (Class<?>) dictInfoLaboratories.keySet().toArray()[index];
     }
 
+    /**
+     * Вспомогательный метод, который нужен для обработки лабораторных работ.
+     * Можно было сделать словарь, да, быстрее, но тут небольшой выйгрыш.
+     * @param numberOfLaboratory номер лабораторной работы
+     * @return индекс нашей лабораторной работы, который я буду искать в массиве.
+     */
     private int numerator(String numberOfLaboratory) {
         return switch (numberOfLaboratory) {
             case "0" -> 0;
