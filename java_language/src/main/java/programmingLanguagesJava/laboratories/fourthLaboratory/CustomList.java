@@ -88,7 +88,7 @@ public interface CustomList<T> extends CustomQueue<T> {
      *
      * @param obj элемент из списка, который мы хотим заменить на новое.
      */
-    void replace(T obj);
+    void replace(T obj, T replaceObj);
 
     /**
      * Определение, является ли список симметричным.
@@ -129,7 +129,7 @@ public interface CustomList<T> extends CustomQueue<T> {
      * @param key - ключ сортировки (изменение указателей - "changePointer", изменение значение - "changeValue").
      * @return возвращает отсортированный список.
      */
-    CustomList<T> sort(String key);
+    void sort(String key);
 
     /**
      * Обращение к элементу списка с помощью индексации.

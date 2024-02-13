@@ -2,7 +2,9 @@ package programmingLanguagesJava.laboratories.fourthLaboratory;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
@@ -37,10 +39,12 @@ public class SingleLinkedList<T extends Comparable<T>> implements CustomList<T>,
     public void addFirst(T obj) {
         var newNode = new Node<>(obj, null);
 
+        // В LinkedList не было ни одного элемента, тогда новая нода - это и хвост, и голова.
         if (this.size == 0)
             this.head = this.tail = newNode;
 
         else {
+            // В ином случае наша новая нода.next = голова (на первую позицию же вставляем), а потом становится головой.
             newNode.next = this.head;
             this.head = newNode;
         }
@@ -50,6 +54,7 @@ public class SingleLinkedList<T extends Comparable<T>> implements CustomList<T>,
 
     @Override
     public void add(T obj, int index) {
+        // Удобное переопределение, так как я написал уже методы для этого.
         if (index == 0) {
             addFirst(obj);
             return;
@@ -79,20 +84,34 @@ public class SingleLinkedList<T extends Comparable<T>> implements CustomList<T>,
 
     @Override
     public T delLast() {
+        // Нода для удаления
         var removed = this.tail;
+
+        // Получаем предпоследний элемент, делаем сразу его хвостом.
         this.tail = getNode(this.size - 2);
+
+        // Говорим, что у хвоста следующий элемент равен null по требованиям.
         this.tail.next = null;
+
         this.size--;
+
         return removed.data;
     }
 
 
     @Override
     public T delFirst() {
+        // Получаем самую первую ноду в связном списке
         var firstNode = this.head;
+
+        // Смещаем указатель на голову на 2 элемент в связном списке.
         this.head = firstNode.next;
+
+        // Обнуляем, так сказать, указатель на следующий элемент.
         firstNode.next = null;
+
         this.size--;
+
         return firstNode.data;
     }
 
@@ -189,7 +208,12 @@ public class SingleLinkedList<T extends Comparable<T>> implements CustomList<T>,
     }
 
     @Override
-    public void replace(T obj) {
+    public void replace(T obj, T replaceObj) {
+
+        while (this.indexOf(obj) != -1) {
+            var i = this.indexOf(obj);
+            this.getNode(i).data = replaceObj;
+        }
 
     }
 
@@ -201,19 +225,58 @@ public class SingleLinkedList<T extends Comparable<T>> implements CustomList<T>,
 
     @Override
     public boolean checkSorted() {
-        return false;
+
+        Node<T> previous = this.head;
+        Node<T> current = this.head.next;
+
+        var flag = true;
+
+        while (current != null) {
+
+            if (previous.compareTo(current) > 0)
+                flag = false;
+
+            if (!flag)
+                return flag;
+
+
+            previous = current;
+            current = current.next;
+
+        }
+
+        return flag;
     }
 
 
     @Override
     public int countDistinct() {
-        return 0;
+
+        var hashSet = new HashSet<>();
+
+        for (var node : this) {
+            hashSet.add(node);
+        }
+
+        return hashSet.size();
+
     }
 
 
     @Override
-    public CustomList<T> distinct() {   
-        return null;
+    public CustomList<T> distinct() {
+
+        var linkedHashSet = new LinkedHashSet<T>();
+
+        for (var node : this) {
+            linkedHashSet.add(node);
+        }
+
+        var singleLinkedList = new SingleLinkedList<T>();
+        linkedHashSet.forEach(singleLinkedList::add);
+
+        return singleLinkedList;
+
     }
 
 
@@ -241,8 +304,14 @@ public class SingleLinkedList<T extends Comparable<T>> implements CustomList<T>,
 
 
     @Override
-    public CustomList<T> sort(String key) {
-        return null;
+    public void sort(String key) {
+
+        if (key.equals("pointer")) {
+            pointerSort();
+        }
+
+        else dataSort();
+
     }
 
     @Override
@@ -307,6 +376,77 @@ public class SingleLinkedList<T extends Comparable<T>> implements CustomList<T>,
             node = node.next;
 
         return node;
+    }
+
+    private void swap(Node<T> ptr1, Node<T> ptr2) {
+        T tmp = ptr2.data;
+        ptr2.data = ptr1.data;
+        ptr1.data = tmp;
+    }
+
+
+    private void dataSort() {
+        boolean swapped;
+        Node<T> current;
+
+        if (head == null) {
+            return;
+        }
+
+        do {
+            swapped = false;
+            current = head;
+
+            while (current.next != null) {
+
+                if (current.data.compareTo(current.next.data) > 0) {
+                    swap(current, current.next);
+                    swapped = true;
+                }
+
+                current = current.next;
+
+            }
+
+        } while (swapped);
+
+    }
+
+    private void pointerSort() {
+        Node<T> dummyNode = new Node<>(null, null);
+        Node<T> currentNode = head;
+
+        while (currentNode != null) {
+            Node<T> insertCurrentPos = dummyNode.next;
+            Node<T> insertPrePos = null;
+
+            while (insertCurrentPos != null) {
+                if (insertCurrentPos.data.compareTo(currentNode.data) > 0) {
+                    break;
+                }
+
+                insertPrePos = insertCurrentPos;
+                insertCurrentPos = insertCurrentPos.next;
+            }
+
+            if (insertPrePos == null) {
+                insertPrePos = dummyNode;
+            }
+
+            Node<T> tempNode = currentNode.next;
+
+            currentNode.next = insertPrePos.next;
+            insertPrePos.next = currentNode;
+
+            currentNode = tempNode;
+        }
+
+        this.head = dummyNode.next;
+        var curr = this.head;
+        while (curr.next != null) {
+            curr = curr.next;
+        }
+        this.tail = curr;
     }
 
 }
