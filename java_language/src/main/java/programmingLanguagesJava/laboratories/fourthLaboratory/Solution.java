@@ -19,15 +19,25 @@ public class Solution {
 
         Object result = switch (question) {
 
-            case 1, 4, 5, 6, 7, 8 ->
+            case 1, 4, 5, 6, 7, 8, 9, 16 ->
                     ConsoleReader.executeTask(Solution.class, String.valueOf(question), " ");
 
-            case 2, 3 -> {
+            case 2, 3, 10 -> {
                 System.out.println("Введите число для задания: ");
                 yield ConsoleReader.executeTask(Solution.class, String.valueOf(question), scanner.nextInt());
             }
 
+            case 11 -> {
+                System.out.print("Какое вы хотите найти максимальное или минимальное? ");
+                scanner.nextLine();
+                yield eleventhQuestion(scanner.nextLine());
+            }
 
+            case 20 -> {
+                System.out.println("Как вы хотите сортировать? С помощью указателей или значений? ");
+                scanner.nextLine();
+                yield twentiethQuestion(scanner.nextLine());
+            }
 
             default -> "Вы выбрали неверное задание";
         };
@@ -227,8 +237,76 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public static String sixteenthQuestion(String ignoreUnused) {
+        var list = new SingleLinkedList<Integer>();
+
+        var firstTest = Arrays.asList(30, 40, 2, 5, 1, 7, 45, 50, 8);
+        var secondTest = Arrays.asList(2, 7, 1, 10, 4);
+
+        secondTest.forEach(list::add);
+
+        return String.format("Список: %s\nМожет быть отсортирован 2 удалениями: %s", list, list.canBeSortedByDeleting2());
+    }
+
+    /**
+     * Определение, сколько различных значений содержится в списке.
+     */
+    @SuppressWarnings("unused")
+    public static String seventeenthQuestion(String ignoreUnused) {
+        var list = new SingleLinkedList<Integer>();
+
+        var values = Arrays.asList(30, 40, 2, 5, 2, 7, 30, 40, 8);
+        values.forEach(list::add);
+
+        return String.format("Список: %s\nКоличество разных значений: ", list.countDistinct());
+    }
+
+    /**
+     * Удаление из списка элементов, значения которых уже встречались в предыдущих элементах.
+     */
+    @SuppressWarnings("unused")
+    public static String eighteenthQuestion(String ignoreUnused) {
+        var list = new SingleLinkedList<Integer>();
+
+        var values = Arrays.asList(30, 40, 2, 5, 2, 7, 30, 40, 8);
+        values.forEach(list::add);
+
+        return String.format("Список: %s\nКоличество разных значений: ", list.distinct());
+    }
+
+    /**
+     * Изменение порядка элементов на обратный.
+     */
+    @SuppressWarnings("unused")
+    public static String nineteenthQuestion(String ignoreUnused) {
+        var result = "";
+        var list = initialize();
+
+        result += "Список исходный: " + list;
+        list.reversed();
+        result += "\nРазвернутый список: " + list;
+        return result;
+    }
+
+    /**
+     * Сортировка элементов списка двумя способами (изменение указателей, изменение значений элементов)
+     */
+    @SuppressWarnings("unused")
+    public static String twentiethQuestion(String param) {
+        var list = initialize();
+        var result = "Список: " + list;
+        list.sort(param);
+        result += "\nСписок после сортировки вашим способом: " + list;
+        return result;
+    }
+
+    /**
+     * Инициализация списка
+     */
+    @SuppressWarnings("unused")
+    public static String twentyFirst(String ignoreUnused) {
         return "";
     }
+
 
 
 

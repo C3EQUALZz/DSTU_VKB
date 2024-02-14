@@ -280,7 +280,6 @@ public class SingleLinkedList<T extends Comparable<T>> implements CustomList<T>,
         }
 
         return hashSet.size();
-
     }
 
 
@@ -469,5 +468,53 @@ public class SingleLinkedList<T extends Comparable<T>> implements CustomList<T>,
         }
         this.tail = curr;
     }
+
+
+    public boolean canBeSortedByDeleting2() {
+        int n = this.size();
+        ArrayList<T> sub = new ArrayList<>();
+
+        sub.add(this.get(0));
+
+        for (int i = 1; i < n; i++) {
+
+            if (this.get(i).compareTo(sub.getLast()) > 0)
+                sub.add(this.get(i));
+
+
+            else {
+
+                var val = this.get(i);
+                var index = binarySearch(sub, val);
+
+                if (index != -1) {
+                    sub.set(index, val); // Replace the element at the found index with the current element
+                }
+
+            }
+        }
+
+        return n - sub.size() == 2;
+    }
+
+    private int binarySearch(ArrayList<T> subList, T val) {
+        int index = -1; // Initialize index to -1
+        int l = 0, r = subList.size() - 1; // Initialize left and right pointers for binary search
+
+        // Binary search to find the index where the current element can be placed in the subsequence
+        while (l <= r) {
+            int mid = (l + r) / 2; // Calculate the middle index
+
+            if (subList.get(mid).compareTo(val) >= 0) {
+                index = mid; // Update the index if the middle element is greater or equal to the current element
+                r = mid - 1; // Move the right pointer to mid - 1
+            } else {
+                l = mid + 1; // Move the left pointer to mid + 1
+            }
+        }
+
+        return index;
+    }
+
 
 }
