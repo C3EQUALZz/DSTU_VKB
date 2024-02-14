@@ -2,10 +2,7 @@ package programmingLanguagesJava.laboratories.fourthLaboratory;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.Spliterator;
+import java.util.*;
 import java.util.function.Consumer;
 
 public class SingleLinkedList<T extends Comparable<T>> implements CustomList<T>, Iterable<T> {
@@ -219,7 +216,31 @@ public class SingleLinkedList<T extends Comparable<T>> implements CustomList<T>,
 
     @Override
     public boolean isSymmetric() {
-        return this.size % 2 == 0;
+
+        if (head == null) {
+            return true; // Пустой список считается симметричным
+        }
+
+        Node<T> currentNode = head;
+        List<T> elements = new ArrayList<>();
+
+        // Пройти по всему списку и добавить элементы в массив
+        while (currentNode != null) {
+            elements.add(currentNode.data);
+            currentNode = currentNode.next;
+        }
+
+        // Сравнить элементы списка с элементами массива, начиная с конца
+        currentNode = head;
+        for (int i = elements.size() - 1; i >= 0; i--) {
+            if (!currentNode.data.equals(elements.get(i))) {
+                return false; // Несимметричный элемент
+            }
+            currentNode = currentNode.next;
+        }
+
+        return true; // Все элементы совпали, список симметричен
+
     }
 
 
