@@ -1,5 +1,7 @@
 """
-Обязательно для просмотра, чтобы понимать материал: https://youtu.be/XvDdCQxCYJ0?si=jTHna1pSAHafhEVJ
+Обязательно для просмотра, чтобы понимать материал:
+ 1. https://youtu.be/XvDdCQxCYJ0?si=jTHna1pSAHafhEVJ
+ 2. https://www.youtube.com/watch?v=fM5UiCAFyIU
 """
 import re
 from typing import Pattern, AnyStr
