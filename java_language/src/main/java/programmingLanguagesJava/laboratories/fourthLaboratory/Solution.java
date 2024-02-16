@@ -1,10 +1,10 @@
 package programmingLanguagesJava.laboratories.fourthLaboratory;
 
 import programmingLanguagesJava.laboratories.ConsoleReader;
+import programmingLanguagesJava.laboratories.fourthLaboratory.classes.Book;
+import programmingLanguagesJava.laboratories.fourthLaboratory.classes.ListMerger;
 
-import java.util.Arrays;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public class Solution {
@@ -53,6 +53,19 @@ public class Solution {
                 System.out.println("Как вы хотите сортировать? С помощью указателей или значений? (pointer, data): ");
                 scanner.nextLine();
                 yield ConsoleReader.executeTask(Solution.class, String.valueOf(question), scanner.nextLine());
+            }
+
+            case 41 -> {
+                System.out.print("Введите книгу по такому клише (название, автор, год): ");
+                // Изучаем Python, Марк Лутц, 2019
+                scanner.nextLine();
+                yield fortiethFirstQuestion(scanner.nextLine());
+            }
+
+            case 42 -> {
+                System.out.print("Введите два массива. Например, [3, 6, 9] [10, 12, 15]: ");
+                scanner.nextLine();
+                yield fortiethSecondQuestion(scanner.nextLine());
             }
 
             default -> "Вы выбрали неверное задание";
@@ -579,6 +592,125 @@ public class Solution {
         var list = new DoubleLinkedList<Integer>();
         new Random().ints(10, 5, 1000).forEach(list::add);
         return list;
+    }
+
+
+    /**
+     * Дан упорядоченный список книг. Добавить новую книгу, сохранив упорядоченность списка.
+     */
+    @SuppressWarnings("unused")
+    public static String fortiethFirstQuestion(String args) {
+        var tree = new TreeSet<>(Arrays.asList(
+                new Book("Му-му", "Иван Тургенев", 1852),
+                new Book("Гарри Поттер", "Джоан Роулинг", 1997)
+        ));
+
+        var it = Arrays.stream(args.split(",\\s+")).iterator();
+
+        try {
+            var result = "Наш список книг до: " + tree;
+            tree.add(new Book(it.next(), it.next(), Integer.parseInt(it.next())));
+            result += "\nНаш список книг после: " + tree;
+            return result;
+        } catch (NoSuchElementException e) {
+            return "Ввели неправильные аргументы";
+        }
+
+    }
+
+    /**
+     * Даны два упорядоченных по возрастанию списка. Объедините их в новый упорядоченный по возрастанию список.
+     */
+    @SuppressWarnings("unused")
+    public static String fortiethSecondQuestion(String args) {
+
+        try {
+            var it = Arrays.stream(args.split("]\\s+\\[")).iterator();
+            var firstList = ListMerger.parser(it.next());
+            var secondList = ListMerger.parser(it.next());
+
+            return String.format("Результат слияния: %s", ListMerger.mergeSortedLists(firstList, secondList));
+
+        } catch (NoSuchElementException e) {
+
+            return "Вы ввели неправильные данные";
+        }
+
+    }
+
+    /**
+     * 5.	Дан список целых чисел. Упорядочьте по возрастанию только:
+     * а) положительные числа;
+     * б) элементы с четными порядковыми номерами в списке.
+     */
+    @SuppressWarnings("unused")
+    public static String fortiethThirdQuestion(String args) {
+        return "";
+    }
+
+    /**
+     * Даны два списка. Определите, совпадают ли множества их элементов.
+     */
+    @SuppressWarnings("unused")
+    public static String fortiethFourthQuestion(String args) {
+
+        try {
+
+            var it = Arrays.stream(args.split("]\\s+\\[")).iterator();
+            var firstList = new HashSet<>(ListMerger.parser(it.next()));
+            var secondList = new HashSet<>(ListMerger.parser(it.next()));
+
+            return firstList.equals(secondList) ? "Множества элементов совпадают" : "Множества элементов не совпадают";
+
+        } catch (NoSuchElementException e) {
+            return "Вы ввели неправильные данные";
+        }
+
+    }
+
+    /**
+     * Дан список. После каждого элемента добавьте предшествующую ему часть списка.
+     */
+    @SuppressWarnings("unused")
+    public static String fortiethFifthQuestion(String args) {
+        return "";
+    }
+
+    /**
+     * Пусть элементы списка хранят символы предложения. Замените каждое вхождение слова "itmathrepetitor" на "silence".
+     */
+    @SuppressWarnings("unused")
+    public static String fortiethSixthQuestion(String args) {
+        return "";
+    }
+
+    /**
+     * Дан текстовый файл. Создайте двусвязный список, каждый элемент которого содержит количество символов в соответствующей строке текста.
+     */
+    @SuppressWarnings("unused")
+    public static String fortiethSeventhQuestion(String args) {
+        return "";
+    }
+
+    /**
+     * Создайте двусвязный список групп факультета. Каждая группа представляет собой односвязный список студентов.
+     */
+    @SuppressWarnings("unused")
+    public static String fortiethEighthQuestion(String args) {
+        return "";
+    }
+
+    /**
+     * Дан список студентов.
+     * Элемент списка содержит фамилию, имя, отчество, год рождения, курс, номер группы, оценки по пяти предметам.
+     * Упорядочите студентов по курсу, причем студенты одного курса располагались в алфавитном порядке.
+     * Найдите средний балл каждой группы по каждому предмету.
+     * Определите самого старшего студента и самого младшего из студентов.
+     * Для каждой группы найдите лучшего с точки зрения успеваемости студента.
+     */
+    @SuppressWarnings("unused")
+    public static String fortiethNinthQuestion(String args) {
+        return "";
     }
 
 }
