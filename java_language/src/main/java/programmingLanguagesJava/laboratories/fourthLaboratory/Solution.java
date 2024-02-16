@@ -68,6 +68,12 @@ public class Solution {
                 yield fortiethSecondQuestion(scanner.nextLine());
             }
 
+            case 43 -> {
+                System.out.println("Введите в начале задание, а потом массив. Например: 'положительные числа [3, 2, 1, -15]'");
+                scanner.nextLine();
+                yield fortiethThirdQuestion(scanner.nextLine());
+            }
+
             default -> "Вы выбрали неверное задание";
         };
 
@@ -639,13 +645,42 @@ public class Solution {
     }
 
     /**
-     * 5.	Дан список целых чисел. Упорядочьте по возрастанию только:
+     * 5. Дан список целых чисел. Упорядочьте по возрастанию только:
      * а) положительные числа;
      * б) элементы с четными порядковыми номерами в списке.
      */
     @SuppressWarnings("unused")
     public static String fortiethThirdQuestion(String args) {
-        return "";
+        var linkedList = ListMerger.parser(args.substring(args.indexOf("[")));
+        Comparator<Integer> comparator;
+
+        if (args.startsWith("положительные числа")) {
+            comparator = (o1, o2) -> {
+                if (o1 > 0 && o2 > 0)
+                    return o1.compareTo(o2);
+
+                if (o1 > 0)
+                    return -1;
+
+                if (o2 > 0)
+                    return 1;
+
+                return 0;
+            };
+        }
+
+        else {
+            comparator = (o1, o2) -> {
+                if (linkedList.indexOf(o1) % 2 == 0 && linkedList.indexOf(o2) % 2 == 0)
+                    return o1.compareTo(o2);
+                return 0;
+            };
+        }
+
+
+        linkedList.sort(comparator);
+
+        return "Результат сортировки: " + linkedList;
     }
 
     /**

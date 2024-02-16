@@ -33,7 +33,7 @@ public class ListMerger {
     public static List<Integer> parser(String listString) {
         List<Integer> result = new ArrayList<>();
 
-        String[] parts = listString.replaceAll("[{}]", "").split(",\\s*");
+        String[] parts = listString.replaceAll("[{}\\[\\]]", "").split(",\\s*");
 
         IntStream.range(0, parts.length).forEach(i -> result.add(Integer.parseInt(parts[i])));
 
