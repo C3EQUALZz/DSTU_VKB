@@ -144,8 +144,8 @@ public class Solution {
     @SuppressWarnings("unused")
     public static String ninthQuestion(String ignoreUnused) {
         var result = "Наш список: " + list;
-        list.delFirst();
-        result += "\nПосле удаления первого элемента: " + list;
+        list.delLast();
+        result += "\nПосле удаления последнего элемента: " + list;
         return result;
 
     }
@@ -155,6 +155,9 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public static String tenthQuestion(String number) {
+        var list = new SingleLinkedList<Integer>();
+        IntStream.range(1, 10).forEach(list::add);
+
         return String.format(
                 "Значение %s находится под индексом %d в %s",
                 number,
@@ -181,8 +184,11 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public static String twelfthQuestion(String value) {
+        var list = new SingleLinkedList<Integer>();
+        IntStream.range(1, 10).forEach(list::add);
+
         var result = "Список до: " + list;
-        list.remove(Integer.parseInt(value));
+        list.remove((Integer) Integer.parseInt(value));
         result += "\nПосле: " + list;
 
         return result;
@@ -193,6 +199,13 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public static String thirteenthQuestion(String string) {
+        var list = new SingleLinkedList<Integer>();
+        IntStream.range(1, 10).forEach(x -> {
+            list.add(x);
+            list.add(x);
+            list.add(x);
+        });
+
         var result = "Список до: " + list;
         list.removeAll(Integer.parseInt(string));
         result += "\nПосле: " + list;
@@ -205,6 +218,14 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public static String fourteenthQuestion(String args) {
+
+        var list = new SingleLinkedList<Integer>();
+        IntStream.range(1, 10).forEach(x -> {
+            list.add(x);
+            list.add(x);
+            list.add(x);
+        });
+
         var it = Arrays.stream(args.split("\\s+")).map(Integer::valueOf).iterator();
 
         var result = "Список до: " + list;
@@ -221,8 +242,8 @@ public class Solution {
     public static String fifteenthQuestion(String ignoreUnused) {
         var symList = new SingleLinkedList<Integer>();
 
-        IntStream.range(1, 10).forEach(symList::add);
-        IntStream.range(9, 0).forEach(symList::add);
+        IntStream.range(1, 11).forEach(symList::add);
+        IntStream.iterate(9, i -> i - 1).limit(9).forEach(symList::add);
 
         return String.format("Список %s - симметричен (%s)", symList, symList.isSymmetric());
     }
@@ -252,7 +273,7 @@ public class Solution {
         var values = Arrays.asList(30, 40, 2, 5, 2, 7, 30, 40, 8);
         values.forEach(list::add);
 
-        return String.format("Список: %s\nКоличество разных значений: ", list.countDistinct());
+        return String.format("Список: %s\nКоличество разных значений: %d", list, list.countDistinct());
     }
 
     /**
@@ -265,7 +286,7 @@ public class Solution {
         var values = Arrays.asList(30, 40, 2, 5, 2, 7, 30, 40, 8);
         values.forEach(list::add);
 
-        return String.format("Список: %s\nКоличество разных значений: ", list.distinct());
+        return String.format("Список до: %s\nСписок после: %s", list, list.distinct());
     }
 
     /**
@@ -288,7 +309,7 @@ public class Solution {
     public static String twentiethQuestion(String param) {
         var result = "Список: " + list;
         list.sort(param);
-        result += "\nСписок после сортировки вашим способом: " + list;
+        result += "\nСписок после " + param + " сортировки: " + list;
         return result;
     }
 

@@ -2,10 +2,6 @@ package programmingLanguagesJava.laboratories.fourthLaboratory;
 
 public class DoubleLinkedList<T extends Comparable<T>> extends SingleLinkedList<T> implements CustomList<T>, Iterable<T> {
 
-    private Node<T> first;
-    private Node<T> last;
-    private int size = 0;
-
     /**
      * Данный метод добавляет в начало связного списка. Все-таки нужен для реализации интерфейса очереди.
      *
@@ -13,9 +9,9 @@ public class DoubleLinkedList<T extends Comparable<T>> extends SingleLinkedList<
      */
     @Override
     public void addFirst(T obj) {
-        var node = new Node<>(null, obj, this.first);
-        this.first.previous = node;
-        this.first = node;
+        var node = new Node<>(null, obj, this.head);
+        this.head.previous = node;
+        this.head = node;
     }
 
     /**
@@ -67,13 +63,13 @@ public class DoubleLinkedList<T extends Comparable<T>> extends SingleLinkedList<
         if (nodeNext != null) {
             nodeNext.previous = nodePrevious;
         } else {
-            last = nodePrevious;
+            tail = nodePrevious;
         }
 
         if (nodePrevious != null) {
             nodePrevious.next = nodeNext;
         } else {
-            first = nodeNext;
+            head = nodeNext;
         }
 
         size--;
@@ -86,13 +82,13 @@ public class DoubleLinkedList<T extends Comparable<T>> extends SingleLinkedList<
     @Override
     public T delLast() {
         // Нода для удаления
-        var removed = this.last;
+        var removed = this.tail;
 
         // Получаем предпоследний элемент, делаем сразу его хвостом.
-        this.last = this.last.previous;
+        this.tail = this.tail.previous;
 
         // Говорим, что у хвоста следующий элемент равен null по требованиям.
-        this.last.next = null;
+        this.tail.next = null;
 
         this.size--;
 
@@ -110,42 +106,13 @@ public class DoubleLinkedList<T extends Comparable<T>> extends SingleLinkedList<
         return false;
     }
 
-    /**
-     * Определение, можно ли удалить из списка каких-нибудь два элемента так, чтобы новый список оказался упорядоченным.
-     *
-     * @return определяет возможно ли такое...
-     */
-    @Override
-    public boolean checkSorted() {
-        return false;
-    }
-
-    /**
-     * Определение, сколько различных значений содержится в списке.
-     *
-     * @return возвращает целое число - количество различных элементов в списке.
-     */
-    @Override
-    public int countDistinct() {
-        return 0;
-    }
-
-    /**
-     * Удаление из списка элементов, значения которых уже встречались в предыдущих элементах.
-     *
-     * @return возвращает новый список, где нет повторяющихся элементов.
-     */
-    @Override
-    public CustomList<T> distinct() {
-        return null;
-    }
 
     /**
      * Изменение порядка элементов на обратный.
      */
     @Override
     public void reversed() {
-        
+
     }
 
     /**
@@ -159,24 +126,6 @@ public class DoubleLinkedList<T extends Comparable<T>> extends SingleLinkedList<
     }
 
     /**
-     * Обращение к элементу списка с помощью индексации.
-     *
-     * @param index целое число от 0 до size - 1
-     * @return возвращает элемент списка
-     */
-    @Override
-    public T get(int index) {
-        return getNode(index).data;
-    }
-
-    @Override
-    public void clear() {
-        first = null;
-        last = null;
-        size = 0;
-    }
-
-    /**
      * Метод добавления элемента в конец списка
      *
      * @param obj элемент, который мы хотим добавить в конец списка
@@ -185,13 +134,13 @@ public class DoubleLinkedList<T extends Comparable<T>> extends SingleLinkedList<
     public void add(T obj) {
 
         if (size == 0) {
-            first = new Node<>(null, obj, null);
-            last = first;
+            head = new Node<>(null, obj, null);
+            tail = head;
 
         } else {
-            Node<T> secondLast = last;
-            last = new Node<>(secondLast, obj, null);
-            secondLast.next = last;
+            Node<T> secondLast = tail;
+            tail = new Node<>(secondLast, obj, null);
+            secondLast.next = tail;
         }
 
         size++;
@@ -205,24 +154,11 @@ public class DoubleLinkedList<T extends Comparable<T>> extends SingleLinkedList<
      */
     @Override
     public T delFirst() {
-        var nodeToDelete = this.first;
+        var nodeToDelete = this.head;
 
-        this.first = nodeToDelete.next;
-        this.first.previous = null;
+        this.head = nodeToDelete.next;
+        this.head.previous = null;
         return nodeToDelete.data;
     }
 
-    private Node<T> getNode(int index) {
-
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException();
-        }
-
-        Node<T> node = first;
-        for (int i = 0; i < index; i++) {
-            node = node.next;
-        }
-
-        return node;
-    }
 }

@@ -6,9 +6,9 @@ import java.util.*;
 import java.util.function.Consumer;
 
 public class SingleLinkedList<T extends Comparable<T>> implements CustomList<T>, Iterable<T> {
-    private int size;
-    private Node<T> head;
-    private Node<T> tail;
+    protected int size;
+    protected Node<T> head;
+    protected Node<T> tail;
 
     /**
      * Мой класс, который реализует структуру данных LinkedList, здесь происходит
@@ -385,7 +385,7 @@ public class SingleLinkedList<T extends Comparable<T>> implements CustomList<T>,
         return Iterable.super.spliterator();
     }
 
-    private Node<T> getNode(int index) {
+    protected Node<T> getNode(int index) {
         if (index < 0 || index >= size)
             throw new IndexOutOfBoundsException();
 
