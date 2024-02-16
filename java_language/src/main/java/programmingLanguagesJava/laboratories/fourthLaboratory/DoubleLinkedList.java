@@ -145,7 +145,7 @@ public class DoubleLinkedList<T extends Comparable<T>> extends SingleLinkedList<
      */
     @Override
     public void reversed() {
-
+        
     }
 
     /**
