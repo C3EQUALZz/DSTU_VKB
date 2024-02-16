@@ -23,12 +23,12 @@ public class Solution {
         Object result = switch (question) {
 
             case 1, 4, 5, 6, 7, 8, 9, 15, 16, 17, 18, 19,
-                    21, 24, 25, 26, 27, 28, 35, 36, 37, 38, 39 ->
+                    21, 24, 25, 26, 27, 28, 29, 35, 36, 37, 38, 39 ->
                     ConsoleReader.executeTask(Solution.class, String.valueOf(question), " ");
 
             case 2, 3, 10,
                     22, 23, 30 -> {
-                System.out.println("Введите число для задания: ");
+                System.out.print("Введите число для задания: ");
                 yield ConsoleReader.executeTask(Solution.class, String.valueOf(question), scanner.next());
             }
 
@@ -399,7 +399,7 @@ public class Solution {
     public static String twentyNinthQuestion(String ignoreUnused) {
 
         var result = "Наш список: " + doubleList;
-        doubleList.delFirst();
+        doubleList.delLast();
         result += "\nПосле удаления первого элемента: " + doubleList;
         return result;
     }
@@ -408,7 +408,9 @@ public class Solution {
      * Поиск данного значения в двусвязном списке
      */
     @SuppressWarnings("unused")
-    public static String thirtyQuestion(String number) {
+    public static String thirtiethQuestion(String number) {
+        var doubleList = new DoubleLinkedList<Integer>();
+        IntStream.range(1, 10).forEach(doubleList::add);
 
         return String.format(
                 "Значение %s находится под индексом %d в %s",
@@ -436,8 +438,12 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public static String thirtySecondQuestion(String value) {
+
+        var doubleList = new DoubleLinkedList<Integer>();
+        IntStream.range(1, 10).forEach(doubleList::add);
+
         var result = "Список до: " + doubleList;
-        doubleList.remove(Integer.parseInt(value));
+        doubleList.remove((Integer) Integer.parseInt(value));
         result += "\nПосле: " + doubleList;
 
         return result;
@@ -448,6 +454,14 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public static String thirtyThirdQuestion(String string) {
+
+        var doubleList = new DoubleLinkedList<Integer>();
+        IntStream.range(1, 10).forEach(x -> {
+            doubleList.add(x);
+            doubleList.add(x);
+            doubleList.add(x);
+        });
+
         var result = "Список до: " + doubleList;
         doubleList.removeAll(Integer.parseInt(string));
         result += "\nПосле: " + doubleList;
@@ -460,6 +474,13 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public static String thirtyFourthQuestion(String args) {
+        var doubleList = new DoubleLinkedList<Integer>();
+        IntStream.range(1, 10).forEach(x -> {
+            doubleList.add(x);
+            doubleList.add(x);
+            doubleList.add(x);
+        });
+
         var it = Arrays.stream(args.split("\\s+")).map(Integer::valueOf).iterator();
 
         var result = "Список до: " + doubleList;
@@ -477,8 +498,8 @@ public class Solution {
     public static String thirtyFifthQuestion(String ignoreUnused) {
         var symList = new DoubleLinkedList<Integer>();
 
-        IntStream.range(1, 10).forEach(symList::add);
-        IntStream.range(9, 0).forEach(symList::add);
+        IntStream.range(1, 11).forEach(symList::add);
+        IntStream.iterate(9, i -> i - 1).limit(9).forEach(symList::add);
 
         return String.format("Список %s - симметричен (%s)", symList, symList.isSymmetric());
     }
@@ -508,7 +529,7 @@ public class Solution {
         var values = Arrays.asList(30, 40, 2, 5, 2, 7, 30, 40, 8);
         values.forEach(list::add);
 
-        return String.format("Список: %s\nКоличество разных значений: ", list.countDistinct());
+        return String.format("Список: %s\nКоличество разных значений: %d", list, list.countDistinct());
     }
 
     /**
@@ -521,7 +542,7 @@ public class Solution {
         var values = Arrays.asList(30, 40, 2, 5, 2, 7, 30, 40, 8);
         values.forEach(list::add);
 
-        return String.format("Список: %s\nКоличество разных значений: ", list.distinct());
+        return String.format("Список: %s\nСписок, содержащий только разные элементы: %s", list, list.distinct());
     }
 
     /**
@@ -547,9 +568,6 @@ public class Solution {
         result += "\nСписок после сортировки вашим способом: " + doubleList;
         return result;
     }
-
-
-
 
     private static SingleLinkedList<Integer> initialize() {
         var list = new SingleLinkedList<Integer>();

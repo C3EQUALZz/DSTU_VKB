@@ -103,7 +103,27 @@ public class DoubleLinkedList<T extends Comparable<T>> extends SingleLinkedList<
      */
     @Override
     public boolean removeAll(Object object) {
-        return false;
+        Node<T> current = head;
+        Node<T> prev = null;
+
+        while (current != null) {
+            if (current.data.equals(object)) {
+
+                if (prev == null) {
+                    this.head = current.next;
+                    this.head.previous = null;
+                }
+
+                else {
+                    prev.next = current.next;
+                    prev.next.previous = prev;
+                }
+
+            } else prev = current;
+
+            current = current.next;
+        }
+        return true;
     }
 
 
@@ -112,17 +132,25 @@ public class DoubleLinkedList<T extends Comparable<T>> extends SingleLinkedList<
      */
     @Override
     public void reversed() {
+        Node<T> previous = null;
+        Node<T> current = this.head;
 
-    }
+        if (current == null)
+            return;
 
-    /**
-     * Сортировка элементов списка двумя способами (изменение указателей, изменение значений элементов)
-     *
-     * @param key - ключ сортировки (изменение указателей - "changePointer", изменение значение - "changeValue").
-     */
-    @Override
-    public void sort(String key) {
+        while (current != null) {
+            var nextElement = current.next;
+            current.next = previous;
+            current.previous = nextElement;
+            previous = current;
 
+            if (current.next == null)
+                this.tail = current;
+
+            current = nextElement;
+        }
+
+        this.head = previous;
     }
 
     /**

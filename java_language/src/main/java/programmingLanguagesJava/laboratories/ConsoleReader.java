@@ -5,7 +5,6 @@ import com.ibm.icu.text.RuleBasedNumberFormat;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Locale;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,7 +33,6 @@ public class ConsoleReader {
             for (int i = 0; i < args.length; i++) {
                 paramTypes[i] = args[i].getClass();
             }
-
 
             Method method = solutionClass.getMethod(str.toString(), paramTypes);
             return method.invoke(solutionClass.getDeclaredConstructor().newInstance(), args);

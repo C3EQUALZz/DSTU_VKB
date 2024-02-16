@@ -197,6 +197,7 @@ public class SingleLinkedList<T extends Comparable<T>> implements CustomList<T>,
                     this.head = current.next;
                 else
                     prev.next = current.next;
+
             } else prev = current;
 
             current = current.next;
