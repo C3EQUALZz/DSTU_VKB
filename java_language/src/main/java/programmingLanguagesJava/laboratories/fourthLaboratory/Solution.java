@@ -5,6 +5,7 @@ import programmingLanguagesJava.laboratories.fourthLaboratory.classes.Book;
 import programmingLanguagesJava.laboratories.fourthLaboratory.classes.ListMerger;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Solution {
@@ -23,7 +24,7 @@ public class Solution {
         Object result = switch (question) {
 
             case 1, 4, 5, 6, 7, 8, 9, 15, 16, 17, 18, 19,
-                    21, 24, 25, 26, 27, 28, 29, 35, 36, 37, 38, 39 ->
+                    21, 24, 25, 26, 27, 28, 29, 35, 36, 37, 38, 39, 46 ->
                     ConsoleReader.executeTask(Solution.class, String.valueOf(question), " ");
 
             case 2, 3, 10,
@@ -59,19 +60,25 @@ public class Solution {
                 System.out.print("Введите книгу по такому клише (название, автор, год): ");
                 // Изучаем Python, Марк Лутц, 2019
                 scanner.nextLine();
-                yield fortiethFirstQuestion(scanner.nextLine());
+                yield fortyFirstQuestion(scanner.nextLine());
             }
 
             case 42 -> {
                 System.out.print("Введите два массива. Например, [3, 6, 9] [10, 12, 15]: ");
                 scanner.nextLine();
-                yield fortiethSecondQuestion(scanner.nextLine());
+                yield fortySecondQuestion(scanner.nextLine());
             }
 
             case 43 -> {
                 System.out.println("Введите в начале задание, а потом массив. Например: 'положительные числа [3, 2, 1, -15]'");
                 scanner.nextLine();
-                yield fortiethThirdQuestion(scanner.nextLine());
+                yield fortyThirdQuestion(scanner.nextLine());
+            }
+
+            case 45 -> {
+                System.out.print("Введите значения для задания в одной строке через пробел: ");
+                scanner.nextLine();
+                yield fortyFifthQuestion(scanner.nextLine());
             }
 
             default -> "Вы выбрали неверное задание";
@@ -605,7 +612,7 @@ public class Solution {
      * Дан упорядоченный список книг. Добавить новую книгу, сохранив упорядоченность списка.
      */
     @SuppressWarnings("unused")
-    public static String fortiethFirstQuestion(String args) {
+    public static String fortyFirstQuestion(String args) {
         var tree = new TreeSet<>(Arrays.asList(
                 new Book("Му-му", "Иван Тургенев", 1852),
                 new Book("Гарри Поттер", "Джоан Роулинг", 1997)
@@ -628,7 +635,7 @@ public class Solution {
      * Даны два упорядоченных по возрастанию списка. Объедините их в новый упорядоченный по возрастанию список.
      */
     @SuppressWarnings("unused")
-    public static String fortiethSecondQuestion(String args) {
+    public static String fortySecondQuestion(String args) {
 
         try {
             var it = Arrays.stream(args.split("]\\s+\\[")).iterator();
@@ -650,7 +657,7 @@ public class Solution {
      * б) элементы с четными порядковыми номерами в списке.
      */
     @SuppressWarnings("unused")
-    public static String fortiethThirdQuestion(String args) {
+    public static String fortyThirdQuestion(String args) {
         var linkedList = ListMerger.parser(args.substring(args.indexOf("[")));
         Comparator<Integer> comparator;
 
@@ -687,7 +694,7 @@ public class Solution {
      * Даны два списка. Определите, совпадают ли множества их элементов.
      */
     @SuppressWarnings("unused")
-    public static String fortiethFourthQuestion(String args) {
+    public static String fortyFourthQuestion(String args) {
 
         try {
 
@@ -707,16 +714,30 @@ public class Solution {
      * Дан список. После каждого элемента добавьте предшествующую ему часть списка.
      */
     @SuppressWarnings("unused")
-    public static String fortiethFifthQuestion(String args) {
-        return "";
+    public static String fortyFifthQuestion(String args) {
+        var past = new StringBuilder();
+        var list = new ArrayList<>(List.of(args.split("\\s+")));
+
+        return list.stream().map(x -> {
+            var result = past + x;
+            past.append(x);
+            return result;
+        }).collect(Collectors.joining(" "));
     }
 
     /**
      * Пусть элементы списка хранят символы предложения. Замените каждое вхождение слова "itmathrepetitor" на "silence".
      */
     @SuppressWarnings("unused")
-    public static String fortiethSixthQuestion(String args) {
-        return "";
+    public static String fortySixthQuestion(String ignoreUnused) {
+        ArrayList<Character> sentenceList = new ArrayList<>(Arrays.asList(
+                'i', 't', 'm', 'a', 't', 'h', 'r', 'e', 'p', 'e', 't', 'i', 't', 'o', 'r',
+                ' ', ' ', 'p', 'r', 'i', 'v', 'e', 't'
+        ));
+
+        var sentence = String.join("", sentenceList.stream().map(Object::toString).toArray(String[]::new));
+
+        return sentence.replaceAll("itmathrepetitor", "silence");
     }
 
     /**
