@@ -4,6 +4,7 @@ import programmingLanguagesJava.laboratories.ConsoleReader;
 import programmingLanguagesJava.laboratories.fourthLaboratory.classes.Book;
 import programmingLanguagesJava.laboratories.fourthLaboratory.classes.ListMerger;
 
+import java.io.File;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -24,7 +25,7 @@ public class Solution {
         Object result = switch (question) {
 
             case 1, 4, 5, 6, 7, 8, 9, 15, 16, 17, 18, 19,
-                    21, 24, 25, 26, 27, 28, 29, 35, 36, 37, 38, 39, 46 ->
+                    21, 24, 25, 26, 27, 28, 29, 35, 36, 37, 38, 39, 46, 47 ->
                     ConsoleReader.executeTask(Solution.class, String.valueOf(question), " ");
 
             case 2, 3, 10,
@@ -87,7 +88,7 @@ public class Solution {
         scanner.close();
         System.out.println(result);
 
-        }
+    }
 
     /**
      * Инициализация списка
@@ -452,8 +453,10 @@ public class Solution {
     @SuppressWarnings("unused")
     public static String thirtyFirstQuestion(String argue) {
         return switch (argue.toLowerCase()) {
-            case "наибольшее", "максимальное" -> String.format("%d - максимальное значение в %s", doubleList.max(), doubleList);
-            case "наименьшее", "минимальное" -> String.format("%d - минимальное значение в %s", doubleList.min(), doubleList);
+            case "наибольшее", "максимальное" ->
+                    String.format("%d - максимальное значение в %s", doubleList.max(), doubleList);
+            case "наименьшее", "минимальное" ->
+                    String.format("%d - минимальное значение в %s", doubleList.min(), doubleList);
             default -> "Вы ввели неправильный аргумент к методу";
         };
 
@@ -652,17 +655,17 @@ public class Solution {
     }
 
     /**
-     * 5. Дан список целых чисел. Упорядочьте по возрастанию только:
+     * Дан список целых чисел. Упорядочьте по возрастанию только:
      * а) положительные числа;
      * б) элементы с четными порядковыми номерами в списке.
      */
     @SuppressWarnings("unused")
     public static String fortyThirdQuestion(String args) {
         var linkedList = ListMerger.parser(args.substring(args.indexOf("[")));
-        Comparator<Integer> comparator;
 
         if (args.startsWith("положительные числа")) {
-            comparator = (o1, o2) -> {
+
+            linkedList.sort((o1, o2) -> {
                 if (o1 > 0 && o2 > 0)
                     return o1.compareTo(o2);
 
@@ -673,21 +676,28 @@ public class Solution {
                     return 1;
 
                 return 0;
-            };
+            });
+
+            return "Результат сортировки: " + linkedList;
+
+
+        } else {
+
+            var sortedEvenIndex = IntStream.range(0, linkedList.size())
+                    .filter(i -> i % 2 == 0)
+                    .mapToObj(linkedList::get)
+                    .sorted()
+                    .iterator();
+
+            return "После сортировки: " + IntStream.range(0, linkedList.size())
+                    .mapToObj(index -> {
+                        if (index % 2 == 0) {
+                            return sortedEvenIndex.next();
+                        }
+                        return linkedList.get(index);
+                    }).toList();
+
         }
-
-        else {
-            comparator = (o1, o2) -> {
-                if (linkedList.indexOf(o1) % 2 == 0 && linkedList.indexOf(o2) % 2 == 0)
-                    return o1.compareTo(o2);
-                return 0;
-            };
-        }
-
-
-        linkedList.sort(comparator);
-
-        return "Результат сортировки: " + linkedList;
     }
 
     /**
@@ -744,15 +754,38 @@ public class Solution {
      * Дан текстовый файл. Создайте двусвязный список, каждый элемент которого содержит количество символов в соответствующей строке текста.
      */
     @SuppressWarnings("unused")
-    public static String fortiethSeventhQuestion(String args) {
-        return "";
+    public static String fortySeventhQuestion(String ignoreUnused) {
+
+        var linkedList = new LinkedList<String>();
+        var i = 1;
+
+        try (var scanner = new Scanner(new File("java_language/src/main/java/programmingLanguagesJava/laboratories/fourthLaboratory/random_file.txt"))) {
+
+            while (scanner.hasNext()) {
+
+                linkedList.add(
+                        String.format(
+                                "Количество символов на строке %d - %d",
+                                i,
+                                scanner.nextLine().length()
+                        )
+                );
+
+                i += 1;
+            }
+
+            return String.join("\n", linkedList);
+
+        } catch (Exception e) {
+            return "Не найден файл";
+        }
     }
 
     /**
      * Создайте двусвязный список групп факультета. Каждая группа представляет собой односвязный список студентов.
      */
     @SuppressWarnings("unused")
-    public static String fortiethEighthQuestion(String args) {
+    public static String fortyEighthQuestion(String args) {
         return "";
     }
 
@@ -765,7 +798,7 @@ public class Solution {
      * Для каждой группы найдите лучшего с точки зрения успеваемости студента.
      */
     @SuppressWarnings("unused")
-    public static String fortiethNinthQuestion(String args) {
+    public static String fortyNinthQuestion(String args) {
         return "";
     }
 
