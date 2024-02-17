@@ -2,7 +2,9 @@ package programmingLanguagesJava.laboratories.fourthLaboratory;
 
 import programmingLanguagesJava.laboratories.ConsoleReader;
 import programmingLanguagesJava.laboratories.fourthLaboratory.classes.Book;
+import programmingLanguagesJava.laboratories.fourthLaboratory.classes.Group;
 import programmingLanguagesJava.laboratories.fourthLaboratory.classes.ListMerger;
+import programmingLanguagesJava.laboratories.fourthLaboratory.classes.Student;
 
 import java.io.File;
 import java.util.*;
@@ -25,7 +27,7 @@ public class Solution {
         Object result = switch (question) {
 
             case 1, 4, 5, 6, 7, 8, 9, 15, 16, 17, 18, 19,
-                    21, 24, 25, 26, 27, 28, 29, 35, 36, 37, 38, 39, 46, 47 ->
+                    21, 24, 25, 26, 27, 28, 29, 35, 36, 37, 38, 39, 46, 47, 48, 49 ->
                     ConsoleReader.executeTask(Solution.class, String.valueOf(question), " ");
 
             case 2, 3, 10,
@@ -785,8 +787,13 @@ public class Solution {
      * Создайте двусвязный список групп факультета. Каждая группа представляет собой односвязный список студентов.
      */
     @SuppressWarnings("unused")
-    public static String fortyEighthQuestion(String args) {
-        return "";
+    public static String fortyEighthQuestion(String ignoreUnused) {
+        var faculty = new LinkedList<String>();
+        String[] names = {"ВКБ22: ", "ВПР22: ", "ВМО21: "};
+        faculty.add("ВКБ22: " + new Group(Arrays.asList(new Student(), new Student(), new Student(), new Student(), new Student())));
+        faculty.add("ВПР22: " + new Group(Arrays.asList(new Student(), new Student(), new Student(), new Student())));
+        faculty.add("ВМО21: " + new Group(Arrays.asList(new Student(), new Student(), new Student())));
+        return String.join("\n\n", faculty);
     }
 
     /**
@@ -798,8 +805,17 @@ public class Solution {
      * Для каждой группы найдите лучшего с точки зрения успеваемости студента.
      */
     @SuppressWarnings("unused")
-    public static String fortyNinthQuestion(String args) {
-        return "";
+    public static String fortyNinthQuestion(String ignoreUnused) {
+        var group = new Group();
+
+        for (int i = 0; i < 10; i++) {
+            group.add(new Student());
+        }
+
+        group.sort();
+
+        return String.format("Список студентов: %s\n\nСредний балл по каждому предмету: %s\n\nСамый старший студент: %s\n\nСамый младший студент: %s\n\nСамый лучшие студенты из групп: %s\n\n" ,
+                group.toString().substring(7), group.getAverage(), group.getOldestStudent(), group.getYoungestStudent(), group.getBest());
     }
 
 }
