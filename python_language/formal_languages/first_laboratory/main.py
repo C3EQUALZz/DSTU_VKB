@@ -13,15 +13,18 @@ def is_left_linear(grammar: dict[str, list[str]]) -> bool:
     Лево линейная регулярная грамматика
     A ⇢ Bx
     A ⇢ x
-    where A,B ∈ V and x ∈ T*
+    where A, B ∈ V and x ∈ T*
     ---
+    Пример:
 
-    >>> is_left_linear({"S": ["Ab"], "A": ["Ab", "Za"], "Z": ["Za", "$"]})
-    True
-
+    S -> Ab
+    A -> Ab
+    A -> Za
+    Z -> Za
+    Z -> $
     """
-    pattern = re.compile(r'^[A-Z] -> [A-Za-z]+[A-Z]?$')
-    return _is_linear(grammar=grammar, pattern=pattern)
+    pattern = re.compile(r'^[A-Z] -> (?:[A-Z].*[a-z]|\W+)$')
+    return _checker(grammar=grammar, pattern=pattern)
 
 
 def is_right_linear(grammar: dict[str, list[str]]) -> bool:
@@ -31,43 +34,70 @@ def is_right_linear(grammar: dict[str, list[str]]) -> bool:
     A ⇢ x
     where A, B ∈ V and x ∈ T*
     ---
+    Пример:
 
-    >>> is_right_linear({"S": ["aS", "aA"], "A": ["bA", "bZ"], "Z": ["$"]})
-    True
-
+    S -> aS
+    S -> aA
+    A -> bA
+    A -> bZ
+    Z -> $
     """
-    pattern = re.compile(r'^[A-Z] -> [a-z][A-Za-z]*')
-    return _is_linear(grammar=grammar, pattern=pattern)
+    pattern = re.compile(r'^[A-Z] -> (?:[a-z].*[A-Z]|\W+)')
+    return _checker(grammar=grammar, pattern=pattern)
 
 
 def is_context_sensitive(grammar: dict[str, list[str]]) -> bool:
     """
+    Контекстно-зависимая грамматика (КЗ-грамматика, контекстная грамматика) — частный случай формальной
+    грамматики (тип 1 по иерархии Хомского), у которой левые и правые части всех продукций могут быть
+    окружены терминальными и нетерминальными символами.
+    ---
+    Пример:
 
+    S -> aAS
+    AS -> AAS
+    AAA -> ABA
+    A -> b
+    bBA -> bcdA
+    bS -> ba
     """
-    pattern = re.compile(r'^[A-Z]')
+    for key, value in grammar.items():
+        if len(key) <= len(value):
+            return True
+    return False
 
 
 def is_context_free(grammar: dict[str, list[str]]) -> bool:
     """
+    Проверяет, что является контекстно-свободной грамматикой.
+    ---
+    Пример:
 
+    S -> aSa
+    S -> bSb
+    S -> aa
+    I -> bb
     """
-    ...
+    pattern = re.compile(r'^[A-Z] -> (?:[a-z]([A-Za-z]+)?[a-z]|\W)')
+    return _checker(grammar=grammar, pattern=pattern)
 
 
-def _is_linear(grammar: dict[str, list[str]], pattern: Pattern[AnyStr]) -> bool:
+def _checker(grammar: dict[str, list[str]], pattern: Pattern[AnyStr]) -> bool:
     """
     В данную функцию передают саму грамматику, которую пользователь ввел с консоли и паттерн для проверки.
     """
-    for non_terminal, rules in grammar.items():
-        return all(pattern.match(f"{non_terminal} -> {rule}") for rule in rules)
+    for first_half, second_half in grammar.items():
+        if not all(pattern.match(f"{first_half} -> {second_half_el}") for second_half_el in second_half):
+            return False
+    return True
 
 
 def main():
     dictionary = defaultdict(list)
-    print("Сейчас вы будете вводить грамматики. Пример ввода: S -> aSb")
+    print("Сейчас вы будете вводить грамматики. Пример ввода: S -> aSb\nКонец ввода - это 'exit' ")
 
-    while (args := input("Введите вашу грамматику. Например, ")) != "exit":
-        key, value = map(lambda x: x.rstrip("|E"), args.split())
+    while (args := input()) != "exit":
+        key, value = map(lambda x: x.strip().rstrip("|E"), args.split("->"))
         dictionary[key].append(value)
 
     if is_left_linear(dictionary):
@@ -82,6 +112,7 @@ def main():
     if is_context_sensitive(dictionary):
         return "Тип 1: контекстно-зависимая грамматика"
 
+    # xAbCD -> xHD
     return "Грамматика типа 0"
 
 
