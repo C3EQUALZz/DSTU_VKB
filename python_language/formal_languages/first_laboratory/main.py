@@ -23,7 +23,7 @@ def is_left_linear(grammar: dict[str, list[str]]) -> bool:
     Z -> Za
     Z -> $
     """
-    pattern = re.compile(r'^[A-Z] -> (?:[A-Z].*[a-z]|\W+)$')
+    pattern = re.compile(r'^[A-Z] -> (?:[A-Z]+[^A-Z]|\W+)$')
     return _checker(grammar=grammar, pattern=pattern)
 
 
@@ -42,7 +42,7 @@ def is_right_linear(grammar: dict[str, list[str]]) -> bool:
     A -> bZ
     Z -> $
     """
-    pattern = re.compile(r'^[A-Z] -> (?:[a-z].*[A-Z]|\W+)')
+    pattern = re.compile(r'^[A-Z] -> (?:[^A-Z]*[A-Z]|\W+)')
     return _checker(grammar=grammar, pattern=pattern)
 
 
@@ -78,7 +78,7 @@ def is_context_free(grammar: dict[str, list[str]]) -> bool:
     S -> aa
     I -> bb
     """
-    pattern = re.compile(r'^[A-Z] -> (?:[a-z]([A-Za-z]+)?[a-z]|\W)')
+    pattern = re.compile(r'^[A-Z] -> (?:[^A-Z]+[A-Za-z]*[^A-Z]|\W)')
     return _checker(grammar=grammar, pattern=pattern)
 
 
