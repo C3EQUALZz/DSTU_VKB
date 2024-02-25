@@ -36,4 +36,6 @@ wcwidth==0.2.12
 faker==21.0.0
 russian-names
 environs
+scipy
+
 
