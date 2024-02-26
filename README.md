@@ -11,3 +11,6 @@
 ---
 Все лабораторные работы в основном делаются на Linux (Manjaro, Fedora, Endeavour OS). Если у Вас что-то не работает, то отправляйте pull request. 
 В крайнем случае открывайте Issues, чтобы остальные могли увидеть в случае чего. 
+
+---
+![GitHub repo size](https://img.shields.io/github/repo-size/C3EQUALZz/DSTU_VKB)
