@@ -1,4 +1,4 @@
-; 11. X = (2*A + B) / 4 - C / 2 + 168
+; 16. X = 3 * (A - 2*B) + 50 - C / 2
 
 data segment
     a dw 10
@@ -14,16 +14,21 @@ code segment
         mov ds, ax 		; load addresses
 
         mov ax, a       ; ax = a
-        sal ax, 1       ; ax = a * 2
-        add ax, b       ; ax = a * 2 + b
-        sar ax, 2       ; ax = (a * 2 + b) / 4
+
+        mov bx, b       ; bx = b
+        sal bx, 1       ; bx *= 2
+
+        sub ax, bx      ; ax = a - 2*b
+
+        mov bx, 3       ; bx = 3
+        mul bx          ; ax = 3 * (a - 2*b)
+
+        add ax, 50      ; ax = 3 * (a - 2*b) + 50
 
         mov bx, c       ; bx = c
         sar bx, 1       ; bx = c / 2
 
-        sub ax, bx      ; ax = (a * 2 + b) / 4 - c / 2
-
-        add ax, 168     ; ax = (a * 2 + b) / 4 - c / 2 + 168
+        sub ax, bx      ; ax = 3 * (a - 2*b) + 50 - c / 2
 
         mov x, ax 		; record result into x
     quit:
