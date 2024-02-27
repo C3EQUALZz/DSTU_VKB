@@ -17,7 +17,7 @@ npyscreen==4.10.5
 number-parser==0.3.2
 numpy==1.26.1
 packaging==23.2
-Pillow==10.1.0
+Pillow==10.2.0
 prettytable==3.9.0
 pydantic==2.5.2
 pydantic_core==2.14.5
