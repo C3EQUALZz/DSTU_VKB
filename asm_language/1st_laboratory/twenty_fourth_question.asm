@@ -1,4 +1,4 @@
-; 17. X = (3*A + 2*B) - C / 4 + 217
+; 24. X = 3 * (A - 2 * B) + 50 - C / 2
 
 data segment
     a dw 10
@@ -15,26 +15,26 @@ code segment
         mov ds, ax 		; load addresses
 
         mov ax, a       ; ax = a
-        mov bx, 3       ; bx = 3
-        mul bx          ; ax *= bx <=> ax = 3 * a
 
         mov bx, b       ; bx = b
         sal bx, 1       ; bx = 2 * b
 
-        add ax, bx      ; ax = (3 * a + 2 * b)
+        sub ax, bx      ; ax = a - 2*b
+
+        mov bx, 3       ; bx = 3
+        mul bx          ; ax = 3 * (a - 2*b)
+
+        add ax, 50      ; ax = 3 * (a - 2*b) + 50
 
         mov bx, c       ; bx = c
-        neg bx          ; bx = -c
-        sar bx, 2       ; bx = -c / 4
+        sar bx, 1       ; bx = c / 2
 
-        add ax, bx      ; ax = (3 * a + 2*b) - c / 4
-
-        add ax, 217     ; ax += 217
+        sub ax, bx      ; ax = 3 * (a - 2*b) + 50 - c / 2
 
         mov x, ax       ; record result into x
     quit:
         mov ax, 4c00h 	; end code 0
-        int 21h 			; exit into dos
+        int 21h 	    ; exit into dos
     end start
 code ends
 
