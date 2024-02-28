@@ -5,7 +5,7 @@
 """
 import re
 from typing import Pattern, AnyStr
-from collections import defaultdict
+from ..interaction_with_user import read_grammar_from_console
 
 
 def is_left_linear(grammar: dict[str, list[str]]) -> bool:
@@ -93,12 +93,7 @@ def _checker(grammar: dict[str, list[str]], pattern: Pattern[AnyStr]) -> bool:
 
 
 def main():
-    dictionary = defaultdict(list)
-    print("Сейчас вы будете вводить грамматики. Пример ввода: S -> aSb\nКонец ввода - это 'exit' ")
-
-    while (args := input()) != "exit":
-        key, value = map(lambda x: x.strip().rstrip("|E"), args.split("->"))
-        dictionary[key].append(value)
+    dictionary = read_grammar_from_console()
 
     if is_left_linear(dictionary):
         return "Тип 3: регулярная лево линейная грамматика"
