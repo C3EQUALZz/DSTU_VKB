@@ -1,4 +1,3 @@
-#googleMapView {
-    -fx-background-radius: 18;
-    -fx-border-radius: 30;
+.map {
+    -fx-background-color: black;
 }

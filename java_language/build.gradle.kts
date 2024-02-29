@@ -35,9 +35,8 @@ dependencies {
     implementation("com.googlecode.json-simple:json-simple:1.1.1")
     implementation("com.github.javafaker:javafaker:1.0.2")
     // https://mvnrepository.com/artifact/com.dlsc/GMapsFX
-    implementation("com.dlsc:GMapsFX:8.0.0") {
-        exclude(group = "ch.qos.logback", module = "logback-classic")
-    }
+    implementation("com.sothawo:mapjfx:3.1.0")
+    implementation("ch.qos.logback:logback-classic:1.2.3")
 }
 
 tasks.test {
