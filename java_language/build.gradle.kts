@@ -6,7 +6,7 @@ plugins {
 
 javafx {
     version = "21.0.2"
-    modules("javafx.controls", "javafx.fxml", "javafx.media")
+    modules("javafx.controls", "javafx.fxml", "javafx.media", "javafx.web")
 }
 
 
@@ -16,6 +16,7 @@ version = "1.0-SNAPSHOT"
 repositories {
     mavenCentral()
 }
+
 
 dependencies {
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
@@ -33,6 +34,10 @@ dependencies {
     implementation("org.jetbrains:annotations:16.0.2")
     implementation("com.googlecode.json-simple:json-simple:1.1.1")
     implementation("com.github.javafaker:javafaker:1.0.2")
+    // https://mvnrepository.com/artifact/com.dlsc/GMapsFX
+    implementation("com.dlsc:GMapsFX:8.0.0") {
+        exclude(group = "ch.qos.logback", module = "logback-classic")
+    }
 }
 
 tasks.test {
