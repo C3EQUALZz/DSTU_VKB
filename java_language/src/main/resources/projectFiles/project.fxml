@@ -48,9 +48,9 @@
                                           <Font name="Comic Sans MS Bold" size="16.0" />
                                        </font>
                                     </Text>
-                                    <TextField layoutX="198.0" layoutY="8.0" prefHeight="35.0" prefWidth="255.0" promptText="Введите данные " style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 30; -fx-text-fill: white; -fx-font-size: 13;" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                    <TextField layoutX="198.0" layoutY="8.0" prefHeight="35.0" prefWidth="255.0" promptText="Введите данные " style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 30; -fx-text-fill: white;" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0">
                                        <font>
-                                          <Font name="Comic Sans MS Bold" size="13.0" />
+                                          <Font name="Comic Sans MS Bold" size="12.0" />
                                        </font></TextField>
                                     <Button fx:id="startSearch" layoutX="470.0" layoutY="13.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent; -fx-border-color: WHITE; -fx-border-radius: 50; -fx-background-position: center; -fx-background-size: cover; -fx-background-repeat: no-repeat;" stylesheets="@../stageFiles/Styles.css" text="✓" textFill="WHITE" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="471.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="15.0" />
                                  </children>
@@ -62,14 +62,14 @@
                                           <Font name="Comic Sans MS Bold" size="16.0" />
                                        </font>
                                     </Text>
-                                    <TextField layoutX="198.0" layoutY="6.0" prefHeight="35.0" prefWidth="255.0" promptText="Введите данные " style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 30; -fx-text-fill: white; -fx-font-size: 13;" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                    <TextField layoutX="198.0" layoutY="6.0" prefHeight="35.0" prefWidth="255.0" promptText="Введите данные " style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 30; -fx-text-fill: white;" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0">
                                        <font>
-                                          <Font name="Comic Sans MS Bold" size="13.0" />
+                                          <Font name="Comic Sans MS Bold" size="12.0" />
                                        </font></TextField>
                                     <Button layoutX="470.0" layoutY="12.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent; -fx-border-color: WHITE; -fx-border-radius: 50; -fx-background-position: center; -fx-background-size: cover; -fx-background-repeat: no-repeat;" stylesheets="@../stageFiles/Styles.css" text="+" textFill="WHITE" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="471.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="15.0" />
                                  </children>
                               </AnchorPane>
-                              <AnchorPane prefHeight="59.0" prefWidth="509.0" style="-fx-border-width: 0 0 2 0; -fx-border-color: transparent transparent white transparent;">
+                              <AnchorPane minHeight="-Infinity" prefHeight="59.0" prefWidth="509.0" style="-fx-border-width: 0 0 2 0; -fx-border-color: transparent transparent white transparent;">
                                  <children>
                                     <Text fill="WHITE" layoutX="14.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ответственное лицо: ">
                                        <font>
