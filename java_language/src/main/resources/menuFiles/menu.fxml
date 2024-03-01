@@ -19,7 +19,7 @@
          <children>
             <ImageView fitHeight="560.0" fitWidth="380.0" layoutX="20.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@rounded-in-photoretrica.png" />
+                  <Image url="@images/rounded-in-photoretrica.png" />
                </image>
             </ImageView>
             <GridPane layoutX="19.0" layoutY="39.0" prefHeight="152.0" prefWidth="375.0">

@@ -39,7 +39,7 @@ public class Main extends Application {
         primaryStage.setResizable(false);
 
         // Установка изображения для приложения
-        primaryStage.getIcons().add(new Image("/menuFiles/desktop.png"));
+        primaryStage.getIcons().add(new Image("/menuFiles/images/desktop.png"));
 
         // Определяю так, чтобы не было системных Windows компонентов, так как с ними выглядит ужасно.
         primaryStage.initStyle(StageStyle.TRANSPARENT);

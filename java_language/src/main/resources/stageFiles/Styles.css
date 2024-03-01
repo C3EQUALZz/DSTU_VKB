@@ -18,7 +18,7 @@
 }
 
 #exitButton {
-    -fx-background-image: url('/stageFiles/Cancel.png');
+    -fx-background-image: url('/stageFiles/images/Cancel.png');
     -fx-background-color: transparent;
     -fx-background-size: cover;
     -fx-background-repeat: no-repeat;
@@ -39,7 +39,7 @@
 }
 
 #backButton {
-    -fx-background-image: url('/stageFiles/back.png');
+    -fx-background-image: url('/stageFiles/images/back.png');
     -fx-background-color: transparent;
     -fx-background-size: cover;
     -fx-background-repeat: no-repeat;
