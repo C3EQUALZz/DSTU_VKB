@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.sothawo.mapjfx.MapView?>
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -33,7 +35,7 @@
             <Insets bottom="10.0" left="10.0" right="10.0" />
          </BorderPane.margin>
          <children>
-            <SplitPane dividerPositions="0.7712031558185405" layoutX="63.0" layoutY="80.0" orientation="VERTICAL" prefHeight="511.0" prefWidth="513.0" style="-fx-background-color: transparent; -fx-background-radius: 30;" stylesheets="@../stageFiles/Styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <SplitPane dividerPositions="0.7712031558185405" layoutX="63.0" layoutY="80.0" orientation="VERTICAL" prefHeight="511.0" prefWidth="513.0" style="-fx-background-color: transparent; -fx-background-radius: 30;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="387.0" prefWidth="509.0" style="-fx-border-radius: 30; -fx-background-color: transparent;">
                      <children>
@@ -46,7 +48,10 @@
                                           <Font name="Comic Sans MS Bold" size="16.0" />
                                        </font>
                                     </Text>
-                                    <TextField layoutX="198.0" layoutY="8.0" prefHeight="35.0" prefWidth="255.0" promptText="Введите данные " style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 30;" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                                    <TextField layoutX="198.0" layoutY="8.0" prefHeight="35.0" prefWidth="255.0" promptText="Введите данные " style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 30;" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                       <font>
+                                          <Font name="Comic Sans MS Bold" size="13.0" />
+                                       </font></TextField>
                                  </children>
                               </AnchorPane>
                               <AnchorPane prefHeight="59.0" prefWidth="509.0">
@@ -56,13 +61,39 @@
                                           <Font name="Comic Sans MS Bold" size="16.0" />
                                        </font>
                                     </Text>
-                                    <TextField layoutX="198.0" layoutY="6.0" prefHeight="35.0" prefWidth="255.0" promptText="Введите данные " style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 30;" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                                    <TextField layoutX="198.0" layoutY="6.0" prefHeight="35.0" prefWidth="255.0" promptText="Введите данные " style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 30;" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                       <font>
+                                          <Font name="Comic Sans MS Bold" size="13.0" />
+                                       </font></TextField>
                                     <Button layoutX="470.0" layoutY="12.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" style="-fx-background-color: transparent; -fx-border-color: WHITE; -fx-border-radius: 50; -fx-background-position: center; -fx-background-size: cover; -fx-background-repeat: no-repeat;" stylesheets="@../stageFiles/Styles.css" text="+" textFill="WHITE" AnchorPane.bottomAnchor="15.0" AnchorPane.topAnchor="15.0" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="59.0" prefWidth="509.0" style="-fx-border-width: 0 0 2 0; -fx-border-color: transparent transparent white transparent;">
+                                 <children>
+                                    <Text fill="WHITE" layoutX="14.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ответственное лицо: ">
+                                       <font>
+                                          <Font name="Comic Sans MS Bold" size="16.0" />
+                                       </font>
+                                    </Text>
+                                    <ComboBox fx:id="combobox" layoutX="202.0" layoutY="6.0" prefHeight="35.0" prefWidth="255.0" promptText="Выбрать лицо " style="-fx-background-radius: 30; -fx-border-radius: 30;" stylesheets="@../stageFiles/combobox.css" visibleRowCount="5" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </ComboBox>
                                  </children>
                               </AnchorPane>
                               <AnchorPane prefHeight="59.0" prefWidth="509.0">
                                  <children>
-                                    <Text layoutX="15.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="150.63671875" />
+                                    <Text fill="WHITE" layoutX="21.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="План помещения:" wrappingWidth="234.63671875" AnchorPane.bottomAnchor="18.3359375" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="255.36328125" AnchorPane.topAnchor="18.3671875">
+                                       <font>
+                                          <Font name="Comic Sans MS Bold" size="16.0" />
+                                       </font>
+                                    </Text>
+                                    <Button fx:id="downloadFile" layoutX="198.0" layoutY="5.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="255.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 30;" stylesheets="@../stageFiles/Styles.css" text="Выбрать файл" textFill="WHITE" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                       <font>
+                                          <Font name="Comic Sans MS Bold" size="16.0" />
+                                       </font>
+                                    </Button>
                                  </children>
                               </AnchorPane>
                            </children>
@@ -70,12 +101,12 @@
                      </children></AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                      <children>
-                        <Button fx:id="clearInput" layoutY="17.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="75.0" prefWidth="235.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 30;" stylesheets="@../stageFiles/Styles.css" text="Очистить" textFill="WHITE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="269.0" AnchorPane.topAnchor="20.0">
+                        <Button fx:id="clearInput" layoutY="17.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="75.0" prefWidth="235.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 30;" stylesheets="@../stageFiles/Styles.css" text="Очистить данные" textFill="WHITE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="269.0" AnchorPane.topAnchor="20.0">
                            <font>
                               <Font name="Comic Sans MS Bold" size="20.0" />
                            </font>
                         </Button>
-                        <Button fx:id="clearInput1" layoutX="258.0" layoutY="17.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="75.0" prefWidth="235.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 30;" stylesheets="@../stageFiles/Styles.css" text="Добавить" textFill="WHITE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="269.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="20.0">
+                        <Button fx:id="addDataToDB" layoutX="258.0" layoutY="17.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="75.0" prefWidth="235.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 30;" stylesheets="@../stageFiles/Styles.css" text="Добавить в базу" textFill="WHITE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="269.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="20.0">
                            <font>
                               <Font name="Comic Sans MS Bold" size="20.0" />
                            </font>
@@ -83,6 +114,10 @@
                      </children>
                   </AnchorPane>
               </items>
+               <stylesheets>
+                  <URL value="@../stageFiles/Styles.css" />
+                  <URL value="@../stageFiles/console.css" />
+               </stylesheets>
             </SplitPane>
          </children></AnchorPane>
    </right>
