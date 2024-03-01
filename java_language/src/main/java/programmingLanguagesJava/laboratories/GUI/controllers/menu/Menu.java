@@ -22,24 +22,8 @@ import java.util.ResourceBundle;
 
 public class Menu implements Initializable {
 
-    @FXML
-    private Button exitButton;
-
-    @FXML
-    private Button ButtonLabs;
-
-    @FXML
-    private Button ButtonProject;
-
-    @FXML
-    private Text minutesTimer;
-
-    @FXML
-    private Text secondsTimer;
-
-    @FXML
-    private Text hourTimer;
-
+    @FXML private Button exitButton, ButtonLabs, ButtonProject;
+    @FXML private Text secondsTimer, minutesTimer, hourTimer;
     private final SceneController controller = new SceneController();
     private final ButtonConfigurator buttonConfigurator = new ButtonConfigurator();
 
