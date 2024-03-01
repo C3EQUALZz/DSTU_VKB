@@ -1,4 +1,4 @@
-package programmingLanguagesJava.laboratories.GUI.controllers;
+package programmingLanguagesJava.laboratories.GUI.controllers.laboratories;
 
 import javafx.animation.TranslateTransition;
 import javafx.scene.control.Label;

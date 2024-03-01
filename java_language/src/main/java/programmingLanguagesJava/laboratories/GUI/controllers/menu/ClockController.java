@@ -1,4 +1,4 @@
-package programmingLanguagesJava.laboratories.GUI.controllers;
+package programmingLanguagesJava.laboratories.GUI.controllers.menu;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;

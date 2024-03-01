@@ -1,4 +1,4 @@
-package programmingLanguagesJava.laboratories.GUI.controllers.projectControllers;
+package programmingLanguagesJava.laboratories.GUI.controllers.project;
 
 import com.sothawo.mapjfx.Coordinate;
 import com.sothawo.mapjfx.MapView;

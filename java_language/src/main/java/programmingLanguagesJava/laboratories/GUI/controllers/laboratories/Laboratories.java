@@ -3,7 +3,7 @@
  */
 
 
-package programmingLanguagesJava.laboratories.GUI.controllers;
+package programmingLanguagesJava.laboratories.GUI.controllers.laboratories;
 
 import javafx.animation.*;
 import javafx.application.Platform;
@@ -16,6 +16,7 @@ import programmingLanguagesJava.laboratories.ConsoleReader;
 import programmingLanguagesJava.laboratories.GUI.config.ButtonConfigurator;
 import programmingLanguagesJava.laboratories.GUI.config.ComboboxConfigurator;
 import programmingLanguagesJava.laboratories.GUI.config.JsonSimpleParser;
+import programmingLanguagesJava.laboratories.GUI.controllers.SceneController;
 
 import java.io.IOException;
 import java.net.URL;

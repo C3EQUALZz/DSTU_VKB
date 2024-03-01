@@ -3,7 +3,7 @@
  * Здесь определены действия для кнопок, часов, плеера (звук при наведении на кнопки)
  */
 
-package programmingLanguagesJava.laboratories.GUI.controllers;
+package programmingLanguagesJava.laboratories.GUI.controllers.menu;
 
 
 import javafx.animation.PauseTransition;
@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import programmingLanguagesJava.laboratories.GUI.config.ButtonConfigurator;
+import programmingLanguagesJava.laboratories.GUI.controllers.SceneController;
 
 import java.io.IOException;
 import java.net.URL;
