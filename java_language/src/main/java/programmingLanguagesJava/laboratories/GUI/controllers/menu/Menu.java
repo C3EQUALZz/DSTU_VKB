@@ -6,23 +6,20 @@
 package programmingLanguagesJava.laboratories.GUI.controllers.menu;
 
 
-import javafx.animation.PauseTransition;
-import javafx.application.Platform;
+
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
 import programmingLanguagesJava.laboratories.GUI.config.ButtonConfigurator;
+import programmingLanguagesJava.laboratories.GUI.controllers.BaseController;
 import programmingLanguagesJava.laboratories.GUI.controllers.SceneController;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+public class Menu extends BaseController {
 
-public class Menu implements Initializable {
-
-    @FXML private Button exitButton, ButtonLabs, ButtonProject;
+    @FXML private Button ButtonLabs, ButtonProject;
     @FXML private Text secondsTimer, minutesTimer, hourTimer;
     private final SceneController controller = new SceneController();
     private final ButtonConfigurator buttonConfigurator = new ButtonConfigurator();
@@ -32,6 +29,8 @@ public class Menu implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        super.initialize(url, resourceBundle);
 
         // Класс, который описывает часы.
 
@@ -58,16 +57,6 @@ public class Menu implements Initializable {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
-        });
-
-        // Обработка событий для кнопки с выходом из меню
-
-        buttonConfigurator.setupButtonEvent(exitButton, event -> {
-
-            PauseTransition pause = new PauseTransition(Duration.millis(100));
-            pause.setOnFinished(evt -> Platform.exit());
-            pause.play();
 
         });
 
