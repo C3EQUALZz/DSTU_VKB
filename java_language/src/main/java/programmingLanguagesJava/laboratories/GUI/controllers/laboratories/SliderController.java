@@ -12,7 +12,7 @@ public class SliderController {
     private final Label openSlider;
     private final Label closeSlider;
 
-    private final ButtonConfigurator buttonConfigurator = new ButtonConfigurator();
+    private final ButtonConfigurator buttonConfigurator = ButtonConfigurator.getInstance();
 
     public SliderController(AnchorPane slider, Label openSlider, Label closeSlider) {
         this.slider = slider;

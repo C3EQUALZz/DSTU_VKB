@@ -40,7 +40,6 @@ public class Laboratories extends BaseController {
         // Связывание кнопок на слайдере с combobox
         buttonLabsEvent();
 
-        //
         buttonEvent();
 
         comboboxConfigurator.defaultConfiguration(combobox);

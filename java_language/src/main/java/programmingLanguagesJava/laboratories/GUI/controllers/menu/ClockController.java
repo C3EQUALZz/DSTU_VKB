@@ -8,9 +8,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class ClockController {
-    private final Text hourTimer;
-    private final Text minutesTimer;
-    private final Text secondsTimer;
+    private final Text hourTimer, minutesTimer, secondsTimer;
 
     public ClockController(Text hourTimer, Text minutesTimer, Text secondsTimer) {
         this.hourTimer = hourTimer;
