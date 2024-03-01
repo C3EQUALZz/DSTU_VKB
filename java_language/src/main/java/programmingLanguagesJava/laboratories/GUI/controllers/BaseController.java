@@ -20,8 +20,8 @@ import java.util.ResourceBundle;
 public abstract class BaseController implements Initializable {
     @FXML
     private Button exitButton, backButton;
-    private final ButtonConfigurator buttonConfigurator = new ButtonConfigurator();
-    private final SceneController controller = new SceneController();
+    protected final ButtonConfigurator buttonConfigurator = new ButtonConfigurator();
+    protected final SceneController controller = new SceneController();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

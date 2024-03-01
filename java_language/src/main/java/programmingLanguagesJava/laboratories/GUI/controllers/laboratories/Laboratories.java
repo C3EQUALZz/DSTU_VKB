@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import programmingLanguagesJava.laboratories.ConsoleReader;
-import programmingLanguagesJava.laboratories.GUI.config.ButtonConfigurator;
 import programmingLanguagesJava.laboratories.GUI.config.ComboboxConfigurator;
 import programmingLanguagesJava.laboratories.GUI.config.JsonSimpleParser;
 import programmingLanguagesJava.laboratories.GUI.controllers.BaseController;
@@ -27,7 +26,6 @@ public class Laboratories extends BaseController {
     @FXML private TextField inputArgs;
 
     private String buttonText;
-    private final ButtonConfigurator buttonConfigurator = ButtonConfigurator.getInstance();
     private final ComboboxConfigurator comboboxConfigurator = new ComboboxConfigurator();
     private final JsonSimpleParser data = new JsonSimpleParser();
 

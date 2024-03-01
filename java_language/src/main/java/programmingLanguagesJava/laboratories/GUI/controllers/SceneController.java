@@ -29,17 +29,9 @@ public class SceneController {
     private Scene menu, laboratories, project;
     // Костыль, который проверяет, что окна были созданы. Сделано с целью того, чтобы каждый раз не пересоздавать окно
     private boolean flagWindowCreated;
-    private static SceneController instance;
 
     public SceneController(Stage stage) {
         this.stage = stage;
-    }
-
-    public static SceneController getInstance(Stage stage) {
-        if (instance == null) {
-            instance = new SceneController(stage);
-        }
-        return instance;
     }
 
     public SceneController() {

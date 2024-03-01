@@ -10,9 +10,7 @@ package programmingLanguagesJava.laboratories.GUI.controllers.menu;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
-import programmingLanguagesJava.laboratories.GUI.config.ButtonConfigurator;
 import programmingLanguagesJava.laboratories.GUI.controllers.BaseController;
-import programmingLanguagesJava.laboratories.GUI.controllers.SceneController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,8 +19,6 @@ public class Menu extends BaseController {
 
     @FXML private Button ButtonLabs, ButtonProject;
     @FXML private Text secondsTimer, minutesTimer, hourTimer;
-    private final SceneController controller = new SceneController();
-    private final ButtonConfigurator buttonConfigurator = ButtonConfigurator.getInstance();
 
     /**
      * Здесь вот точка запуска программы контроллеров происходит. Параметрами я даже не пользуюсь, но они нужны.
