@@ -17,6 +17,13 @@ public class ButtonConfigurator {
     public final AudioClip hoverClip = new AudioClip(Objects.requireNonNull(getClass().getResource("/music/hover.mp3")).toExternalForm());
     public final AudioClip clickClip = new AudioClip(Objects.requireNonNull(getClass().getResource("/music/click.mp3")).toExternalForm());
 
+    private static ButtonConfigurator instance;
+
+    public static ButtonConfigurator getInstance() {
+        if (instance == null)
+            instance = new ButtonConfigurator();
+        return instance;
+    }
 
     /**
      * Настройка кнопки с определенными параметрами.

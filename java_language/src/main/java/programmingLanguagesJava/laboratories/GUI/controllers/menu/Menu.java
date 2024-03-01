@@ -22,7 +22,7 @@ public class Menu extends BaseController {
     @FXML private Button ButtonLabs, ButtonProject;
     @FXML private Text secondsTimer, minutesTimer, hourTimer;
     private final SceneController controller = new SceneController();
-    private final ButtonConfigurator buttonConfigurator = new ButtonConfigurator();
+    private final ButtonConfigurator buttonConfigurator = ButtonConfigurator.getInstance();
 
     /**
      * Здесь вот точка запуска программы контроллеров происходит. Параметрами я даже не пользуюсь, но они нужны.

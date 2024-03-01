@@ -17,7 +17,7 @@ import java.util.TreeMap;
 import java.util.stream.IntStream;
 
 public class ComboboxConfigurator {
-    private final ButtonConfigurator buttonConfigurator = new ButtonConfigurator();
+    private final ButtonConfigurator buttonConfigurator = ButtonConfigurator.getInstance();
 
     // Словарь с лабораторными работами, где ключ - лабораторная работа, значение - ссылки на методы
     private final TreeMap<Class<?>, Method[]> dictInfoLaboratories = ParserLaboratories.parseLaboratories();
