@@ -1,0 +1,57 @@
+.combo-box .list-view .list-cell:hover {
+    -fx-border-color: black;
+}
+
+.combo-box .increment-arrow, .combo-box .decrement-arrow {
+    -fx-background-color: #9e5ce4; /* Цвет стрелочек у ползунка ползунка */
+    -fx-border-width: 1px;
+}
+
+.combo-box .thumb {
+    -fx-background-color: #9e5ce4;
+}
+
+.combo-box .track {
+    -fx-background-color: transparent;
+    -fx-opacity: 0;
+}
+
+.combo-box {
+    -fx-background-color: #9e5ce4;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 3px;
+    -fx-padding: 5px;
+    -fx-text-fill: white;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.combo-box .arrow-button .arrow {
+    -fx-background-color: white;
+    -fx-shape: "M 0 0 L 4 5 L 8 0 Z";
+    -fx-translate-x: -2px;
+    -fx-translate-y: 1px;
+    -fx-transition: transform 0.3s ease-in-out;
+}
+
+.combo-box .list-view {
+    -fx-background-color: #9e5ce4;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 18;
+    -fx-background-radius: 18;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: white;
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 13;
+    -fx-border-radius: 18;
+    -fx-background-radius: 18;
+}
+
+.combo-box .list-view .list-cell {
+    -fx-padding: 5px;
+    -fx-background-color: #9e5ce4;
+}
