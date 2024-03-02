@@ -32,17 +32,16 @@ class OpenStreetMap {
         // Приближение карты по умолчанию. Выбрал на глаз.
         mapView.setZoom(17);
         // Event, который отвечает за установку маркера на карту.
-        markerEvent();
-
-
+        mapClickMarkerEvent();
     }
 
     // Данный код был полностью взят отсюда: https://www.sothawo.com/projects/mapjfx-demo/
-    private void markerEvent() {
+    private void mapClickMarkerEvent() {
         mapView.addEventHandler(MapViewEvent.MAP_CLICKED, event -> {
             event.consume();
             final Coordinate newPosition = event.getCoordinate();
-            addressField.setText(String.valueOf(newPosition));
+            // Здесь есть небольшие мои поправки, чтобы добавлялись данные насчет названия координат.
+            addressField.setText(ReverseGeocoding.getAddressByCoordinates(newPosition.getLatitude(), newPosition.getLongitude()));
 
             if (markerClick.getVisible()) {
                 final Coordinate oldPosition = markerClick.getPosition();
@@ -80,6 +79,10 @@ class OpenStreetMap {
         };
         transition.play();
     }
+
+    
+
+
 
 
 
