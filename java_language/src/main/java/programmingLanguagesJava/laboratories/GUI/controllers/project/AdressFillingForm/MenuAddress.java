@@ -1,3 +1,7 @@
+/**
+ * Контроллер для взаимодействия с адресом
+ */
+
 package programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm;
 
 import com.sothawo.mapjfx.MapView;
@@ -6,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import programmingLanguagesJava.laboratories.GUI.controllers.BaseController;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.MapInteraction.OpenStreetMap;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,9 +25,21 @@ public class MenuAddress extends BaseController {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
-        new OpenStreetMap(mapView, addressField).mapViewEvent();
+        setUpMap();
         PhotoAutoCadFileChooser.fileChooserEvent(downloadFile, buttonConfigurator);
     }
+
+    private void setUpMap() {
+        var openStreetMapInstance = new OpenStreetMap(mapView);
+        openStreetMapInstance.setAddressField(addressField);
+        openStreetMapInstance.event();
+
+    }
+
+    private void setUpFileChooser() {
+
+    }
+
 
 
 }
