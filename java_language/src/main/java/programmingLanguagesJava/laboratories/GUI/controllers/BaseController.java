@@ -21,7 +21,7 @@ public abstract class BaseController implements Initializable {
     @FXML
     private Button exitButton, backButton;
     protected final ButtonConfigurator buttonConfigurator = new ButtonConfigurator();
-    protected final SceneController controller = new SceneController();
+    protected final SceneController controller = SceneController.getInstance();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

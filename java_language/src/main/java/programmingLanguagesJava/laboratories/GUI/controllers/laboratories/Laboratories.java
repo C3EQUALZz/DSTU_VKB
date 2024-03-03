@@ -27,7 +27,7 @@ public class Laboratories extends BaseController {
 
     private String buttonText;
     private final ComboboxConfigurator comboboxConfigurator = new ComboboxConfigurator();
-    private final JsonSimpleParser data = new JsonSimpleParser();
+    private final JsonSimpleParser data = JsonSimpleParser.getInstance();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

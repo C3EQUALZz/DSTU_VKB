@@ -21,20 +21,33 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class SceneController {
-    // Параметры для определения координат мышки
     private double xOffset = 0, yOffset = 0;
-    // Наш Stage, с которым мы хотим взаимодействовать
     private Stage stage;
-    // В данном приложении будет 3 окна, вот как раз они ниже
     private Scene menu, laboratories, project;
     // Костыль, который проверяет, что окна были созданы. Сделано с целью того, чтобы каждый раз не пересоздавать окно
     private boolean flagWindowCreated;
+    private static SceneController instance;
 
-    public SceneController(Stage stage) {
+    private static final String MENU_FXML_PATH = "/menuFiles/menu.fxml";
+    private static final String LABORATORIES_FXML_PATH = "/laboratoriesFiles/laboratories.fxml";
+    private static final String PROJECT_FXML_PATH = "/projectFiles/project.fxml";
+
+    private SceneController(Stage stage) {
         this.stage = stage;
     }
 
-    public SceneController() {
+    public static SceneController getInstance(Stage stage) {
+        if (instance == null) {
+            instance = new SceneController(stage);
+        }
+        return instance;
+    }
+
+    public static SceneController getInstance() {
+        if (instance == null) {
+            throw new IllegalStateException("SceneController не был инициализирован");
+        }
+        return instance;
     }
 
     /**
@@ -105,9 +118,9 @@ public class SceneController {
     private void createAllScenes(MouseEvent event) {
 
         try {
-            this.menu = createWindow("/menuFiles/menu.fxml", event);
-            this.laboratories = createWindow("/laboratoriesFiles/laboratories.fxml", event);
-            this.project = createWindow("/projectFiles/project.fxml", event);
+            this.menu = createWindow(MENU_FXML_PATH, event);
+            this.laboratories = createWindow(LABORATORIES_FXML_PATH, event);
+            this.project = createWindow(PROJECT_FXML_PATH, event);
 
         } catch (IOException e) {
             throw new RuntimeException("Неправильные файлы или event");

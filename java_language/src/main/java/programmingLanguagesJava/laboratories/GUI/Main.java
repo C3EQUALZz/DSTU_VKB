@@ -22,7 +22,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         var stageInitialized = initStage(stage);
-        SceneController controller = new SceneController(stage);
+        SceneController controller = SceneController.getInstance(stage);
         controller.switchToMenu();
         stageInitialized.show();
     }
