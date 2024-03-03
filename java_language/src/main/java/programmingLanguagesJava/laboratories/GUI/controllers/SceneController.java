@@ -21,14 +21,22 @@ import java.util.Objects;
 public class SceneController {
     private double xOffset = 0, yOffset = 0;
     private final Stage stage;
-    private Scene menu, laboratories, project;
-    // Костыль, который проверяет, что окна были созданы. Сделано с целью того, чтобы каждый раз не пересоздавать окно
-    private boolean flagWindowCreated;
     private static SceneController instance;
 
-    private static final String MENU_FXML_PATH = "/menuFiles/menu.fxml";
-    private static final String LABORATORIES_FXML_PATH = "/laboratoriesFiles/laboratories.fxml";
-    private static final String PROJECT_FXML_PATH = "/projectFiles/project.fxml";
+    private enum Scenes {
+        ;
+        private static Scene MENU = null;
+        private static Scene LABORATORIES = null;
+        private static Scene PROJECT = null;
+    }
+
+    private enum ScenePath {
+        ;
+        private static final String MENU_FXML_PATH = "/menuFiles/menu.fxml";
+        private static final String LABORATORIES_FXML_PATH = "/laboratoriesFiles/laboratories.fxml";
+        private static final String PROJECT_FXML_PATH = "/projectFiles/project.fxml";
+    }
+
 
     private SceneController(Stage stage) {
         this.stage = stage;
@@ -54,12 +62,7 @@ public class SceneController {
      * @throws IOException может броситься такая ошибка, так как считывает файлы.
      */
     public void switchFromMenuToLaboratories() throws IOException {
-
-        if (!flagWindowCreated) {
-            createAllScenes();
-        }
-
-        animationSlideWindow(laboratories);
+        animationSlideWindow(Scenes.LABORATORIES);
     }
 
     /**
@@ -68,12 +71,7 @@ public class SceneController {
      * @throws IOException может броситься такая ошибка, так как считывает файлы
      */
     public void switchFromMenuToProject() throws IOException {
-
-        if (!flagWindowCreated) {
-            createAllScenes();
-        }
-
-        animationSlideWindow(this.project);
+        animationSlideWindow(Scenes.PROJECT);
     }
 
     /**
@@ -82,7 +80,7 @@ public class SceneController {
      * @throws IOException может броситься такая ошибка, так как считывает файлы
      */
     public void switchToMenu() throws IOException {
-        animationSlideWindow(this.menu);
+        animationSlideWindow(Scenes.MENU);
     }
 
     /**
@@ -92,24 +90,20 @@ public class SceneController {
      * @throws IOException может броситься такая ошибка, так как считывает файлы
      */
     public void setStartMenu() throws IOException {
-        this.menu = createWindow(MENU_FXML_PATH);
-        this.stage.setScene(this.menu);
-    }
 
-    /**
-     * Метод, который создает все окна сразу, чтобы каждый раз отдельное окно не подгружать в память
-     * Такой способ увеличивает быстродействие приложения, но больше расходуется память
-     */
-    private void createAllScenes() {
         try {
-            this.menu = createWindow(MENU_FXML_PATH);
-            this.laboratories = createWindow(LABORATORIES_FXML_PATH);
-            this.project = createWindow(PROJECT_FXML_PATH);
+
+            Scenes.MENU = createWindow(ScenePath.MENU_FXML_PATH);
+            Scenes.LABORATORIES = createWindow(ScenePath.LABORATORIES_FXML_PATH);
+            Scenes.PROJECT = createWindow(ScenePath.PROJECT_FXML_PATH);
 
         } catch (IOException e) {
+
             throw new RuntimeException("Неправильные файлы или event");
+
         }
-        this.flagWindowCreated = true;
+
+        this.stage.setScene(Scenes.MENU = createWindow(ScenePath.MENU_FXML_PATH));
     }
 
 
@@ -120,6 +114,7 @@ public class SceneController {
      */
     private Scene createWindow(String filePath) throws IOException {
         try {
+
             Parent windowFXML = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(filePath)));
             var scene = new Scene(windowFXML);
             setWindowDragged(windowFXML);
@@ -127,8 +122,11 @@ public class SceneController {
             scene.setFill(Color.TRANSPARENT);
 
             return scene;
+
         } catch (IOException e) {
+
             throw new RuntimeException("Не смог загрузить файл: " + filePath, e);
+
         }
 
     }
@@ -152,12 +150,12 @@ public class SceneController {
      * @param scene окно, на которое мы хотим переключиться.
      */
     private void animationSlideWindow(Scene scene) {
-        FadeTransition fadeOut = new FadeTransition(Duration.millis(750), this.stage.getScene().getRoot());
+        var fadeOut = new FadeTransition(Duration.millis(750), this.stage.getScene().getRoot());
         fadeOut.setFromValue(1.0);
         fadeOut.setToValue(0.0);
 
         fadeOut.setOnFinished(e -> {
-            FadeTransition fadeIn = new FadeTransition(Duration.millis(700), scene.getRoot());
+            var fadeIn = new FadeTransition(Duration.millis(700), scene.getRoot());
             fadeIn.setFromValue(0.0);
             fadeIn.setToValue(1.0);
             fadeIn.play();
