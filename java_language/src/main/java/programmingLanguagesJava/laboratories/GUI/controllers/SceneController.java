@@ -37,11 +37,20 @@ public class SceneController {
         private static final String PROJECT_FXML_PATH = "/projectFiles/project.fxml";
     }
 
-
+    /**
+     * Конструктор сделал приватным, чтобы реализовать Singleton - гугл в помощь
+     * @param stage окно Stage, к которому мы хотим прикрепить наш SceneController
+     */
     private SceneController(Stage stage) {
         this.stage = stage;
     }
 
+    /**
+     * Данный метод как раз и есть реализация паттерна Singleton на Java. Тут нет метода __new__, как в Python, чтобы
+     * работать не зная действие под капотом.
+     * @param stage окно Stage, к которому мы хотим прикрепить наш SceneController
+     * @return возвращает SceneController
+     */
     public static SceneController getInstance(Stage stage) {
         if (instance == null) {
             instance = new SceneController(stage);
@@ -49,6 +58,10 @@ public class SceneController {
         return instance;
     }
 
+    /**
+     * Метод больше как костыль, потому что в
+     * @return SceneController, который используется в BaseController.
+     */
     public static SceneController getInstance() {
         if (instance == null) {
             throw new IllegalStateException("SceneController не был инициализирован");
@@ -57,7 +70,7 @@ public class SceneController {
     }
 
     /**
-     * Переключение с меню на лабораторные
+     * Переключение с меню на лабораторные работы
      *
      * @throws IOException может броситься такая ошибка, так как считывает файлы.
      */
@@ -116,8 +129,11 @@ public class SceneController {
         try {
 
             Parent windowFXML = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(filePath)));
+
             var scene = new Scene(windowFXML);
+
             setWindowDragged(windowFXML);
+
             // Костыль, чтобы не было углов у приложения, которые видны в SceneBuilder
             scene.setFill(Color.TRANSPARENT);
 
