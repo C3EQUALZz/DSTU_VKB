@@ -42,13 +42,11 @@ public abstract class BaseController implements Initializable {
 
             // Обработка событий возврата обратно в меню
             buttonConfigurator.setupButtonEvent(backButton, event -> {
-
                 try {
-                    controller.switchToMenu(event);
+                    controller.switchToMenu();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-
             });
 
         } catch (RuntimeException ignored) {}

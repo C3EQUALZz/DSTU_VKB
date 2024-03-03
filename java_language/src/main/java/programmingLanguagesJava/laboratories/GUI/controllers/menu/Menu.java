@@ -35,25 +35,21 @@ public class Menu extends BaseController {
         // Обработка событий для кнопки с лабораторными
 
         buttonConfigurator.setupButtonEvent(ButtonLabs, event -> {
-
             try {
-                controller.switchFromMenuToLaboratories(event);
+                controller.switchFromMenuToLaboratories();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
         });
 
         // Обработка событий для кнопки с проектом
 
         buttonConfigurator.setupButtonEvent(ButtonProject, event -> {
-
             try {
-                controller.switchFromMenuToProject(event);
+                controller.switchFromMenuToProject();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
         });
 
     }

@@ -9,12 +9,10 @@ package programmingLanguagesJava.laboratories.GUI.controllers;
 
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -22,7 +20,7 @@ import java.util.Objects;
 
 public class SceneController {
     private double xOffset = 0, yOffset = 0;
-    private Stage stage;
+    private final Stage stage;
     private Scene menu, laboratories, project;
     // Костыль, который проверяет, что окна были созданы. Сделано с целью того, чтобы каждый раз не пересоздавать окно
     private boolean flagWindowCreated;
@@ -53,13 +51,12 @@ public class SceneController {
     /**
      * Переключение с меню на лабораторные
      *
-     * @param event MouseEvent, с помощью которого мы будем определять в каком Stage это происходит
      * @throws IOException может броситься такая ошибка, так как считывает файлы.
      */
-    public void switchFromMenuToLaboratories(MouseEvent event) throws IOException {
+    public void switchFromMenuToLaboratories() throws IOException {
 
         if (!flagWindowCreated) {
-            createAllScenes(event);
+            createAllScenes();
         }
 
         animationSlideWindow(laboratories);
@@ -68,13 +65,12 @@ public class SceneController {
     /**
      * Переключение с меню на проект
      *
-     * @param event MouseEvent, с помощью которого мы будем определять в каком Stage это происходит
      * @throws IOException может броситься такая ошибка, так как считывает файлы
      */
-    public void switchFromMenuToProject(MouseEvent event) throws IOException {
+    public void switchFromMenuToProject() throws IOException {
 
         if (!flagWindowCreated) {
-            createAllScenes(event);
+            createAllScenes();
         }
 
         animationSlideWindow(this.project);
@@ -83,15 +79,9 @@ public class SceneController {
     /**
      * Переключение с любого окна на меню
      *
-     * @param event MouseEvent, с помощью которого мы будем определять в каком Stage это происходит
      * @throws IOException может броситься такая ошибка, так как считывает файлы
      */
-    public void switchToMenu(MouseEvent event) throws IOException {
-
-        if (!flagWindowCreated) {
-            createAllScenes(event);
-        }
-
+    public void switchToMenu() throws IOException {
         animationSlideWindow(this.menu);
     }
 
@@ -101,68 +91,49 @@ public class SceneController {
      * При первом запуске
      * @throws IOException может броситься такая ошибка, так как считывает файлы
      */
-    public void switchToMenu() throws IOException {
-
-        if (!flagWindowCreated) {
-            this.menu = createWindow();
-        }
-
+    public void setStartMenu() throws IOException {
+        this.menu = createWindow(MENU_FXML_PATH);
         this.stage.setScene(this.menu);
     }
 
     /**
      * Метод, который создает все окна сразу, чтобы каждый раз отдельное окно не подгружать в память
      * Такой способ увеличивает быстродействие приложения, но больше расходуется память
-     * @param event MouseEvent, с помощью которого мы будем определять в каком Stage это происходит
      */
-    private void createAllScenes(MouseEvent event) {
-
+    private void createAllScenes() {
         try {
-            this.menu = createWindow(MENU_FXML_PATH, event);
-            this.laboratories = createWindow(LABORATORIES_FXML_PATH, event);
-            this.project = createWindow(PROJECT_FXML_PATH, event);
+            this.menu = createWindow(MENU_FXML_PATH);
+            this.laboratories = createWindow(LABORATORIES_FXML_PATH);
+            this.project = createWindow(PROJECT_FXML_PATH);
 
         } catch (IOException e) {
             throw new RuntimeException("Неправильные файлы или event");
         }
-
         this.flagWindowCreated = true;
     }
 
 
     /**
      * @param filePath Путь к файлу
-     * @param event MouseEvent, с помощью которого мы будем определять в каком Stage это происходит
      * @return Возвращает созданную сцену
      * @throws IOException может возникнуть ошибка при считывании файла с FXML
      */
-    private Scene createWindow(String filePath, MouseEvent event) throws IOException {
-        Parent windowFXML = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(filePath)));
-        var scene = new Scene(windowFXML);
+    private Scene createWindow(String filePath) throws IOException {
+        try {
+            Parent windowFXML = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(filePath)));
+            var scene = new Scene(windowFXML);
+            setWindowDragged(windowFXML);
+            // Костыль, чтобы не было углов у приложения, которые видны в SceneBuilder
+            scene.setFill(Color.TRANSPARENT);
 
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            return scene;
+        } catch (IOException e) {
+            throw new RuntimeException("Не смог загрузить файл: " + filePath, e);
+        }
 
-        // Возможность, чтобы окно могло передвигаться при зажатии мышки
-        windowFXML.setOnMousePressed(ev -> {
-            xOffset = ev.getSceneX();
-            yOffset = ev.getSceneY();
-        });
-
-        windowFXML.setOnMouseDragged(ev -> {
-            stage.setX(ev.getScreenX() - xOffset);
-            stage.setY(ev.getScreenY() - yOffset);
-        });
-
-        // Костыль, чтобы не было углов у приложения, которые видны в SceneBuilder
-        scene.setFill(Color.TRANSPARENT);
-
-        return scene;
     }
 
-    private Scene createWindow() throws IOException {
-
-        Parent windowFXML = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/menuFiles/menu.fxml")));
-
+    private void setWindowDragged(Parent windowFXML) {
         // Возможность, чтобы окно могло передвигаться при зажатии мышки
         windowFXML.setOnMousePressed(ev -> {
             xOffset = ev.getSceneX();
@@ -174,14 +145,6 @@ public class SceneController {
             this.stage.setX(ev.getScreenX() - xOffset);
             this.stage.setY(ev.getScreenY() - yOffset);
         });
-
-
-        var scene = new Scene(windowFXML);
-
-        // Костыль, чтобы не было углов у приложения, которые видны в SceneBuilder
-        scene.setFill(Color.TRANSPARENT);
-
-        return scene;
     }
 
     /**

@@ -23,7 +23,7 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         var stageInitialized = initStage(stage);
         SceneController controller = SceneController.getInstance(stage);
-        controller.switchToMenu();
+        controller.setStartMenu();
         stageInitialized.show();
     }
 

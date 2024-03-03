@@ -88,7 +88,7 @@ class ReverseGeocoding {
 
         } catch (IOException e) {
 
-            throw new IOException("Не получается собрать JSON информацию с карты", e);
+            throw new IOException("Не удалось считать JSON данные");
 
         }
     }
