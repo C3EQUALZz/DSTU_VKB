@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import programmingLanguagesJava.laboratories.GUI.config.ComboboxConfigurator;
 import programmingLanguagesJava.laboratories.GUI.controllers.BaseController;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.addingNames.TextFieldAddController;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.fileChooserInteraction.PhotoAutoCadFileChooser;
@@ -24,7 +25,7 @@ public class MenuAddress extends BaseController {
     @FXML private Button downloadFile, startSearch, addHuman;
     @FXML private TextField addressField, fullNameField;
     @FXML private ComboBox<String> combobox;
-
+    private final ComboboxConfigurator comboboxConfigurator = new ComboboxConfigurator();
 
 
     @Override
@@ -34,7 +35,7 @@ public class MenuAddress extends BaseController {
         setUpFileChooser();
         setUpSearchEngine();
         setUpFullName();
-        setUpCombobox();
+        comboboxConfigurator.defaultConfiguration(combobox);
     }
 
     /**
@@ -61,17 +62,15 @@ public class MenuAddress extends BaseController {
      */
     private void setUpFileChooser() {
         var fileChooser = new PhotoAutoCadFileChooser();
-        fileChooser.setButtonDownloadFile(downloadFile);
-        fileChooser.event();
+        buttonConfigurator.setupButtonEvent(downloadFile, fileChooser::event);
     }
 
     private void setUpFullName() {
         var textFieldNamePerson = new TextFieldAddController(fullNameField);
-        buttonConfigurator.setupButtonEvent(addHuman, event -> textFieldNamePerson.event());
-    }
-
-    private void setUpCombobox() {
-
+        buttonConfigurator.setupButtonEvent(addHuman, event -> {
+            textFieldNamePerson.event();
+            comboboxConfigurator.setupComboboxEvent(combobox, textFieldNamePerson.getPersons());
+        });
     }
 
 
