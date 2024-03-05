@@ -10,7 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import programmingLanguagesJava.laboratories.GUI.controllers.BaseController;
-import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.MapInteraction.OpenStreetMap;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.processingEventsOnMap.OpenStreetMap;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -37,14 +37,15 @@ public class MenuAddress extends BaseController {
         var openStreetMapInstance = new OpenStreetMap(mapView);
         openStreetMapInstance.setAddressField(addressField);
         openStreetMapInstance.event();
-
     }
 
     /**
      * Здесь запускается event, который обрабатывает поиск через ввод данных с TextField.
      */
     private void setUpSearchEngine() {
-
+        var textFieldSearchEngine = new TextFieldSearchController(addressField);
+        textFieldSearchEngine.setMapView(mapView);
+        buttonConfigurator.setupButtonEvent(startSearch, event -> textFieldSearchEngine.event());
     }
 
 

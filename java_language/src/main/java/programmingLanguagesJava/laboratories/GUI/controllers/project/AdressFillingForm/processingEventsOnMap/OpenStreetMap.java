@@ -3,7 +3,7 @@
  * Здесь есть логика нажатия на карту, установка маркеров
  */
 
-package programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.MapInteraction;
+package programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.processingEventsOnMap;
 
 import com.sothawo.mapjfx.Coordinate;
 import com.sothawo.mapjfx.MapView;
@@ -58,9 +58,4 @@ public class OpenStreetMap {
 
         mapClickController.event();
     }
-
-    private static void textFieldEvent(MapView mapView, TextField addressField) {
-        // Добавить поддержку ассинхронности в приложении, чтобы не было проблем с задержкой. 
-    }
-
 }

@@ -1,3 +1,8 @@
+/**
+ * Данная часть разработана как обработчик событий на выбор файлов, который Java сама вызывает относительно операционной системы.
+ * Здесь скорее всего будет обработка по добавлению плана здания.
+ */
+
 package programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm;
 
 import javafx.scene.Node;
@@ -19,6 +24,7 @@ class PhotoAutoCadFileChooser {
     void setButtonDownloadFile(Button button) {
         this.buttonDownloadFile = button;
     }
+
     @SuppressWarnings("unused")
     Button getButtonDownloadFile() {
         return buttonDownloadFile;

@@ -4,7 +4,7 @@
  * Документация к тому, чтобы работать с маркером: https://www.sothawo.com/projects/mapjfx-demo/
  */
 
-package programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.MapInteraction;
+package programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.processingEventsOnMap;
 
 import com.sothawo.mapjfx.Coordinate;
 import com.sothawo.mapjfx.MapView;

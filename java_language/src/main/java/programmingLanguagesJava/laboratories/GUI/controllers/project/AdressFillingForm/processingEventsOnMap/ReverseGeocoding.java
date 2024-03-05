@@ -4,7 +4,7 @@
  * Мы же в Google картах не вбиваем координаты, а только название. Здесь реализован именно функционал.
  */
 
-package programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.MapInteraction;
+package programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.processingEventsOnMap;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
