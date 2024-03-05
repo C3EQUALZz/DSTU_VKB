@@ -111,7 +111,7 @@
                               </AnchorPane>
                               <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                  <children>
-                                    <TextArea layoutX="155.0" layoutY="-34.0" prefHeight="166.0" prefWidth="509.0" promptText="Уточнения от заказчика можете добавить здесь:" style="-fx-border-color: white; -fx-border-radius: 18; -fx-background-radius: 18;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                    <TextArea fx:id="comments" layoutX="155.0" layoutY="-34.0" prefHeight="166.0" prefWidth="509.0" promptText="Уточнения от заказчика можете добавить здесь:" style="-fx-border-color: white; -fx-border-radius: 18; -fx-background-radius: 18;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                                        <padding>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </padding>
@@ -126,7 +126,7 @@
                      </children></AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                      <children>
-                        <Button fx:id="clearInput" layoutY="17.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="75.0" prefWidth="235.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 30;" stylesheets="@../stageFiles/Styles.css" text="Очистить данные" textFill="WHITE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="269.0" AnchorPane.topAnchor="20.0">
+                        <Button fx:id="createDocument" layoutY="17.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="75.0" prefWidth="235.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 30;" stylesheets="@../stageFiles/Styles.css" text="Создать договор" textFill="WHITE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="269.0" AnchorPane.topAnchor="20.0">
                            <font>
                               <Font name="Comic Sans MS Bold" size="20.0" />
                            </font>

@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 public class MenuAddress extends BaseController {
 
     @FXML private MapView mapView;
-    @FXML private Button downloadFile, startSearch, addHuman;
+    @FXML private Button downloadFile, startSearch, addHuman, createDocument;
     @FXML private TextField addressField, fullNameField;
     @FXML private ComboBox<String> combobox;
     private final ComboboxConfigurator comboboxConfigurator = new ComboboxConfigurator();
@@ -65,12 +65,24 @@ public class MenuAddress extends BaseController {
         buttonConfigurator.setupButtonEvent(downloadFile, fileChooser::event);
     }
 
+    /**
+     * Здесь запускается event, который обрабатывает добавления ФИО в TextField.
+     * После добавления хотя бы одного ФИО включается combobox.
+     */
     private void setUpFullName() {
         var textFieldNamePerson = new TextFieldAddController(fullNameField);
         buttonConfigurator.setupButtonEvent(addHuman, event -> {
             textFieldNamePerson.event();
             comboboxConfigurator.setupComboboxEvent(combobox, textFieldNamePerson.getPersons());
         });
+    }
+
+
+    /**
+     * Здесь описывается логика создания документа, который мы будем обрабатывать.
+     */
+    private void setUpCreateDocument() {
+
     }
 
 
