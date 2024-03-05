@@ -26,9 +26,13 @@ public class MenuAddress extends BaseController {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
         setUpMap();
-        PhotoAutoCadFileChooser.fileChooserEvent(downloadFile, buttonConfigurator);
+        setUpFileChooser();
+        setUpSearchEngine();
     }
 
+    /**
+     * Здесь запускается event, который обрабатывает изначальную инициализацию карты, добавляет event маркера
+     */
     private void setUpMap() {
         var openStreetMapInstance = new OpenStreetMap(mapView);
         openStreetMapInstance.setAddressField(addressField);
@@ -36,9 +40,26 @@ public class MenuAddress extends BaseController {
 
     }
 
-    private void setUpFileChooser() {
+    /**
+     * Здесь запускается event, который обрабатывает поиск через ввод данных с TextField.
+     */
+    private void setUpSearchEngine() {
 
     }
+
+
+    /**
+     * Здесь запускается event, который обрабатывает кнопку добавки файлов
+     */
+    private void setUpFileChooser() {
+        var fileChooser = new PhotoAutoCadFileChooser();
+        fileChooser.setButtonDownloadFile(downloadFile);
+        fileChooser.event();
+
+        // Здесь можно добавить логику добавки информации в общий JSON, который позже можно обрабатывать.
+    }
+
+
 
 
 
