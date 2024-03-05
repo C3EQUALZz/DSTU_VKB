@@ -100,9 +100,8 @@ public class SceneController {
      * Переключение с любого окна на меню.
      * Здесь используется для удобства взаимодействия с самого начала приложения.
      * При первом запуске
-     * @throws IOException может броситься такая ошибка, так как считывает файлы
      */
-    public void setStartMenu() throws IOException {
+    public void setStartMenu() {
 
         try {
 
@@ -116,7 +115,7 @@ public class SceneController {
 
         }
 
-        this.stage.setScene(Scenes.MENU = createWindow(ScenePath.MENU_FXML_PATH));
+        this.stage.setScene(Scenes.MENU);
     }
 
 
@@ -171,7 +170,7 @@ public class SceneController {
         fadeOut.setToValue(0.0);
 
         fadeOut.setOnFinished(e -> {
-            var fadeIn = new FadeTransition(Duration.millis(700), scene.getRoot());
+            var fadeIn = new FadeTransition(Duration.millis(850), scene.getRoot());
             fadeIn.setFromValue(0.0);
             fadeIn.setToValue(1.0);
             fadeIn.play();

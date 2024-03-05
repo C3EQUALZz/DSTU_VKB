@@ -10,8 +10,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import programmingLanguagesJava.laboratories.GUI.controllers.SceneController;
 
-import java.io.IOException;
-
 public class Main extends Application {
 
     /**
@@ -20,7 +18,7 @@ public class Main extends Application {
      * @param stage сущность нашего приложения.
      */
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         var stageInitialized = initStage(stage);
         SceneController controller = SceneController.getInstance(stage);
         controller.setStartMenu();
