@@ -3,7 +3,7 @@
  * Здесь скорее всего будет обработка по добавлению плана здания.
  */
 
-package programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm;
+package programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.fileChooserInteraction;
 
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -12,7 +12,7 @@ import programmingLanguagesJava.laboratories.GUI.config.ButtonConfigurator;
 
 import java.io.File;
 
-class PhotoAutoCadFileChooser {
+public class PhotoAutoCadFileChooser {
     private static final FileChooser.ExtensionFilter photosFilter = new FileChooser.ExtensionFilter("Photo", "*.jpg", "*.jpeg", "*.png");
     private static final FileChooser.ExtensionFilter autoCadFilesFilter = new FileChooser.ExtensionFilter("Plans", "*.dwg", "*.rvt");
     private final ButtonConfigurator buttonConfigurator = ButtonConfigurator.getInstance();
@@ -21,22 +21,22 @@ class PhotoAutoCadFileChooser {
     private String selectedFile;
 
     @SuppressWarnings("unused")
-    void setButtonDownloadFile(Button button) {
+    public void setButtonDownloadFile(Button button) {
         this.buttonDownloadFile = button;
     }
 
     @SuppressWarnings("unused")
-    Button getButtonDownloadFile() {
+    public Button getButtonDownloadFile() {
         return buttonDownloadFile;
     }
 
     @SuppressWarnings("unused")
-    String getSelectedFile() {
+    public String getSelectedFile() {
         return this.selectedFile;
     }
 
     @SuppressWarnings("unused")
-    void event() {
+    public void event() {
         if (buttonDownloadFile == null) {
             throw new RuntimeException("Вы должны выбрать кнопку для установки fileChooser");
         }

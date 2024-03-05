@@ -10,7 +10,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import programmingLanguagesJava.laboratories.GUI.controllers.BaseController;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.addingNames.TextFieldAddController;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.fileChooserInteraction.PhotoAutoCadFileChooser;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.processingEventsOnMap.OpenStreetMap;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.searchEngineField.TextFieldSearchController;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,9 +21,11 @@ import java.util.ResourceBundle;
 public class MenuAddress extends BaseController {
 
     @FXML private MapView mapView;
-    @FXML private Button downloadFile, startSearch;
-    @FXML private TextField addressField;
+    @FXML private Button downloadFile, startSearch, addHuman;
+    @FXML private TextField addressField, fullNameField;
     @FXML private ComboBox<String> combobox;
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -28,6 +33,8 @@ public class MenuAddress extends BaseController {
         setUpMap();
         setUpFileChooser();
         setUpSearchEngine();
+        setUpFullName();
+        setUpCombobox();
     }
 
     /**
@@ -56,12 +63,16 @@ public class MenuAddress extends BaseController {
         var fileChooser = new PhotoAutoCadFileChooser();
         fileChooser.setButtonDownloadFile(downloadFile);
         fileChooser.event();
-
-        // Здесь можно добавить логику добавки информации в общий JSON, который позже можно обрабатывать.
     }
 
+    private void setUpFullName() {
+        var textFieldNamePerson = new TextFieldAddController(fullNameField);
+        buttonConfigurator.setupButtonEvent(addHuman, event -> textFieldNamePerson.event());
+    }
 
+    private void setUpCombobox() {
 
+    }
 
 
 }

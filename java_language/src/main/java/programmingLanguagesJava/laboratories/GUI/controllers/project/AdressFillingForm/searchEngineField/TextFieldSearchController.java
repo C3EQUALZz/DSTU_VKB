@@ -4,7 +4,7 @@
  * Тут есть дублирование логики с другим классом, где есть запросы к API, но мне исправлять это не особо хочется сейчас.
  */
 
-package programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm;
+package programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.searchEngineField;
 
 import com.sothawo.mapjfx.Coordinate;
 import com.sothawo.mapjfx.MapView;
@@ -31,24 +31,24 @@ public class TextFieldSearchController {
     private static final Marker markerClick = Marker.createProvided(Marker.Provided.BLUE).setVisible(true);
 
     @SuppressWarnings("unused")
-    TextFieldSearchController(TextField textField) {
+    public TextFieldSearchController(TextField textField) {
         this.textField = textField;
     }
 
     @SuppressWarnings("unused")
-    void setMapView(MapView mapView) {
+    public void setMapView(MapView mapView) {
         this.mapView = mapView;
     }
 
     @SuppressWarnings("unused")
-    MapView getMapView() {
+    public MapView getMapView() {
         return this.mapView;
     }
 
     /**
      * Обработчик событий, чтобы запускать логику методов.
      */
-    void event() {
+    public void event() {
         var prompt = textField.getText();
 
         var connection = connect(prompt);
