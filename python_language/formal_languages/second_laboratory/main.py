@@ -31,19 +31,13 @@ def check_exist(grammar_rules: dict[str, list[str]]) -> bool:
             if symbol not in reachable_symbols:
                 reachable_symbols.add(symbol)
 
-    def all_symbols_reachable(production_inner: str) -> bool:
-        """
-        Проверяет, что все символы находятся в достижимых
-        """
-        return all(symbol in reachable_symbols for symbol in production_inner)
-
     def factory(productions_inner: list[str]) -> bool | None:
         """
         Здесь используется фабрика, которая все запускает для удобства
         """
         for production_inner in productions_inner:
             # Если все символы из правила уже достижимы, добавляем не терминал в множество
-            if all_symbols_reachable(production_inner) and non_terminal not in reachable_symbols:
+            if all(symbol in reachable_symbols for symbol in production_inner):
                 update_reachable_symbols({non_terminal})
                 return True
 
