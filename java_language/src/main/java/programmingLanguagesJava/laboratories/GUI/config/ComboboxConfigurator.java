@@ -12,12 +12,13 @@ import javafx.scene.control.ListCell;
 import programmingLanguagesJava.laboratories.GUI.config.ParserLabs.ParserLaboratories;
 
 import java.lang.reflect.Method;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.TreeMap;
 import java.util.stream.IntStream;
 
 public class ComboboxConfigurator {
-    private final ButtonConfigurator buttonConfigurator = new ButtonConfigurator();
+    private final ButtonConfigurator buttonConfigurator = ButtonConfigurator.getInstance();
 
     // Словарь с лабораторными работами, где ключ - лабораторная работа, значение - ссылки на методы
     private final TreeMap<Class<?>, Method[]> dictInfoLaboratories = ParserLaboratories.parseLaboratories();
@@ -74,6 +75,27 @@ public class ComboboxConfigurator {
         IntStream.range(1, countOfMethods + 1).forEach(number -> linkedList.add(number + " задание"));
 
         comboBox.getItems().addAll(linkedList);
+
+        if (selectedValue != null) {
+
+            if (comboBox.getItems().contains(selectedValue))
+                comboBox.setValue(selectedValue);
+
+            else
+                comboBox.getSelectionModel().selectFirst();
+
+        }
+    }
+
+    public void setupComboboxEvent(ComboBox<String> comboBox, Collection<String> nameOfPersons) {
+        comboBox.setDisable(false);
+
+        // Сохранение выбранного значения, если оно есть
+        var selectedValue = comboBox.getValue();
+
+        comboBox.getItems().clear();
+
+        comboBox.getItems().addAll(nameOfPersons);
 
         if (selectedValue != null) {
 

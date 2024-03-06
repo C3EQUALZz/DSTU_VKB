@@ -10,8 +10,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import programmingLanguagesJava.laboratories.GUI.controllers.SceneController;
 
-import java.io.IOException;
-
 public class Main extends Application {
 
     /**
@@ -20,10 +18,10 @@ public class Main extends Application {
      * @param stage сущность нашего приложения.
      */
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         var stageInitialized = initStage(stage);
-        SceneController controller = new SceneController(stage);
-        controller.switchToMenu();
+        SceneController controller = SceneController.getInstance(stage);
+        controller.setStartMenu();
         stageInitialized.show();
     }
 
@@ -39,7 +37,7 @@ public class Main extends Application {
         primaryStage.setResizable(false);
 
         // Установка изображения для приложения
-        primaryStage.getIcons().add(new Image("/menuFiles/desktop.png"));
+        primaryStage.getIcons().add(new Image("/menuFiles/images/desktop.png"));
 
         // Определяю так, чтобы не было системных Windows компонентов, так как с ними выглядит ужасно.
         primaryStage.initStyle(StageStyle.TRANSPARENT);

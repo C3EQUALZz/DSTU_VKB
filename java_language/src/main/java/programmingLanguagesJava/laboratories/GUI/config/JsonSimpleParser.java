@@ -17,8 +17,17 @@ public class JsonSimpleParser {
     private static final JSONParser parser = new JSONParser();
     private final JSONObject jsonObject;
 
-    public JsonSimpleParser() {
+    private static JsonSimpleParser instance;
+
+    private JsonSimpleParser() {
         this.jsonObject = parse();
+    }
+
+    public static JsonSimpleParser getInstance() {
+        if (instance == null) {
+            instance = new JsonSimpleParser();
+        }
+        return instance;
     }
 
     private static JSONObject parse() {

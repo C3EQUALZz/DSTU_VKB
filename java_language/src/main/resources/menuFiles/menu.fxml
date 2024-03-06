@@ -13,13 +13,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="menuRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #2E3348; -fx-border-radius: 30; -fx-background-radius: 18;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="programmingLanguagesJava.laboratories.GUI.controllers.Menu">
+<BorderPane fx:id="menuRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #2E3348; -fx-border-radius: 30; -fx-background-radius: 18;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="programmingLanguagesJava.laboratories.GUI.controllers.menu.Menu">
    <left>
       <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="560.0" fitWidth="380.0" layoutX="20.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@rounded-in-photoretrica.png" />
+                  <Image url="@images/rounded-in-photoretrica.png" />
                </image>
             </ImageView>
             <GridPane layoutX="19.0" layoutY="39.0" prefHeight="152.0" prefWidth="375.0">

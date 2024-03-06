@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #2E3348; -fx-border-radius: 30; -fx-background-radius: 18;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="programmingLanguagesJava.laboratories.GUI.controllers.Laboratories">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #2E3348; -fx-border-radius: 30; -fx-background-radius: 18;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="programmingLanguagesJava.laboratories.GUI.controllers.laboratories.Laboratories">
    <top>
       <AnchorPane prefHeight="110.0" prefWidth="835.0" BorderPane.alignment="CENTER">
          <children>
@@ -31,7 +31,7 @@
                   <Button fx:id="backButton" layoutX="19.0" layoutY="17.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="28.0" stylesheets="@../stageFiles/Styles.css" />
                </children>
             </AnchorPane>
-            <ComboBox fx:id="combobox" layoutX="593.0" layoutY="66.0" prefHeight="32.0" prefWidth="193.0" promptText="Выберите задание" stylesheets="@../stageFiles/combobox.css" visibleRowCount="5">
+            <ComboBox fx:id="combobox" layoutX="593.0" layoutY="66.0" prefHeight="32.0" prefWidth="193.0" promptText="Выберите задание" stylesheets="@CSS/combobox.css" visibleRowCount="5">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -45,7 +45,7 @@
                <graphic>
                   <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@Menu.png" />
+                        <Image url="@images/Menu.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -57,7 +57,7 @@
                <graphic>
                   <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@Menu.png" />
+                        <Image url="@images/Menu.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -77,7 +77,7 @@
                      <graphic>
                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@Glass_Flask.png" />
+                              <Image url="@images/Glass_Flask.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -89,7 +89,7 @@
                      <graphic>
                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@Glass_Flask.png" />
+                              <Image url="@images/Glass_Flask.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -101,7 +101,7 @@
                      <graphic>
                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@Glass_Flask.png" />
+                              <Image url="@images/Glass_Flask.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -113,7 +113,7 @@
                      <graphic>
                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@Glass_Flask.png" />
+                              <Image url="@images/Glass_Flask.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -125,7 +125,7 @@
                      <graphic>
                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@Glass_Flask.png" />
+                              <Image url="@images/Glass_Flask.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -137,7 +137,7 @@
                      <graphic>
                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@Glass_Flask.png" />
+                              <Image url="@images/Glass_Flask.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -149,7 +149,7 @@
                      <graphic>
                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@Glass_Flask.png" />
+                              <Image url="@images/Glass_Flask.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -198,12 +198,12 @@
                   </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="121.0" prefWidth="324.0" stylesheets="@../stageFiles/Styles.css">
                      <children>
-                        <TextField fx:id="inputArgs" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="486.0" promptText="Введите параметры " style="-fx-background-color: transparent; -fx-border-color: WHITE; -fx-border-radius: 30; -fx-background-radius: 18;" stylesheets="@../stageFiles/console.css" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
+                        <TextField fx:id="inputArgs" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="486.0" promptText="Введите параметры " style="-fx-background-color: transparent; -fx-border-color: WHITE; -fx-border-radius: 30; -fx-background-radius: 18; -fx-text-fill: white;" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
                            <font>
                               <Font name="Comic Sans MS Bold" size="12.0" />
                            </font>
                         </TextField>
-                        <TextArea fx:id="output" editable="false" layoutX="-2.0" layoutY="55.0" prefHeight="130.0" prefWidth="518.0" style="-fx-border-color: WHITE; -fx-border-width: 2;" stylesheets="@../stageFiles/console.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-2.0">
+                        <TextArea fx:id="output" editable="false" layoutX="-2.0" layoutY="55.0" prefHeight="130.0" prefWidth="518.0" style="-fx-border-color: WHITE; -fx-border-width: 2; -fx-font-size: 14;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-2.0">
                            <font>
                               <Font name="Comic Sans MS Bold" size="12.0" />
                            </font>

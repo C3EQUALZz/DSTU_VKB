@@ -1,0 +1,1 @@
+from .get_rules_from_console import get_rules_from_console

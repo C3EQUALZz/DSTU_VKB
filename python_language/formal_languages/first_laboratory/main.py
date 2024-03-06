@@ -5,7 +5,7 @@
 """
 import re
 from typing import Pattern, AnyStr
-from ..interaction_with_user import read_grammar_from_console
+from python_language.formal_languages.useful_functions import get_rules_from_console
 
 
 def is_left_linear(grammar: dict[str, list[str]]) -> bool:
@@ -78,7 +78,7 @@ def is_context_free(grammar: dict[str, list[str]]) -> bool:
     S -> aa
     I -> bb
     """
-    pattern = re.compile(r'^[A-Z] -> (?:[^A-Z]+[A-Za-z]*[^A-Z]|\W)')
+    pattern = re.compile(r'^[A-Z] -> (?:[A-Za-z]+|\W)')
     return _checker(grammar=grammar, pattern=pattern)
 
 
@@ -87,13 +87,13 @@ def _checker(grammar: dict[str, list[str]], pattern: Pattern[AnyStr]) -> bool:
     В данную функцию передают саму грамматику, которую пользователь ввел с консоли и паттерн для проверки.
     """
     for first_half, second_half in grammar.items():
-        if not all(pattern.match(f"{first_half} -> {second_half_el}") for second_half_el in second_half):
+        if not all(pattern.fullmatch(f"{first_half} -> {second_half_el}") for second_half_el in second_half):
             return False
     return True
 
 
 def main():
-    dictionary = read_grammar_from_console()
+    dictionary = get_rules_from_console()
 
     if is_left_linear(dictionary):
         return "Тип 3: регулярная лево линейная грамматика"
