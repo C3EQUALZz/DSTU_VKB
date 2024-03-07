@@ -38,7 +38,7 @@ def _parse_rules(rules: list[str], set_of_terminals: set[str]) -> list[str]:
 
 
 def main() -> None:
-    set_of_terminals = set(input('Множество терминалов: ').split())
+    set_of_terminals = set(input('Множество не терминалов: ').split())
     new_grammar = remove_useless_symbol(get_rules_from_console(), set_of_terminals)
     print("Новая грамматика без бесполезных символов:")
     print("\n".join(f"{key} -> {'|'.join(value)}" for key, value in new_grammar.items()))

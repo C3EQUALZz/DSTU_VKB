@@ -4,7 +4,7 @@
 from collections import defaultdict
 
 
-def get_rules_from_console():
+def get_rules_from_console(key="don't_remove"):
     """
     Получение информации о правилах грамматики, возвращая в виде словаря
     """
@@ -12,7 +12,7 @@ def get_rules_from_console():
     print("Сейчас вы будете вводить грамматики. Пример ввода: S -> aSb\nКонец ввода - это 'exit' ")
 
     while (args := input()) != "exit":
-        key, value = map(lambda x: x.strip().rstrip("|E"), args.split("->"))
+        key, value = map(lambda x: x.strip().rstrip("|E" if key != "don't_remove" else ""), args.split("->"))
         dictionary[key].append(value)
 
     return dictionary
