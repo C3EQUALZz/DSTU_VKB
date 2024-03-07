@@ -1,69 +1,47 @@
-from typing import Generator, Any
+"""
+Удаление бесполезных символов
+Пример ввода:
+S R T
+----
+S -> R
+S -> T
+R -> pX
+R -> paR
+R -> paT
+T -> Tg
+T -> g
+X -> aXb
+Y -> aYa
+Y -> y|E
+exit
+"""
 from python_language.formal_languages.useful_functions import get_rules_from_console
 
 
-def _processing_terminal_values(grammar_inner: dict[str, list[str]], symbol: str) -> Generator[str, Any, None]:
+def remove_useless_symbol(grammar_inner: dict[str, list[str]],
+                          set_of_terminals: set[str]) -> dict[str, list[str]]:
     """
-    Обработка терминальных значений перед добавлением в стек
+    Данная функция удаляет бесполезные символы, проверяя, что элемент грамматики входит во множество терминалов
     """
-    if symbol in grammar_inner:
-        yield from (char for production in grammar_inner[symbol] for char in production if char.isupper())
+    return {terminal: _parse_rules(grammar_inner[terminal], set_of_terminals)
+            for terminal in grammar_inner if terminal in set_of_terminals}
 
 
-def _find_reachable_symbols(grammar_inner: dict[str, list[str]], start_symbol: str) -> set[str | None]:
+def _parse_rules(rules: list[str], set_of_terminals: set[str]) -> list[str]:
     """
-    Ищем динамически, проходя все символы в стеке
+    Удаляем правила, которые не находятся в множестве терминалов.
     """
-    # Множество достижимых символов
-    reachable = set()
-    # Стек для обхода символов
-    stack = [start_symbol]
-
-    while stack:
-        symbol = stack.pop()
-        if symbol not in reachable:
-            reachable.add(symbol)
-            # Обработка терминальных значений перед добавлением в стек
-            if terminal_values := _processing_terminal_values(grammar_inner=grammar_inner, symbol=symbol):
-                stack.extend(terminal_values)
-
-    return reachable
-
-
-def _create_new_grammar(grammar_inner: dict[str, list[str]], reachable_symbols: set[str | None]) -> dict[str, list[str]]:
-    """
-    Создаем новую грамматику, изменять grammar_inner не хочется, да эффективно, но я спать хочу
-    """
-    new_grammar: dict[str, list[str]] = {}
-    for symbol, productions in grammar_inner.items():
-        if symbol in reachable_symbols:
-            new_productions: list[str] = []
-            for production in productions:
-                # Включаем только те продукции, которые содержат достижимые символы
-                if all(char in reachable_symbols or not char.isupper() for char in production):
-                    new_productions.append(production)
-            if new_productions:
-                new_grammar[symbol] = new_productions
-
-    return new_grammar
-
-
-def remove_unreachable_symbols(grammar_inner):
-    """
-    Реализация пункта а) по удалению ненужных символов
-    """
-    # Предполагается, что первый символ - стартовый
-    start_symbol = list(grammar_inner.keys())[0]
-    reachable_symbols = _find_reachable_symbols(grammar_inner, start_symbol)
-
-    # Создание нового словаря грамматики с достижимыми символами
-    return _create_new_grammar(grammar_inner=grammar_inner, reachable_symbols=reachable_symbols)
+    for rule in rules:
+        if all(word not in set_of_terminals and word.isupper() for word in rule):
+            rules.remove(rule)
+    return rules
 
 
 def main() -> None:
-    new_grammar = remove_unreachable_symbols(get_rules_from_console())
-    print("Новая грамматика без недостижимых символов:")
-    print(new_grammar)
+    set_of_terminals = set(input('Множество не терминалов: ').split())
+    new_grammar = remove_useless_symbol(get_rules_from_console(), set_of_terminals)
+    print("Новая грамматика без бесполезных символов:")
+    print("\n".join(f"{key} -> {'|'.join(value)}" for key, value in new_grammar.items()))
 
 
 if __name__ == "__main__":
