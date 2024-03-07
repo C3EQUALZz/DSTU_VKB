@@ -5,71 +5,72 @@
 package programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.documentProcessing;
 
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.stream.IntStream;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class DocxProcessor {
-
-    private static final String FILE_PATH = "projectFiles/blank-dogovora-okazanija-ohrannyh-uslug.docx";
-    private static final String MODIFIED_PATH = "projectFiles/blank-dogovora-okazanija-ohrannyh-uslug-1.docx";
-    private static final InputStream FULL_PATH = DocxProcessor.class.getClassLoader().getResourceAsStream(FILE_PATH);
+    private static final String PATH_TO_PROJECT = "java_language/src/main/resources/projectFiles";
+    private static final Path PATH_TO_DIR = Paths.get(PATH_TO_PROJECT, "documents_for_database");
+    private static final Path PATH_BLANK = Paths.get(PATH_TO_PROJECT, "blank-dogovora-okazanija-ohrannyh-uslug.docx");
 
     public static void main(String[] args) {
-        replaceTextInDocx();
-    }
+        try {
+            var originalDoc = openOriginalDoc(PATH_BLANK);
 
+            replaceUnderlines(originalDoc);
 
-    public static void replaceTextInDocx() {
+            var newFilePath = createNewDocx("blank-dogovora-okazanija-ohrannyh-uslug.docx");
+            saveResult(originalDoc, newFilePath);
 
-        if (FULL_PATH == null) {
-            throw new RuntimeException("Ничего нет по данному файлу");
-        }
-
-        try (var document = new XWPFDocument(FULL_PATH)) {
-
-            saveNewDocument(parseDocument(document));
-
-        } catch (IOException e) {
-
-            throw new RuntimeException("Ошибка обработки документа", e);
-
+            System.out.println("Замена завершена успешно!");
+        } catch (Exception e) {
+            throw new RuntimeException("Ошибка при обработке документа", e);
         }
     }
 
-    private static XWPFDocument parseDocument(XWPFDocument document) {
+    private static XWPFDocument openOriginalDoc(Path filePath) throws IOException {
+        var fis = new FileInputStream(filePath.toFile());
+        return new XWPFDocument(new BufferedInputStream(fis));
+    }
 
-        document.getParagraphs().forEach(paragraph -> {
-            var text = paragraph.getText();
-
-            if (text.contains("_______")) {
-                replaceTextInParagraph(paragraph, "Your Replacement Text");
+    private static void replaceUnderlines(XWPFDocument doc) {
+        var count = 0;
+        for (var paragraph : doc.getParagraphs()) {
+            for (var run : paragraph.getRuns()) {
+                parseRow(run, run.getText(0), count);
             }
-
-        });
-
-        return document;
-
+        }
     }
 
-    private static void replaceTextInParagraph(XWPFParagraph paragraph, String replacementText) {
-        // Очистим содержимое параграфа
-        IntStream.iterate(-1, i -> i - 1).limit(paragraph.getRuns().size() - 1).forEach(paragraph::removeRun);
-        // Добавим новый текст
-        paragraph.createRun().setText(replacementText);
+    private static void parseRow(XWPFRun run, String text, int count) {
+        while (text != null && text.contains("_")) {
+            text = text.replaceFirst("_+", String.valueOf(count++));
+            run.setText(text, 0);
+        }
     }
 
-    private static void saveNewDocument(XWPFDocument document) throws IOException {
-        try (FileOutputStream fos = new FileOutputStream(MODIFIED_PATH)) {
+    private static void saveResult(XWPFDocument doc, String filePath) throws IOException {
+        try (BufferedOutputStream fos = new BufferedOutputStream(new FileOutputStream(filePath))) {
+            doc.write(fos);
+        }
+    }
 
-            document.write(fos);
+    private static String createNewDocx(String fileName) {
+        var baseName = fileName.substring(0, fileName.lastIndexOf('.'));
+        var extension = fileName.substring(fileName.lastIndexOf('.'));
+
+        try {
+
+            Files.createDirectories(PATH_TO_DIR);
+            return Files.createTempFile(PATH_TO_DIR, baseName + "-", extension).toAbsolutePath().toString();
 
         } catch (IOException e) {
 
-            throw new RuntimeException("Не получилось записать в файл", e);
+            throw new RuntimeException("Ошибка создания нового файла", e);
 
         }
 
