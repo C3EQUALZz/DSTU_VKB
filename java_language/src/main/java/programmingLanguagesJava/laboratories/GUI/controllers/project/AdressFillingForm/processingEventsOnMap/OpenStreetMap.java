@@ -46,7 +46,8 @@ public class OpenStreetMap {
 
     /**
      * Event, который отвечает за установку маркера на карту.
-     * @param mapView карта, на которую мы хотим добавить данный event
+     *
+     * @param mapView      карта, на которую мы хотим добавить данный event
      * @param addressField TextField, в который мы хотим записывать информацию.
      */
     private static void mapClickMarkerEvent(MapView mapView, TextField addressField) {
