@@ -1,11 +1,11 @@
 /**
  * Здесь лежит копия документа https://assistentus.ru/forma/dogovor-okazaniya-ohrannyh-uslug/view
+ * Реализован паттерн Стратегия для улучшения поддержки кода, соблюдения SOLID
  */
 
 package programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.documentProcessing;
 
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -14,54 +14,60 @@ import java.nio.file.Paths;
 
 public class DocxProcessor {
     private static final String PATH_TO_PROJECT = "java_language/src/main/resources/projectFiles";
+    private static final String NAME_OF_FILE = "blank-dogovora-okazanija-ohrannyh-uslug.docx";
     private static final Path PATH_TO_DIR = Paths.get(PATH_TO_PROJECT, "documents_for_database");
     private static final Path PATH_BLANK = Paths.get(PATH_TO_PROJECT, "blank-dogovora-okazanija-ohrannyh-uslug.docx");
 
-    public static void main(String[] args) {
+    public String event() {
         try {
-            var originalDoc = openOriginalDoc(PATH_BLANK);
+            var originalDoc = openOriginalDoc();
 
-            replaceUnderlines(originalDoc);
+            var replacer = new NumberedUnderlineReplacer();
+            replacer.replaceUnderlines(originalDoc);
 
-            var newFilePath = createNewDocx("blank-dogovora-okazanija-ohrannyh-uslug.docx");
+            var newFilePath = createNewDocx();
+
             saveResult(originalDoc, newFilePath);
 
-            System.out.println("Замена завершена успешно!");
+            return newFilePath;
+
         } catch (Exception e) {
             throw new RuntimeException("Ошибка при обработке документа", e);
         }
     }
 
-    private static XWPFDocument openOriginalDoc(Path filePath) throws IOException {
-        var fis = new FileInputStream(filePath.toFile());
-        return new XWPFDocument(new BufferedInputStream(fis));
-    }
+    private XWPFDocument openOriginalDoc() {
 
-    private static void replaceUnderlines(XWPFDocument doc) {
-        var count = 0;
-        for (var paragraph : doc.getParagraphs()) {
-            for (var run : paragraph.getRuns()) {
-                parseRow(run, run.getText(0), count);
-            }
+        try {
+
+            var fis = new FileInputStream(DocxProcessor.PATH_BLANK.toFile());
+            return new XWPFDocument(new BufferedInputStream(fis));
+
+        } catch (IOException e) {
+
+            throw new RuntimeException("Не получилось открыть файл с примером договора", e);
+
         }
+
     }
 
-    private static void parseRow(XWPFRun run, String text, int count) {
-        while (text != null && text.contains("_")) {
-            text = text.replaceFirst("_+", String.valueOf(count++));
-            run.setText(text, 0);
-        }
-    }
+    private void saveResult(XWPFDocument doc, String filePath) {
 
-    private static void saveResult(XWPFDocument doc, String filePath) throws IOException {
         try (BufferedOutputStream fos = new BufferedOutputStream(new FileOutputStream(filePath))) {
+
             doc.write(fos);
+
+        } catch (IOException e) {
+
+            throw new RuntimeException("Не получилось сохранить результат изменения в документ", e);
+
         }
     }
 
-    private static String createNewDocx(String fileName) {
-        var baseName = fileName.substring(0, fileName.lastIndexOf('.'));
-        var extension = fileName.substring(fileName.lastIndexOf('.'));
+    private String createNewDocx() {
+
+        var baseName = NAME_OF_FILE.substring(0, NAME_OF_FILE.lastIndexOf('.'));
+        var extension = NAME_OF_FILE.substring(NAME_OF_FILE.lastIndexOf('.'));
 
         try {
 
