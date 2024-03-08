@@ -13,10 +13,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class DocxProcessor {
-    private static final String PATH_TO_PROJECT = "java_language/src/main/resources/projectFiles";
-    private static final String NAME_OF_FILE = "blank-dogovora-okazanija-ohrannyh-uslug.docx";
-    private static final Path PATH_TO_DIR = Paths.get(PATH_TO_PROJECT, "documents_for_database");
-    private static final Path PATH_BLANK = Paths.get(PATH_TO_PROJECT, "blank-dogovora-okazanija-ohrannyh-uslug.docx");
+    private final String PATH_TO_PROJECT = "src/main/resources/projectFiles";
+    private final Path PATH_TO_DIR = Paths.get(PATH_TO_PROJECT, "documents_for_database").toAbsolutePath();
+    private final Path PATH_BLANK = Paths.get(PATH_TO_PROJECT, "blank-dogovora-okazanija-ohrannyh-uslug.docx").toAbsolutePath();
 
     public String event() {
         try {
@@ -40,7 +39,7 @@ public class DocxProcessor {
 
         try {
 
-            var fis = new FileInputStream(DocxProcessor.PATH_BLANK.toFile());
+            var fis = new FileInputStream(PATH_BLANK.toFile());
             return new XWPFDocument(new BufferedInputStream(fis));
 
         } catch (IOException e) {
@@ -66,6 +65,7 @@ public class DocxProcessor {
 
     private String createNewDocx() {
 
+        final var NAME_OF_FILE = "blank-dogovora-okazanija-ohrannyh-uslug.docx";
         var baseName = NAME_OF_FILE.substring(0, NAME_OF_FILE.lastIndexOf('.'));
         var extension = NAME_OF_FILE.substring(NAME_OF_FILE.lastIndexOf('.'));
 

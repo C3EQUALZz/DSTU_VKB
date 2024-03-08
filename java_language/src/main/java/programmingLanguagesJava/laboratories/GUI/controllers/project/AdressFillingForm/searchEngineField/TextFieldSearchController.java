@@ -48,7 +48,7 @@ public class TextFieldSearchController {
     /**
      * Обработчик событий, чтобы запускать логику методов.
      */
-    public void event() {
+    public String event() {
         var prompt = textField.getText();
 
         var connection = connect(prompt);
@@ -67,6 +67,8 @@ public class TextFieldSearchController {
         }
 
         connection.disconnect();
+
+        return textField.getText();
 
     }
 

@@ -12,11 +12,13 @@ import javafx.scene.control.TextField;
 import programmingLanguagesJava.laboratories.GUI.config.ComboboxConfigurator;
 import programmingLanguagesJava.laboratories.GUI.controllers.BaseController;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.addingNames.TextFieldAddController;
-import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.fileChooserInteraction.PhotoAutoCadFileChooser;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.documentProcessing.DocxProcessor;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.fileChooserInteraction.FileChooserController;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.processingEventsOnMap.OpenStreetMap;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.searchEngineField.TextFieldSearchController;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class MenuAddress extends BaseController {
@@ -25,64 +27,80 @@ public class MenuAddress extends BaseController {
     @FXML private Button downloadFile, startSearch, addHuman, createDocument;
     @FXML private TextField addressField, fullNameField;
     @FXML private ComboBox<String> combobox;
+
     private final ComboboxConfigurator comboboxConfigurator = new ComboboxConfigurator();
+    private final HashMap<String, String> jsonData = new HashMap<>();
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
-        setUpMap();
-        setUpFileChooser();
-        setUpSearchEngine();
-        setUpFullName();
         comboboxConfigurator.defaultConfiguration(combobox);
+
+        initializeMap();
+        initializeSearchEngine();
+        initializeFullName();
+        initializeCreateDocument();
+        initializeFileChooser();
     }
 
     /**
      * Здесь запускается event, который обрабатывает изначальную инициализацию карты, добавляет event маркера
      */
-    private void setUpMap() {
+    private void initializeMap() {
         var openStreetMapInstance = new OpenStreetMap(mapView);
         openStreetMapInstance.setAddressField(addressField);
         openStreetMapInstance.event();
+
+        addressField.textProperty().addListener((observable, oldValue, newValue) -> updateJsonData("addressField", newValue));
     }
 
     /**
      * Здесь запускается event, который обрабатывает поиск через ввод данных с TextField.
      */
-    private void setUpSearchEngine() {
-        var textFieldSearchEngine = new TextFieldSearchController(addressField);
-        textFieldSearchEngine.setMapView(mapView);
-        buttonConfigurator.setupButtonEvent(startSearch, event -> textFieldSearchEngine.event());
+    private void initializeSearchEngine() {
+        var textFieldSearchController = new TextFieldSearchController(addressField);
+        textFieldSearchController.setMapView(mapView);
+        buttonConfigurator.setupButtonEvent(startSearch, event -> textFieldSearchController.event());
     }
-
 
     /**
      * Здесь запускается event, который обрабатывает кнопку добавки файлов
      */
-    private void setUpFileChooser() {
-        var fileChooser = new PhotoAutoCadFileChooser();
-        buttonConfigurator.setupButtonEvent(downloadFile, fileChooser::event);
+    private void initializeFileChooser() {
+        var fileChooserController = new FileChooserController();
+        buttonConfigurator.setupButtonEvent(downloadFile, event -> updateJsonData("buildingPlan", fileChooserController.event(event)));
     }
 
     /**
      * Здесь запускается event, который обрабатывает добавления ФИО в TextField.
      * После добавления хотя бы одного ФИО включается combobox.
      */
-    private void setUpFullName() {
-        var textFieldNamePerson = new TextFieldAddController(fullNameField);
+    private void initializeFullName() {
+        var textFieldAddController = new TextFieldAddController(fullNameField);
+
         buttonConfigurator.setupButtonEvent(addHuman, event -> {
-            textFieldNamePerson.event();
-            comboboxConfigurator.setupComboboxEvent(combobox, textFieldNamePerson.getPersons());
+            var persons = textFieldAddController.event();
+            comboboxConfigurator.setupComboboxEvent(combobox, persons);
+            updateJsonData("allPeople", String.join(", ", persons));
+            combobox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> updateJsonData("mainPerson", newValue));
         });
     }
-
 
     /**
      * Здесь описывается логика создания документа, который мы будем обрабатывать.
      */
-    private void setUpCreateDocument() {
+    private void initializeCreateDocument() {
+        var docxProcessor = new DocxProcessor();
+        buttonConfigurator.setupButtonEvent(createDocument, event -> updateJsonData("pathToFile", docxProcessor.event()));
+    }
 
+    private void updateJsonData(String elementUI, String value) {
+        jsonData.put(elementUI, value);
+    }
+
+    public HashMap<String, String> getJsonData() {
+        return this.jsonData;
     }
 
 

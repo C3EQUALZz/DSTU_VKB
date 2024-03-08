@@ -38,6 +38,7 @@ dependencies {
     implementation("com.sothawo:mapjfx:3.1.0")
     implementation("ch.qos.logback:logback-classic:1.2.3")
     implementation("org.apache.poi:poi-ooxml:5.2.5")
+    implementation("org.apache.logging.log4j:log4j-to-slf4j:2.8.2")
 }
 
 tasks.test {

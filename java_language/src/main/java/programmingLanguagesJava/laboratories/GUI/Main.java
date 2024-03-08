@@ -20,7 +20,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         var stageInitialized = initStage(stage);
-        SceneController controller = SceneController.getInstance(stage);
+        var controller = SceneController.getInstance(stage);
         controller.setStartMenu();
         stageInitialized.show();
     }

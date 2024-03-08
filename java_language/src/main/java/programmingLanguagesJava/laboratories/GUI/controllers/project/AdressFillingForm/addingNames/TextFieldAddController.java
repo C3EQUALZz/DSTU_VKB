@@ -14,19 +14,10 @@ public class TextFieldAddController {
         this.textField = textField;
     }
 
-    public void event() {
+    public HashSet<String> event() {
         persons.add(textField.getText());
         textField.clear();
-    }
-
-    @SuppressWarnings("unused")
-    public HashSet<String> getPersons() {
         return persons;
-    }
-
-    @SuppressWarnings("unused")
-    public void clearPersons() {
-        persons.clear();
     }
 
 }
