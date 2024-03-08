@@ -14,10 +14,15 @@ import javafx.animation.Transition;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
 
+import java.util.Optional;
+
 class MapClickController {
+    // Карта, к которой мы хотим применить наш контроллер
     private final MapView mapView;
+    // TextField, к которому мы обращаемся для заполнения.
     private TextField addressField = null;
-    private static final Marker markerClick = Marker.createProvided(Marker.Provided.BLUE).setVisible(true);
+    // Именно сам маркер
+    private final Marker markerClick = Marker.createProvided(Marker.Provided.BLUE).setVisible(true);
 
     MapClickController(MapView mapView) {
         this.mapView = mapView;
@@ -27,40 +32,43 @@ class MapClickController {
         this.addressField = addressField;
     }
 
+    /**
+     * Event, который предназначен для обработки нажатий на карту.
+     */
     void event() {
         mapView.addEventHandler(MapViewEvent.MAP_CLICKED, event -> {
             event.consume();
             final Coordinate newPosition = event.getCoordinate();
+            final Coordinate oldPosition = markerClick.getPosition();
 
-            if (addressField != null)
-                addressField.setText(ReverseGeocoding.getAddressByCoordinates(newPosition.getLatitude(), newPosition.getLongitude()));
+            // Функциональный if, IDEA предложила заменить на данную запись
+            Optional.ofNullable(addressField).ifPresent(field -> field.setText(ReverseGeocoding.getAddressByCoordinates(newPosition.getLatitude(), newPosition.getLongitude())));
 
-            if (markerClick.getVisible()) {
-                final Coordinate oldPosition = markerClick.getPosition();
-                if (oldPosition != null) {
-                    animateClickMarker(oldPosition, newPosition);
-                } else {
-                    markerClick.setPosition(newPosition);
-                    // adding can only be done after coordinate is set
-                    mapView.addMarker(markerClick);
-                }
+            if (oldPosition != null) {
+                animateClickMarker(oldPosition, newPosition);
+            } else {
+                markerClick.setPosition(newPosition);
+                mapView.addMarker(markerClick);
             }
+
         });
     }
 
-
-    private static void animateClickMarker(Coordinate oldPosition, Coordinate newPosition) {
+    /**
+     * Анимация передвижения маркера, была взята с документации к карте
+     * @param oldPosition старая позиция по координатам
+     * @param newPosition новая позиция по координатам
+     */
+    private void animateClickMarker(Coordinate oldPosition, Coordinate newPosition) {
         final Transition transition = new Transition() {
-            private final Double oldPositionLongitude = oldPosition.getLongitude();
-            private final Double oldPositionLatitude = oldPosition.getLatitude();
-            private final double deltaLatitude = newPosition.getLatitude() - oldPositionLatitude;
-            private final double deltaLongitude = newPosition.getLongitude() - oldPositionLongitude;
+            private final double deltaLatitude = newPosition.getLatitude() - oldPosition.getLatitude();
+            private final double deltaLongitude = newPosition.getLongitude() - oldPosition.getLongitude();
 
             {
                 setCycleDuration(Duration.seconds(0.5));
                 setOnFinished(evt -> markerClick.setPosition(newPosition));
             }
-
+            // Данная формула была в документации, честно не разбирался что и как
             @Override
             protected void interpolate(double v) {
                 final double latitude = oldPosition.getLatitude() + v * deltaLatitude;
@@ -68,6 +76,7 @@ class MapClickController {
                 markerClick.setPosition(new Coordinate(latitude, longitude));
             }
         };
+
         transition.play();
     }
 

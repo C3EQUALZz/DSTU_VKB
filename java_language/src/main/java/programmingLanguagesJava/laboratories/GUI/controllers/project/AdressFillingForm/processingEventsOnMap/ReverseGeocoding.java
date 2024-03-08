@@ -36,9 +36,9 @@ class ReverseGeocoding {
             String jsonData = collectInfo(connection);
             return getDisplayName(jsonData);
 
-        } catch (IOException | ParseException e) {
+        } catch (IOException e) {
 
-            throw new RuntimeException("Error while getting address: " + e.getMessage(), e);
+            throw new RuntimeException("Ошибка при подключении к адресу: " + e.getMessage(), e);
 
         } finally {
 
@@ -73,7 +73,7 @@ class ReverseGeocoding {
     }
 
     // Сбор информации в строку, чтобы можно было десериализовать JSON
-    private static String collectInfo(HttpURLConnection connection) throws IOException {
+    private static String collectInfo(HttpURLConnection connection) {
         var result = new StringBuilder();
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
@@ -88,14 +88,24 @@ class ReverseGeocoding {
 
         } catch (IOException e) {
 
-            throw new IOException("Не удалось считать JSON данные");
+            throw new RuntimeException("Не удалось считать JSON данные", e);
 
         }
     }
 
     // Получаем информацию о месте
-    private static String getDisplayName(String jsonData) throws ParseException {
-        JSONObject jsonObject = (JSONObject) jsonParser.parse(jsonData);
-        return (String) jsonObject.get("display_name");
+    private static String getDisplayName(String jsonData) {
+
+        try {
+
+            var jsonObject = (JSONObject) jsonParser.parse(jsonData);
+            return (String) jsonObject.get("display_name");
+
+        } catch (ParseException e) {
+
+            throw new RuntimeException("Не удалось распарсить данные", e);
+
+        }
+
     }
 }

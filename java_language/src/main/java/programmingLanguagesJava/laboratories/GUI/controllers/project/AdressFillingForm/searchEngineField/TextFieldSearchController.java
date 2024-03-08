@@ -40,24 +40,20 @@ public class TextFieldSearchController {
         this.mapView = mapView;
     }
 
-    @SuppressWarnings("unused")
-    public MapView getMapView() {
-        return this.mapView;
-    }
-
     /**
      * Обработчик событий, чтобы запускать логику методов.
      */
     public String event() {
-        var prompt = textField.getText();
 
-        var connection = connect(prompt);
+        var connection = connect(textField.getText());
 
         var data = parseJson(readInfo(connection));
 
         if (data.equals("Не удалось найти адрес.")) {
             textField.setText("Не удалось найти адрес. Проверьте корректность");
+
         } else {
+
             var iteratorData = Arrays.stream(data.split("\\s+")).map(Double::parseDouble).iterator();
             var coords = new Coordinate(iteratorData.next(), iteratorData.next());
 
@@ -79,20 +75,19 @@ public class TextFieldSearchController {
      */
     private HttpURLConnection connect(String address) {
 
+        var NOMINATIM_API = "https://nominatim.openstreetmap.org/search?format=json&q=";
+        var encodedAddress = java.net.URLEncoder.encode(address, StandardCharsets.UTF_8);
+        var url = NOMINATIM_API + encodedAddress;
+
         try {
 
-            var NOMINATIM_API = "https://nominatim.openstreetmap.org/search?format=json&q=";
-            var uri = new URI(NOMINATIM_API + java.net.URLEncoder.encode(address, StandardCharsets.UTF_8));
-            var url = uri.toURL();
-
-            var httpURLConnection = (HttpURLConnection) url.openConnection();
-
-            httpURLConnection.setRequestMethod("GET");
-
-            return httpURLConnection;
+            var uri = new URI(url);
+            return (HttpURLConnection) uri.toURL().openConnection();
 
         } catch (IOException | URISyntaxException e) {
+
             throw new RuntimeException("Невозможно обработать запрос к API", e);
+
         }
 
     }
@@ -103,7 +98,7 @@ public class TextFieldSearchController {
      * @return возвращает информацию с сервера в виде строки.
      */
     private StringBuilder readInfo(HttpURLConnection connection) {
-        StringBuilder response = new StringBuilder();
+        var response = new StringBuilder();
 
         // Буферно считываю информацию
         try (var in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
@@ -135,15 +130,15 @@ public class TextFieldSearchController {
 
             if (!jsonArray.isEmpty()) {
                 var jsonObject = (JSONObject) jsonArray.getFirst();
-                var lat = String.valueOf(jsonObject.get("lat"));
-                var lon = String.valueOf(jsonObject.get("lon"));
-                return String.format("%s %s", lat, lon);
+                return String.format("%s %s", jsonObject.get("lat"), jsonObject.get("lon"));
             }
 
             return "Не удалось найти адрес.";
 
         } catch (ParseException e) {
+
             throw new RuntimeException("Невозможно обработать JSON файл", e);
+
         }
 
     }
