@@ -11,17 +11,24 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 
 public class DocxProcessor {
     private final String PATH_TO_PROJECT = "src/main/resources/projectFiles";
     private final Path PATH_TO_DIR = Paths.get(PATH_TO_PROJECT, "documents_for_database").toAbsolutePath();
     private final Path PATH_BLANK = Paths.get(PATH_TO_PROJECT, "blank-dogovora-okazanija-ohrannyh-uslug.docx").toAbsolutePath();
 
+    private final HashMap<String, String> jsonData;
+
+    public DocxProcessor(HashMap<String, String> jsonData) {
+        this.jsonData = jsonData;
+    }
+
     public String event() {
         try {
             var originalDoc = openOriginalDoc();
 
-            var replacer = new NumberedUnderlineReplacer();
+            var replacer = new NumberedUnderlineReplacer(this.jsonData);
             replacer.replaceUnderlines(originalDoc);
 
             var newFilePath = createNewDocx();

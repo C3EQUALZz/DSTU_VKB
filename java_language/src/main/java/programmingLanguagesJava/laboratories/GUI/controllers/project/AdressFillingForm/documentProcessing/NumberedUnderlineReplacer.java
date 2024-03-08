@@ -3,22 +3,43 @@ package programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFill
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.concurrent.ThreadLocalRandom;
+
 class NumberedUnderlineReplacer implements UnderlineReplacer {
-    private int count = 0;
+    private final Iterator<String> jsonData;
+
+    public NumberedUnderlineReplacer(HashMap<String, String> jsonData) {
+        this.jsonData = convertJsonForDocument(jsonData).values().iterator();
+    }
 
     @Override
     public void replaceUnderlines(XWPFDocument doc) {
         for (var paragraph : doc.getParagraphs()) {
             for (var run : paragraph.getRuns()) {
-                parseRow(run, run.getText(0), count);
+                parseRow(run, run.getText(0));
             }
         }
     }
 
-    void parseRow(XWPFRun run, String text, int count) {
+    void parseRow(XWPFRun run, String text) {
         while (text != null && text.contains("_")) {
-            text = text.replaceFirst("_+", String.valueOf(count++));
+            text = text.replaceFirst("_+", jsonData.next());
             run.setText(text, 0);
         }
     }
+
+
+    private LinkedHashMap<String, String> convertJsonForDocument(HashMap<String, String> jsonData) {
+        var result = new LinkedHashMap<String, String>();
+        result.put("city", jsonData.getOrDefault("addressField", "").split(",")[4]);
+        result.put("year", "2024");
+        result.put("mainPerson", jsonData.getOrDefault("mainPerson", ""));
+        result.put("addressField", jsonData.getOrDefault("addressField", ""));
+        result.put("cost", ThreadLocalRandom.current().nextInt(45_000, 100_000) + " тыс. рублей");
+        return result;
+    }
+
 }
