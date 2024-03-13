@@ -4,7 +4,7 @@
 from collections import defaultdict
 
 
-def get_rules_from_console(key="don't_remove"):
+def get_rules_from_console(key="remove"):
     """
     Получение информации о правилах грамматики, возвращая в виде словаря
     """
