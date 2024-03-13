@@ -1,0 +1,1 @@
+from .second_point import remove_unreachable_symbols
