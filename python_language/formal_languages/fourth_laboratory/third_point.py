@@ -1,5 +1,10 @@
 """
 Удаляет левую рекурсию из грамматики
+
+Полезные источники:
+- https://www.geeksforgeeks.org/removing-direct-and-indirect-left-recursion-in-a-grammar/
+- https://www.gatevidyalay.com/left-recursion-left-recursion-elimination/?__cf_chl_rt_tk=uccLph7mi4FFPGgpf6Qqv1CojQylaiIfUsftfjKIz68-1710434049-0.0.1.1-1386
+- https://boxofnotes.com/what-is-left-recursion-and-how-to-eliminate-left-recursion/
 --------
 S -> Sa
 S -> Sb
