@@ -14,8 +14,10 @@
 Все лабораторные работы в основном делаются на Linux (Manjaro, Fedora, Endeavour OS). Если у Вас что-то не работает, то отправляйте pull request. 
 В крайнем случае открывайте Issues, чтобы остальные могли увидеть в случае чего. 
 
-Ещё репозиторий с лабораторными работами: https://github.com/yaromochka/DSTU
-
+Ещё репозитории с лабораторными работами: 
+- https://github.com/yaromochka/DSTU
+- https://github.com/Din0zaBr/DSTU
+  
 ---
 ![GitHub repo size](https://img.shields.io/github/repo-size/C3EQUALZz/DSTU_VKB)
 
