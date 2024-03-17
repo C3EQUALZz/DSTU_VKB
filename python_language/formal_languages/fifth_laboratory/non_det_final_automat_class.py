@@ -17,12 +17,18 @@ F (A, a) = B, где A, B ∈ V_n, a ∈ V_t.
 
 Примеры смотрите в методичке.
 """
+import os
 from collections import defaultdict
+from typing import Final, Any
+
+from automata.fa.nfa import NFA
 
 from python_language.formal_languages.fifth_laboratory.grammar_class import Grammar
 
+PATH_TO_DIAGRAM: Final = os.path.join(os.path.curdir, "test_nfa.png")
 
-class FiniteAutomaton:
+
+class NonDeterministicFiniteAutomaton:
     def __init__(self, grammar: Grammar) -> None:
         """
         M = (Q, T, F, H, Z), где:
@@ -30,16 +36,16 @@ class FiniteAutomaton:
         - T - множество символов входного алфавита (set_of_input_alphabet_characters)
         - F - функции перехода (transition_function)
         - H - начальный символ автомата (start_state)
-        - Z - множество конечных состояний (final_states)
+        - Z - множество заключительных состояний (final_states)
         """
         self.start_state: str = grammar.start_symbol
         self.set_of_states: set[str] = grammar.set_of_non_terminals | {grammar.start_symbol}
         self.set_of_input_alphabet_characters: set[str] = grammar.set_of_terminals
         self.transition_function = grammar.transition_rules
-        self.final_states: set[str] = self.calculate_final_states(grammar)
+        self.final_states = grammar.transition_rules
 
     @property
-    def transition_function(self) -> dict[tuple[str, str], list[str]]:
+    def transition_function(self) -> dict[str, defaultdict[Any, set]]:
         """
         Свойство - геттер, которую возвращает функцию переходов
         """
@@ -56,40 +62,47 @@ class FiniteAutomaton:
         Returns:
             Ничего не возвращает, только создает функции перехода НДА автомата
         """
-        self.__transition_function = defaultdict(list)
+        self.__transition_function = {}
 
         for non_terminal, productions in transition_rules.items():
+            transition_dict = defaultdict(set)
             for production in productions:
-                self.__process_production(production=production, non_terminal=non_terminal)
+                self.__process_production(production=production, transition_dict=transition_dict)
 
-    def __process_production(self, production: str, non_terminal: str) -> None:
+            if transition_dict:
+                self.__transition_function[non_terminal] = transition_dict
+
+    def __process_production(self, production: str, transition_dict: dict) -> None:
         """
         Обрабатывает каждую продукцию и обновляет функцию перехода.
 
         Args:
             production: очередная продукция, которую мы хотим добавить в функцию перехода (значение словаря).
-            non_terminal: не терминальный символ, который идет в качестве ключа.
+            transition_dict: словарь, в который добавляются переходы
         Returns:
             Ничего не возвращает, только добавляет элементы в словарь
         """
         for i in range(len(production) - 1):
             # Если символ - терминал
             if production[i] in self.set_of_input_alphabet_characters:
-                self.__transition_function[(non_terminal, production[i])].append(production[i + 1])
+                transition_dict[production[i]].add(production[i + 1])
 
-    def calculate_final_states(self, grammar: Grammar) -> set[str]:
-        final_states = set()
-        for non_terminal, productions in grammar.transition_rules.items():
-            for production in productions:
+    @property
+    def final_states(self) -> set[str]:
+        """
+        Свойство - геттер, которое возвращает множество заключительных состояний
+        """
+        return self.__final_states
 
-                if len(production) == 1 and production[0] in ('ε', "E", "e"):
-                    final_states.add(self.start_state)
+    @final_states.setter
+    def final_states(self, transition_rules: dict[str, list[str]]) -> None:
+        """
+        Множество заключительных состояний, здесь, видимо, идет поиск новых терминалов, как я понял из примера
+        """
+        self.__final_states = self.set_of_states - set(transition_rules.keys())
 
-                for i in range(len(production) - 1):
-                    if production[i + 1] in grammar.set_of_non_terminals:
-                        final_states.add(production[i])
-
-        return final_states
+        if any(rule in ("E", "e", "ε") for rule in transition_rules[self.start_state]):
+            self.__final_states.add(self.start_state)
 
     def __str__(self) -> str:
         """
@@ -101,9 +114,14 @@ class FiniteAutomaton:
                 f" {self.start_state},"
                 f" {self.final_states})")
 
-
-if __name__ == '__main__':
-    grammar = Grammar({"a", "b"}, {"S", "A", "B"}, {"S": ["aB", "aA"], "B": ["bB", "a"], "A": ["aA", "b"]})
-    print(grammar.transition_rules)
-    nda = FiniteAutomaton(grammar)
-    print(nda)
+    def show_diagram(self) -> None:
+        """
+        Метод, который создает граф на основе автомата
+        """
+        NFA(
+            states=self.set_of_states,
+            input_symbols=self.set_of_input_alphabet_characters,
+            transitions=self.transition_function,
+            initial_state=self.start_state,
+            final_states=self.final_states,
+        ).show_diagram(path=PATH_TO_DIAGRAM)
