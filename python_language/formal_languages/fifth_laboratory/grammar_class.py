@@ -9,7 +9,7 @@ from random import choice
 from string import ascii_lowercase, digits
 from typing import Final
 
-RANDOM_SYMBOL: Final = choice(ascii_lowercase + digits)
+RANDOM_SYMBOL: Final = "N"
 
 
 class Grammar:
