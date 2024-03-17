@@ -37,5 +37,6 @@ faker==21.0.0
 russian-names
 environs
 scipy
-
+automata-lib
+coloraide
 
