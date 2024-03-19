@@ -69,8 +69,7 @@ class NonDeterministicFiniteAutomaton:
             for production in productions:
                 self.__process_production(production=production, transition_dict=transition_dict)
 
-            if transition_dict:
-                self.__transition_function[non_terminal] = transition_dict
+            self.__transition_function[non_terminal] = transition_dict
 
     def __process_production(self, production: str, transition_dict: dict) -> None:
         """
@@ -125,3 +124,22 @@ class NonDeterministicFiniteAutomaton:
             initial_state=self.start_state,
             final_states=self.final_states,
         ).show_diagram(path=PATH_TO_DIAGRAM)
+
+    def epsilon_closure(self, states: set) -> set:
+        epsilon_closure_set = set(states)  # Инициализируем эпсилон-замыкание текущими состояниями
+
+        queue = list(states)  # Создаем очередь для обработки состояний
+
+        while queue:
+            current_state = queue.pop(0)
+
+            # Находим все состояния, в которые можно перейти по эпсилон-переходу из текущего состояния
+            epsilon_transitions = self.transition_function.get(current_state, {}).get('', set())
+
+            # Добавляем новые состояния в эпсилон-замыкание
+            epsilon_closure_set |= epsilon_transitions
+
+            # Добавляем новые состояния в очередь для обработки
+            queue.extend(epsilon_transitions)
+
+        return epsilon_closure_set

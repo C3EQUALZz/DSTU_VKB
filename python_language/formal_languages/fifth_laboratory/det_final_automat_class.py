@@ -24,7 +24,6 @@ from collections import defaultdict
 from typing import Any, Final
 
 from automata.fa.dfa import DFA
-from automata.fa.nfa import NFA
 
 from python_language.formal_languages.fifth_laboratory.grammar_class import Grammar
 from python_language.formal_languages.fifth_laboratory.non_det_final_automat_class import (
@@ -43,6 +42,8 @@ class DeterministicFiniteAutomaton:
         - H - начальный символ автомата (start_state)
         - Z` - множество заключительных состояний (final_states)
         """
+        non_deterministic_automaton = self.__add_empty_transitions_for_nfa(non_deterministic_automaton)
+
         self.start_state: str = non_deterministic_automaton.start_state
         self.set_of_input_alphabet_characters: set[str] = non_deterministic_automaton.set_of_input_alphabet_characters
         self.set_of_states = non_deterministic_automaton.set_of_states
@@ -104,32 +105,22 @@ class DeterministicFiniteAutomaton:
             final_states=self.final_states,
         ).show_diagram(path=PATH_TO_DIAGRAM)
 
-    def epsilon_closure(self, state: str):
-        # Инициализируем эпсилон-замыкание текущим состоянием
-        epsilon_closure_set = {state}
+    @staticmethod
+    def __add_empty_transitions_for_nfa(nfa: NonDeterministicFiniteAutomaton) -> NonDeterministicFiniteAutomaton:
+        for state in nfa.set_of_states:
+            if state not in nfa.transition_function:
+                nfa.transition_function.update(
+                    {state: {input_character: {} for input_character in nfa.set_of_input_alphabet_characters}})
 
-        # Создаем очередь для обработки состояний
-        queue = [state]
+        for state, functions in nfa.transition_function.items():
+            for input_character in nfa.set_of_input_alphabet_characters:
+                if input_character not in functions:
+                    nfa.transition_function[state].update({input_character: {}})
 
-        # Пока очередь не пуста
-        while queue:
-            current_state = queue.pop(0)
-
-            # Находим все состояния, в которые можно перейти по эпсилон-переходу из текущего состояния
-            epsilon_transitions = self.transition_function.get(current_state, {}).get('', set())
-
-            # Добавляем новые состояния в эпсилон-замыкание
-            epsilon_closure_set.update(epsilon_transitions)
-
-            # Добавляем новые состояния в очередь для обработки
-            queue.extend(epsilon_transitions - epsilon_closure_set)
-
-        return epsilon_closure_set
+        return nfa
 
 
 if __name__ == "__main__":
     grammar = Grammar({"a", "b"}, {"S", "A", "B"}, {"S": ["aB", "aA"], "B": ["bB", "a"], "A": ["aA", "b"]}, "S")
     nfa = NonDeterministicFiniteAutomaton(grammar)
     print(nfa)
-    dfa = DeterministicFiniteAutomaton(nfa)
-    print(dfa.epsilon_closure("A"))
