@@ -21,7 +21,7 @@ F′(D, x) ={s | s∈F(t, x) для некоторого t∈D}.
 """
 import os
 from collections import defaultdict, deque
-from typing import Any, Final
+from typing import Final
 
 from automata.fa.dfa import DFA
 
@@ -32,7 +32,7 @@ from python_language.formal_languages.fifth_laboratory.non_det_final_automat_cla
 PATH_TO_DIAGRAM: Final = os.path.join(os.path.curdir, "test_dfa.png")
 
 
-class DeterFA:
+class DeterministicFiniteAutomaton:
     def __init__(self, transitions: dict[str, dict[str, set[str]]], start_state, final_states, input_alphabet, states):
         self.start_state: str = start_state
         self.set_of_input_alphabet_characters: set[str] = input_alphabet
@@ -49,9 +49,10 @@ class DeterFA:
             current_state_set = unmarked_states.pop(0)
             marked_states.append(current_state_set)
 
-            # Проверяем, содержит ли текущее состояние хотя бы одно финальное состояние
-            if current_state_set.intersection(self.final_states):
-                self.final_states.update(current_state_set)
+            if any(state in self.final_states for state in current_state_set):
+                # Если хотя бы одно состояние в текущем множестве является финальным,
+                # то текущее множество состояний ДКА также становится финальным
+                self.final_states.add(self._states_to_string(current_state_set))
 
             for symbol in self.set_of_input_alphabet_characters:
                 next_state_set = self._epsilon_closure(self._transition(current_state_set, symbol))
@@ -64,8 +65,7 @@ class DeterFA:
 
         self.transition_function = dfa_transitions
         self.set_of_states = {self._states_to_string(state) for state in marked_states}
-        # Убираем из множества финальных состояний все, которые не являются финальными в ДКА
-        self.final_states = {state for state in self.final_states if state in self.set_of_states}
+        self.final_states = {state for state in self.set_of_states if state in self.final_states}
 
     def _transition(self, state_set: set[str], symbol: str) -> set[str]:
         """
@@ -141,7 +141,7 @@ def main() -> None:
     input_alphabet = {"a", "b"}
     states = {"q0", "q1", "q2"}
 
-    d = DeterFA(transitions, start_state, final_states, input_alphabet, states)
+    d = DeterministicFiniteAutomaton(transitions, start_state, final_states, input_alphabet, states)
     d.construct_dfa()
     d.show_diagram()
 
@@ -149,6 +149,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    main()
     grammar = Grammar({"a", "b"}, {"S", "A", "B"}, {"S": ["aB", "aA"], "B": ["bB", "a"], "A": ["aA", "b"]}, "S")
     nfa = NonDeterministicFiniteAutomaton(grammar)
     print(nfa)
