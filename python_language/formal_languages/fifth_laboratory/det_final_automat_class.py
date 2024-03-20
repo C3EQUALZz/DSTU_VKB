@@ -49,23 +49,37 @@ class DeterministicFiniteAutomaton:
             current_state_set = unmarked_states.pop(0)
             marked_states.append(current_state_set)
 
-            if any(state in self.final_states for state in current_state_set):
-                # Если хотя бы одно состояние в текущем множестве является финальным,
-                # то текущее множество состояний ДКА также становится финальным
-                self.final_states.add(self._states_to_string(current_state_set))
-
-            for symbol in self.set_of_input_alphabet_characters:
-                next_state_set = self._epsilon_closure(self._transition(current_state_set, symbol))
-
-                if next_state_set not in marked_states:
-                    unmarked_states.append(next_state_set)
-
-                dfa_transitions[self._states_to_string(current_state_set)].update(
-                    {symbol: self._states_to_string(next_state_set)})
+            self._add_final_state(current_state_set)
+            self._fill_dfa_transition(current_state_set, marked_states, unmarked_states, dfa_transitions)
 
         self.transition_function = dfa_transitions
         self.set_of_states = {self._states_to_string(state) for state in marked_states}
         self.final_states = {state for state in self.set_of_states if state in self.final_states}
+
+    def _fill_dfa_transition(self,
+                             current_state_set: set[str],
+                             marked_states: list[set[str]],
+                             unmarked_states: list[set[str]],
+                             dfa_transitions: defaultdict[str, dict]) -> defaultdict[str, dict]:
+
+        for symbol in self.set_of_input_alphabet_characters:
+            next_state_set = self._epsilon_closure(self._transition(current_state_set, symbol))
+
+            if next_state_set not in marked_states:
+                unmarked_states.append(next_state_set)
+
+            dfa_transitions[self._states_to_string(current_state_set)].update(
+                {symbol: self._states_to_string(next_state_set)})
+
+        return dfa_transitions
+
+    def _add_final_state(self, current_state_set) -> None:
+        """
+        Если хотя бы одно состояние в текущем множестве является финальным,
+        то текущее множество состояний ДКА также становится финальным
+        """
+        if any(state in self.final_states for state in current_state_set):
+            self.final_states.add(self._states_to_string(current_state_set))
 
     def _transition(self, state_set: set[str], symbol: str) -> set[str]:
         """
