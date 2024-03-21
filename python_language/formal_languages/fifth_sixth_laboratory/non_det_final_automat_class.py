@@ -23,7 +23,7 @@ from typing import Final
 
 from automata.fa.nfa import NFA
 
-from python_language.formal_languages.fifth_laboratory.grammar_class import Grammar
+from python_language.formal_languages.fifth_sixth_laboratory.grammar_class import Grammar
 
 PATH_TO_DIAGRAM: Final = os.path.join(os.path.curdir, "test_nfa.png")
 

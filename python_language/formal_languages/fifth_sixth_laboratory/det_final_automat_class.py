@@ -27,8 +27,8 @@ from typing import Final
 
 from automata.fa.dfa import DFA
 
-from python_language.formal_languages.fifth_laboratory.grammar_class import Grammar
-from python_language.formal_languages.fifth_laboratory.non_det_final_automat_class import (
+from python_language.formal_languages.fifth_sixth_laboratory.grammar_class import Grammar
+from python_language.formal_languages.fifth_sixth_laboratory.non_det_final_automat_class import (
     NonDeterministicFiniteAutomaton)
 
 PATH_TO_DIAGRAM: Final = os.path.join(os.path.curdir, "test_dfa.png")
