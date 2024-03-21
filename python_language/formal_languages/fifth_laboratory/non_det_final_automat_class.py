@@ -124,3 +124,10 @@ class NonDeterministicFiniteAutomaton:
             initial_state=self.start_state,
             final_states=self.final_states,
         ).show_diagram(path=PATH_TO_DIAGRAM)
+
+
+if __name__ == "__main__":
+    grammar = Grammar({"a", "b"}, {"S", "A", "B"}, {"S": ["aB", "aA"], "B": ["bB", "a"], "A": ["aA", "b"]}, "S")
+    nfa = NonDeterministicFiniteAutomaton(grammar)
+    nfa.show_diagram()
+    print(nfa)

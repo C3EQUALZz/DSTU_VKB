@@ -18,6 +18,8 @@ F′(D, x) ={s | s∈F(t, x) для некоторого t∈D}.
 
 Шаг 6. Составить таблицу новых обозначений множеств состояний и
 определить ДКА M′ в этих обозначениях.
+
+Ввод из примера лежит в main, через консоль можете сделать сами
 """
 import os
 from collections import defaultdict, deque
@@ -33,12 +35,13 @@ PATH_TO_DIAGRAM: Final = os.path.join(os.path.curdir, "test_dfa.png")
 
 
 class DeterministicFiniteAutomaton:
-    def __init__(self, transitions: dict[str, dict[str, set[str]]], start_state, final_states, input_alphabet, states):
-        self.start_state: str = start_state
-        self.set_of_input_alphabet_characters: set[str] = input_alphabet
-        self.set_of_states = states
-        self.transition_function = transitions
-        self.final_states = final_states
+    def __init__(self, nfa: NonDeterministicFiniteAutomaton) -> None:
+        self.start_state: str = nfa.start_state
+        self.set_of_input_alphabet_characters: set[str] = nfa.set_of_input_alphabet_characters
+        self.set_of_states = nfa.set_of_states
+        self.transition_function = nfa.transition_function
+        self.final_states = nfa.final_states
+        self.construct_dfa()
 
     def construct_dfa(self) -> None:
         dfa_transitions = defaultdict(dict)
@@ -81,7 +84,7 @@ class DeterministicFiniteAutomaton:
         if any(state in self.final_states for state in current_state_set):
             self.final_states.add(self._states_to_string(current_state_set))
 
-    def _transition(self, state_set: set[str], symbol: str) -> set[str]:
+    def _transition(self, state_set: set[str], symbol: str) -> set[str] | set[set[str]]:
         """
         Данный метод используется для получения множества состояний,
         в которые можно перейти из заданного множества состояний по заданному символу.
@@ -144,26 +147,13 @@ class DeterministicFiniteAutomaton:
 
 
 def main() -> None:
-    transitions = {
-        "q0": {"a": {"q0"}, "b": {"q0", "q1"}},
-        "q1": {"a": {}, "b": {"q2"}},
-        "q2": {"a": {}, "b": {}},
-    }
-
-    start_state = "q0"
-    final_states = {"q2"}
-    input_alphabet = {"a", "b"}
-    states = {"q0", "q1", "q2"}
-
-    d = DeterministicFiniteAutomaton(transitions, start_state, final_states, input_alphabet, states)
-    d.construct_dfa()
+    grammar = Grammar({"a", "b"}, {"S", "A", "B"}, {"S": ["aB", "aA"], "B": ["bB", "a"], "A": ["aA", "b"]}, "S")
+    nfa = NonDeterministicFiniteAutomaton(grammar)
+    nfa.show_diagram()
+    d = DeterministicFiniteAutomaton(nfa)
     d.show_diagram()
-
     print(d)
 
 
 if __name__ == "__main__":
     main()
-    grammar = Grammar({"a", "b"}, {"S", "A", "B"}, {"S": ["aB", "aA"], "B": ["bB", "a"], "A": ["aA", "b"]}, "S")
-    nfa = NonDeterministicFiniteAutomaton(grammar)
-    print(nfa)
