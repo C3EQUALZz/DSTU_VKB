@@ -61,10 +61,7 @@ def is_context_sensitive(grammar: dict[str, list[str]]) -> bool:
     bBA -> bcdA
     bS -> ba
     """
-    for key, value in grammar.items():
-        if len(key) <= len(value):
-            return True
-    return False
+    return all(len(key) <= len(value) for key, value in grammar.items())
 
 
 def is_context_free(grammar: dict[str, list[str]]) -> bool:
