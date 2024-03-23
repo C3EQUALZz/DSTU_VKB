@@ -39,6 +39,7 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:1.2.3")
     implementation("org.apache.poi:poi-ooxml:5.2.5")
     implementation("org.apache.logging.log4j:log4j-to-slf4j:2.8.2")
+    implementation("org.xerial:sqlite-jdbc:3.30.1")
 }
 
 tasks.test {
