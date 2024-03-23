@@ -3,7 +3,7 @@
 """
 import os
 from copy import deepcopy
-from typing import Final, MutableSet, MutableMapping, Self, AnyStr, Set
+from typing import Final, MutableMapping, Self, AnyStr, Set
 
 from automata.fa.nfa import NFA
 
@@ -15,11 +15,11 @@ PATH_TO_DIAGRAM: Final = os.path.join(os.path.curdir, "test_dfa_min.png")
 
 class RemovedUselessSymbolsDFA:
     def __init__(self,
-                 states: MutableSet[AnyStr],
-                 alphabet: MutableSet[AnyStr],
+                 states: Set[AnyStr],
+                 alphabet: Set[AnyStr],
                  start: AnyStr,
                  transitions: MutableMapping[AnyStr, MutableMapping[AnyStr, Set[AnyStr]]],
-                 final_states: MutableSet[AnyStr]):
+                 final_states: Set[AnyStr]):
 
         self.start_state = start
         self.set_of_input_alphabet_characters = alphabet

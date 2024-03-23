@@ -4,6 +4,7 @@
 
 from python_language.formal_languages.seventh_eighth_laboratory.remove_unreachable_states_dfa_class import (
     RemovedUselessSymbolsDFA)
+from python_language.formal_languages.seventh_eighth_laboratory.minimize_dfa_class import DFAMinimizer
 
 
 def main() -> None:
@@ -29,8 +30,8 @@ def main() -> None:
     # 'E': {'a': {'B'}, 'b': {'D'}}},
     # A, {'D', 'E'})
     d = RemovedUselessSymbolsDFA(states, alphabet, start, transitions, final_states)
-    d.show_diagram()
-    print(d)
+    n = DFAMinimizer.from_removed_symbols_dfa(d)
+    print(n)
 
 
 if __name__ == "__main__":
