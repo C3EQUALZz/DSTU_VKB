@@ -10,7 +10,7 @@ from automata.fa.nfa import NFA
 from python_language.formal_languages.seventh_eighth_laboratory.graph_class import Graph
 from python_language.formal_languages.fifth_sixth_laboratory.det_final_automat_class import DeterministicFiniteAutomaton
 
-PATH_TO_DIAGRAM: Final = os.path.join(os.path.curdir, "test_dfa_min.png")
+PATH_TO_DIAGRAM: Final = os.path.join(os.path.curdir, "test_dfa_removed.png")
 
 
 class RemovedUselessSymbolsDFA:

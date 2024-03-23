@@ -29,6 +29,8 @@ def main() -> None:
     # 'D': {'a': {'C'}, 'b': {'E'}},
     # 'E': {'a': {'B'}, 'b': {'D'}}},
     # A, {'D', 'E'})
+
+    # A, B, C, D, E
     d = RemovedUselessSymbolsDFA(states, alphabet, start, transitions, final_states)
     n = DFAMinimizer.from_removed_symbols_dfa(d)
     print(n)
