@@ -17,7 +17,7 @@
 Ещё репозитории с лабораторными работами: 
 - https://github.com/yaromochka/DSTU
 - https://github.com/Din0zaBr/DSTU
-- https://github.com/Kikuzawa
+- https://github.com/Kikuzawa/DSTU
   
 ---
 ![GitHub repo size](https://img.shields.io/github/repo-size/C3EQUALZz/DSTU_VKB)
