@@ -44,6 +44,9 @@ class DeterministicFiniteAutomaton:
         self.construct_dfa()
 
     def construct_dfa(self) -> None:
+        """
+        Метод, с помощью которого начинается запуск построения ДКА
+        """
         dfa_transitions = defaultdict(dict)
         unmarked_states = [self._epsilon_closure({self.start_state})]
         marked_states = []
@@ -64,7 +67,14 @@ class DeterministicFiniteAutomaton:
                              marked_states: list[set[str]],
                              unmarked_states: list[set[str]],
                              dfa_transitions: defaultdict[str, dict]) -> defaultdict[str, dict]:
-
+        """
+        Метод, который заполняет таблицу переходов для ДКА
+        Args:
+            current_state_set: текущее состояние
+            marked_states: проверенные вершины
+            unmarked_states: непроверенные вершины
+            dfa_transitions: таблица переходов
+        """
         for symbol in self.set_of_input_alphabet_characters:
             next_state_set = self._epsilon_closure(self._transition(current_state_set, symbol))
 
