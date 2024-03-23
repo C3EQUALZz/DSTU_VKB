@@ -19,7 +19,7 @@ F (A, a) = B, где A, B ∈ V_n, a ∈ V_t.
 """
 import os
 from collections import defaultdict
-from typing import Final
+from typing import Final, MutableMapping, Set, AnyStr
 
 from automata.fa.nfa import NFA
 
@@ -38,21 +38,21 @@ class NonDeterministicFiniteAutomaton:
         - H - начальный символ автомата (start_state)
         - Z - множество заключительных состояний (final_states)
         """
-        self.start_state: str = grammar.start_symbol
-        self.set_of_states: set[str] = grammar.set_of_non_terminals | {grammar.start_symbol}
-        self.set_of_input_alphabet_characters: set[str] = grammar.set_of_terminals
+        self.start_state: AnyStr = grammar.start_symbol
+        self.set_of_states: set[AnyStr] = grammar.set_of_non_terminals | {grammar.start_symbol}
+        self.set_of_input_alphabet_characters: set[AnyStr] = grammar.set_of_terminals
         self.transition_function = grammar.transition_rules
         self.final_states = grammar.transition_rules
 
     @property
-    def transition_function(self) -> dict[str, defaultdict[str, set]]:
+    def transition_function(self) -> MutableMapping[AnyStr, MutableMapping[AnyStr, Set[AnyStr]]]:
         """
         Свойство - геттер, которую возвращает функцию переходов
         """
         return self.__transition_function
 
     @transition_function.setter
-    def transition_function(self, transition_rules: dict[str, list[str]]) -> None:
+    def transition_function(self, transition_rules: MutableMapping[AnyStr, list[AnyStr]]) -> None:
         """
         Свойство - сеттер, которое устанавливает функцию перехода из грамматики
 
@@ -71,7 +71,7 @@ class NonDeterministicFiniteAutomaton:
 
             self.__transition_function[non_terminal] = transition_dict
 
-    def __process_production(self, production: str, transition_dict: dict) -> None:
+    def __process_production(self, production: AnyStr, transition_dict: MutableMapping[AnyStr, Set[AnyStr]]) -> None:
         """
         Обрабатывает каждую продукцию и обновляет функцию перехода.
 
@@ -94,7 +94,7 @@ class NonDeterministicFiniteAutomaton:
         return self.__final_states
 
     @final_states.setter
-    def final_states(self, transition_rules: dict[str, list[str]]) -> None:
+    def final_states(self, transition_rules: MutableMapping[AnyStr, list[AnyStr]]) -> None:
         """
         Множество заключительных состояний, здесь, видимо, идет поиск новых терминалов, как я понял из примера
         """
@@ -124,10 +124,3 @@ class NonDeterministicFiniteAutomaton:
             initial_state=self.start_state,
             final_states=self.final_states,
         ).show_diagram(path=PATH_TO_DIAGRAM)
-
-
-if __name__ == "__main__":
-    grammar = Grammar({"a", "b"}, {"S", "A", "B"}, {"S": ["aB", "aA"], "B": ["bB", "a"], "A": ["aA", "b"]}, "S")
-    nfa = NonDeterministicFiniteAutomaton(grammar)
-    nfa.show_diagram()
-    print(nfa)

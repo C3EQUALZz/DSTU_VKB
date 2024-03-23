@@ -1,31 +1,42 @@
 """
-Минимизация ДКА
+Удаление ненужных вершин в ДКА
 """
 import os
 from copy import deepcopy
-from typing import Final
-from python_language.formal_languages.seventh_eighth_laboratory.graph_class import Graph
+from typing import Final, MutableSet, MutableMapping, Self, AnyStr, Set
 
 from automata.fa.nfa import NFA
+
+from python_language.formal_languages.seventh_eighth_laboratory.graph_class import Graph
+from python_language.formal_languages.fifth_sixth_laboratory.det_final_automat_class import DeterministicFiniteAutomaton
 
 PATH_TO_DIAGRAM: Final = os.path.join(os.path.curdir, "test_dfa_min.png")
 
 
 class RemovedUselessSymbolsDFA:
-    # def __init__(self, dfa: DeterministicFiniteAutomaton) -> None:
-    #     self.start_state: str = dfa.start_state
-    #     self.set_of_input_alphabet_characters: set[str] = copy(dfa.set_of_input_alphabet_characters)
-    #     self.set_of_states = copy(dfa.set_of_states)
-    #     self.transition_function = deepcopy(dfa.transition_function)
-    #     self.final_states = copy(dfa.final_states)
+    def __init__(self,
+                 states: MutableSet[AnyStr],
+                 alphabet: MutableSet[AnyStr],
+                 start: AnyStr,
+                 transitions: MutableMapping[AnyStr, MutableMapping[AnyStr, Set[AnyStr]]],
+                 final_states: MutableSet[AnyStr]):
 
-    def __init__(self, states, alphabet, start, transitions, final_states):
         self.start_state = start
         self.set_of_input_alphabet_characters = alphabet
         self.transition_function = transitions
         self.set_of_states = states
         self.final_states = final_states
         self.__eliminate_unreachable_states()
+
+    @classmethod
+    def from_dfa(cls, dfa: DeterministicFiniteAutomaton) -> Self:
+        return cls(
+            states=dfa.set_of_states,
+            alphabet=dfa.set_of_input_alphabet_characters,
+            start=dfa.start_state,
+            transitions=dfa.transition_function(),
+            final_states=dfa.final_states()
+        )
 
     def __eliminate_unreachable_states(self) -> None:
         """
