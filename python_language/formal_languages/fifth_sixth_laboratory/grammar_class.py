@@ -5,8 +5,6 @@
 """
 
 import re
-from random import choice
-from string import ascii_lowercase, digits
 from typing import Final
 
 RANDOM_SYMBOL: Final = "N"
