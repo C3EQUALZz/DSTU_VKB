@@ -39,7 +39,8 @@ def left_factorize(grammar: dict[str, list[str]]) -> dict[str, list[str]]:
             new_grammar[new_non_terminal].extend([production[len(common_prefix):] for production in productions])
 
         else:
-            new_grammar[non_terminal].append(productions)
+            # Костыль, так как могут быть пустые символы
+            new_grammar[non_terminal].extend(filter(None, productions))
 
     return new_grammar
 
