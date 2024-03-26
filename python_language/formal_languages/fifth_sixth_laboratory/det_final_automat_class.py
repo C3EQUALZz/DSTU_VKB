@@ -154,16 +154,3 @@ class DeterministicFiniteAutomaton:
         Вспомогательный метод для перевода множества состояний в строку для библиотеки
         """
         return ''.join(sorted(state_set))
-
-
-def main() -> None:
-    grammar = Grammar({"a", "b"}, {"S", "A", "B"}, {"S": ["aB", "aA"], "B": ["bB", "a"], "A": ["aA", "b"]}, "S")
-    nfa = NonDeterministicFiniteAutomaton(grammar)
-    nfa.show_diagram()
-    d = DeterministicFiniteAutomaton(nfa)
-    d.show_diagram()
-    print(d)
-
-
-if __name__ == "__main__":
-    main()
