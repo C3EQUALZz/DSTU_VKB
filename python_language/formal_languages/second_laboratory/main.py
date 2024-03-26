@@ -16,6 +16,8 @@ W -> W+W
 V -> *0
 V -> /1
 exit
+----------
+0 1 + - / *
 """
 
 from itertools import chain
