@@ -2,6 +2,13 @@
 Обязательно для просмотра, чтобы понимать материал:
  1. https://youtu.be/XvDdCQxCYJ0?si=jTHna1pSAHafhEVJ
  2. https://www.youtube.com/watch?v=fM5UiCAFyIU
+ Мой вариант:
+ S -> 0A0
+ S -> 0B0
+ A -> 1B1
+ A -> 11
+ B -> 0S0
+ B -> 00
 """
 import re
 from typing import Pattern, AnyStr
@@ -61,7 +68,7 @@ def is_context_sensitive(grammar: dict[str, list[str]]) -> bool:
     bBA -> bcdA
     bS -> ba
     """
-    return all(len(key) <= len(value) for key, value in grammar.items())
+    return all(len(key) <= len(value) for key, values in grammar.items() for value in values)
 
 
 def is_context_free(grammar: dict[str, list[str]]) -> bool:
@@ -75,7 +82,7 @@ def is_context_free(grammar: dict[str, list[str]]) -> bool:
     S -> aa
     I -> bb
     """
-    pattern = re.compile(r'^[A-Z] -> (?:[A-Za-z]+|\W)')
+    pattern = re.compile(r'^[A-Z] -> (.).*\1$')
     return _checker(grammar=grammar, pattern=pattern)
 
 
