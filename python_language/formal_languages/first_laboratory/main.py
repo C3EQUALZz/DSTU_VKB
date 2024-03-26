@@ -82,7 +82,7 @@ def is_context_free(grammar: dict[str, list[str]]) -> bool:
     S -> aa
     I -> bb
     """
-    pattern = re.compile(r'^[A-Z] -> (.).*\1$')
+    pattern = re.compile(r'^[A-Z] -> (.)*.*\1*$')
     return _checker(grammar=grammar, pattern=pattern)
 
 
