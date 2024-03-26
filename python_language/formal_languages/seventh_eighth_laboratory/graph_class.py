@@ -2,12 +2,12 @@
 Здесь описан класс графа, который мне нужен для поиска в ширину
 """
 from collections import defaultdict, deque
-from collections.abc import MutableMapping, MutableSet
 from copy import deepcopy
+from typing import Set, MutableMapping, AnyStr
 
 
 class Graph:
-    def __init__(self, transitions: MutableMapping[str, MutableMapping[str, MutableSet[str]]]) -> None:
+    def __init__(self, transitions: MutableMapping[AnyStr, MutableMapping[AnyStr, Set[AnyStr]]]) -> None:
         self.transitions = deepcopy(transitions)
         self._graph = defaultdict(set)
         self._convert_to_graph()
@@ -27,14 +27,14 @@ class Graph:
             for _, value in dict_values.items():
                 self._graph[key].update(value)
 
-    def bfs(self) -> MutableSet[str]:
+    def bfs(self) -> Set[AnyStr]:
         """
         Здесь используется алгоритм обхода поиска в ширину
         Ссылка на источник:
         - https://www.easydoit.ru/python/kak-obojti-graf-v-shirinu-na-python-principy-sovety-i-primery-koda/
         """
-        visited: set[str] = set()
-        queue: deque[str] = deque([next(iter(self.transitions))])
+        visited: Set[AnyStr] = set()
+        queue: deque[AnyStr] = deque([next(iter(self.transitions))])
 
         while queue:
             vertex = queue.popleft()

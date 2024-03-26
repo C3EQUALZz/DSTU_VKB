@@ -12,8 +12,7 @@ from typing import Self, Set, AnyStr, Mapping, Final
 from dataclasses import dataclass
 from automata.fa.nfa import NFA
 
-from python_language.formal_languages.seventh_eighth_laboratory.remove_unreachable_states_dfa_class import (
-    RemovedUselessSymbolsDFA)
+from .remove_unreachable_states_dfa_class import RemovedUselessSymbolsDFA
 
 PATH_TO_DIAGRAM: Final = os.path.join(os.path.curdir, "test_dfa_min.png")
 
