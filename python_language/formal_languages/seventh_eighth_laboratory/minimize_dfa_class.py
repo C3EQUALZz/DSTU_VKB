@@ -5,40 +5,37 @@
 - https://youtu.be/0XaGAkY09Wc?si=Ltcw-JBfBYO82KMQ
 """
 import os
-from typing import Self, Set, AnyStr, Mapping, Final, Tuple, List
-from copy import deepcopy
 from collections import defaultdict
+from copy import deepcopy
+from itertools import chain, product
+from typing import Self, Set, AnyStr, Mapping, Final
+from dataclasses import dataclass
+from automata.fa.nfa import NFA
 
 from python_language.formal_languages.seventh_eighth_laboratory.remove_unreachable_states_dfa_class import (
     RemovedUselessSymbolsDFA)
 
-from automata.fa.nfa import NFA
-
 PATH_TO_DIAGRAM: Final = os.path.join(os.path.curdir, "test_dfa_min.png")
 
 
+@dataclass
 class DFAMinimizer:
-    def __init__(self,
-                 states: Set[AnyStr],
-                 alphabet: Set[AnyStr],
-                 start: AnyStr,
-                 transitions: Mapping[AnyStr, Mapping[AnyStr, Set[AnyStr]]],
-                 final_states: Set[AnyStr]) -> None:
+    set_of_states: Set[AnyStr]
+    set_of_input_alphabet_characters: Set[AnyStr]
+    start_state: AnyStr
+    transition_function: Mapping[AnyStr, Mapping[AnyStr, Set[AnyStr]]]
+    final_states: Set[AnyStr]
 
-        self.start_state = start
-        self.set_of_input_alphabet_characters: set[str] = alphabet
-        self.set_of_states = states
-        self.transition_function = transitions
-        self.final_states = final_states
+    def __post_init__(self):
         self.__minimize_dfa()
 
     @classmethod
     def from_removed_symbols_dfa(cls, dfa: RemovedUselessSymbolsDFA) -> Self:
         return cls(
-            states=dfa.set_of_states,
-            alphabet=dfa.set_of_input_alphabet_characters,
-            start=dfa.start_state,
-            transitions=dfa.transition_function,
+            set_of_states=dfa.set_of_states,
+            set_of_input_alphabet_characters=dfa.set_of_input_alphabet_characters,
+            start_state=dfa.start_state,
+            transition_function=dfa.transition_function,
             final_states=dfa.final_states
         )
 
@@ -120,14 +117,13 @@ class DFAMinimizer:
         """
         new_transition_function = defaultdict(dict)
 
-        for state in self.set_of_states:
-            for symbol in self.set_of_input_alphabet_characters:
-                transitions = set()
-                for old_state in state:
-                    transitions.update(self.transition_function.get(old_state, {}).get(symbol, []))
+        for state, symbol in product(self.set_of_states, self.set_of_input_alphabet_characters):
+            transitions = set(chain.from_iterable(
+                self.transition_function.get(old_state, {}).get(symbol, []) for old_state in state
+            ))
 
-                new_transition_function[state][symbol] = {new_state_set for new_state_set in self.set_of_states if
-                                                          any(new_state in new_state_set for new_state in transitions)}
+            new_transition_function[state][symbol] = {new_state_set for new_state_set in self.set_of_states if
+                                                      any(new_state in new_state_set for new_state in transitions)}
 
         return new_transition_function
 
