@@ -14,17 +14,19 @@ import programmingLanguagesJava.laboratories.GUI.controllers.BaseController;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.addingNames.TextFieldAddController;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.documentProcessing.DocxProcessor;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.fileChooserInteraction.FileChooserController;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.observers.FormObserver;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.processingEventsOnMap.OpenStreetMap;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.searchEngineField.TextFieldSearchController;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class MenuAddress extends BaseController {
 
     @FXML private MapView mapView;
-    @FXML private Button downloadFile, startSearch, addHuman, createDocument;
+    @FXML private Button downloadFile, startSearch, addHuman, createDocument, addDataToDB;
     @FXML private TextField addressField, fullNameField;
     @FXML private ComboBox<String> combobox;
 
@@ -42,6 +44,8 @@ public class MenuAddress extends BaseController {
         initializeFullName();
         initializeCreateDocument();
         initializeFileChooser();
+
+        new FormObserver(addressField, combobox, Arrays.asList(createDocument, addDataToDB));
     }
 
     /**
@@ -52,11 +56,7 @@ public class MenuAddress extends BaseController {
         openStreetMapInstance.setAddressField(addressField);
         openStreetMapInstance.event();
 
-        addressField.textProperty().addListener((observable, oldValue, newValue) -> {
-            updateJsonData("addressField", newValue);
-            if (this.jsonData.keySet().size() >= 2)
-                createDocument.setDisable(false);
-        });
+        addressField.textProperty().addListener((observable, oldValue, newValue) -> updateJsonData("addressField", newValue));
     }
 
     /**
@@ -65,11 +65,7 @@ public class MenuAddress extends BaseController {
     private void initializeSearchEngine() {
         var textFieldSearchController = new TextFieldSearchController(addressField);
         textFieldSearchController.setMapView(mapView);
-        buttonConfigurator.setupButtonEvent(startSearch, event -> {
-            textFieldSearchController.event();
-            if (this.jsonData.keySet().size() >= 2)
-                createDocument.setDisable(false);
-        });
+        buttonConfigurator.setupButtonEvent(startSearch, event -> textFieldSearchController.event());
     }
 
     /**
@@ -77,11 +73,7 @@ public class MenuAddress extends BaseController {
      */
     private void initializeFileChooser() {
         var fileChooserController = new FileChooserController();
-        buttonConfigurator.setupButtonEvent(downloadFile, event -> {
-            updateJsonData("buildingPlan", fileChooserController.event(event));
-            if (this.jsonData.keySet().size() >= 2)
-                createDocument.setDisable(false);
-        });
+        buttonConfigurator.setupButtonEvent(downloadFile, event -> updateJsonData("buildingPlan", fileChooserController.event(event)));
     }
 
     /**
@@ -96,8 +88,6 @@ public class MenuAddress extends BaseController {
             comboboxConfigurator.setupComboboxEvent(combobox, persons);
             updateJsonData("allPeople", String.join(", ", persons));
             combobox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> updateJsonData("mainPerson", newValue));
-            if (this.jsonData.keySet().size() >= 2)
-                createDocument.setDisable(false);
         });
     }
 
@@ -106,13 +96,7 @@ public class MenuAddress extends BaseController {
      */
     private void initializeCreateDocument() {
         var docxProcessor = new DocxProcessor(this.jsonData);
-
-        buttonConfigurator.setupButtonEvent(createDocument, event -> {
-            if (this.jsonData.keySet().size() >= 2) {
-                createDocument.setDisable(false);
-                updateJsonData("pathToFile", docxProcessor.event());
-            }
-        });
+        buttonConfigurator.setupButtonEvent(createDocument, event -> updateJsonData("pathToFile", docxProcessor.event()));
     }
 
     private void updateJsonData(String elementUI, String value) {
