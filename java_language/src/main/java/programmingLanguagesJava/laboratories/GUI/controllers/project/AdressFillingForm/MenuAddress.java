@@ -38,7 +38,6 @@ public class MenuAddress extends BaseController {
     private final ComboboxConfigurator comboboxConfigurator = new ComboboxConfigurator();
     private HashSet<String> persons;
     private FileChooserController fileChooserController;
-    private final HashMap<String, String> jsonData = new HashMap<>();
 
 
     @Override
@@ -98,7 +97,10 @@ public class MenuAddress extends BaseController {
      * Здесь описывается логика создания документа, который мы будем обрабатывать.
      */
     private void initializeCreateDocument() {
-        var docxProcessor = new DocxProcessor(this.jsonData);
+        // Словарь, в котором мы будем хранить все значения
+        var jsonData = new HashMap<String, String>();
+
+        var docxProcessor = new DocxProcessor(jsonData);
         buttonConfigurator.setupButtonEvent(createDocument, event -> {
             // Добавляем значения в наш словарь
             jsonData.put("addressField", addressField.getText());
