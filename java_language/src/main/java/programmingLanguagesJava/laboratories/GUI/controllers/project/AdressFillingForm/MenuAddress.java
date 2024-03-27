@@ -31,6 +31,7 @@ public class MenuAddress extends BaseController {
     @FXML private ComboBox<String> combobox;
 
     private final ComboboxConfigurator comboboxConfigurator = new ComboboxConfigurator();
+    private FileChooserController fileChooserController;
     private final HashMap<String, String> jsonData = new HashMap<>();
 
 
@@ -55,8 +56,6 @@ public class MenuAddress extends BaseController {
         var openStreetMapInstance = new OpenStreetMap(mapView);
         openStreetMapInstance.setAddressField(addressField);
         openStreetMapInstance.event();
-
-        addressField.textProperty().addListener((observable, oldValue, newValue) -> updateJsonData("addressField", newValue));
     }
 
     /**
@@ -72,8 +71,8 @@ public class MenuAddress extends BaseController {
      * Здесь запускается event, который обрабатывает кнопку добавки файлов
      */
     private void initializeFileChooser() {
-        var fileChooserController = new FileChooserController();
-        buttonConfigurator.setupButtonEvent(downloadFile, event -> updateJsonData("buildingPlan", fileChooserController.event(event)));
+        fileChooserController = new FileChooserController();
+        buttonConfigurator.setupButtonEvent(downloadFile, event -> fileChooserController.event(event));
     }
 
     /**
@@ -87,7 +86,6 @@ public class MenuAddress extends BaseController {
             var persons = textFieldAddController.event();
             comboboxConfigurator.setupComboboxEvent(combobox, persons);
             updateJsonData("allPeople", String.join(", ", persons));
-            combobox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> updateJsonData("mainPerson", newValue));
         });
     }
 
@@ -96,7 +94,14 @@ public class MenuAddress extends BaseController {
      */
     private void initializeCreateDocument() {
         var docxProcessor = new DocxProcessor(this.jsonData);
-        buttonConfigurator.setupButtonEvent(createDocument, event -> updateJsonData("pathToFile", docxProcessor.event()));
+        buttonConfigurator.setupButtonEvent(createDocument, event -> {
+            // Добавляем значения в наш словарь
+            updateJsonData("addressField", addressField.getText());
+            updateJsonData("fullNameField", fullNameField.getText());
+            updateJsonData("mainPerson", combobox.getValue());
+            updateJsonData("buildingPlan", fileChooserController.getSelectedFile());
+            updateJsonData("pathToFile", docxProcessor.event());
+        });
     }
 
     private void updateJsonData(String elementUI, String value) {

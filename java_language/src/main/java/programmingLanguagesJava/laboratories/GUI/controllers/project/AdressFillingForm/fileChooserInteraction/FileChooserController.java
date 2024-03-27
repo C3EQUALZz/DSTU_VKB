@@ -19,6 +19,8 @@ public class FileChooserController {
             new FileChooser.ExtensionFilter("Photo", "*.jpg", "*.jpeg", "*.png"),
             new FileChooser.ExtensionFilter("Plans", "*.dwg", "*.rvt")
     );
+    private File selectedFile;
+
     private final FileChooser fileChooser;
 
     /**
@@ -34,10 +36,15 @@ public class FileChooserController {
     /**
      * Обработчик событий выбора файла посредством OC.
      * @param event данный event нужен, чтобы можно было вызвать окно выбора файла, ссылаясь на stage.
-     * @return возвращает путь к выбранному файлу, если пользователь выбрал
      */
-    public String event(MouseEvent event) {
-        var selectedFile = this.fileChooser.showOpenDialog(((Node) event.getSource()).getScene().getWindow());
+    public void event(MouseEvent event) {
+        selectedFile = this.fileChooser.showOpenDialog(((Node) event.getSource()).getScene().getWindow());
+    }
+
+    /**
+     *  @return возвращает путь к выбранному файлу, если пользователь выбрал
+     */
+    public String getSelectedFile() {
         return selectedFile != null ? selectedFile.getPath() : null;
     }
 }
