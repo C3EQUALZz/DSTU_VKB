@@ -21,16 +21,22 @@ import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFilli
 import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 
 public class MenuAddress extends BaseController {
 
-    @FXML private MapView mapView;
-    @FXML private Button downloadFile, startSearch, addHuman, createDocument, addDataToDB;
-    @FXML private TextField addressField, fullNameField;
-    @FXML private ComboBox<String> combobox;
+    @FXML
+    private MapView mapView;
+    @FXML
+    private Button downloadFile, startSearch, addHuman, createDocument, addDataToDB;
+    @FXML
+    private TextField addressField, fullNameField;
+    @FXML
+    private ComboBox<String> combobox;
 
     private final ComboboxConfigurator comboboxConfigurator = new ComboboxConfigurator();
+    private HashSet<String> persons;
     private FileChooserController fileChooserController;
     private final HashMap<String, String> jsonData = new HashMap<>();
 
@@ -83,9 +89,8 @@ public class MenuAddress extends BaseController {
         var textFieldAddController = new TextFieldAddController(fullNameField);
 
         buttonConfigurator.setupButtonEvent(addHuman, event -> {
-            var persons = textFieldAddController.event();
+            persons = textFieldAddController.event();
             comboboxConfigurator.setupComboboxEvent(combobox, persons);
-            updateJsonData("allPeople", String.join(", ", persons));
         });
     }
 
@@ -96,15 +101,13 @@ public class MenuAddress extends BaseController {
         var docxProcessor = new DocxProcessor(this.jsonData);
         buttonConfigurator.setupButtonEvent(createDocument, event -> {
             // Добавляем значения в наш словарь
-            updateJsonData("addressField", addressField.getText());
-            updateJsonData("fullNameField", fullNameField.getText());
-            updateJsonData("mainPerson", combobox.getValue());
-            updateJsonData("buildingPlan", fileChooserController.getSelectedFile());
-            updateJsonData("pathToFile", docxProcessor.event());
+            jsonData.put("addressField", addressField.getText());
+            jsonData.put("fullNameField", fullNameField.getText());
+            jsonData.put("mainPerson", combobox.getValue());
+            jsonData.put("buildingPlan", fileChooserController.getSelectedFile());
+            jsonData.put("allPeople", String.join(", ", persons));
+            jsonData.put("pathToFile", docxProcessor.event());
         });
     }
 
-    private void updateJsonData(String elementUI, String value) {
-        jsonData.put(elementUI, value);
-    }
 }
