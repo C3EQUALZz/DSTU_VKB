@@ -17,11 +17,10 @@ class NumberedUnderlineReplacer implements UnderlineReplacer {
 
     @Override
     public void replaceUnderlines(XWPFDocument doc) {
-        for (var paragraph : doc.getParagraphs()) {
-            for (var run : paragraph.getRuns()) {
-                parseRow(run, run.getText(0));
-            }
-        }
+        doc.getParagraphs().forEach(xwpfParagraph ->
+                xwpfParagraph.getRuns().forEach(xwpfRun ->
+                        parseRow(xwpfRun, xwpfRun.getText(0))));
+
     }
 
     void parseRow(XWPFRun run, String text) {
