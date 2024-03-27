@@ -1,12 +1,17 @@
 """
 Удаление ненужных вершин в ДКА
 """
+import os
 from copy import deepcopy
 from dataclasses import dataclass
-from typing import MutableMapping, Self, AnyStr, Set
+from typing import MutableMapping, Self, AnyStr, Set, Final
+
+from automata.fa.nfa import NFA
 
 from ..fifth_sixth_laboratory.det_final_automat_class import DeterministicFiniteAutomaton
 from .graph_class import Graph
+
+PATH_TO_DIAGRAM: Final = os.path.join(os.path.curdir, "test_dfa_removed.png")
 
 
 @dataclass
@@ -50,3 +55,15 @@ class RemovedUselessSymbolsDFA:
         Удаление финальных состояний, если там были недостижимые вершины
         """
         self.final_states = {state for state in final_state if state in self.set_of_states}
+
+    def show_diagram(self) -> None:
+        """
+        Метод, который создает граф на основе автомата
+        """
+        NFA(
+            states=self.set_of_states,
+            input_symbols=self.set_of_input_alphabet_characters,
+            transitions=self.transition_function,
+            initial_state=self.start_state,
+            final_states=self.final_states,
+        ).show_diagram(path=PATH_TO_DIAGRAM)

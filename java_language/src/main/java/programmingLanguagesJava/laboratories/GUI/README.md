@@ -2,6 +2,8 @@
 ---
 Смотреть иконки здесь: https://icons8.com/icons/set/desktop или скачайте приложение https://icons8.com/app/windows
 
+Как установить MySQL и нужные компоненты: https://youtu.be/BxdSUGBs0gM?si=1gMyCdosJyI_mDHr
+
 --- 
 
 Логика моего приложения такая: 

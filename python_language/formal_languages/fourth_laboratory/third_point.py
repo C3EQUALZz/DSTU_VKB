@@ -75,18 +75,19 @@ def remove_left_recursion(rules: dict[str, list[str]]) -> dict[str, list[str]]:
     non_terminals = defaultdict(list, rules)
 
     for non_terminal in rules:
-        rules = non_terminals[non_terminal]
-        alpha_rules, beta_rules = _split_rules(rules, non_terminal)
 
-        if not alpha_rules:
-            continue
+        if any(rule.startswith(non_terminal) for rule in rules[non_terminal]):
+            alpha_rules, beta_rules = _split_rules(non_terminals[non_terminal], non_terminal)
 
-        new_rules_non_terminal, new_rules_new_non_terminal, new_non_terminal = _generate_new_rules(non_terminal,
-                                                                                                   alpha_rules,
-                                                                                                   beta_rules)
+            if not alpha_rules:
+                continue
 
-        non_terminals[non_terminal] = list(new_rules_non_terminal)
-        non_terminals[new_non_terminal] = list(new_rules_new_non_terminal)
+            new_rules_non_terminal, new_rules_new_non_terminal, new_non_terminal = _generate_new_rules(non_terminal,
+                                                                                                       alpha_rules,
+                                                                                                       beta_rules)
+
+            non_terminals[non_terminal] = list(new_rules_non_terminal)
+            non_terminals[new_non_terminal] = list(new_rules_new_non_terminal)
 
     return non_terminals
 
@@ -95,7 +96,7 @@ def main() -> None:
     grammar = get_rules_from_console("don't_remove")
     new_grammar = remove_left_recursion(grammar)
     print("Новая грамматика без левой рекурсии: ")
-    print("\n".join(f"{key} -> {'|'.join(value)}" for key, value in new_grammar.items()))
+    print("\n".join(f"{key} -> {'|'.join(value).rstrip('|')}" for key, value in new_grammar.items() if value))
 
 
 if __name__ == '__main__':

@@ -8,19 +8,19 @@ from python_language.formal_languages.seventh_eighth_laboratory.minimize_dfa_cla
 
 
 def main() -> None:
-    states = {"A", "B", "C", "D", "E", "F", "G"}
-    alphabet = {"a", "b"}
-    start = "A"
-    final_states = {"D", "E"}
-    transitions = {
-        "A": {"a": {"B"}, "b": {"C"}},
-        "B": {"b": {"D"}},
-        "C": {"b": {"E"}},
-        "D": {"a": {"C"}, "b": {"E"}},
-        "E": {"a": {"B"}, "b": {"D"}},
-        "F": {"a": {"D"}, "b": {"G"}},
-        "G": {"a": {"F"}, "b": {"E"}}
-    }
+    # states = {"A", "B", "C", "D", "E", "F", "G"}
+    # alphabet = {"a", "b"}
+    # start = "A"
+    # final_states = {"D", "E"}
+    # transitions = {
+    #     "A": {"a": {"B"}, "b": {"C"}},
+    #     "B": {"b": {"D"}},
+    #     "C": {"b": {"E"}},
+    #     "D": {"a": {"C"}, "b": {"E"}},
+    #     "E": {"a": {"B"}, "b": {"D"}},
+    #     "F": {"a": {"D"}, "b": {"G"}},
+    #     "G": {"a": {"F"}, "b": {"E"}}
+    # }
 
     # M`` = ({'B', 'D', 'C', 'A', 'E'}, {'b', 'a'},
     # {'A': {'a': {'B'}, 'b': {'C'}},
@@ -57,9 +57,26 @@ def main() -> None:
     #     "E": {"0": {"B"}, "1": {"C"}}
     # }
 
+    states = {"Y", "X", "Z", "I", "J", "K", "L", "N", "M"}
+    alphabet = {"i", "j", "n", "m", "k", "/", "!"}
+    start = "X"
+    final_states = {"N"}
+    transitions = {
+        "Y": {"n": {"X"}, "m": {"I"}},
+        "X": {"i": {"I"}, "j": {"K"}},
+        "Z": {"n": {"X"}, "m": {"K"}},
+        "I": {"j": {"J"}, "n": {"L"}},
+        "J": {"m": {"X"}, "k": {"N"}},
+        "K": {"j": {"J"}, "n": {"M"}},
+        "L": {"/": {"L"}, "!": {"N"}},
+        "N": {},
+        "M": {"!": {"N"}, "/": {"M"}}
+    }
+
     d = RemovedUselessSymbolsDFA(states, alphabet, start, transitions, final_states)
-    n = DFAMinimizer.from_removed_symbols_dfa(d)
-    n.show_diagram()
+    d.show_diagram()
+    # n = DFAMinimizer.from_removed_symbols_dfa(d)
+    # n.show_diagram()
 
 
 if __name__ == "__main__":

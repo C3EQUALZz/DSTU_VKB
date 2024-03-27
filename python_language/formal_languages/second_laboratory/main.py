@@ -1,64 +1,67 @@
 """
 Пример ввода:
-S -> R
-S -> T
-R -> pX
-R -> paR
-R -> paT
-T -> Tg
-T -> g
-X -> aXb
-Y -> aYa
-Y -> y
+R -> T1T
+R -> T1U
+R -> W
+R -> E
+T -> U
+T -> T01
+T -> T10
+T -> E
+U -> +U
+U -> +0
+U -> +1
+W -> W-W
+W -> W+W
+V -> *0
+V -> /1
 exit
+----------
+0 1 + - / *
 """
+
+from itertools import chain
+from typing import Mapping, Set, List, AnyStr
 from python_language.formal_languages.first_laboratory import is_context_free
 from python_language.formal_languages.useful_functions import get_rules_from_console
 
 
-def check_exist(grammar_rules: dict[str, list[str]]) -> bool:
+def check_grammar_existence(grammar: Mapping[AnyStr, List[AnyStr]], set_of_non_terminals: Set[AnyStr]) -> bool:
     """
-    Проверка на существование языка КС-грамматики
+    Проверка КС грамматики с помощью алгоритма, который описан в методичке
+    Args:
+        grammar (Mapping[AnyStr, List[AnyStr]]) - правила перехода, которые ввел пользователь
+        set_of_non_terminals (Set[AnyStr) - множество не терминалов
     """
-    reachable_symbols = {"S"}
+    # Стартовый символ всегда в самом начале правил, поэтому так сделал
+    start_symbol = next(iter(grammar))
 
-    def update_reachable_symbols(symbols: set[str]) -> None:
-        """
-        Обновляет нашей множество достижимых символов
-        """
-        nonlocal reachable_symbols
-        for symbol in symbols:
-            if symbol not in reachable_symbols:
-                reachable_symbols.add(symbol)
+    # Наше множество, в которое мы будем добавлять элементы
+    set_with_non_terminals = {start_symbol}
 
-    def factory(productions_inner: list[str]) -> bool | None:
-        """
-        Здесь используется фабрика, которая все запускает для удобства
-        """
-        for production_inner in productions_inner:
-            # Если все символы из правила уже достижимы, добавляем не терминал в множество
-            if all(symbol in reachable_symbols for symbol in production_inner):
-                update_reachable_symbols({non_terminal})
-                return True
+    max_length = 0
 
-    # Пока мы добавляем новые символы в множество достижимых, продолжаем итерации
-    changed = True
-    while changed:
-        changed = False
-        for non_terminal, productions in grammar_rules.items():
-            changed = factory(productions)
+    # Из примера я понял, что нужно рассматривать каждый отдельный символ S -> AB ---> A B, а не слитно
+    for symbol in chain.from_iterable(rule for rules in grammar.values() for rule in rules):
 
-    # Если стартовый символ достижим, значит язык существует
-    return "S" in reachable_symbols
+        if symbol in set_with_non_terminals | set_of_non_terminals:
+            set_with_non_terminals.add(symbol)
+
+        if max_length == (length := len(set_with_non_terminals)):
+            break
+        else:
+            max_length = length
+
+    return start_symbol in set_with_non_terminals
 
 
-def main() -> str:
-    # Считываем информацию с консоли
-    rules = get_rules_from_console()
+def main() -> AnyStr:
+    rules = get_rules_from_console("remove")
+    non_terminals = set(input("Введите множество не терминалов: ").split())
 
     if is_context_free(rules):
         return (f"1)Введена КС - грамматика\n2)"
-                f"{'Язык существует' if check_exist(rules) else 'Язык не существует'}")
+                f"{'Язык существует' if check_grammar_existence(rules, non_terminals) else 'Язык не существует'}")
     return "1)Введенная грамматика не является КС-грамматикой "
 
 
