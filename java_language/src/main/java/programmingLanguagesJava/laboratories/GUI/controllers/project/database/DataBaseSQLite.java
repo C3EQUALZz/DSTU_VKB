@@ -1,7 +1,19 @@
 package programmingLanguagesJava.laboratories.GUI.controllers.project.database;
 
 public class DataBaseSQLite implements DAO {
+    private static DataBaseSQLite instance;
 
+    private DataBaseSQLite() {
+
+    }
+
+    public static synchronized DataBaseSQLite getInstance() {
+        if (instance == null) {
+            instance = new DataBaseSQLite();
+        }
+
+        return instance;
+    }
 
     @Override
     public void addAddress(String address) {
