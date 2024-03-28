@@ -31,8 +31,8 @@ class RemovedUselessSymbolsDFA:
             set_of_states=dfa.set_of_states,
             set_of_input_alphabet_characters=dfa.set_of_input_alphabet_characters,
             start_state=dfa.start_state,
-            transition_function=dfa.transition_function(),
-            final_states=dfa.final_states()
+            transition_function=dfa.transition_function,
+            final_states=dfa.final_states
         )
 
     def __eliminate_unreachable_states(self) -> None:

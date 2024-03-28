@@ -23,13 +23,12 @@ F′(D, x) ={s | s∈F(t, x) для некоторого t∈D}.
 """
 import os
 from collections import defaultdict, deque
-from typing import Final, Self, AnyStr, Set, MutableMapping, List
 from dataclasses import dataclass
+from typing import Final, Self, AnyStr, Set, MutableMapping, List
 
 from automata.fa.dfa import DFA
 from automata.fa.nfa import NFA
 
-from python_language.formal_languages.fifth_sixth_laboratory.grammar_class import Grammar
 from python_language.formal_languages.fifth_sixth_laboratory.non_det_final_automat_class import (
     NonDeterministicFiniteAutomaton)
 
@@ -184,16 +183,3 @@ class DeterministicFiniteAutomaton:
         Вспомогательный метод для перевода множества состояний в строку для библиотеки
         """
         return ''.join(sorted(state_set))
-
-
-def main() -> None:
-    grammar = Grammar({"a", "b"}, {"S", "A", "B"}, {"S": ["aB", "aA"], "B": ["bB", "a"], "A": ["aA", "b"]}, "S")
-    nfa = NonDeterministicFiniteAutomaton(grammar)
-    nfa.show_diagram()
-    d = DeterministicFiniteAutomaton.from_nfa(nfa)
-    d.show_diagram()
-    print(d)
-
-
-if __name__ == "__main__":
-    main()

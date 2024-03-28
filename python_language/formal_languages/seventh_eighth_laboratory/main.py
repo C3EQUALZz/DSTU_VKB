@@ -75,8 +75,8 @@ def main() -> None:
 
     d = RemovedUselessSymbolsDFA(states, alphabet, start, transitions, final_states)
     d.show_diagram()
-    # n = DFAMinimizer.from_removed_symbols_dfa(d)
-    # n.show_diagram()
+    n = DFAMinimizer.from_removed_symbols_dfa(d)
+    n.show_diagram()
 
 
 if __name__ == "__main__":

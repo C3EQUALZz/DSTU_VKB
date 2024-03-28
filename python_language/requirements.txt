@@ -39,4 +39,5 @@ environs
 scipy
 automata-lib
 coloraide
+pandas
 
