@@ -40,6 +40,7 @@ dependencies {
     implementation("org.apache.poi:poi-ooxml:5.2.5")
     implementation("org.apache.logging.log4j:log4j-to-slf4j:2.8.2")
     implementation("org.xerial:sqlite-jdbc:3.30.1")
+    implementation("de.jensd:fontawesomefx:8.9")
 }
 
 tasks.test {

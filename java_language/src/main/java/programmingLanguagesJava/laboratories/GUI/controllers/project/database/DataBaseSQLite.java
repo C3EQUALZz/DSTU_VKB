@@ -1,10 +1,23 @@
 package programmingLanguagesJava.laboratories.GUI.controllers.project.database;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 public class DataBaseSQLite implements DAO {
+    private static final String DATABASE_URL = String.format(
+            "jdbc:sqlite:%s%s",
+            System.getProperty("user.dir"),
+            "java_language/src/main/resources/projectFiles/data/security_information_db.db");
     private static DataBaseSQLite instance;
+    private Connection connection;
 
     private DataBaseSQLite() {
-
+        try {
+            connection = DriverManager.getConnection(DATABASE_URL);
+        } catch (SQLException e) {
+            throw new RuntimeException("Не получилось подключиться к базе данных", e);
+        }
     }
 
     public static synchronized DataBaseSQLite getInstance() {
