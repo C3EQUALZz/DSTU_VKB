@@ -41,4 +41,24 @@ public class ButtonConfigurator {
             eventHandler.handle(event); // Передача объекта MouseEvent в обработчике события
         });
     }
+
+    /**
+     * Настройка кнопки с определенными параметрами.
+     *
+     * @param button       кнопка, на которую мы хотим назначить настройку по нажатию и т.п.
+     * @param action       действие, которое мы хотим выполнить при нажатии на кнопку.
+     * @param errorMessage сообщение об ошибке, если действие не удалось выполнить.
+     */
+    public void setupButtonEvent(Button button, CheckedConsumer action, String errorMessage) {
+        EventHandler<MouseEvent> eventHandler = event -> {
+            try {
+                action.accept(event);
+            } catch (Exception e) {
+                throw new RuntimeException(errorMessage, e);
+            }
+        };
+        setupButtonEvent(button, eventHandler);
+    }
+
+
 }
