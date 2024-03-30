@@ -18,6 +18,7 @@ import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFilli
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.processingEventsOnMap.OpenStreetMap;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.searchEngineField.TextFieldSearchController;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -29,7 +30,7 @@ public class MenuAddress extends BaseController {
     @FXML
     private MapView mapView;
     @FXML
-    private Button downloadFile, startSearch, addHuman, createDocument, addDataToDB;
+    private Button downloadFile, startSearch, addHuman, createDocument, addDataToDB, backButton;
     @FXML
     private TextField addressField, fullNameField;
     @FXML
@@ -50,6 +51,7 @@ public class MenuAddress extends BaseController {
         initializeFullName();
         initializeCreateDocument();
         initializeFileChooser();
+        overRideBackButton();
 
         new FormObserver(addressField, combobox, Arrays.asList(createDocument, addDataToDB));
     }
@@ -109,6 +111,19 @@ public class MenuAddress extends BaseController {
             jsonData.put("buildingPlan", fileChooserController.getSelectedFile());
             jsonData.put("allPeople", String.join(", ", persons));
             jsonData.put("pathToFile", docxProcessor.event());
+        });
+    }
+
+    /**
+     * Нужно было переопределить кнопку возвращения назад в меню проекта
+     */
+    private void overRideBackButton() {
+        buttonConfigurator.setupButtonEvent(backButton, event -> {
+            try {
+                controller.switchFromFillingFormToProjectMenu();
+            } catch (IOException e) {
+                throw new RuntimeException("Не получилось переключиться на меню проекта с окна записи данных в БД", e);
+            }
         });
     }
 

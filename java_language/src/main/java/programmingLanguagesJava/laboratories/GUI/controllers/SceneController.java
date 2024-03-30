@@ -29,6 +29,7 @@ public class SceneController {
         private static Scene LABORATORIES = null;
         private static Scene PROJECT_MENU = null;
         private static Scene PROJECT_FILLING_FORM = null;
+        private static Scene PROJECT_DATABASE_VIEW = null;
     }
 
     private enum ScenePath {
@@ -37,6 +38,7 @@ public class SceneController {
         private static final String LABORATORIES_FXML_PATH = "/laboratoriesFiles/laboratories.fxml";
         private static final String MENU_PROJECT_FXML_PATH = "/projectFiles/menu_project.fxml";
         private static final String FILLING_FORM_PROJECT_FXML_PATH = "/projectFiles/project.fxml";
+        private static final String DATABASE_VIEW_PROJECT_FXML_PATH = "/projectFiles/database_project.fxml";
     }
 
     /**
@@ -89,8 +91,24 @@ public class SceneController {
         animationSlideWindow(Scenes.PROJECT_MENU);
     }
 
+    /**
+     * Переключение с меню проекта на запись окна в БД
+     * @throws IOException - может броситься такая ошибка, так как считывает файлы
+     */
     public void switchFromMenuProjectToFillingForm() throws IOException {
         animationSlideWindow(Scenes.PROJECT_FILLING_FORM);
+    }
+
+    /**
+     * Переключение с окна заполнения данных в БД на меню проекта
+     * @throws IOException - может броситься такая ошибка, так как считывает файлы
+     */
+    public void switchFromFillingFormToProjectMenu() throws IOException {
+        animationSlideWindow(Scenes.PROJECT_MENU);
+    }
+
+    public void switchFromMenuProjectToDataBaseView() throws IOException {
+        animationSlideWindow(Scenes.PROJECT_DATABASE_VIEW);
     }
 
     /**
@@ -115,6 +133,7 @@ public class SceneController {
             Scenes.LABORATORIES = createWindow(ScenePath.LABORATORIES_FXML_PATH);
             Scenes.PROJECT_MENU = createWindow(ScenePath.MENU_PROJECT_FXML_PATH);
             Scenes.PROJECT_FILLING_FORM = createWindow(ScenePath.FILLING_FORM_PROJECT_FXML_PATH);
+            Scenes.PROJECT_DATABASE_VIEW = createWindow(ScenePath.DATABASE_VIEW_PROJECT_FXML_PATH);
 
         } catch (IOException e) {
 
@@ -153,6 +172,10 @@ public class SceneController {
 
     }
 
+    /**
+     * Метод, который нужен, чтобы можно было передвигать окно
+     * @param windowFXML окно, которое мы хотим перетаскивать
+     */
     private void setWindowDragged(Parent windowFXML) {
         // Возможность, чтобы окно могло передвигаться при зажатии мышки
         windowFXML.setOnMousePressed(ev -> {
