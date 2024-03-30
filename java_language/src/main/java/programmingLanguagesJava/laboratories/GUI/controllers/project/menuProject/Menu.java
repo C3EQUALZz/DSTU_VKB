@@ -14,12 +14,9 @@ import java.util.ResourceBundle;
 
 public class Menu extends BaseController {
 
-    @FXML
-    private AnchorPane anchorPaneMovable, registrationAnchorPane;
-    @FXML
-    private Button signInButton, addToDatabaseButton, viewDatabaseButton;
-    @FXML
-    private MediaView mediaViewVideo;
+    @FXML private AnchorPane anchorPaneMovable, registrationAnchorPane;
+    @FXML private Button signInButton, addToDatabaseButton, viewDatabaseButton;
+    @FXML private MediaView mediaViewVideo;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

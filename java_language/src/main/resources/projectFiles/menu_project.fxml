@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.media.MediaView?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -47,7 +48,8 @@
             </Label>
             <AnchorPane layoutX="2.0" layoutY="308.0" prefHeight="196.0" prefWidth="373.0" style="-fx-background-radius: 30; -fx-border-radius: 18;" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="307.0">
                <children>
-                  <MediaView fx:id="mediaViewVideo" fitHeight="185.0" fitWidth="310.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="0.0" />
+                  <Rectangle arcHeight="6.0" arcWidth="6.0" disable="true" fill="DODGERBLUE" height="184.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="5.0" style="-fx-fill: transparent; -fx-arc-height: 20.0; -fx-arc-width: 20.0; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.8) , 15, 0 , 0 , 8);" width="318.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="4.0" />
+                  <MediaView fx:id="mediaViewVideo" fitHeight="183.0" fitWidth="306.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="10.0" />
                </children>
             </AnchorPane>
             <FontAwesomeIconView fill="WHITE" glyphName="PLUS" layoutX="337.0" layoutY="245.0" size="2em" />
@@ -78,7 +80,7 @@
             </Label>
             <VBox layoutX="25.0" layoutY="226.0" prefHeight="113.0" prefWidth="305.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="225.0">
                <children>
-                  <TextField fx:id="loginField" promptText="Логин" style="-fx-background-radius: 4;">
+                  <TextField promptText="Логин" style="-fx-background-radius: 4;">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
@@ -86,7 +88,7 @@
                         <Font name="Comic Sans MS Bold" size="12.0" />
                      </font>
                   </TextField>
-                  <PasswordField fx:id="passwordField" prefHeight="26.0" prefWidth="297.0" promptText="Пароль" style="-fx-border-radius: 4;">
+                  <PasswordField prefHeight="26.0" prefWidth="297.0" promptText="Пароль" style="-fx-border-radius: 4;">
                      <VBox.margin>
                         <Insets top="15.0" />
                      </VBox.margin>

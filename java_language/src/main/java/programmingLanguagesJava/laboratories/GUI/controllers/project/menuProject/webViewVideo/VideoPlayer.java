@@ -1,3 +1,7 @@
+/**
+ * Данный пакет символизирует запись с камеры, которая происходит в округе
+ */
+
 package programmingLanguagesJava.laboratories.GUI.controllers.project.menuProject.webViewVideo;
 
 import javafx.scene.media.Media;
@@ -14,6 +18,9 @@ public class VideoPlayer implements ElementMenu {
         this.mediaView = mediaView;
     }
 
+    /**
+     * Запуск видео происходит здесь
+     */
     @Override
     public void event() {
         var media = new Media(getPathToFile());
@@ -22,17 +29,14 @@ public class VideoPlayer implements ElementMenu {
         mediaPlayer.play();
     }
 
+    /**
+     * Получение абсолютного пути до файла с нашего видео
+     * @return путь к видео
+     */
     private String getPathToFile() {
-        // Получаем текущий рабочий каталог проекта
         var currentDirectory = System.getProperty("user.dir");
-
-        // Относительный путь к видеофайлу
         var relativePath = "src/main/resources/projectFiles/video/camera.mp4";
-
-        // Создаем объект File с использованием текущего каталога и относительного пути
         var file = new File(currentDirectory, relativePath);
-
-        // Получаем абсолютный путь к файлу
         return file.toURI().toString();
     }
 }
