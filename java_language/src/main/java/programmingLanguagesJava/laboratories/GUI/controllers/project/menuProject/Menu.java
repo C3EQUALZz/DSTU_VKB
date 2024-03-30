@@ -4,13 +4,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import programmingLanguagesJava.laboratories.GUI.controllers.BaseController;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.menuProject.movableAnchor.MovableAnchorPane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Menu extends BaseController {
 
-    @FXML private AnchorPane anchorPaneMovable;
+    @FXML private AnchorPane anchorPaneMovable, registrationAnchorPane;
     @FXML private Button signInButton;
 
     @Override
@@ -21,7 +22,7 @@ public class Menu extends BaseController {
     }
 
     private void setSignInButton() {
-        var movableAnchorPane = new MovableAnchorPane(anchorPaneMovable);
+        var movableAnchorPane = new MovableAnchorPane(anchorPaneMovable, registrationAnchorPane);
         buttonConfigurator.setupButtonEvent(signInButton, event -> movableAnchorPane.event());
     }
 

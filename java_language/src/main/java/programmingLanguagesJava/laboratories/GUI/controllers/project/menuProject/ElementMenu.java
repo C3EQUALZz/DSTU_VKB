@@ -1,5 +1,5 @@
 package programmingLanguagesJava.laboratories.GUI.controllers.project.menuProject;
 
-interface ElementMenu {
+public interface ElementMenu {
     void event();
 }

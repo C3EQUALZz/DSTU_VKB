@@ -57,7 +57,7 @@
       </AnchorPane>
    </left>
    <right>
-      <AnchorPane prefHeight="600.0" prefWidth="370.0" style="-fx-border-color: WHITE; -fx-border-radius: 18; -fx-background-radius: 30;" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="registrationAnchorPane" prefHeight="600.0" prefWidth="370.0" style="-fx-border-color: WHITE; -fx-border-radius: 18; -fx-background-radius: 30;" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="10.0" right="10.0" top="10.0" />
          </BorderPane.margin>
