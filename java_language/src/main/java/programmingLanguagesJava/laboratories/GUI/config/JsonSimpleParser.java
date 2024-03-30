@@ -39,7 +39,7 @@ public class JsonSimpleParser {
             return (JSONObject) parser.parse(fileReader);
 
         } catch (IOException | ParseException e) {
-            return null;
+            throw new RuntimeException("Не получилось распарсить файл", e);
         }
     }
 
