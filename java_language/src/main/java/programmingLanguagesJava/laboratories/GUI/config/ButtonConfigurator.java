@@ -33,11 +33,11 @@ public class ButtonConfigurator {
      */
     public void setupButtonEvent(Button button, EventHandler<MouseEvent> eventHandler) {
         // Обработка того момента, когда мышка наводится на кнопку.
-        button.setOnMouseEntered(event -> new AudioClip(Objects.requireNonNull(getClass().getResource("/music/hover.mp3")).toString()).play());
+        button.setOnMouseEntered(event -> hoverClip.play());
 
         // Обработка того момента, когда нажали на кнопку.
         button.setOnMouseClicked(event -> {
-            new AudioClip(Objects.requireNonNull(getClass().getResource("/music/click.mp3")).toString()).play();
+            clickClip.play();
             eventHandler.handle(event); // Передача объекта MouseEvent в обработчике события
         });
     }
