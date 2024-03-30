@@ -46,7 +46,7 @@ public class Menu extends BaseController {
 
         buttonConfigurator.setupButtonEvent(ButtonProject, event -> {
             try {
-                controller.switchFromMenuToProject();
+                controller.switchFromMenuToMenuProject();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

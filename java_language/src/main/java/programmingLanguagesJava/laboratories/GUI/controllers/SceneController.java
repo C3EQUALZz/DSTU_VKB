@@ -27,14 +27,16 @@ public class SceneController {
         ;
         private static Scene MENU = null;
         private static Scene LABORATORIES = null;
-        private static Scene PROJECT = null;
+        private static Scene PROJECT_MENU = null;
+        private static Scene PROJECT_FILLING_FORM = null;
     }
 
     private enum ScenePath {
         ;
         private static final String MENU_FXML_PATH = "/menuFiles/menu.fxml";
         private static final String LABORATORIES_FXML_PATH = "/laboratoriesFiles/laboratories.fxml";
-        private static final String PROJECT_FXML_PATH = "/projectFiles/project.fxml";
+        private static final String MENU_PROJECT_FXML_PATH = "/projectFiles/menu_project.fxml";
+        private static final String FILLING_FORM_PROJECT_FXML_PATH = "/projectFiles/project.fxml";
     }
 
     /**
@@ -83,8 +85,12 @@ public class SceneController {
      *
      * @throws IOException может броситься такая ошибка, так как считывает файлы
      */
-    public void switchFromMenuToProject() throws IOException {
-        animationSlideWindow(Scenes.PROJECT);
+    public void switchFromMenuToMenuProject() throws IOException {
+        animationSlideWindow(Scenes.PROJECT_MENU);
+    }
+
+    public void switchFromMenuProjectToFillingForm() throws IOException {
+        animationSlideWindow(Scenes.PROJECT_FILLING_FORM);
     }
 
     /**
@@ -107,7 +113,8 @@ public class SceneController {
 
             Scenes.MENU = createWindow(ScenePath.MENU_FXML_PATH);
             Scenes.LABORATORIES = createWindow(ScenePath.LABORATORIES_FXML_PATH);
-            Scenes.PROJECT = createWindow(ScenePath.PROJECT_FXML_PATH);
+            Scenes.PROJECT_MENU = createWindow(ScenePath.MENU_PROJECT_FXML_PATH);
+            Scenes.PROJECT_FILLING_FORM = createWindow(ScenePath.FILLING_FORM_PROJECT_FXML_PATH);
 
         } catch (IOException e) {
 
