@@ -1,3 +1,7 @@
+/**
+ * Данный класс отвечает за часы, которые есть в главном меню
+ */
+
 package programmingLanguagesJava.laboratories.GUI.controllers.menu;
 
 import javafx.animation.AnimationTimer;
@@ -7,10 +11,10 @@ import javafx.scene.text.Text;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class ClockController {
+class ClockController {
     private final Text hourTimer, minutesTimer, secondsTimer;
 
-    public ClockController(Text hourTimer, Text minutesTimer, Text secondsTimer) {
+    ClockController(Text hourTimer, Text minutesTimer, Text secondsTimer) {
         this.hourTimer = hourTimer;
         this.minutesTimer = minutesTimer;
         this.secondsTimer = secondsTimer;
@@ -21,7 +25,7 @@ public class ClockController {
      * Все изменения в UI нужно делать в одном потоке по правилам JavaFx.
      * Здесь создается анонимный класс, который определяет наши часы.
      */
-    public AnimationTimer clock() {
+    AnimationTimer clock() {
         return new AnimationTimer() {
             @Override
             public void handle(long now) {

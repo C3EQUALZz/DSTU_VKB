@@ -1,3 +1,8 @@
+/**
+ * Данный участок кода предназначен для обработки событий для слайдера в лабораторных работах.
+ * Он улучшает UI, поэтому вот так.
+ *
+ */
 package programmingLanguagesJava.laboratories.GUI.controllers.laboratories;
 
 import javafx.animation.TranslateTransition;
@@ -6,15 +11,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import programmingLanguagesJava.laboratories.GUI.config.ButtonConfigurator;
 
-public class SliderController {
+class SliderController {
 
     private final AnchorPane slider;
     private final Label openSlider;
     private final Label closeSlider;
-
     private final ButtonConfigurator buttonConfigurator = ButtonConfigurator.getInstance();
 
-    public SliderController(AnchorPane slider, Label openSlider, Label closeSlider) {
+    SliderController(AnchorPane slider, Label openSlider, Label closeSlider) {
         this.slider = slider;
         this.openSlider = openSlider;
         this.closeSlider = closeSlider;
@@ -26,7 +30,7 @@ public class SliderController {
      * В общем, поэтому с самого начала меню закрыто, а не открыто.
      * Здесь под капотом, если что 2 кнопки, которые совпадают 1 в 1.
      */
-    public void sliderEvent() {
+    void sliderEvent() {
         // Состояние закрытого меню
         slider.setTranslateX(-500);
 
