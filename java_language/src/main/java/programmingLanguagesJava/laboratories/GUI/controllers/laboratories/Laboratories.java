@@ -32,6 +32,9 @@ public class Laboratories extends BaseController {
     private final ComboboxConfigurator comboboxConfigurator = new ComboboxConfigurator();
     private final JsonSimpleParser data = JsonSimpleParser.getInstance();
 
+    /**
+     * Инициализация контроллера для окна с лабораторными работами
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
