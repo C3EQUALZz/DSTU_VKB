@@ -76,47 +76,42 @@ public class SceneController {
     /**
      * Переключение с меню на лабораторные работы
      *
-     * @throws IOException может броситься такая ошибка, так как считывает файлы.
      */
-    public void switchFromMenuToLaboratories() throws IOException {
+    public void switchFromMenuToLaboratories() {
         animationSlideWindow(Scenes.LABORATORIES);
     }
 
     /**
      * Переключение с меню на проект
      *
-     * @throws IOException может броситься такая ошибка, так как считывает файлы
      */
-    public void switchFromMenuToMenuProject() throws IOException {
+    public void switchFromMenuToMenuProject() {
         animationSlideWindow(Scenes.PROJECT_MENU);
     }
 
     /**
      * Переключение с меню проекта на запись окна в БД
-     * @throws IOException - может броситься такая ошибка, так как считывает файлы
      */
-    public void switchFromMenuProjectToFillingForm() throws IOException {
+    public void switchFromMenuProjectToFillingForm() {
         animationSlideWindow(Scenes.PROJECT_FILLING_FORM);
     }
 
     /**
      * Переключение с окна заполнения данных в БД на меню проекта
-     * @throws IOException - может броситься такая ошибка, так как считывает файлы
      */
-    public void switchFromFillingFormToProjectMenu() throws IOException {
+    public void switchFromFillingFormToProjectMenu() {
         animationSlideWindow(Scenes.PROJECT_MENU);
     }
 
-    public void switchFromMenuProjectToDataBaseView() throws IOException {
+    public void switchFromMenuProjectToDataBaseView() {
         animationSlideWindow(Scenes.PROJECT_DATABASE_VIEW);
     }
 
     /**
      * Переключение с любого окна на меню
      *
-     * @throws IOException может броситься такая ошибка, так как считывает файлы
      */
-    public void switchToMenu() throws IOException {
+    public void switchToMenu() {
         animationSlideWindow(Scenes.MENU);
     }
 

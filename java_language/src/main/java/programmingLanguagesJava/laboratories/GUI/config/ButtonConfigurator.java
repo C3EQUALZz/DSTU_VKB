@@ -19,6 +19,10 @@ public class ButtonConfigurator {
 
     private static ButtonConfigurator instance;
 
+    /**
+     * Реализация SingleTone
+     * @return возвращает наш объект, который был создан 1 раз за время действия программы
+     */
     public static ButtonConfigurator getInstance() {
         if (instance == null)
             instance = new ButtonConfigurator();

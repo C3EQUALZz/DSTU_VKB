@@ -11,7 +11,7 @@ public class Student implements Comparable<Student> {
     private final int course;
     private final int yearOfBirth;
     private final int groupNumber;
-    private HashMap<String, Double> evaluations;
+    private final HashMap<String, Double> evaluations;
 
     public Student() {
         this.FIO = new Faker().name().name();

@@ -36,6 +36,9 @@ public class MovableAnchorPane implements ElementMenu {
         this.fadeTransition = configureFadeTransition();
     }
 
+    /**
+     * Обработка событий, чтобы двигался anchorPane
+     */
     @Override
     public void event() {
         var newX = anchorPane.getLayoutX() + 400;

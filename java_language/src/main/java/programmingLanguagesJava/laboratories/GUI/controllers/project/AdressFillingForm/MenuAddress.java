@@ -18,7 +18,6 @@ import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFilli
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.processingEventsOnMap.OpenStreetMap;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.searchEngineField.TextFieldSearchController;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -118,13 +117,11 @@ public class MenuAddress extends BaseController {
      * Нужно было переопределить кнопку возвращения назад в меню проекта
      */
     private void overRideBackButton() {
-        buttonConfigurator.setupButtonEvent(backButton, event -> {
-            try {
-                controller.switchFromFillingFormToProjectMenu();
-            } catch (IOException e) {
-                throw new RuntimeException("Не получилось переключиться на меню проекта с окна записи данных в БД", e);
-            }
-        });
+        buttonConfigurator.setupButtonEvent(
+                backButton,
+                event -> controller.switchFromFillingFormToProjectMenu(),
+                "Не получилось переключиться на меню проекта с окна записи данных в БД"
+        );
     }
 
 }

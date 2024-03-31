@@ -13,7 +13,6 @@ import javafx.scene.control.Button;
 import javafx.util.Duration;
 import programmingLanguagesJava.laboratories.GUI.config.ButtonConfigurator;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -41,13 +40,11 @@ public abstract class BaseController implements Initializable {
             });
 
             // Обработка событий возврата обратно в меню
-            buttonConfigurator.setupButtonEvent(backButton, event -> {
-                try {
-                    controller.switchToMenu();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
+            buttonConfigurator.setupButtonEvent(
+                    backButton,
+                    event -> controller.switchToMenu(),
+                "Не получилось переключиться на главное меню приложения"
+            );
 
         } catch (RuntimeException ignored) {}
     }

@@ -6,13 +6,11 @@
 package programmingLanguagesJava.laboratories.GUI.controllers.menu;
 
 
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import programmingLanguagesJava.laboratories.GUI.controllers.BaseController;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 public class Menu extends BaseController {
@@ -25,32 +23,23 @@ public class Menu extends BaseController {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         super.initialize(url, resourceBundle);
 
         // Класс, который описывает часы.
-
         new ClockController(hourTimer, minutesTimer, secondsTimer).clock().start();
 
         // Обработка событий для кнопки с лабораторными
-
-        buttonConfigurator.setupButtonEvent(ButtonLabs, event -> {
-            try {
-                controller.switchFromMenuToLaboratories();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        buttonConfigurator.setupButtonEvent(
+                ButtonLabs,
+                event -> controller.switchFromMenuToLaboratories(),
+            "Не получилось переключиться с меню на лабораторные работы"
+        );
 
         // Обработка событий для кнопки с проектом
-
-        buttonConfigurator.setupButtonEvent(ButtonProject, event -> {
-            try {
-                controller.switchFromMenuToMenuProject();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
+        buttonConfigurator.setupButtonEvent(
+                ButtonProject,
+                event -> controller.switchFromMenuToMenuProject(),
+            "Не получилось переключиться с меню на проект"
+        );
     }
 }
