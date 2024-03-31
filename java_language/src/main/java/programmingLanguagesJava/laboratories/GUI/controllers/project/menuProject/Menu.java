@@ -6,10 +6,13 @@ package programmingLanguagesJava.laboratories.GUI.controllers.project.menuProjec
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.MediaView;
 import programmingLanguagesJava.laboratories.GUI.controllers.BaseController;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.menuProject.movableAnchor.MovableAnchorPane;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.menuProject.observers.TextFieldsObserver;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.menuProject.webViewVideo.VideoPlayer;
 
 import java.net.URL;
@@ -20,10 +23,13 @@ public class Menu extends BaseController {
     @FXML private AnchorPane anchorPaneMovable, registrationAnchorPane;
     @FXML private Button signInButton, addToDatabaseButton, viewDatabaseButton;
     @FXML private MediaView mediaViewVideo;
+    @FXML private TextField loginField;
+    @FXML private PasswordField passwordField;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
+        new TextFieldsObserver(loginField, passwordField, signInButton);
 
         setSignInButton();
         setAddToDatabaseButton();

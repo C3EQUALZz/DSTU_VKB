@@ -80,7 +80,7 @@
             </Label>
             <VBox layoutX="25.0" layoutY="226.0" prefHeight="113.0" prefWidth="305.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="225.0">
                <children>
-                  <TextField promptText="Логин" style="-fx-background-radius: 4;">
+                  <TextField fx:id="loginField" promptText="Логин" style="-fx-background-radius: 4;">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
@@ -88,7 +88,7 @@
                         <Font name="Comic Sans MS Bold" size="12.0" />
                      </font>
                   </TextField>
-                  <PasswordField prefHeight="26.0" prefWidth="297.0" promptText="Пароль" style="-fx-border-radius: 4;">
+                  <PasswordField fx:id="passwordField" prefHeight="26.0" prefWidth="297.0" promptText="Пароль" style="-fx-border-radius: 4;">
                      <VBox.margin>
                         <Insets top="15.0" />
                      </VBox.margin>
@@ -96,7 +96,7 @@
                         <Font name="Comic Sans MS Bold" size="12.0" />
                      </font>
                   </PasswordField>
-                  <Button fx:id="signInButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="310.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 4;" stylesheets="@../stageFiles/Styles.css" text="Войти" textFill="WHITE">
+                  <Button fx:id="signInButton" disable="true" mnemonicParsing="false" prefHeight="26.0" prefWidth="310.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 4;" stylesheets="@../stageFiles/Styles.css" text="Войти" textFill="WHITE">
                      <VBox.margin>
                         <Insets top="15.0" />
                      </VBox.margin>

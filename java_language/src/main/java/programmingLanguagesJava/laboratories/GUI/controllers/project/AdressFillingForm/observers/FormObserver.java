@@ -8,6 +8,7 @@ package programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFill
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.Observer;
 
 import java.util.List;
 

@@ -2,7 +2,7 @@
  * Общий интерфейс для слушателей классов - слушателей
  */
 
-package programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.observers;
+package programmingLanguagesJava.laboratories.GUI.controllers.project;
 
 public interface Observer {
     /**
