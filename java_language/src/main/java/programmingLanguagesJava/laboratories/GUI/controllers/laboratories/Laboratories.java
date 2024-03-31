@@ -38,7 +38,7 @@ public class Laboratories extends BaseController {
         comboboxConfigurator.defaultConfiguration(combobox);
 
         // Контроллер, который отвечает за боковой слайдер меню
-        new SliderController(slider, openSlider, closeSlider).sliderEvent();
+        new SliderController(slider, openSlider, closeSlider).event();
 
         // Связывание кнопок
         setupButtonLabsEvent();
