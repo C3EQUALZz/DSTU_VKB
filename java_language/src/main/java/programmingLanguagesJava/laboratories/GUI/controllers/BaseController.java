@@ -22,6 +22,9 @@ public abstract class BaseController implements Initializable {
     protected final ButtonConfigurator buttonConfigurator = new ButtonConfigurator();
     protected final SceneController controller = SceneController.getInstance();
 
+    /**
+     * Точка запуска базового контролера, все методы точек запуска для ост. окон его обязательно должны переопределить.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
