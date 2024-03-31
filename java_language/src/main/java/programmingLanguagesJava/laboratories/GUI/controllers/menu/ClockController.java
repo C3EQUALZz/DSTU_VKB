@@ -11,7 +11,7 @@ import javafx.scene.text.Text;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-class ClockController {
+class ClockController implements ElementMenu {
     private final Text hourTimer, minutesTimer, secondsTimer;
 
     ClockController(Text hourTimer, Text minutesTimer, Text secondsTimer) {
@@ -20,12 +20,7 @@ class ClockController {
         this.secondsTimer = secondsTimer;
     }
 
-    /**
-     * Контроллер для часов.
-     * Все изменения в UI нужно делать в одном потоке по правилам JavaFx.
-     * Здесь создается анонимный класс, который определяет наши часы.
-     */
-    AnimationTimer clock() {
+    private AnimationTimer createTimer() {
         return new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -37,5 +32,15 @@ class ClockController {
                 });
             }
         };
+    }
+
+    /**
+     * Контроллер для часов.
+     * Все изменения в UI нужно делать в одном потоке по правилам JavaFx.
+     * Здесь создается анонимный класс, который определяет наши часы.
+     */
+    @Override
+    public void event() {
+        createTimer().start();
     }
 }

@@ -26,7 +26,7 @@ public class Menu extends BaseController {
         super.initialize(url, resourceBundle);
 
         // Класс, который описывает часы.
-        new ClockController(hourTimer, minutesTimer, secondsTimer).clock().start();
+        new ClockController(hourTimer, minutesTimer, secondsTimer).event();
 
         // Обработка событий для кнопки с лабораторными
         buttonConfigurator.setupButtonEvent(
