@@ -1,5 +1,6 @@
 /**
- * Данный класс отвечает за часы, которые есть в главном меню
+ * Данный класс отвечает за часы, которые есть в главном меню.
+ * Гайд, по которому я это делал: https://youtu.be/8zOSqvKNTlY?si=dqK8oV0rOkG9LlOy
  */
 
 package programmingLanguagesJava.laboratories.GUI.controllers.menu;
@@ -20,6 +21,12 @@ class ClockController implements ElementMenu {
         this.secondsTimer = secondsTimer;
     }
 
+    /**
+     * Здесь создается анонимный класс, который определяет наши часы.
+     * Здесь уже автоматически происходит подстановка значений.
+     * Все изменения в UI нужно делать в одном потоке по правилам JavaFx.
+     * @return возвращает наш таймер
+     */
     private AnimationTimer createTimer() {
         return new AnimationTimer() {
             @Override
@@ -35,9 +42,7 @@ class ClockController implements ElementMenu {
     }
 
     /**
-     * Контроллер для часов.
-     * Все изменения в UI нужно делать в одном потоке по правилам JavaFx.
-     * Здесь создается анонимный класс, который определяет наши часы.
+     * Точка запуска контроллера для часов.
      */
     @Override
     public void event() {
