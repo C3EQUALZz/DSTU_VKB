@@ -29,12 +29,14 @@ public class Menu extends BaseController {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
-        new TextFieldsObserver(loginField, passwordField, signInButton);
 
+        setWebViewVideo();
         setSignInButton();
         setAddToDatabaseButton();
         setViewDatabaseButton();
-        setWebViewVideo();
+
+        new TextFieldsObserver(loginField, passwordField, signInButton);
+
     }
 
     /**
