@@ -6,6 +6,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
 
+/**
+ * Класс DataBaseSQLite предоставляет методы для взаимодействия с базой данных SQLite.
+ * Он использует DAO (Data Access Object) для работы с таблицами Peoples и Remaining_info.
+ */
 public class DataBaseSQLite {
 
     private static final String DATABASE_URL = String.format(
@@ -18,7 +22,12 @@ public class DataBaseSQLite {
     private final PeoplesDAO peoplesDAO;
     private static DataBaseSQLite instance;
 
-
+    /**
+     * Конструктор класса DataBaseSQLite.
+     * Он устанавливает соединение с базой данных и инициализирует DAO для таблиц Peoples и Remaining_info.
+     *
+     * @throws RuntimeException Если не удалось подключиться к базе данных.
+     */
     private DataBaseSQLite() {
 
         try {
@@ -34,6 +43,11 @@ public class DataBaseSQLite {
         }
     }
 
+    /**
+     * Метод getInstance() возвращает единственный экземпляр класса DataBaseSQLite (Singleton pattern).
+     *
+     * @return Единственный экземпляр класса DataBaseSQLite.
+     */
     public static synchronized DataBaseSQLite getInstance() {
 
         if (instance == null) {
@@ -43,9 +57,15 @@ public class DataBaseSQLite {
         return instance;
     }
 
+    /**
+     * Метод insert() вставляет данные о человеке в базу данных.
+     * Он использует DAO для вставки данных в таблицы Peoples и Remaining_info.
+     *
+     * @param personData Данные о человеке в формате HashMap.
+     */
     public void insert(HashMap<String, String> personData) {
         remainingInfoDAO.insert(personData.get("pathToFile"), personData.get("buildingPlan"));
-        int remainingInfoId = remainingInfoDAO.getLastIndex();
+        var remainingInfoId = remainingInfoDAO.getLastIndex();
         var listOfPersons = Person.createPeoples(personData.get("allPeople"), personData.get("mainPerson"));
         peoplesDAO.insert(listOfPersons, remainingInfoId);
     }
