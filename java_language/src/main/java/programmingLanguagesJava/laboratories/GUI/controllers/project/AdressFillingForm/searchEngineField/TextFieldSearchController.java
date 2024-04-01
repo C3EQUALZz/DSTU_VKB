@@ -44,6 +44,7 @@ public class TextFieldSearchController implements ElementAddressFillingForm {
     /**
      * Обработчик событий, чтобы запускать логику методов.
      */
+    @Override
     public void event() {
 
         var connection = connect(textField.getText());

@@ -26,14 +26,10 @@ import java.util.ResourceBundle;
 
 public class MenuAddress extends BaseController {
 
-    @FXML
-    private MapView mapView;
-    @FXML
-    private Button downloadFile, startSearch, addHuman, createDocument, addDataToDB, backButton;
-    @FXML
-    private TextField addressField, fullNameField;
-    @FXML
-    private ComboBox<String> combobox;
+    @FXML private MapView mapView;
+    @FXML private Button downloadFile, startSearch, addHuman, createDocument, addDataToDB, backButton;
+    @FXML private TextField addressField, fullNameField;
+    @FXML private ComboBox<String> combobox;
 
     private final ComboboxConfigurator comboboxConfigurator = new ComboboxConfigurator();
     private HashSet<String> persons;
