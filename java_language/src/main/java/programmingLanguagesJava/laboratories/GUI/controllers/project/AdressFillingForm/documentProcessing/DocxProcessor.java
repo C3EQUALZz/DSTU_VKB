@@ -13,16 +13,30 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 
+/**
+ * Класс DocxProcessor обрабатывает документы в формате DOCX.
+ */
 public class DocxProcessor {
     private final String PATH_TO_PROJECT = "src/main/resources/projectFiles";
     private final Path PATH_TO_DIR = Paths.get(PATH_TO_PROJECT, "documents_for_database").toAbsolutePath();
     private final Path PATH_BLANK = Paths.get(PATH_TO_PROJECT, "blank-dogovora-okazanija-ohrannyh-uslug.docx").toAbsolutePath();
     private final HashMap<String, String> jsonData;
 
+    /**
+     * Конструктор класса DocxProcessor.
+     *
+     * @param jsonData Данные в формате JSON, которые будут использоваться для замены подчеркиваний.
+     */
     public DocxProcessor(HashMap<String, String> jsonData) {
         this.jsonData = jsonData;
     }
 
+    /**
+     * Метод event() обрабатывает документ, заменяя подчеркивания на данные из JSON.
+     *
+     * @return Путь к обработанному документу.
+     * @throws RuntimeException Если произошла ошибка при обработке документа.
+     */
     public String event() {
         try {
             var originalDoc = openOriginalDoc();

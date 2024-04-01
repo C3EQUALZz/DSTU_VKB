@@ -17,14 +17,14 @@ import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFilli
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.observers.FormObserver;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.processingEventsOnMap.OpenStreetMap;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.searchEngineField.TextFieldSearchController;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.database.DataBaseSQLite;
 
 import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.ResourceBundle;
 
-public class MenuAddress extends BaseController {
+public class AddressFillingForm extends BaseController {
 
     @FXML private MapView mapView;
     @FXML private Button downloadFile, startSearch, addHuman, createDocument, addDataToDB, backButton;
@@ -32,8 +32,9 @@ public class MenuAddress extends BaseController {
     @FXML private ComboBox<String> combobox;
 
     private final ComboboxConfigurator comboboxConfigurator = new ComboboxConfigurator();
-    private HashSet<String> persons;
+    private final DataBaseSQLite dataBaseSQLite = DataBaseSQLite.getInstance();
     private FileChooserController fileChooserController;
+    private static final HashMap<String, String> jsonData = new HashMap<>();
 
 
     @Override
@@ -47,6 +48,7 @@ public class MenuAddress extends BaseController {
         initializeCreateDocument();
         initializeFileChooser();
         overRideBackButton();
+        setAddDataToDB();
 
         new FormObserver(addressField, combobox, Arrays.asList(createDocument, addDataToDB));
     }
@@ -86,8 +88,7 @@ public class MenuAddress extends BaseController {
 
         buttonConfigurator.setupButtonEvent(addHuman, event -> {
             textFieldAddController.event();
-            this.persons = textFieldAddController.getPersons();
-            comboboxConfigurator.setupComboboxEvent(combobox, this.persons);
+            comboboxConfigurator.setupComboboxEvent(combobox, textFieldAddController.getPersons());
         });
     }
 
@@ -96,16 +97,14 @@ public class MenuAddress extends BaseController {
      */
     private void initializeCreateDocument() {
         // Словарь, в котором мы будем хранить все значения
-        var jsonData = new HashMap<String, String>();
 
         var docxProcessor = new DocxProcessor(jsonData);
         buttonConfigurator.setupButtonEvent(createDocument, event -> {
             // Добавляем значения в наш словарь
             jsonData.put("addressField", addressField.getText());
-            jsonData.put("fullNameField", fullNameField.getText());
             jsonData.put("mainPerson", combobox.getValue());
             jsonData.put("buildingPlan", fileChooserController.getSelectedFile());
-            jsonData.put("allPeople", String.join(", ", this.persons));
+            jsonData.put("allPeople", String.join(", ", combobox.getItems()));
             jsonData.put("pathToFile", docxProcessor.event());
         });
     }
@@ -119,6 +118,13 @@ public class MenuAddress extends BaseController {
                 event -> controller.switchToMenuProject(),
                 "Не получилось переключиться на меню проекта с окна записи данных в БД"
         );
+    }
+
+    /**
+     * Метод, который добавляет элементы в базу данных
+     */
+    private void setAddDataToDB() {
+        buttonConfigurator.setupButtonEvent(addDataToDB, event -> dataBaseSQLite.insert(jsonData));
     }
 
 }
