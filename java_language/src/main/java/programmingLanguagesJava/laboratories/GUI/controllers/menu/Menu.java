@@ -38,7 +38,7 @@ public class Menu extends BaseController {
         // Обработка событий для кнопки с проектом
         buttonConfigurator.setupButtonEvent(
                 ButtonProject,
-                event -> controller.switchFromMenuToMenuProject(),
+                event -> controller.switchToMenuProject(),
             "Не получилось переключиться с меню на проект"
         );
     }

@@ -75,7 +75,6 @@ public class SceneController {
 
     /**
      * Переключение с меню на лабораторные работы
-     *
      */
     public void switchFromMenuToLaboratories() {
         animationSlideWindow(Scenes.LABORATORIES);
@@ -83,9 +82,8 @@ public class SceneController {
 
     /**
      * Переключение с меню на проект
-     *
      */
-    public void switchFromMenuToMenuProject() {
+    public void switchToMenuProject() {
         animationSlideWindow(Scenes.PROJECT_MENU);
     }
 
@@ -96,20 +94,12 @@ public class SceneController {
         animationSlideWindow(Scenes.PROJECT_FILLING_FORM);
     }
 
-    /**
-     * Переключение с окна заполнения данных в БД на меню проекта
-     */
-    public void switchFromFillingFormToProjectMenu() {
-        animationSlideWindow(Scenes.PROJECT_MENU);
-    }
-
     public void switchFromMenuProjectToDataBaseView() {
         animationSlideWindow(Scenes.PROJECT_DATABASE_VIEW);
     }
 
     /**
      * Переключение с любого окна на меню
-     *
      */
     public void switchToMenu() {
         animationSlideWindow(Scenes.MENU);

@@ -89,8 +89,9 @@ public class MenuAddress extends BaseController {
         var textFieldAddController = new TextFieldAddController(fullNameField);
 
         buttonConfigurator.setupButtonEvent(addHuman, event -> {
-            persons = textFieldAddController.event();
-            comboboxConfigurator.setupComboboxEvent(combobox, persons);
+            textFieldAddController.event();
+            this.persons = textFieldAddController.getPersons();
+            comboboxConfigurator.setupComboboxEvent(combobox, this.persons);
         });
     }
 
@@ -108,7 +109,7 @@ public class MenuAddress extends BaseController {
             jsonData.put("fullNameField", fullNameField.getText());
             jsonData.put("mainPerson", combobox.getValue());
             jsonData.put("buildingPlan", fileChooserController.getSelectedFile());
-            jsonData.put("allPeople", String.join(", ", persons));
+            jsonData.put("allPeople", String.join(", ", this.persons));
             jsonData.put("pathToFile", docxProcessor.event());
         });
     }
@@ -119,7 +120,7 @@ public class MenuAddress extends BaseController {
     private void overRideBackButton() {
         buttonConfigurator.setupButtonEvent(
                 backButton,
-                event -> controller.switchFromFillingFormToProjectMenu(),
+                event -> controller.switchToMenuProject(),
                 "Не получилось переключиться на меню проекта с окна записи данных в БД"
         );
     }

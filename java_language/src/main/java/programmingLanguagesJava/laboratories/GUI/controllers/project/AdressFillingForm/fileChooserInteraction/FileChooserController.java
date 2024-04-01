@@ -8,11 +8,12 @@ package programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFill
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.ElementAddressFillingForm;
 
 import java.io.File;
 import java.util.List;
 
-public class FileChooserController {
+public class FileChooserController implements ElementAddressFillingForm {
 
     // Фильтры для файлов, которые нам нужны. Я изначально планирую только фото или файлы AutoCad/Revit
     List<FileChooser.ExtensionFilter> filters = List.of(

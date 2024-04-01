@@ -14,6 +14,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.ElementAddressFillingForm;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,7 +25,7 @@ import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
-public class TextFieldSearchController {
+public class TextFieldSearchController implements ElementAddressFillingForm {
     private MapView mapView;
     private final TextField textField;
     private final JSONParser parser = new JSONParser();
@@ -43,7 +44,7 @@ public class TextFieldSearchController {
     /**
      * Обработчик событий, чтобы запускать логику методов.
      */
-    public String event() {
+    public void event() {
 
         var connection = connect(textField.getText());
 
@@ -63,8 +64,6 @@ public class TextFieldSearchController {
         }
 
         connection.disconnect();
-
-        return textField.getText();
 
     }
 
