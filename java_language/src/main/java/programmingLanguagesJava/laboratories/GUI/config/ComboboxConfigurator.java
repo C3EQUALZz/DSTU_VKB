@@ -22,6 +22,16 @@ public class ComboboxConfigurator {
 
     // Словарь с лабораторными работами, где ключ - лабораторная работа, значение - ссылки на методы
     private final TreeMap<Class<?>, Method[]> dictInfoLaboratories = ParserLaboratories.parseLaboratories();
+    private static ComboboxConfigurator instance;
+
+    private ComboboxConfigurator() {}
+
+    public static ComboboxConfigurator getInstance() {
+        if (instance == null) {
+            instance = new ComboboxConfigurator();
+        }
+        return instance;
+    }
 
     /**
      * Конфигурация выпадающего списка по умолчанию. Тут только установка звуков.

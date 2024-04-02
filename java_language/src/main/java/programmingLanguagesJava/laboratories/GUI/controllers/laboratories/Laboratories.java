@@ -29,7 +29,7 @@ public class Laboratories extends BaseController {
     @FXML private TextField inputArgs;
 
     private String buttonText;
-    private final ComboboxConfigurator comboboxConfigurator = new ComboboxConfigurator();
+    private final ComboboxConfigurator comboboxConfigurator = ComboboxConfigurator.getInstance();
     private final JsonSimpleParser data = JsonSimpleParser.getInstance();
 
     /**

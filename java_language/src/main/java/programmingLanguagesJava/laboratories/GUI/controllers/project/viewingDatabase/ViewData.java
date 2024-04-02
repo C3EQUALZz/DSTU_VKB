@@ -8,11 +8,9 @@ package programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDat
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import programmingLanguagesJava.laboratories.GUI.config.ComboboxConfigurator;
 import programmingLanguagesJava.laboratories.GUI.controllers.BaseController;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.database.DataBaseSQLite;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.database.utils.PersonInfo;
@@ -34,14 +32,17 @@ public class ViewData extends BaseController {
     @FXML private TableColumn<PersonInfo, Image> planColumn, pactColumn;
     @FXML private Button addHumanButton;
     @FXML private TextField keywordTextField;
+    @FXML private ComboBox<String> sortValueCombobox;
 
     private final DataBaseSQLite database = DataBaseSQLite.getInstance();
+    private final ComboboxConfigurator comboboxConfigurator = ComboboxConfigurator.getInstance();
     private final List<PersonInfo> personInfos = database.loadPersonInfos();
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
+        comboboxConfigurator.defaultConfiguration(sortValueCombobox);
 
         setTableView();
         setAddHumanButton();

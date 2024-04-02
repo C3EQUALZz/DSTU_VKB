@@ -31,7 +31,7 @@ public class AddressFillingForm extends BaseController {
     @FXML private TextField addressField, fullNameField;
     @FXML private ComboBox<String> combobox;
 
-    private final ComboboxConfigurator comboboxConfigurator = new ComboboxConfigurator();
+    private final ComboboxConfigurator comboboxConfigurator = ComboboxConfigurator.getInstance();
     private final DataBaseSQLite dataBaseSQLite = DataBaseSQLite.getInstance();
     private FileChooserController fileChooserController;
     private static final HashMap<String, String> jsonData = new HashMap<>();

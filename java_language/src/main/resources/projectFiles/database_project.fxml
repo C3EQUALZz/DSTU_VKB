@@ -165,7 +165,7 @@
                   </AnchorPane>
                   <AnchorPane prefHeight="45.0" prefWidth="299.0" style="-fx-border-color: WHITE; -fx-border-width: 0 0 1 0;">
                      <children>
-                        <ComboBox layoutX="13.0" layoutY="10.0" prefHeight="25.0" prefWidth="275.0" promptText="Выберите тип сортировки" stylesheets="@CSS/combobox-styles.css" visibleRowCount="3" AnchorPane.bottomAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                        <ComboBox fx:id="sortValueCombobox" layoutX="13.0" layoutY="10.0" prefHeight="25.0" prefWidth="275.0" promptText="Выберите тип сортировки" stylesheets="@CSS/combobox-styles.css" visibleRowCount="3" AnchorPane.bottomAnchor="5.0" AnchorPane.topAnchor="5.0" />
                      </children>
                   </AnchorPane>
                   <AnchorPane prefHeight="64.0" prefWidth="299.0" style="-fx-border-color: WHITE; -fx-border-width: 0 0 1 0;">
