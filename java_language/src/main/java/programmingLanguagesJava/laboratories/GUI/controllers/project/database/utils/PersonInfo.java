@@ -8,6 +8,6 @@ public class PersonInfo {
     private String firstName;
     private String lastName;
     private String patronymic;
-    private String planOfHouse;
-    private String document;
+    private byte[] planOfHouse;
+    private byte[] document;
 }

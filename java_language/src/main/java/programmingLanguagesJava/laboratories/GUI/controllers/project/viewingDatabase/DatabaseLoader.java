@@ -19,8 +19,8 @@ class DatabaseLoader {
                 var firstName = resultSet.getString("first_name");
                 var lastName = resultSet.getString("last_name");
                 var patronymic = resultSet.getString("patronymic");
-                var planOfHouse = resultSet.getString("plan_of_house");
-                var document = resultSet.getString("document");
+                var planOfHouse = resultSet.getBytes("plan_of_house");
+                var document = resultSet.getBytes("document");
 
                 personInfos.add(new PersonInfo(firstName, lastName, patronymic, planOfHouse, document));
             }

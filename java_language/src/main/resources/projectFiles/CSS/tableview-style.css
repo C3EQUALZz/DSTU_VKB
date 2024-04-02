@@ -37,6 +37,7 @@
     -fx-font-weight: bold;
     -fx-font-size: 14; /* Увеличиваем размер шрифта */
     -fx-text-alignment: center;
+    -fx-alignment: center;
 }
 
 .table-view .scroll-bar .thumb {
