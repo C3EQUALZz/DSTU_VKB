@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
 public class AddressFillingForm extends BaseController {
 
     @FXML private MapView mapView;
-    @FXML private Button downloadFile, startSearch, addHuman, createDocument, addDataToDB, backButton;
+    @FXML private Button downloadFile, startSearch, addHuman, createDocument, addDataToDB;
     @FXML private TextField addressField, fullNameField;
     @FXML private ComboBox<String> combobox;
 
@@ -47,7 +47,6 @@ public class AddressFillingForm extends BaseController {
         initializeFullName();
         initializeCreateDocument();
         initializeFileChooser();
-        overRideBackButton();
         setAddDataToDB();
 
         new FormObserver(addressField, combobox, Arrays.asList(createDocument, addDataToDB));
@@ -107,17 +106,6 @@ public class AddressFillingForm extends BaseController {
             jsonData.put("allPeople", String.join(", ", combobox.getItems()));
             jsonData.put("pathToFile", docxProcessor.event());
         });
-    }
-
-    /**
-     * Нужно было переопределить кнопку возвращения назад в меню проекта
-     */
-    private void overRideBackButton() {
-        buttonConfigurator.setupButtonEvent(
-                backButton,
-                event -> controller.switchToMenuProject(),
-                "Не получилось переключиться на меню проекта с окна записи данных в БД"
-        );
     }
 
     /**

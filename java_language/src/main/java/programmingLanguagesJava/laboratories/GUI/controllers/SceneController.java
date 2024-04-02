@@ -17,11 +17,13 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Stack;
 
 public class SceneController {
     private double xOffset = 0, yOffset = 0;
     private final Stage stage;
     private static SceneController instance;
+    private final Stack<Scene> sceneHistory = new Stack<>();
 
     private enum Scenes {
         ;
@@ -78,6 +80,7 @@ public class SceneController {
      */
     public void switchFromMenuToLaboratories() {
         animationSlideWindow(Scenes.LABORATORIES);
+        sceneHistory.push(Scenes.MENU);
     }
 
     /**
@@ -85,24 +88,40 @@ public class SceneController {
      */
     public void switchToMenuProject() {
         animationSlideWindow(Scenes.PROJECT_MENU);
+        sceneHistory.push(Scenes.MENU);
     }
 
     /**
-     * Переключение с меню проекта на запись окна в БД
+     * Переключение с меню проекта на окно с записью информации о заказчике в БД
      */
     public void switchFromMenuProjectToFillingForm() {
         animationSlideWindow(Scenes.PROJECT_FILLING_FORM);
-    }
 
-    public void switchFromMenuProjectToDataBaseView() {
-        animationSlideWindow(Scenes.PROJECT_DATABASE_VIEW);
+        if (!sceneHistory.peek().equals(Scenes.PROJECT_MENU)) {
+            sceneHistory.push(Scenes.PROJECT_MENU);
+        }
+
     }
 
     /**
-     * Переключение с любого окна на меню
+     * Переключение с меню на просмотр базы данных. Здесь стоит условие if, чтобы не забили стек
      */
-    public void switchToMenu() {
-        animationSlideWindow(Scenes.MENU);
+    public void switchFromMenuProjectToDataBaseView() {
+        animationSlideWindow(Scenes.PROJECT_DATABASE_VIEW);
+
+        if (!sceneHistory.peek().equals(Scenes.PROJECT_MENU)) {
+            sceneHistory.push(Scenes.PROJECT_MENU);
+        }
+
+    }
+
+    /**
+     * Метод, который возвращает на прошлое окно.
+     */
+    public void goBack() {
+        if (!sceneHistory.isEmpty()) {
+            animationSlideWindow(sceneHistory.pop());
+        }
     }
 
     /**
@@ -125,8 +144,8 @@ public class SceneController {
             throw new RuntimeException("Неправильные файлы или event");
 
         }
-
-        this.stage.setScene(Scenes.MENU);
+        sceneHistory.push(Scenes.MENU);
+        this.stage.setScene(sceneHistory.peek());
     }
 
 

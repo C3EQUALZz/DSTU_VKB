@@ -45,8 +45,8 @@ public abstract class BaseController implements Initializable {
             // Обработка событий возврата обратно в меню
             buttonConfigurator.setupButtonEvent(
                     backButton,
-                    event -> controller.switchToMenu(),
-                "Не получилось переключиться на главное меню приложения"
+                    event -> controller.goBack(),
+                "Не получилось переключиться на прошлое окно"
             );
 
         } catch (RuntimeException ignored) {}
