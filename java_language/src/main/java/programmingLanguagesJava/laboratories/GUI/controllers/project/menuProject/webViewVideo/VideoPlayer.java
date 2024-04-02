@@ -4,6 +4,7 @@
 
 package programmingLanguagesJava.laboratories.GUI.controllers.project.menuProject.webViewVideo;
 
+import javafx.application.Platform;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -25,9 +26,15 @@ public class VideoPlayer implements ElementMenu {
     public void event() {
         var media = new Media(getPathToFile());
         var mediaPlayer = new MediaPlayer(media);
-        mediaView.setMediaPlayer(mediaPlayer);
-        mediaPlayer.play();
+        mediaPlayer.setAutoPlay(true);
+
+        mediaPlayer.setOnReady(() -> Platform.runLater(() -> {
+            mediaView.setMediaPlayer(mediaPlayer);
+            mediaPlayer.play();
+        }));
     }
+
+
 
     /**
      * Получение абсолютного пути до файла с нашего видео
