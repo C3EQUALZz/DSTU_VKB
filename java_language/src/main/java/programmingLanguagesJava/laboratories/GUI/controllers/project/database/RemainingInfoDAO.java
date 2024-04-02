@@ -59,7 +59,6 @@ public class RemainingInfoDAO {
         } catch (SQLException e) {
 
             throw new RuntimeException("Ошибка при получении последнего индекса из таблицы Remaining_info", e);
-
         }
     }
 }

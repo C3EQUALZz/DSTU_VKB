@@ -2,6 +2,7 @@ package programmingLanguagesJava.laboratories.GUI.controllers.project.database;
 
 import programmingLanguagesJava.laboratories.GUI.controllers.project.database.utils.Person;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ public class DataBaseSQLite {
 
     private final RemainingInfoDAO remainingInfoDAO;
     private final PeoplesDAO peoplesDAO;
+    public final Connection connection;
     private static DataBaseSQLite instance;
 
     /**
@@ -31,8 +33,7 @@ public class DataBaseSQLite {
     private DataBaseSQLite() {
 
         try {
-
-            var connection = DriverManager.getConnection(DATABASE_URL);
+            connection = DriverManager.getConnection(DATABASE_URL);
             remainingInfoDAO = new RemainingInfoDAO(connection);
             peoplesDAO = new PeoplesDAO(connection);
 
