@@ -35,11 +35,11 @@
          <children>
             <TableView fx:id="customersTableView" layoutX="14.0" layoutY="27.0" prefHeight="519.0" prefWidth="480.0" style="-fx-border-color: WHITE; -fx-border-radius: 28; -fx-background-radius: 30;" stylesheets="@CSS/tableview-style.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
-                  <TableColumn fx:id="surnameColumn" editable="false" prefWidth="90.0" resizable="false" sortable="false" text="Фамилия" />
-                  <TableColumn fx:id="nameColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="90.0" resizable="false" sortable="false" text="Имя" />
-                  <TableColumn fx:id="patronymicColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="90.0" resizable="false" sortable="false" text="Отчество" />
-                  <TableColumn fx:id="planColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="100.0" resizable="false" sortable="false" text="План" />
-                  <TableColumn fx:id="pactColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="100.0" resizable="false" sortable="false" text="Договор" />
+                  <TableColumn fx:id="surnameColumn" editable="false" prefWidth="100.0" resizable="false" sortable="false" text="Фамилия" />
+                  <TableColumn fx:id="nameColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="100.0" resizable="false" sortable="false" text="Имя" />
+                  <TableColumn fx:id="patronymicColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="120.0" resizable="false" sortable="false" text="Отчество" />
+                  <TableColumn fx:id="planColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="75.0" resizable="false" sortable="false" text="План" />
+                  <TableColumn fx:id="pactColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="75.0" resizable="false" sortable="false" text="Договор" />
               </columns>
             </TableView>
          </children>
@@ -69,7 +69,13 @@
                      <children>
                         <StackPane layoutX="6.0" layoutY="-1.0" prefHeight="39.0" prefWidth="287.0" style="-fx-border-radius: 18; -fx-background-radius: 30;">
                            <children>
-                              <TextField style="-fx-border-radius: 18; -fx-background-radius: 30; -fx-background-color: #9e5ce4; -fx-border-color: WHITE;" />
+                              <TextField fx:id="keywordTextField" promptText="Поиск: " style="-fx-border-radius: 18; -fx-background-radius: 30; -fx-background-color: #9e5ce4; -fx-border-color: WHITE; -fx-text-fill: WHITE; -fx-padding: 0 0 0 20;">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <font>
+                                    <Font name="Comic Sans MS Bold" size="14.0" />
+                                 </font></TextField>
                               <Button mnemonicParsing="false" style="-fx-background-color: transparent;" stylesheets="@CSS/button-styles.css" StackPane.alignment="CENTER_LEFT">
                                  <graphic>
                                     <FontAwesomeIconView fill="WHITE" glyphName="CLOSE" />
@@ -106,7 +112,7 @@
                                  <children>
                                     <VBox layoutX="23.0" layoutY="-20.0" prefHeight="159.0" prefWidth="233.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="66.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <RadioButton mnemonicParsing="false" prefHeight="38.0" prefWidth="259.0" stylesheets="@CSS/radio-button-styles.css" text="По фамилии" textFill="WHITE">
+                                          <RadioButton fx:id="lastNameRadioButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="259.0" stylesheets="@CSS/radio-button-styles.css" text="По фамилии" textFill="WHITE">
                                              <padding>
                                                 <Insets bottom="10.0" left="10.0" top="10.0" />
                                              </padding>
@@ -117,7 +123,7 @@
                                                 <Font name="Comic Sans MS Bold" size="12.0" />
                                              </font>
                                           </RadioButton>
-                                          <RadioButton mnemonicParsing="false" prefHeight="28.0" prefWidth="255.0" stylesheets="@CSS/radio-button-styles.css" text="По имени" textFill="WHITE">
+                                          <RadioButton fx:id="firstNameRadioButton" mnemonicParsing="false" prefHeight="28.0" prefWidth="255.0" stylesheets="@CSS/radio-button-styles.css" text="По имени" textFill="WHITE">
                                              <padding>
                                                 <Insets bottom="10.0" left="10.0" />
                                              </padding>
@@ -125,7 +131,7 @@
                                                 <Font name="Comic Sans MS Bold" size="12.0" />
                                              </font>
                                           </RadioButton>
-                                          <RadioButton mnemonicParsing="false" prefHeight="28.0" prefWidth="255.0" stylesheets="@CSS/radio-button-styles.css" text="По отчеству" textFill="WHITE">
+                                          <RadioButton fx:id="patronymicRadioButton" mnemonicParsing="false" prefHeight="28.0" prefWidth="255.0" stylesheets="@CSS/radio-button-styles.css" text="По отчеству" textFill="WHITE">
                                              <padding>
                                                 <Insets bottom="10.0" left="10.0" />
                                              </padding>
@@ -168,17 +174,29 @@
                            <children>
                               <AnchorPane prefHeight="60.0" prefWidth="100.0" style="-fx-border-color: WHITE; -fx-border-width: 0 1 0 0;">
                                  <children>
-                                    <FontAwesomeIconView fill="#00e776" glyphName="REFRESH" layoutX="38.0" layoutY="38.0" size="2em" textAlignment="CENTER" />
+                                    <Button fx:id="updateTableButton" layoutX="31.0" layoutY="15.0" mnemonicParsing="false" style="-fx-background-color: transparent;" stylesheets="@../stageFiles/Styles.css">
+                                       <graphic>
+                                          <FontAwesomeIconView fill="#00e776" glyphName="REFRESH" size="2em" textAlignment="CENTER" />
+                                       </graphic>
+                                    </Button>
                                  </children>
                               </AnchorPane>
                               <AnchorPane prefHeight="60.0" prefWidth="100.0" style="-fx-border-color: WHITE; -fx-border-width: 0 1 0 0;">
                                  <children>
-                                    <FontAwesomeIconView fill="#2196f3" glyphName="USER_PLUS" layoutX="36.0" layoutY="38.0" size="2em" />
+                                    <Button fx:id="addHumanButton" layoutX="28.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: transparent;" stylesheets="@../stageFiles/Styles.css">
+                                       <graphic>
+                                          <FontAwesomeIconView fill="#2196f3" glyphName="USER_PLUS" size="2em" />
+                                       </graphic>
+                                    </Button>
                                  </children>
                               </AnchorPane>
                               <AnchorPane prefHeight="200.0" prefWidth="100.0">
                                  <children>
-                                    <FontAwesomeIconView fill="#f50606" glyphName="REMOVE" layoutX="41.0" layoutY="38.0" size="2em" />
+                                    <Button fx:id="deleteRowButton" layoutX="33.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: transparent;" stylesheets="@../stageFiles/Styles.css">
+                                       <graphic>
+                                          <FontAwesomeIconView fill="#f50606" glyphName="REMOVE" size="2em" />
+                                       </graphic>
+                                    </Button>
                                  </children>
                               </AnchorPane>
                            </children>
@@ -191,7 +209,7 @@
                               <Font name="Comic Sans MS Bold" size="15.0" />
                            </font>
                         </Button>
-                        <Button layoutX="168.0" layoutY="86.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="125.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 18; -fx-border-radius: 18; -fx-border-color: WHITE;" text="Договор" textFill="WHITE" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="155.0" AnchorPane.rightAnchor="7.0">
+                        <Button layoutX="168.0" layoutY="86.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="125.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 18; -fx-border-radius: 18; -fx-border-color: WHITE;" stylesheets="@../stageFiles/Styles.css" text="Договор" textFill="WHITE" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="155.0" AnchorPane.rightAnchor="7.0">
                            <font>
                               <Font name="Comic Sans MS Bold" size="15.0" />
                            </font>

@@ -19,7 +19,7 @@
     -fx-text-fill: white; /* Цвет текста заголовка колонки */
     -fx-font-family: 'Comic Sans MS';
     -fx-font-weight: bold;
-    -fx-font-size: 14; /* Увеличиваем размер шрифта */
+    -fx-font-size: 12; /* Увеличиваем размер шрифта */
 }
 
 .table-view .corner {

@@ -116,6 +116,14 @@ public class SceneController {
     }
 
     /**
+     * Метод, который переключает на окно с заполнениями формы
+     */
+    public void switchFromDataBaseViewToFillingForm() {
+        animationSlideWindow(Scenes.PROJECT_FILLING_FORM);
+        sceneHistory.push(Scenes.PROJECT_DATABASE_VIEW);
+    }
+
+    /**
      * Метод, который возвращает на прошлое окно.
      */
     public void goBack() {
