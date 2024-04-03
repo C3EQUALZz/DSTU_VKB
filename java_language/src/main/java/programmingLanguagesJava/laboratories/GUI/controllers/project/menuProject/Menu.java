@@ -35,7 +35,7 @@ public class Menu extends BaseController {
         setAddToDatabaseButton();
         setViewDatabaseButton();
 
-        new TextFieldsObserver(loginField, passwordField, signInButton);
+        new TextFieldsObserver(loginField, passwordField, signInButton).listen();
 
     }
 

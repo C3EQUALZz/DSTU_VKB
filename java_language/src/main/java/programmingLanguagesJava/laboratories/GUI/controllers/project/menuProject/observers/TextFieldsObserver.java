@@ -7,19 +7,15 @@ package programmingLanguagesJava.laboratories.GUI.controllers.project.menuProjec
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import lombok.RequiredArgsConstructor;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.Observer;
 
+@RequiredArgsConstructor
 public class TextFieldsObserver implements Observer {
     private final TextField loginField;
     private final PasswordField passwordField;
     private final Button button;
 
-    public TextFieldsObserver(TextField loginField, PasswordField passwordField, Button button) {
-        this.loginField = loginField;
-        this.passwordField = passwordField;
-        this.button = button;
-        listen();
-    }
 
     /**
      * Метод, который запускает слушателя для нашего класса

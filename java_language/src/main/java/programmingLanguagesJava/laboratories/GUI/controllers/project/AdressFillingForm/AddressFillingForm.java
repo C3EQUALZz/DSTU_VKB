@@ -50,7 +50,7 @@ public class AddressFillingForm extends BaseController {
         initializeFileChooser();
         setAddDataToDB();
 
-        new FormObserver(addressField, combobox, Arrays.asList(createDocument, addDataToDB));
+        new FormObserver(addressField, combobox, Arrays.asList(createDocument, addDataToDB)).listen();
     }
 
     /**
