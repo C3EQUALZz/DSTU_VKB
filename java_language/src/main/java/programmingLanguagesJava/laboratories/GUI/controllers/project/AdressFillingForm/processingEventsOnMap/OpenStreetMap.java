@@ -8,20 +8,18 @@ package programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFill
 import com.sothawo.mapjfx.Coordinate;
 import com.sothawo.mapjfx.MapView;
 import javafx.scene.control.TextField;
+import lombok.Setter;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.ElementAddressFillingForm;
 
 public class OpenStreetMap implements ElementAddressFillingForm {
     private static final Coordinate DSTUCoords = new Coordinate(47.2371576587879, 39.711658338598745);
     private final MapView mapView;
+    @Setter
     private TextField addressField = null;
 
 
     public OpenStreetMap(MapView mapView) {
         this.mapView = mapView;
-    }
-
-    public void setAddressField(TextField addressField) {
-        this.addressField = addressField;
     }
 
     /**

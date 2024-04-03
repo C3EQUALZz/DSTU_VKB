@@ -9,12 +9,14 @@ package programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFill
 import com.sothawo.mapjfx.Coordinate;
 import com.sothawo.mapjfx.MapView;
 import com.sothawo.mapjfx.Marker;
+import javafx.concurrent.Task;
 import javafx.scene.control.TextField;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.ElementAddressFillingForm;
+import lombok.Setter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,19 +28,15 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public class TextFieldSearchController implements ElementAddressFillingForm {
+
+    @Setter
     private MapView mapView;
     private final TextField textField;
     private final JSONParser parser = new JSONParser();
     private static final Marker markerClick = Marker.createProvided(Marker.Provided.BLUE).setVisible(true);
 
-    @SuppressWarnings("unused")
     public TextFieldSearchController(TextField textField) {
         this.textField = textField;
-    }
-
-    @SuppressWarnings("unused")
-    public void setMapView(MapView mapView) {
-        this.mapView = mapView;
     }
 
     /**
@@ -46,27 +44,35 @@ public class TextFieldSearchController implements ElementAddressFillingForm {
      */
     @Override
     public void event() {
+        // Создаем новую задачу для выполнения запроса к API в отдельном потоке
+        var task = new Task<String>() {
+            @Override
+            protected String call() {
+                var connection = connect(textField.getText());
+                var data = parseJson(readInfo(connection));
+                connection.disconnect();
+                return data;
+            }
+        };
 
-        var connection = connect(textField.getText());
+        // Обновляем поле адреса после завершения задачи
+        task.setOnSucceeded(workerStateEvent -> {
+            String data = task.getValue();
+            if (data.equals("Не удалось найти адрес.")) {
+                textField.setText("Не удалось найти адрес. Проверьте корректность");
+            } else {
+                var iteratorData = Arrays.stream(data.split("\\s+")).map(Double::parseDouble).iterator();
+                var coords = new Coordinate(iteratorData.next(), iteratorData.next());
+                markerClick.setPosition(coords);
+                mapView.addMarker(markerClick);
+                mapView.setCenter(coords);
+            }
+        });
 
-        var data = parseJson(readInfo(connection));
-
-        if (data.equals("Не удалось найти адрес.")) {
-            textField.setText("Не удалось найти адрес. Проверьте корректность");
-
-        } else {
-
-            var iteratorData = Arrays.stream(data.split("\\s+")).map(Double::parseDouble).iterator();
-            var coords = new Coordinate(iteratorData.next(), iteratorData.next());
-
-            markerClick.setPosition(coords);
-            mapView.addMarker(markerClick);
-            mapView.setCenter(coords);
-        }
-
-        connection.disconnect();
-
+        // Запускаем задачу в новом потоке
+        new Thread(task).start();
     }
+
 
     /**
      * Здесь происходит подключение к серверу, чтобы собрать информацию.
