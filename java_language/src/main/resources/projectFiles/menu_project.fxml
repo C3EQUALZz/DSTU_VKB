@@ -18,7 +18,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #2E3348; -fx-border-radius: 30; -fx-background-radius: 18;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="programmingLanguagesJava.laboratories.GUI.controllers.project.menuProject.Menu">
    <left>
-      <AnchorPane minWidth="-Infinity" prefHeight="504.0" prefWidth="370.0" style="-fx-border-color: WHITE; -fx-border-radius: 18; -fx-background-radius: 30;" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="hiddenAnchorPane" minWidth="-Infinity" prefHeight="504.0" prefWidth="370.0" style="-fx-border-color: WHITE; -fx-border-radius: 18; -fx-background-radius: 30;" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="10.0" left="10.0" top="10.0" />
          </BorderPane.margin>

@@ -38,7 +38,15 @@
     -fx-font-size: 14; /* Увеличиваем размер шрифта */
     -fx-text-alignment: center;
     -fx-alignment: center;
+    -fx-border-color: white;
+    -fx-border-width: 0 1 1 0;
 }
+
+.table-view .table-row-cell:selected:focused {
+    -fx-border-color: #9e5ce4;
+    -fx-border-width: 2px;
+}
+
 
 .table-view .scroll-bar .thumb {
     -fx-background-color: #9e5ce4;
@@ -56,6 +64,7 @@
 .table-view .scroll-bar .increment-arrow, .table-view .scroll-bar .decrement-arrow {
     -fx-background-color: #9e5ce4; /* Цвет стрелочек у ползунка ползунка */
     -fx-border-width: 1px;
+    -fx-padding: 2;
 }
 
 .table-view .scroll-bar {

@@ -30,7 +30,7 @@ public class ViewData extends BaseController {
     @FXML private TableView<PersonInfo> customersTableView;
     @FXML private TableColumn<PersonInfo, String> surnameColumn, nameColumn, patronymicColumn;
     @FXML private TableColumn<PersonInfo, Image> planColumn, pactColumn;
-    @FXML private Button addHumanButton;
+    @FXML private Button addHumanButton, updateTableButton;
     @FXML private TextField keywordTextField;
     @FXML private ComboBox<String> sortValueCombobox;
 
@@ -47,6 +47,7 @@ public class ViewData extends BaseController {
         setTableView();
         setAddHumanButton();
         setKeywordTextField();
+        setUpdateTableButton();
 
     }
 
@@ -67,6 +68,10 @@ public class ViewData extends BaseController {
                 .keywordTextField(keywordTextField)
                 .searchStrategies(Arrays.asList(new FirstNameSearchStrategy(), new LastNameSearchStrategy(), new PatronymicSearchStrategy()))
                 .build().event();
+    }
+
+    private void setUpdateTableButton() {
+        buttonConfigurator.setupButtonEvent(updateTableButton, event -> setTableView());
     }
 
 
