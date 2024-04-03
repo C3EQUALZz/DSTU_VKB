@@ -8,23 +8,21 @@ package programmingLanguagesJava.laboratories.GUI.controllers.menu;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.scene.text.Text;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+@RequiredArgsConstructor
 class ClockController implements ElementMenu {
     private final Text hourTimer, minutesTimer, secondsTimer;
 
-    ClockController(Text hourTimer, Text minutesTimer, Text secondsTimer) {
-        this.hourTimer = hourTimer;
-        this.minutesTimer = minutesTimer;
-        this.secondsTimer = secondsTimer;
-    }
 
     /**
      * Здесь создается анонимный класс, который определяет наши часы.
      * Здесь уже автоматически происходит подстановка значений.
      * Все изменения в UI нужно делать в одном потоке по правилам JavaFx.
+     *
      * @return возвращает наш таймер
      */
     private AnimationTimer createTimer() {

@@ -23,6 +23,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutionException;
 
 public class AddressFillingForm extends BaseController {
 
@@ -99,12 +100,18 @@ public class AddressFillingForm extends BaseController {
 
         var docxProcessor = new DocxProcessor(jsonData);
         buttonConfigurator.setupButtonEvent(createDocument, event -> {
+            try {
+
             // Добавляем значения в наш словарь
             jsonData.put("addressField", addressField.getText());
             jsonData.put("mainPerson", combobox.getValue());
             jsonData.put("buildingPlan", fileChooserController.getSelectedFile());
             jsonData.put("allPeople", String.join(", ", combobox.getItems()));
-            jsonData.put("pathToFile", docxProcessor.event());
+            jsonData.put("pathToFile", docxProcessor.event().get());
+
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException("Не получилось добавить в jsonData, скорее всего проблема с документом", e);
+            }
         });
     }
 

@@ -31,6 +31,7 @@ class SliderController implements ElementLaboratory {
 
     /**
      * Первоначальная настройка slider
+     *
      * @param slider, который мы хотим настроить
      * @return результирующий slider
      */
@@ -52,6 +53,7 @@ class SliderController implements ElementLaboratory {
 
     /**
      * Настройка звука для отдельного Label, так как в Slider я использовал его, имитируя кнопку
+     *
      * @param button кнопку, которую мы хотим настроить
      */
     private void configureButtonSoundEffects(Label button) {
@@ -78,6 +80,7 @@ class SliderController implements ElementLaboratory {
 
     /**
      * Сама анимация Slider
+     *
      * @param position позиция, на которую мы хотим переместить наш Slider
      */
     private void slideMenuToPosition(double position) {
@@ -88,7 +91,8 @@ class SliderController implements ElementLaboratory {
 
     /**
      * Настройка видимости слайдера
-     * @param openVisible параметр видимости для openSlider
+     *
+     * @param openVisible  параметр видимости для openSlider
      * @param closeVisible параметр видимости для closeSlider
      */
     private void switchButtonVisibility(boolean openVisible, boolean closeVisible) {

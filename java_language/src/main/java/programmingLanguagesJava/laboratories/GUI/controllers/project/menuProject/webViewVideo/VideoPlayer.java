@@ -9,15 +9,13 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.menuProject.ElementMenu;
+import lombok.RequiredArgsConstructor;
 
 import java.io.File;
 
+@RequiredArgsConstructor
 public class VideoPlayer implements ElementMenu {
     private final MediaView mediaView;
-
-    public VideoPlayer(MediaView mediaView) {
-        this.mediaView = mediaView;
-    }
 
     /**
      * Запуск видео происходит здесь
@@ -33,8 +31,6 @@ public class VideoPlayer implements ElementMenu {
             mediaPlayer.play();
         }));
     }
-
-
 
     /**
      * Получение абсолютного пути до файла с нашего видео

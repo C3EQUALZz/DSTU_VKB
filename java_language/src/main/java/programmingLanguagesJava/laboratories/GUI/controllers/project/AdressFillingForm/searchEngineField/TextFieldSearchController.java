@@ -17,6 +17,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.ElementAddressFillingForm;
 import lombok.Setter;
+import lombok.RequiredArgsConstructor;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,17 +28,15 @@ import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
+@RequiredArgsConstructor
 public class TextFieldSearchController implements ElementAddressFillingForm {
 
     @Setter
     private MapView mapView;
+
     private final TextField textField;
     private final JSONParser parser = new JSONParser();
     private static final Marker markerClick = Marker.createProvided(Marker.Provided.BLUE).setVisible(true);
-
-    public TextFieldSearchController(TextField textField) {
-        this.textField = textField;
-    }
 
     /**
      * Обработчик событий, чтобы запускать логику методов.

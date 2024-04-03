@@ -7,10 +7,12 @@ package programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFill
 
 import javafx.scene.control.TextField;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.ElementAddressFillingForm;
 
 import java.util.HashSet;
 
+@RequiredArgsConstructor
 public class TextFieldAddController implements ElementAddressFillingForm {
 
     private final TextField textField;
@@ -21,10 +23,6 @@ public class TextFieldAddController implements ElementAddressFillingForm {
      */
     @Getter
     private final HashSet<String> persons = new HashSet<>();
-
-    public TextFieldAddController(TextField textField) {
-        this.textField = textField;
-    }
 
     /**
      * Здесь запускается обработчик событий, который у нас добавляет элементы в множество

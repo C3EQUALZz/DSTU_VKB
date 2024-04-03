@@ -12,24 +12,22 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Класс DocxProcessor обрабатывает документы в формате DOCX.
  */
+@RequiredArgsConstructor
 public class DocxProcessor {
     private final String PATH_TO_PROJECT = "src/main/resources/projectFiles";
     private final Path PATH_TO_DIR = Paths.get(PATH_TO_PROJECT, "documents_for_database").toAbsolutePath();
     private final Path PATH_BLANK = Paths.get(PATH_TO_PROJECT, "blank-dogovora-okazanija-ohrannyh-uslug.docx").toAbsolutePath();
+
     private final HashMap<String, String> jsonData;
 
-    /**
-     * Конструктор класса DocxProcessor.
-     *
-     * @param jsonData Данные в формате JSON, которые будут использоваться для замены подчеркиваний.
-     */
-    public DocxProcessor(HashMap<String, String> jsonData) {
-        this.jsonData = jsonData;
-    }
 
     /**
      * Метод event() обрабатывает документ, заменяя подчеркивания на данные из JSON.
@@ -37,23 +35,32 @@ public class DocxProcessor {
      * @return Путь к обработанному документу.
      * @throws RuntimeException Если произошла ошибка при обработке документа.
      */
-    public String event() {
-        try {
-            var originalDoc = openOriginalDoc();
+    public Future<String> event() {
+        // Создаем ExecutorService с одним потоком
+        try (ExecutorService executor = Executors.newSingleThreadExecutor()) {
+            // Отправляем задачу на выполнение в отдельном потоке и получаем Future
 
-            var replacer = new NumberedUnderlineReplacer(this.jsonData);
-            replacer.replaceUnderlines(originalDoc);
+            // Возвращаем Future, который можно использовать для получения результата в будущем
+            return executor.submit(() -> {
+                try {
+                    var originalDoc = openOriginalDoc();
 
-            var newFilePath = createNewDocx();
+                    var replacer = new NumberedUnderlineReplacer(this.jsonData);
+                    replacer.replaceUnderlines(originalDoc);
 
-            saveResult(originalDoc, newFilePath);
+                    var newFilePath = createNewDocx();
 
-            return newFilePath;
+                    saveResult(originalDoc, newFilePath);
 
-        } catch (Exception e) {
-            throw new RuntimeException("Ошибка при обработке документа", e);
+                    return newFilePath;
+                } catch (Exception e) {
+                    throw new RuntimeException("Ошибка при обработке документа", e);
+                }
+            });
         }
     }
+
+
 
     /**
      * Метод openOriginalDoc() открывает файл с примером договора в формате XWPFDocument.
