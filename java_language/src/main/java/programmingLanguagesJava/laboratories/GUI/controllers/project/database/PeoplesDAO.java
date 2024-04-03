@@ -4,6 +4,7 @@
 
 package programmingLanguagesJava.laboratories.GUI.controllers.project.database;
 
+import lombok.RequiredArgsConstructor;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.database.utils.Person;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.database.utils.SQLQuery;
 
@@ -14,22 +15,15 @@ import java.util.List;
 /**
  * Класс PeoplesDAO предоставляет методы для взаимодействия с таблицей Peoples в базе данных.
  */
+@RequiredArgsConstructor
 public class PeoplesDAO {
     private final Connection connection;
 
-    /**
-     * Конструктор класса PeoplesDAO.
-     *
-     * @param connection Объект Connection, представляющий соединение с базой данных.
-     */
-    public PeoplesDAO(Connection connection) {
-        this.connection = connection;
-    }
 
     /**
      * Метод insert() вставляет список людей в таблицу Peoples в базе данных.
      *
-     * @param people Список объектов Person, представляющих людей, которых нужно вставить в таблицу.
+     * @param people          Список объектов Person, представляющих людей, которых нужно вставить в таблицу.
      * @param remainingInfoId ID информации, оставшейся для этих людей.
      * @throws RuntimeException Если произошла ошибка при вставке людей в базу данных.
      */

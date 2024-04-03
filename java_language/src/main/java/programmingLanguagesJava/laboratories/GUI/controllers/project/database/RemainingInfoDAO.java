@@ -4,32 +4,26 @@
 
 package programmingLanguagesJava.laboratories.GUI.controllers.project.database;
 
+import lombok.RequiredArgsConstructor;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.database.utils.FileUtil;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.database.utils.SQLQuery;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.OptionalInt;
 
-import programmingLanguagesJava.laboratories.GUI.controllers.project.database.utils.FileUtil;
-import programmingLanguagesJava.laboratories.GUI.controllers.project.database.utils.SQLQuery;
-
 /**
  * Класс RemainingInfoDAO предоставляет методы для взаимодействия с таблицей Remaining_info в базе данных.
  */
+@RequiredArgsConstructor
 public class RemainingInfoDAO {
     private final Connection connection;
 
-    /**
-     * Конструктор класса RemainingInfoDAO.
-     *
-     * @param connection Объект Connection, представляющий соединение с базой данных.
-     */
-    public RemainingInfoDAO(Connection connection) {
-        this.connection = connection;
-    }
 
     /**
      * Метод insert() вставляет данные в таблицу Remaining_info в базе данных.
      *
-     * @param pathToFile Путь к файлу, который нужно вставить в таблицу.
+     * @param pathToFile   Путь к файлу, который нужно вставить в таблицу.
      * @param buildingPlan План здания, который нужно вставить в таблицу.
      * @throws RuntimeException Если произошла ошибка при вставке данных в базу данных.
      */
