@@ -27,16 +27,22 @@ import java.util.ResourceBundle;
 
 
 public class ViewData extends BaseController {
-    @FXML private TableView<PersonInfo> customersTableView;
-    @FXML private TableColumn<PersonInfo, String> surnameColumn, nameColumn, patronymicColumn;
-    @FXML private TableColumn<PersonInfo, Image> planColumn, pactColumn;
-    @FXML private Button addHumanButton, updateTableButton;
-    @FXML private TextField keywordTextField;
-    @FXML private ComboBox<String> sortValueCombobox;
+    @FXML
+    private TableView<PersonInfo> customersTableView;
+    @FXML
+    private TableColumn<PersonInfo, String> surnameColumn, nameColumn, patronymicColumn;
+    @FXML
+    private TableColumn<PersonInfo, Image> planColumn, pactColumn;
+    @FXML
+    private Button addHumanButton, updateTableButton;
+    @FXML
+    private TextField keywordTextField;
+    @FXML
+    private ComboBox<String> sortValueCombobox;
 
     private final DataBaseSQLite database = DataBaseSQLite.getInstance();
     private final ComboboxConfigurator comboboxConfigurator = ComboboxConfigurator.getInstance();
-    private final List<PersonInfo> personInfos = database.loadPersonInfos();
+    private List<PersonInfo> personInfos = database.loadPersonInfos();
 
 
     @Override
@@ -62,7 +68,7 @@ public class ViewData extends BaseController {
     }
 
     private void setKeywordTextField() {
-         HumanSearchController.builder()
+        HumanSearchController.builder()
                 .customersTableView(customersTableView)
                 .filteredData(new FilteredList<>(FXCollections.observableArrayList(personInfos)))
                 .keywordTextField(keywordTextField)
@@ -71,9 +77,11 @@ public class ViewData extends BaseController {
     }
 
     private void setUpdateTableButton() {
-        buttonConfigurator.setupButtonEvent(updateTableButton, event -> setTableView());
+        buttonConfigurator.setupButtonEvent(updateTableButton, event -> {
+            this.personInfos = database.loadPersonInfos();
+            customersTableView.refresh();
+        });
     }
-
 
 
 }
