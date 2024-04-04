@@ -18,3 +18,13 @@
 .radio-button {
     -fx-background-color: transparent;
 }
+
+.radio-button:hover {
+    -fx-translate-y: -1px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.8) , 15, 0 , 0 , 8 );
+}
+
+.radio-button:pressed {
+    -fx-translate-y: +1px;
+    -fx-effect: null;
+}

@@ -79,12 +79,12 @@
                                  <font>
                                     <Font name="Comic Sans MS Bold" size="14.0" />
                                  </font></TextField>
-                              <Button mnemonicParsing="false" style="-fx-background-color: transparent;" stylesheets="@CSS/button-styles.css" StackPane.alignment="CENTER_LEFT">
+                              <Button mnemonicParsing="false" style="-fx-background-color: transparent;" StackPane.alignment="CENTER_LEFT">
                                  <graphic>
                                     <FontAwesomeIconView fill="WHITE" glyphName="CLOSE" />
                                  </graphic>
                               </Button>
-                              <Button mnemonicParsing="false" style="-fx-background-color: transparent;" stylesheets="@CSS/button-styles.css" StackPane.alignment="CENTER_RIGHT">
+                              <Button mnemonicParsing="false" style="-fx-background-color: transparent;" StackPane.alignment="CENTER_RIGHT">
                                  <graphic>
                                     <FontAwesomeIconView fill="WHITE" glyphName="SEARCH" textAlignment="CENTER" />
                                  </graphic>
