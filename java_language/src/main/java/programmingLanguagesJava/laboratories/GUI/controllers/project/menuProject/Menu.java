@@ -11,12 +11,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.MediaView;
 import programmingLanguagesJava.laboratories.GUI.controllers.BaseController;
-import programmingLanguagesJava.laboratories.GUI.controllers.project.menuProject.movableAnchor.MovableAnchorPane;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.menuProject.observers.TextFieldsObserver;
-import programmingLanguagesJava.laboratories.GUI.controllers.project.menuProject.webViewVideo.VideoPlayer;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.menuProject.strategy.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
 public class Menu extends BaseController {
 
@@ -30,52 +30,15 @@ public class Menu extends BaseController {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
 
-        setWebViewVideo();
-        setSignInButton();
-        setAddToDatabaseButton();
-        setViewDatabaseButton();
-
         new TextFieldsObserver(loginField, passwordField, signInButton).listen();
 
-    }
+        Stream.of(
+                new VideoPlayerActionMenu(mediaViewVideo),
+                new SignInButtonActionMenu(anchorPaneMovable, registrationAnchorPane, signInButton),
+                new AddToDatabaseButtonActionMenu(addToDatabaseButton),
+                new ViewDatabaseButtonActionMenu(viewDatabaseButton)
+        ).parallel().forEach(ActionMenu::execute);
 
-    /**
-     * Настройка подключения, когда пользователь входит в приложение
-     */
-    private void setSignInButton() {
-        var movableAnchorPane = new MovableAnchorPane(anchorPaneMovable, registrationAnchorPane);
-        buttonConfigurator.setupButtonEvent(signInButton, event -> movableAnchorPane.event());
-    }
-
-    /**
-     * Настройка видео
-     */
-    private void setWebViewVideo() {
-        var videoPlayer = new VideoPlayer(mediaViewVideo);
-        videoPlayer.event();
-    }
-
-    /**
-     * Настройка переключения на форму с базой данных
-     */
-    private void setAddToDatabaseButton() {
-        buttonConfigurator.setupButtonEvent(
-                addToDatabaseButton,
-                event -> controller.switchFromMenuProjectToFillingForm(),
-                "Не получилось переключиться на страницу с заполнением БД"
-        );
-
-    }
-
-    /**
-     * Настройка переключения с меню на просмотр базы данных
-     */
-    private void setViewDatabaseButton() {
-        buttonConfigurator.setupButtonEvent(
-                viewDatabaseButton,
-                event -> controller.switchFromMenuProjectToDataBaseView(),
-                "Не получилось переключиться на страницу с просмотром БД"
-            );
     }
 
 }
