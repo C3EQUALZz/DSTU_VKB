@@ -5,6 +5,7 @@
 
 package programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.searchingDatabase;
 
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.TableView;
@@ -26,8 +27,8 @@ public class HumanSearchController implements ElementDatabaseView {
     // TableView для отображения информации о людях
     private final TableView<PersonInfo> customersTableView;
 
-    // FilteredList для хранения отфильтрованных данных о людях
-    private final FilteredList<PersonInfo> filteredData;
+    // ObservableList для хранения исходных данных о людях
+    private final ObservableList<PersonInfo> personInfos;
 
     // TextField для ввода ключевых слов для поиска
     private final TextField keywordTextField;
@@ -45,19 +46,27 @@ public class HumanSearchController implements ElementDatabaseView {
      */
     @Override
     public void event() {
+        // Создание FilteredList из ObservableList
+        FilteredList<PersonInfo> filteredData = new FilteredList<>(personInfos);
+
         keywordTextField.textProperty().addListener((observable, oldValue, newValue) ->
                 filteredData.setPredicate(personInfo -> {
 
-            if (newValue.isEmpty() || newValue.isBlank()) {
-                return true;
-            }
+                    if (newValue.isEmpty() || newValue.isBlank()) {
+                        return true;
+                    }
 
-            return searchStrategies.stream().anyMatch(strategy -> strategy.matches(personInfo, newValue));
-        }));
+                    return searchStrategies.stream().anyMatch(strategy -> strategy.matches(personInfo, newValue));
+                }));
 
-        var sortedData = new SortedList<>(filteredData);
+        // Создание SortedList из FilteredList
+        SortedList<PersonInfo> sortedData = new SortedList<>(filteredData);
+
+        // Привязка компаратора SortedList к компаратору TableView
         sortedData.comparatorProperty().bind(customersTableView.comparatorProperty());
+
+        // Установка SortedList в качестве элементов TableView
         customersTableView.setItems(sortedData);
     }
-
 }
+

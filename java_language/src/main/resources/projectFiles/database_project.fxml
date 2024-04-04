@@ -115,7 +115,7 @@
                                  <children>
                                     <VBox layoutX="23.0" layoutY="-20.0" prefHeight="159.0" prefWidth="233.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="66.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <RadioButton fx:id="lastNameRadioButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="259.0" stylesheets="@CSS/radio-button-styles.css" text="По фамилии" textFill="WHITE">
+                                          <RadioButton fx:id="lastNameRadioButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="259.0" stylesheets="@CSS/radio-button-styles.css" text="По фамилии" textFill="WHITE">
                                              <padding>
                                                 <Insets bottom="10.0" left="10.0" top="10.0" />
                                              </padding>
@@ -126,7 +126,7 @@
                                                 <Font name="Comic Sans MS Bold" size="12.0" />
                                              </font>
                                           </RadioButton>
-                                          <RadioButton fx:id="firstNameRadioButton" mnemonicParsing="false" prefHeight="28.0" prefWidth="255.0" stylesheets="@CSS/radio-button-styles.css" text="По имени" textFill="WHITE">
+                                          <RadioButton fx:id="firstNameRadioButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="233.0" stylesheets="@CSS/radio-button-styles.css" text="По имени" textFill="WHITE">
                                              <padding>
                                                 <Insets bottom="10.0" left="10.0" />
                                              </padding>
@@ -134,23 +134,7 @@
                                                 <Font name="Comic Sans MS Bold" size="12.0" />
                                              </font>
                                           </RadioButton>
-                                          <RadioButton fx:id="patronymicRadioButton" mnemonicParsing="false" prefHeight="28.0" prefWidth="255.0" stylesheets="@CSS/radio-button-styles.css" text="По отчеству" textFill="WHITE">
-                                             <padding>
-                                                <Insets bottom="10.0" left="10.0" />
-                                             </padding>
-                                             <font>
-                                                <Font name="Comic Sans MS Bold" size="12.0" />
-                                             </font>
-                                          </RadioButton>
-                                          <RadioButton mnemonicParsing="false" prefHeight="28.0" prefWidth="234.0" stylesheets="@CSS/radio-button-styles.css" text="По времени создания плана" textFill="WHITE">
-                                             <padding>
-                                                <Insets bottom="10.0" left="10.0" />
-                                             </padding>
-                                             <font>
-                                                <Font name="Comic Sans MS Bold" size="12.0" />
-                                             </font>
-                                          </RadioButton>
-                                          <RadioButton mnemonicParsing="false" prefHeight="27.0" prefWidth="249.0" stylesheets="@CSS/radio-button-styles.css" text="По времени создания договора" textFill="WHITE">
+                                          <RadioButton fx:id="patronymicRadioButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="233.0" stylesheets="@CSS/radio-button-styles.css" text="По отчеству" textFill="WHITE">
                                              <padding>
                                                 <Insets bottom="10.0" left="10.0" />
                                              </padding>

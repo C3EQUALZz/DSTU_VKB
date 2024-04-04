@@ -7,7 +7,7 @@
 package programmingLanguagesJava.laboratories.GUI.config;
 
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBase;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.AudioClip;
 
@@ -35,7 +35,7 @@ public class ButtonConfigurator {
      * @param button       кнопка, на которую мы хотим назначить настройку по нажатию и т.п.
      * @param eventHandler событие, которое мы хотим обработать.
      */
-    public void setupButtonEvent(Button button, EventHandler<MouseEvent> eventHandler) {
+    public void setupButtonEvent(ButtonBase button, EventHandler<MouseEvent> eventHandler) {
         // Обработка того момента, когда мышка наводится на кнопку.
         button.setOnMouseEntered(event -> hoverClip.play());
 
@@ -53,7 +53,7 @@ public class ButtonConfigurator {
      * @param action       действие, которое мы хотим выполнить при нажатии на кнопку.
      * @param errorMessage сообщение об ошибке, если действие не удалось выполнить.
      */
-    public void setupButtonEvent(Button button, CheckedConsumer action, String errorMessage) {
+    public void setupButtonEvent(ButtonBase button, CheckedConsumer action, String errorMessage) {
         EventHandler<MouseEvent> eventHandler = event -> {
             try {
                 action.accept(event);
