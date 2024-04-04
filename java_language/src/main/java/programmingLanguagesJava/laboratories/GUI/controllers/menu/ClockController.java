@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @RequiredArgsConstructor
-class ClockController implements ElementMenu {
+public class ClockController implements ElementMenu {
     private final Text hourTimer, minutesTimer, secondsTimer;
 
 

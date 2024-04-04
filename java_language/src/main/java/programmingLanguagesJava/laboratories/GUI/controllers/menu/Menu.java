@@ -10,9 +10,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import programmingLanguagesJava.laboratories.GUI.controllers.BaseController;
+import programmingLanguagesJava.laboratories.GUI.controllers.menu.strategy.ActionMainMenu;
+import programmingLanguagesJava.laboratories.GUI.controllers.menu.strategy.ButtonLabsActionMainMenu;
+import programmingLanguagesJava.laboratories.GUI.controllers.menu.strategy.ButtonProjectActionMainMenu;
+import programmingLanguagesJava.laboratories.GUI.controllers.menu.strategy.ClockControllerActionMainMenu;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
+
 public class Menu extends BaseController {
 
     @FXML private Button ButtonLabs, ButtonProject;
@@ -24,22 +30,10 @@ public class Menu extends BaseController {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
-
-        // Класс, который описывает часы.
-        new ClockController(hourTimer, minutesTimer, secondsTimer).event();
-
-        // Обработка событий для кнопки с лабораторными
-        buttonConfigurator.setupButtonEvent(
-                ButtonLabs,
-                event -> controller.switchFromMenuToLaboratories(),
-            "Не получилось переключиться с меню на лабораторные работы"
-        );
-
-        // Обработка событий для кнопки с проектом
-        buttonConfigurator.setupButtonEvent(
-                ButtonProject,
-                event -> controller.switchToMenuProject(),
-            "Не получилось переключиться с меню на проект"
-        );
+        Stream.of(
+                new ButtonLabsActionMainMenu(ButtonLabs),
+                new ButtonProjectActionMainMenu(ButtonProject),
+                new ClockControllerActionMainMenu(secondsTimer, minutesTimer, hourTimer)
+        ).parallel().forEach(ActionMainMenu::execute);
     }
 }
