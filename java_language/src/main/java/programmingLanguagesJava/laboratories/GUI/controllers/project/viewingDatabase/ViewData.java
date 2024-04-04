@@ -79,6 +79,7 @@ public class ViewData extends BaseController {
     private void setUpdateTableButton() {
         buttonConfigurator.setupButtonEvent(updateTableButton, event -> {
             this.personInfos = database.loadPersonInfos();
+            setTableView();
             customersTableView.refresh();
         });
     }
