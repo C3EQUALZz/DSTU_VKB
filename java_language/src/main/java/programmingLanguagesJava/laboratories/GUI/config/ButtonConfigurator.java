@@ -19,6 +19,10 @@ public class ButtonConfigurator {
 
     private static ButtonConfigurator instance;
 
+    /**
+     * Реализация SingleTone
+     * @return возвращает наш объект, который был создан 1 раз за время действия программы
+     */
     public static ButtonConfigurator getInstance() {
         if (instance == null)
             instance = new ButtonConfigurator();
@@ -33,12 +37,32 @@ public class ButtonConfigurator {
      */
     public void setupButtonEvent(Button button, EventHandler<MouseEvent> eventHandler) {
         // Обработка того момента, когда мышка наводится на кнопку.
-        button.setOnMouseEntered(event -> new AudioClip(Objects.requireNonNull(getClass().getResource("/music/hover.mp3")).toString()).play());
+        button.setOnMouseEntered(event -> hoverClip.play());
 
         // Обработка того момента, когда нажали на кнопку.
         button.setOnMouseClicked(event -> {
-            new AudioClip(Objects.requireNonNull(getClass().getResource("/music/click.mp3")).toString()).play();
+            clickClip.play();
             eventHandler.handle(event); // Передача объекта MouseEvent в обработчике события
         });
     }
+
+    /**
+     * Настройка кнопки с определенными параметрами.
+     *
+     * @param button       кнопка, на которую мы хотим назначить настройку по нажатию и т.п.
+     * @param action       действие, которое мы хотим выполнить при нажатии на кнопку.
+     * @param errorMessage сообщение об ошибке, если действие не удалось выполнить.
+     */
+    public void setupButtonEvent(Button button, CheckedConsumer action, String errorMessage) {
+        EventHandler<MouseEvent> eventHandler = event -> {
+            try {
+                action.accept(event);
+            } catch (Exception e) {
+                throw new RuntimeException(errorMessage, e);
+            }
+        };
+        setupButtonEvent(button, eventHandler);
+    }
+
+
 }

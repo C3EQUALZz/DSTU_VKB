@@ -1,8 +1,10 @@
 
 ---
-Смотреть иконки здесь: https://icons8.com/icons/set/desktop или скачайте приложение https://icons8.com/app/windows
+- Смотреть иконки здесь: https://icons8.com/icons/set/desktop или скачайте приложение https://icons8.com/app/windows
 
-Как установить MySQL и нужные компоненты: https://youtu.be/BxdSUGBs0gM?si=1gMyCdosJyI_mDHr
+- Как установить MySQL и нужные компоненты: https://youtu.be/BxdSUGBs0gM?si=1gMyCdosJyI_mDHr
+
+- Как установить зависимости для SceneBuilder: https://youtu.be/cvjUC5iAqr8?si=FW7H3_xLO3_vpwZ2
 
 --- 
 
@@ -13,8 +15,18 @@
 4. Main - является сущностью приложения, там происходит запуск и конфигурация приложения. 
 
 ---
+Для SceneBuilder будут нужны зависимости для карт и иконок.
+Для установки создайте пустой FXML файл, а потом скачайте пакеты, которые представлены ниже.
+
+![img.png](photoREADME/img4.png)
+
+---
+
 ![img.png](photoREADME/menu.png)
 ![img.png](photoREADME/img2.png)
+![img.png](photoREADME/img5.png)
+![img.png](photoREADME/img6.png)
+![img.png](photoREADME/img7.png)
 ---
 Предметная область № 10: отдел вневедомственной охраны.
 

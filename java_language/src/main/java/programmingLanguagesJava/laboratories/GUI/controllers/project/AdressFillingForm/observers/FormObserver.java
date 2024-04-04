@@ -8,27 +8,20 @@ package programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFill
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import lombok.RequiredArgsConstructor;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.Observer;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 public class FormObserver implements Observer {
     private final TextField textField;
     private final ComboBox<String> comboBox;
     private final List<Button> buttons;
 
     /**
-     * В моем случае на странице есть поле, выпадающий список, которые я хочу отслеживать
-     * @param textField поле ввода, которое мне нужно, чтобы смотреть не пусто ли оно
-     * @param comboBox выпадающий список, который проверяю на значения
-     * @param buttons кнопки, которые хотим включать и выключать
+     * Метод, который запускает слушателя
      */
-    public FormObserver(TextField textField, ComboBox<String> comboBox, List<Button> buttons) {
-        this.textField = textField;
-        this.comboBox = comboBox;
-        this.buttons = buttons;
-        listen();
-    }
-
     @Override
     public void listen() {
         textField.textProperty().addListener((observable, oldValue, newValue) -> checkFields());

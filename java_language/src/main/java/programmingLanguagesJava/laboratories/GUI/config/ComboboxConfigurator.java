@@ -22,6 +22,16 @@ public class ComboboxConfigurator {
 
     // Словарь с лабораторными работами, где ключ - лабораторная работа, значение - ссылки на методы
     private final TreeMap<Class<?>, Method[]> dictInfoLaboratories = ParserLaboratories.parseLaboratories();
+    private static ComboboxConfigurator instance;
+
+    private ComboboxConfigurator() {}
+
+    public static ComboboxConfigurator getInstance() {
+        if (instance == null) {
+            instance = new ComboboxConfigurator();
+        }
+        return instance;
+    }
 
     /**
      * Конфигурация выпадающего списка по умолчанию. Тут только установка звуков.
@@ -61,16 +71,26 @@ public class ComboboxConfigurator {
         comboBox.setDisable(true);
     }
 
+    /**
+     * В лабораторных работах я настраиваю combobox, поэтому вот здесь решил оставить настройку.
+     * У меня в зависимости от кнопки выбираются и обновляются значения в combobox
+     * @param comboBox выпадающий список, который мы хотим настроить
+     * @param button кнопка, относительно которой будет настройка по заданиям
+     */
     public void setupComboboxEvent(ComboBox<String> comboBox, Button button) {
+        // включаю combobox
         comboBox.setDisable(false);
 
         // Сохранение выбранного значения, если оно есть
         var selectedValue = comboBox.getValue();
 
+        // Перед тем как добавлять элементы, я удаляю все оттуда. Высчитывать разницу и вот эти все приколы не хочу
         comboBox.getItems().clear();
 
+        // Получаю из словаря с лабораторными работами количество заданий
         var countOfMethods = dictInfoLaboratories.get(getKeyButton(button)).length;
 
+        // O(1) - сложность добавления в связный список, поэтому сделал его. Добавляю туда соотв количество заданий
         var linkedList = new LinkedList<String>();
         IntStream.range(1, countOfMethods + 1).forEach(number -> linkedList.add(number + " задание"));
 

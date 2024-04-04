@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.media.MediaView?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #2E3348; -fx-border-radius: 30; -fx-background-radius: 18;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="programmingLanguagesJava.laboratories.GUI.controllers.project.menuProject.Menu">
+   <left>
+      <AnchorPane fx:id="hiddenAnchorPane" minWidth="-Infinity" prefHeight="504.0" prefWidth="370.0" style="-fx-border-color: WHITE; -fx-border-radius: 18; -fx-background-radius: 30;" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" top="10.0" />
+         </BorderPane.margin>
+         <children>
+            <FontAwesomeIconView fill="WHITE" glyphName="DATABASE" layoutX="145.0" layoutY="117.0" size="8em" AnchorPane.leftAnchor="145.0" AnchorPane.rightAnchor="145.0" />
+            <VBox alignment="CENTER" layoutX="62.0" layoutY="222.0" prefHeight="79.0" prefWidth="263.0" AnchorPane.bottomAnchor="210.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="221.0">
+               <children>
+                  <Button fx:id="addToDatabaseButton" mnemonicParsing="false" prefHeight="34.0" prefWidth="303.0" style="-fx-background-color: #9e5ce4; -fx-border-radius: 4;" stylesheets="@../stageFiles/Styles.css" text="Добавить клиента в базу данных" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Comic Sans MS Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="viewDatabaseButton" mnemonicParsing="false" prefHeight="34.0" prefWidth="336.0" style="-fx-background-color: #9e5ce4; -fx-border-radius: 4;" stylesheets="@../stageFiles/Styles.css" text="Просмотреть базу данных" textFill="WHITE">
+                     <font>
+                        <Font name="Comic Sans MS Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+            <Label alignment="CENTER" layoutX="97.0" layoutY="143.0" prefHeight="38.0" prefWidth="183.0" text="База данных" textFill="WHITE" underline="true" AnchorPane.leftAnchor="97.0" AnchorPane.rightAnchor="97.0" AnchorPane.topAnchor="143.0">
+               <font>
+                  <Font name="Comic Sans MS Bold" size="22.0" />
+               </font>
+            </Label>
+            <AnchorPane layoutX="2.0" layoutY="308.0" prefHeight="196.0" prefWidth="373.0" style="-fx-background-radius: 30; -fx-border-radius: 18;" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="307.0">
+               <children>
+                  <Rectangle arcHeight="6.0" arcWidth="6.0" disable="true" fill="DODGERBLUE" height="184.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="5.0" style="-fx-fill: transparent; -fx-arc-height: 20.0; -fx-arc-width: 20.0; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.8) , 15, 0 , 0 , 8);" width="318.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="4.0" />
+                  <MediaView fx:id="mediaViewVideo" fitHeight="183.0" fitWidth="306.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="10.0" />
+               </children>
+            </AnchorPane>
+            <FontAwesomeIconView fill="WHITE" glyphName="PLUS" layoutX="337.0" layoutY="245.0" size="2em" />
+            <FontAwesomeIconView fill="WHITE" glyphName="EYE" layoutX="334.0" layoutY="289.0" size="2em" />
+            <AnchorPane fx:id="anchorPaneMovable" layoutX="8.0" layoutY="8.0" prefHeight="504.0" prefWidth="370.0" style="-fx-background-color: #2E3348; -fx-background-radius: 30; -fx-border-radius: 18;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <ImageView fitHeight="195.0" fitWidth="328.0" layoutX="21.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/security-guarantor-high-resolution-logo-white-transparent(2)(1).png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </left>
+   <right>
+      <AnchorPane fx:id="registrationAnchorPane" prefHeight="600.0" prefWidth="370.0" style="-fx-border-color: WHITE; -fx-border-radius: 18; -fx-background-radius: 30;" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+         <children>
+            <FontAwesomeIconView fill="WHITE" glyphName="USERS" layoutX="133.0" layoutY="117.0" size="8em" text="" wrappingWidth="98.0" AnchorPane.leftAnchor="133.0" AnchorPane.rightAnchor="133.0" />
+            <Label alignment="CENTER" layoutX="122.0" layoutY="143.0" prefHeight="38.0" prefWidth="102.0" text="Войдите" textFill="WHITE" underline="true" AnchorPane.leftAnchor="133.0" AnchorPane.rightAnchor="133.0" AnchorPane.topAnchor="142.0">
+               <font>
+                  <Font name="Comic Sans MS Bold" size="22.0" />
+               </font>
+            </Label>
+            <VBox layoutX="25.0" layoutY="226.0" prefHeight="113.0" prefWidth="305.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="225.0">
+               <children>
+                  <TextField fx:id="loginField" promptText="Логин" style="-fx-background-radius: 4;">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Comic Sans MS Bold" size="12.0" />
+                     </font>
+                  </TextField>
+                  <PasswordField fx:id="passwordField" prefHeight="26.0" prefWidth="297.0" promptText="Пароль" style="-fx-border-radius: 4;">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Comic Sans MS Bold" size="12.0" />
+                     </font>
+                  </PasswordField>
+                  <Button fx:id="signInButton" disable="true" mnemonicParsing="false" prefHeight="26.0" prefWidth="310.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 4;" stylesheets="@../stageFiles/Styles.css" text="Войти" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Comic Sans MS Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+            <AnchorPane layoutX="85.0" layoutY="349.0" prefHeight="155.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <Text fill="WHITE" layoutX="52.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="При потере пароля обратитесь к администратору" textAlignment="CENTER" wrappingWidth="268.13671875">
+                     <font>
+                        <Font name="Comic Sans MS Bold" size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+            <FontAwesomeIconView fill="WHITE" glyphName="KEY" layoutX="338.0" layoutY="246.0" size="2em" />
+            <FontAwesomeIconView fill="WHITE" glyphName="LOCK" layoutX="342.0" layoutY="286.0" size="2em" text="" />
+         </children>
+      </AnchorPane>
+   </right>
+   <top>
+      <AnchorPane prefHeight="76.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="exitButton" layoutX="761.0" layoutY="14.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="28.0" stylesheets="@../stageFiles/Styles.css" />
+            <Button fx:id="backButton" layoutX="19.0" layoutY="17.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="28.0" stylesheets="@../stageFiles/Styles.css" />
+            <Text fill="WHITE" layoutX="356.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Меню" textAlignment="CENTER" underline="true" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="356.0" AnchorPane.rightAnchor="356.8857421875" AnchorPane.topAnchor="11.0">
+               <font>
+                  <Font name="Comic Sans MS Bold" size="30.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </top>
+</BorderPane>

@@ -12,7 +12,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import lombok.RequiredArgsConstructor;
 
+/**
+ * Класс DocxProcessor обрабатывает документы в формате DOCX.
+ */
+@RequiredArgsConstructor
 public class DocxProcessor {
     private final String PATH_TO_PROJECT = "src/main/resources/projectFiles";
     private final Path PATH_TO_DIR = Paths.get(PATH_TO_PROJECT, "documents_for_database").toAbsolutePath();
@@ -20,28 +28,46 @@ public class DocxProcessor {
 
     private final HashMap<String, String> jsonData;
 
-    public DocxProcessor(HashMap<String, String> jsonData) {
-        this.jsonData = jsonData;
-    }
 
-    public String event() {
-        try {
-            var originalDoc = openOriginalDoc();
+    /**
+     * Метод event() обрабатывает документ, заменяя подчеркивания на данные из JSON.
+     *
+     * @return Путь к обработанному документу.
+     * @throws RuntimeException Если произошла ошибка при обработке документа.
+     */
+    public Future<String> event() {
+        // Создаем ExecutorService с одним потоком
+        try (ExecutorService executor = Executors.newSingleThreadExecutor()) {
+            // Отправляем задачу на выполнение в отдельном потоке и получаем Future
 
-            var replacer = new NumberedUnderlineReplacer(this.jsonData);
-            replacer.replaceUnderlines(originalDoc);
+            // Возвращаем Future, который можно использовать для получения результата в будущем
+            return executor.submit(() -> {
+                try {
+                    var originalDoc = openOriginalDoc();
 
-            var newFilePath = createNewDocx();
+                    var replacer = new NumberedUnderlineReplacer(this.jsonData);
+                    replacer.replaceUnderlines(originalDoc);
 
-            saveResult(originalDoc, newFilePath);
+                    var newFilePath = createNewDocx();
 
-            return newFilePath;
+                    saveResult(originalDoc, newFilePath);
 
-        } catch (Exception e) {
-            throw new RuntimeException("Ошибка при обработке документа", e);
+                    return newFilePath;
+                } catch (Exception e) {
+                    throw new RuntimeException("Ошибка при обработке документа", e);
+                }
+            });
         }
     }
 
+
+
+    /**
+     * Метод openOriginalDoc() открывает файл с примером договора в формате XWPFDocument.
+     *
+     * @return XWPFDocument - объект, представляющий открытый файл с примером договора.
+     * @throws RuntimeException если не удалось открыть файл с примером договора.
+     */
     private XWPFDocument openOriginalDoc() {
 
         try {
@@ -57,9 +83,16 @@ public class DocxProcessor {
 
     }
 
+    /**
+     * Метод saveResult() сохраняет измененный документ в формате XWPFDocument по указанному пути.
+     *
+     * @param doc XWPFDocument - объект, представляющий измененный документ.
+     * @param filePath String - путь, по которому следует сохранить измененный документ.
+     * @throws RuntimeException если не удалось сохранить результат изменения в документ.
+     */
     private void saveResult(XWPFDocument doc, String filePath) {
 
-        try (BufferedOutputStream fos = new BufferedOutputStream(new FileOutputStream(filePath))) {
+        try (var fos = new BufferedOutputStream(new FileOutputStream(filePath))) {
 
             doc.write(fos);
 
@@ -70,6 +103,13 @@ public class DocxProcessor {
         }
     }
 
+    /**
+     * Метод createNewDocx() создает новый документ в формате DOCX с указанным именем.
+     * Имя файла формируется на основе базового имени и расширения файла.
+     *
+     * @return String - путь к созданному временному файлу в формате DOCX.
+     * @throws RuntimeException если возникает ошибка при создании нового файла.
+     */
     private String createNewDocx() {
 
         final var NAME_OF_FILE = "blank-dogovora-okazanija-ohrannyh-uslug.docx";

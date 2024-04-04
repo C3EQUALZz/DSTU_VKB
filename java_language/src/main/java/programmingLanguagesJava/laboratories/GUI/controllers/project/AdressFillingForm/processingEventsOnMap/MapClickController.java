@@ -11,8 +11,11 @@ import com.sothawo.mapjfx.MapView;
 import com.sothawo.mapjfx.Marker;
 import com.sothawo.mapjfx.event.MapViewEvent;
 import javafx.animation.Transition;
+import javafx.concurrent.Task;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
+import org.jetbrains.annotations.NotNull;
+import lombok.Setter;
 
 import java.util.Optional;
 
@@ -20,16 +23,13 @@ class MapClickController {
     // Карта, к которой мы хотим применить наш контроллер
     private final MapView mapView;
     // TextField, к которому мы обращаемся для заполнения.
+    @Setter
     private TextField addressField = null;
     // Именно сам маркер
     private final Marker markerClick = Marker.createProvided(Marker.Provided.BLUE).setVisible(true);
 
     MapClickController(MapView mapView) {
         this.mapView = mapView;
-    }
-
-    void setAddressField(TextField addressField) {
-        this.addressField = addressField;
     }
 
     /**
@@ -41,8 +41,9 @@ class MapClickController {
             final Coordinate newPosition = event.getCoordinate();
             final Coordinate oldPosition = markerClick.getPosition();
 
-            // Функциональный if, IDEA предложила заменить на данную запись
-            Optional.ofNullable(addressField).ifPresent(field -> field.setText(ReverseGeocoding.getAddressByCoordinates(newPosition.getLatitude(), newPosition.getLongitude())));
+            // Создаем новую задачу для выполнения запроса к API в отдельном потоке.
+            // Запускаем задачу в новом потоке
+            new Thread(setNameByCoords(newPosition)).start();
 
             if (oldPosition != null) {
                 animateClickMarker(oldPosition, newPosition);
@@ -50,9 +51,32 @@ class MapClickController {
                 markerClick.setPosition(newPosition);
                 mapView.addMarker(markerClick);
             }
-
         });
     }
+
+    /**
+     * Запросы к API нужно оформлять в отдельном потоке, поэтому здесь создал отдельный метод, который делает запрос
+     * @param newPosition координаты, которые выбрал пользователь для обработки
+     * @return задачу, где находится элемент строки для вставки в текст
+     */
+    @NotNull
+    private Task<String> setNameByCoords(Coordinate newPosition) {
+        var task = new Task<String>() {
+            @Override
+            protected String call() {
+                return ReverseGeocoding.getAddressByCoordinates(newPosition.getLatitude(), newPosition.getLongitude());
+            }
+        };
+
+        // Обновляем поле адреса после завершения задачи
+        task.setOnSucceeded(workerStateEvent -> {
+            String address = task.getValue();
+            Optional.ofNullable(addressField).ifPresent(field -> field.setText(address));
+        });
+
+        return task;
+    }
+
 
     /**
      * Анимация передвижения маркера, была взята с документации к карте

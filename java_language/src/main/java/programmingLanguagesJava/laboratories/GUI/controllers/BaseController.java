@@ -13,7 +13,6 @@ import javafx.scene.control.Button;
 import javafx.util.Duration;
 import programmingLanguagesJava.laboratories.GUI.config.ButtonConfigurator;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -23,6 +22,9 @@ public abstract class BaseController implements Initializable {
     protected final ButtonConfigurator buttonConfigurator = new ButtonConfigurator();
     protected final SceneController controller = SceneController.getInstance();
 
+    /**
+     * Точка запуска базового контролера, все методы точек запуска для ост. окон его обязательно должны переопределить.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -41,13 +43,11 @@ public abstract class BaseController implements Initializable {
             });
 
             // Обработка событий возврата обратно в меню
-            buttonConfigurator.setupButtonEvent(backButton, event -> {
-                try {
-                    controller.switchToMenu();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
+            buttonConfigurator.setupButtonEvent(
+                    backButton,
+                    event -> controller.goBack(),
+                "Не получилось переключиться на прошлое окно"
+            );
 
         } catch (RuntimeException ignored) {}
     }

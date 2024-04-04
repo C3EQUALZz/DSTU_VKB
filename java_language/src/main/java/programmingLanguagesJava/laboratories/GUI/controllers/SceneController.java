@@ -17,24 +17,30 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Stack;
 
 public class SceneController {
     private double xOffset = 0, yOffset = 0;
     private final Stage stage;
     private static SceneController instance;
+    private final Stack<Scene> sceneHistory = new Stack<>();
 
     private enum Scenes {
         ;
         private static Scene MENU = null;
         private static Scene LABORATORIES = null;
-        private static Scene PROJECT = null;
+        private static Scene PROJECT_MENU = null;
+        private static Scene PROJECT_FILLING_FORM = null;
+        private static Scene PROJECT_DATABASE_VIEW = null;
     }
 
     private enum ScenePath {
         ;
         private static final String MENU_FXML_PATH = "/menuFiles/menu.fxml";
         private static final String LABORATORIES_FXML_PATH = "/laboratoriesFiles/laboratories.fxml";
-        private static final String PROJECT_FXML_PATH = "/projectFiles/project.fxml";
+        private static final String MENU_PROJECT_FXML_PATH = "/projectFiles/menu_project.fxml";
+        private static final String FILLING_FORM_PROJECT_FXML_PATH = "/projectFiles/project.fxml";
+        private static final String DATABASE_VIEW_PROJECT_FXML_PATH = "/projectFiles/database_project.fxml";
     }
 
     /**
@@ -71,29 +77,59 @@ public class SceneController {
 
     /**
      * Переключение с меню на лабораторные работы
-     *
-     * @throws IOException может броситься такая ошибка, так как считывает файлы.
      */
-    public void switchFromMenuToLaboratories() throws IOException {
+    public void switchFromMenuToLaboratories() {
         animationSlideWindow(Scenes.LABORATORIES);
+        sceneHistory.push(Scenes.MENU);
     }
 
     /**
      * Переключение с меню на проект
-     *
-     * @throws IOException может броситься такая ошибка, так как считывает файлы
      */
-    public void switchFromMenuToProject() throws IOException {
-        animationSlideWindow(Scenes.PROJECT);
+    public void switchToMenuProject() {
+        animationSlideWindow(Scenes.PROJECT_MENU);
+        sceneHistory.push(Scenes.MENU);
     }
 
     /**
-     * Переключение с любого окна на меню
-     *
-     * @throws IOException может броситься такая ошибка, так как считывает файлы
+     * Переключение с меню проекта на окно с записью информации о заказчике в БД
      */
-    public void switchToMenu() throws IOException {
-        animationSlideWindow(Scenes.MENU);
+    public void switchFromMenuProjectToFillingForm() {
+        animationSlideWindow(Scenes.PROJECT_FILLING_FORM);
+
+        if (!sceneHistory.peek().equals(Scenes.PROJECT_MENU)) {
+            sceneHistory.push(Scenes.PROJECT_MENU);
+        }
+
+    }
+
+    /**
+     * Переключение с меню на просмотр базы данных. Здесь стоит условие if, чтобы не забили стек
+     */
+    public void switchFromMenuProjectToDataBaseView() {
+        animationSlideWindow(Scenes.PROJECT_DATABASE_VIEW);
+
+        if (!sceneHistory.peek().equals(Scenes.PROJECT_MENU)) {
+            sceneHistory.push(Scenes.PROJECT_MENU);
+        }
+
+    }
+
+    /**
+     * Метод, который переключает на окно с заполнениями формы
+     */
+    public void switchFromDataBaseViewToFillingForm() {
+        animationSlideWindow(Scenes.PROJECT_FILLING_FORM);
+        sceneHistory.push(Scenes.PROJECT_DATABASE_VIEW);
+    }
+
+    /**
+     * Метод, который возвращает на прошлое окно.
+     */
+    public void goBack() {
+        if (!sceneHistory.isEmpty()) {
+            animationSlideWindow(sceneHistory.pop());
+        }
     }
 
     /**
@@ -107,15 +143,17 @@ public class SceneController {
 
             Scenes.MENU = createWindow(ScenePath.MENU_FXML_PATH);
             Scenes.LABORATORIES = createWindow(ScenePath.LABORATORIES_FXML_PATH);
-            Scenes.PROJECT = createWindow(ScenePath.PROJECT_FXML_PATH);
+            Scenes.PROJECT_MENU = createWindow(ScenePath.MENU_PROJECT_FXML_PATH);
+            Scenes.PROJECT_FILLING_FORM = createWindow(ScenePath.FILLING_FORM_PROJECT_FXML_PATH);
+            Scenes.PROJECT_DATABASE_VIEW = createWindow(ScenePath.DATABASE_VIEW_PROJECT_FXML_PATH);
 
         } catch (IOException e) {
 
             throw new RuntimeException("Неправильные файлы или event");
 
         }
-
-        this.stage.setScene(Scenes.MENU);
+        sceneHistory.push(Scenes.MENU);
+        this.stage.setScene(sceneHistory.peek());
     }
 
 
@@ -146,6 +184,10 @@ public class SceneController {
 
     }
 
+    /**
+     * Метод, который нужен, чтобы можно было передвигать окно
+     * @param windowFXML окно, которое мы хотим перетаскивать
+     */
     private void setWindowDragged(Parent windowFXML) {
         // Возможность, чтобы окно могло передвигаться при зажатии мышки
         windowFXML.setOnMousePressed(ev -> {

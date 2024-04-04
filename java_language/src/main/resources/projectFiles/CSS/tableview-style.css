@@ -1,0 +1,74 @@
+.table-view .column-header-background {
+    -fx-background-color: #9e5ce4; /* Цвет фона */
+    -fx-background-radius: 25px 25px 0px 0px; /* Округление углов фона */
+    -fx-border-radius: 18px 18px 0px 0px; /* Округление углов границы (если есть) */
+}
+
+.table-view .column-header-background .filler {
+    -fx-background-color: white; /* Цвет разделителя */
+    -fx-padding: 0.25em; /* Отступы вокруг разделителя */
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: white; /* Цвет разделителя */
+    -fx-border-width: 0 1px 1px 0; /* Толщина разделителя, применяется только к правой границе */
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white; /* Цвет текста заголовка колонки */
+    -fx-font-family: 'Comic Sans MS';
+    -fx-font-weight: bold;
+    -fx-font-size: 12; /* Увеличиваем размер шрифта */
+}
+
+.table-view .corner {
+    -fx-background-color: transparent; /* Прозрачный фон в углу */
+}
+
+.table-view {
+    -fx-background-color: transparent; /* Прозрачный фон таблицы */
+}
+
+.table-view .cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: white; /* Цвет текста заголовка колонки */
+    -fx-font-family: 'Comic Sans MS';
+    -fx-font-weight: bold;
+    -fx-font-size: 14; /* Увеличиваем размер шрифта */
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-border-color: white;
+    -fx-border-width: 0 1 1 0;
+}
+
+.table-view .table-row-cell:selected:focused {
+    -fx-border-color: #9e5ce4;
+    -fx-border-width: 2px;
+}
+
+
+.table-view .scroll-bar .thumb {
+    -fx-background-color: #9e5ce4;
+}
+
+.table-view .scroll-bar .track {
+    -fx-background-color: transparent;
+    -fx-opacity: 0;
+}
+
+.table-view .scroll-bar .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.table-view .scroll-bar .increment-arrow, .table-view .scroll-bar .decrement-arrow {
+    -fx-background-color: #9e5ce4; /* Цвет стрелочек у ползунка ползунка */
+    -fx-border-width: 1px;
+    -fx-padding: 2;
+}
+
+.table-view .scroll-bar {
+    -fx-background-radius: 18;
+    -fx-border-radius: 30;
+}
+

@@ -17,27 +17,25 @@ import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFilli
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.observers.FormObserver;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.processingEventsOnMap.OpenStreetMap;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.searchEngineField.TextFieldSearchController;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.database.DataBaseSQLite;
 
 import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutionException;
 
-public class MenuAddress extends BaseController {
+public class AddressFillingForm extends BaseController {
 
-    @FXML
-    private MapView mapView;
-    @FXML
-    private Button downloadFile, startSearch, addHuman, createDocument, addDataToDB;
-    @FXML
-    private TextField addressField, fullNameField;
-    @FXML
-    private ComboBox<String> combobox;
+    @FXML private MapView mapView;
+    @FXML private Button downloadFile, startSearch, addHuman, createDocument, addDataToDB;
+    @FXML private TextField addressField, fullNameField;
+    @FXML private ComboBox<String> combobox;
 
-    private final ComboboxConfigurator comboboxConfigurator = new ComboboxConfigurator();
-    private HashSet<String> persons;
+    private final ComboboxConfigurator comboboxConfigurator = ComboboxConfigurator.getInstance();
+    private final DataBaseSQLite dataBaseSQLite = DataBaseSQLite.getInstance();
     private FileChooserController fileChooserController;
+    private static final HashMap<String, String> jsonData = new HashMap<>();
 
 
     @Override
@@ -50,8 +48,9 @@ public class MenuAddress extends BaseController {
         initializeFullName();
         initializeCreateDocument();
         initializeFileChooser();
+        setAddDataToDB();
 
-        new FormObserver(addressField, combobox, Arrays.asList(createDocument, addDataToDB));
+        new FormObserver(addressField, combobox, Arrays.asList(createDocument, addDataToDB)).listen();
     }
 
     /**
@@ -88,8 +87,8 @@ public class MenuAddress extends BaseController {
         var textFieldAddController = new TextFieldAddController(fullNameField);
 
         buttonConfigurator.setupButtonEvent(addHuman, event -> {
-            persons = textFieldAddController.event();
-            comboboxConfigurator.setupComboboxEvent(combobox, persons);
+            textFieldAddController.event();
+            comboboxConfigurator.setupComboboxEvent(combobox, textFieldAddController.getPersons());
         });
     }
 
@@ -98,18 +97,29 @@ public class MenuAddress extends BaseController {
      */
     private void initializeCreateDocument() {
         // Словарь, в котором мы будем хранить все значения
-        var jsonData = new HashMap<String, String>();
 
         var docxProcessor = new DocxProcessor(jsonData);
         buttonConfigurator.setupButtonEvent(createDocument, event -> {
+            try {
+
             // Добавляем значения в наш словарь
             jsonData.put("addressField", addressField.getText());
-            jsonData.put("fullNameField", fullNameField.getText());
             jsonData.put("mainPerson", combobox.getValue());
             jsonData.put("buildingPlan", fileChooserController.getSelectedFile());
-            jsonData.put("allPeople", String.join(", ", persons));
-            jsonData.put("pathToFile", docxProcessor.event());
+            jsonData.put("allPeople", String.join(", ", combobox.getItems()));
+            jsonData.put("pathToFile", docxProcessor.event().get());
+
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException("Не получилось добавить в jsonData, скорее всего проблема с документом", e);
+            }
         });
+    }
+
+    /**
+     * Метод, который добавляет элементы в базу данных
+     */
+    private void setAddDataToDB() {
+        buttonConfigurator.setupButtonEvent(addDataToDB, event -> dataBaseSQLite.insert(jsonData));
     }
 
 }

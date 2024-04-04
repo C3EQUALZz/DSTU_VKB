@@ -1,5 +1,6 @@
 /**
  * Контроллер, который отвечает за окно с лабораторными работами.
+ * Не совсем хорошо написан, можно было использовать паттерн наблюдатель, но я не хочу исправлять сильно.
  */
 
 package programmingLanguagesJava.laboratories.GUI.controllers.laboratories;
@@ -13,7 +14,9 @@ import programmingLanguagesJava.laboratories.GUI.config.JsonSimpleParser;
 import programmingLanguagesJava.laboratories.GUI.controllers.BaseController;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
 public class Laboratories extends BaseController {
 
@@ -26,79 +29,81 @@ public class Laboratories extends BaseController {
     @FXML private TextField inputArgs;
 
     private String buttonText;
-    private final ComboboxConfigurator comboboxConfigurator = new ComboboxConfigurator();
+    private final ComboboxConfigurator comboboxConfigurator = ComboboxConfigurator.getInstance();
     private final JsonSimpleParser data = JsonSimpleParser.getInstance();
 
+    /**
+     * Инициализация контроллера для окна с лабораторными работами
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         super.initialize(url, resourceBundle);
-
-        // Контроллер, который отвечает за боковой слайдер меню
-        new SliderController(slider, openSlider, closeSlider).sliderEvent();
-
-        // Связывание кнопок на слайдере с combobox
-        buttonLabsEvent();
-
-        buttonEvent();
-
         comboboxConfigurator.defaultConfiguration(combobox);
 
-        combobox.valueProperty().addListener((obs, oldVal, newVal) -> {
+        // Контроллер, который отвечает за боковой слайдер меню
+        new SliderController(slider, openSlider, closeSlider).event();
 
-            if (newVal != null)
-                condition.setText(data.get(buttonText, newVal));
+        // Связывание кнопок
+        setupButtonLabsEvent();
+        setupClearInputButton();
+        setupStartQuestionButton();
 
-        });
+
+        combobox.valueProperty().addListener((obs, oldVal, newVal) -> Optional.ofNullable(newVal)
+                .ifPresent(value -> condition.setText(data.get(buttonText, value))));
 
     }
 
     /**
      * Метод, который отвечает за связывание кнопок лабораторных работ с combobox
      */
-    private void buttonLabsEvent() {
-
-        // Все лабораторные в качестве кнопок
-        Button[] allButtons = {
-                zeroButton, firstButton, firstDotFirstButton,
-                secondButton, thirdButton, thirdDotFirstButton, fourthButton
-        };
-
-        for (var button : allButtons) {
-            buttonConfigurator.setupButtonEvent(button, event -> {
-
-                // С помощью текста с кнопки я распознаю количество заданий в лабораторной
-                buttonText = button.getText();
-                comboboxConfigurator.setupComboboxEvent(combobox, button);
-
-            });
-        }
-
+    private void setupButtonLabsEvent() {
+        Stream.of(
+                zeroButton,
+                firstButton,
+                firstDotFirstButton,
+                secondButton,
+                thirdButton,
+                thirdDotFirstButton,
+                fourthButton
+                ).forEach(this::setupButton);
     }
 
-    // Метод, который отвечает за обработку кнопок с очисткой данных, запуском методов
-    private void buttonEvent() {
-        // Настраиваю так, что при нажатии на "очистить данные" убираются все данные
+    /**
+     * Настройка отдельной кнопки
+     * @param button кнопка, которую мы хотим настроить
+     */
+    private void setupButton(Button button) {
+        buttonConfigurator.setupButtonEvent(button, event -> {
+            buttonText = button.getText();
+            comboboxConfigurator.setupComboboxEvent(combobox, button);
+        });
+    }
+
+    /**
+     * Метод, который отвечает за обработку кнопок с очисткой данных, запуском методов
+     */
+    private void setupClearInputButton() {
         buttonConfigurator.setupButtonEvent(clearInput, event -> {
             condition.clear();
             inputArgs.clear();
             output.clear();
         });
+    }
 
-
-        buttonConfigurator.setupButtonEvent(startQuestion, event1 -> {
+    /**
+     * Метод, который настраивает запуск обработки заданий при выбранных значениях у combobox и кнопки
+     */
+    private void setupStartQuestionButton() {
+        buttonConfigurator.setupButtonEvent(startQuestion, event -> {
             var value = combobox.getValue();
-
-            // combobox может принимать значение null, а парсеру не нравятся такие значения.
             if (value != null) {
                 var classLaboratory = comboboxConfigurator.getKeyButton(buttonText);
                 var inputData = inputArgs.getText();
                 var comboboxData = value.split("\\s+")[0];
-
                 output.setText((String) ConsoleReader.executeTask(classLaboratory, comboboxData, inputData));
             }
         });
-
     }
 
 
