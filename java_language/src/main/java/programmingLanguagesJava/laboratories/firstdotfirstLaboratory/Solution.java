@@ -14,10 +14,10 @@ import java.util.stream.Collectors;
 public class Solution {
 
     static String text = """
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et 
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et\s
             dolore magna aliqua. Pellentesque adipiscing commodo elit at. Scelerisque purus semper eget duis. Purus
-            sit amet volutpat consequat mauris nunc congue nisi vitae. Quis hendrerit dolor magna eget est lorem 
-            ipsum. Molestie ac feugiat sed lectus vestibulum. Massa tincidunt dui ut ornare lectus sit. Sed 
+            sit amet volutpat consequat mauris nunc congue nisi vitae. Quis hendrerit dolor magna eget est lorem\s
+            ipsum. Molestie ac feugiat sed lectus vestibulum. Massa tincidunt dui ut ornare lectus sit. Sed\s
             ullamcorper morbi tincidunt ornare massa eget egestas. In ornare quam viverra orci sagittis eu.
             Mauris rhoncus aenean vel elit. Sed arcu non odio euismod lacinia. Auctor augue mauris augue neque.
              Eleifend mi in nulla posuere sollicitudin aliquam
@@ -109,9 +109,9 @@ public class Solution {
         // Получаем среднюю длину, проходя по всему списку
         var averageLength = Arrays.stream(splitStrings).mapToInt(String::length).average().orElseThrow();
 
-        // Собираем те предложения, которые больше по длине
+        // Собираем те предложения, которые меньше по длине
         var result = Arrays.stream(splitStrings)
-                .filter(row -> row.length() > averageLength)
+                .filter(row -> row.length() < averageLength)
                 .collect(Collectors.joining("\n"));
 
         return String.format("Строки, длины которых меньше средней: %s", result);
@@ -154,21 +154,24 @@ public class Solution {
      */
     @SuppressWarnings("unused")
     public static String fifthQuestion(String strings) {
-        // Здесь я получаю символы.
-        // Метод chars переделывает в итератор с кодами ASCII символов
-        // получается аналог map(int.ord, symbol)
-        // map отличается от mapToObj тем, что один переделывает в новый тип данных, а другой нет
-        var symbols = String.join("", strings.split("\\s+")).chars()
-                .mapToObj(c -> (char) c)
+
+        var chars = String.join("", strings.split("\\s+")).chars().mapToObj(c -> (char) c)
+                .toList();
+
+        var symbols = chars.stream()
                 .map(c -> HelpMethods.centerString(String.valueOf(c)))
                 .collect(Collectors.joining(""));
 
-        var unicodeValuesOfChars = symbols.chars()
-                .filter(n -> n != 32)
-                .mapToObj(c -> HelpMethods.centerString(String.valueOf(c)))
+        var place = chars.stream()
+                .map(b -> HelpMethods.centerString(String.valueOf(getCharPosition(b))))
                 .collect(Collectors.joining(""));
 
-        return String.format("%s\n%s", symbols, unicodeValuesOfChars);
+        return String.format("%s\n%s", symbols, place);
+    }
+
+    private static int getCharPosition(char c) {
+        var line = "abcdefghijklmnopqrstuvwxyz";
+        return line.indexOf(String.valueOf(c).toLowerCase()) + 1;
     }
 
     /**
