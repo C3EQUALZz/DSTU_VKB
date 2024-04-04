@@ -26,7 +26,6 @@ from collections import defaultdict, deque
 from dataclasses import dataclass
 from typing import Final, Self, AnyStr, Set, MutableMapping, List
 
-from automata.fa.dfa import DFA
 from automata.fa.nfa import NFA
 
 from python_language.formal_languages.fifth_sixth_laboratory.non_det_final_automat_class import (
@@ -159,17 +158,17 @@ class DeterministicFiniteAutomaton:
                 f" {self.start_state},"
                 f" {self.final_states})")
 
-    def get_library_dfa(self) -> DFA:
+    def get_library_dfa(self) -> NFA:
         """
         Получение исходного ДКА из библиотеки для удобного отображения таблицы
         """
-        return DFA.from_nfa(NFA(
+        return NFA(
             states=self.set_of_states,
             input_symbols=self.set_of_input_alphabet_characters,
             transitions=self.transition_function,
             initial_state=self.start_state,
             final_states=self.final_states,
-        ), retain_names=True)
+        )
 
     def show_diagram(self) -> None:
         """
@@ -183,3 +182,25 @@ class DeterministicFiniteAutomaton:
         Вспомогательный метод для перевода множества состояний в строку для библиотеки
         """
         return ''.join(sorted(state_set))
+
+
+if __name__ == "__main__":
+    start_state = "q0"
+    set_of_input = {"a", "b"}
+    transition_function = {
+        "q0": {"": {"q1"}},
+        "q1": {"a": {"q1"}, "b": {"q2"}},
+        "q2": {"": {"q3"}},
+        "q3": {"b": {"q1"}}
+    }
+    final_state = {"q3"}
+    set_of_states = {"q1", "q2", "q3"}
+
+    d = DeterministicFiniteAutomaton(start_state=start_state,
+                                     set_of_input_alphabet_characters=set_of_input,
+                                     transition_function=transition_function,
+                                     final_states=final_state,
+                                     set_of_states=set_of_states)
+
+    print(d)
+    d.show_diagram()
