@@ -22,15 +22,28 @@ public class VideoPlayer implements ElementMenu {
      */
     @Override
     public void event() {
-        var media = new Media(getPathToFile());
-        var mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
+        new Thread(() -> {
 
-        mediaPlayer.setOnReady(() -> Platform.runLater(() -> {
-            mediaView.setMediaPlayer(mediaPlayer);
-            mediaPlayer.play();
-        }));
+            try {
+                Thread.sleep(1000); // Задержка в 1 секунду
+            } catch (InterruptedException e) {
+                throw new RuntimeException("не получился костыль с видео :)", e);
+            }
+
+            var media = new Media(getPathToFile());
+            var mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setAutoPlay(true);
+
+            mediaPlayer.setOnReady(() -> Platform.runLater(() -> {
+                mediaView.setMediaPlayer(mediaPlayer);
+                mediaPlayer.play();
+            }));
+
+            mediaPlayer.setOnError(() -> System.out.println("Ошибка при воспроизведении видео: " + mediaPlayer.getError()));
+        }).start();
     }
+
+
 
     /**
      * Получение абсолютного пути до файла с нашего видео
