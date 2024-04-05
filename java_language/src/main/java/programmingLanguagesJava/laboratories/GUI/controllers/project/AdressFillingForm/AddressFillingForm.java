@@ -60,8 +60,7 @@ public class AddressFillingForm extends BaseController {
      * Здесь запускается event, который обрабатывает изначальную инициализацию карты, добавляет event маркера
      */
     private void initializeMap() {
-        var openStreetMapInstance = new OpenStreetMap(mapView);
-        openStreetMapInstance.setAddressField(addressField);
+        var openStreetMapInstance = new OpenStreetMap(mapView, addressField);
         openStreetMapInstance.event();
     }
 
@@ -69,8 +68,7 @@ public class AddressFillingForm extends BaseController {
      * Здесь запускается event, который обрабатывает поиск через ввод данных с TextField.
      */
     private void initializeSearchEngine() {
-        var textFieldSearchController = new TextFieldSearchController(addressField);
-        textFieldSearchController.setMapView(mapView);
+        var textFieldSearchController = new TextFieldSearchController(mapView, addressField);
         buttonConfigurator.setupButtonEvent(startSearch, event -> textFieldSearchController.event());
     }
 
@@ -113,6 +111,7 @@ public class AddressFillingForm extends BaseController {
 
         });
     }
+
     /**
      * Метод, который добавляет элементы в базу данных
      */

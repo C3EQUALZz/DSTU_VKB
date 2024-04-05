@@ -31,10 +31,10 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class TextFieldSearchController implements ElementAddressFillingForm {
 
-    @Setter
-    private MapView mapView;
 
+    private final MapView mapView;
     private final TextField textField;
+
     private final JSONParser parser = new JSONParser();
     private static final Marker markerClick = Marker.createProvided(Marker.Provided.BLUE).setVisible(true);
 
