@@ -8,29 +8,31 @@ package programmingLanguagesJava.laboratories.GUI.controllers.laboratories;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import programmingLanguagesJava.laboratories.ConsoleReader;
-import programmingLanguagesJava.laboratories.GUI.config.ComboboxConfigurator;
-import programmingLanguagesJava.laboratories.GUI.config.JsonSimpleParser;
 import programmingLanguagesJava.laboratories.GUI.controllers.BaseController;
+import programmingLanguagesJava.laboratories.GUI.controllers.laboratories.strategy.*;
+import programmingLanguagesJava.laboratories.GUI.controllers.laboratories.strategyContext.StrategyContextCombobox;
+import programmingLanguagesJava.laboratories.GUI.controllers.laboratories.strategyContext.StrategyContextText;
 
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
 public class Laboratories extends BaseController {
 
-    @FXML private Button clearInput, startQuestion;
-    @FXML private Button zeroButton, firstButton, firstDotFirstButton, secondButton, thirdButton, thirdDotFirstButton, fourthButton;
-    @FXML private Label openSlider, closeSlider;
-    @FXML private AnchorPane slider;
-    @FXML private ComboBox<String> combobox;
-    @FXML private TextArea condition, output;
-    @FXML private TextField inputArgs;
-
-    private String buttonText;
-    private final ComboboxConfigurator comboboxConfigurator = ComboboxConfigurator.getInstance();
-    private final JsonSimpleParser data = JsonSimpleParser.getInstance();
+    @FXML
+    private Button clearInput, startQuestion;
+    @FXML
+    private Button zeroButton, firstButton, firstDotFirstButton, secondButton, thirdButton, thirdDotFirstButton, fourthButton;
+    @FXML
+    private Label openSlider, closeSlider;
+    @FXML
+    private AnchorPane slider;
+    @FXML
+    private ComboBox<String> combobox;
+    @FXML
+    private TextArea condition, output;
+    @FXML
+    private TextField inputArgs;
 
     /**
      * Инициализация контроллера для окна с лабораторными работами
@@ -38,27 +40,11 @@ public class Laboratories extends BaseController {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
-        comboboxConfigurator.defaultConfiguration(combobox);
 
-        // Контроллер, который отвечает за боковой слайдер меню
-        new SliderController(slider, openSlider, closeSlider).event();
+        var strategyContextCombobox = new StrategyContextCombobox(combobox);
+        var strategyContextText = new StrategyContextText(inputArgs, condition, output);
 
-        // Связывание кнопок
-        setupButtonLabsEvent();
-        setupClearInputButton();
-        setupStartQuestionButton();
-
-
-        combobox.valueProperty().addListener((obs, oldVal, newVal) -> Optional.ofNullable(newVal)
-                .ifPresent(value -> condition.setText(data.get(buttonText, value))));
-
-    }
-
-    /**
-     * Метод, который отвечает за связывание кнопок лабораторных работ с combobox
-     */
-    private void setupButtonLabsEvent() {
-        Stream.of(
+        var buttonStream = Stream.of(
                 zeroButton,
                 firstButton,
                 firstDotFirstButton,
@@ -66,44 +52,18 @@ public class Laboratories extends BaseController {
                 thirdButton,
                 thirdDotFirstButton,
                 fourthButton
-                ).forEach(this::setupButton);
-    }
+        );
 
-    /**
-     * Настройка отдельной кнопки
-     * @param button кнопка, которую мы хотим настроить
-     */
-    private void setupButton(Button button) {
-        buttonConfigurator.setupButtonEvent(button, event -> {
-            buttonText = button.getText();
-            comboboxConfigurator.setupComboboxEvent(combobox, button);
-        });
-    }
+        Stream.of(
 
-    /**
-     * Метод, который отвечает за обработку кнопок с очисткой данных, запуском методов
-     */
-    private void setupClearInputButton() {
-        buttonConfigurator.setupButtonEvent(clearInput, event -> {
-            condition.clear();
-            inputArgs.clear();
-            output.clear();
-        });
-    }
+                new SliderActionLaboratories(openSlider, closeSlider, slider),
+                new ComboboxActionLaboratories(strategyContextCombobox, condition),
+                new ButtonLabsActionLaboratories(strategyContextCombobox, buttonStream),
+                new ClearButtonActionLaboratories(strategyContextText, clearInput),
+                new StartQuestionActionLaboratories(strategyContextCombobox, strategyContextText, startQuestion)
 
-    /**
-     * Метод, который настраивает запуск обработки заданий при выбранных значениях у combobox и кнопки
-     */
-    private void setupStartQuestionButton() {
-        buttonConfigurator.setupButtonEvent(startQuestion, event -> {
-            var value = combobox.getValue();
-            if (value != null) {
-                var classLaboratory = comboboxConfigurator.getKeyButton(buttonText);
-                var inputData = inputArgs.getText();
-                var comboboxData = value.split("\\s+")[0];
-                output.setText((String) ConsoleReader.executeTask(classLaboratory, comboboxData, inputData));
-            }
-        });
+        ).parallel().forEach(ActionLaboratories::execute);
+
     }
 
 

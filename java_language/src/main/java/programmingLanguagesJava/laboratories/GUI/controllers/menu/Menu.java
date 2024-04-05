@@ -30,6 +30,7 @@ public class Menu extends BaseController {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
+
         Stream.of(
                 new ButtonLabsActionMainMenu(ButtonLabs),
                 new ButtonProjectActionMainMenu(ButtonProject),

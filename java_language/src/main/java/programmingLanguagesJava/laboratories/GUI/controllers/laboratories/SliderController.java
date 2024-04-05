@@ -11,7 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import programmingLanguagesJava.laboratories.GUI.config.ButtonConfigurator;
 
-class SliderController implements ElementLaboratory {
+public class SliderController implements ElementLaboratory {
     private final AnchorPane slider;
     private final Label openSlider, closeSlider;
     private final ButtonConfigurator buttonConfigurator = ButtonConfigurator.getInstance();
@@ -23,7 +23,7 @@ class SliderController implements ElementLaboratory {
         private static final double MENU_OPENED_POSITION = 0;
     }
 
-    SliderController(AnchorPane slider, Label openSlider, Label closeSlider) {
+    public SliderController(AnchorPane slider, Label openSlider, Label closeSlider) {
         this.openSlider = openSlider;
         this.closeSlider = closeSlider;
         this.slider = initializeSlider(slider);

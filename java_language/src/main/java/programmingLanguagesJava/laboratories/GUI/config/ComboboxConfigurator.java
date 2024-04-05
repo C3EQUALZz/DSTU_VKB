@@ -78,8 +78,6 @@ public class ComboboxConfigurator {
      * @param button кнопка, относительно которой будет настройка по заданиям
      */
     public void setupComboboxEvent(ComboBox<String> comboBox, Button button) {
-        // включаю combobox
-        comboBox.setDisable(false);
 
         // Сохранение выбранного значения, если оно есть
         var selectedValue = comboBox.getValue();
