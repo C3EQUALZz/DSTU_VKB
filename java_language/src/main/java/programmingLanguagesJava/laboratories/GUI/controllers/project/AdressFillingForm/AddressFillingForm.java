@@ -27,10 +27,14 @@ import java.util.concurrent.ExecutionException;
 
 public class AddressFillingForm extends BaseController {
 
-    @FXML private MapView mapView;
-    @FXML private Button downloadFile, startSearch, addHuman, createDocument, addDataToDB;
-    @FXML private TextField addressField, fullNameField;
-    @FXML private ComboBox<String> combobox;
+    @FXML
+    private MapView mapView;
+    @FXML
+    private Button downloadFile, startSearch, addHuman, createDocument, addDataToDB;
+    @FXML
+    private TextField addressField, fullNameField;
+    @FXML
+    private ComboBox<String> combobox;
 
     private final ComboboxConfigurator comboboxConfigurator = ComboboxConfigurator.getInstance();
     private final DataBaseSQLite dataBaseSQLite = DataBaseSQLite.getInstance();
@@ -102,12 +106,12 @@ public class AddressFillingForm extends BaseController {
         buttonConfigurator.setupButtonEvent(createDocument, event -> {
             try {
 
-            // Добавляем значения в наш словарь
-            jsonData.put("addressField", addressField.getText());
-            jsonData.put("mainPerson", combobox.getValue());
-            jsonData.put("buildingPlan", fileChooserController.getSelectedFile());
-            jsonData.put("allPeople", String.join(", ", combobox.getItems()));
-            jsonData.put("pathToFile", docxProcessor.event().get());
+                // Добавляем значения в наш словарь
+                jsonData.put("addressField", addressField.getText());
+                jsonData.put("mainPerson", combobox.getValue());
+                jsonData.put("buildingPlan", fileChooserController.getSelectedFile());
+                jsonData.put("allPeople", String.join(", ", combobox.getItems()));
+                jsonData.put("pathToFile", docxProcessor.event().get());
 
             } catch (InterruptedException | ExecutionException e) {
                 throw new RuntimeException("Не получилось добавить в jsonData, скорее всего проблема с документом", e);

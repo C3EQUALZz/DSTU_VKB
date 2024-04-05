@@ -20,11 +20,16 @@ import java.util.stream.Stream;
 
 public class Menu extends BaseController {
 
-    @FXML private AnchorPane anchorPaneMovable, registrationAnchorPane;
-    @FXML private Button signInButton, addToDatabaseButton, viewDatabaseButton;
-    @FXML private MediaView mediaViewVideo;
-    @FXML private TextField loginField;
-    @FXML private PasswordField passwordField;
+    @FXML
+    private AnchorPane anchorPaneMovable, registrationAnchorPane;
+    @FXML
+    private Button signInButton, addToDatabaseButton, viewDatabaseButton;
+    @FXML
+    private MediaView mediaViewVideo;
+    @FXML
+    private TextField loginField;
+    @FXML
+    private PasswordField passwordField;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
