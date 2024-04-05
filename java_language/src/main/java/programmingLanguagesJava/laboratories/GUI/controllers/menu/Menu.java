@@ -25,7 +25,8 @@ public class Menu extends BaseController {
     @FXML private Text secondsTimer, minutesTimer, hourTimer;
 
     /**
-     * Здесь вот точка запуска программы контроллеров происходит. Параметрами я даже не пользуюсь, но они нужны.
+     * Здесь вот точка запуска программы контроллеров происходит.
+     * Параметрами я даже не пользуюсь, но они нужны.
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

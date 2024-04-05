@@ -3,6 +3,13 @@ package programmingLanguagesJava.laboratories.GUI.config.ParserLabs;
 import java.util.Comparator;
 
 class LaboratoryComparator implements Comparator<Class<?>> {
+
+    /**
+     * Штука, чтобы работала сортировка лабораторных работ
+     * @param o1 the first object to be compared.
+     * @param o2 the second object to be compared.
+     * @return возвращает порядок сравнения работ
+     */
     @Override
     public int compare(Class<?> o1, Class<?> o2) {
 
@@ -14,7 +21,9 @@ class LaboratoryComparator implements Comparator<Class<?>> {
         return Integer.compare(orderS1, orderS2);
     }
 
-    // Метод для определения порядка для каждой строки
+    /**
+     * Метод для определения порядка для каждой строки
+     */
     private static int getOrder(String s) {
         return switch (s) {
             case "zero" -> 0;
@@ -28,6 +37,13 @@ class LaboratoryComparator implements Comparator<Class<?>> {
         };
     }
 
+    /**
+     * Костыль, который позволяет получать название папки
+     * @param s полный путь, в зависимости от которого можно было получить имя директории
+     * @return возвращает папку
+     * Да, можно было с помощью библиотек сделать, но мне уже не хочется переделывать этот костыль,
+     * так как он 100% отрабатывает
+     */
     private static String getDir(String s) {
         return s.substring(s.indexOf("laboratories") + 13, s.indexOf("Laboratory"));
     }

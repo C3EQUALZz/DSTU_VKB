@@ -6,7 +6,6 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.Comparator;
 import java.util.Locale;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 class StringNumberComparator implements Comparator<Method> {
@@ -18,7 +17,7 @@ class StringNumberComparator implements Comparator<Method> {
 
     private int numberFromString(String number) {
 
-        RuleBasedNumberFormat numberFormat = new RuleBasedNumberFormat(Locale.UK, RuleBasedNumberFormat.SPELLOUT);
+        var numberFormat = new RuleBasedNumberFormat(Locale.UK, RuleBasedNumberFormat.SPELLOUT);
         try {
             return numberFormat.parse(parseToUnderstandableForm(number)).intValue();
         } catch (ParseException e) {
@@ -30,8 +29,8 @@ class StringNumberComparator implements Comparator<Method> {
 
         var number = numberWithQuestion.substring(0, numberWithQuestion.indexOf("Q") + 1);
 
-        Pattern pattern = Pattern.compile("[A-Z]");
-        Matcher matcher = pattern.matcher(number);
+        var pattern = Pattern.compile("[A-Z]");
+        var matcher = pattern.matcher(number);
 
         if (matcher.find()) {
             var charUpper = matcher.group();
