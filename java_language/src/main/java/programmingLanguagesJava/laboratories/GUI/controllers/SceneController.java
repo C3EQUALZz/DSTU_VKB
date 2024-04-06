@@ -14,16 +14,21 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import lombok.Getter;
 
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Stack;
 
 public class SceneController {
+
     private double xOffset = 0, yOffset = 0;
+    @Getter
     private final Stage stage;
     private static SceneController instance;
     private final Stack<Scene> sceneHistory = new Stack<>();
+    private final String CSS = Objects.requireNonNull(this.getClass().getResource("/stageFiles/Styles.css")).toExternalForm();
+
 
     private enum Scenes {
         ;
@@ -173,6 +178,8 @@ public class SceneController {
 
             // Костыль, чтобы не было углов у приложения, которые видны в SceneBuilder
             scene.setFill(Color.TRANSPARENT);
+
+            scene.getStylesheets().add(CSS);
 
             return scene;
 

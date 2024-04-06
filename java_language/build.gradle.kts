@@ -44,9 +44,9 @@ dependencies {
     implementation("de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2")
     compileOnly("org.projectlombok:lombok:1.18.32")
     annotationProcessor("org.projectlombok:lombok:1.18.32")
-
     testCompileOnly("org.projectlombok:lombok:1.18.32")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.32")
+    implementation("org.controlsfx:controlsfx:11.2.1")
 
 }
 

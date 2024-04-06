@@ -11,7 +11,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
+import java.util.Map;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,7 +25,7 @@ public class DocxProcessor {
     private final Path PATH_TO_DIR = Paths.get(PATH_TO_PROJECT, "documents_for_database").toAbsolutePath();
     private final Path PATH_BLANK = Paths.get(PATH_TO_PROJECT, "blank-dogovora-okazanija-ohrannyh-uslug.docx").toAbsolutePath();
 
-    private final HashMap<String, String> jsonData;
+    private final Map<String, String> jsonData;
     private volatile String result;
 
 
@@ -50,6 +50,7 @@ public class DocxProcessor {
 
                 // Сохраняем результат в общей переменной
                 result = newFilePath;
+
             } catch (Exception e) {
                 throw new RuntimeException("Ошибка при обработке документа", e);
             }

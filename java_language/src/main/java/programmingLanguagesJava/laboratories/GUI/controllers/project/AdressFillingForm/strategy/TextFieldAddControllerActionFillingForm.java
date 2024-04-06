@@ -15,6 +15,7 @@ public class TextFieldAddControllerActionFillingForm implements ActionFillingFor
         this.textFieldAddController = new TextFieldAddController(textField);
         this.addHuman = button;
         this.combobox = combobox;
+        comboboxConfigurator.defaultConfiguration(combobox);
     }
 
     @Override

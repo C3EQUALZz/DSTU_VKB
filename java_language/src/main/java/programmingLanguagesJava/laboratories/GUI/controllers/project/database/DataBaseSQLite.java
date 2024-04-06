@@ -12,9 +12,9 @@ import programmingLanguagesJava.laboratories.GUI.controllers.project.database.ut
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Класс DataBaseSQLite предоставляет методы для взаимодействия с базой данных SQLite.
@@ -27,11 +27,10 @@ public class DataBaseSQLite {
             System.getProperty("user.dir"),
             "/src/main/resources/projectFiles/data/security_information_db.db"
     );
-
-    private final RemainingInfoDAO remainingInfoDAO;
-    private final PeoplesDAO peoplesDAO;
     @Getter
     private final Connection connection;
+    private final RemainingInfoDAO remainingInfoDAO;
+    private final PeoplesDAO peoplesDAO;
     private static DataBaseSQLite instance;
 
     /**
@@ -75,7 +74,7 @@ public class DataBaseSQLite {
      *
      * @param personData Данные о человеке в формате HashMap.
      */
-    public void insert(HashMap<String, String> personData) {
+    public void insert(Map<String, String> personData) {
         remainingInfoDAO.insert(personData.get("pathToFile"), personData.get("buildingPlan"));
         var remainingInfoId = remainingInfoDAO.getLastIndex();
         var listOfPersons = Person.createPeoples(personData.get("allPeople"), personData.get("mainPerson"));

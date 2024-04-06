@@ -2,17 +2,20 @@ package programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFill
 
 import javafx.scene.control.Button;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.fileChooserInteraction.FileChooserController;
+import lombok.RequiredArgsConstructor;
 
+/**
+ * Здесь класс, который является опять-таки прослойкой для конфигурации FileChooserController
+ */
+@RequiredArgsConstructor
 public class FileChooserActionFillingForm implements ActionFillingForm {
 
     private final FileChooserController fileChooserController;
     private final Button downloadFile;
 
-    public FileChooserActionFillingForm(Button downloadFile) {
-        this.fileChooserController = new FileChooserController();
-        this.downloadFile = downloadFile;
-    }
-
+    /**
+     * Точка запуска программы
+     */
     @Override
     public void execute() {
         buttonConfigurator.setupButtonEvent(downloadFile, fileChooserController::event);

@@ -10,6 +10,7 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -24,7 +25,7 @@ class NumberedUnderlineReplacer implements UnderlineReplacer {
      *
      * @param jsonData Данные в формате JSON, которые будут использоваться для замены подчеркиваний.
      */
-    public NumberedUnderlineReplacer(HashMap<String, String> jsonData) {
+    public NumberedUnderlineReplacer(Map<String, String> jsonData) {
         this.jsonData = convertJsonForDocument(new HashMap<>(jsonData)).values().iterator();
     }
 

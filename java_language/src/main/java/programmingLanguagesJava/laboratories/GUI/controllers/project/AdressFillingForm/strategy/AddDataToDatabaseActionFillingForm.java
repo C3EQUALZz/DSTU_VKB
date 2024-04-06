@@ -3,18 +3,24 @@ package programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFill
 import javafx.scene.control.Button;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.database.DataBaseSQLite;
 import lombok.RequiredArgsConstructor;
-import java.util.HashMap;
 
+import java.util.Map;
+
+/**
+ * Класс, который конфигурирует кнопку добавления в базу данных.
+ */
 @RequiredArgsConstructor
 public class AddDataToDatabaseActionFillingForm implements ActionFillingForm {
 
+    private final Map<String, String> jsonData;
     private final Button addDataToDB;
-    private final HashMap<String, String> jsonData;
-    private final DataBaseSQLite dataBaseSQLite = DataBaseSQLite.getInstance();
 
+    /**
+     * Точка запуска
+     */
     @Override
     public void execute() {
-        buttonConfigurator.setupButtonEvent(addDataToDB, event -> dataBaseSQLite.insert(jsonData));
+        buttonConfigurator.setupButtonEvent(addDataToDB, event -> DataBaseSQLite.getInstance().insert(jsonData));
     }
 
 }
