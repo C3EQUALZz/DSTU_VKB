@@ -45,6 +45,7 @@ public class ViewData extends BaseController {
 
     private final DataBaseSQLite database = DataBaseSQLite.getInstance();
     private final ComboboxConfigurator comboboxConfigurator = ComboboxConfigurator.getInstance();
+
     private List<PersonInfo> personInfos = database.loadPersonInfos();
 
 
@@ -100,8 +101,6 @@ public class ViewData extends BaseController {
                 .lastNameRadioButton(lastNameRadioButton).patronymicRadioButton(patronymicRadioButton).build().event();
 
     }
-
-
 
 
 }

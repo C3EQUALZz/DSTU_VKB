@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import programmingLanguagesJava.laboratories.GUI.controllers.SceneController;
+import programmingLanguagesJava.laboratories.GUI.fileObserver.FileWatcherService;
 
 public class Main extends Application {
 
@@ -19,10 +20,17 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage stage) {
+
         var stageInitialized = initStage(stage);
-        var controller = SceneController.getInstance(stage);
-        controller.setStartMenu();
+
+        SceneController.getInstance(stage).setStartMenu();
+
         stageInitialized.show();
+
+        var consoleDemon = new FileWatcherService();
+        consoleDemon.setDaemon(true);
+        consoleDemon.start();
+
     }
 
     /**
