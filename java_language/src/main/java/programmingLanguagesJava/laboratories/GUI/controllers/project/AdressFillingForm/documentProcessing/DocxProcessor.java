@@ -37,7 +37,7 @@ public class DocxProcessor {
      */
     public String event() {
 
-        new Thread(() -> {
+        Thread thread = new Thread(() -> {
             try {
                 var originalDoc = openOriginalDoc();
 
@@ -54,7 +54,16 @@ public class DocxProcessor {
             } catch (Exception e) {
                 throw new RuntimeException("Ошибка при обработке документа", e);
             }
-        }).start();
+        });
+
+        thread.start();
+
+        try {
+            thread.join();  // Ждем, пока поток не завершится
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException("Поток был прерван", e);
+        }
 
         return result;
     }
