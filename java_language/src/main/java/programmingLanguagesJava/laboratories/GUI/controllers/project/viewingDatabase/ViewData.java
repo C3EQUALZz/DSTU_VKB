@@ -65,7 +65,8 @@ public class ViewData extends BaseController {
                 new RadioButtonsActionViewingDatabase(listDataBase, radioButtonContext),
                 new UpdateTableButtonActionViewingDatabase(listDataBase, context, radioButtonContext,
                         updateTableButton, keywordTextField),
-                new ReaderActionViewingDataBase(context, contractButton)
+                new ReaderActionViewingDataBase(context, contractButton),
+                new ReaderPlanActionViewDatabase(context, planOfhouseButton)
 
         ).forEach(ActionViewingDatabase::execute);
 
