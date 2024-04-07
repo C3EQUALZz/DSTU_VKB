@@ -27,7 +27,7 @@ public class FileWatcherService extends Thread {
 
     public FileWatcherService() {
         this.fileReaderService = new FileReaderService();
-        this.alertService = AlertService.getInstance();
+        this.alertService = new AlertService();
     }
 
     /**
@@ -79,7 +79,7 @@ public class FileWatcherService extends Thread {
     private void handleModifyEvent() {
         var message = fileReaderService.readWordFromFile();
         if (message != null && WORDS.contains(message.trim().toLowerCase())) {
-            Platform.runLater(alertService::createAlert);
+            Platform.runLater(alertService::start);
         }
     }
 }

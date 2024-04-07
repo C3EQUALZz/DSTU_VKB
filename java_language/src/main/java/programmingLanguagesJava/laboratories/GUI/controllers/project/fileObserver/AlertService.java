@@ -1,44 +1,43 @@
 package programmingLanguagesJava.laboratories.GUI.controllers.project.fileObserver;
 
-import javafx.scene.control.Dialog;
-import javafx.stage.Modality;
+import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.stage.Stage;
-import programmingLanguagesJava.laboratories.GUI.config.SceneConfigurator;
-import programmingLanguagesJava.laboratories.GUI.config.StageConfigurator;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
+import programmingLanguagesJava.laboratories.GUI.controllers.SceneController;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.database.DataBaseSQLite;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.database.utils.PersonInfo;
 
-import java.io.IOException;
+import java.util.Random;
 
-class AlertService {
-    private static AlertService instance;
+class AlertService extends Thread {
 
-    private Dialog<Void> alert;
+    private final Stage stage = SceneController.getInstance().getStage();
+    private final PersonInfo personInfo = DataBaseSQLite.getInstance().loadPersonInfos().get(new Random().nextInt(0, 10));
 
-    private AlertService() {}
+    @Override
+    public void run() {
 
-    static AlertService getInstance() {
-        if (instance == null) {
-            instance = new AlertService();
+        var text = String.format(
+                "Произошла кража! У '%s'. Полиция уведомлена! Вызван ближайший наряд охраны!",
+                String.join(" ", personInfo.getLastName(), personInfo.getFirstName(), personInfo.getPatronymic())
+        );
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Поток для уведомления о краже был прерван", e);
         }
-        return instance;
-    }
 
-    void createAlert() {
-        if (alert == null || !alert.isShowing()) {
-            try {
+        var notification = Notifications.create()
+                .title("Операция произошла успешно")
+                .owner(stage)
+                .text(text)
+                .hideAfter(Duration.seconds(7))
+                .position(Pos.TOP_CENTER);
 
-                alert = new Dialog<>();
-                alert.initModality(Modality.APPLICATION_MODAL);
-
-                var scene = SceneConfigurator.createScene("/projectFiles/modal-window.fxml");
-                var stage = StageConfigurator.configureStage((Stage) alert.getDialogPane().getScene().getWindow());
-
-                stage.setScene(scene);
-                stage.showAndWait();
-
-            } catch (IOException e) {
-                throw new RuntimeException("Не получилось считать файл", e);
-            }
-        }
+        Platform.runLater(notification::showWarning);
     }
 
 }

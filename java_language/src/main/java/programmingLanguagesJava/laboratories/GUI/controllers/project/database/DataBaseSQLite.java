@@ -27,6 +27,7 @@ public class DataBaseSQLite {
             System.getProperty("user.dir"),
             "/src/main/resources/projectFiles/data/security_information_db.db"
     );
+
     @Getter
     private final Connection connection;
     private final RemainingInfoDAO remainingInfoDAO;
