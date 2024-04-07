@@ -1,4 +1,4 @@
-package programmingLanguagesJava.laboratories.GUI.fileObserver;
+package programmingLanguagesJava.laboratories.GUI.controllers.project.fileObserver;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
