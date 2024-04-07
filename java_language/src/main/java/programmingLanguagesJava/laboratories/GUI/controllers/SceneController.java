@@ -8,27 +8,20 @@ package programmingLanguagesJava.laboratories.GUI.controllers;
 
 
 import javafx.animation.FadeTransition;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import lombok.Getter;
+import programmingLanguagesJava.laboratories.GUI.config.SceneConfigurator;
 
 import java.io.IOException;
-import java.util.Objects;
 import java.util.Stack;
 
 public class SceneController {
-
-    private double xOffset = 0, yOffset = 0;
     @Getter
     private final Stage stage;
     private static SceneController instance;
     private final Stack<Scene> sceneHistory = new Stack<>();
-    private final String CSS = Objects.requireNonNull(this.getClass().getResource("/stageFiles/Styles.css")).toExternalForm();
-
 
     private enum Scenes {
         ;
@@ -146,11 +139,11 @@ public class SceneController {
 
         try {
 
-            Scenes.MENU = createWindow(ScenePath.MENU_FXML_PATH);
-            Scenes.LABORATORIES = createWindow(ScenePath.LABORATORIES_FXML_PATH);
-            Scenes.PROJECT_MENU = createWindow(ScenePath.MENU_PROJECT_FXML_PATH);
-            Scenes.PROJECT_FILLING_FORM = createWindow(ScenePath.FILLING_FORM_PROJECT_FXML_PATH);
-            Scenes.PROJECT_DATABASE_VIEW = createWindow(ScenePath.DATABASE_VIEW_PROJECT_FXML_PATH);
+            Scenes.MENU = SceneConfigurator.createScene(ScenePath.MENU_FXML_PATH);
+            Scenes.LABORATORIES = SceneConfigurator.createScene(ScenePath.LABORATORIES_FXML_PATH);
+            Scenes.PROJECT_MENU = SceneConfigurator.createScene(ScenePath.MENU_PROJECT_FXML_PATH);
+            Scenes.PROJECT_FILLING_FORM = SceneConfigurator.createScene(ScenePath.FILLING_FORM_PROJECT_FXML_PATH);
+            Scenes.PROJECT_DATABASE_VIEW = SceneConfigurator.createScene(ScenePath.DATABASE_VIEW_PROJECT_FXML_PATH);
 
         } catch (IOException e) {
 
@@ -161,53 +154,6 @@ public class SceneController {
         this.stage.setScene(sceneHistory.peek());
     }
 
-
-    /**
-     * @param filePath Путь к файлу
-     * @return Возвращает созданную сцену
-     * @throws IOException может возникнуть ошибка при считывании файла с FXML
-     */
-    private Scene createWindow(String filePath) throws IOException {
-        try {
-
-            Parent windowFXML = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(filePath)));
-
-            var scene = new Scene(windowFXML);
-
-            setWindowDragged(windowFXML);
-
-            // Костыль, чтобы не было углов у приложения, которые видны в SceneBuilder
-            scene.setFill(Color.TRANSPARENT);
-
-            scene.getStylesheets().add(CSS);
-
-            return scene;
-
-        } catch (IOException e) {
-
-            throw new RuntimeException("Не смог загрузить файл: " + filePath, e);
-
-        }
-
-    }
-
-    /**
-     * Метод, который нужен, чтобы можно было передвигать окно
-     * @param windowFXML окно, которое мы хотим перетаскивать
-     */
-    private void setWindowDragged(Parent windowFXML) {
-        // Возможность, чтобы окно могло передвигаться при зажатии мышки
-        windowFXML.setOnMousePressed(ev -> {
-            xOffset = ev.getSceneX();
-            yOffset = ev.getSceneY();
-        });
-
-        // Когда зажатое окно
-        windowFXML.setOnMouseDragged(ev -> {
-            this.stage.setX(ev.getScreenX() - xOffset);
-            this.stage.setY(ev.getScreenY() - yOffset);
-        });
-    }
 
     /**
      * Метод, чтобы была анимация переключения между окнами приложения.
