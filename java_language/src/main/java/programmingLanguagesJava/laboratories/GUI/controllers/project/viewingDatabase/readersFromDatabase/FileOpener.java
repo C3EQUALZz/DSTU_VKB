@@ -24,6 +24,12 @@ public abstract class FileOpener implements ElementDatabaseView {
     protected final ButtonConfigurator buttonConfigurator = ButtonConfigurator.getInstance();
 
 
+    /**
+     * Метод, который позволяет создавать временные файл для просмотра фото или Word документов.
+     * Сам процесс открытия делается за счет Desktop, который сам определяет возможные приложения.
+     * @param fileContent массив байтов из базы данных, который мы достали
+     * @param extension расширение файла, в которое мы временно хотим создать.
+     */
     protected void openFile(byte[] fileContent, String extension) {
         try {
 
