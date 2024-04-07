@@ -10,7 +10,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.database.utils.PersonInfo;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.ElementDatabaseView;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.searchingDatabase.strategy.FirstNameSearchStrategy;
@@ -25,7 +25,7 @@ import java.util.List;
  * Класс HumanSearchController реализует интерфейс ElementDatabaseView и предоставляет функциональность для поиска людей в базе данных.
  * Этот класс использует паттерн проектирования Builder для создания экземпляров класса.
  */
-@Builder
+@RequiredArgsConstructor
 public class HumanSearchController implements ElementDatabaseView {
 
     // TableView для отображения информации о людях

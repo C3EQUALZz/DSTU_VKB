@@ -7,6 +7,9 @@ import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingData
 import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.strategyContext.TableViewContext;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Класс, который конфигурирует поиск людей в базе данных.
+ */
 @RequiredArgsConstructor
 public class KeyWordTextFieldActionViewingDatabase implements ActionViewingDatabase {
 
@@ -14,12 +17,11 @@ public class KeyWordTextFieldActionViewingDatabase implements ActionViewingDatab
     private final TableViewContext context;
     private final TextField keywordTextField;
 
+    /**
+     * Точка запуска
+     */
     @Override
     public void execute() {
-        HumanSearchController.builder()
-                .customersTableView(context.customersTableView())
-                .keywordTextField(keywordTextField)
-                .personInfos(personInfos)
-                .build().event();
+        new HumanSearchController(context.customersTableView(), personInfos, keywordTextField).event();
     }
 }

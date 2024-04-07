@@ -6,21 +6,28 @@ import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingData
 import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.tableViewStart.TableViewManager;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Класс, который конфигурирует создание TableView для отображения базы данных в приложении
+ */
 @RequiredArgsConstructor
 public class TableViewConfActionViewingDatabase implements ActionViewingDatabase {
     private final ObservableList<PersonInfo> personInfos;
     private final TableViewContext context;
 
+    /**
+     * Точка запуска
+     */
     @Override
     public void execute() {
-        TableViewManager.builder().
-                customersTableView(context.customersTableView())
-                .surnameColumn(context.surnameColumn())
-                .nameColumn(context.nameColumn())
-                .patronymicColumn(context.patronymicColumn())
-                .planColumn(context.planColumn())
-                .pactColumn(context.pactColumn())
-                .personInfos(personInfos)
-                .build().event();
+
+        new TableViewManager(
+                context.customersTableView(),
+                context.surnameColumn(),
+                context.nameColumn(),
+                context.patronymicColumn(),
+                context.planColumn(),
+                context.pactColumn(),
+                personInfos
+        ).event();
     }
 }

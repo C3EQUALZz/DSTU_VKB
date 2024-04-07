@@ -29,7 +29,7 @@ public class ViewData extends BaseController {
     @FXML
     private TableColumn<PersonInfo, Image> planColumn, pactColumn;
     @FXML
-    private Button addHumanButton, updateTableButton, planOfhouseButton;
+    private Button addHumanButton, updateTableButton, planOfhouseButton, contractButton;
     @FXML
     private TextField keywordTextField;
     @FXML
@@ -65,7 +65,7 @@ public class ViewData extends BaseController {
                 new RadioButtonsActionViewingDatabase(listDataBase, radioButtonContext),
                 new UpdateTableButtonActionViewingDatabase(listDataBase, context, radioButtonContext,
                         updateTableButton, keywordTextField),
-                new ReaderActionViewingDataBase(context, planOfhouseButton)
+                new ReaderActionViewingDataBase(context, contractButton)
 
         ).forEach(ActionViewingDatabase::execute);
 

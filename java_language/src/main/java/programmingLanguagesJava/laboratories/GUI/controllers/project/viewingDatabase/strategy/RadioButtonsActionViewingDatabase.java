@@ -6,12 +6,18 @@ import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingData
 import lombok.RequiredArgsConstructor;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.strategyContext.RadioButtonContext;
 
+/**
+ * Класс, который конфигурирует radio Button
+ */
 @RequiredArgsConstructor
 public class RadioButtonsActionViewingDatabase implements ActionViewingDatabase {
 
     private final ObservableList<PersonInfo> personInfos;
     private final RadioButtonContext radioButtonContext;
 
+    /**
+     * Точка запуска этого кода.
+     */
     @Override
     public void execute() {
 

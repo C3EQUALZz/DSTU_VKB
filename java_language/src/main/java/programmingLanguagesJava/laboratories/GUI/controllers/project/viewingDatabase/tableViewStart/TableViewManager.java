@@ -9,7 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.database.utils.PersonInfo;
-import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.ElementDatabaseView;
 
 import java.util.List;
@@ -18,14 +18,16 @@ import java.util.List;
  * Данный класс реализует паттерн строитель, используя библиотеку Lombok
  * Здесь как раз реализуется само добавление в таблицу из базы данных.
  */
-@Builder
+@RequiredArgsConstructor
 public class TableViewManager implements ElementDatabaseView {
 
-    private final ObservableList<PersonInfo> personInfos;
+
 
     @FXML private final TableView<PersonInfo> customersTableView;
     @FXML private final TableColumn<PersonInfo, String> surnameColumn, nameColumn, patronymicColumn;
     @FXML private final TableColumn<PersonInfo, Image> planColumn, pactColumn;
+
+    private final ObservableList<PersonInfo> personInfos;
 
     private enum IMAGES {
         ;

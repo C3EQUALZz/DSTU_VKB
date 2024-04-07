@@ -14,6 +14,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+/**
+ * Класс, который описывает считыватель файла из БД.
+ * Он позволяет просматривать информацию.
+ */
 @RequiredArgsConstructor
 public class Reader implements ElementDatabaseView {
 
@@ -21,6 +25,9 @@ public class Reader implements ElementDatabaseView {
     private final Button button;
     private final ButtonConfigurator buttonConfigurator = ButtonConfigurator.getInstance();
 
+    /**
+     * Здесь стоит точка на тот момент, когда пользователь нажимает кнопку создать документ
+     */
     @Override
     public void event() {
         buttonConfigurator.setupButtonEvent(button, mouseEvent -> {
@@ -31,22 +38,23 @@ public class Reader implements ElementDatabaseView {
         });
     }
 
+    /**
+     * Метод, который открывает документ, чтобы можно было его просматривать.
+     * @param document байтовый массив, который описывает документ.
+     */
     private void openDocument(byte[] document) {
         try {
-            // Создание временного файла
             Path tempPath = Files.createTempFile("document", ".docx");
             File tempFile = tempPath.toFile();
-            tempFile.deleteOnExit(); // Удаление файла при выходе из программы
+            tempFile.deleteOnExit();
 
-            // Запись blob в файл
             try (FileOutputStream fos = new FileOutputStream(tempFile)) {
                 fos.write(document);
             }
 
-            // Открытие файла с помощью приложения по умолчанию
+
             Desktop.getDesktop().open(tempFile);
         } catch (IOException e) {
-
             throw new RuntimeException("Не получилось открыть docx файл", e);
         }
     }

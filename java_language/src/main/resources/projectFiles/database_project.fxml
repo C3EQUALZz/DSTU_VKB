@@ -191,7 +191,7 @@
                               <Font name="Comic Sans MS Bold" size="15.0" />
                            </font>
                         </Button>
-                        <Button layoutX="168.0" layoutY="86.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="125.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 18; -fx-border-radius: 18; -fx-border-color: WHITE;" stylesheets="@../stageFiles/Styles.css" text="Договор" textFill="WHITE" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="155.0" AnchorPane.rightAnchor="7.0">
+                        <Button fx:id="contractButton" layoutX="168.0" layoutY="86.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="125.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 18; -fx-border-radius: 18; -fx-border-color: WHITE;" stylesheets="@../stageFiles/Styles.css" text="Договор" textFill="WHITE" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="155.0" AnchorPane.rightAnchor="7.0">
                            <font>
                               <Font name="Comic Sans MS Bold" size="15.0" />
                            </font>

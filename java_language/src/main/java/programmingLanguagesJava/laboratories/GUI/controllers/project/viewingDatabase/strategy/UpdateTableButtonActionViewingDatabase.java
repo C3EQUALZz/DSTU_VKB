@@ -10,6 +10,9 @@ import programmingLanguagesJava.laboratories.GUI.controllers.project.database.ut
 import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.strategyContext.RadioButtonContext;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.strategyContext.TableViewContext;
 
+/**
+ * Класс, который конфигурирует кнопку обновления таблицы.
+ */
 @AllArgsConstructor
 public class UpdateTableButtonActionViewingDatabase implements ActionViewingDatabase {
 
@@ -20,6 +23,9 @@ public class UpdateTableButtonActionViewingDatabase implements ActionViewingData
     private final Button updateTableButton;
     private final TextField textField;
 
+    /**
+     * Точка запуска
+     */
     @Override
     public void execute() {
         buttonConfigurator.setupButtonEvent(updateTableButton, event -> {
