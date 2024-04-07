@@ -80,6 +80,7 @@ public class FileWatcherService extends Thread {
         var message = fileReaderService.readWordFromFile();
         if (message != null && WORDS.contains(message.trim().toLowerCase())) {
             Platform.runLater(alertService::start);
+
         }
     }
 }

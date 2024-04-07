@@ -19,6 +19,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
+/**
+ * Контроллер для меню приложения.
+ */
 public class Menu extends BaseController {
 
     @FXML

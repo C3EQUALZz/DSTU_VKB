@@ -21,6 +21,9 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
+/**
+ * Контроллер для окна для ввода данных от оператора
+ */
 public class AddressFillingForm extends BaseController {
 
     @FXML
