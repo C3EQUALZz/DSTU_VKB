@@ -20,7 +20,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
-
+/**
+ * Контроллер для Scene с просмотром базы данных
+ */
 public class ViewData extends BaseController {
     @FXML
     private TableView<PersonInfo> customersTableView;

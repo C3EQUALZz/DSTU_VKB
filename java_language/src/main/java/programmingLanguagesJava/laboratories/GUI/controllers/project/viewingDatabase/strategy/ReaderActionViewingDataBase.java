@@ -1,7 +1,7 @@
 package programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.strategy;
 
 import javafx.scene.control.Button;
-import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.readingDocxFromDatabase.Reader;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.readersFromDatabase.readingDocxFromDatabase.Reader;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.strategyContext.TableViewContext;
 import lombok.RequiredArgsConstructor;
 

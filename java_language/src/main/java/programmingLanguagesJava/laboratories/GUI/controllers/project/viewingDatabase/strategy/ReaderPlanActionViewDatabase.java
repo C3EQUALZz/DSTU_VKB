@@ -2,7 +2,7 @@ package programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDat
 import javafx.scene.control.Button;
 import lombok.RequiredArgsConstructor;
 import programmingLanguagesJava.laboratories.GUI.config.ButtonConfigurator;
-import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.readingPhotoFromDatabase.PhotoReader;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.readersFromDatabase.readingPhotoFromDatabase.PhotoReader;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.strategyContext.TableViewContext;
 
 /**
