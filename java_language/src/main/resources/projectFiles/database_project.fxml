@@ -186,7 +186,7 @@
                      </children></AnchorPane>
                   <AnchorPane prefHeight="138.0" prefWidth="299.0">
                      <children>
-                        <Button layoutX="7.0" layoutY="68.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="125.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 18; -fx-border-radius: 18; -fx-border-color: WHITE;" stylesheets="@../stageFiles/Styles.css" text="План здания" textFill="WHITE" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="150.0">
+                        <Button fx:id="planOfhouseButton" layoutX="7.0" layoutY="68.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="125.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 18; -fx-border-radius: 18; -fx-border-color: WHITE;" stylesheets="@../stageFiles/Styles.css" text="План здания" textFill="WHITE" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="150.0">
                            <font>
                               <Font name="Comic Sans MS Bold" size="15.0" />
                            </font>
