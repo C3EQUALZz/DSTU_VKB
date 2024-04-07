@@ -41,12 +41,12 @@ public class SceneConfigurator {
      * @param filePath Путь к файлу
      * @return Возвращает созданную сцену
      */
-    public static Scene createScene(String filePath) throws IOException {
+    public static Scene createScene(Stage stage, String filePath) throws IOException {
         Parent windowFXML = FXMLLoader.load(Objects.requireNonNull(SceneConfigurator.class.getResource(filePath)));
 
         var scene = new Scene(windowFXML);
 
-        setWindowDragged((Stage) scene.getWindow(), windowFXML);
+        setWindowDragged(stage, windowFXML);
 
         // Костыль, чтобы не было углов у приложения, которые видны в SceneBuilder
         scene.setFill(Color.TRANSPARENT);

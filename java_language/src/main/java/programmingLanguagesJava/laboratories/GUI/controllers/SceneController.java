@@ -139,11 +139,11 @@ public class SceneController {
 
         try {
 
-            Scenes.MENU = SceneConfigurator.createScene(ScenePath.MENU_FXML_PATH);
-            Scenes.LABORATORIES = SceneConfigurator.createScene(ScenePath.LABORATORIES_FXML_PATH);
-            Scenes.PROJECT_MENU = SceneConfigurator.createScene(ScenePath.MENU_PROJECT_FXML_PATH);
-            Scenes.PROJECT_FILLING_FORM = SceneConfigurator.createScene(ScenePath.FILLING_FORM_PROJECT_FXML_PATH);
-            Scenes.PROJECT_DATABASE_VIEW = SceneConfigurator.createScene(ScenePath.DATABASE_VIEW_PROJECT_FXML_PATH);
+            Scenes.MENU = SceneConfigurator.createScene(stage, ScenePath.MENU_FXML_PATH);
+            Scenes.LABORATORIES = SceneConfigurator.createScene(stage, ScenePath.LABORATORIES_FXML_PATH);
+            Scenes.PROJECT_MENU = SceneConfigurator.createScene(stage, ScenePath.MENU_PROJECT_FXML_PATH);
+            Scenes.PROJECT_FILLING_FORM = SceneConfigurator.createScene(stage, ScenePath.FILLING_FORM_PROJECT_FXML_PATH);
+            Scenes.PROJECT_DATABASE_VIEW = SceneConfigurator.createScene(stage, ScenePath.DATABASE_VIEW_PROJECT_FXML_PATH);
 
         } catch (IOException e) {
 
