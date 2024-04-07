@@ -7,11 +7,10 @@ import programmingLanguagesJava.laboratories.GUI.controllers.project.database.ut
 import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.ElementDatabaseView;
 
 import java.awt.*;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
+
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -27,8 +26,9 @@ public abstract class FileOpener implements ElementDatabaseView {
 
     protected void openFile(byte[] fileContent, String extension) {
         try {
-            Path tempPath = Files.createTempFile("document", extension);
-            File tempFile = tempPath.toFile();
+
+            var tempFile = Files.createTempFile("document", extension).toFile();
+
             tempFile.deleteOnExit();
 
             try (FileOutputStream fos = new FileOutputStream(tempFile)) {
