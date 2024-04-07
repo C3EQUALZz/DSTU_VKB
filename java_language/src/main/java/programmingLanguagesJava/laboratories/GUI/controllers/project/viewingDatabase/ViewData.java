@@ -21,7 +21,6 @@ import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingData
 
 import java.net.URL;
 import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
 
 
@@ -42,8 +41,6 @@ public class ViewData extends BaseController {
 
     private final DataBaseSQLite database = DataBaseSQLite.getInstance();
 
-    private List<PersonInfo> personInfos = database.loadPersonInfos();
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -60,7 +57,7 @@ public class ViewData extends BaseController {
     private void setTableView() {
         TableViewManager.builder().customersTableView(customersTableView).surnameColumn(surnameColumn).nameColumn(nameColumn).
                 patronymicColumn(patronymicColumn).planColumn(planColumn).pactColumn(pactColumn).database(database)
-                .personInfos(personInfos).build().event();
+                .personInfos(database.loadPersonInfos()).build().event();
     }
 
     private void setAddHumanButton() {
@@ -70,7 +67,7 @@ public class ViewData extends BaseController {
     private void setKeywordTextField() {
         HumanSearchController.builder()
                 .customersTableView(customersTableView)
-                .personInfos(FXCollections.observableArrayList(personInfos))
+                .personInfos(FXCollections.observableArrayList(database.loadPersonInfos()))
                 .keywordTextField(keywordTextField)
                 .searchStrategies(Arrays.asList(new FirstNameSearchStrategy(), new LastNameSearchStrategy(), new PatronymicSearchStrategy()))
                 .build().event();
@@ -78,7 +75,6 @@ public class ViewData extends BaseController {
 
     private void setUpdateTableButton() {
         buttonConfigurator.setupButtonEvent(updateTableButton, event -> {
-            this.personInfos = database.loadPersonInfos();
             setTableView();
             customersTableView.refresh();
         });
@@ -86,7 +82,7 @@ public class ViewData extends BaseController {
 
     private void setLastNameRadioButton() {
         // Создание ObservableList с данными
-        var data = FXCollections.observableArrayList(personInfos);
+        var data = FXCollections.observableArrayList(database.loadPersonInfos());
 
         // Установка ObservableList в качестве элементов TableView
         customersTableView.setItems(data);

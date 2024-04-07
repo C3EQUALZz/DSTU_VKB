@@ -31,7 +31,7 @@ public class CreateDocumentActionFillingForm implements ActionFillingForm {
                 jsonData.put("buildingPlan", fileChooserController.getSelectedFile());
                 jsonData.put("allPeople", String.join(", ", combobox.getItems()));
                 jsonData.put("pathToFile", docxProcessor.event());
-                new NotificationClass(controller.getStage()).start();
+                new NotificationClass().start();
             });
         });
 

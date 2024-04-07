@@ -13,6 +13,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import lombok.RequiredArgsConstructor;
+import programmingLanguagesJava.laboratories.GUI.controllers.SceneController;
+
 import java.util.Objects;
 
 /**
@@ -22,7 +24,7 @@ import java.util.Objects;
 public class NotificationClass extends Thread {
 
     private static final Image image = new Image(Objects.requireNonNull(NotificationClass.class.getResourceAsStream("/projectFiles/images/verified.png")));
-    private final Stage stage;
+    private final Stage stage = SceneController.getInstance().getStage();
 
     @Override
     public void run() {

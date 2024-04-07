@@ -13,16 +13,19 @@ import java.util.Random;
 
 class AlertService extends Thread {
 
+    // Здесь случайно выбранное уведомление, потому что мне нужно эмулировать происшествие какое-нибудь.
+    // Да, мне нужно было сделать через внедрение зависимостей, но у меня архитектура кривая у приложения, так что
+    // уже так.
+
     private final Stage stage = SceneController.getInstance().getStage();
     private final PersonInfo personInfo = DataBaseSQLite.getInstance().loadPersonInfos().get(new Random().nextInt(0, 10));
+    private final String text = String.format(
+            "Произошла кража! У '%s'. Полиция уведомлена! Вызван ближайший наряд охраны!",
+            String.join(" ", personInfo.getLastName(), personInfo.getFirstName(), personInfo.getPatronymic())
+    );
 
     @Override
     public void run() {
-
-        var text = String.format(
-                "Произошла кража! У '%s'. Полиция уведомлена! Вызван ближайший наряд охраны!",
-                String.join(" ", personInfo.getLastName(), personInfo.getFirstName(), personInfo.getPatronymic())
-        );
 
         try {
             Thread.sleep(1000);
