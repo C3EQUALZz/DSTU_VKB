@@ -1,10 +1,10 @@
 package programmingLanguagesJava.laboratories.GUI.controllers.project.menuProject.strategy;
 
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
 import programmingLanguagesJava.laboratories.GUI.config.ButtonConfigurator;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.menuProject.movableAnchor.MovableAnchorPane;
 import lombok.RequiredArgsConstructor;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.menuProject.strategyContext.ContextAnchorPane;
 
 /**
  * Данный класс является одним из посредников для удобного запуска элементов UI.
@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 public class SignInButtonActionMenu implements ActionMenu {
 
     private final ButtonConfigurator buttonConfigurator = ButtonConfigurator.getInstance();
-    private final AnchorPane anchorPaneMovable, registrationAnchorPane;
+    private final ContextAnchorPane contextAnchorPane;
     private final Button signInButton;
 
     /**
@@ -24,7 +24,7 @@ public class SignInButtonActionMenu implements ActionMenu {
      */
     @Override
     public void execute() {
-        var movableAnchorPane = new MovableAnchorPane(anchorPaneMovable, registrationAnchorPane);
+        var movableAnchorPane = new MovableAnchorPane(contextAnchorPane);
         buttonConfigurator.setupButtonEvent(signInButton, event -> movableAnchorPane.event());
     }
 }

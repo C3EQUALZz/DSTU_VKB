@@ -11,29 +11,26 @@ import javafx.animation.TranslateTransition;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.menuProject.ElementMenu;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.menuProject.strategyContext.ContextAnchorPane;
 
 public class MovableAnchorPane implements ElementMenu {
-    private final AnchorPane anchorPane, otherAnchorPane;
-    private final TranslateTransition translateTransition;
-    private final FadeTransition fadeTransition;
+
+    private final AnchorPane anchorPane, registrationAnchorPane, cameraAnchorPane;
 
     // Константы для продолжительности анимаций
     private enum DURATION {
         ;
         private static final Duration TRANSLATE_DURATION = Duration.seconds(2);
-        private static final Duration FADE_DURATION = Duration.seconds(0.7);
+        private static final Duration FADE_DURATION = Duration.seconds(2);
     }
 
     /**
      * Данный класс используется для анимации, когда пользователь ввел корректный пароль
-     * @param anchorPane, который будет перемещаться
-     * @param otherAnchorPane, который будет прятаться
      */
-    public MovableAnchorPane(AnchorPane anchorPane, AnchorPane otherAnchorPane) {
-        this.anchorPane = anchorPane;
-        this.otherAnchorPane = otherAnchorPane;
-        this.translateTransition = new TranslateTransition(DURATION.TRANSLATE_DURATION, anchorPane);
-        this.fadeTransition = configureFadeTransition();
+    public MovableAnchorPane(ContextAnchorPane contextAnchorPane) {
+        this.anchorPane = contextAnchorPane.anchorPaneMovable();
+        this.registrationAnchorPane = contextAnchorPane.registrationAnchorPane();
+        this.cameraAnchorPane = contextAnchorPane.hiddenAnchorPane();
     }
 
     /**
@@ -45,10 +42,13 @@ public class MovableAnchorPane implements ElementMenu {
         anchorPane.setStyle("-fx-border-color: white; -fx-border-radius: 18; -fx-background-radius: 30");
         anchorPane.setLayoutX(newX);
 
-        // Запускаем анимации
+
+        var translateTransition = new TranslateTransition(DURATION.TRANSLATE_DURATION, anchorPane);
         translateTransition.setToX(newX);
         translateTransition.play();
-        fadeTransition.play();
+
+        configureFadeTransition(registrationAnchorPane, 1.0, 0.0, false).play();
+        configureFadeTransition(cameraAnchorPane, 0.0, 1.0, true).play();
     }
 
     /**
@@ -56,11 +56,11 @@ public class MovableAnchorPane implements ElementMenu {
      * В event такое можно сделать, но в таком случае будет переизбыток кода, поэтому вынесено в отдельный метод
      * @return возвращает настроенное исчезновение
      */
-    private FadeTransition configureFadeTransition() {
-        var fadeTransition = new FadeTransition(DURATION.FADE_DURATION, otherAnchorPane);
-        fadeTransition.setFromValue(1.0);
-        fadeTransition.setToValue(0.0);
-        fadeTransition.setOnFinished(event -> otherAnchorPane.setVisible(false));
+    private FadeTransition configureFadeTransition(AnchorPane pane, double fromValue, double toValue, boolean visibility) {
+        var fadeTransition = new FadeTransition(DURATION.FADE_DURATION, pane);
+        fadeTransition.setFromValue(fromValue);
+        fadeTransition.setToValue(toValue);
+        fadeTransition.setOnFinished(event -> pane.setVisible(visibility));
         return fadeTransition;
     }
 
