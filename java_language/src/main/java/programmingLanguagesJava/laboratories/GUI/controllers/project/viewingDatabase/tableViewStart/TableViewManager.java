@@ -1,6 +1,6 @@
 package programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.tableViewStart;
 
-import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -8,7 +8,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import programmingLanguagesJava.laboratories.GUI.controllers.project.database.DataBaseSQLite;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.database.utils.PersonInfo;
 import lombok.Builder;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.ElementDatabaseView;
@@ -22,9 +21,9 @@ import java.util.List;
 @Builder
 public class TableViewManager implements ElementDatabaseView {
 
-    private final TableView<PersonInfo> customersTableView;
-    private final DataBaseSQLite database;
-    private final List<PersonInfo> personInfos;
+    private final ObservableList<PersonInfo> personInfos;
+
+    @FXML private final TableView<PersonInfo> customersTableView;
     @FXML private final TableColumn<PersonInfo, String> surnameColumn, nameColumn, patronymicColumn;
     @FXML private final TableColumn<PersonInfo, Image> planColumn, pactColumn;
 
@@ -50,7 +49,7 @@ public class TableViewManager implements ElementDatabaseView {
         pactColumn.setCellFactory(column -> createImageCell(personInfos, IMAGES.WORD_PNG));
 
         // Установка данных в таблицу
-        customersTableView.setItems(FXCollections.observableArrayList(personInfos));
+        customersTableView.setItems(personInfos);
     }
 
     /**

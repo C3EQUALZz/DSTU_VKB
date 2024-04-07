@@ -13,8 +13,12 @@ import javafx.scene.control.TextField;
 import lombok.Builder;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.database.utils.PersonInfo;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.ElementDatabaseView;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.searchingDatabase.strategy.FirstNameSearchStrategy;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.searchingDatabase.strategy.LastNameSearchStrategy;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.searchingDatabase.strategy.PatronymicSearchStrategy;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.searchingDatabase.strategy.SearchStrategy;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -34,7 +38,7 @@ public class HumanSearchController implements ElementDatabaseView {
     private final TextField keywordTextField;
 
     // Список стратегий поиска для выполнения поиска
-    private final List<SearchStrategy> searchStrategies;
+    private final List<SearchStrategy> searchStrategies = Arrays.asList(new FirstNameSearchStrategy(), new LastNameSearchStrategy(), new PatronymicSearchStrategy());
 
     /**
      * Метод event() слушает изменения в поле keywordTextField и обновляет отфильтрованные данные в соответствии

@@ -12,16 +12,13 @@ import javafx.scene.image.Image;
 import programmingLanguagesJava.laboratories.GUI.controllers.BaseController;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.database.DataBaseSQLite;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.database.utils.PersonInfo;
-import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.searchingDatabase.HumanSearchController;
-import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.searchingDatabase.strategy.FirstNameSearchStrategy;
-import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.searchingDatabase.strategy.LastNameSearchStrategy;
-import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.searchingDatabase.strategy.PatronymicSearchStrategy;
-import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.sortingDatabase.SorterTableView;
-import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.tableViewStart.TableViewManager;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.strategy.*;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.strategyContext.RadioButtonContext;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.strategyContext.TableViewContext;
 
 import java.net.URL;
-import java.util.Arrays;
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
 
 public class ViewData extends BaseController {
@@ -39,58 +36,37 @@ public class ViewData extends BaseController {
     private RadioButton lastNameRadioButton, firstNameRadioButton, patronymicRadioButton;
 
 
-    private final DataBaseSQLite database = DataBaseSQLite.getInstance();
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
 
-        setTableView();
-        setAddHumanButton();
-        setKeywordTextField();
-        setUpdateTableButton();
-        setLastNameRadioButton();
+        var context = new TableViewContext(
+                customersTableView,
+                surnameColumn,
+                nameColumn,
+                patronymicColumn,
+                planColumn,
+                pactColumn
+        );
 
-    }
+        var radioButtonContext = new RadioButtonContext(
+                lastNameRadioButton,
+                firstNameRadioButton,
+                patronymicRadioButton
+        );
 
-    private void setTableView() {
-        TableViewManager.builder().customersTableView(customersTableView).surnameColumn(surnameColumn).nameColumn(nameColumn).
-                patronymicColumn(patronymicColumn).planColumn(planColumn).pactColumn(pactColumn).database(database)
-                .personInfos(database.loadPersonInfos()).build().event();
-    }
 
-    private void setAddHumanButton() {
-        buttonConfigurator.setupButtonEvent(addHumanButton, event -> controller.switchFromDataBaseViewToFillingForm());
-    }
+        var listDataBase = FXCollections.observableArrayList(DataBaseSQLite.getInstance().loadPersonInfos());
 
-    private void setKeywordTextField() {
-        HumanSearchController.builder()
-                .customersTableView(customersTableView)
-                .personInfos(FXCollections.observableArrayList(database.loadPersonInfos()))
-                .keywordTextField(keywordTextField)
-                .searchStrategies(Arrays.asList(new FirstNameSearchStrategy(), new LastNameSearchStrategy(), new PatronymicSearchStrategy()))
-                .build().event();
-    }
+        Stream.of(
+                new AddHumanButtonActionViewingDatabase(addHumanButton),
+                new TableViewConfActionViewingDatabase(listDataBase, context),
+                new KeyWordTextFieldActionViewingDatabase(listDataBase, context, keywordTextField),
+                new RadioButtonsActionViewingDatabase(listDataBase, radioButtonContext),
+                new UpdateTableButtonActionViewingDatabase(listDataBase, context, radioButtonContext,
+                        updateTableButton, keywordTextField)
 
-    private void setUpdateTableButton() {
-        buttonConfigurator.setupButtonEvent(updateTableButton, event -> {
-            setTableView();
-            customersTableView.refresh();
-        });
-    }
-
-    private void setLastNameRadioButton() {
-        // Создание ObservableList с данными
-        var data = FXCollections.observableArrayList(database.loadPersonInfos());
-
-        // Установка ObservableList в качестве элементов TableView
-        customersTableView.setItems(data);
-
-        SorterTableView.builder().data(data)
-                .firstNameRadioButton(firstNameRadioButton)
-                .lastNameRadioButton(lastNameRadioButton)
-                .patronymicRadioButton(patronymicRadioButton).build().event();
+        ).forEach(ActionViewingDatabase::execute);
 
     }
 
