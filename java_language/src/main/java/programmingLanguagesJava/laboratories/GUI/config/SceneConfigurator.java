@@ -9,6 +9,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Класс, который нужен, чтобы настраивать Scene.
+ */
 public class SceneConfigurator {
 
     private static final String CSS = Objects.requireNonNull(SceneConfigurator.class.getResource("/stageFiles/Styles.css")).toExternalForm();
