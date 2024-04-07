@@ -9,7 +9,6 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import programmingLanguagesJava.laboratories.GUI.config.ComboboxConfigurator;
 import programmingLanguagesJava.laboratories.GUI.controllers.BaseController;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.database.DataBaseSQLite;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.database.utils.PersonInfo;
@@ -38,13 +37,10 @@ public class ViewData extends BaseController {
     @FXML
     private TextField keywordTextField;
     @FXML
-    private ComboBox<String> sortValueCombobox;
-    @FXML
     private RadioButton lastNameRadioButton, firstNameRadioButton, patronymicRadioButton;
 
 
     private final DataBaseSQLite database = DataBaseSQLite.getInstance();
-    private final ComboboxConfigurator comboboxConfigurator = ComboboxConfigurator.getInstance();
 
     private List<PersonInfo> personInfos = database.loadPersonInfos();
 
@@ -52,7 +48,6 @@ public class ViewData extends BaseController {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
-        comboboxConfigurator.defaultConfiguration(sortValueCombobox);
 
         setTableView();
         setAddHumanButton();
@@ -97,8 +92,9 @@ public class ViewData extends BaseController {
         customersTableView.setItems(data);
 
         SorterTableView.builder().data(data)
-                .buttonConfigurator(buttonConfigurator).firstNameRadioButton(firstNameRadioButton)
-                .lastNameRadioButton(lastNameRadioButton).patronymicRadioButton(patronymicRadioButton).build().event();
+                .firstNameRadioButton(firstNameRadioButton)
+                .lastNameRadioButton(lastNameRadioButton)
+                .patronymicRadioButton(patronymicRadioButton).build().event();
 
     }
 

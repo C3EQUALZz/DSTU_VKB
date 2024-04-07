@@ -47,7 +47,7 @@ public class HumanSearchController implements ElementDatabaseView {
     @Override
     public void event() {
         // Создание FilteredList из ObservableList
-        FilteredList<PersonInfo> filteredData = new FilteredList<>(personInfos);
+        var filteredData = new FilteredList<>(personInfos);
 
         keywordTextField.textProperty().addListener((observable, oldValue, newValue) ->
                 filteredData.setPredicate(personInfo -> {
@@ -60,7 +60,7 @@ public class HumanSearchController implements ElementDatabaseView {
                 }));
 
         // Создание SortedList из FilteredList
-        SortedList<PersonInfo> sortedData = new SortedList<>(filteredData);
+        var sortedData = new SortedList<>(filteredData);
 
         // Привязка компаратора SortedList к компаратору TableView
         sortedData.comparatorProperty().bind(customersTableView.comparatorProperty());

@@ -25,7 +25,7 @@ public class VideoPlayer implements ElementMenu {
         new Thread(() -> {
 
             try {
-                Thread.sleep(1000); // Задержка в 1 секунду
+                Thread.sleep(1500);
             } catch (InterruptedException e) {
                 throw new RuntimeException("не получился костыль с видео :)", e);
             }
@@ -43,16 +43,12 @@ public class VideoPlayer implements ElementMenu {
         }).start();
     }
 
-
-
     /**
      * Получение абсолютного пути до файла с нашего видео
      * @return путь к видео
      */
     private String getPathToFile() {
-        var currentDirectory = System.getProperty("user.dir");
-        var relativePath = "src/main/resources/projectFiles/video/camera.mp4";
-        var file = new File(currentDirectory, relativePath);
+        var file = new File(System.getProperty("user.dir"), "src/main/resources/projectFiles/video/camera.mp4");
         return file.toURI().toString();
     }
 }

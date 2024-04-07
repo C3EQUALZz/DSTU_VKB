@@ -14,7 +14,7 @@ import java.util.function.Function;
 @Builder
 public class SorterTableView implements ElementDatabaseView {
 
-    private ButtonConfigurator buttonConfigurator;
+    private final ButtonConfigurator buttonConfigurator = ButtonConfigurator.getInstance();
     private RadioButton lastNameRadioButton, firstNameRadioButton, patronymicRadioButton;
     private ObservableList<PersonInfo> data;
 

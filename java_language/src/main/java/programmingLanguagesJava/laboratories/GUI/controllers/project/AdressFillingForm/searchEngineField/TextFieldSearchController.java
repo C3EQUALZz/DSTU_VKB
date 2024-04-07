@@ -16,7 +16,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.AdressFillingForm.ElementAddressFillingForm;
-import lombok.Setter;
 import lombok.RequiredArgsConstructor;
 
 import java.io.BufferedReader;
@@ -30,7 +29,6 @@ import java.util.Arrays;
 
 @RequiredArgsConstructor
 public class TextFieldSearchController implements ElementAddressFillingForm {
-
 
     private final MapView mapView;
     private final TextField textField;
