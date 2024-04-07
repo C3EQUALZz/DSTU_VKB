@@ -19,7 +19,7 @@ class FileReaderService {
      * Метод, который считывает информацию построчно из файла. Каждый раз читает одну строку
      * @return возвращает информацию с одной строки.
      */
-    public String readWordFromFile() {
+    String readWordFromFile() {
 
         try (var reader = new BufferedReader(new FileReader(FILE_PATH))) {
             return reader.readLine();

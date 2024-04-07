@@ -5,11 +5,10 @@
 package programmingLanguagesJava.laboratories.GUI;
 
 import javafx.application.Application;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import programmingLanguagesJava.laboratories.GUI.config.StageConfigurator;
 import programmingLanguagesJava.laboratories.GUI.controllers.SceneController;
-import programmingLanguagesJava.laboratories.GUI.fileObserver.FileWatcherService;
+import programmingLanguagesJava.laboratories.GUI.controllers.project.fileObserver.FileWatcherService;
 
 public class Main extends Application {
 
@@ -21,7 +20,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
 
-        var stageInitialized = initStage(stage);
+        var stageInitialized = StageConfigurator.configureStage(stage);
 
         SceneController.getInstance(stage).setStartMenu();
 
@@ -33,23 +32,4 @@ public class Main extends Application {
 
     }
 
-    /**
-     * Установка параметров на все приложение
-     */
-    private Stage initStage(Stage primaryStage) {
-        // Название приложения
-        primaryStage.setTitle("Ковалев Данил ВКБ22");
-
-        // Установка неизменяемости по размеру, так как я немного криво располагаю элементы.
-        // Не умею в масштабируемое приложение, поэтому так.
-        primaryStage.setResizable(false);
-
-        // Установка изображения для приложения
-        primaryStage.getIcons().add(new Image("/menuFiles/images/desktop.png"));
-
-        // Определяю так, чтобы не было системных Windows компонентов, так как с ними выглядит ужасно.
-        primaryStage.initStyle(StageStyle.TRANSPARENT);
-
-        return primaryStage;
-    }
 }

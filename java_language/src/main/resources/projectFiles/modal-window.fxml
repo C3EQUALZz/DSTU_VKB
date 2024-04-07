@@ -12,8 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: #2E3348; -fx-border-radius: 30; -fx-background-radius: 18;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: #2E3348; -fx-border-radius: 30; -fx-background-radius: 18;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="programmingLanguagesJava.laboratories.GUI.controllers.project.fileObserver.AlertServiceController">
    <top>
       <AnchorPane prefHeight="60.0" prefWidth="400.0" BorderPane.alignment="CENTER">
          <children>
@@ -30,12 +29,12 @@
    <bottom>
       <AnchorPane prefHeight="76.0" prefWidth="400.0" BorderPane.alignment="CENTER">
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="266.0" layoutY="26.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: white; -fx-border-width: 2;" stylesheets="@../stageFiles/Styles.css" text="Вызвать наряд" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="15.0">
+            <Button fx:id="callSecurityButton" alignment="CENTER" contentDisplay="CENTER" layoutX="266.0" layoutY="26.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: white; -fx-border-width: 2;" stylesheets="@../stageFiles/Styles.css" text="Вызвать наряд" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="15.0">
                <font>
                   <Font name="Comic Sans MS Bold" size="14.0" />
                </font>
             </Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="26.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: white; -fx-border-width: 2;" stylesheets="@../stageFiles/Styles.css" text="Закрыть" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="250.0">
+            <Button fx:id="closeButton" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="26.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #9e5ce4; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: white; -fx-border-width: 2;" stylesheets="@../stageFiles/Styles.css" text="Закрыть" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="250.0">
                <font>
                   <Font name="Comic Sans MS Bold" size="14.0" />
                </font>
@@ -64,7 +63,7 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Text>
-                  <TextField editable="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <TextField fx:id="adressTextField" editable="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets left="10.0" right="10.0" />
                      </GridPane.margin>
@@ -80,7 +79,7 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Text>
-                  <TextField editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <TextField fx:id="mainPersonTextField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="10.0" right="10.0" />
                      </GridPane.margin>

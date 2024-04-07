@@ -1,43 +1,38 @@
 package programmingLanguagesJava.laboratories.GUI.controllers.project.fileObserver;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Dialog;
-import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import programmingLanguagesJava.laboratories.GUI.config.SceneConfigurator;
+import programmingLanguagesJava.laboratories.GUI.config.StageConfigurator;
 
 import java.io.IOException;
-import java.util.Objects;
 
-public class AlertService {
+class AlertService {
     private static AlertService instance;
+
     private Dialog<Void> alert;
 
     private AlertService() {}
 
-    public static AlertService getInstance() {
+    static AlertService getInstance() {
         if (instance == null) {
             instance = new AlertService();
         }
         return instance;
     }
 
-    public void createAlert() {
+    void createAlert() {
         if (alert == null || !alert.isShowing()) {
             try {
-                var scene = new Scene(loadFXML());
-                scene.setFill(Color.TRANSPARENT);
 
                 alert = new Dialog<>();
                 alert.initModality(Modality.APPLICATION_MODAL);
 
-                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                stage.initStyle(StageStyle.TRANSPARENT);
-                stage.setScene(scene);
+                var scene = SceneConfigurator.createScene("/projectFiles/modal-window.fxml");
+                var stage = StageConfigurator.configureStage((Stage) alert.getDialogPane().getScene().getWindow());
 
+                stage.setScene(scene);
                 stage.showAndWait();
 
             } catch (IOException e) {
@@ -46,7 +41,4 @@ public class AlertService {
         }
     }
 
-    private Parent loadFXML() throws IOException {
-        return FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/projectFiles/modal-window.fxml")));
-    }
 }
