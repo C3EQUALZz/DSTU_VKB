@@ -1,5 +1,6 @@
 package programmingLanguagesJava.laboratories.GUI.controllers.project.viewingDatabase.deleteRowFromTableView;
 
+import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,8 @@ public class Deleter implements ElementDatabaseView {
     public void event() {
         buttonConfigurator.setupButtonEvent(button, event -> {
             var selectedItem = customersTableView.getSelectionModel().getSelectedItem();
-            customersTableView.getItems().remove(selectedItem);
+            FilteredList<PersonInfo> filteredData = new FilteredList<>(customersTableView.getItems(), p -> !p.equals(selectedItem));
+            customersTableView.setItems(filteredData);
         });
     }
 }
