@@ -32,7 +32,7 @@
    <left>
       <AnchorPane prefHeight="519.0" prefWidth="480.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="customersTableView" layoutX="14.0" layoutY="27.0" prefHeight="519.0" prefWidth="480.0" style="-fx-border-color: WHITE; -fx-border-radius: 28; -fx-background-radius: 30;" stylesheets="@CSS/tableview-style.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <TableView fx:id="customersTableView" editable="true" layoutX="14.0" layoutY="27.0" prefHeight="519.0" prefWidth="480.0" style="-fx-border-color: WHITE; -fx-border-radius: 28; -fx-background-radius: 30;" stylesheets="@CSS/tableview-style.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
                   <TableColumn fx:id="surnameColumn" editable="false" prefWidth="100.0" resizable="false" sortable="false" text="Фамилия" />
                   <TableColumn fx:id="nameColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="100.0" resizable="false" sortable="false" text="Имя" />

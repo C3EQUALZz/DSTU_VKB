@@ -26,19 +26,15 @@
  *****************************************************************************/
 
 .notification-bar>.pane .close-button {
-    -fx-background-color: transparent;
+    -fx-background-color: red;
     -fx-background-insets: 0;
-    -fx-background-radius: 0;
+    -fx-background-radius: 30;
     -fx-padding: 0 0 0 0;
     -fx-alignment: center;
 }
 
-.notification-bar > .pane .close-button:hover {
-    -fx-background-color: linear-gradient(#a3a3a3, #8b8b8b 34%, #777777 36%, #777777 63%, #8b8b8b 65%, #adadad);
-}
-
-.notification-bar>.pane .close-button:pressed {
-    -fx-background-color: linear-gradient(#a3a3a3, #8b8b8b 34%, #777777 36%, #777777 63%, #8b8b8b 65%, #adadad);
+.notification-bar>.pane .close-button:hover {
+    -fx-background-color: red;
 }
 
 .notification-bar>.pane .close-button>.graphic {
@@ -48,11 +44,13 @@
 }
 
 .notification-bar>.pane .close-button:hover>.graphic {
-    -fx-background-color: #fff;
+    -fx-translate-y: -0.5px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.8) , 15, 0 , 0 , 8 );
 }
 
 .notification-bar>.pane .close-button:pressed>.graphic {
-    -fx-background-color: #fff;
+    -fx-translate-y: +0.5px;
+    -fx-effect: null;
 }
 
 .notification-bar>.pane .close-button>.graphic {
