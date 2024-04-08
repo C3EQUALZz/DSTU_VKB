@@ -45,38 +45,53 @@ def main() -> None:
     # }
     # final_states = {"q3", "q4", "q5"}
 
-    # states = {"A", "B", "C", "D", "E"}
-    # alphabet = {"0", "1"}
-    # start = "A"
-    # final_states = {"E"}
+    states = {"A", "B", "C", "D", "E"}
+    alphabet = {"0", "1"}
+    start = "A"
+    final_states = {"E"}
+    transitions = {
+        "A": {"0": {"B"}, "1": {"C"}},
+        "B": {"0": {"B"}, "1": {"D"}},
+        "C": {"0": {"B"}, "1": {"C"}},
+        "D": {"0": {"B"}, "1": {"E"}},
+        "E": {"0": {"B"}, "1": {"C"}}
+    }
+
+    # states = {"Y", "X", "Z", "I", "J", "K", "L", "N", "M"}
+    # alphabet = {"i", "j", "n", "m", "k", "/", "!"}
+    # start = "X"
+    # final_states = {"N"}
     # transitions = {
-    #     "A": {"0": {"B"}, "1": {"C"}},
-    #     "B": {"0": {"B"}, "1": {"D"}},
-    #     "C": {"0": {"B"}, "1": {"C"}},
-    #     "D": {"0": {"B"}, "1": {"E"}},
-    #     "E": {"0": {"B"}, "1": {"C"}}
+    #     "Y": {"n": {"X"}, "m": {"I"}},
+    #     "X": {"i": {"I"}, "j": {"K"}},
+    #     "Z": {"n": {"X"}, "m": {"K"}},
+    #     "I": {"j": {"J"}, "n": {"L"}},
+    #     "J": {"m": {"X"}, "k": {"N"}},
+    #     "K": {"j": {"J"}, "n": {"M"}},
+    #     "L": {"/": {"L"}, "!": {"N"}},
+    #     "N": {},
+    #     "M": {"!": {"N"}, "/": {"M"}}
     # }
 
-    states = {"Y", "X", "Z", "I", "J", "K", "L", "N", "M"}
-    alphabet = {"i", "j", "n", "m", "k", "/", "!"}
-    start = "X"
-    final_states = {"N"}
-    transitions = {
-        "Y": {"n": {"X"}, "m": {"I"}},
-        "X": {"i": {"I"}, "j": {"K"}},
-        "Z": {"n": {"X"}, "m": {"K"}},
-        "I": {"j": {"J"}, "n": {"L"}},
-        "J": {"m": {"X"}, "k": {"N"}},
-        "K": {"j": {"J"}, "n": {"M"}},
-        "L": {"/": {"L"}, "!": {"N"}},
-        "N": {},
-        "M": {"!": {"N"}, "/": {"M"}}
-    }
+    # states = {"q0", "q1", "q2", "q3", "q4", "q5", "q6"}
+    # alphabet = {"a", "b"}
+    # start = "q0"
+    # transitions = {
+    #     "q0": {"a": {"q1"}, "b": {"q4"}},
+    #     "q1": {"a": {"q2"}, "b": {"q1"}},
+    #     "q2": {"a": {"q3"}, "b": {"q6"}},
+    #     "q3": {"a": {"q3"}, "b": {"q3"}},
+    #     "q4": {"a": {"q5"}, "b": {"q1"}},
+    #     "q5": {"a": {"q6"}, "b": {"q3"}},
+    #     "q6": {"a": {"q6"}, "b": {"q3"}}
+    # }
+    #
+    # final_states = {"q3", "q6"}
 
     d = RemovedUselessSymbolsDFA(states, alphabet, start, transitions, final_states)
     d.show_diagram()
     n = DFAMinimizer.from_removed_symbols_dfa(d)
-    n.show_diagram()
+    print(n)
 
 
 if __name__ == "__main__":

@@ -11,6 +11,7 @@ from itertools import chain, product
 from typing import Self, Set, AnyStr, Mapping, Final
 from dataclasses import dataclass
 from automata.fa.nfa import NFA
+import re
 
 from .remove_unreachable_states_dfa_class import RemovedUselessSymbolsDFA
 
@@ -43,7 +44,9 @@ class DFAMinimizer:
         Здесь происходит логика минимизации ДКА
         """
         self.set_of_states = {"".join(s) for s in self.__minimize_states()}
-        self.final_states = {state for state in self.set_of_states if set(state) & self.final_states}
+        self.final_states = {state for state in self.set_of_states
+                             if any(set(fin_state).issubset(state) for fin_state in self.final_states)}
+
         self.start_state = ''.join([state for state in self.set_of_states if self.start_state in state])
         self.transition_function = self.__construct_transition_function()
 
@@ -117,12 +120,14 @@ class DFAMinimizer:
         new_transition_function = defaultdict(dict)
 
         for state, symbol in product(self.set_of_states, self.set_of_input_alphabet_characters):
+            print(state, symbol)
             transitions = set(chain.from_iterable(
-                self.transition_function.get(old_state, {}).get(symbol, []) for old_state in state
+                self.transition_function.get(old_state, {}).get(symbol, [])
+                for old_state in re.findall(r'[A-Za-z][0-9]*', state)
             ))
 
             new_transition_function[state][symbol] = {new_state_set for new_state_set in self.set_of_states if
-                                                      any(new_state in new_state_set for new_state in transitions)}
+                                                      any(set(new_state).issubset(new_state_set) for new_state in transitions)}
 
         return new_transition_function
 
