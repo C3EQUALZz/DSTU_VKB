@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import lombok.RequiredArgsConstructor;
+import programmingLanguagesJava.laboratories.GUI.config.SOUND;
 import programmingLanguagesJava.laboratories.GUI.controllers.SceneController;
 
 import java.util.Objects;
@@ -44,6 +45,8 @@ public class NotificationClass extends Thread {
                 .hideAfter(Duration.seconds(7))
                 .graphic(new ImageView(image))
                 .position(Pos.TOP_CENTER);
+
+        SOUND.NOTIFICATION.play();
 
         Platform.runLater(notification::show);
     }

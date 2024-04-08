@@ -18,8 +18,6 @@ import java.util.TreeMap;
 import java.util.stream.IntStream;
 
 public class ComboboxConfigurator {
-    private final ButtonConfigurator buttonConfigurator = ButtonConfigurator.getInstance();
-
     // Словарь с лабораторными работами, где ключ - лабораторная работа, значение - ссылки на методы
     private final TreeMap<Class<?>, Method[]> dictInfoLaboratories = ParserLaboratories.parseLaboratories();
     private static ComboboxConfigurator instance;
@@ -40,10 +38,10 @@ public class ComboboxConfigurator {
     public void defaultConfiguration(ComboBox<String> comboBox) {
 
         // Обработчик событий, когда мышка попала на combobox.
-        comboBox.setOnMouseEntered(event -> buttonConfigurator.hoverClip.play());
+        comboBox.setOnMouseEntered(event -> SOUND.HOVER.play());
 
         // Обработчик событий, когда нажали на combobox.
-        comboBox.setOnMouseClicked(event -> buttonConfigurator.clickClip.play());
+        comboBox.setOnMouseClicked(event -> SOUND.CLICK.play());
 
         // Это было ради того, чтобы установить эффект hover звука на каждый элемент в combobox.
         comboBox.setCellFactory(param -> new ListCell<>() {
@@ -54,7 +52,7 @@ public class ComboboxConfigurator {
                     setText(null);
                 } else {
                     setText(item);
-                    setOnMouseEntered(event1 -> buttonConfigurator.hoverClip.play());
+                    setOnMouseEntered(event1 -> SOUND.HOVER.play());
                 }
             }
         });
@@ -63,7 +61,7 @@ public class ComboboxConfigurator {
         // устройство не разбирал, поэтому такой вариант для обработки звука.
         comboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                buttonConfigurator.clickClip.play();
+                SOUND.CLICK.play();
             }
         });
 

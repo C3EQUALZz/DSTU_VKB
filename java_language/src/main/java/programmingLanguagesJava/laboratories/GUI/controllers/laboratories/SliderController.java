@@ -9,12 +9,11 @@ import javafx.animation.TranslateTransition;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
-import programmingLanguagesJava.laboratories.GUI.config.ButtonConfigurator;
+import programmingLanguagesJava.laboratories.GUI.config.SOUND;
 
 public class SliderController implements ElementLaboratory {
     private final AnchorPane slider;
     private final Label openSlider, closeSlider;
-    private final ButtonConfigurator buttonConfigurator = ButtonConfigurator.getInstance();
 
     // Различные позиции Slider, я пишу не масштабируемое приложение, поэтому сдвиги по пикселям.
     private enum POSITIONS {
@@ -57,14 +56,14 @@ public class SliderController implements ElementLaboratory {
      * @param button кнопку, которую мы хотим настроить
      */
     private void configureButtonSoundEffects(Label button) {
-        button.setOnMouseEntered(event -> buttonConfigurator.hoverClip.play());
+        button.setOnMouseEntered(event -> SOUND.HOVER.play());
     }
 
     /**
      * Метод, который открывает нам меню
      */
     private void openMenu() {
-        buttonConfigurator.clickClip.play();
+        SOUND.CLICK.play();
         slideMenuToPosition(POSITIONS.MENU_OPENED_POSITION);
         switchButtonVisibility(false, true);
     }
@@ -73,7 +72,7 @@ public class SliderController implements ElementLaboratory {
      * Метод, который прячет меню
      */
     private void closeMenu() {
-        buttonConfigurator.clickClip.play();
+        SOUND.CLICK.play();
         slideMenuToPosition(POSITIONS.MENU_CLOSED_POSITION);
         switchButtonVisibility(true, false);
     }

@@ -9,13 +9,8 @@ package programmingLanguagesJava.laboratories.GUI.config;
 import javafx.event.EventHandler;
 import javafx.scene.control.ButtonBase;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.media.AudioClip;
-
-import java.util.Objects;
 
 public class ButtonConfigurator {
-    public final AudioClip hoverClip = new AudioClip(Objects.requireNonNull(getClass().getResource("/music/hover.mp3")).toExternalForm());
-    public final AudioClip clickClip = new AudioClip(Objects.requireNonNull(getClass().getResource("/music/click.mp3")).toExternalForm());
 
     private static ButtonConfigurator instance;
 
@@ -37,11 +32,11 @@ public class ButtonConfigurator {
      */
     public void setupButtonEvent(ButtonBase button, EventHandler<MouseEvent> eventHandler) {
         // Обработка того момента, когда мышка наводится на кнопку.
-        button.setOnMouseEntered(event -> hoverClip.play());
+        button.setOnMouseEntered(event -> SOUND.HOVER.play());
 
         // Обработка того момента, когда нажали на кнопку.
         button.setOnMouseClicked(event -> {
-            clickClip.play();
+            SOUND.CLICK.play();
             eventHandler.handle(event); // Передача объекта MouseEvent в обработчике события
         });
     }

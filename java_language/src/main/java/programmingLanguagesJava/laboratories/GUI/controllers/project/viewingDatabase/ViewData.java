@@ -31,7 +31,7 @@ public class ViewData extends BaseController {
     @FXML
     private TableColumn<PersonInfo, Image> planColumn, pactColumn;
     @FXML
-    private Button addHumanButton, updateTableButton, planOfhouseButton, contractButton;
+    private Button addHumanButton, updateTableButton, planOfhouseButton, contractButton, deleteRowButton;
     @FXML
     private TextField keywordTextField;
     @FXML
@@ -68,7 +68,8 @@ public class ViewData extends BaseController {
                 new UpdateTableButtonActionViewingDatabase(listDataBase, context, radioButtonContext,
                         updateTableButton, keywordTextField),
                 new ReaderActionViewingDataBase(context, contractButton),
-                new ReaderPlanActionViewDatabase(context, planOfhouseButton)
+                new ReaderPlanActionViewDatabase(context, planOfhouseButton),
+                new DeleteRowActionViewingDatabase(context, deleteRowButton)
 
         ).forEach(ActionViewingDatabase::execute);
 
