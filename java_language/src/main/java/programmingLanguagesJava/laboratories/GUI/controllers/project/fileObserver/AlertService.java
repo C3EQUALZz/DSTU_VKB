@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
+import programmingLanguagesJava.laboratories.GUI.config.SOUND;
 import programmingLanguagesJava.laboratories.GUI.controllers.SceneController;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.database.DataBaseSQLite;
 import programmingLanguagesJava.laboratories.GUI.controllers.project.database.utils.PersonInfo;
@@ -51,6 +52,7 @@ class AlertService extends Thread {
                 .hideAfter(Duration.seconds(7))
                 .position(Pos.TOP_CENTER);
 
+        SOUND.NOTIFICATION.play();
         Platform.runLater(notification::showWarning);
     }
 
