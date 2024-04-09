@@ -1,0 +1,80 @@
+/* Почитал, что обычно ставят какой-то корневой в px, а как тогда масштабируемость определяется? */
+.text {
+  font-size: 14px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* Заголовок лекции */
+.title_of_lecture {
+    display: block; 
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 1em 0 0.4px;
+    position: relative;
+}
+
+.title_of_lecture::before {
+    content: "";
+    position: absolute;
+    bottom: -10%; /* изменено с -0.3rem на 0 */
+    left: 49%; /* изменено с 78rem на 50% */
+    width: 30rem;
+    height: 1rem;
+    transform: skew(-12deg) translateX(-50%); /* изменено с translateX(-50%) на translateX(-50%) */
+    background: rgba(238,111,87,0.5);
+    z-index: -1;
+}
+
+/* Подзаголовки тем в лекции */
+.subtitle_of_lecture {
+    display: block;
+    text-align: center;
+    font-size: 1.3rem;
+}
+
+/* Контейнер, оборачивающий текст лекции, я думаю, что нужно выравнивание делать по центру, опять-таки меняйте как хотите */
+.container {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  width: 90%; /* Больше ширины на маленьких экранах */
+}
+
+/* Содержимое лекции */
+.container p {
+  font-size: 1.2rem;
+  margin-bottom: 0;
+  margin-top: 0rem;
+  line-height: 2rem;
+}
+
+/* Увеличиваем ширину контейнера для больших экранов */
+@media (min-width: 600px) {
+  .container {
+    width: 75%;
+  }
+}
+
+@media (min-width: 900px) {
+  .container {
+    width: 60%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    width: 45%;
+  }
+}
+
+/* Перечисление определений с пунктами, там 1, 2 и т.п */
+.points {
+    margin-top: 0;
+    padding-top: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    list-style: decimal;
+}
+
+

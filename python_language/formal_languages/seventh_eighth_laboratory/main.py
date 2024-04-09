@@ -6,6 +6,11 @@ from python_language.formal_languages.seventh_eighth_laboratory.remove_unreachab
     RemovedUselessSymbolsDFA)
 from python_language.formal_languages.seventh_eighth_laboratory.minimize_dfa_class import DFAMinimizer
 
+from automata.fa.dfa import DFA
+from automata.fa.nfa import NFA
+
+import os
+
 
 def main() -> None:
     # states = {"A", "B", "C", "D", "E", "F", "G"}
@@ -45,17 +50,17 @@ def main() -> None:
     # }
     # final_states = {"q3", "q4", "q5"}
 
-    states = {"A", "B", "C", "D", "E"}
-    alphabet = {"0", "1"}
-    start = "A"
-    final_states = {"E"}
-    transitions = {
-        "A": {"0": {"B"}, "1": {"C"}},
-        "B": {"0": {"B"}, "1": {"D"}},
-        "C": {"0": {"B"}, "1": {"C"}},
-        "D": {"0": {"B"}, "1": {"E"}},
-        "E": {"0": {"B"}, "1": {"C"}}
-    }
+    # states = {"A", "B", "C", "D", "E"}
+    # alphabet = {"0", "1"}
+    # start = "A"
+    # final_states = {"E"}
+    # transitions = {
+    #     "A": {"0": {"B"}, "1": {"C"}},
+    #     "B": {"0": {"B"}, "1": {"D"}},
+    #     "C": {"0": {"B"}, "1": {"C"}},
+    #     "D": {"0": {"B"}, "1": {"E"}},
+    #     "E": {"0": {"B"}, "1": {"C"}}
+    # }
 
     # states = {"Y", "X", "Z", "I", "J", "K", "L", "N", "M"}
     # alphabet = {"i", "j", "n", "m", "k", "/", "!"}
@@ -88,10 +93,39 @@ def main() -> None:
     #
     # final_states = {"q3", "q6"}
 
+    states = {"q0", "q1", "q2", "q3", "q4", "q5"}
+    alphabet = {"0", "1"}
+    start = "q0"
+    final_states = {"q3", "q4", "q5"}
+    transitions = {
+        "q0": {"0": {"q1"}, "1": {"q2"}},
+        "q1": {"0": {"q3"}, "1": {"q2"}},
+        "q2": {"0": {"q4"}, "1": {"q1"}},
+        "q3": {"0": {"q5"}, "1": {"q4"}},
+        "q4": {"0": {"q4"}, "1": {"q2"}},
+        "q5": {"0": {"q5"}, "1": {"q4"}}
+    }
+
     d = RemovedUselessSymbolsDFA(states, alphabet, start, transitions, final_states)
     d.show_diagram()
     n = DFAMinimizer.from_removed_symbols_dfa(d)
     print(n)
+
+    # DFA.from_nfa(NFA(
+    #     states=states,
+    #     input_symbols=alphabet,
+    #     final_states=final_states,
+    #     transitions=transitions,
+    #     initial_state=start
+    # ), retain_names=True).show_diagram(path=os.path.join(os.path.curdir, "test_dfa.png"))
+
+    # DFA(
+    #     states=states,
+    #     input_symbols=alphabet,
+    #     final_states=final_states,
+    #     transitions=transitions,
+    #     initial_state=start,
+    # ).minify(retain_names=True).show_diagram(os.path.join(os.path.curdir, "test_dfa_min.png"))
 
 
 if __name__ == "__main__":

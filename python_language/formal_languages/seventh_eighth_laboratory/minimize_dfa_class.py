@@ -99,6 +99,7 @@ class DFAMinimizer:
             Кортеж из новой и старой видоизмененной группы
             Пример: ({A, B, C} -> __create_new_group_based_on_the_old -> {A, B}, {C})
         """
+        # TODO: ЗДЕСЬ ОШИБКА В ЛОГИКЕ, НУЖНО ИСПРАВИТЬ
 
         new_group = set()
         remaining_states = group.copy()
@@ -120,14 +121,14 @@ class DFAMinimizer:
         new_transition_function = defaultdict(dict)
 
         for state, symbol in product(self.set_of_states, self.set_of_input_alphabet_characters):
-            print(state, symbol)
             transitions = set(chain.from_iterable(
                 self.transition_function.get(old_state, {}).get(symbol, [])
                 for old_state in re.findall(r'[A-Za-z][0-9]*', state)
             ))
 
             new_transition_function[state][symbol] = {new_state_set for new_state_set in self.set_of_states if
-                                                      any(set(new_state).issubset(new_state_set) for new_state in transitions)}
+                                                      any(set(new_state).issubset(new_state_set) for new_state in
+                                                          transitions)}
 
         return new_transition_function
 
