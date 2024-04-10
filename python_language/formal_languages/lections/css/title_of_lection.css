@@ -1,0 +1,36 @@
+/* Костыль, чтобы центрировать */
+.center_h1 {
+    text-align: center;
+}
+
+/* Заголовок лекции */
+.title_of_lecture {
+    display: inline-block;
+    text-align: center;
+    align-content: center;
+    font-size: 1.5rem;
+    padding: 1em 0 0.1em;
+    position: relative;
+}
+
+.title_of_lecture::after {
+    content: "";
+    display: block;
+    width: 100%; 
+    height: 0.2rem;
+    background-color: #f9dd94;
+    position: absolute;
+    bottom: 0;
+}
+
+/* .title_of_lecture::before {
+    content: "";
+    position: absolute;
+    bottom: -10%; 
+    left: 49%; 
+    width: 30rem;
+    height: 1rem;
+    transform: skew(-12deg) translateX(-50%); 
+    background: rgba(238,111,87,0.5);
+    z-index: -1;
+} */

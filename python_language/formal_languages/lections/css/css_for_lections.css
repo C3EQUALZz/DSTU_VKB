@@ -1,0 +1,31 @@
+/* Почитал, что обычно ставят какой-то корневой в px, а как тогда масштабируемость определяется? */
+.text {
+  font-size: 14px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+
+/* Подзаголовки тем в лекции */
+.subtitle_of_lecture {
+    display: block;
+    text-align: center;
+    font-size: 1.3rem;
+}
+
+/* Подзаголовки для доказательства теорем и т.п */
+.proof_or_theorem {
+  display: block;
+  text-align: left;
+  font-size: 1.1875rem;
+} 
+
+/* Перечисление определений с пунктами, там 1, 2 и т.п */
+.points {
+    margin-top: 0;
+    padding-top: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    list-style: decimal;
+}
+
+
