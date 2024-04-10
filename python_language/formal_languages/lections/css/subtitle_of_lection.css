@@ -1,0 +1,19 @@
+/* Подзаголовки тем в лекции */
+.subtitle_of_lecture {
+    display: inline-block;
+    text-align: center;
+    align-content: center;
+    font-size: 1.3rem;
+    padding: 1em 0 0.1em;
+    position: relative;
+}
+
+.subtitle_of_lecture::after {
+  content: "";
+    display: block;
+    width: 100%; 
+    height: 0.2rem;
+    background-color: #fa8072;
+    position: absolute;
+    bottom: 0;
+}

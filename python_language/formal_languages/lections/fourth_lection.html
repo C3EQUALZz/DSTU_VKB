@@ -3,10 +3,13 @@
 <link rel="stylesheet" type="text/css" href="css/css_for_lections.css">
 <link rel="stylesheet" type="text/css" href="css/container.css">
 <link rel="stylesheet" type="text/css" href="css/title_of_lection.css">
+<link rel="stylesheet" type="text/css" href="css/ordered_list.css">
+<link rel="stylesheet" type="text/css" href="css/subtitle_of_lection.css">
+<link rel="stylesheet" type="text/css" href="css/proofs_examples_etc.css">
 
 <div class="text">
 
-    <div class="center_h1">
+    <div class="center_any_title">
         <h1 class="title_of_lecture">Источники и языки</h1>
     </div>
 
@@ -24,13 +27,16 @@
             Все такие слова, и только они составляют язык L. Говорят, что источник <i>порождает</i> язык L.</p><br>
         
         <p>Пример.</p><br>
-        <img src="images/vectorpaint.svg"><img><br><br>
+        <img src="images/fourth_lection/vectorpaint.svg"><br><br>
 
         <p>L = a<sup>2</sup>b<sup>*</sup> V abb<sup>*</sup> V b<sup>*</sup></p>
         <p>Чтобы проверить, что данный источник порождает именно этот язык, нужно рассмотреть все пути, ведущие из начальной вершины в заключительную.</p><br>
     </div>
 
-    <h3 class="subtitle_of_lecture">Первая теорема Клини</h3>
+    <div class="center_any_title">
+        <h3 class="subtitle_of_lecture">Первая теорема Клини</h3>
+    </div>
+    
     
     <div class="container">
         <p><i>Каждый язык, порождаемый источником, является регулярным.</i></p><br>
@@ -39,12 +45,12 @@
         <p>Пусть вершины источника пронумерованы. И пусть R<sup>k</sup><sub>ij</sub> обозначает множество всех слов,
              порожденных путями в данном источнике из вершины с номером i в вершину с номером j,
              не проходящими вершину с номером больше k. Следующая лемма иллюстрирует "понижение степени" R<sup>k</sup><sub>ij</sub>
-              и позволяет таким образом перейти к простейшим языкам R<sub>i</sub>0<sub>j</sub>.</p><br>
+              и позволяет таким образом перейти к простейшим языкам R<sub>i</sub>0<sub>j</sub>.</p>
 
         <h4 class="proof_or_theorem">Лемма.</h4>
 
         <p>Выполнены следующие равенства.</p>
-        <ol>
+        <ol class="points">
             <li><p>R<sup>k</sup><sub>ij</sub> = R<sup>k-1</sup><sub>ij</sub> V R<sup>k-1</sup><sub>ik</sub>(R<sup>k-1</sup><sub>kk</sub>)<sup>*</sup>R<sup>k-</sup><sub>kj</sub></p></li>
             <li><p>R<sup>k</sup><sub>kj</sub> = (R<sup>k-1</sup><sub>kk</sub>)<sup>*</sup>R<sup>k-1</sup><sub>kj</sub></p></li>
             <li><p>R<sup>k</sup><sub>ik</sub> = R<sup>k-1</sup><sub>ik</sub>(R<sup>k-1</sup><sub>kk</sub>)<sup>*</sup></p></li>
@@ -64,16 +70,63 @@
         <p>Пункты 2 - 4 следуют из 1. Выведем пункт 2.</p>
         <p>Пусть i = k. Тогда R<sup>k</sup><sub>kj</sub> = R<sup>k</sup><sub>kj</sub> - 1 V R<sup>k</sup><sub>kk</sub> - 1(R<sup>k</sup><sub>kk</sub> - 1) * R<sup>k</sup><sub>kj</sub> - 1 =
              (&lambda; V R<sup>k</sup><sub>kk</sub> -1(R<sup>k</sup><sub>kk</sub> - 1))* R<sup>k</sup><sub>kj</sub> - 1 = (R<sup>k</sup><sub>kk</sub> - 1) * R<sup>k</sup><sub>kj</sub> - 1.</p>
-        <p>Остальные пункты выводятся аналогично.</p><br>
-
-        <p></p>
+        <p>Остальные пункты выводятся аналогично.</p>
         
+        <h4 class="proof_or_theorem">Доказательство теоремы.</h4><br>
+
+        <p>Составим регулярное выражение для языка, порожденного произвольным источником.</p><br>
+
+        <p>Итак, рассмотрим источник И с n вершинами. Некоторым образом
+            перенумеруем его вершины. Множество начальных вершин обозначим I,
+            а множество заключительных ꂈ F.</p><br>
+        
+        <p>Очевидно, что вырабатываемое им множество слов есть и, V i ∈ I, k ∈ F(R<sup>n</sup><sub>lk</sub>) ,это слова, порожденные путями от начальных вершин к заключительным, которые не проходят вершины с номерами, большими, чем количество вершин. Далее, для каждого R<sup>n</sup><sub>lk</sub> применяем лемму до тех пор, пока в ней не будут участвовать лишь R<sup>0</sup><sub>ij</sub>, то есть слова, соответствующие множествам путей из вершины i в вершину j, не заходящих ни в какую другую вершину. Можно выписать конкретные выражения для каждого R<sup>0</sup><sub>ij</sub> следующим образом.</p><br>
+
+        <p>R<sup>0</sup><sub>ij</sub> = ∅, если нет ребер, ведущих из вершины i в вершину j, причем i ꁘ= j.</p>
+        <p>R<sup>0</sup><sub>ij</sub> = a<sub>1</sub>1 V ... V a<sub>k</sub>, если из i в j ведут ребра с буквами a<sub>1</sub>, ..., a<sub>k</sub>. 
+            Если от i к j ведет еще и пустое ребро, то в объединение добавляется пустое слово &lambda;.</p>
+        
+        <p>R<sup>0</sup><sub>ij</sub> = &lambda;, если есть только пустое ребро. Множество Ri0i также всегда содержит пустое слово &lambda;.</p>
+        <p>Ясно, что языки R<sup>0</sup><sub>ij</sub> регулярны. Видно, что все языки R<sup>k</sup><sub>ij</sub> получаются из них с помощью операций объединения, конкатенации и итерации. 
+            Следовательно, все языки R<sup>k</sup><sub>ij</sub> регулярны, поэтому регулярен и язык V i ∈ I, k ∈ F(R<sup>n</sup><sub>lk</sub>). Теорема доказана.</p><br>
+        
+        <p>Применяя лемму, можно также формализовать процесс определения языка, вырабатываемого источником.</p>
+
+        <h4 class="proof_or_theorem">Пример.</h4>
+
+        <img src="images/fourth_lection/FreeSample-Vectorizer-io-image_2024-04-10_21-50-59.svg"><br>
+
+        <p>Этот источник порождает язык L = R<sup>2</sup><sub>12</sub> = R<sup>1</sup><sub>12</sub>(R<sup>1</sup><sub>22</sub>)* = 
+            (R<sup>0</sup><sub>11</sub>)<sup>*</sup>R<sup>0</sup><sub>12</sub>(R<sup>0</sup><sub>22</sub> U R<sup>0</sup><sub>21</sub>
+            (R<sup>0</sup><sub>11</sub>)<sup>*</sup>R<sup>0</sup><sub>12</sub>)<sup>*</sup> = b<sup>*</sup>a(b V b<sup>*</sup>a)<sup>*</sup>.</p>
+
+        <p>Источник называется двухполюсником, если в нем ровно одна начальная вершина и ровно одна заключительная, причем они не совпадают, ни одно ребро не входит в начальную вершину, а из заключительной вершины не выходит ни одно ребро.</p>
+
+        <h4 class="proof_or_theorem">Утверждение.</h4>
+        <p>Для любого источника существует эквивалентный ему двухполюсник.</p>
+        
+        <h4 class="proof_or_theorem">Доказательство</h4>
+        <p>В данном источнике все начальные и заключительные вершины сделаем обыкновенными и введем дополнительные вершины q<sub>0</sub> и q<sub>f</sub>. Из q<sub>0</sub> проведем пустые ребра в бывшие начальные, а из бывших заключительных проведем пустые ребра в q<sub>f</sub>. Получившийся источник - двухполюсник, эквивалентный данному.</p>
+    </div>
+
+    <div class="center_any_title">
+        <h3 class="subtitle_of_lecture">Вторая теорема Клини.</h3>
+    </div>
+    
+    <div class="container">
+        <p><i>Любой регулярный язык порождается некоторым источником.</i></p>
+
+        <h4 class="proof_or_theorem">Доказательство.</h4>
+        <p>Построим для регулярного языка источник. Для простейших ∅,&lambda;,a соответствующие источники выглядят так: </p><br>
+        <img src="images/fourth_lection/FreeSample-Vectorizer-io-image_2024-04-10_22-26-17.svg"><br><br>
+
+        <p>&lambda; ∗ y; a * E y; a ∅ ∗ ' y;a</p>
+        <p>Далее, пусть построены источники для регулярных языков L<sub>1</sub> и L<sub>2</sub>. Можно считать их двухполюсниками.</p>
 
     </div>
         
         
         
-    </div>
-
-
 </div>
+
+

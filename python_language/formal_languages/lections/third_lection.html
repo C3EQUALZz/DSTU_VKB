@@ -1,15 +1,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 <link rel="stylesheet" type="text/css" href="css/css_for_lections.css">
-<link rel="stylesheet" type="text/css" href="css/css_for_lections.css">
+<link rel="stylesheet" type="text/css" href="css/container.css">
 <link rel="stylesheet" type="text/css" href="css/title_of_lection.css">
+<link rel="stylesheet" type="text/css" href="css/ordered_list.css">
+<link rel="stylesheet" type="text/css" href="css/subtitle_of_lection.css">
+<link rel="stylesheet" type="text/css" href="css/proofs_examples_etc.css">
 
 <div class="text">
-    <div class="center_h1">
+
+    <div class="center_any_title">
         <h1 class="title_of_lecture"> Виды грамматик и языков</h1>
     </div>
     
-    <h3 class="subtitle_of_lecture">Регулярные языки</h3>
+    <div class="center_any_title">
+        <h3 class="subtitle_of_lecture">Регулярные языки</h3>
+    </div>
 
     <div class="container">
         <p>Возьмем некоторое конечное множество символов A, назовем его <i>алфавитом</i>, а его элементы - <i>буквами</i>.</p><br>
@@ -29,12 +35,16 @@
 
         <p>Языком в данном алфавите A называется любое подмножество L множества всех слов A<sup>*</sup>, L ⊂ A<sup>*</sup>.</p><br>
 
-        <p>Пример. A = {a,b,c}</p>
+        <h4 class="proof_or_theorem">Пример.</h4>
+
+        <p> A = {a,b,c}</p>
         <p>L = {&lambda;, aa, abc, cb, bc}. A<sup>*</sup> - все слова, которые можно составить из букв a, b, c: &lambda;, a, b, c, aa, ab, ac, ba,...</p><br> 
 
     </div>
 
-    <h3 class="subtitle_of_lecture">Операции над языками. Регулярные языки.</h3>
+    <div class="center_any_title">
+        <h3 class="subtitle_of_lecture">Операции над языками. Регулярные языки.</h3>
+    </div>
 
     <div class="container">
         <p>Рассмотрим произвольный алфавит A и всевозможные языки в нем.</p>
@@ -65,8 +75,10 @@
         </ol>
     </div>
 
-    <h3 class="subtitle_of_lecture">Формальное определение.</h3>
-
+    <div class="center_any_title">
+        <h3 class="subtitle_of_lecture">Формальное определение.</h3>
+    </div>
+    
     <div class="container">
         <ol class="points">
             <li>
@@ -83,11 +95,13 @@
 
         <p>Выражение, задающее регулярный язык, называется регулярным выражением. Для простейших языков эти выражения - ∅,&lambda;,a, остальные составляются из простейших с помощью V,·,<sup>*</sup> и скобок.</p><br>
 
-        <p>Задача. Составить регулярное выражение для языка в алфавите {a, b, c}, состоящее из всех слов, начинающихся на ab, но не заканчивающихся на c. </p>
+        <h4 class="proof_or_theorem">Задача.</h4>
+        <p>Составить регулярное выражение для языка в алфавите {a, b, c}, состоящее из всех слов, начинающихся на ab, но не заканчивающихся на c. </p>
         <p>Как уже было сказано, множество всех слов в алфавите A = {a,b,c} есть A<sup>*</sup> = (a V b V c)<sup>*</sup>.</p>
         <p>Все слова, начинающиеся на ab - конкатенация ab со множеством всех слов. Выражение для такого языка есть ab(a V b V c)<sup>*</sup>. Слово не заканчивается на букву c, значит, оно заканчивается на a или на b. Поэтому регулярное выражение для данного языка имеет вид ab(a V b V c) * (a V b).</p><br>
         
-        <p>Задача. Составить регулярное выражение для языка в алфавите {a, b, c} из всех слов, где буква b встречается только в виде массива b<sub>n</sub>,где n - четное число.</p>
+        <h4 class="proof_or_theorem">Задача.</h4>
+        <p> Составить регулярное выражение для языка в алфавите {a, b, c} из всех слов, где буква b встречается только в виде массива b<sub>n</sub>,где n - четное число.</p>
         <p>Сначала зададим массив b<sub>n</sub>. Это (bb)<sup>*</sup>, кстати, сюда входит и пустое слово (случай n = 0). Слова языка Ð всевозможные последовательности букв a, c и таких массивов.</p>
 
         <p>Искомое регулярное выражение - (a V (bb) * V c)<sup>*</sup>. Но не все формальные языки являются регулярными.</p><br>

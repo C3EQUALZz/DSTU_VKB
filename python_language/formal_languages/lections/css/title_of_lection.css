@@ -1,14 +1,9 @@
-/* Костыль, чтобы центрировать */
-.center_h1 {
-    text-align: center;
-}
-
 /* Заголовок лекции */
 .title_of_lecture {
     display: inline-block;
     text-align: center;
     align-content: center;
-    font-size: 1.5rem;
+    font-size: 2rem;
     padding: 1em 0 0.1em;
     position: relative;
 }
