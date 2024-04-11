@@ -6,3 +6,10 @@
     padding-bottom: 0;
     list-style: decimal;
 }
+
+.points li {
+  font-size: 1.2rem;
+  margin-bottom: 0;
+  margin-top: 0rem;
+  line-height: 2rem;
+}
