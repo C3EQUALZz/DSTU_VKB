@@ -14,8 +14,15 @@
   display: block;
   text-align: left;
   font-size: 1.1875rem;
-} 
+}
 
-
+/* CSS для фото, которое я вставляю */
+.image {
+  display: block;
+  align-self: center;
+  align-items: center;
+  text-align: center;
+  font-size: 0.2rem;
+}
 
 
