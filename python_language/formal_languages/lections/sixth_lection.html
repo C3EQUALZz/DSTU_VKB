@@ -1,0 +1,146 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<link rel="stylesheet" type="text/css" href="css/css_for_lections.css">
+<link rel="stylesheet" type="text/css" href="css/container.css">
+<link rel="stylesheet" type="text/css" href="css/title_of_lection.css">
+<link rel="stylesheet" type="text/css" href="css/ordered_list.css">
+<link rel="stylesheet" type="text/css" href="css/subtitle_of_lection.css">
+<link rel="stylesheet" type="text/css" href="css/proofs_examples_etc.css">
+
+<div class="text">
+    <div class="center_any_title">
+        <h1 class="title_of_lecture">Минимизация автоматов</h1>
+    </div>
+
+    <div class="container">
+        <p>
+            <br>Так как существуют различные автоматы, задающие одинаковые отображения Φ, возникает вопрос, как построить автомат, эквивалентный данному, но с меньшим числом состояний.
+             Процесс минимизации позволяет получить автомат с наименьшим числом состояний.
+        </p>
+
+        <p>
+            <br> Состояния q<sub>i</sub> и q<sub>j</sub> некоторого автомата называются эквивалентными, если инициальные автоматы с начальными состояниями q<sub>i</sub> и q<sub>j</sub> эквивалентны.
+                Разобьем множество состояний автомата Q на классы эквивалентности (эквивалентные состояния находятся в одном классе, состояния из разных классов неэквивалентны). 
+                Каждый класс объявляется состоянием нового автомата q̃<sub>1</sub>, q̃<sub>2</sub>, ..., q̃<sub>n</sub>. От состояния q<sub>i</sub> к состояния q<sub>j</sub> проводится ребро с буквами
+                a, v, если такие ребра были между состояниями исходного автомата из соответствующих классов. 
+            
+        </p>
+
+        <p>
+            <br> q ꂘ начальная вершина, если в соответствующем классе содержится начальная вершина.
+        </p>
+
+        <p>
+            <br> Полученный автомат называется минимальным или приведенным. Разбиение на классы происходит следующим образом. 
+        </p>
+    </div>
+
+    <div class="center_any_title">
+        <h3 class="subtitle_of_lecture">Алгоритм минимизации.</h3>
+    </div>
+
+    <div class="container">
+        <p>
+            <ol class="points">
+                <li> q<sub>i</sub>, q<sub>j</sub> отнесем к одному классу, если f(q<sub>i</sub>, a) = f(q<sub>j</sub>, a) для каждой буквы входного алфавита.
+                    Полученный класс назовем классом 1-эквивалентности.</li>
+
+                <li> Каждый полученный класс разобьем следующим образом: q<sub>s</sub>s, q<sub>t</sub> из класса 1-эквивалентности находятся в одном классе 2-эквивалентности,
+                    если для каждой буквы входного алфавита a состояния ϕ(q<sub>s</sub>, a) и ϕ(q<sub>t</sub>, a) находятся в одном классе 1-эквивалентности для каждого a.</li>
+
+                <li> q<sub>s</sub>, q<sub>t</sub> из одного класса (i − 1)-эквивалентности находятся в одном классе i-эквивалентности, если для каждого a состояния ϕ(q<sub>s</sub>, a)
+                    и ϕ(q<sub>t</sub>, a) находятся в одном классе (i − 1)-эквивалентности.</li>
+            </ol>
+        </p>
+
+        <p>
+            <br> Когда этот процесс остановится (классы прекращают делиться), получится требуемое разбиение.
+             Легко видеть, что максимальное число шагов данного алгоритма на единицу меньше числа состояний исходного автомата.
+        </p>
+
+        <h4 class="proof_or_theorem">Пример.</h4>
+
+        <div class="image">
+            <img src="images/sixth_lection/first.png">
+        </div>
+
+        <p>
+            <br> На первом шаге алгоритма (проверка совпадения выходных символов) выделяются два класса: I = {q<sub>0</sub>}, II = {q<sub>1</sub>1, q<sub>2</sub>}.
+             Рассмотрим ϕ(q<sub>i</sub>i, a<sub>j</sub>) для второго класса. 
+        </p>
+
+        <div class="image">
+            <img src="images/sixth_lection/second.png">
+        </div>
+
+        <p>
+            <br> Функции переходов переводят состояния в одинаковые классы, дальше разбиения не происходит.
+             Значит, состояния q1 и q2 эквивалентны. Минимальный автомат имеет вид: 
+        </p>
+
+        <div class="image">
+            <img src="images/sixth_lection/third.png">
+        </div>
+
+        <h4 class="proof_or_theorem">Пример.</h4>
+        <p>
+            <br> Задание: по грамматике построить источник, детерминировать его, получить автомат, распознающий тот же язык, 
+            минимизировать полученный автомат и записать грамматику для минимального автомата.
+            <br> I → aI|bI|bA,
+            <br> A → aB|bC,
+            <br> B → aB|bI|aI,
+            <br> C → bC|a|b.
+            <br> Источник, порождающий тот же язык, что и грамматика. 
+        </p>
+
+        <div class="image">
+            <img src="images/sixth_lection/fourth.png">
+        </div>
+
+        <p>
+            <br> Детерминируем этот источник.
+        </p>
+
+        <div class="image">
+            <img src="images/sixth_lection/fifth.png">
+        </div>
+
+        <p>
+            <br> Детерминированный источник имеет вид 
+        </p>
+
+        <div class="image">
+            <img src="images/sixth_lection/sixth.png">
+        </div>
+
+        <p>
+            <br> Такому источнику можно поставить в соответствие муровский автомат, допускающий тот же язык с помощью выходного символа 1. 
+        </p>
+
+        <div class="image">
+            <img src="images/sixth_lection/seventh.png">
+        </div>
+
+        <p>
+            <br> На первом шаге выделяются классы 1-эквивалентности: 
+            <br> I = {1, 2, 3, 5}, II = {4, 6} 
+        </p>
+
+        <div class="image">
+            <img src="images/sixth_lection/eighth.png">
+        </div>
+
+        <p>
+            <br> Минимизация закончена. Получившийся автомат таков:
+        </p>
+
+        <div class="image">
+            <img src="images/sixth_lection/ninth.png">
+        </div>
+
+        <p>
+            <br> Порождающая грамматика имеет вид
+            <br> I → aI|bA,A → aI|bB,B → bB|aI|a|b.
+        </p>
+    </div>
+</div>
