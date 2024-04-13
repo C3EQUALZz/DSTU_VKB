@@ -40,4 +40,5 @@ scipy
 automata-lib
 coloraide
 pandas
+seaborn
 
