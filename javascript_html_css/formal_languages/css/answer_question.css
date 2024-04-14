@@ -1,18 +1,37 @@
+/* В данный блок помещается само решение */
 .answer {
-  display: grid;
-  place-items: center;
-  background: #acd2fb;
-  border-radius: 1em;
-  clip-path: circle(15.2% at 100% 0);
-  transition: all 0.3s;
-  padding: 1rem 4rem 4rem 4rem;
+	position: absolute;
+	right: 0;
+	top: 0;
+	display: grid;
+	place-items: center;
+	background: #acd2fb;
+	border-radius: 1em;
+	clip-path: circle(10.2% at 100% 0);
+	transition: all 0.3s;
+	padding: 1rem 4rem 4rem 4rem;
 }
 
-.answer p {
-  margin-right: 1rem;
-}
-
+/* При наведении раскрывается полностью */
 .answer:hover {
-  clip-path: circle(141.4% at 100% 0);
+	clip-path: circle(141.4% at 100% 0);
 }
 
+/* Контейнер, в который мы помещаем условие задания и решение. Сделан с той целью, чтобы были слева и справа */
+.task-container {
+	display: flex;
+	justify-content: space-between;
+}
+
+.title_answer_container {
+	display: inline-block;
+	justify-content: space-between;
+}
+
+.fas.fa-lightbulb {
+  position: absolute;
+  right: 1.2rem;
+  top: 1.2rem;
+	font-size: 1.5rem;
+	color: yellow;
+}

@@ -7,6 +7,8 @@
 <link rel="stylesheet" type="text/css" href="../css/subtitle_of_lection.css">
 <link rel="stylesheet" type="text/css" href="../css/proofs_examples_etc.css">
 <link rel="stylesheet" type="text/css" href="../css/answer_question.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 
 <div class="text">
 
@@ -15,29 +17,74 @@
   </div>
 
   <div class="container">
-    <h4 class="proof_or_theorem">Пример 1. Для заданных языков L<sub>1</sub> и L<sub>2</sub> найти L<sub>1</sub> &cap; L<sub>2</sub> и L<sub>1</sub> &cup; L<sub>2</sub>: </h4>
+    <h4 class="proof_or_theorem">Пример 1. </h4>
 
-    <p>
-      <br> - L<sub>1</sub> = {b<sup>i</sup>a | i &ge; 0} i , L<sub>2</sub> = {a<sup>i</sup>b | i &ge; 0};
-      <br> - L<sub>1</sub> = {b<sup>i</sup> a<sup>j</sup> | i &ge; 0, j &ge; 0} ij , L<sub>2</sub> = {a<sup>i</sup> b<sup>j</sup> | i &ge; 0, j &ge; 0};
-    </p>
-
-    <div class="answer">
-      <h4 class="proof_or_theorem"> Решение </h4>
-      <p>
-        <br> - L<sub>1</sub> &cap; L<sub>2</sub> = {b<sup>i</sup> a<sup>i + 1</sup>b | i &ge; 0}
-        <br> Пример: ab, baab, bbaaab... 
-        <br> L<sub>1</sub> &cup; L<sub>2</sub> = {Ø}
-        <br> Наборы: L<sub>1</sub> = {a, ba, bba, bbba, …}, L<sub>2</sub> = {b, ab, aab, aaab, …}. Результат пересечения – пустое множество
-      </p>
+    <div class="task-container">
 
       <p>
-        <br> - L<sub>1</sub>1 &cup; L<sub>2</sub> = {b<sup>i</sup> a<sup>j</sup> a<sup>i</sup>i b<sup>j</sup> | i, j &ge; 0}
-        <br> Пример: λ, ba, ab, baab, bbaaab, baaabb, bbaaaabb…
-        <br> L<sub>1</sub> &cap; L<sub>2</sub> = {&lambda;}
-        <br> Результатом пересечение L<sub>1</sub> и L<sub>2</sub> может быть только &lambda;, так как единственный элемент,
-         который есть в L<sub>1</sub> и L<sub>2</sub>, это пустой символ, который можно получить при i, j = 0
+        <br> Для заданных языков L<sub>1</sub> и L<sub>2</sub> найти L<sub>1</sub> &cap; L<sub>2</sub> и L<sub>1</sub> &cup; L<sub>2</sub>:
+        <br> - L<sub>1</sub> = {b<sup>i</sup>a | i &ge; 0} i , L<sub>2</sub> = {a<sup>i</sup>b | i &ge; 0};
+        <br> - L<sub>1</sub> = {b<sup>i</sup> a<sup>j</sup> | i &ge; 0, j &ge; 0} ij , L<sub>2</sub> = {a<sup>i</sup> b<sup>j</sup> | i &ge; 0, j &ge; 0};
       </p>
+
+      <div class="answer">
+        
+        <div class="title_answer_container">
+            <h4 class="proof_or_theorem"> Решение </h4>
+            <i class="fas fa-lightbulb"></i>
+        </div>
+
+        <p>
+          <br> - L<sub>1</sub> &cap; L<sub>2</sub> = {b<sup>i</sup> a<sup>i + 1</sup>b | i &ge; 0}
+          <br> Пример: ab, baab, bbaaab... 
+          <br> L<sub>1</sub> &cup; L<sub>2</sub> = {Ø}
+          <br> Наборы: L<sub>1</sub> = {a, ba, bba, bbba, …}, L<sub>2</sub> = {b, ab, aab, aaab, …}. Результат пересечения – пустое множество
+        </p>
+
+        <p>
+          <br> - L<sub>1</sub>1 &cup; L<sub>2</sub> = {b<sup>i</sup> a<sup>j</sup> a<sup>i</sup>i b<sup>j</sup> | i, j &ge; 0}
+          <br> Пример: λ, ba, ab, baab, bbaaab, baaabb, bbaaaabb…
+          <br> L<sub>1</sub> &cap; L<sub>2</sub> = {&lambda;}
+          <br> Результатом пересечение L<sub>1</sub> и L<sub>2</sub> может быть только &lambda;, так как единственный элемент,
+          который есть в L<sub>1</sub> и L<sub>2</sub>, это пустой символ, который можно получить при i, j = 0
+        </p>
+
+      </div>
+
+    </div>
+    
+
+  </div>
+
+  <div class="container">
+    <h4 class="proof_or_theorem">Пример 2.</h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Построить контекстно-свободные грамматики для следующих языков: 
+        <br> L = {0<sup>i</sup> 1<sup>j</sup> | i = j}; 
+        <br> L = {0<sup>i</sup> 1<sup>j</sup> | i ≥ j}; 
+      </p>
+
+      <div class="answer">
+
+        <div class="title_answer_container">
+            <h4 class="proof_or_theorem"> Решение </h4>
+            <i class="fas fa-lightbulb"></i>
+        </div>
+
+        <p>
+          <br> Главный алгоритм при составлении грамматики должен быть таким, чтобы хотя бы одно правило имело такой вид, например:
+          <br> A → aCa, A → Bav,  B → nLb;
+          <br> Пример для задания:
+          <br> S → AB
+          <br> A → 0A | 0 | λ
+          <br> B → B1 | 1 | λ
+        </p>
+
+      </div>
+
     </div>
 
   </div>

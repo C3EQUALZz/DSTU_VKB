@@ -1,5 +1,6 @@
 /* Контейнер, оборачивающий текст лекции, я думаю, что нужно выравнивание делать по центру, опять-таки меняйте как хотите */
 .container {
+  position: relative;
   display: block;
   margin-left: auto;
   margin-right: auto;
