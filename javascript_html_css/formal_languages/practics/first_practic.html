@@ -1,0 +1,45 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<link rel="stylesheet" type="text/css" href="../css/css_for_lections.css">
+<link rel="stylesheet" type="text/css" href="../css/container.css">
+<link rel="stylesheet" type="text/css" href="../css/title_of_lection.css">
+<link rel="stylesheet" type="text/css" href="../css/ordered_list.css">
+<link rel="stylesheet" type="text/css" href="../css/subtitle_of_lection.css">
+<link rel="stylesheet" type="text/css" href="../css/proofs_examples_etc.css">
+<link rel="stylesheet" type="text/css" href="../css/answer_question.css">
+
+<div class="text">
+
+  <div class="center_any_title">
+    <h1 class="title_of_lecture">Практика по лекции №1</h1>
+  </div>
+
+  <div class="container">
+    <h4 class="proof_or_theorem">Пример 1. Для заданных языков L<sub>1</sub> и L<sub>2</sub> найти L<sub>1</sub> &cap; L<sub>2</sub> и L<sub>1</sub> &cup; L<sub>2</sub>: </h4>
+
+    <p>
+      <br> - L<sub>1</sub> = {b<sup>i</sup>a | i &ge; 0} i , L<sub>2</sub> = {a<sup>i</sup>b | i &ge; 0};
+      <br> - L<sub>1</sub> = {b<sup>i</sup> a<sup>j</sup> | i &ge; 0, j &ge; 0} ij , L<sub>2</sub> = {a<sup>i</sup> b<sup>j</sup> | i &ge; 0, j &ge; 0};
+    </p>
+
+    <div class="answer">
+      <h4 class="proof_or_theorem"> Решение </h4>
+      <p>
+        <br> - L<sub>1</sub> &cap; L<sub>2</sub> = {b<sup>i</sup> a<sup>i + 1</sup>b | i &ge; 0}
+        <br> Пример: ab, baab, bbaaab... 
+        <br> L<sub>1</sub> &cup; L<sub>2</sub> = {Ø}
+        <br> Наборы: L<sub>1</sub> = {a, ba, bba, bbba, …}, L<sub>2</sub> = {b, ab, aab, aaab, …}. Результат пересечения – пустое множество
+      </p>
+
+      <p>
+        <br> - L<sub>1</sub>1 &cup; L<sub>2</sub> = {b<sup>i</sup> a<sup>j</sup> a<sup>i</sup>i b<sup>j</sup> | i, j &ge; 0}
+        <br> Пример: λ, ba, ab, baab, bbaaab, baaabb, bbaaaabb…
+        <br> L<sub>1</sub> &cap; L<sub>2</sub> = {&lambda;}
+        <br> Результатом пересечение L<sub>1</sub> и L<sub>2</sub> может быть только &lambda;, так как единственный элемент,
+         который есть в L<sub>1</sub> и L<sub>2</sub>, это пустой символ, который можно получить при i, j = 0
+      </p>
+    </div>
+
+  </div>
+
+</div>

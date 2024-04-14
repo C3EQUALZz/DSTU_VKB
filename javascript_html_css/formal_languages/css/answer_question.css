@@ -1,0 +1,18 @@
+.answer {
+  display: grid;
+  place-items: center;
+  background: #acd2fb;
+  border-radius: 1em;
+  clip-path: circle(15.2% at 100% 0);
+  transition: all 0.3s;
+  padding: 1rem 4rem 4rem 4rem;
+}
+
+.answer p {
+  margin-right: 1rem;
+}
+
+.answer:hover {
+  clip-path: circle(141.4% at 100% 0);
+}
+
