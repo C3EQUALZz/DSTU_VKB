@@ -7,9 +7,10 @@
 	place-items: center;
 	background: #acd2fb;
 	border-radius: 1em;
-	clip-path: circle(10.2% at 100% 0);
+	clip-path: circle(5.2rem at 100% 0);
 	transition: all 0.3s;
 	padding: 1rem 4rem 4rem 4rem;
+  z-index: 1;
 }
 
 /* При наведении раскрывается полностью */
@@ -21,17 +22,19 @@
 .task-container {
 	display: flex;
 	justify-content: space-between;
+  margin-bottom: 9rem;
 }
 
 .title_answer_container {
-	display: inline-block;
+	display: flex;
 	justify-content: space-between;
+	align-items: center;
+	width: 100%;
 }
 
 .fas.fa-lightbulb {
-  position: absolute;
-  right: 1.2rem;
-  top: 1.2rem;
-	font-size: 1.5rem;
-	color: yellow;
+  font-size: 1.5rem;
+  color: yellow;
 }
+
+
