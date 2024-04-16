@@ -1,0 +1,60 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<link rel="stylesheet" type="text/css" href="../css/css_for_lections.css">
+<link rel="stylesheet" type="text/css" href="../css/container.css">
+<link rel="stylesheet" type="text/css" href="../css/title_of_lection.css">
+<link rel="stylesheet" type="text/css" href="../css/ordered_list.css">
+<link rel="stylesheet" type="text/css" href="../css/subtitle_of_lection.css">
+<link rel="stylesheet" type="text/css" href="../css/proofs_examples_etc.css">
+<link rel="stylesheet" type="text/css" href="../css/answer_question.css">
+
+<div class="text">
+
+  <div class="center_any_title">
+    <h1 class="title_of_lecture">Практика по лекции №2</h1>
+  </div>
+
+  <div class="container">
+
+    <!-- https://youtu.be/7o3RP9vxrqY?si=p9lgvWeYdfl8OHFy -->
+
+    <h4 class="proof_or_theorem">Пример 1. </h4>
+
+    <div class="task-container">
+      
+      <p>
+        <br> Проверка существования языка грамматики. 
+        <br> 
+        <br> E → E+T|T
+        <br> T → T*F|F
+        <br> F → (E)|a
+      </p>
+
+      <div class="answer">
+
+        <h4 class="proof_or_theorem">Решение </h4>
+
+        <p>
+          <br> N<sub>0</sub> = Ø, i &ne; 1
+          <br> N<sub>1</sub> = Ø &cup; {F} = {F}
+          <br> N<sub>1</sub> &ne; N<sub>0</sub>, то i = i + 1 = 2
+          <br> N<sub>2</sub> = {F} &cup; {T} = {F, T}
+          <br> N<sub>2</sub> &ne; N<sub>1</sub>, i = 3
+          <br> N<sub>3</sub> = {F, T} &cup; {E} = {F, T, E}
+          <br> N<sub>3</sub> &ne; N<sub>2</sub>, i = 4
+          <br> N<sub>4</sub> = {F, T, E}
+          <br> N<sub>4</sub> = N<sub>3</sub> = N<sub>e</sub>
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div>
+    
+  </div>
+
+</div>

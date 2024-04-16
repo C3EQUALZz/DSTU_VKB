@@ -7,7 +7,6 @@
 <link rel="stylesheet" type="text/css" href="../css/subtitle_of_lection.css">
 <link rel="stylesheet" type="text/css" href="../css/proofs_examples_etc.css">
 <link rel="stylesheet" type="text/css" href="../css/answer_question.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 
 <div class="text">
@@ -17,6 +16,7 @@
   </div>
 
   <div class="container">
+
     <h4 class="proof_or_theorem">Пример 1. </h4>
 
     <div class="task-container">
@@ -28,11 +28,8 @@
       </p>
 
       <div class="answer">
-        
-        <div class="title_answer_container">
-            <h4 class="proof_or_theorem"> Решение </h4>
-            <i class="fas fa-lightbulb"></i>
-        </div>
+
+        <h4 class="proof_or_theorem">Решение </h4>
 
         <p>
           <br> - L<sub>1</sub> &cap; L<sub>2</sub> = {b<sup>i</sup> a<sup>i + 1</sup>b | i &ge; 0}
@@ -57,6 +54,7 @@
   </div>
 
   <div class="container">
+
     <h4 class="proof_or_theorem">Пример 2.</h4>
 
     <div class="task-container">
@@ -69,10 +67,7 @@
 
       <div class="answer">
 
-        <div class="title_answer_container">
-            <h4 class="proof_or_theorem"> Решение </h4>
-            <i class="fas fa-lightbulb"></i>
-        </div>
+        <h4 class="proof_or_theorem">Решение </h4>
 
         <p>
           <br> Главный алгоритм при составлении грамматики должен быть таким, чтобы хотя бы одно правило имело такой вид, например:
@@ -81,6 +76,67 @@
           <br> S → AB
           <br> A → 0A | 0 | λ
           <br> B → B1 | 1 | λ
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Пример 3. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Описать язык, порождаемый грамматикой G = {a, b}, {S, A}, P, S,
+        <br> где P состоит из правил: 
+        <br>
+        <br> S → aS | bS | aA
+        <br> A → a
+      </p>
+
+      <div class="answer">
+
+        <h4 class="proof_or_theorem">Решение </h4>
+
+        <p>
+          <br> Левая часть правил состоит из одного нетерминального символа – это либо регулярная грамматика, либо КС. 
+          <br> Правая часть состоит из терминальных и нетерминальных символов, а также имеют конструкцию - “aA”. 
+          <br> Из этого можно сделать вывод, что это регулярная грамматика, причём праволинейная.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Пример 4. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Описать язык, порождаемый грамматикой G = {a, b}, {S, A, B}, P, S,
+        <br> где P состоит из правил: 
+        <br>
+        <br> S → AB
+        <br> A → aA | λ
+        <br> B → Bb | λ
+      </p>
+
+      <div class="answer">
+
+        <h4 class="proof_or_theorem">Решение </h4>
+
+        <p>
+          <br> Левая часть правил состоит из одного нетерминального символа – это либо регулярная грамматика, либо КС. 
+          <br> Правая часть состоит из терминальных и нетерминальных символов. В правиле “S → AB” в правой части находятся два терминала,
+          <br> а значит это не может быть регулярной грамматикой – это КС грамматика.
         </p>
 
       </div>

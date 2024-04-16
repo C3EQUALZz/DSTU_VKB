@@ -15,26 +15,13 @@
 
 /* При наведении раскрывается полностью */
 .answer:hover {
-	clip-path: circle(141.4% at 100% 0);
+	clip-path: circle(141.2% at 100% 0);
 }
 
 /* Контейнер, в который мы помещаем условие задания и решение. Сделан с той целью, чтобы были слева и справа */
 .task-container {
 	display: flex;
 	justify-content: space-between;
-  margin-bottom: 9rem;
+  margin-bottom: 10rem;
 }
-
-.title_answer_container {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	width: 100%;
-}
-
-.fas.fa-lightbulb {
-  font-size: 1.5rem;
-  color: yellow;
-}
-
 
