@@ -1,27 +1,27 @@
-/* В данный блок помещается само решение */
-.answer {
-	position: absolute;
-	right: 0;
-	top: 0;
-	display: grid;
-	place-items: center;
-	background: #acd2fb;
-	border-radius: 1em;
-	clip-path: circle(5.2rem at 100% 0);
-	transition: all 0.3s;
-	padding: 1rem 4rem 4rem 4rem;
-  z-index: 1;
-}
-
-/* При наведении раскрывается полностью */
-.answer:hover {
-	clip-path: circle(141.2% at 100% 0);
-}
-
-/* Контейнер, в который мы помещаем условие задания и решение. Сделан с той целью, чтобы были слева и справа */
 .task-container {
-	display: flex;
-	justify-content: space-between;
-  margin-bottom: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+  position: relative;
 }
 
+.answer {
+  margin-top: 2rem;
+  position: relative;
+  display: grid;
+  place-items: center;
+  background: #acd2fb;
+  border-radius: 1em;
+  padding: 0 4rem 4rem 4rem;
+  z-index: 1;
+  width: 100%; 
+  box-sizing: border-box; 
+  overflow: hidden; 
+  max-height: 2rem; 
+	transition: all 0.3s;
+}
+
+.answer:hover {
+  max-height: 100rem;
+}

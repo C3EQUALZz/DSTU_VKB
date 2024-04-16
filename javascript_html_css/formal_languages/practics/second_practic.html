@@ -23,7 +23,7 @@
     <div class="task-container">
       
       <p>
-        <br> Проверка существования языка грамматики. 
+        <br> Сделайте проверку существования языка КС грамматики.  
         <br> 
         <br> E → E+T|T
         <br> T → T*F|F
@@ -53,8 +53,40 @@
   </div>
 
 
-  <div>
+  <div class="container">
     
+    <h4 class="proof_or_theorem">Пример 2. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Устраните недостижимые символы из данного набора правил
+        <br> 
+        <br> E → E+T|T
+        <br> T → T*F|F
+        <br> F → (E)|a
+      </p>
+
+      <div class="answer">
+
+        <h4 class="proof_or_theorem">Решение </h4>
+
+        <p>
+          <br> V<sub>0</sub> = {E}, i = 1
+          <br> V<sub>1</sub> = {E} &cup; {+, T}
+          <br> V<sub>1</sub> &ne; V<sub>0</sub>, i = 2
+          <br> V<sub>2</sub> = {E, +, T} &cup; {*, F}
+          <br> V<sub>2</sub> &ne; V<sub>1</sub>, i = 3
+          <br> V<sub>3</sub> = {E, +, T, *, F} &cup; {(, ), a}
+          <br> V<sub>3</sub> = V<sub>2</sub>, i = 4
+          <br> V<sub>4</sub> = V<sub>3</sub> = V<sub>e</sub>
+          <br> P' = P
+        </p>
+
+      </div>
+
+    </div>
+
   </div>
 
 </div>
