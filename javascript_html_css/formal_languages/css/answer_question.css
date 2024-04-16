@@ -25,3 +25,10 @@
 .answer:hover {
   max-height: 100rem;
 }
+
+hr {
+	width: 100%;
+	text-align: center;
+	margin-top: 1rem;
+	border-width: 0.1rem;
+}
