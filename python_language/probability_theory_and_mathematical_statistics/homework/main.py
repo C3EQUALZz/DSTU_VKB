@@ -92,7 +92,7 @@ class DataInteraction:
             ax.set_xlim(left=0)
             ax.set_ylim(bottom=0)
 
-        plt.savefig(f"{"_".join(self.comment.split())}.png")
+        plt.savefig(f"{'_'.join(self.comment.split())}.png")
         plt.show()
 
     @staticmethod
@@ -141,7 +141,7 @@ def main() -> None:
         )
 
         for number, question in enumerate(questions, start=1):
-            print(f"{str(number) + " Задание":-^60}\n")
+            print(f"{str(number) + ' Задание':-^60}\n")
             print(question)
 
 
