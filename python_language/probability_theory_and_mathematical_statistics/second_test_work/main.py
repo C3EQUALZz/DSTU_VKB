@@ -16,11 +16,11 @@ from matplotlib import pyplot as plt
 
 
 class DataInteraction:
-    def __init__(self, data: list[float], indices: tuple[int, ...], comment: str,
+    def __init__(self, data: list[float], indices: slice, comment: str,
                  *, chart_histogram: bool = True, chart_frequency_range: bool = True,
                  ) -> None:
 
-        self.data = [data[i] for i in range(len(data)) if i % 10 in indices]
+        self.data = data[indices]
         self.comment = comment
         self.chart_histogram = chart_histogram
         self.chart_frequency_range = chart_frequency_range
@@ -69,6 +69,9 @@ class DataInteraction:
         """
         Здесь происходит отрисовка графиков
         """
+        if not self.chart_histogram and not self.chart_frequency_range:
+            return
+
         fig, axes = plt.subplots(1, self.chart_frequency_range + self.chart_histogram, figsize=(12, 6))
 
         if isinstance(axes, Axes):
@@ -126,21 +129,24 @@ def main() -> None:
     """
     Точка запуска логики
     """
-    with open("dataset.txt", mode="r", encoding="utf-8") as file:
+    with open("data/dataset.txt", mode="r", encoding="utf-8") as file:
         data: list[float] = list(map(float, file.readlines()))
 
         questions = (
-            DataInteraction(data, (0, 1, 2, 3, 4, 5, 6, 7, 8, 9), "Генеральная совокупность",
+            DataInteraction(data, slice(0, len(data)), "Генеральная совокупность",
                             chart_histogram=True, chart_frequency_range=True),
 
-            DataInteraction(data, (0, 2, 4, 6, 8), "Выборка из ГС через 1 элемент",
+            DataInteraction(data, slice(0, len(data), 2), "Выборка из ГС через 1 элемент",
                             chart_histogram=True, chart_frequency_range=False),
 
-            DataInteraction(data, (1, 5), "Выборка из ГС по желанию В.М",
+            DataInteraction(data, slice(1, len(data), 4), "Выборка из ГС по желанию В.М",
                             chart_histogram=False, chart_frequency_range=True),
+
+            DataInteraction(data, slice(1, len(data), 3), "Аудиторная часть",
+                            chart_histogram=True, chart_frequency_range=True),
         )
 
-        for number, question in enumerate(questions, start=1):
+        for number, question in enumerate(filter(None, questions), start=1):
             print(f"{str(number) + ' Задание':-^60}\n")
             print(question)
 
