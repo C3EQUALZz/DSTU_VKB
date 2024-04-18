@@ -1,0 +1,99 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<link rel="stylesheet" type="text/css" href="../css/css_for_lections.css">
+<link rel="stylesheet" type="text/css" href="../css/container.css">
+<link rel="stylesheet" type="text/css" href="../css/title_of_lection.css">
+<link rel="stylesheet" type="text/css" href="../css/ordered_list.css">
+<link rel="stylesheet" type="text/css" href="../css/subtitle_of_lection.css">
+<link rel="stylesheet" type="text/css" href="../css/proofs_examples_etc.css">
+<link rel="stylesheet" type="text/css" href="../css/answer_question.css">
+
+<div class="text">
+
+  <div class="center_any_title">
+    <h1 class="title_of_lecture">Практика по лекции №3</h1>
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №1</h4>
+
+    <div class="task-container">
+      <p>
+        <br> Ответьте на серию вопросов, которая представлена ниже. 
+        <br> Что такое алфавит в контексте грамматик?
+        <br> Что такое буквы алфавита? 
+        <br> Что такое слово? 
+      </p>
+
+      <div class="answer">
+
+        <h4 class="proof_or_theorem">Решение </h4>
+
+        <p>
+          <br> <b>Алфавитом</b> называется конечное множество символов.
+          <br> Элементы данного множества - <b>буквы</b>. 
+          <br> <b>Словом</b> в данном алфавите называется конечная цепочка букв этого алфавита.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №2 </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Какие операции существуют над языками? Дайте также определение данным операциям.
+      </p>
+
+      <div class="answer">
+        
+        <h4 class="proof_or_theorem">Решение </h4>
+
+        <p>
+          <br> Объединением языков L<sub>1</sub> и L<sub>2</sub> называется множество слов,
+           входящих хотя бы в один из этих языков: L = L<sub>1</sub> ∨ L<sub>2</sub> = {α|α ∈ L<sub>1</sub> или α ∈ L<sub>2</sub>}.
+          <br> Конкатенацией (произведением) языков L<sub>1</sub> и L<sub>2</sub> называется множество слов
+           вида L<sub>1</sub> · L<sub>2</sub> = {αβ, где α ∈ L<sub>1</sub>, β ∈ L<sub>2</sub>}.
+          Таким образом, это слова, получающиеся приписыванием к каждому слову из L<sub>1</sub> слова из L<sub>2</sub>. Конкатенация слов α и β есть слово αβ.
+          <br> Итерацией языка L называется язык вида &lambda;∨L<sub>1</sub>∨L<sub>2</sub> ∨...∨L<sub>i</sub> ∨..., он обозначается L<sup>*</sup>.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №3 </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Составить регулярное выражение для языка в алфавите {a, b, c}, состоящее из всех слов, начинающихся на ab, но не заканчивающихся на c.
+      </p>
+
+      <div class="answer">
+
+        <h4 class="proof_or_theorem">Решение </h4>
+
+        <p>
+          <br> Как уже было сказано, множество всех слов в алфавите A = {a,b,c} есть A<sup>*</sup> = (a ∨ b ∨ c)<sup>*</sup>.
+          <br> Все слова, начинающиеся на ab - конкатенация ab со множеством всех слов. Выражение для такого языка есть ab(a ∨ b ∨ c) ∗. Слово не заканчивается на букву c, значит, оно заканчивается на a или на b. Поэтому регулярное выражение для данного языка имеет вид ab(a ∨ b ∨ c)<sup>*</sup>(a ∨ b).
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
