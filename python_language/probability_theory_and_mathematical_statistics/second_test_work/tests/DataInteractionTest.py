@@ -31,10 +31,10 @@ def test_slice_are_taken_from_1_through_3():
     Выборка состоит из элементов ГС, которые берутся через 3, начиная с 1
     """
 
-    data_interaction = DataInteraction(data, slice(1, len(data), 3), "Выборка через 1", chart_histogram=False,
+    data_interaction = DataInteraction(data, slice(1, len(data), 4), "Выборка через 3", chart_histogram=False,
                                        chart_frequency_range=False)
 
-    assert len(data_interaction.data) == 333, "Неправильный срез в третьем задании"
+    assert len(data_interaction.data) == 250, "Неправильный срез в третьем задании"
 
 
 if __name__ == '__main__':

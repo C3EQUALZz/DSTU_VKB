@@ -139,11 +139,8 @@ def main() -> None:
             DataInteraction(data, slice(0, len(data), 2), "Выборка из ГС через 1 элемент",
                             chart_histogram=True, chart_frequency_range=False),
 
-            DataInteraction(data, slice(1, len(data), 4), "Выборка из ГС по желанию В.М",
+            DataInteraction(data, slice(1, len(data), 4), "Выборка из ГС через 3 элемента, начиная с 1",
                             chart_histogram=False, chart_frequency_range=True),
-
-            DataInteraction(data, slice(1, len(data), 3), "Аудиторная часть",
-                            chart_histogram=True, chart_frequency_range=True),
         )
 
         for number, question in enumerate(filter(None, questions), start=1):
