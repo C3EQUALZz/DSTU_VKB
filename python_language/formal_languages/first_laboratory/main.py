@@ -87,7 +87,6 @@ def is_context_sensitive(*,
     terminals = '|'.join(map(re.escape, set_of_terminals))
     union_of_symbols = non_terminals + "|" + terminals
     pattern = re.compile(fr'^(({union_of_symbols})*({non_terminals})({union_of_symbols})*) -> (({union_of_symbols})+|ε)$')
-    print(pattern)
 
     return (all(len(key) <= len(value) for key, values in grammar.items() for value in values) and
             _checker(grammar=grammar, pattern=pattern))
@@ -107,9 +106,12 @@ def is_context_free(*,
     S -> aa
     I -> bb
     """
-    terminals = '|'.join(set_of_terminals)
-    non_terminals = '|'.join(set_of_non_terminals)
-    pattern = re.compile(rf'^({non_terminals}) -> (({terminals}|{non_terminals})*|ε)$')
+
+    terminals = '|'.join(map(re.escape, set_of_terminals))
+    non_terminals = '|'.join(map(re.escape, set_of_non_terminals))
+    union_of_symbols = non_terminals + "|" + terminals
+
+    pattern = re.compile(rf'^({non_terminals}) -> (({union_of_symbols})*|ε)$')
 
     return _checker(grammar=grammar, pattern=pattern)
 
