@@ -18,6 +18,16 @@ V -> /1
 exit
 ----------
 0 1 + - / *
+
+
+E -> E+T
+E -> T
+T -> T*F
+T -> F
+F -> (E)
+F -> a
+--------
+a + * ( )
 """
 
 from itertools import chain
@@ -56,7 +66,7 @@ def check_grammar_existence(grammar: Mapping[AnyStr, List[AnyStr]], set_of_non_t
 
 
 def main() -> AnyStr:
-    rules = get_rules_from_console("remove")
+    rules = get_rules_from_console("don't_remove")
     non_terminals = set(input("Введите множество не терминалов: ").split())
 
     if is_context_free(rules):

@@ -11,11 +11,14 @@
  B -> 00
 """
 import re
-from typing import Pattern, AnyStr
+from typing import Pattern, AnyStr, Set, Mapping, List
 from python_language.formal_languages.useful_functions import get_rules_from_console
 
 
-def is_left_linear(grammar: dict[str, list[str]]) -> bool:
+def is_left_linear(*,
+                   set_of_terminals: Set[AnyStr],
+                   set_of_non_terminals: Set[AnyStr],
+                   grammar: Mapping[AnyStr, List[AnyStr]]) -> bool:
     """
     Лево линейная регулярная грамматика
     A ⇢ Bx
@@ -30,11 +33,17 @@ def is_left_linear(grammar: dict[str, list[str]]) -> bool:
     Z -> Za
     Z -> $
     """
-    pattern = re.compile(r'^[A-Z] -> (?:[A-Z]+[^A-Z]|\W+)$')
+    non_terminals = '|'.join(map(re.escape, set_of_non_terminals))
+    terminals = '|'.join(map(re.escape, set_of_terminals))
+    pattern = re.compile(fr'^({non_terminals}) -> (({non_terminals})*({terminals})+|ε)$')
+
     return _checker(grammar=grammar, pattern=pattern)
 
 
-def is_right_linear(grammar: dict[str, list[str]]) -> bool:
+def is_right_linear(*,
+                    set_of_terminals: Set[AnyStr],
+                    set_of_non_terminals: Set[AnyStr],
+                    grammar: Mapping[AnyStr, List[AnyStr]]) -> bool:
     """
     Правая линейная регулярная грамматика
     A ⇢ xB
@@ -49,11 +58,17 @@ def is_right_linear(grammar: dict[str, list[str]]) -> bool:
     A -> bZ
     Z -> $
     """
-    pattern = re.compile(r'^[A-Z] -> (?:[^A-Z]*[A-Z]|\W+)')
+    non_terminals = '|'.join(map(re.escape, set_of_non_terminals))
+    terminals = '|'.join(map(re.escape, set_of_terminals))
+    pattern = re.compile(fr'^({non_terminals}) -> (({terminals})+({non_terminals})*|ε)$')
+
     return _checker(grammar=grammar, pattern=pattern)
 
 
-def is_context_sensitive(grammar: dict[str, list[str]]) -> bool:
+def is_context_sensitive(*,
+                         set_of_terminals: Set[AnyStr],
+                         set_of_non_terminals: Set[AnyStr],
+                         grammar: Mapping[AnyStr, List[AnyStr]]) -> bool:
     """
     Контекстно-зависимая грамматика (КЗ-грамматика, контекстная грамматика) — частный случай формальной
     грамматики (тип 1 по иерархии Хомского), у которой левые и правые части всех продукций могут быть
@@ -68,10 +83,20 @@ def is_context_sensitive(grammar: dict[str, list[str]]) -> bool:
     bBA -> bcdA
     bS -> ba
     """
-    return all(len(key) <= len(value) for key, values in grammar.items() for value in values)
+    non_terminals = '|'.join(map(re.escape, set_of_non_terminals))
+    terminals = '|'.join(map(re.escape, set_of_terminals))
+    union_of_symbols = non_terminals + "|" + terminals
+    pattern = re.compile(fr'^(({union_of_symbols})*({non_terminals})({union_of_symbols})*) -> (({union_of_symbols})+|ε)$')
+    print(pattern)
+
+    return (all(len(key) <= len(value) for key, values in grammar.items() for value in values) and
+            _checker(grammar=grammar, pattern=pattern))
 
 
-def is_context_free(grammar: dict[str, list[str]]) -> bool:
+def is_context_free(*,
+                    set_of_terminals: Set[AnyStr],
+                    set_of_non_terminals: Set[AnyStr],
+                    grammar: Mapping[AnyStr, List[AnyStr]]) -> bool:
     """
     Проверяет, что является контекстно-свободной грамматикой.
     ---
@@ -82,11 +107,14 @@ def is_context_free(grammar: dict[str, list[str]]) -> bool:
     S -> aa
     I -> bb
     """
-    pattern = re.compile(r'^[A-Z] -> (.)*.*\1*$')
+    terminals = '|'.join(set_of_terminals)
+    non_terminals = '|'.join(set_of_non_terminals)
+    pattern = re.compile(rf'^({non_terminals}) -> (({terminals}|{non_terminals})*|ε)$')
+
     return _checker(grammar=grammar, pattern=pattern)
 
 
-def _checker(grammar: dict[str, list[str]], pattern: Pattern[AnyStr]) -> bool:
+def _checker(grammar: Mapping[str, list[str]], pattern: Pattern[AnyStr]) -> bool:
     """
     В данную функцию передают саму грамматику, которую пользователь ввел с консоли и паттерн для проверки.
     """
@@ -97,18 +125,32 @@ def _checker(grammar: dict[str, list[str]], pattern: Pattern[AnyStr]) -> bool:
 
 
 def main():
-    dictionary = get_rules_from_console()
+    dictionary = get_rules_from_console("don't_remove")
+    set_of_terminals = set(input("Введите множество терминалов через пробел: ").strip().split())
+    set_of_non_terminals = set(input("Введите множество не терминалов через пробел: ").strip().split())
 
-    if is_left_linear(dictionary):
+    if is_left_linear(
+            set_of_terminals=set_of_terminals,
+            set_of_non_terminals=set_of_non_terminals,
+            grammar=dictionary):
         return "Тип 3: регулярная лево линейная грамматика"
 
-    if is_right_linear(dictionary):
+    if is_right_linear(
+            set_of_terminals=set_of_terminals,
+            set_of_non_terminals=set_of_non_terminals,
+            grammar=dictionary):
         return "Тип 3: регулярная право линейная грамматика"
 
-    if is_context_free(dictionary):
+    if is_context_free(
+            set_of_terminals=set_of_terminals,
+            set_of_non_terminals=set_of_non_terminals,
+            grammar=dictionary):
         return "Тип 2: контекстно-свободная грамматика"
 
-    if is_context_sensitive(dictionary):
+    if is_context_sensitive(
+            set_of_terminals=set_of_terminals,
+            set_of_non_terminals=set_of_non_terminals,
+            grammar=dictionary):
         return "Тип 1: контекстно-зависимая грамматика"
 
     # xAbCD -> xHD
