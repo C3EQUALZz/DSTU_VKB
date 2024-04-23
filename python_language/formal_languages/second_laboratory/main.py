@@ -66,12 +66,18 @@ def check_grammar_existence(grammar: Mapping[AnyStr, List[AnyStr]], set_of_non_t
 
 
 def main() -> AnyStr:
-    rules = get_rules_from_console("don't_remove")
-    non_terminals = set(input("Введите множество не терминалов: ").split())
+    dictionary = get_rules_from_console("don't_remove")
+    set_of_terminals = set(input("Введите множество терминалов через пробел: ").strip().split())
+    set_of_non_terminals = set(input("Введите множество не терминалов через пробел: ").strip().split())
 
-    if is_context_free(rules):
+    if is_context_free(set_of_terminals=set_of_terminals,
+                       set_of_non_terminals=set_of_non_terminals,
+                       grammar=dictionary):
+
         return (f"1)Введена КС - грамматика\n2)"
-                f"{'Язык существует' if check_grammar_existence(rules, non_terminals) else 'Язык не существует'}")
+                f"{('Язык не существует', 'Язык существует')
+                    [check_grammar_existence(dictionary, set_of_non_terminals)]}")
+
     return "1)Введенная грамматика не является КС-грамматикой "
 
 
