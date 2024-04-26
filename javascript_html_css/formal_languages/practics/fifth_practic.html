@@ -145,15 +145,224 @@
         <br> 
       </p>
 
-    </div>
+      <div class="answer">
 
-    <div class="answer">
+        <h4 class="proof_or_theorem">Решение </h4>
 
-      <h4 class="proof_or_theorem">Решение </h4>
+        <p>
+          <br> <b>ШАГ 1:</b> построим по регулярной грамматике конечный автомат
+          <br> Пополним грамматику правилами: B → cN и D → cN, где N – новый нетерминал.
+          <br> Начальное состояние конечного автомата H=E.
+          <br> Множество состояний автомата Q = {E, A, B, C, D, N}, множество символов входного алфавита T = {0, 1, a, b, c}
+          <br> Значения сформированной функции переходов даны в таблице 1.
+        </p>
 
-      <p>
+        <p>
+        <br> 
+
+          <table class="table-view">
+
+            <caption> 
+                <b>Таблица 1</b> - Функция переходов автомата M
+            </caption>
+
+            <thead>
+              
+              <tr>
+                <th>F</th>
+                <th>E</th>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+                <th>D</th>
+                <th>N</th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+              
+              <tr>
+                <td>0</td>
+                <td>A</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>C</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>1</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>C</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>a</td>
+                <td>∅</td>
+                <td>B,D</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>D</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>b</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>B</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>c</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>N</td>
+                <td>∅</td>
+                <td>N</td>
+                <td>∅</td>
+              </tr>
+
+            </tbody>
+
+          </table>
+        </p>
+
+        <p>
+          <br> Множество заключительных состояний Z = {C, N}.
+          <br> Для начального символа грамматики ε-правила присутствуют. Следовательно Множество заключительных состояния Z = {E, C, N}.
+          <br> Конечный автомат М-недетерминированный, граф НКА представлен ниже. 
+        </p>
+          
+        <div class="image">
+          <img src="images/fifth_practic/nka_second.png">
+        </div>
+
         
-      </p>
+        <p>
+          <br> <b>ШАГ 2</b> построим по НКА M ДКА M′. Строим таблицу переходов для ДКА M′ (таблица 2)
+        </p>
+
+        <p>
+          <br>
+
+          <table class="table-view">
+
+            <caption>
+              <b>Таблица 2</b> – Построение функции переходов для ДКА M′
+            </caption>
+
+            <thead>
+
+              <tr>
+                <th>Шаг</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+                <th>6</th>
+                <th>7</th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              <tr>
+                <td>F</td>
+                <td>E</td>
+                <td>A</td>
+                <td>B,D</td>
+                <td>C</td>
+                <td>D</td>
+                <td>B</td>
+                <td>N</td>
+              </tr>
+
+              <tr>
+                <td>0</td>
+                <td>A</td>
+                <td>∅</td>
+                <td>C</td>
+                <td>∅</td>
+                <td>C</td>
+                <td>∅</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>1</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>C</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>C</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>a</td>
+                <td>∅</td>
+                <td>B,D</td>
+                <td>D</td>
+                <td>∅</td>
+                <td>D</td>
+                <td>∅</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>b</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>B</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>B</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>c</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>N</td>
+                <td>∅</td>
+                <td>N</td>
+                <td>N</td>
+                <td>∅</td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </p>
+
+        <p>
+          <br> Во множество заключительных состояний автомата M′ включим элементы Z′ = {E, C, N, (B, D)}.
+          <br> Введем следующие новые обозначения состояний автомата M′: (B, D) = X
+          <br> Искомый ДКА определяется следующей пятеркой объектов: Q′ = {E, A, B, C, D, N, X}, T = {0, 1, a, b, c}, функция переходов задана таблицей 2,
+          H={E}, Z′ = {E, C, N, X}
+          <br> Граф полученного ДКА представлен ниже
+        </p>
+
+        <div class="image">
+          <img src="images/fifth_practic/dka_second.png">
+        </div>
+
+      </div>
 
     </div>
 
