@@ -185,4 +185,342 @@
 
   </div>
 
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №2. </h4>
+
+    <div class="task-container">
+      <p>
+        <br> Дан граф исходного конечного автомата M, он представлен ниже. Нужно минимизировать конечный автомат. 
+      </p>
+
+      <div class="image">
+        <img src="images/sixth_practic/dka_second.png">
+      </div>
+
+      <div class="answer">
+
+        <h4 class="proof_or_theorem">Решение </h4>
+
+        <p>
+          <br> <b>ШАГ 1:</b> Устранить недостижимые состояния КА M = (Q, T, F, H, Z), где Q = {E, G, L, M, H, K, F, S }, T = {1, 0, a, b, c, !}, H = {E}, Z = {S} и функция переходов задана таблицей. 
+        </p>
+
+        <p>
+          <br>
+
+          <table class="table-view">
+
+            <caption>
+              Функция переходов конечного автомата M
+            </caption>
+
+            <thead>
+
+              <tr>
+                <th>F</th>
+                <th>E</th>
+                <th>G</th>
+                <th>L</th>
+                <th>M</th>
+                <th>H</th>
+                <th>K</th>
+                <th>F</th>
+                <th>S</th>
+              </tr>
+              
+            </thead>
+
+            <tbody>
+
+              <tr>
+                <td>1</td>
+                <td></td>
+                <td>G</td>
+                <td></td>
+                <td>M</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>0</td>
+                <td></td>
+                <td>G</td>
+                <td></td>
+                <td>M</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>A</td>
+                <td></td>
+                <td></td>
+                <td>G</td>
+                <td></td>
+                <td>G</td>
+                <td>M</td>
+                <td>G</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>b</td>
+                <td></td>
+                <td></td>
+                <td>M</td>
+                <td></td>
+                <td>M</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>c</td>
+                <td></td>
+                <td></td>
+                <td>H</td>
+                <td></td>
+                <td>L</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>!</td>
+                <td>H</td>
+                <td>S</td>
+                <td></td>
+                <td>S</td>
+                <td></td>
+                <td>E</td>
+                <td>E</td>
+                <td></td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </p>
+
+        <p>
+          <br> Последовательность устранения недостижимых символов КА имеет вид:
+          <br> Q<sub>0</sub> = {E}
+          <br> Q<sub>1</sub> = {E, H}
+          <br> Q<sub>2</sub> = {E, H, G, M, L}
+          <br> Q<sub>3</sub> = {E, H, G, M, L, S}
+          <br> Q<sub>4</sub> = {E, H, G, M, L, S}
+          <br> т.к. Q3 = Q4, то Qд = {E, H, G, M, L, S}. Qн = {F, K}; Q′ = {E, H, G, M, L, S}; Z′= {S}.
+          <br> Функция переходов автомата M′ представлена ниже
+        </p>
+
+        <p>
+          <br> 
+
+          <table class="table-view">
+
+            <caption>
+              Функция переходов автомата M′
+            </caption>
+
+            <thead>
+
+              <th>F</th>
+              <th>E</th>
+              <th>G</th>
+              <th>L</th>
+              <th>M</th>
+              <th>H</th>
+              <th>S</th>
+
+            </thead>
+
+            <tbody>
+
+              <tr>
+                <td>1</td>
+                <td></td>
+                <td>G</td>
+                <td></td>
+                <td>M</td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>0</td>
+                <td></td>
+                <td>G</td>
+                <td></td>
+                <td>M</td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>a</td>
+                <td></td>
+                <td></td>
+                <td>G</td>
+                <td></td>
+                <td>G</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>b</td>
+                <td></td>
+                <td></td>
+                <td>M</td>
+                <td></td>
+                <td>M</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>c</td>
+                <td></td>
+                <td></td>
+                <td>H</td>
+                <td></td>
+                <td>L</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>!</td>
+                <td>H</td>
+                <td>S</td>
+                <td></td>
+                <td>S</td>
+                <td></td>
+                <td></td>
+              </tr>
+              
+            </tbody>
+
+          </table>
+
+        </p>
+
+        <p>
+          <br> Граф КА M′ после устранения недостижимых состояний представлен на рисунке 
+        </p>
+
+        <div class="image">
+          <img src="images/sixth_practic/dfa_second_removed.png">
+        </div>
+
+        <p>
+          <br> <b>ШАГ 2</b>: Последовательность построения разбиений будет иметь вид, который представлен ниже:
+	        <br> R(0) = {{E, H, G, M, L}, {S}}, n = 0
+          <br> R(1) = {{S}, {G, M}, {H, L, E}}, n = 1
+          <br> R(2) = {{S}, {G, M}, {H, L}, {E}}, n = 2
+          <br> R(3) = {{S}, {G, M}, {H, L}, {E}}, n = 3
+          <br> т.к. R(2) = R(3), то искомое разбиение построено
+        </p>
+
+        <p>
+          <br> Переобозначим оставшиеся неразбитые группы состояний: X = {G, M}, Y = {H, L}. Получим минимальный автомат M'', где Q’’= {E, X, Y, S}, Z''={S}. Функция переходов автомата M'' представлена ниже
+        </p>
+        
+        <p>
+          <br>
+
+          <table class="table-view">
+            
+            <caption>
+              Функция переходов автомата M''
+            </caption>
+
+            <thead>
+
+              <tr>
+                <th>F``</th>
+                <th>E</th>
+                <th>X</th>
+                <th>Y</th>
+                <th>S</th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              <tr>
+                <td>1</td>
+                <td></td>
+                <td>X</td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>0</td>
+                <td></td>
+                <td>X</td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>a</td>
+                <td></td>
+                <td></td>
+                <td>X</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>b</td>
+                <td></td>
+                <td></td>
+                <td>X</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>c</td>
+                <td></td>
+                <td></td>
+                <td>Y</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>!</td>
+                <td>Y</td>
+                <td>S</td>
+                <td></td>
+                <td></td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </p>
+
+        <p>
+          <br> Граф переходов конечного автомата после его минимизации показан ниже. 
+        </p>
+
+        <div class="image">
+          <img src="images/sixth_practic/second_result.png">
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
 </div>
