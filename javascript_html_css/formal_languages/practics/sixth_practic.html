@@ -894,7 +894,150 @@
       </p>
 
       <div class="image">
-        <img src="">
+        <img src="images/sixth_practic/condition_twenty_third.png">
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №24. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Дан граф исходного конечного автомата M, он представлен ниже. Нужно минимизировать конечный автомат. 
+      </p>
+
+      <div class="image">
+        <img src="images/sixth_practic/condition_twenty_fourth.png">
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №25. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Дан граф исходного конечного автомата M, он представлен ниже. Нужно минимизировать конечный автомат. 
+      </p>
+
+      <div class="image">
+        <img src="images/sixth_practic/condition_twenty_fifth.png">
+      </div>
+
+      <div class="answer">
+
+        <h4 class="proof_or_theorem">Решение </h4>
+
+        <p>
+          <br> <b>ШАГ 1:</b> Устранить недостижимые состояния КА M = (Q, T, F, H, Z), где Q = {S, A, B, C, D, E, F, H }, T = { [, {, }, ], ⊥}, H = {S}, Z = {F, H} и функция переходов задана таблицей. Граф исходного КА М представлен ниже.
+        </p>
+
+        <p>
+          <br>
+
+          <table class="table-view">
+            
+            <thead>
+
+              <tr>
+                <th>F</th>
+                <th>S</th>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+                <th>D</th>
+                <th>E</th>
+                <th>F</th>
+                <th>H</th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              <tr>
+                <td>&lbrace;</td>
+                <td>A</td>
+                <td>D</td>
+                <td>D</td>
+                <td>E</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>&rbrace;</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>D</td>
+                <td>E</td>
+                <td>∅</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>&lbrack;</td>
+                <td>C</td>
+                <td>∅</td>
+                <td>A</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>&rbrack;</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>H</td>
+                <td>F</td>
+                <td>∅</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>⊥</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>H</td>
+                <td>F</td>
+              </tr>
+
+            </tbody>
+
+          </table>
+        </p>
+
+        <p>
+          <br> Последовательность устранения недостижимых символов КА имеет вид:
+          <br> Q<sub>0</sub> = {S}
+          <br> Q<sub>1</sub> = {S, A, C}
+          <br> Q<sub>2</sub> = {S, A, C, D, E}
+          <br> Q<sub>3</sub> = {S, A, C, D, E, H, F}
+          <br> Q<sub>4</sub> = {S, A, C, D, E, H, F}
+        </p>
+      
       </div>
 
     </div>
