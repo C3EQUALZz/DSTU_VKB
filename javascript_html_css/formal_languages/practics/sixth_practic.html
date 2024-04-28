@@ -1037,6 +1037,188 @@
           <br> Q<sub>3</sub> = {S, A, C, D, E, H, F}
           <br> Q<sub>4</sub> = {S, A, C, D, E, H, F}
         </p>
+
+        <p>
+          <br> т.к. Q<sub>3</sub> = Q<sub>4</sub>, то Qд = {S, A, C, D, E, H, F}. Qн = {B}; Q′ = {S, A, C, D, E, H, F};
+          <br> Z′= {F, H}.
+          <br> Функция переходов автомата M′ представлена ниже
+        </p>
+
+        <p>
+          <br> 
+          <table class="table-view">
+
+            <thead>
+
+              <tr>
+                <th>F</th>
+                <th>S</th>
+                <th>A</th>
+                <th>C</th>
+                <th>D</th>
+                <th>E</th>
+                <th>F</th>
+                <th>H</th>
+              </tr>
+              
+            </thead>
+
+            <tbody>
+
+              <tr>
+                <td>&lbrace;</td>
+                <td>A</td>
+                <td>D</td>
+                <td>E</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>&rbrace;</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>D</td>
+                <td>E</td>
+                <td>∅</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>&lbrack;</td>
+                <td>C</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>&rbrack;</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>H</td>
+                <td>F</td>
+                <td>∅</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>⊥</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>H</td>
+                <td>F</td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </p>
+
+        <p>
+          <br> Граф КА M′ после устранения недостижимых состояний представлен ниже
+        </p>
+
+        <div class="image">
+          <img src="images/sixth_practic/removed_twenty_fifth.png">
+        </div>
+
+        <p>
+          <br> <b>ШАГ 2:</b> Последовательность построения разбиений будет иметь вид:
+	        <br> R (0) = {{S, A, C, D, E}, {F, H}}, n = 0
+          <br> R (1) = {{S}, {A, C}, {D, E}, {F, H}}, n = 1
+          <br> R (2) = {{S}, {A, C}, {D, E}, {F, H}}, n = 2 => т.к. R (1) = R (2), то искомое разбиение построено
+        </p>
+
+        <p>
+          <br> Переобозначим оставшиеся неразбитые группы состояний:
+          <br> X = {A, C}, Y = {D, E}, N = {F, H}
+          <br> Получим минимальный автомат M'', где Q’’= {S, X, Y, N}, Z''={N}
+          <br> Функция переходов автомата M'' представлена в таблице 3
+        </p>
+
+        <p>
+          <br>
+          <table class="table-view">
+
+            <thead>
+
+              <tr>
+                <th>F``</th>
+                <th>S</th>
+                <th>X</th>
+                <th>Y</th>
+                <th>N</th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              <tr>
+                <td>&lbrace;</td>
+                <td>X</td>
+                <td>Y</td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>&rbrace;</td>
+                <td></td>
+                <td></td>
+                <td>Y</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>&lbrack;</td>
+                <td>X</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>&rbrack;</td>
+                <td></td>
+                <td></td>
+                <td>N</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>⊥</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>N</td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </p>
+
+        <p>
+          <br> Граф переходов конечного автомата после его минимизации показан ниже
+        </p>
+
+        <div class="image">
+          <img src="images/sixth_practic/result_twenty_fifth.png">
+        </div>
       
       </div>
 
