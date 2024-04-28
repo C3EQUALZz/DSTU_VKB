@@ -626,4 +626,328 @@
 
   </div>
 
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №6. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Построить по регулярной грамматике КА и преобразовать полученный автомат к детерминированному виду.
+        <br> Грамматика G = ({a, b, c, d, e, $, #, ⊥},{S, A, B, C, D, E}, P, S), где P состоит из следующих пунктов:
+        <br> S → aA | bB | cC
+        <br> A → dD
+        <br> B → #D | $E
+        <br> D → dD | dB | ⊥
+        <br> C → cE
+        <br> E → eE | eB | ⊥
+      </p>
+
+      <div class="answer">
+
+        <h4 class="proof_or_theorem">Решение </h4>
+
+        <p>
+          <br> <b>ШАГ 1:</b> построим по регулярной грамматике конечный автомат
+          <br> Пополним грамматику правилами: D → ⊥N и E → ⊥N, где N – новый нетерминал.
+          <br> Начальное состояние конечного автомата H=S. Множество состояний автомата Q = {S, A, B, C, D, E, N}, множество символов входного алфавита T = {a, b, c, d, e, $, #, ⊥}.
+          <br> Значения сформированной функции переходов даны в таблице 1.
+        </p>
+
+        <p>
+          <br>
+
+          <table class="table-view">
+
+            <thead>
+
+              <tr>
+                <th>F</th>
+                <th>S</th>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+                <th>D</th>
+                <th>E</th>
+                <th>N</th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              <tr>
+                <td>a</td>
+                <td>A</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>b</td>
+                <td>B</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>c</td>
+                <td>C</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>E</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>d</td>
+                <td>∅</td>
+                <td>D</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>B,D</td>
+                <td>∅</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>e</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>E,B</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>$</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>E</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>⊥</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>N</td>
+                <td>N</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>#</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>D</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </p>
+
+        <p>
+          <br> Множество заключительных состояний Z = {N}. 
+          <br> Для начального символа грамматики ε-правила отсутствуют. Конечный автомат М-недетерминированный, граф НКА представлен ниже. 
+        </p>
+
+        <div class="image">
+          <img src="images/fifth_practic/nfa_sixth.png">
+        </div>
+
+        <p>
+          <br> <b>ШАГ 2:</b> построим по НКА M ДКА M′
+          <br> Строим таблицу переходов для ДКА M′, которая представлена ниже
+        </p>
+
+        <p>
+          <br>
+          <table class="table-view">
+            
+            <thead>
+
+              <tr>
+                <th>Шаг</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+                <th>6</th>
+                <th>7</th>
+                <th>8</th>
+                <th>9</th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              <tr>
+                <td>F</td>
+                <td>S</td>
+                <td>A</td>
+                <td>B</td>
+                <td>C</td>
+                <td>D</td>
+                <td>E</td>
+                <td>B, D</td>
+                <td>N</td>
+                <td>E,B</td>
+              </tr>
+
+              <tr>
+                <td>a</td>
+                <td>A</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>b</td>
+                <td>B</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>c</td>
+                <td>C</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>E</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>d</td>
+                <td>∅</td>
+                <td>D</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>B,D</td>
+                <td>∅</td>
+                <td>B,D</td>
+                <td>∅</td>
+                <td>∅</td>
+              </tr>
+
+              <tr>
+                <td>e</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>E,B</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>E,B</td>
+              </tr>
+
+              <tr>
+                <td>$</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>E</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>E</td>
+                <td>∅</td>
+                <td>E</td>
+              </tr>
+
+              <tr>
+                <td>⊥</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>N</td>
+                <td>N</td>
+                <td>N</td>
+                <td>∅</td>
+                <td>N</td>
+              </tr>
+
+              <tr>
+                <td>#</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>D</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>∅</td>
+                <td>D</td>
+                <td>∅</td>
+                <td>D</td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </p>
+
+        <p>
+          <br> Во множество заключительных состояний автомата M′ включим элементы Z′ = {(B, D), (E, B), N}.
+          <br> Введем следующие новые обозначения состояний автомата M′: (B, D) = X, (E, B) = Y 
+          <br> Искомый ДКА определяется следующей пятеркой объектов: 
+          <br> Q′ = {S, A, B, C, D, E, N, X, Y}, T = { a, b, c, d, e, $, #, ⊥}, функция переходов задана таблицей 2, H={S}, Z′ = {X, Y, N}
+          <br> Граф полученного ДКА представлен ниже. 
+        </p>
+
+        <div class="image">
+          <img src="images/fifth_practic/dka_sixth.png">
+        </div>
+
+        
+
+      </div>
+
+    </div>
+
+  </div>
+
 </div>
