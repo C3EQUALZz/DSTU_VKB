@@ -19,10 +19,11 @@
   box-sizing: border-box; 
   overflow: hidden; 
   max-height: 2rem; 
-	transition: all 0.3s;
+	transition: all 8s;
 }
 
 .answer:hover {
+  transition: all 10s;
   max-height: 1000rem;
 }
 
