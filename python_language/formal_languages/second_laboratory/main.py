@@ -1,4 +1,6 @@
 """
+Реализация от Романа Карпова
+
 Пример ввода:
 R -> T1T
 R -> T1U
@@ -30,39 +32,46 @@ F -> a
 a + * ( )
 """
 
-from itertools import chain
 from typing import Mapping, Set, List, AnyStr
+
 from python_language.formal_languages.first_laboratory import is_context_free
 from python_language.formal_languages.useful_functions import get_rules_from_console
 
 
-def check_grammar_existence(grammar: Mapping[AnyStr, List[AnyStr]], set_of_non_terminals: Set[AnyStr]) -> bool:
+def check_grammar_exist(grammar: Mapping[AnyStr, List[AnyStr]], set_of_non_terminals: Set[AnyStr],
+                        key="exist") -> bool | set[str]:
     """
     Проверка КС грамматики с помощью алгоритма, который описан в методичке
     Args:
         grammar (Mapping[AnyStr, List[AnyStr]]) - правила перехода, которые ввел пользователь
         set_of_non_terminals (Set[AnyStr) - множество не терминалов
+        key: ...
     """
+    # Стартовый символ всегда в самом начале правил, поэтому так сделал
     # Стартовый символ всегда в самом начале правил, поэтому так сделал
     start_symbol = next(iter(grammar))
 
-    # Наше множество, в которое мы будем добавлять элементы
-    set_with_non_terminals = {start_symbol}
+    flag = False
 
-    max_length = 0
+    for non_terminal in set_of_non_terminals:
+        # Наше множество, в которое мы будем добавлять элементы
+        set_with_non_terminals = set()
+        temporary_non_terminal = non_terminal
+        for symbol, rules in reversed(grammar.items()):
 
-    # Из примера я понял, что нужно рассматривать каждый отдельный символ S -> AB ---> A B, а не слитно
-    for symbol in chain.from_iterable(rule for rules in grammar.values() for rule in rules):
+            if any(temporary_non_terminal in rule for rule in rules) or any(non_terminal in rule for rule in rules):
+                set_with_non_terminals.add(symbol)
+            else:
+                continue
+            temporary_non_terminal = symbol
 
-        if symbol in set_with_non_terminals | set_of_non_terminals:
-            set_with_non_terminals.add(symbol)
-
-        if max_length == (length := len(set_with_non_terminals)):
-            break
-        else:
-            max_length = length
-
-    return start_symbol in set_with_non_terminals
+        if start_symbol in set_with_non_terminals:
+            if key == "exist":
+                flag = True
+                break
+            else:
+                return set_with_non_terminals
+    return flag
 
 
 def main() -> AnyStr:
@@ -73,12 +82,9 @@ def main() -> AnyStr:
     if is_context_free(set_of_terminals=set_of_terminals,
                        set_of_non_terminals=set_of_non_terminals,
                        grammar=dictionary):
-
         return (f"1)Введена КС - грамматика\n2)"
-                f"{('Язык не существует', 'Язык существует')
-                    [check_grammar_existence(dictionary, set_of_non_terminals)]}")
-
-    return "1)Введенная грамматика не является КС-грамматикой "
+                f"{'Язык существует' if check_grammar_exist(dictionary, set_of_non_terminals) else 'Язык не существует'}")
+    return "Введенная грамматика не является КС-грамматикой "
 
 
 if __name__ == "__main__":
