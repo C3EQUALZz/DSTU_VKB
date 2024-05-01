@@ -43,7 +43,7 @@ class DFAMinimizer:
         """
         Здесь происходит логика минимизации ДКА
         """
-        self.set_of_states = {"".join(s) for s in self.__minimize_states()}
+        self.set_of_states = {"".join(sorted(s)) for s in self.__minimize_states()}
         self.final_states = {state for state in self.set_of_states
                              if any(set(fin_state).issubset(state) for fin_state in self.final_states)}
 
