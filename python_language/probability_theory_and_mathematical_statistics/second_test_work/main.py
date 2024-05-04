@@ -13,6 +13,7 @@ import seaborn as sns
 
 from matplotlib.axes import Axes
 from matplotlib import pyplot as plt
+from collections import Counter
 
 
 class DataInteraction:
@@ -83,11 +84,16 @@ class DataInteraction:
         if self.chart_histogram:
             sns.histplot(self.data, bins=25, ax=axes[i])
             titles.append(f"Гистограмма '{self.comment}'")
+            axes[i].set_xlabel('Значения выборки')
+            axes[i].set_ylabel('Высота')
             i += 1
 
         if self.chart_frequency_range:
-            sns.kdeplot(self.data, bw_adjust=0.1, ax=axes[i])
+            data_frequency = Counter(self.data)
+            sns.lineplot(x=data_frequency.keys(), y=data_frequency.values(), ax=axes[i])
             titles.append(f"Полигон частот '{self.comment}'")
+            axes[i].set_xlabel("Значения выборки")
+            axes[i].set_ylabel("Количество совпадений")
             i += 1
 
         for ax, title in zip(axes, titles):
@@ -141,6 +147,9 @@ def main() -> None:
 
             DataInteraction(data, slice(1, len(data), 4), "Выборка из ГС через 3 элемента, начиная с 1",
                             chart_histogram=False, chart_frequency_range=True),
+
+            DataInteraction(data, slice(4, len(data), 3), "Аудиторная часть", chart_histogram=True,
+                            chart_frequency_range=True),
         )
 
         for number, question in enumerate(filter(None, questions), start=1):
