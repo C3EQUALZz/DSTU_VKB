@@ -1,44 +1,42 @@
-data segment
-    array dw 10,0,12,479,-347,40,50,70,124,97
-    positive dw ?
-    negative dw ?
-data ends
+.model small
+.data
+dataArray db 10,0,-12,47,-34,40,50,70,-12,97 ; Пример массива
+arraySize equ $-dataArray ; Размер массива
 
-code segment
-    assume cs: code, ds: data
+posSum dw 0 ; Сумма положительных чисел
+negSum dw 0 ; Сумма отрицательных чисел
 
+.code
 start:
-    mov ax, data
+    mov ax, @data
     mov ds, ax
+    mov cx, arraySize ; Установка счетчика размером массива
+    lea si, dataArray ; Загрузка адреса массива в SI
 
-    lea bx, array   ; адрес начала массива
-    mov cx, 10      ; количество элементов массива
-    xor ax, ax      ; обнуляем регистр суммы положительных чисел
-    mov dx, ax      ; обнуляем регистр суммы отрицательных чисел
+sum_loop:
+    cmp cx, 0 ; Проверяем, остались ли элементы в массиве
+    je done ; Если элементов не осталось, завершаем цикл
 
-beg:
-    mov ax, [bx]    ; загружаем очередное слово в регистр AX
-    test ax, 8000h  ; проверяем знак числа
-    jns posit       ; если число положительное, переходим на метку posit
+    lodsb ; Загрузка байта в AL и увеличение SI
+    cbw ; Преобразование байта в слово (расширение знака)
 
-    neg ax          ; инвертируем знак числа
-    add dx, ax      ; добавляем значение к сумме отрицательных чисел
-    jmp next
+    test ax, ax ; Проверка знака числа
+    jns positive ; Если число положительное (или ноль), перейти к метке 'positive'
 
-posit:
-    add ax, positive ; добавляем значение к сумме положительных чисел
+negative:
+    add negSum, ax ; Добавить число к negSum
+    jmp next_element ; Перейти к следующему элементу
 
-next:
-    add bx, 2       ; переходим к следующему элементу массива
-    loop beg        ; продолжаем цикл до тех пор, пока не обойдем все элементы
+positive:
+    add posSum, ax ; Добавить число к posSum
 
-    mov positive, ax ; сохраняем сумму положительных чисел в переменную positive
-    mov negative, dx ; сохраняем сумму отрицательных чисел в переменную negative
+next_element:
+    dec cx ; Уменьшаем счетчик
+    jmp sum_loop ; Перейти к следующему числу
 
-    ; здесь можно вывести результаты
+done:
+    ; ... (здесь можно добавить код для вывода результатов)
 
-quit:
-    mov ax, 4c00h
+    mov ax, 4C00h ; Завершить программу
     int 21h
-code ends
 end start
