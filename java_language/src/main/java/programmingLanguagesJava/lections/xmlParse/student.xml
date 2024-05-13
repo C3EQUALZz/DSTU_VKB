@@ -1,0 +1,17 @@
+<students>
+    <student>
+        <name>Иванов Иван</name>
+        <age>20</age>
+        <major>Информационные технологии</major>
+    </student>
+    <student>
+        <name>Петрова Елена</name>
+        <age>21</age>
+        <major>Программная инженерия</major>
+    </student>
+    <student>
+        <name>Сидоров Алексей</name>
+        <age>19</age>
+        <major>Безопасность информационных систем</major>
+    </student>
+</students>

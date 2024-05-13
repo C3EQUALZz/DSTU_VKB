@@ -47,7 +47,13 @@ dependencies {
     testCompileOnly("org.projectlombok:lombok:1.18.32")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.32")
     implementation("org.controlsfx:controlsfx:11.2.1")
-
+    // https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
+    implementation("jakarta.xml.bind:jakarta.xml.bind-api:4.0.0")
+    implementation("org.glassfish.jaxb:jaxb-runtime:4.0.1")
+    implementation("javax.xml.bind:jaxb-api:2.3.1")
+    implementation("com.sun.xml.bind:jaxb-core:3.0.0")
+    implementation("com.sun.xml.bind:jaxb-impl:2.3.3")
+    implementation("com.sun.xml.bind:jaxb-core:2.3.0.1")
 }
 
 tasks.test {
