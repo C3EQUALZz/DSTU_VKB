@@ -1,13 +1,13 @@
 ﻿using Library.Core.Classes.DataCompositions;
 using Library.Core.Interfaces;
 
-namespace Library.FirstLaboratory;
+namespace Library.Laboratories.FirstLaboratory.FirstTask;
 
-public class FirstTask : ILabTask
+public class Main : ILabTask
 {
     private readonly string _parsedData;
     
-    public FirstTask(string input) => _parsedData = CompositionFactory.Create<string>().Parse(input);
+    public Main(string input) => _parsedData = CompositionFactory.Create<string>().Parse(input);
     public string Execute()
     {
         return $"Результат задания {_parsedData}";
