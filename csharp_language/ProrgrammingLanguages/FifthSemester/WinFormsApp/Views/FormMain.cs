@@ -1,46 +1,93 @@
-﻿using WinFormsApp.Core.Classes;
+﻿using WinFormsApp.Core.Interfaces;
+using WinFormsApp.Core.Classes;
+using WinFormsApp.Presenters;
 
-namespace WinFormsApp.Views
+namespace WinFormsApp.Views;
+    
+public partial class FormMain : BaseForm, IMenuView
 {
-    public partial class FormMain : Form
+    public event EventHandler? MinimizeClicked;
+    public event EventHandler? MaximizeClicked;
+    public event EventHandler? CloseClicked;
+    public event EventHandler? MenuButtonClicked;
+    
+    public FormMain()
     {
-        public FormMain()
+        InitializeComponent();
+        var _ = new PresenterWithMenu(this);
+    }
+    
+    public Size FormSize
+    {
+        get => ClientSize;
+        set => ClientSize = value;
+    }
+
+        public new FormWindowState WindowState
         {
-            InitializeComponent();
+            get => base.WindowState;
+            set => base.WindowState = value;
         }
 
-        private Color SelectThemeColor()
+        public Padding FormPadding
         {
-            var random = new Random();
-            var index = random.Next(ColorMapCodes.ColorCodes.Count);
-            var colorCode = ColorMapCodes.ColorCodes.Values.ElementAt(index);
-            return ColorTranslator.FromHtml(colorCode);
+            get => Padding;
+            set => Padding = value;
         }
 
-        private void ActivateButton(object sender, EventArgs e)
+        public int MenuPanelWidth
         {
-            if (sender is Button)
+            get => MenuPanel.Width;
+            set => MenuPanel.Width = value;
+        }
+
+        private void MinimizeButton_Click(object sender, EventArgs e)
+        {
+            MinimizeClicked?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void MaximizeButton_Click(object sender, EventArgs e)
+        {
+            MaximizeClicked?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void CloseButton_Click(object sender, EventArgs e)
+        {
+            CloseClicked?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void MenuButton_Click(object sender, EventArgs e)
+        {
+            MenuButtonClicked?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void UpdateMenu(bool isCollapsed)
+        {
+            if (isCollapsed)
             {
-                Color color = SelectThemeColor();
-                var button = (Button)sender;
-                button.BackColor = color;
-                button.ForeColor = Color.White;
-                button.Font = new Font("JetBrains Mono SemiBold", 9.999999F, FontStyle.Bold);
+                MenuPanel.Width = 100;
+                LabelMenu.Visible = false;
+                MenuButton.Dock = DockStyle.Top;
+                foreach (Button menuButton in MenuPanel.Controls.OfType<Button>())
+                {
+                    menuButton.Text = "";
+                    menuButton.ImageAlign = ContentAlignment.MiddleCenter;
+                    menuButton.Padding = new Padding(0);
+                }
             }
-        }
-
-        private void DisableButton(object sender, EventArgs e)
-        {
-            foreach (Control control in MenuPanel.Controls)
+            else
             {
-
+                MenuPanel.Width = 230;
+                LabelMenu.Visible = true;
+                MenuButton.Dock = DockStyle.None;
+                foreach (Button menuButton in MenuPanel.Controls.OfType<Button>())
+                {
+                if (menuButton.Tag is null)
+                    continue;
+                    menuButton.Text = "  " + menuButton.Tag.ToString();
+                    menuButton.ImageAlign = ContentAlignment.MiddleLeft;
+                    menuButton.Padding = new Padding(10, 0, 0, 0);
+                }
             }
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
     }
-}
