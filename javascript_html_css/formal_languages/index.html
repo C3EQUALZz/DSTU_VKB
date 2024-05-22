@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="output.css">
+    <link rel="shortcut icon" href="img/unnamed.png" type="image/x-icon">
+    <title>Сайт с лекциями | formal_languages</title>
+</head>
+
+<body style="background-image: url(img/background.jpg);  background-position: center;">
+    <header>
+        <div class="flex justify-between items-center pt-2 px-5">
+            <img src="img/unnamed.png" alt="logo" width="50">
+            <ul class="flex gap-x-3">
+                <li><a class="text-xl font-medium hover:text-[#b4b4b4] duration-300"
+                        href="https://joyteka.com/100555034" target="_blank">Квиз</a></li>
+            </ul>
+            <a target="_blank" href="https://github.com/C3EQUALZz/formal_languages_website"><img
+                    src="img/Octicons-mark-github.svg" alt="github" width="50" height="50"></a>
+        </div>
+    </header>
+    <main>
+        <div class="flex mt-32 mx-72 gap-x-20">
+            <div>
+                <img class="rounded-lg" src="img/logo_main.jpg" alt="">
+            </div>
+            <div class="pt-20 space-y-4">
+                <div class="flex gap-x-2">
+                    <p class="text-base bg-[#b4b4b4] px-1 w-20 rounded-lg font-bold text-white">#Лекции</p>
+                    <p class="text-base bg-[#b4b4b4] px-1 w-16 rounded-lg font-bold text-white">#ДГТУ</p>
+                    <p class="text-base bg-[#b4b4b4] px-1 w-[150px] rounded-lg font-bold text-white">#formal_languages
+                    </p>
+                </div>
+                <h1 class="text-4xl font-bold ">formal_languages_website</h1>
+                <h3 class="text-[#a9a9a9] text-lg font-medium">У нас есть меню, в котором происходит выбор лекции -
+                    отдельная директория с html файлом.</h3>
+                <button
+                    class="py-2 px-5 bg-[#333333] text-xl rounded-xl font-bold text-white hover:bg-white hover:text-[#191919] duration-300 border-[#b4b4b4]"><a
+                        href="#lections">К лекциям</a></button>
+            </div>
+        </div>
+    </main>
+    <section id="lections">
+        <div class="mt-72 mb-20">
+            <div class="grid grid-cols-3 mx-20" id="lectures-container">
+            </div>
+        </div>
+    </section>
+    <div class="mx-auto px-5">
+        
+</body>
+
+<script src="script.js"></script>
+
+</html>

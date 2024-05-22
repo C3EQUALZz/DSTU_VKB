@@ -1,0 +1,35 @@
+.task-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.answer {
+  margin-top: 2rem;
+  position: relative;
+  display: grid;
+  place-items: center;
+  background: #acd2fb;
+  border-radius: 1em;
+  padding: 0 4rem 4rem 4rem;
+  z-index: 1;
+  width: 100%; 
+  box-sizing: border-box; 
+  overflow: hidden; 
+  max-height: 2rem; 
+	transition: all 3s;
+}
+
+.answer:hover {
+  max-height: 1000rem;
+    transition: all 5s;
+}
+
+hr {
+	width: 100%;
+	text-align: center;
+	margin-top: 1rem;
+	border-width: 0.1rem;
+}

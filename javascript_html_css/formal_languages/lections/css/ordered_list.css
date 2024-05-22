@@ -1,0 +1,15 @@
+/* Перечисление определений с пунктами, там 1, 2 и т.п */
+.points {
+    margin-top: 0;
+    padding-top: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    list-style: decimal;
+}
+
+.points li {
+  font-size: 1.2rem;
+  margin-bottom: 0;
+  margin-top: 0rem;
+  line-height: 2rem;
+}

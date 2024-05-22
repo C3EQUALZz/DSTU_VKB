@@ -1,0 +1,492 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<link rel="stylesheet" type="text/css" href="css/css_for_lections.css">
+<link rel="stylesheet" type="text/css" href="css/container.css">
+<link rel="stylesheet" type="text/css" href="css/title_of_lection.css">
+<link rel="stylesheet" type="text/css" href="css/ordered_list.css">
+<link rel="stylesheet" type="text/css" href="css/subtitle_of_lection.css">
+<link rel="stylesheet" type="text/css" href="css/proofs_examples_etc.css">
+<link rel="stylesheet" type="text/css" href="css/answer_question.css">
+<link rel="stylesheet" type="text/css" href="css/design.css">
+
+<div class="text">
+
+  <div class="center_any_title">
+    <h1 class="title_of_lecture">Практика по лекции №3</h1>
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №1</h4>
+
+    <div class="task-container">
+      <p>
+        <br> Ответьте на серию вопросов, которая представлена ниже. 
+        <br> Что такое алфавит в контексте грамматик?
+        <br> Что такое буквы алфавита? 
+        <br> Что такое слово? 
+      </p>
+
+      <div class="answer">
+
+        <h4 class="proof_or_theorem">Решение </h4>
+
+        <p>
+          <br> <b>Алфавитом</b> называется конечное множество символов.
+          <br> Элементы данного множества - <b>буквы</b>. 
+          <br> <b>Словом</b> в данном алфавите называется конечная цепочка букв этого алфавита.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №2 </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Какие операции существуют над языками? Дайте также определение данным операциям.
+      </p>
+
+      <div class="answer">
+        
+        <h4 class="proof_or_theorem">Решение </h4>
+
+        <p>
+          <br> Объединением языков L<sub>1</sub> и L<sub>2</sub> называется множество слов,
+           входящих хотя бы в один из этих языков: L = L<sub>1</sub> ∨ L<sub>2</sub> = {α|α ∈ L<sub>1</sub> или α ∈ L<sub>2</sub>}.
+          <br> Конкатенацией (произведением) языков L<sub>1</sub> и L<sub>2</sub> называется множество слов
+           вида L<sub>1</sub> · L<sub>2</sub> = {αβ, где α ∈ L<sub>1</sub>, β ∈ L<sub>2</sub>}.
+          Таким образом, это слова, получающиеся приписыванием к каждому слову из L<sub>1</sub> слова из L<sub>2</sub>. Конкатенация слов α и β есть слово αβ.
+          <br> Итерацией языка L называется язык вида &lambda;∨L<sub>1</sub>∨L<sub>2</sub> ∨...∨L<sub>i</sub> ∨..., он обозначается L<sup>*</sup>.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №3 </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Составить регулярное выражение для языка в алфавите {a, b, c}, состоящее из всех слов, начинающихся на ab, но не заканчивающихся на c.
+      </p>
+
+      <div class="answer">
+
+        <h4 class="proof_or_theorem">Решение </h4>
+
+        <p>
+          <br> Как уже было сказано, множество всех слов в алфавите A = {a,b,c} есть A<sup>*</sup> = (a ∨ b ∨ c)<sup>*</sup>.
+          <br> Все слова, начинающиеся на ab - конкатенация ab со множеством всех слов. Выражение для такого языка есть ab(a ∨ b ∨ c) ∗. Слово не заканчивается на букву c, значит, оно заканчивается на a или на b. Поэтому регулярное выражение для данного языка имеет вид ab(a ∨ b ∨ c)<sup>*</sup>(a ∨ b).
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №4. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Требуется решить задачу синтеза конечного автомата по заданному регулярному выражению R. 
+        <br> 
+        <br> R = (a &cup; b &cup; c)<sup>*</sup>
+      </p>
+
+      <div class="answer">
+
+        <h4 class="proof_or_theorem">Решение </h4>
+
+        <div class="image">
+          <img src="images/third_practic/result_fourth.png">
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №5. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Требуется решить задачу синтеза конечного автомата по заданному регулярному выражению R. 
+        <br>
+        <br> R = a<sup>*</sup>b<sup>*</sup>c<sup>*</sup>
+      </p>
+
+      <div class="answer">
+
+        <h4 class="proof_or_theorem">Решение </h4>
+
+        <div class="image">
+          <img src="images/third_practic/result_fifth.png">
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №6. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Требуется решить задачу синтеза конечного автомата по заданному регулярному выражению R. 
+        <br>
+        <br> R = (aba &cup; acba &cup; bcba &cup; ca)
+      </p>
+
+      <div class="answer">
+
+        <h4 class="proof_or_theorem">Решение </h4>
+
+        <div class="image">
+          <img src="images/third_practic/result_sixth.png" width="700">
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №7. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Требуется решить задачу синтеза конечного автомата по заданному регулярному выражению R. 
+        <br>
+        <br> R = c(ab)<sup>*</sup>ba<sup>*</sup>c<sup>*</sup>b
+      </p>
+
+      <div class="answer">
+
+        <h4 class="proof_or_theorem">Решение </h4>
+
+        <div class="image">
+          <img src="images/third_practic/result_seventh.png" width="700">
+        </div>
+        
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №8. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Требуется решить задачу синтеза конечного автомата по заданному регулярному выражению R. 
+        <br>
+        <br> R = a(ab<sup>*</sup>c)<sup>*</sup>a
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №9. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Требуется решить задачу синтеза конечного автомата по заданному регулярному выражению R. 
+        <br>
+        <br> R = (ab &cup; bc)<sup>*</sup>aa
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №10. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Требуется решить задачу синтеза конечного автомата по заданному регулярному выражению R. 
+        <br>
+        <br> R = a<sup>*</sup>(bc &cup; ca)(ab &cup; cb)<sup>*</sup>
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №11. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Требуется решить задачу синтеза конечного автомата по заданному регулярному выражению R. 
+        <br>
+        <br> R = a<sup>*</sup>(bc &cup; ca) &cup; (ab &cup; cb)<sup>*</sup>
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №12. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Требуется решить задачу синтеза конечного автомата по заданному регулярному выражению R. 
+        <br>
+        <br> R = (a &cup; b &cup; c)<sup>*</sup>a(ab<sup>*</sup>c)<sup>*</sup>a
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №13. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Требуется решить задачу синтеза конечного автомата по заданному регулярному выражению R. 
+        <br>
+        <br> R = (a &cup; b &cup; c)<sup>*</sup> &cup; a(ab<sup>*</sup>c)<sup>*</sup>a
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №14. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Требуется решить задачу синтеза конечного автомата по заданному регулярному выражению R. 
+        <br>
+        <br> R = a(ab<sup>*</sup> &cup; acb)<sup>*</sup> &cup; b(cb<sup>*</sup>)<sup>*</sup>a
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №15. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Требуется решить задачу синтеза конечного автомата по заданному регулярному выражению R. 
+        <br>
+        <br> R = a<sup>*</sup>(bc &cup; ca)(abc &cup; cb)<sup>*</sup>ac
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №16. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Требуется решить задачу синтеза конечного автомата по заданному регулярному выражению R. 
+        <br>
+        <br> R = a(ab<sup>*</sup>c)<sup>*</sup>a((ca<sup>*</sup>a &cup; bc)<sup>*</sup> &cup; b(cb)<sup>*</sup>a)
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №17. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Требуется решить задачу синтеза конечного автомата по заданному регулярному выражению R. 
+        <br>
+        <br> R = (a<sup>*</sup>bc &cup; cd)<sup>*</sup>(bac<sup>*</sup> &cup; aa<sup>*</sup>c)<sup>*</sup>
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №18. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Требуется решить задачу синтеза конечного автомата по заданному регулярному выражению R. 
+        <br>
+        <br> R = (ba<sup>*</sup>c &cup; ca)<sup>*</sup> &cup; ab<sup>*</sup>c<sup>*</sup>
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №19. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Требуется решить задачу синтеза конечного автомата по заданному регулярному выражению R. 
+        <br>
+        <br> R = ((ba<sup>*</sup>c &cup; ca)<sup>*</sup> &cup; (a<sup>*</sup>c)<sup>*</sup>)<sup>*</sup>
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №20. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Требуется решить задачу синтеза конечного автомата по заданному регулярному выражению R. 
+        <br>
+        <br> R = (ba<sup>*</sup>b<sup>*</sup>c &cup; cba<sup>*</sup>)<sup>*</sup>
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №21. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Требуется решить задачу синтеза конечного автомата по заданному регулярному выражению R. 
+        <br>
+        <br> R = (ba<sup>*</sup>c &cup; a<sup>*</sup>bc<sup>*</sup>)<sup>*</sup> &cup; (ac<sup>*</sup> &cup; a<sup>*</sup>c)<sup>*</sup>
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №22. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Требуется решить задачу синтеза конечного автомата по заданному регулярному выражению R. 
+        <br>
+        <br> R = ((abc<sup>*</sup> &cup; (ab)<sup>*</sup>)<sup>*</sup>ab(ab<sup>*</sup> &cup; b<sup>*</sup>ca)<sup>*</sup>)<sup>*</sup>
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №23. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Требуется решить задачу синтеза конечного автомата по заданному регулярному выражению R. 
+        <br>
+        <br> R = ((baa<sup>*</sup>c &cup; bd)<sup>*</sup>(cd<sup>*</sup>a &cup; ab)<sup>*</sup>)<sup>*</sup>
+      </p>
+
+    </div>
+
+  </div>
+
+   <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №24. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Требуется решить задачу синтеза конечного автомата по заданному регулярному выражению R. 
+        <br>
+        <br> R = (((abc)<sup>*</sup>ac)<sup>*</sup>bc<sup>*</sup>ac<sup>*</sup>b)<sup>*</sup>
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №25. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Требуется решить задачу синтеза конечного автомата по заданному регулярному выражению R. 
+        <br>
+        <br> R = (ca<sup>*</sup>b &cup; a<sup>*</sup>bc<sup>*</sup>)<sup>*</sup>abc(bac &cup; a &cup; (cb)<sup>*</sup>)<sup>*</sup>
+      </p>
+
+    </div>
+
+  </div>
+
+</div>

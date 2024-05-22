@@ -1,0 +1,570 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<link rel="stylesheet" type="text/css" href="css/css_for_lections.css">
+<link rel="stylesheet" type="text/css" href="css/container.css">
+<link rel="stylesheet" type="text/css" href="css/title_of_lection.css">
+<link rel="stylesheet" type="text/css" href="css/ordered_list.css">
+<link rel="stylesheet" type="text/css" href="css/subtitle_of_lection.css">
+<link rel="stylesheet" type="text/css" href="css/proofs_examples_etc.css">
+<link rel="stylesheet" type="text/css" href="css/answer_question.css">
+<link rel="stylesheet" type="text/css" href="css/design.css">
+
+<div class="text">
+
+  <div class="center_any_title">
+    <h1 class="title_of_lecture">Практика по лекции №1</h1>
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №1. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Для заданных языков L<sub>1</sub> и L<sub>2</sub> найти L<sub>1</sub> &cap; L<sub>2</sub> и L<sub>1</sub> &cup; L<sub>2</sub>:
+        <br> - L<sub>1</sub> = {b<sup>i</sup>a | i &ge; 0} i , L<sub>2</sub> = {a<sup>i</sup>b | i &ge; 0};
+        <br> - L<sub>1</sub> = {b<sup>i</sup> a<sup>j</sup> | i &ge; 0, j &ge; 0} ij , L<sub>2</sub> = {a<sup>i</sup> b<sup>j</sup> | i &ge; 0, j &ge; 0};
+      </p>
+
+      <div class="answer">
+
+        <h4 class="proof_or_theorem">Решение </h4>
+
+        <p>
+          <br> - L<sub>1</sub> &cap; L<sub>2</sub> = {b<sup>i</sup> a<sup>i + 1</sup>b | i &ge; 0}
+          <br> Пример: ab, baab, bbaaab... 
+          <br> L<sub>1</sub> &cup; L<sub>2</sub> = {Ø}
+          <br> Наборы: L<sub>1</sub> = {a, ba, bba, bbba, …}, L<sub>2</sub> = {b, ab, aab, aaab, …}. Результат пересечения – пустое множество
+        </p>
+
+        <p>
+          <br> - L<sub>1</sub>1 &cup; L<sub>2</sub> = {b<sup>i</sup> a<sup>j</sup> a<sup>i</sup>i b<sup>j</sup> | i, j &ge; 0}
+          <br> Пример: λ, ba, ab, baab, bbaaab, baaabb, bbaaaabb…
+          <br> L<sub>1</sub> &cap; L<sub>2</sub> = {&lambda;}
+          <br> Результатом пересечение L<sub>1</sub> и L<sub>2</sub> может быть только &lambda;, так как единственный элемент,
+          который есть в L<sub>1</sub> и L<sub>2</sub>, это пустой символ, который можно получить при i, j = 0
+        </p>
+
+      </div>
+
+    </div>
+    
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №2.</h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Построить контекстно-свободные грамматики для следующих языков: 
+        <br> L = {0<sup>i</sup> 1<sup>j</sup> | i = j}; 
+        <br> L = {0<sup>i</sup> 1<sup>j</sup> | i ≥ j}; 
+      </p>
+
+      <div class="answer">
+
+        <h4 class="proof_or_theorem">Решение </h4>
+
+        <p>
+          <br> Главный алгоритм при составлении грамматики должен быть таким, чтобы хотя бы одно правило имело такой вид, например:
+          <br> A → aCa, A → Bav,  B → nLb;
+          <br> Пример для задания:
+          <br> S → AB
+          <br> A → 0A | 0 | λ
+          <br> B → B1 | 1 | λ
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №3. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Описать язык, порождаемый грамматикой G = {a, b}, {S, A}, P, S,
+        <br> где P состоит из правил: 
+        <br>
+        <br> S → aS | bS | aA
+        <br> A → a
+      </p>
+
+      <div class="answer">
+
+        <h4 class="proof_or_theorem">Решение </h4>
+
+        <p>
+          <br> Левая часть правил состоит из одного нетерминального символа – это либо регулярная грамматика, либо КС. 
+          <br> Правая часть состоит из терминальных и нетерминальных символов, а также имеют конструкцию - “aA”. 
+          <br> Из этого можно сделать вывод, что это регулярная грамматика, причём праволинейная.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №4. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Описать язык, порождаемый грамматикой G = {a, b}, {S, A, B}, P, S,
+        <br> где P состоит из правил: 
+        <br>
+        <br> S → AB
+        <br> A → aA | λ
+        <br> B → Bb | λ
+      </p>
+
+      <div class="answer">
+
+        <h4 class="proof_or_theorem">Решение </h4>
+
+        <p>
+          <br> Левая часть правил состоит из одного нетерминального символа – это либо регулярная грамматика, либо КС. 
+          <br> Правая часть состоит из терминальных и нетерминальных символов. В правиле “S → AB” в правой части находятся два терминала,
+          <br> а значит это не может быть регулярной грамматикой – это КС грамматика.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №5. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Описать язык, порождаемый грамматикой G = {a, b, $}, {A, Z, S}, P, S,
+        <br> где P состоит из правил: 
+        <br>
+        <br> S → Ab
+        <br> A → Ab | Za
+        <br> Z → Za | $
+      </p>
+
+      <div class="answer">
+
+        <h4 class="proof_or_theorem">Решение </h4>
+
+        <p>
+          <br> Данная грамматика является левосторонней регулярной грамматикой, так как слева в результате продукций находятся нетерминалы 
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №6. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Описать язык, порождаемый грамматикой G = {a, b, c}, {A, S}, P, S,
+        <br> где P состоит из правил: 
+        <br>
+        <br> S → aS | bA
+        <br> A → ε | cA
+      </p>
+
+      <div class="answer">
+
+        <h4 class="proof_or_theorem">Решение </h4>
+
+        <p>
+          <br> Данная грамматика является правосторонней регулярной грамматикой, так как справа в результате продукций находятся только нетерминалы
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №7. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Описать язык, порождаемый грамматикой G = {a, b, $}, {A, S, Z}, P, S,
+        <br> где P состоит из правил: 
+        <br>
+        <br> S → aS | aA
+        <br> A → bA | bZ
+        <br> Z → $
+      </p>
+
+      <div class="answer">
+
+        <h4 class="proof_or_theorem">Решение </h4>
+
+         <p>
+          <br> Данная грамматика является правосторонней регулярной грамматикой, так как справа в результате продукций находятся только нетерминалы
+        </p>
+
+      </div>
+
+    </div>
+    
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №8. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Описать язык, порождаемый грамматикой G = {a, b, c, d}, {A, S, B}, P, S,
+        <br> где P состоит из правил: 
+        <br>
+        <br> S → aAS
+        <br> AS → AAS
+        <br> AAA → ABA
+        <br> A → b
+        <br> bBA → bcdA
+        <br> bS → bA
+      </p>
+
+      <div class="answer">
+
+        <h4 class="proof_or_theorem">Решение </h4>
+
+        <p>
+          <br> По левой части видно, что данная грамматика является контекстно зависимой, так левые и правые части всех продукций окружены терминальными и нетерминальными символами.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №9. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Описать язык, порождаемый грамматикой G = {a, b}, {A, S, B}, P, S,
+        <br> где P состоит из правил: 
+        <br>
+        <br> S → aA
+        <br> S → bB
+        <br> A → aB
+        <br> A → a
+        <br> B → bA
+        <br> B → b
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+     <h4 class="proof_or_theorem">Задача №10. </h4>
+
+     <div class="task-container">
+
+      <p>
+        <br> Описать язык, порождаемый грамматикой G = {a, b, c}, {S, B, C}, P, S,
+        <br> где P состоит из правил: 
+        <br>
+        <br> S → aBCS
+        <br> S → aB
+        <br> aB → aC
+        <br> C → cC
+        <br> C → c
+      </p>
+
+     </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №11. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Описать язык, порождаемый грамматикой G = {a, b}, {S, B, C}, P, S,
+        <br> где P состоит из правил: 
+        <br>
+        <br> S → aBC
+        <br> BC → b
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №12. </h4>
+    
+    <div class="task-container">
+
+      <p>
+        <br> Описать язык, порождаемый грамматикой G = {a, b}, {S, B, A}, P, S,
+        <br> где P состоит из правил: 
+        <br>
+        <br> S → aAbB
+        <br> aA → Aa
+        <br> bB → b
+        <br> bB → bbB
+        <br> A → εa
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №13. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Описать язык, порождаемый грамматикой G = {a, b}, {S, B, C}, P, S,
+        <br> где P состоит из правил: 
+        <br>
+        <br> S → aBc
+        <br> B → bB | C
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №14. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Описать язык, порождаемый грамматикой G = {a, b, +, -}, {S, A}, P, S,
+        <br> где P состоит из правил: 
+        <br>
+        <br> S → A+A-A
+        <br> A → aA | bA | a | b
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №15. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Описать язык, порождаемый грамматикой G = {c, d}, {S, C, D}, P, S,
+        <br> где P состоит из правил: 
+        <br>
+        <br> S → C
+        <br> C → ccC
+        <br> C → ccD
+        <br> D → dD
+        <br> D → d
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №16. </h4>
+
+    <div class="task-container">
+
+       <p>
+        <br> Описать язык, порождаемый грамматикой G = {a, b, c}, {A, B, C}, P, S,
+        <br> где P состоит из правил: 
+        <br>
+        <br> S → ABC
+        <br> A → aA | a
+        <br> B → bB | b
+        <br> C → cC | c
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №17. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Придумать правила, удовлетворяющие языку, который представлен ниже
+        <br> 
+        <br> L(G) = {ww | w &isin; {0, 1}<sup>*</sup>}
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №18. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Придумать правила, удовлетворяющие языку, который представлен ниже
+        <br> 
+        <br> L(G) = {10<sup>n</sup> | n &GreaterEqual; 0}
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №19. </h4>
+
+     <div class="task-container">
+
+      <p>
+        <br> Придумать правила, удовлетворяющие языку, который представлен ниже
+        <br> 
+        <br> L(G) = {0<sup>2n+1</sup>12<sup>2n</sup> | n > 0}
+      </p>
+
+     </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №20. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Придумать правила, удовлетворяющие языку, который представлен ниже
+        <br> 
+        <br> L(G) = {a + b | {a, b} &isin; {0, 1, 2}<sup>*</sup>}
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №21. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Придумать правила, удовлетворяющие языку, который представлен ниже
+        <br> 
+        <br> L(G) = {1<sup>n</sup>0<sup>2n</sup>2<sup>2n+1</sup> | n &GreaterEqual; 0}
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №22. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Придумать правила, удовлетворяющие языку, который представлен ниже
+        <br> 
+        <br> L(G) = {(w + w)<sup>n</sup> | w &isin; {0, 1}, n &GreaterEqual; 0}
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №23. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Придумать правила, удовлетворяющие языку, который представлен ниже
+        <br> 
+        <br> L(G) = {w | w &isin; {0, 1}<sup>+</sup> и не содержит двух рядом соседних единиц}
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №24. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Придумать правила, удовлетворяющие языку, который представлен ниже
+        <br> 
+        <br> L(G) = {a<sup>i</sup>b<sup>j</sup>c<sup>k</sup> | i = j или j = k}
+      </p>
+
+    </div>
+    
+  </div>
+
+  <div class="container">
+
+    <h4 class="proof_or_theorem">Задача №25. </h4>
+
+    <div class="task-container">
+
+      <p>
+        <br> Придумать правила, удовлетворяющие языку, который представлен ниже
+        <br> 
+        <br> L(G) = {a<sup>n<sup>2</sup></sup> | n &GreaterEqual; 1}
+      </p>
+
+    </div>
+
+  </div>
+
+</div>

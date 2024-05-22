@@ -1,0 +1,14 @@
+/* https://www.educative.io/blog/html-tables */
+
+.table-view {
+  border-collapse: collapse;
+}
+
+td, th {
+   padding: 0.5rem;
+   border: 0.1rem solid rgba(0, 0, 0, 0.5);
+}
+
+caption {
+ padding-bottom: 0.5rem;
+}

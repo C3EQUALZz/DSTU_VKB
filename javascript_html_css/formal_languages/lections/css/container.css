@@ -1,0 +1,36 @@
+/* Контейнер, оборачивающий текст лекции, я думаю, что нужно выравнивание делать по центру, опять-таки меняйте как хотите */
+.container {
+  position: relative;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  width: 90%; /* Больше ширины на маленьких экранах */
+}
+
+/* Содержимое лекции */
+.container p {
+  font-size: 1.2rem;
+  margin-bottom: 0;
+  margin-top: 0rem;
+  line-height: 2rem;
+}
+
+/* Увеличиваем ширину контейнера для больших экранов */
+@media (min-width: 600px) {
+  .container {
+    width: 75%;
+  }
+}
+
+@media (min-width: 900px) {
+  .container {
+    width: 60%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    width: 75%;
+  }
+}
