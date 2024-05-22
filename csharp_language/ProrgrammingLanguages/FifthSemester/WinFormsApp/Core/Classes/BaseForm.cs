@@ -114,11 +114,8 @@ public class BaseForm : Form
             case FormWindowState.Normal:
                 if (Padding.Top != borderSize)
                     Padding = new Padding(borderSize);
-                formSize = ClientSize;  // Обновление размера формы
+                formSize = ClientSize;
                 break;
         }
     }
-
-
-
 }
