@@ -13,9 +13,3 @@
 ---
 
 FontAwesome: https://youtu.be/5AsJJl7Bhvc?si=P6aVYPqdCAWBc7Zz
-
----
-
-### Замечания
-
-FontAwesome не настолько разнообразен иконками, которые нужны мне. 
