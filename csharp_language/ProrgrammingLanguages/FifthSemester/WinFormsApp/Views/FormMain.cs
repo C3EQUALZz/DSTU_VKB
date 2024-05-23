@@ -1,6 +1,6 @@
-﻿using WinFormsApp.Core.Interfaces;
-using WinFormsApp.Core.Classes;
+﻿using WinFormsApp.Core.Classes;
 using WinFormsApp.Presenters;
+using WinFormsApp.Core.Interfaces.Views;
 
 namespace WinFormsApp.Views;
 

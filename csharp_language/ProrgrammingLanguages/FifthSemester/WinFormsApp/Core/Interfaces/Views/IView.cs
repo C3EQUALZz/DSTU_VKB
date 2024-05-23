@@ -1,4 +1,4 @@
-﻿namespace WinFormsApp.Core.Interfaces;
+﻿namespace WinFormsApp.Core.Interfaces.Views;
 
 
 /// <summary>

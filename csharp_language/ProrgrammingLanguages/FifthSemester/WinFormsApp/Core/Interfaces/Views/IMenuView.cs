@@ -1,4 +1,4 @@
-﻿namespace WinFormsApp.Core.Interfaces;
+﻿namespace WinFormsApp.Core.Interfaces.Views;
 
 /// <summary>
 /// Специализированный интерфейс для основного окна с меню и лабораторными

@@ -1,4 +1,4 @@
-﻿using WinFormsApp.Core.Interfaces;
+﻿using WinFormsApp.Core.Interfaces.Views;
 
 namespace WinFormsApp.Presenters;
 

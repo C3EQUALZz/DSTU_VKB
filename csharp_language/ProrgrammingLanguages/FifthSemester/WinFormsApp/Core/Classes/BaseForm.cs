@@ -1,135 +1,110 @@
-﻿using System.Runtime.InteropServices;
+﻿using WinFormsApp.Core.Classes.Utils;
+using WinFormsApp.Core.Enums.Form;
+using WinFormsApp.Core.Interfaces;
 
-namespace WinFormsApp.Core.Classes
+namespace WinFormsApp.Core.Classes;
+
+enum BorderConstants
 {
-    public class BaseForm : Form
+    BorderSize = 2,
+    ResizeAreaSize = 10
+}
+
+public class BaseForm : Form
+{
+    protected Size formSizeBeforeMinimize;
+
+    public BaseForm()
     {
-        private readonly int borderSize = 2;
-        protected Size formSizeBeforeMinimize;
+        Padding = new Padding((int)BorderConstants.BorderSize);
+        BackColor = Color.FromArgb(39, 39, 58);
+        Resize += FormResizeEvent;
+    }
 
-        public BaseForm()
+    protected void PanelTitleBar_MouseDown(object sender, MouseEventArgs e)
+    {
+        NativeMethods.ReleaseCapture();
+        NativeMethods.SendMessage(Handle, 0x112, 0xf012, 0);
+    }
+
+    protected override void WndProc(ref Message m)
+    {
+        switch (m.Msg)
         {
-            Padding = new Padding(borderSize);
-            BackColor = Color.FromArgb(39, 39, 58);
-            Resize += FormResizeEvent;
+            case (int)MessageConstants.WM_NCCALCSIZE:
+                if (m.WParam.ToInt32() == 1)
+                    return;
+                break;
+
+            case (int)MessageConstants.WM_SYSCOMMAND:
+                HandleSysCommand(m);
+                break;
+
+            case (int)MessageConstants.WM_NCHITTEST:
+                HandleNCHitTest(ref m, (int)BorderConstants.ResizeAreaSize);
+                break;
         }
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern void ReleaseCapture();
+        base.WndProc(ref m);
+    }
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern void SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
-
-        protected void PanelTitleBar_MouseDown(object sender, MouseEventArgs e)
+    protected void FormResizeEvent(object? sender, EventArgs e)
+    {
+        switch (WindowState)
         {
-            ReleaseCapture();
-            SendMessage(Handle, 0x112, 0xf012, 0);
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            const int WM_NCCALCSIZE = 0x0083;
-            const int WM_SYSCOMMAND = 0x0112;
-            const int SC_MINIMIZE = 0xF020;
-            const int SC_RESTORE = 0xF120;
-            const int WM_NCHITTEST = 0x0084;
-            const int resizeAreaSize = 10;
-
-            switch (m.Msg)
-            {
-                case WM_NCCALCSIZE:
-                    if (m.WParam.ToInt32() == 1)
-                        return;
-                    break;
-
-                case WM_SYSCOMMAND:
-                    HandleSysCommand(m);
-                    break;
-
-                case WM_NCHITTEST:
-                    HandleNCHitTest(ref m, resizeAreaSize);
-                    break;
-            }
-
-            base.WndProc(ref m);
-        }
-
-        private void HandleSysCommand(Message m)
-        {
-            const int SC_MINIMIZE = 0xF020;
-            const int SC_RESTORE = 0xF120;
-
-            int wParam = (m.WParam.ToInt32() & 0xFFF0);
-            if (wParam == SC_MINIMIZE)
-            {
+            case FormWindowState.Maximized:
+                Padding = new Padding(8, 8, 8, 0);
+                break;
+            case FormWindowState.Normal:
+                if (Padding.Top != (int)BorderConstants.BorderSize)
+                    Padding = new Padding((int)BorderConstants.BorderSize);
                 formSizeBeforeMinimize = ClientSize;
-            }
-            else if (wParam == SC_RESTORE)
-            {
-                ClientSize = formSizeBeforeMinimize;
-            }
-        }
-
-        private void HandleNCHitTest(ref Message m, int resizeAreaSize)
-        {
-            const int HTCLIENT = 1;
-            const int HTLEFT = 10;
-            const int HTRIGHT = 11;
-            const int HTTOP = 12;
-            const int HTTOPLEFT = 13;
-            const int HTTOPRIGHT = 14;
-            const int HTBOTTOM = 15;
-            const int HTBOTTOMLEFT = 16;
-            const int HTBOTTOMRIGHT = 17;
-
-            base.WndProc(ref m);
-
-            if (WindowState == FormWindowState.Normal && (int)m.Result == HTCLIENT)
-            {
-                Point screenPoint = new(m.LParam.ToInt32());
-                Point clientPoint = PointToClient(screenPoint);
-
-                if (clientPoint.Y <= resizeAreaSize)
-                {
-                    if (clientPoint.X <= resizeAreaSize)
-                        m.Result = (IntPtr)HTTOPLEFT;
-                    else if (clientPoint.X < (Size.Width - resizeAreaSize))
-                        m.Result = (IntPtr)HTTOP;
-                    else
-                        m.Result = (IntPtr)HTTOPRIGHT;
-                }
-                else if (clientPoint.Y <= (Size.Height - resizeAreaSize))
-                {
-                    if (clientPoint.X <= resizeAreaSize)
-                        m.Result = (IntPtr)HTLEFT;
-                    else if (clientPoint.X > (Width - resizeAreaSize))
-                        m.Result = (IntPtr)HTRIGHT;
-                }
-                else
-                {
-                    if (clientPoint.X <= resizeAreaSize)
-                        m.Result = (IntPtr)HTBOTTOMLEFT;
-                    else if (clientPoint.X < (Size.Width - resizeAreaSize))
-                        m.Result = (IntPtr)HTBOTTOM;
-                    else
-                        m.Result = (IntPtr)HTBOTTOMRIGHT;
-                }
-            }
-        }
-
-        protected void FormResizeEvent(object sender, EventArgs e)
-        {
-            switch (WindowState)
-            {
-                case FormWindowState.Maximized:
-                    Padding = new Padding(8, 8, 8, 0);
-                    break;
-                case FormWindowState.Normal:
-                    if (Padding.Top != borderSize)
-                        Padding = new Padding(borderSize);
-                    formSizeBeforeMinimize = ClientSize;
-                    break;
-            }
+                break;
         }
     }
+
+    private void HandleSysCommand(Message m)
+    {
+        var wParam = (m.WParam.ToInt32() & 0xFFF0);
+        if (wParam == (int)SysCommandConstants.SC_MINIMIZE)
+        {
+            formSizeBeforeMinimize = ClientSize;
+        }
+        else if (wParam == (int)SysCommandConstants.SC_RESTORE)
+        {
+            ClientSize = formSizeBeforeMinimize;
+        }
+    }
+
+    private void HandleNCHitTest(ref Message m, int resizeAreaSize)
+    {
+        base.WndProc(ref m);
+
+        if (WindowState == FormWindowState.Normal && (int)m.Result == (int)HitTestConstants.HTCLIENT)
+        {
+            Point screenPoint = new(m.LParam.ToInt32());
+            Point clientPoint = PointToClient(screenPoint);
+
+            m.Result = GetHitTestResult(clientPoint, resizeAreaSize);
+        }
+    }
+
+    private IntPtr GetHitTestResult(Point clientPoint, int resizeAreaSize)
+    {
+        foreach (HitTestConstants hitTestConstant in Enum.GetValues(typeof(HitTestConstants)))
+        {
+            
+            IHitTestStrategy strategy = HitTestStrategyFactory.GetStrategy(hitTestConstant);
+            
+            IntPtr result = strategy.GetHitTestResult(clientPoint, Size, resizeAreaSize);
+           
+            if (result != IntPtr.Zero)
+            {
+                return result;
+            }
+        }
+
+        return (IntPtr)HitTestConstants.HTCLIENT;
+    }
+
 }
