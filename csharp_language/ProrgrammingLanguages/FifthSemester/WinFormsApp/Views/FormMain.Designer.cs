@@ -37,7 +37,7 @@
             panelLogo = new Panel();
             MenuButton = new FontAwesome.Sharp.IconButton();
             LabelMenu = new Label();
-            panelTitleBar = new Panel();
+            PanelTitleBar = new Panel();
             label2 = new Label();
             MinimizeButton = new FontAwesome.Sharp.IconButton();
             CloseButton = new FontAwesome.Sharp.IconButton();
@@ -46,7 +46,7 @@
             iconSplitButton1 = new FontAwesome.Sharp.IconSplitButton();
             MenuPanel.SuspendLayout();
             panelLogo.SuspendLayout();
-            panelTitleBar.SuspendLayout();
+            PanelTitleBar.SuspendLayout();
             SuspendLayout();
             // 
             // MenuPanel
@@ -59,9 +59,9 @@
             MenuPanel.Controls.Add(iconButton2);
             MenuPanel.Controls.Add(panelLogo);
             MenuPanel.Dock = DockStyle.Left;
-            MenuPanel.Location = new Point(0, 0);
+            MenuPanel.Location = new Point(2, 2);
             MenuPanel.Name = "MenuPanel";
-            MenuPanel.Size = new Size(220, 504);
+            MenuPanel.Size = new Size(220, 578);
             MenuPanel.TabIndex = 0;
             // 
             // iconButton6
@@ -77,7 +77,7 @@
             iconButton6.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconButton6.IconSize = 30;
             iconButton6.ImageAlign = ContentAlignment.MiddleLeft;
-            iconButton6.Location = new Point(0, 453);
+            iconButton6.Location = new Point(0, 527);
             iconButton6.Name = "iconButton6";
             iconButton6.Padding = new Padding(15, 0, 0, 15);
             iconButton6.Size = new Size(220, 51);
@@ -218,19 +218,19 @@
             LabelMenu.TabIndex = 0;
             LabelMenu.Text = "Меню";
             // 
-            // panelTitleBar
+            // PanelTitleBar
             // 
-            panelTitleBar.BackColor = Color.FromArgb(51, 51, 76);
-            panelTitleBar.Controls.Add(label2);
-            panelTitleBar.Controls.Add(MinimizeButton);
-            panelTitleBar.Controls.Add(CloseButton);
-            panelTitleBar.Controls.Add(MaximizeButton);
-            panelTitleBar.Dock = DockStyle.Top;
-            panelTitleBar.Location = new Point(220, 0);
-            panelTitleBar.Name = "panelTitleBar";
-            panelTitleBar.Size = new Size(837, 60);
-            panelTitleBar.TabIndex = 1;
-            panelTitleBar.MouseDown += panelTitleBar_MouseDown;
+            PanelTitleBar.BackColor = Color.FromArgb(51, 51, 76);
+            PanelTitleBar.Controls.Add(label2);
+            PanelTitleBar.Controls.Add(MinimizeButton);
+            PanelTitleBar.Controls.Add(CloseButton);
+            PanelTitleBar.Controls.Add(MaximizeButton);
+            PanelTitleBar.Dock = DockStyle.Top;
+            PanelTitleBar.Location = new Point(222, 2);
+            PanelTitleBar.Name = "PanelTitleBar";
+            PanelTitleBar.Size = new Size(865, 60);
+            PanelTitleBar.TabIndex = 1;
+            PanelTitleBar.MouseDown += PanelTitleBar_MouseDown;
             // 
             // label2
             // 
@@ -256,7 +256,7 @@
             MinimizeButton.IconColor = Color.White;
             MinimizeButton.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MinimizeButton.IconSize = 20;
-            MinimizeButton.Location = new Point(702, 0);
+            MinimizeButton.Location = new Point(730, 0);
             MinimizeButton.Name = "MinimizeButton";
             MinimizeButton.Padding = new Padding(0, 15, 0, 10);
             MinimizeButton.Size = new Size(45, 25);
@@ -274,7 +274,7 @@
             CloseButton.IconColor = Color.White;
             CloseButton.IconFont = FontAwesome.Sharp.IconFont.Auto;
             CloseButton.IconSize = 20;
-            CloseButton.Location = new Point(792, 0);
+            CloseButton.Location = new Point(820, 0);
             CloseButton.Name = "CloseButton";
             CloseButton.Size = new Size(45, 25);
             CloseButton.TabIndex = 9;
@@ -291,7 +291,7 @@
             MaximizeButton.IconColor = Color.White;
             MaximizeButton.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MaximizeButton.IconSize = 20;
-            MaximizeButton.Location = new Point(747, 0);
+            MaximizeButton.Location = new Point(775, 0);
             MaximizeButton.Name = "MaximizeButton";
             MaximizeButton.Size = new Size(45, 25);
             MaximizeButton.TabIndex = 6;
@@ -302,9 +302,9 @@
             // 
             panel1.BackColor = Color.FromArgb(245, 245, 254);
             panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(220, 60);
+            panel1.Location = new Point(222, 62);
             panel1.Name = "panel1";
-            panel1.Size = new Size(837, 444);
+            panel1.Size = new Size(865, 518);
             panel1.TabIndex = 2;
             // 
             // iconSplitButton1
@@ -323,9 +323,9 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1057, 504);
+            ClientSize = new Size(1089, 582);
             Controls.Add(panel1);
-            Controls.Add(panelTitleBar);
+            Controls.Add(PanelTitleBar);
             Controls.Add(MenuPanel);
             Font = new Font("FiraCode Nerd Font Mono SemBd", 8.999999F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Name = "FormMain";
@@ -336,8 +336,8 @@
             MenuPanel.PerformLayout();
             panelLogo.ResumeLayout(false);
             panelLogo.PerformLayout();
-            panelTitleBar.ResumeLayout(false);
-            panelTitleBar.PerformLayout();
+            PanelTitleBar.ResumeLayout(false);
+            PanelTitleBar.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -358,6 +358,6 @@
         private FontAwesome.Sharp.IconButton CloseButton;
         private FontAwesome.Sharp.IconButton MinimizeButton;
         private Label label2;
-        private Panel panelTitleBar;
+        private Panel PanelTitleBar;
     }
 }
