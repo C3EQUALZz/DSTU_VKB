@@ -1,6 +1,7 @@
 ﻿using WinFormsApp.Core.Classes;
 using WinFormsApp.Presenters;
 using WinFormsApp.Core.Interfaces.Views;
+using WinFormsApp.Core.Classes.UIElements.Menu;
 
 namespace WinFormsApp.Views;
 
@@ -10,13 +11,14 @@ public partial class FormMain : BaseForm, IMenuView
     public event EventHandler? MaximizeClicked;
     public event EventHandler? CloseClicked;
     public event EventHandler? MenuButtonClicked;
+    private readonly SideBar _sideBar;
 
     public FormMain()
     {
         InitializeComponent();
         var _ = new PresenterWithMenu(this);
+        _sideBar = new SideBar(MenuPanel, LabelMenu, MenuButton);
     }
-
     public Size FormSize
     {
         get => ClientSize;
@@ -63,32 +65,15 @@ public partial class FormMain : BaseForm, IMenuView
 
     public void UpdateMenu(bool isCollapsed)
     {
-        if (isCollapsed)
-        {
-            MenuPanel.Width = 100;
-            LabelMenu.Visible = false;
-            MenuButton.Dock = DockStyle.Top;
-            foreach (Button menuButton in MenuPanel.Controls.OfType<Button>())
-            {
-                menuButton.Text = "";
-                menuButton.ImageAlign = ContentAlignment.MiddleCenter;
-                menuButton.Padding = new Padding(0);
-            }
-        }
-        else
-        {
-            MenuPanel.Width = 230;
-            LabelMenu.Visible = true;
-            MenuButton.Dock = DockStyle.None;
-            foreach (Button menuButton in MenuPanel.Controls.OfType<Button>())
-            {
-                if (menuButton.Tag is null)
-                    continue;
-                menuButton.Text = "  " + menuButton.Tag.ToString();
-                menuButton.ImageAlign = ContentAlignment.MiddleLeft;
-                menuButton.Padding = new Padding(10, 0, 0, 0);
-            }
-        }
+        _sideBar.UpdateMenu(isCollapsed);
     }
+
+
+
+
+
+
+
+
 
 }
