@@ -65,15 +65,7 @@ public partial class FormMain : BaseForm, IMenuView
 
     public void UpdateMenu(bool isCollapsed)
     {
-        _sideBar.UpdateMenu(isCollapsed);
+        _sideBar.SetMenuState(isCollapsed ? new CollapsedMenuState() : new ExpandedMenuState());   
     }
-
-
-
-
-
-
-
-
 
 }

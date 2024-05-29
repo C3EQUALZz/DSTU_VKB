@@ -44,9 +44,11 @@
             MaximizeButton = new FontAwesome.Sharp.IconButton();
             panel1 = new Panel();
             iconSplitButton1 = new FontAwesome.Sharp.IconSplitButton();
+            tableLayoutPanel1 = new TableLayoutPanel();
             MenuPanel.SuspendLayout();
             panelLogo.SuspendLayout();
             PanelTitleBar.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // MenuPanel
@@ -61,7 +63,7 @@
             MenuPanel.Dock = DockStyle.Left;
             MenuPanel.Location = new Point(2, 2);
             MenuPanel.Name = "MenuPanel";
-            MenuPanel.Size = new Size(220, 578);
+            MenuPanel.Size = new Size(220, 812);
             MenuPanel.TabIndex = 0;
             // 
             // iconButton6
@@ -70,14 +72,14 @@
             iconButton6.Dock = DockStyle.Bottom;
             iconButton6.FlatAppearance.BorderSize = 0;
             iconButton6.FlatStyle = FlatStyle.Flat;
-            iconButton6.Font = new Font("JetBrains Mono ExtraBold", 10F);
+            iconButton6.Font = new Font("Microsoft Sans Serif", 10F);
             iconButton6.ForeColor = Color.Gainsboro;
             iconButton6.IconChar = FontAwesome.Sharp.IconChar.SignOut;
             iconButton6.IconColor = Color.White;
             iconButton6.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconButton6.IconSize = 30;
             iconButton6.ImageAlign = ContentAlignment.MiddleLeft;
-            iconButton6.Location = new Point(0, 527);
+            iconButton6.Location = new Point(0, 761);
             iconButton6.Name = "iconButton6";
             iconButton6.Padding = new Padding(15, 0, 0, 15);
             iconButton6.Size = new Size(220, 51);
@@ -93,7 +95,7 @@
             iconButton5.Dock = DockStyle.Top;
             iconButton5.FlatAppearance.BorderSize = 0;
             iconButton5.FlatStyle = FlatStyle.Flat;
-            iconButton5.Font = new Font("JetBrains Mono ExtraBold", 10F);
+            iconButton5.Font = new Font("Microsoft Sans Serif", 10F);
             iconButton5.ForeColor = Color.Gainsboro;
             iconButton5.IconChar = FontAwesome.Sharp.IconChar.GripHorizontal;
             iconButton5.IconColor = Color.White;
@@ -116,7 +118,7 @@
             iconButton4.Dock = DockStyle.Top;
             iconButton4.FlatAppearance.BorderSize = 0;
             iconButton4.FlatStyle = FlatStyle.Flat;
-            iconButton4.Font = new Font("JetBrains Mono ExtraBold", 10F);
+            iconButton4.Font = new Font("Microsoft Sans Serif", 10F);
             iconButton4.ForeColor = Color.Gainsboro;
             iconButton4.IconChar = FontAwesome.Sharp.IconChar.GripHorizontal;
             iconButton4.IconColor = Color.White;
@@ -139,7 +141,7 @@
             iconButton3.Dock = DockStyle.Top;
             iconButton3.FlatAppearance.BorderSize = 0;
             iconButton3.FlatStyle = FlatStyle.Flat;
-            iconButton3.Font = new Font("JetBrains Mono ExtraBold", 10F);
+            iconButton3.Font = new Font("Microsoft Sans Serif", 10F);
             iconButton3.ForeColor = Color.Gainsboro;
             iconButton3.IconChar = FontAwesome.Sharp.IconChar.GripHorizontal;
             iconButton3.IconColor = Color.White;
@@ -162,7 +164,7 @@
             iconButton2.Dock = DockStyle.Top;
             iconButton2.FlatAppearance.BorderSize = 0;
             iconButton2.FlatStyle = FlatStyle.Flat;
-            iconButton2.Font = new Font("JetBrains Mono ExtraBold", 10F);
+            iconButton2.Font = new Font("Microsoft Sans Serif", 10F);
             iconButton2.ForeColor = Color.Gainsboro;
             iconButton2.IconChar = FontAwesome.Sharp.IconChar.GripHorizontal;
             iconButton2.IconColor = Color.White;
@@ -221,14 +223,12 @@
             // PanelTitleBar
             // 
             PanelTitleBar.BackColor = Color.FromArgb(51, 51, 76);
+            PanelTitleBar.Controls.Add(tableLayoutPanel1);
             PanelTitleBar.Controls.Add(label2);
-            PanelTitleBar.Controls.Add(MinimizeButton);
-            PanelTitleBar.Controls.Add(CloseButton);
-            PanelTitleBar.Controls.Add(MaximizeButton);
             PanelTitleBar.Dock = DockStyle.Top;
             PanelTitleBar.Location = new Point(222, 2);
             PanelTitleBar.Name = "PanelTitleBar";
-            PanelTitleBar.Size = new Size(865, 60);
+            PanelTitleBar.Size = new Size(961, 60);
             PanelTitleBar.TabIndex = 1;
             PanelTitleBar.MouseDown += PanelTitleBar_MouseDown;
             // 
@@ -236,64 +236,64 @@
             // 
             label2.AutoSize = true;
             label2.FlatStyle = FlatStyle.Flat;
-            label2.Font = new Font("JetBrains Mono ExtraBold", 15.999999F, FontStyle.Bold | FontStyle.Italic);
+            label2.Font = new Font("Microsoft Sans Serif", 15.999999F, FontStyle.Bold | FontStyle.Italic);
             label2.ForeColor = Color.Gainsboro;
             label2.Location = new Point(6, 22);
             label2.Name = "label2";
             label2.RightToLeft = RightToLeft.No;
-            label2.Size = new Size(130, 29);
+            label2.Size = new Size(127, 26);
             label2.TabIndex = 11;
             label2.Text = "Dashboard";
             label2.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // MinimizeButton
             // 
-            MinimizeButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             MinimizeButton.BackColor = Color.DarkCyan;
+            MinimizeButton.Dock = DockStyle.Fill;
             MinimizeButton.FlatAppearance.BorderSize = 0;
             MinimizeButton.FlatStyle = FlatStyle.Flat;
             MinimizeButton.IconChar = FontAwesome.Sharp.IconChar.AngleDown;
             MinimizeButton.IconColor = Color.White;
             MinimizeButton.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MinimizeButton.IconSize = 20;
-            MinimizeButton.Location = new Point(730, 0);
+            MinimizeButton.Location = new Point(3, 3);
             MinimizeButton.Name = "MinimizeButton";
             MinimizeButton.Padding = new Padding(0, 15, 0, 10);
-            MinimizeButton.Size = new Size(45, 25);
+            MinimizeButton.Size = new Size(44, 26);
             MinimizeButton.TabIndex = 10;
             MinimizeButton.UseVisualStyleBackColor = false;
             MinimizeButton.Click += MinimizeButton_Click;
             // 
             // CloseButton
             // 
-            CloseButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             CloseButton.BackColor = Color.FromArgb(254, 74, 130);
+            CloseButton.Dock = DockStyle.Fill;
             CloseButton.FlatAppearance.BorderSize = 0;
             CloseButton.FlatStyle = FlatStyle.Flat;
             CloseButton.IconChar = FontAwesome.Sharp.IconChar.TimesSquare;
             CloseButton.IconColor = Color.White;
             CloseButton.IconFont = FontAwesome.Sharp.IconFont.Auto;
             CloseButton.IconSize = 20;
-            CloseButton.Location = new Point(820, 0);
+            CloseButton.Location = new Point(103, 3);
             CloseButton.Name = "CloseButton";
-            CloseButton.Size = new Size(45, 25);
+            CloseButton.Size = new Size(44, 26);
             CloseButton.TabIndex = 9;
             CloseButton.UseVisualStyleBackColor = false;
             CloseButton.Click += CloseButton_Click;
             // 
             // MaximizeButton
             // 
-            MaximizeButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             MaximizeButton.BackColor = Color.RoyalBlue;
+            MaximizeButton.Dock = DockStyle.Fill;
             MaximizeButton.FlatAppearance.BorderSize = 0;
             MaximizeButton.FlatStyle = FlatStyle.Flat;
             MaximizeButton.IconChar = FontAwesome.Sharp.IconChar.Square;
             MaximizeButton.IconColor = Color.White;
             MaximizeButton.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MaximizeButton.IconSize = 20;
-            MaximizeButton.Location = new Point(775, 0);
+            MaximizeButton.Location = new Point(53, 3);
             MaximizeButton.Name = "MaximizeButton";
-            MaximizeButton.Size = new Size(45, 25);
+            MaximizeButton.Size = new Size(44, 26);
             MaximizeButton.TabIndex = 6;
             MaximizeButton.UseVisualStyleBackColor = false;
             MaximizeButton.Click += MaximizeButton_Click;
@@ -304,7 +304,7 @@
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(222, 62);
             panel1.Name = "panel1";
-            panel1.Size = new Size(865, 518);
+            panel1.Size = new Size(961, 752);
             panel1.TabIndex = 2;
             // 
             // iconSplitButton1
@@ -319,11 +319,29 @@
             iconSplitButton1.Size = new Size(23, 23);
             iconSplitButton1.Text = "iconSplitButton1";
             // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            tableLayoutPanel1.ColumnCount = 3;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 49F));
+            tableLayoutPanel1.Controls.Add(MinimizeButton, 0, 0);
+            tableLayoutPanel1.Controls.Add(CloseButton, 2, 0);
+            tableLayoutPanel1.Controls.Add(MaximizeButton, 1, 0);
+            tableLayoutPanel1.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
+            tableLayoutPanel1.Location = new Point(808, 0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 1;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Size = new Size(150, 32);
+            tableLayoutPanel1.TabIndex = 0;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1089, 582);
+            ClientSize = new Size(1185, 816);
             Controls.Add(panel1);
             Controls.Add(PanelTitleBar);
             Controls.Add(MenuPanel);
@@ -338,6 +356,7 @@
             panelLogo.PerformLayout();
             PanelTitleBar.ResumeLayout(false);
             PanelTitleBar.PerformLayout();
+            tableLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -359,5 +378,6 @@
         private FontAwesome.Sharp.IconButton MinimizeButton;
         private Label label2;
         private Panel PanelTitleBar;
+        private TableLayoutPanel tableLayoutPanel1;
     }
 }
