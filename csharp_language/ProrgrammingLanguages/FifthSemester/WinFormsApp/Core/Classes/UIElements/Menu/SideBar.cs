@@ -9,7 +9,7 @@ namespace WinFormsApp.Core.Classes.UIElements.Menu;
 /// </summary>
 public class SideBar(Panel MenuPanel, Label LabelMenu, Button MenuButton)
 {
-    private const int AnimationDuration = 300;
+    private const int AnimationDuration = 800;
     private IMenuState currentState = new ExpandedMenuState();
 
     /// <summary>
@@ -26,16 +26,17 @@ public class SideBar(Panel MenuPanel, Label LabelMenu, Button MenuButton)
             currentState.UpdateButtonText(MenuPanel);
         }
 
-        var transition = new Transition(new Linear(TimeSpan.FromMilliseconds(AnimationDuration)));
+        var transition = new Transition(new EaseInEaseOut(TimeSpan.FromMilliseconds(AnimationDuration)));
         transition.Add(MenuPanel, "Width", currentState.GetMenuWidth());
         transition.TransitionCompleted += (o, e) =>
         {
-            currentState.UpdateMenuProperties(LabelMenu, MenuButton);
 
             if (currentState is ExpandedMenuState)
             {
                 currentState.UpdateButtonText(MenuPanel);
             }
+
+            currentState.UpdateMenuProperties(LabelMenu, MenuButton);
         };
         transition.Run();
     }
