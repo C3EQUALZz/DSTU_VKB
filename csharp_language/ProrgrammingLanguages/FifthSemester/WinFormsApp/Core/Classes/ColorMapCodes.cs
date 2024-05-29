@@ -1,5 +1,4 @@
-﻿using System.Windows.Forms;
-using WinFormsApp.Core.Enums;
+﻿using WinFormsApp.Core.Enums;
 
 namespace WinFormsApp.Core.Classes
 {

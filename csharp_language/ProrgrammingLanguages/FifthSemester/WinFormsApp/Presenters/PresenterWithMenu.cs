@@ -44,7 +44,7 @@ public class PresenterWithMenu
         {
             _view.WindowState = FormWindowState.Normal;
             _view.FormSize = _formSize;
-            
+
         }
 
     }

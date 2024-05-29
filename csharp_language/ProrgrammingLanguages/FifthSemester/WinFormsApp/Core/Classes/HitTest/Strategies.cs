@@ -1,5 +1,5 @@
-﻿using WinFormsApp.Core.Interfaces;
-using WinFormsApp.Core.Enums.Form;
+﻿using WinFormsApp.Core.Enums.Form;
+using WinFormsApp.Core.Interfaces;
 
 namespace WinFormsApp.Core.Classes.HitTest;
 

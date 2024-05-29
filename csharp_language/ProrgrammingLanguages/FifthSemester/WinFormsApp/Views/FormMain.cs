@@ -1,7 +1,7 @@
 ﻿using WinFormsApp.Core.Classes;
-using WinFormsApp.Presenters;
-using WinFormsApp.Core.Interfaces.Views;
 using WinFormsApp.Core.Classes.UIElements.Menu;
+using WinFormsApp.Core.Interfaces.Views;
+using WinFormsApp.Presenters;
 
 namespace WinFormsApp.Views;
 

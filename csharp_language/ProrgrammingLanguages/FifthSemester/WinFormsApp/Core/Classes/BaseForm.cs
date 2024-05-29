@@ -93,11 +93,11 @@ public class BaseForm : Form
     {
         foreach (HitTestConstants hitTestConstant in Enum.GetValues(typeof(HitTestConstants)))
         {
-            
+
             IHitTestStrategy strategy = HitTestStrategyFactory.GetStrategy(hitTestConstant);
-            
+
             IntPtr result = strategy.GetHitTestResult(clientPoint, Size, resizeAreaSize);
-           
+
             if (result != IntPtr.Zero)
             {
                 return result;

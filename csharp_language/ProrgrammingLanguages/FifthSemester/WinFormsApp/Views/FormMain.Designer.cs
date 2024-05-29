@@ -38,13 +38,13 @@
             MenuButton = new FontAwesome.Sharp.IconButton();
             LabelMenu = new Label();
             PanelTitleBar = new Panel();
-            label2 = new Label();
+            tableLayoutPanel1 = new TableLayoutPanel();
             MinimizeButton = new FontAwesome.Sharp.IconButton();
             CloseButton = new FontAwesome.Sharp.IconButton();
             MaximizeButton = new FontAwesome.Sharp.IconButton();
+            label2 = new Label();
             panel1 = new Panel();
             iconSplitButton1 = new FontAwesome.Sharp.IconSplitButton();
-            tableLayoutPanel1 = new TableLayoutPanel();
             MenuPanel.SuspendLayout();
             panelLogo.SuspendLayout();
             PanelTitleBar.SuspendLayout();
@@ -63,7 +63,7 @@
             MenuPanel.Dock = DockStyle.Left;
             MenuPanel.Location = new Point(2, 2);
             MenuPanel.Name = "MenuPanel";
-            MenuPanel.Size = new Size(220, 812);
+            MenuPanel.Size = new Size(220, 1046);
             MenuPanel.TabIndex = 0;
             // 
             // iconButton6
@@ -79,7 +79,7 @@
             iconButton6.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconButton6.IconSize = 30;
             iconButton6.ImageAlign = ContentAlignment.MiddleLeft;
-            iconButton6.Location = new Point(0, 761);
+            iconButton6.Location = new Point(0, 995);
             iconButton6.Name = "iconButton6";
             iconButton6.Padding = new Padding(15, 0, 0, 15);
             iconButton6.Size = new Size(220, 51);
@@ -228,23 +228,27 @@
             PanelTitleBar.Dock = DockStyle.Top;
             PanelTitleBar.Location = new Point(222, 2);
             PanelTitleBar.Name = "PanelTitleBar";
-            PanelTitleBar.Size = new Size(961, 60);
+            PanelTitleBar.Size = new Size(1057, 60);
             PanelTitleBar.TabIndex = 1;
             PanelTitleBar.MouseDown += PanelTitleBar_MouseDown;
             // 
-            // label2
+            // tableLayoutPanel1
             // 
-            label2.AutoSize = true;
-            label2.FlatStyle = FlatStyle.Flat;
-            label2.Font = new Font("Microsoft Sans Serif", 15.999999F, FontStyle.Bold | FontStyle.Italic);
-            label2.ForeColor = Color.Gainsboro;
-            label2.Location = new Point(6, 22);
-            label2.Name = "label2";
-            label2.RightToLeft = RightToLeft.No;
-            label2.Size = new Size(127, 26);
-            label2.TabIndex = 11;
-            label2.Text = "Dashboard";
-            label2.TextAlign = ContentAlignment.MiddleCenter;
+            tableLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            tableLayoutPanel1.ColumnCount = 3;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel1.Controls.Add(MinimizeButton, 0, 0);
+            tableLayoutPanel1.Controls.Add(CloseButton, 2, 0);
+            tableLayoutPanel1.Controls.Add(MaximizeButton, 1, 0);
+            tableLayoutPanel1.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
+            tableLayoutPanel1.Location = new Point(907, 3);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 1;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Size = new Size(150, 32);
+            tableLayoutPanel1.TabIndex = 0;
             // 
             // MinimizeButton
             // 
@@ -298,13 +302,27 @@
             MaximizeButton.UseVisualStyleBackColor = false;
             MaximizeButton.Click += MaximizeButton_Click;
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.FlatStyle = FlatStyle.Flat;
+            label2.Font = new Font("Microsoft Sans Serif", 15.999999F, FontStyle.Bold | FontStyle.Italic);
+            label2.ForeColor = Color.Gainsboro;
+            label2.Location = new Point(6, 22);
+            label2.Name = "label2";
+            label2.RightToLeft = RightToLeft.No;
+            label2.Size = new Size(127, 26);
+            label2.TabIndex = 11;
+            label2.Text = "Dashboard";
+            label2.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(245, 245, 254);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(222, 62);
             panel1.Name = "panel1";
-            panel1.Size = new Size(961, 752);
+            panel1.Size = new Size(1057, 986);
             panel1.TabIndex = 2;
             // 
             // iconSplitButton1
@@ -319,29 +337,11 @@
             iconSplitButton1.Size = new Size(23, 23);
             iconSplitButton1.Text = "iconSplitButton1";
             // 
-            // tableLayoutPanel1
-            // 
-            tableLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            tableLayoutPanel1.ColumnCount = 3;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 49F));
-            tableLayoutPanel1.Controls.Add(MinimizeButton, 0, 0);
-            tableLayoutPanel1.Controls.Add(CloseButton, 2, 0);
-            tableLayoutPanel1.Controls.Add(MaximizeButton, 1, 0);
-            tableLayoutPanel1.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
-            tableLayoutPanel1.Location = new Point(808, 0);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 1;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(150, 32);
-            tableLayoutPanel1.TabIndex = 0;
-            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1185, 816);
+            ClientSize = new Size(1281, 1050);
             Controls.Add(panel1);
             Controls.Add(PanelTitleBar);
             Controls.Add(MenuPanel);

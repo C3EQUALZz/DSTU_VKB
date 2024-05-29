@@ -1,5 +1,5 @@
-﻿using FluentTransitions.Methods;
-using FluentTransitions;
+﻿using FluentTransitions;
+using FluentTransitions.Methods;
 using WinFormsApp.Core.Interfaces.UIElements;
 
 namespace WinFormsApp.Core.Classes.UIElements.Menu;
@@ -37,6 +37,7 @@ public class SideBar(Panel MenuPanel, Label LabelMenu, Button MenuButton)
             }
 
             currentState.UpdateMenuProperties(LabelMenu, MenuButton);
+
         };
         transition.Run();
     }
