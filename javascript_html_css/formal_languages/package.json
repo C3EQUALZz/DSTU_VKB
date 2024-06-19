@@ -14,7 +14,7 @@
     "balanced-match": "^1.0.2",
     "binary-extensions": "^2.3.0",
     "brace-expansion": "^2.0.1",
-    "braces": "^3.0.2",
+    "braces": "^3.0.3",
     "camelcase-css": "^2.0.1",
     "chokidar": "^3.6.0",
     "color-convert": "^2.0.1",
