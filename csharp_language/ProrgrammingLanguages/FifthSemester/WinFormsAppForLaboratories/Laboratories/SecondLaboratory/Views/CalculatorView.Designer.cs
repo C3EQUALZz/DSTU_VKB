@@ -29,15 +29,16 @@
         private void InitializeComponent()
         {
             panelTitle = new Panel();
-            panelHistory = new Panel();
-            buttonExit = new FontAwesome.Sharp.IconButton();
-            iconButton1 = new FontAwesome.Sharp.IconButton();
             iconButton2 = new FontAwesome.Sharp.IconButton();
+            iconButton1 = new FontAwesome.Sharp.IconButton();
+            buttonExit = new FontAwesome.Sharp.IconButton();
+            panelHistory = new Panel();
             panel1 = new Panel();
             menuButton = new FontAwesome.Sharp.IconButton();
             buttonHistory = new FontAwesome.Sharp.IconButton();
             textDisplay2 = new TextBox();
             textDisplay1 = new TextBox();
+            buttonClearHistory = new FontAwesome.Sharp.IconButton();
             richTextBox1 = new RichTextBox();
             panelTitle.SuspendLayout();
             panelHistory.SuspendLayout();
@@ -55,52 +56,6 @@
             panelTitle.Name = "panelTitle";
             panelTitle.Size = new Size(350, 40);
             panelTitle.TabIndex = 0;
-            // 
-            // panelHistory
-            // 
-            panelHistory.Controls.Add(richTextBox1);
-            panelHistory.Dock = DockStyle.Bottom;
-            panelHistory.Location = new Point(0, 530);
-            panelHistory.Margin = new Padding(0);
-            panelHistory.Name = "panelHistory";
-            panelHistory.Size = new Size(350, 40);
-            panelHistory.TabIndex = 1;
-            // 
-            // buttonExit
-            // 
-            buttonExit.Dock = DockStyle.Right;
-            buttonExit.FlatAppearance.BorderSize = 0;
-            buttonExit.FlatAppearance.MouseOverBackColor = Color.Red;
-            buttonExit.FlatStyle = FlatStyle.Flat;
-            buttonExit.ForeColor = Color.Transparent;
-            buttonExit.IconChar = FontAwesome.Sharp.IconChar.Multiply;
-            buttonExit.IconColor = Color.White;
-            buttonExit.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            buttonExit.IconSize = 16;
-            buttonExit.Location = new Point(300, 0);
-            buttonExit.Margin = new Padding(0);
-            buttonExit.Name = "buttonExit";
-            buttonExit.Size = new Size(50, 40);
-            buttonExit.TabIndex = 2;
-            buttonExit.UseVisualStyleBackColor = true;
-            // 
-            // iconButton1
-            // 
-            iconButton1.Dock = DockStyle.Right;
-            iconButton1.FlatAppearance.BorderSize = 0;
-            iconButton1.FlatAppearance.MouseOverBackColor = Color.Red;
-            iconButton1.FlatStyle = FlatStyle.Flat;
-            iconButton1.ForeColor = Color.Transparent;
-            iconButton1.IconChar = FontAwesome.Sharp.IconChar.SquareFull;
-            iconButton1.IconColor = Color.White;
-            iconButton1.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            iconButton1.IconSize = 15;
-            iconButton1.Location = new Point(250, 0);
-            iconButton1.Margin = new Padding(0);
-            iconButton1.Name = "iconButton1";
-            iconButton1.Size = new Size(50, 40);
-            iconButton1.TabIndex = 3;
-            iconButton1.UseVisualStyleBackColor = true;
             // 
             // iconButton2
             // 
@@ -120,6 +75,53 @@
             iconButton2.Size = new Size(50, 40);
             iconButton2.TabIndex = 4;
             iconButton2.UseVisualStyleBackColor = true;
+            // 
+            // iconButton1
+            // 
+            iconButton1.Dock = DockStyle.Right;
+            iconButton1.FlatAppearance.BorderSize = 0;
+            iconButton1.FlatAppearance.MouseOverBackColor = Color.Red;
+            iconButton1.FlatStyle = FlatStyle.Flat;
+            iconButton1.ForeColor = Color.Transparent;
+            iconButton1.IconChar = FontAwesome.Sharp.IconChar.SquareFull;
+            iconButton1.IconColor = Color.White;
+            iconButton1.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iconButton1.IconSize = 15;
+            iconButton1.Location = new Point(250, 0);
+            iconButton1.Margin = new Padding(0);
+            iconButton1.Name = "iconButton1";
+            iconButton1.Size = new Size(50, 40);
+            iconButton1.TabIndex = 3;
+            iconButton1.UseVisualStyleBackColor = true;
+            // 
+            // buttonExit
+            // 
+            buttonExit.Dock = DockStyle.Right;
+            buttonExit.FlatAppearance.BorderSize = 0;
+            buttonExit.FlatAppearance.MouseOverBackColor = Color.Red;
+            buttonExit.FlatStyle = FlatStyle.Flat;
+            buttonExit.ForeColor = Color.Transparent;
+            buttonExit.IconChar = FontAwesome.Sharp.IconChar.Multiply;
+            buttonExit.IconColor = Color.White;
+            buttonExit.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            buttonExit.IconSize = 16;
+            buttonExit.Location = new Point(300, 0);
+            buttonExit.Margin = new Padding(0);
+            buttonExit.Name = "buttonExit";
+            buttonExit.Size = new Size(50, 40);
+            buttonExit.TabIndex = 2;
+            buttonExit.UseVisualStyleBackColor = true;
+            // 
+            // panelHistory
+            // 
+            panelHistory.Controls.Add(richTextBox1);
+            panelHistory.Controls.Add(buttonClearHistory);
+            panelHistory.Dock = DockStyle.Bottom;
+            panelHistory.Location = new Point(0, 565);
+            panelHistory.Margin = new Padding(0);
+            panelHistory.Name = "panelHistory";
+            panelHistory.Size = new Size(350, 5);
+            panelHistory.TabIndex = 1;
             // 
             // panel1
             // 
@@ -201,15 +203,37 @@
             textDisplay1.Text = "0";
             textDisplay1.TextAlign = HorizontalAlignment.Right;
             // 
+            // buttonClearHistory
+            // 
+            buttonClearHistory.Dock = DockStyle.Bottom;
+            buttonClearHistory.FlatAppearance.BorderSize = 0;
+            buttonClearHistory.FlatAppearance.MouseOverBackColor = Color.Red;
+            buttonClearHistory.FlatStyle = FlatStyle.Flat;
+            buttonClearHistory.Font = new Font("Gadugi", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            buttonClearHistory.ForeColor = Color.Transparent;
+            buttonClearHistory.IconChar = FontAwesome.Sharp.IconChar.Trash;
+            buttonClearHistory.IconColor = Color.White;
+            buttonClearHistory.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            buttonClearHistory.IconSize = 25;
+            buttonClearHistory.Location = new Point(0, -35);
+            buttonClearHistory.Margin = new Padding(0);
+            buttonClearHistory.Name = "buttonClearHistory";
+            buttonClearHistory.Size = new Size(350, 40);
+            buttonClearHistory.TabIndex = 5;
+            buttonClearHistory.UseVisualStyleBackColor = true;
+            // 
             // richTextBox1
             // 
             richTextBox1.BackColor = Color.FromArgb(32, 32, 32);
             richTextBox1.BorderStyle = BorderStyle.None;
+            richTextBox1.Dock = DockStyle.Fill;
             richTextBox1.ForeColor = Color.Silver;
-            richTextBox1.Location = new Point(121, 12);
+            richTextBox1.Location = new Point(0, 0);
+            richTextBox1.Margin = new Padding(0);
             richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(169, 16);
-            richTextBox1.TabIndex = 0;
+            richTextBox1.ScrollBars = RichTextBoxScrollBars.Horizontal;
+            richTextBox1.Size = new Size(350, 0);
+            richTextBox1.TabIndex = 6;
             richTextBox1.Text = "";
             // 
             // CalculatorView
@@ -248,6 +272,7 @@
         private FontAwesome.Sharp.IconButton buttonHistory;
         private TextBox textDisplay2;
         private TextBox textDisplay1;
+        private FontAwesome.Sharp.IconButton buttonClearHistory;
         private RichTextBox richTextBox1;
     }
 }
