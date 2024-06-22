@@ -1,25 +1,98 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using WinFormsAppForLaboratories.Laboratories.SecondLaboratory.Core.Classes;
 
-namespace WinFormsAppForLaboratories.Laboratories.SecondLaboratory.Views
+namespace WinFormsAppForLaboratories.Laboratories.SecondLaboratory.Views;
+
+public partial class CalculatorView : Form
 {
-    public partial class CalculatorView : Form
+
+    private bool enterValue = false;
+    private string operation = string.Empty;
+    private string firstNumber, secondNumber;
+    Double result = 0;
+
+    public CalculatorView()
     {
-        public CalculatorView()
+        InitializeComponent();
+    }
+
+    private void OnButtonNumberClick(object sender, EventArgs e)
+    {
+        enterValue = false;
+        var button = (CustomButton)sender;
+
+        if (textDisplay1.Text == "0" || enterValue)
         {
-            InitializeComponent();
+            textDisplay1.Text = string.Empty;
         }
 
-        private void iconButton1_Click(object sender, EventArgs e)
-        {
 
+        if ((button.Text == "." && !textDisplay1.Text.Contains('.')) || button.Text != ".")
+        {
+            textDisplay1.Text += button.Text;
         }
+
+
+    }
+
+    private void OnButtonMathOperationClick(object sender, EventArgs e)
+    {
+        if (result != 0)
+        {
+            buttonEquals.PerformClick();
+        }
+
+        else
+        {
+            result = Double.Parse(textDisplay1.Text);
+        }
+
+        var button = (CustomButton)sender;
+        operation = button.Text;
+        enterValue = true;
+        if (textDisplay1.Text != "0")
+        {
+            textDisplay2.Text = firstNumber = $"{result} {operation}";
+            textDisplay1.Text = string.Empty;
+        }
+    }
+
+    private void OnButtonEqualsClick(object sender, EventArgs e)
+    {
+        secondNumber = textDisplay1.Text;
+        textDisplay2.Text = $"{textDisplay2.Text} {textDisplay1.Text}=";
+
+        if (textDisplay1.Text != string.Empty)
+        {
+            if (textDisplay1.Text == "0")
+                textDisplay2.Text = string.Empty;
+
+            switch (operation)
+            {
+                case "+":
+                    textDisplay1.Text = (result + Double.Parse(textDisplay1.Text)).ToString();
+                    break;
+
+                case "-":
+                    textDisplay1.Text = (result - Double.Parse(textDisplay1.Text)).ToString();
+                    break;
+
+                case "×":
+                    textDisplay1.Text = (result * Double.Parse(textDisplay1.Text)).ToString();
+                    break;
+
+                case "÷":
+                    textDisplay1.Text = (result / Double.Parse(textDisplay1.Text)).ToString();
+                    break;
+
+                default:
+                    textDisplay1.Text = $"{textDisplay1.Text} = ";
+                    break;
+            }
+        }
+    }
+
+    private void OnClickButtonHistory(object sender, EventArgs e)
+    {
+        panelHistory.Height = (panelHistory.Height == 5) ? 345 : 5;
     }
 }

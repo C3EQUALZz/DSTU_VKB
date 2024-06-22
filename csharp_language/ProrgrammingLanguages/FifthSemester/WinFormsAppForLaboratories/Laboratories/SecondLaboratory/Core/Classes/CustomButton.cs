@@ -9,7 +9,7 @@ public class CustomButton : Button
 {
     private int borderSize = 0;
     private int borderRadius = 50;
-    private readonly Color borderColor = Color.DodgerBlue;
+    private Color borderColor = Color.Transparent;
 
     public int BorderSize
     {
