@@ -46,8 +46,8 @@
             iconButton1 = new FontAwesome.Sharp.IconButton();
             buttonExit = new FontAwesome.Sharp.IconButton();
             panelHistory = new Panel();
-            richTextBox1 = new RichTextBox();
             buttonClearHistory = new FontAwesome.Sharp.IconButton();
+            richTextBoxDisplayHistory = new RichTextBox();
             panel1 = new Panel();
             menuButton = new FontAwesome.Sharp.IconButton();
             buttonHistory = new FontAwesome.Sharp.IconButton();
@@ -328,7 +328,6 @@
             // 
             iconButton2.Dock = DockStyle.Right;
             iconButton2.FlatAppearance.BorderSize = 0;
-            iconButton2.FlatAppearance.MouseOverBackColor = Color.Red;
             iconButton2.FlatStyle = FlatStyle.Flat;
             iconButton2.Font = new Font("Gadugi", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             iconButton2.ForeColor = Color.Transparent;
@@ -347,7 +346,6 @@
             // 
             iconButton1.Dock = DockStyle.Right;
             iconButton1.FlatAppearance.BorderSize = 0;
-            iconButton1.FlatAppearance.MouseOverBackColor = Color.Red;
             iconButton1.FlatStyle = FlatStyle.Flat;
             iconButton1.ForeColor = Color.Transparent;
             iconButton1.IconChar = FontAwesome.Sharp.IconChar.SquareFull;
@@ -381,28 +379,14 @@
             // 
             // panelHistory
             // 
-            panelHistory.Controls.Add(richTextBox1);
             panelHistory.Controls.Add(buttonClearHistory);
+            panelHistory.Controls.Add(richTextBoxDisplayHistory);
             panelHistory.Dock = DockStyle.Bottom;
             panelHistory.Location = new Point(0, 565);
             panelHistory.Margin = new Padding(10, 0, 10, 0);
             panelHistory.Name = "panelHistory";
             panelHistory.Size = new Size(360, 5);
             panelHistory.TabIndex = 1;
-            // 
-            // richTextBox1
-            // 
-            richTextBox1.BackColor = Color.FromArgb(32, 32, 32);
-            richTextBox1.BorderStyle = BorderStyle.None;
-            richTextBox1.Dock = DockStyle.Fill;
-            richTextBox1.ForeColor = Color.Silver;
-            richTextBox1.Location = new Point(0, 0);
-            richTextBox1.Margin = new Padding(0);
-            richTextBox1.Name = "richTextBox1";
-            richTextBox1.ScrollBars = RichTextBoxScrollBars.Horizontal;
-            richTextBox1.Size = new Size(360, 0);
-            richTextBox1.TabIndex = 6;
-            richTextBox1.Text = "";
             // 
             // buttonClearHistory
             // 
@@ -421,6 +405,20 @@
             buttonClearHistory.Size = new Size(360, 40);
             buttonClearHistory.TabIndex = 5;
             buttonClearHistory.UseVisualStyleBackColor = true;
+            // 
+            // richTextBoxDisplayHistory
+            // 
+            richTextBoxDisplayHistory.BackColor = Color.FromArgb(32, 32, 32);
+            richTextBoxDisplayHistory.BorderStyle = BorderStyle.None;
+            richTextBoxDisplayHistory.Dock = DockStyle.Fill;
+            richTextBoxDisplayHistory.ForeColor = Color.Silver;
+            richTextBoxDisplayHistory.Location = new Point(0, 0);
+            richTextBoxDisplayHistory.Margin = new Padding(0);
+            richTextBoxDisplayHistory.Name = "richTextBoxDisplayHistory";
+            richTextBoxDisplayHistory.ScrollBars = RichTextBoxScrollBars.Horizontal;
+            richTextBoxDisplayHistory.Size = new Size(360, 5);
+            richTextBoxDisplayHistory.TabIndex = 6;
+            richTextBoxDisplayHistory.Text = "";
             // 
             // panel1
             // 
@@ -845,6 +843,7 @@
             AutoScaleMode = AutoScaleMode.None;
             BackColor = Color.FromArgb(32, 32, 32);
             ClientSize = new Size(360, 570);
+            Controls.Add(panelHistory);
             Controls.Add(buttonDecimal);
             Controls.Add(buttonZero);
             Controls.Add(buttonSwapPlusMinus);
@@ -877,7 +876,6 @@
             Controls.Add(textDisplay1);
             Controls.Add(textDisplay2);
             Controls.Add(panel1);
-            Controls.Add(panelHistory);
             Controls.Add(panelTitle);
             Font = new Font("Gadugi", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ForeColor = Color.White;
@@ -907,7 +905,7 @@
         private TextBox textDisplay2;
         private TextBox textDisplay1;
         private FontAwesome.Sharp.IconButton buttonClearHistory;
-        private RichTextBox richTextBox1;
+        private RichTextBox richTextBoxDisplayHistory;
         private Core.Classes.EllipseControl ellipseForm;
         private Core.Classes.CustomButton buttonBackSpace;
         private Core.Classes.CustomButton customButton7;

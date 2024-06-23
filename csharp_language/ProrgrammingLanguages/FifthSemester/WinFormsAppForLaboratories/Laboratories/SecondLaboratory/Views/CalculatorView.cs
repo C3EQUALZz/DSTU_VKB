@@ -7,7 +7,7 @@ public partial class CalculatorView : Form
 
     private bool enterValue = false;
     private string operation = string.Empty;
-    private string firstNumber, secondNumber;
+    private string? firstNumber, secondNumber;
     Double result = 0;
 
     public CalculatorView()
@@ -66,33 +66,23 @@ public partial class CalculatorView : Form
             if (textDisplay1.Text == "0")
                 textDisplay2.Text = string.Empty;
 
-            switch (operation)
+            textDisplay1.Text = operation switch
             {
-                case "+":
-                    textDisplay1.Text = (result + Double.Parse(textDisplay1.Text)).ToString();
-                    break;
+                "+" => (result + Double.Parse(textDisplay1.Text)).ToString(),
+                "-" => (result - Double.Parse(textDisplay1.Text)).ToString(),
+                "×" => (result * Double.Parse(textDisplay1.Text)).ToString(),
+                "÷" => (result / Double.Parse(textDisplay1.Text)).ToString(),
+                _ => $"{textDisplay1.Text} = ",
+            };
 
-                case "-":
-                    textDisplay1.Text = (result - Double.Parse(textDisplay1.Text)).ToString();
-                    break;
-
-                case "×":
-                    textDisplay1.Text = (result * Double.Parse(textDisplay1.Text)).ToString();
-                    break;
-
-                case "÷":
-                    textDisplay1.Text = (result / Double.Parse(textDisplay1.Text)).ToString();
-                    break;
-
-                default:
-                    textDisplay1.Text = $"{textDisplay1.Text} = ";
-                    break;
-            }
+            richTextBoxDisplayHistory.AppendText($"{firstNumber} {secondNumber} = {textDisplay1.Text}");
         }
     }
 
     private void OnClickButtonHistory(object sender, EventArgs e)
     {
-        panelHistory.Height = (panelHistory.Height == 5) ? 345 : 5;
+        panelHistory.Height = (panelHistory.Height == 5) ? 355 : 5;
     }
+
+   
 }
