@@ -76,13 +76,39 @@ public partial class CalculatorView : Form
             };
 
             richTextBoxDisplayHistory.AppendText($"{firstNumber} {secondNumber} = {textDisplay1.Text}");
+
+            result = Double.Parse(textDisplay1.Text);
+            operation = string.Empty;
+
         }
     }
 
-    private void OnClickButtonHistory(object sender, EventArgs e)
+    private void OnButtonHistoryClick(object sender, EventArgs e)
     {
         panelHistory.Height = (panelHistory.Height == 5) ? 355 : 5;
     }
 
-   
+    private void OnButtonClearHistoryClick(object sender, EventArgs e)
+    {
+        richTextBoxDisplayHistory.Clear();
+        if (richTextBoxDisplayHistory.Text == string.Empty)
+        {
+            richTextBoxDisplayHistory.Text = "История операций пуста";
+        }
+    }
+
+    private void OnButtonBackSpaceClick(object sender, EventArgs e)
+    {
+        if (textDisplay1.Text.Length > 0)
+        {
+            textDisplay1.Text = textDisplay1.Text.Remove(textDisplay1.Text.Length - 1, 1);
+        }
+
+        if (textDisplay1.Text == string.Empty) 
+        {
+            textDisplay1.Text = "0";
+        }
+    }
+
+
 }

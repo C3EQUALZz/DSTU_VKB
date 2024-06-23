@@ -104,6 +104,7 @@
             buttonBackSpace.TabIndex = 5;
             buttonBackSpace.TextColor = Color.White;
             buttonBackSpace.UseVisualStyleBackColor = false;
+            buttonBackSpace.Click += OnButtonBackSpaceClick;
             // 
             // buttonPercent
             // 
@@ -405,6 +406,7 @@
             buttonClearHistory.Size = new Size(360, 40);
             buttonClearHistory.TabIndex = 5;
             buttonClearHistory.UseVisualStyleBackColor = true;
+            buttonClearHistory.Click += OnButtonClearHistoryClick;
             // 
             // richTextBoxDisplayHistory
             // 
@@ -467,7 +469,7 @@
             buttonHistory.Size = new Size(50, 40);
             buttonHistory.TabIndex = 2;
             buttonHistory.UseVisualStyleBackColor = true;
-            buttonHistory.Click += OnClickButtonHistory;
+            buttonHistory.Click += OnButtonHistoryClick;
             // 
             // textDisplay2
             // 
