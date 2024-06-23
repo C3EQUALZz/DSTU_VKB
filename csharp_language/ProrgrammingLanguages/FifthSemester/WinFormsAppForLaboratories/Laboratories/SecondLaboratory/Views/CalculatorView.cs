@@ -104,11 +104,27 @@ public partial class CalculatorView : Form
             textDisplay1.Text = textDisplay1.Text.Remove(textDisplay1.Text.Length - 1, 1);
         }
 
-        if (textDisplay1.Text == string.Empty) 
+        if (textDisplay1.Text == string.Empty)
         {
             textDisplay1.Text = "0";
         }
     }
 
+    private void OnButtonClearClick(object sender, EventArgs e)
+    {
+        textDisplay1.Text = "0";
+        textDisplay2.Text = string.Empty;
+        result = 0;
+    }
 
+    private void OnButtonClearEntryClick(object sender, EventArgs e)
+    {
+        textDisplay1.Text = "0";
+    }
+
+    private void OnOperationButtonsClick(object sender, EventArgs e)
+    {
+        var button = (CustomButton) sender;
+
+    }
 }

@@ -123,6 +123,7 @@
             buttonPercent.Text = "%";
             buttonPercent.TextColor = Color.White;
             buttonPercent.UseVisualStyleBackColor = false;
+            buttonPercent.Click += OnOperationButtonsClick;
             // 
             // buttonClearEntry
             // 
@@ -141,6 +142,7 @@
             buttonClearEntry.Text = "CE";
             buttonClearEntry.TextColor = Color.White;
             buttonClearEntry.UseVisualStyleBackColor = false;
+            buttonClearEntry.Click += OnButtonClearEntryClick;
             // 
             // buttonClear
             // 
@@ -159,6 +161,7 @@
             buttonClear.Text = "C";
             buttonClear.TextColor = Color.White;
             buttonClear.UseVisualStyleBackColor = false;
+            buttonClear.Click += OnButtonClearClick;
             // 
             // buttonSquareRoot
             // 
@@ -178,6 +181,7 @@
             buttonSquareRoot.Text = "√𝑥";
             buttonSquareRoot.TextColor = Color.White;
             buttonSquareRoot.UseVisualStyleBackColor = false;
+            buttonSquareRoot.Click += OnOperationButtonsClick;
             // 
             // buttonSquare
             // 
@@ -197,6 +201,7 @@
             buttonSquare.Text = "𝑥²";
             buttonSquare.TextColor = Color.White;
             buttonSquare.UseVisualStyleBackColor = false;
+            buttonSquare.Click += OnOperationButtonsClick;
             // 
             // buttonReverseFraction
             // 
@@ -216,6 +221,7 @@
             buttonReverseFraction.Text = "⅟𝑥";
             buttonReverseFraction.TextColor = Color.White;
             buttonReverseFraction.UseVisualStyleBackColor = false;
+            buttonReverseFraction.Click += OnOperationButtonsClick;
             // 
             // buttonDivision
             // 
@@ -819,6 +825,7 @@
             buttonSwapPlusMinus.Text = "±";
             buttonSwapPlusMinus.TextColor = Color.White;
             buttonSwapPlusMinus.UseVisualStyleBackColor = false;
+            buttonSwapPlusMinus.Click += OnOperationButtonsClick;
             // 
             // buttonEquals
             // 
