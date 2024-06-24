@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Laboratories\SecondLaboratory\Controllers\" />
     <Folder Include="Laboratories\SecondLaboratory\resources\" />
   </ItemGroup>
 

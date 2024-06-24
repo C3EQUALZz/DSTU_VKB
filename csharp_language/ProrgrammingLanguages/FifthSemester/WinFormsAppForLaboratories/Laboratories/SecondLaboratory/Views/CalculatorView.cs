@@ -1,94 +1,43 @@
-﻿using WinFormsAppForLaboratories.Laboratories.SecondLaboratory.Core.Classes;
+﻿using WinFormsAppForLaboratories.Laboratories.SecondLaboratory.Core.Interfaces;
+using WinFormsAppForLaboratories.Laboratories.SecondLaboratory.Models;
+using WinFormsAppForLaboratories.Laboratories.SecondLaboratory.Presenters;
 
 namespace WinFormsAppForLaboratories.Laboratories.SecondLaboratory.Views;
 
-public partial class CalculatorView : Form
+public partial class CalculatorView : Form, ICalculatorView
 {
-
-    private bool enterValue = false;
-    private string operation = string.Empty;
-    private string? firstNumber, secondNumber;
-    Double result = 0;
+    private readonly CalculatorPresenter _presenter;
 
     public CalculatorView()
     {
         InitializeComponent();
+        _presenter = new CalculatorPresenter(this, new CalculatorModel());
     }
 
-    private void OnButtonNumberClick(object sender, EventArgs e)
+    public string Display1Text
     {
-        enterValue = false;
-        var button = (CustomButton)sender;
-
-        if (textDisplay1.Text == "0" || enterValue)
-        {
-            textDisplay1.Text = string.Empty;
-        }
-
-
-        if ((button.Text == "." && !textDisplay1.Text.Contains('.')) || button.Text != ".")
-        {
-            textDisplay1.Text += button.Text;
-        }
-
-
+        get => textDisplay1.Text;
+        set => textDisplay1.Text = value;
     }
 
-    private void OnButtonMathOperationClick(object sender, EventArgs e)
+    public string Display2Text
     {
-        if (result != 0)
-        {
-            buttonEquals.PerformClick();
-        }
-
-        else
-        {
-            result = Double.Parse(textDisplay1.Text);
-        }
-
-        var button = (CustomButton)sender;
-        operation = button.Text;
-        enterValue = true;
-        if (textDisplay1.Text != "0")
-        {
-            textDisplay2.Text = firstNumber = $"{result} {operation}";
-            textDisplay1.Text = string.Empty;
-        }
+        get => textDisplay2.Text;
+        set => textDisplay2.Text = value;
     }
 
-    private void OnButtonEqualsClick(object sender, EventArgs e)
+    public bool EnterValue { get; set; }
+    public string? Operation { get; set; }
+    public string? FirstNumber { get; set; }
+    public string? SecondNumber { get; set; }
+    public double Result { get; set; }
+
+    public void AppendHistory(string text)
     {
-        secondNumber = textDisplay1.Text;
-        textDisplay2.Text = $"{textDisplay2.Text} {textDisplay1.Text}=";
-
-        if (textDisplay1.Text != string.Empty)
-        {
-            if (textDisplay1.Text == "0")
-                textDisplay2.Text = string.Empty;
-
-            textDisplay1.Text = operation switch
-            {
-                "+" => (result + Double.Parse(textDisplay1.Text)).ToString(),
-                "-" => (result - Double.Parse(textDisplay1.Text)).ToString(),
-                "×" => (result * Double.Parse(textDisplay1.Text)).ToString(),
-                "÷" => (result / Double.Parse(textDisplay1.Text)).ToString(),
-                _ => $"{textDisplay1.Text} = ",
-            };
-
-            richTextBoxDisplayHistory.AppendText($"{firstNumber} {secondNumber} = {textDisplay1.Text}");
-
-            result = Double.Parse(textDisplay1.Text);
-            operation = string.Empty;
-
-        }
+        richTextBoxDisplayHistory.AppendText(text);
     }
 
-    private void OnButtonHistoryClick(object sender, EventArgs e)
-    {
-        panelHistory.Height = (panelHistory.Height == 5) ? 355 : 5;
-    }
-
-    private void OnButtonClearHistoryClick(object sender, EventArgs e)
+    public void ClearHistory()
     {
         richTextBoxDisplayHistory.Clear();
         if (richTextBoxDisplayHistory.Text == string.Empty)
@@ -97,34 +46,59 @@ public partial class CalculatorView : Form
         }
     }
 
-    private void OnButtonBackSpaceClick(object sender, EventArgs e)
+    public void ToggleHistoryPanel()
     {
-        if (textDisplay1.Text.Length > 0)
-        {
-            textDisplay1.Text = textDisplay1.Text.Remove(textDisplay1.Text.Length - 1, 1);
-        }
-
-        if (textDisplay1.Text == string.Empty)
-        {
-            textDisplay1.Text = "0";
-        }
+        panelHistory.Height = (panelHistory.Height == 5) ? 355 : 5;
     }
 
-    private void OnButtonClearClick(object sender, EventArgs e)
+
+    private void OnNumberButtonClick(object sender, EventArgs e)
     {
-        textDisplay1.Text = "0";
-        textDisplay2.Text = string.Empty;
-        result = 0;
+        _presenter.OnNumberButtonClick(sender, e);
     }
 
-    private void OnButtonClearEntryClick(object sender, EventArgs e)
+    private void OnMathOperationButtonClick(object sender, EventArgs e)
     {
-        textDisplay1.Text = "0";
+        _presenter.OnMathOperationButtonClick(sender, e);
+    }
+
+    private void OnEqualsButtonClick(object sender, EventArgs e)
+    {
+        _presenter.OnEqualsButtonClick(sender, e);
+    }
+
+    private void OnHistoryButtonClick(object sender, EventArgs e)
+    {
+        _presenter.OnHistoryButtonClick(sender, e);
+    }
+
+    private void OnClearHistoryButtonClick(object sender, EventArgs e)
+    {
+        _presenter.OnClearHistoryButtonClick(sender, e);
+    }
+
+    private void OnBackSpaceButtonClick(object sender, EventArgs e)
+    {
+        _presenter.OnBackSpaceButtonClick(sender, e);
+    }
+
+    private void OnClearButtonClick(object sender, EventArgs e)
+    {
+        _presenter.OnClearButtonClick(sender, e);
+    }
+
+    private void OnClearEntryButtonClick(object sender, EventArgs e)
+    {
+        _presenter.OnClearEntryButtonClick(sender, e);
     }
 
     private void OnOperationButtonsClick(object sender, EventArgs e)
     {
-        var button = (CustomButton) sender;
+        _presenter.OnOperationButtonClick(sender, e);
+    }
 
+    private void OnButtonExitClick(object sender, EventArgs e)
+    {
+        Application.Exit();
     }
 }

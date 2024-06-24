@@ -95,16 +95,16 @@
             buttonBackSpace.BorderSize = 0;
             buttonBackSpace.FlatAppearance.BorderSize = 0;
             buttonBackSpace.FlatStyle = FlatStyle.Flat;
-            buttonBackSpace.ForeColor = Color.White;
+            buttonBackSpace.ForeColor = Color.WhiteSmoke;
             buttonBackSpace.Image = (Image)resources.GetObject("buttonBackSpace.Image");
             buttonBackSpace.Location = new Point(272, 217);
             buttonBackSpace.Margin = new Padding(0);
             buttonBackSpace.Name = "buttonBackSpace";
             buttonBackSpace.Size = new Size(80, 53);
             buttonBackSpace.TabIndex = 5;
-            buttonBackSpace.TextColor = Color.White;
+            buttonBackSpace.TextColor = Color.WhiteSmoke;
             buttonBackSpace.UseVisualStyleBackColor = false;
-            buttonBackSpace.Click += OnButtonBackSpaceClick;
+            buttonBackSpace.Click += OnBackSpaceButtonClick;
             // 
             // buttonPercent
             // 
@@ -114,14 +114,14 @@
             buttonPercent.BorderSize = 0;
             buttonPercent.FlatAppearance.BorderSize = 0;
             buttonPercent.FlatStyle = FlatStyle.Flat;
-            buttonPercent.ForeColor = Color.White;
+            buttonPercent.ForeColor = Color.WhiteSmoke;
             buttonPercent.Location = new Point(5, 217);
             buttonPercent.Margin = new Padding(0);
             buttonPercent.Name = "buttonPercent";
             buttonPercent.Size = new Size(80, 53);
             buttonPercent.TabIndex = 12;
             buttonPercent.Text = "%";
-            buttonPercent.TextColor = Color.White;
+            buttonPercent.TextColor = Color.WhiteSmoke;
             buttonPercent.UseVisualStyleBackColor = false;
             buttonPercent.Click += OnOperationButtonsClick;
             // 
@@ -133,16 +133,16 @@
             buttonClearEntry.BorderSize = 0;
             buttonClearEntry.FlatAppearance.BorderSize = 0;
             buttonClearEntry.FlatStyle = FlatStyle.Flat;
-            buttonClearEntry.ForeColor = Color.White;
+            buttonClearEntry.ForeColor = Color.WhiteSmoke;
             buttonClearEntry.Location = new Point(94, 217);
             buttonClearEntry.Margin = new Padding(0);
             buttonClearEntry.Name = "buttonClearEntry";
             buttonClearEntry.Size = new Size(80, 53);
             buttonClearEntry.TabIndex = 13;
             buttonClearEntry.Text = "CE";
-            buttonClearEntry.TextColor = Color.White;
+            buttonClearEntry.TextColor = Color.WhiteSmoke;
             buttonClearEntry.UseVisualStyleBackColor = false;
-            buttonClearEntry.Click += OnButtonClearEntryClick;
+            buttonClearEntry.Click += OnClearEntryButtonClick;
             // 
             // buttonClear
             // 
@@ -152,16 +152,16 @@
             buttonClear.BorderSize = 0;
             buttonClear.FlatAppearance.BorderSize = 0;
             buttonClear.FlatStyle = FlatStyle.Flat;
-            buttonClear.ForeColor = Color.White;
+            buttonClear.ForeColor = Color.WhiteSmoke;
             buttonClear.Location = new Point(183, 217);
             buttonClear.Margin = new Padding(0);
             buttonClear.Name = "buttonClear";
             buttonClear.Size = new Size(80, 53);
             buttonClear.TabIndex = 14;
             buttonClear.Text = "C";
-            buttonClear.TextColor = Color.White;
+            buttonClear.TextColor = Color.WhiteSmoke;
             buttonClear.UseVisualStyleBackColor = false;
-            buttonClear.Click += OnButtonClearClick;
+            buttonClear.Click += OnClearButtonClick;
             // 
             // buttonSquareRoot
             // 
@@ -172,14 +172,14 @@
             buttonSquareRoot.FlatAppearance.BorderSize = 0;
             buttonSquareRoot.FlatStyle = FlatStyle.Flat;
             buttonSquareRoot.Font = new Font("Gadugi", 14F);
-            buttonSquareRoot.ForeColor = Color.White;
+            buttonSquareRoot.ForeColor = Color.WhiteSmoke;
             buttonSquareRoot.Location = new Point(183, 273);
             buttonSquareRoot.Margin = new Padding(0);
             buttonSquareRoot.Name = "buttonSquareRoot";
             buttonSquareRoot.Size = new Size(80, 53);
             buttonSquareRoot.TabIndex = 18;
             buttonSquareRoot.Text = "√𝑥";
-            buttonSquareRoot.TextColor = Color.White;
+            buttonSquareRoot.TextColor = Color.WhiteSmoke;
             buttonSquareRoot.UseVisualStyleBackColor = false;
             buttonSquareRoot.Click += OnOperationButtonsClick;
             // 
@@ -192,14 +192,14 @@
             buttonSquare.FlatAppearance.BorderSize = 0;
             buttonSquare.FlatStyle = FlatStyle.Flat;
             buttonSquare.Font = new Font("Gadugi", 14F);
-            buttonSquare.ForeColor = Color.White;
+            buttonSquare.ForeColor = Color.WhiteSmoke;
             buttonSquare.Location = new Point(94, 273);
             buttonSquare.Margin = new Padding(0);
             buttonSquare.Name = "buttonSquare";
             buttonSquare.Size = new Size(80, 53);
             buttonSquare.TabIndex = 17;
             buttonSquare.Text = "𝑥²";
-            buttonSquare.TextColor = Color.White;
+            buttonSquare.TextColor = Color.WhiteSmoke;
             buttonSquare.UseVisualStyleBackColor = false;
             buttonSquare.Click += OnOperationButtonsClick;
             // 
@@ -212,14 +212,14 @@
             buttonReverseFraction.FlatAppearance.BorderSize = 0;
             buttonReverseFraction.FlatStyle = FlatStyle.Flat;
             buttonReverseFraction.Font = new Font("Gadugi", 14F);
-            buttonReverseFraction.ForeColor = Color.White;
+            buttonReverseFraction.ForeColor = Color.WhiteSmoke;
             buttonReverseFraction.Location = new Point(5, 273);
             buttonReverseFraction.Margin = new Padding(0);
             buttonReverseFraction.Name = "buttonReverseFraction";
             buttonReverseFraction.Size = new Size(80, 53);
             buttonReverseFraction.TabIndex = 16;
             buttonReverseFraction.Text = "⅟𝑥";
-            buttonReverseFraction.TextColor = Color.White;
+            buttonReverseFraction.TextColor = Color.WhiteSmoke;
             buttonReverseFraction.UseVisualStyleBackColor = false;
             buttonReverseFraction.Click += OnOperationButtonsClick;
             // 
@@ -232,16 +232,16 @@
             buttonDivision.FlatAppearance.BorderSize = 0;
             buttonDivision.FlatStyle = FlatStyle.Flat;
             buttonDivision.Font = new Font("Gadugi", 14F);
-            buttonDivision.ForeColor = Color.White;
+            buttonDivision.ForeColor = Color.WhiteSmoke;
             buttonDivision.Location = new Point(272, 273);
             buttonDivision.Margin = new Padding(0);
             buttonDivision.Name = "buttonDivision";
             buttonDivision.Size = new Size(80, 53);
             buttonDivision.TabIndex = 15;
             buttonDivision.Text = "÷";
-            buttonDivision.TextColor = Color.White;
+            buttonDivision.TextColor = Color.WhiteSmoke;
             buttonDivision.UseVisualStyleBackColor = false;
-            buttonDivision.Click += OnButtonMathOperationClick;
+            buttonDivision.Click += OnMathOperationButtonClick;
             // 
             // buttonMultiply
             // 
@@ -252,16 +252,16 @@
             buttonMultiply.FlatAppearance.BorderSize = 0;
             buttonMultiply.FlatStyle = FlatStyle.Flat;
             buttonMultiply.Font = new Font("Gadugi", 14F);
-            buttonMultiply.ForeColor = Color.White;
+            buttonMultiply.ForeColor = Color.WhiteSmoke;
             buttonMultiply.Location = new Point(272, 329);
             buttonMultiply.Margin = new Padding(0);
             buttonMultiply.Name = "buttonMultiply";
             buttonMultiply.Size = new Size(80, 53);
             buttonMultiply.TabIndex = 19;
             buttonMultiply.Text = "×";
-            buttonMultiply.TextColor = Color.White;
+            buttonMultiply.TextColor = Color.WhiteSmoke;
             buttonMultiply.UseVisualStyleBackColor = false;
-            buttonMultiply.Click += OnButtonMathOperationClick;
+            buttonMultiply.Click += OnMathOperationButtonClick;
             // 
             // buttonSubstraction
             // 
@@ -272,16 +272,16 @@
             buttonSubstraction.FlatAppearance.BorderSize = 0;
             buttonSubstraction.FlatStyle = FlatStyle.Flat;
             buttonSubstraction.Font = new Font("Gadugi", 14F);
-            buttonSubstraction.ForeColor = Color.White;
+            buttonSubstraction.ForeColor = Color.WhiteSmoke;
             buttonSubstraction.Location = new Point(272, 385);
             buttonSubstraction.Margin = new Padding(0);
             buttonSubstraction.Name = "buttonSubstraction";
             buttonSubstraction.Size = new Size(80, 53);
             buttonSubstraction.TabIndex = 23;
             buttonSubstraction.Text = "-";
-            buttonSubstraction.TextColor = Color.White;
+            buttonSubstraction.TextColor = Color.WhiteSmoke;
             buttonSubstraction.UseVisualStyleBackColor = false;
-            buttonSubstraction.Click += OnButtonMathOperationClick;
+            buttonSubstraction.Click += OnMathOperationButtonClick;
             // 
             // buttonAdd
             // 
@@ -292,16 +292,16 @@
             buttonAdd.FlatAppearance.BorderSize = 0;
             buttonAdd.FlatStyle = FlatStyle.Flat;
             buttonAdd.Font = new Font("Gadugi", 14F);
-            buttonAdd.ForeColor = Color.White;
+            buttonAdd.ForeColor = Color.WhiteSmoke;
             buttonAdd.Location = new Point(272, 441);
             buttonAdd.Margin = new Padding(0);
             buttonAdd.Name = "buttonAdd";
             buttonAdd.Size = new Size(80, 53);
             buttonAdd.TabIndex = 27;
             buttonAdd.Text = "+";
-            buttonAdd.TextColor = Color.White;
+            buttonAdd.TextColor = Color.WhiteSmoke;
             buttonAdd.UseVisualStyleBackColor = false;
-            buttonAdd.Click += OnButtonMathOperationClick;
+            buttonAdd.Click += OnMathOperationButtonClick;
             // 
             // textDisplay1
             // 
@@ -383,6 +383,7 @@
             buttonExit.Size = new Size(50, 40);
             buttonExit.TabIndex = 2;
             buttonExit.UseVisualStyleBackColor = true;
+            buttonExit.Click += OnButtonExitClick;
             // 
             // panelHistory
             // 
@@ -412,7 +413,7 @@
             buttonClearHistory.Size = new Size(360, 40);
             buttonClearHistory.TabIndex = 5;
             buttonClearHistory.UseVisualStyleBackColor = true;
-            buttonClearHistory.Click += OnButtonClearHistoryClick;
+            buttonClearHistory.Click += OnClearHistoryButtonClick;
             // 
             // richTextBoxDisplayHistory
             // 
@@ -462,7 +463,6 @@
             // 
             buttonHistory.Dock = DockStyle.Right;
             buttonHistory.FlatAppearance.BorderSize = 0;
-            buttonHistory.FlatAppearance.MouseOverBackColor = Color.Red;
             buttonHistory.FlatStyle = FlatStyle.Flat;
             buttonHistory.ForeColor = Color.Transparent;
             buttonHistory.IconChar = FontAwesome.Sharp.IconChar.ClockRotateLeft;
@@ -475,7 +475,7 @@
             buttonHistory.Size = new Size(50, 40);
             buttonHistory.TabIndex = 2;
             buttonHistory.UseVisualStyleBackColor = true;
-            buttonHistory.Click += OnButtonHistoryClick;
+            buttonHistory.Click += OnHistoryButtonClick;
             // 
             // textDisplay2
             // 
@@ -505,14 +505,14 @@
             customButton3.BorderSize = 0;
             customButton3.FlatAppearance.BorderSize = 0;
             customButton3.FlatStyle = FlatStyle.Flat;
-            customButton3.ForeColor = Color.White;
+            customButton3.ForeColor = Color.DarkGray;
             customButton3.Location = new Point(295, 178);
             customButton3.Margin = new Padding(0);
             customButton3.Name = "customButton3";
             customButton3.Size = new Size(55, 30);
             customButton3.TabIndex = 7;
             customButton3.Text = "MS";
-            customButton3.TextColor = Color.White;
+            customButton3.TextColor = Color.DarkGray;
             customButton3.UseVisualStyleBackColor = false;
             // 
             // customButton4
@@ -523,14 +523,14 @@
             customButton4.BorderSize = 0;
             customButton4.FlatAppearance.BorderSize = 0;
             customButton4.FlatStyle = FlatStyle.Flat;
-            customButton4.ForeColor = Color.White;
+            customButton4.ForeColor = Color.DarkGray;
             customButton4.Location = new Point(223, 178);
             customButton4.Margin = new Padding(0);
             customButton4.Name = "customButton4";
             customButton4.Size = new Size(55, 30);
             customButton4.TabIndex = 8;
             customButton4.Text = "M-";
-            customButton4.TextColor = Color.White;
+            customButton4.TextColor = Color.DarkGray;
             customButton4.UseVisualStyleBackColor = false;
             // 
             // customButton5
@@ -541,14 +541,14 @@
             customButton5.BorderSize = 0;
             customButton5.FlatAppearance.BorderSize = 0;
             customButton5.FlatStyle = FlatStyle.Flat;
-            customButton5.ForeColor = Color.White;
+            customButton5.ForeColor = Color.DarkGray;
             customButton5.Location = new Point(151, 178);
             customButton5.Margin = new Padding(0);
             customButton5.Name = "customButton5";
             customButton5.Size = new Size(55, 30);
             customButton5.TabIndex = 9;
             customButton5.Text = "M+";
-            customButton5.TextColor = Color.White;
+            customButton5.TextColor = Color.DarkGray;
             customButton5.UseVisualStyleBackColor = false;
             // 
             // customButton6
@@ -559,14 +559,14 @@
             customButton6.BorderSize = 0;
             customButton6.FlatAppearance.BorderSize = 0;
             customButton6.FlatStyle = FlatStyle.Flat;
-            customButton6.ForeColor = Color.White;
+            customButton6.ForeColor = Color.DarkGray;
             customButton6.Location = new Point(79, 178);
             customButton6.Margin = new Padding(0);
             customButton6.Name = "customButton6";
             customButton6.Size = new Size(55, 30);
             customButton6.TabIndex = 10;
             customButton6.Text = "MR";
-            customButton6.TextColor = Color.White;
+            customButton6.TextColor = Color.DarkGray;
             customButton6.UseVisualStyleBackColor = false;
             // 
             // customButton7
@@ -577,14 +577,14 @@
             customButton7.BorderSize = 0;
             customButton7.FlatAppearance.BorderSize = 0;
             customButton7.FlatStyle = FlatStyle.Flat;
-            customButton7.ForeColor = Color.White;
+            customButton7.ForeColor = Color.DarkGray;
             customButton7.Location = new Point(7, 178);
             customButton7.Margin = new Padding(0);
             customButton7.Name = "customButton7";
             customButton7.Size = new Size(55, 30);
             customButton7.TabIndex = 11;
             customButton7.Text = "MC";
-            customButton7.TextColor = Color.White;
+            customButton7.TextColor = Color.DarkGray;
             customButton7.UseVisualStyleBackColor = false;
             // 
             // buttonNine
@@ -595,17 +595,17 @@
             buttonNine.BorderSize = 0;
             buttonNine.FlatAppearance.BorderSize = 0;
             buttonNine.FlatStyle = FlatStyle.Flat;
-            buttonNine.Font = new Font("Gadugi", 12F);
-            buttonNine.ForeColor = Color.White;
+            buttonNine.Font = new Font("Gadugi", 12F, FontStyle.Bold);
+            buttonNine.ForeColor = Color.WhiteSmoke;
             buttonNine.Location = new Point(183, 329);
             buttonNine.Margin = new Padding(0);
             buttonNine.Name = "buttonNine";
             buttonNine.Size = new Size(80, 53);
             buttonNine.TabIndex = 22;
             buttonNine.Text = "9";
-            buttonNine.TextColor = Color.White;
+            buttonNine.TextColor = Color.WhiteSmoke;
             buttonNine.UseVisualStyleBackColor = false;
-            buttonNine.Click += OnButtonNumberClick;
+            buttonNine.Click += OnNumberButtonClick;
             // 
             // buttonEigth
             // 
@@ -615,17 +615,17 @@
             buttonEigth.BorderSize = 0;
             buttonEigth.FlatAppearance.BorderSize = 0;
             buttonEigth.FlatStyle = FlatStyle.Flat;
-            buttonEigth.Font = new Font("Gadugi", 12F);
-            buttonEigth.ForeColor = Color.White;
+            buttonEigth.Font = new Font("Gadugi", 12F, FontStyle.Bold);
+            buttonEigth.ForeColor = Color.WhiteSmoke;
             buttonEigth.Location = new Point(94, 329);
             buttonEigth.Margin = new Padding(0);
             buttonEigth.Name = "buttonEigth";
             buttonEigth.Size = new Size(80, 53);
             buttonEigth.TabIndex = 21;
             buttonEigth.Text = "8";
-            buttonEigth.TextColor = Color.White;
+            buttonEigth.TextColor = Color.WhiteSmoke;
             buttonEigth.UseVisualStyleBackColor = false;
-            buttonEigth.Click += OnButtonNumberClick;
+            buttonEigth.Click += OnNumberButtonClick;
             // 
             // buttonSeven
             // 
@@ -635,17 +635,17 @@
             buttonSeven.BorderSize = 0;
             buttonSeven.FlatAppearance.BorderSize = 0;
             buttonSeven.FlatStyle = FlatStyle.Flat;
-            buttonSeven.Font = new Font("Gadugi", 12F);
-            buttonSeven.ForeColor = Color.White;
+            buttonSeven.Font = new Font("Gadugi", 12F, FontStyle.Bold);
+            buttonSeven.ForeColor = Color.WhiteSmoke;
             buttonSeven.Location = new Point(5, 329);
             buttonSeven.Margin = new Padding(0);
             buttonSeven.Name = "buttonSeven";
             buttonSeven.Size = new Size(80, 53);
             buttonSeven.TabIndex = 20;
             buttonSeven.Text = "7";
-            buttonSeven.TextColor = Color.White;
+            buttonSeven.TextColor = Color.WhiteSmoke;
             buttonSeven.UseVisualStyleBackColor = false;
-            buttonSeven.Click += OnButtonNumberClick;
+            buttonSeven.Click += OnNumberButtonClick;
             // 
             // buttonSix
             // 
@@ -655,17 +655,17 @@
             buttonSix.BorderSize = 0;
             buttonSix.FlatAppearance.BorderSize = 0;
             buttonSix.FlatStyle = FlatStyle.Flat;
-            buttonSix.Font = new Font("Gadugi", 12F);
-            buttonSix.ForeColor = Color.White;
+            buttonSix.Font = new Font("Gadugi", 12F, FontStyle.Bold);
+            buttonSix.ForeColor = Color.WhiteSmoke;
             buttonSix.Location = new Point(183, 385);
             buttonSix.Margin = new Padding(0);
             buttonSix.Name = "buttonSix";
             buttonSix.Size = new Size(80, 53);
             buttonSix.TabIndex = 26;
             buttonSix.Text = "6";
-            buttonSix.TextColor = Color.White;
+            buttonSix.TextColor = Color.WhiteSmoke;
             buttonSix.UseVisualStyleBackColor = false;
-            buttonSix.Click += OnButtonNumberClick;
+            buttonSix.Click += OnNumberButtonClick;
             // 
             // buttonFive
             // 
@@ -675,17 +675,17 @@
             buttonFive.BorderSize = 0;
             buttonFive.FlatAppearance.BorderSize = 0;
             buttonFive.FlatStyle = FlatStyle.Flat;
-            buttonFive.Font = new Font("Gadugi", 12F);
-            buttonFive.ForeColor = Color.White;
+            buttonFive.Font = new Font("Gadugi", 12F, FontStyle.Bold);
+            buttonFive.ForeColor = Color.WhiteSmoke;
             buttonFive.Location = new Point(94, 385);
             buttonFive.Margin = new Padding(0);
             buttonFive.Name = "buttonFive";
             buttonFive.Size = new Size(80, 53);
             buttonFive.TabIndex = 25;
             buttonFive.Text = "5";
-            buttonFive.TextColor = Color.White;
+            buttonFive.TextColor = Color.WhiteSmoke;
             buttonFive.UseVisualStyleBackColor = false;
-            buttonFive.Click += OnButtonNumberClick;
+            buttonFive.Click += OnNumberButtonClick;
             // 
             // buttonFour
             // 
@@ -695,17 +695,17 @@
             buttonFour.BorderSize = 0;
             buttonFour.FlatAppearance.BorderSize = 0;
             buttonFour.FlatStyle = FlatStyle.Flat;
-            buttonFour.Font = new Font("Gadugi", 12F);
-            buttonFour.ForeColor = Color.White;
+            buttonFour.Font = new Font("Gadugi", 12F, FontStyle.Bold);
+            buttonFour.ForeColor = Color.WhiteSmoke;
             buttonFour.Location = new Point(5, 385);
             buttonFour.Margin = new Padding(0);
             buttonFour.Name = "buttonFour";
             buttonFour.Size = new Size(80, 53);
             buttonFour.TabIndex = 24;
             buttonFour.Text = "4";
-            buttonFour.TextColor = Color.White;
+            buttonFour.TextColor = Color.WhiteSmoke;
             buttonFour.UseVisualStyleBackColor = false;
-            buttonFour.Click += OnButtonNumberClick;
+            buttonFour.Click += OnNumberButtonClick;
             // 
             // buttonThree
             // 
@@ -715,17 +715,17 @@
             buttonThree.BorderSize = 0;
             buttonThree.FlatAppearance.BorderSize = 0;
             buttonThree.FlatStyle = FlatStyle.Flat;
-            buttonThree.Font = new Font("Gadugi", 12F);
-            buttonThree.ForeColor = Color.White;
+            buttonThree.Font = new Font("Gadugi", 12F, FontStyle.Bold);
+            buttonThree.ForeColor = Color.WhiteSmoke;
             buttonThree.Location = new Point(183, 441);
             buttonThree.Margin = new Padding(0);
             buttonThree.Name = "buttonThree";
             buttonThree.Size = new Size(80, 53);
             buttonThree.TabIndex = 30;
             buttonThree.Text = "3";
-            buttonThree.TextColor = Color.White;
+            buttonThree.TextColor = Color.WhiteSmoke;
             buttonThree.UseVisualStyleBackColor = false;
-            buttonThree.Click += OnButtonNumberClick;
+            buttonThree.Click += OnNumberButtonClick;
             // 
             // buttonTwo
             // 
@@ -735,17 +735,17 @@
             buttonTwo.BorderSize = 0;
             buttonTwo.FlatAppearance.BorderSize = 0;
             buttonTwo.FlatStyle = FlatStyle.Flat;
-            buttonTwo.Font = new Font("Gadugi", 12F);
-            buttonTwo.ForeColor = Color.White;
+            buttonTwo.Font = new Font("Gadugi", 12F, FontStyle.Bold);
+            buttonTwo.ForeColor = Color.WhiteSmoke;
             buttonTwo.Location = new Point(94, 441);
             buttonTwo.Margin = new Padding(0);
             buttonTwo.Name = "buttonTwo";
             buttonTwo.Size = new Size(80, 53);
             buttonTwo.TabIndex = 29;
             buttonTwo.Text = "2";
-            buttonTwo.TextColor = Color.White;
+            buttonTwo.TextColor = Color.WhiteSmoke;
             buttonTwo.UseVisualStyleBackColor = false;
-            buttonTwo.Click += OnButtonNumberClick;
+            buttonTwo.Click += OnNumberButtonClick;
             // 
             // buttonOne
             // 
@@ -755,17 +755,17 @@
             buttonOne.BorderSize = 0;
             buttonOne.FlatAppearance.BorderSize = 0;
             buttonOne.FlatStyle = FlatStyle.Flat;
-            buttonOne.Font = new Font("Gadugi", 12F);
-            buttonOne.ForeColor = Color.White;
+            buttonOne.Font = new Font("Gadugi", 12F, FontStyle.Bold);
+            buttonOne.ForeColor = Color.WhiteSmoke;
             buttonOne.Location = new Point(5, 441);
             buttonOne.Margin = new Padding(0);
             buttonOne.Name = "buttonOne";
             buttonOne.Size = new Size(80, 53);
             buttonOne.TabIndex = 28;
             buttonOne.Text = "1";
-            buttonOne.TextColor = Color.White;
+            buttonOne.TextColor = Color.WhiteSmoke;
             buttonOne.UseVisualStyleBackColor = false;
-            buttonOne.Click += OnButtonNumberClick;
+            buttonOne.Click += OnNumberButtonClick;
             // 
             // buttonDecimal
             // 
@@ -776,16 +776,16 @@
             buttonDecimal.FlatAppearance.BorderSize = 0;
             buttonDecimal.FlatStyle = FlatStyle.Flat;
             buttonDecimal.Font = new Font("Gadugi", 14F);
-            buttonDecimal.ForeColor = Color.White;
+            buttonDecimal.ForeColor = Color.WhiteSmoke;
             buttonDecimal.Location = new Point(183, 497);
             buttonDecimal.Margin = new Padding(0);
             buttonDecimal.Name = "buttonDecimal";
             buttonDecimal.Size = new Size(80, 53);
             buttonDecimal.TabIndex = 34;
             buttonDecimal.Text = ".";
-            buttonDecimal.TextColor = Color.White;
+            buttonDecimal.TextColor = Color.WhiteSmoke;
             buttonDecimal.UseVisualStyleBackColor = false;
-            buttonDecimal.Click += OnButtonNumberClick;
+            buttonDecimal.Click += OnNumberButtonClick;
             // 
             // buttonZero
             // 
@@ -795,17 +795,17 @@
             buttonZero.BorderSize = 0;
             buttonZero.FlatAppearance.BorderSize = 0;
             buttonZero.FlatStyle = FlatStyle.Flat;
-            buttonZero.Font = new Font("Gadugi", 12F);
-            buttonZero.ForeColor = Color.White;
+            buttonZero.Font = new Font("Gadugi", 12F, FontStyle.Bold);
+            buttonZero.ForeColor = Color.WhiteSmoke;
             buttonZero.Location = new Point(94, 497);
             buttonZero.Margin = new Padding(0);
             buttonZero.Name = "buttonZero";
             buttonZero.Size = new Size(80, 53);
             buttonZero.TabIndex = 33;
             buttonZero.Text = "0";
-            buttonZero.TextColor = Color.White;
+            buttonZero.TextColor = Color.WhiteSmoke;
             buttonZero.UseVisualStyleBackColor = false;
-            buttonZero.Click += OnButtonNumberClick;
+            buttonZero.Click += OnNumberButtonClick;
             // 
             // buttonSwapPlusMinus
             // 
@@ -816,14 +816,14 @@
             buttonSwapPlusMinus.FlatAppearance.BorderSize = 0;
             buttonSwapPlusMinus.FlatStyle = FlatStyle.Flat;
             buttonSwapPlusMinus.Font = new Font("Gadugi", 14F);
-            buttonSwapPlusMinus.ForeColor = Color.White;
+            buttonSwapPlusMinus.ForeColor = Color.WhiteSmoke;
             buttonSwapPlusMinus.Location = new Point(5, 497);
             buttonSwapPlusMinus.Margin = new Padding(0);
             buttonSwapPlusMinus.Name = "buttonSwapPlusMinus";
             buttonSwapPlusMinus.Size = new Size(80, 53);
             buttonSwapPlusMinus.TabIndex = 32;
             buttonSwapPlusMinus.Text = "±";
-            buttonSwapPlusMinus.TextColor = Color.White;
+            buttonSwapPlusMinus.TextColor = Color.WhiteSmoke;
             buttonSwapPlusMinus.UseVisualStyleBackColor = false;
             buttonSwapPlusMinus.Click += OnOperationButtonsClick;
             // 
@@ -845,7 +845,7 @@
             buttonEquals.Text = "=";
             buttonEquals.TextColor = Color.Black;
             buttonEquals.UseVisualStyleBackColor = false;
-            buttonEquals.Click += OnButtonEqualsClick;
+            buttonEquals.Click += OnEqualsButtonClick;
             // 
             // CalculatorView
             // 
@@ -887,7 +887,7 @@
             Controls.Add(panel1);
             Controls.Add(panelTitle);
             Font = new Font("Gadugi", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ForeColor = Color.White;
+            ForeColor = Color.WhiteSmoke;
             FormBorderStyle = FormBorderStyle.None;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "CalculatorView";
