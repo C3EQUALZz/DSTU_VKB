@@ -1,4 +1,4 @@
-; 7. X = 6C + (B - C + 1) / 2
+; 8. X = 6C + (B - C + 1) / 2
 
 data segment
     a dw 10
