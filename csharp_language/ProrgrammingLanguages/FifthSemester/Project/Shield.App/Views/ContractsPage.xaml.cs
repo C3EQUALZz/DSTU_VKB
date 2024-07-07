@@ -32,6 +32,8 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
     {
         ViewModel = App.GetService<ContractsViewModel>();
         InitializeComponent();
+
+        UpdateContractsLV();
     }
 
     private async void CreateContractBtn_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)

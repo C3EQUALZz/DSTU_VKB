@@ -1,7 +1,10 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media.Imaging;
+using Shield.App.Helpers;
 using Shield.DataAccess.Models;
+using Windows.Storage.Streams;
 
 namespace Shield.App.Controls;
 public sealed partial class ContractControl : UserControl, INotifyPropertyChanged
@@ -10,7 +13,9 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
     public string Address { get; set; }
     public string Owners { get; set; }
     public string Bailee { get; set; }
+    public string Comment { get; set; }
     public Plan Plan { get; set; }
+    public BitmapImage Bitmap { get; set; }
 
     public event PropertyChangedEventHandler PropertyChanged;
     
@@ -23,9 +28,12 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
     {
         ContractId = c.ContractId;
         Address = c.Address;
-        Plan = c.Plan;
         Owners = c.Owners;
         Bailee = c.Bailee;
+        Comment = c.Comment;
+        Plan = c.Plan;
+        Bitmap = BitmapHelper.BytesToBitmap(c.Picture.Data);
+
         InitializeComponent();
     }
 

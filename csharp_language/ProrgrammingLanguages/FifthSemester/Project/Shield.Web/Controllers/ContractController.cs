@@ -5,6 +5,8 @@ using Shield.Web.Data.Contexts;
 using Shield.DataAccess.DTOs;
 using Shield.DataAccess.Models;
 
+using Microsoft.EntityFrameworkCore;
+
 namespace Shield.Web.Controllers;
 
 [Route("api/contract")]
@@ -22,7 +24,7 @@ public class ContractController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetAllContracts()
     {
-        return Ok(new GetAllContractsResponse() { Contracts=_context.Contracts.ToList() });
+        return Ok(new GetAllContractsResponse() { Contracts=_context.Contracts.Include(c => c.Plan).Include(c => c.Picture).ToList() });
     }
 
     [HttpPost]
@@ -40,7 +42,7 @@ public class ContractController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetContract([FromRoute] int id)
     {
-        var contract = await _context.Contracts.FindAsync(id);
+        var contract = await _context.Contracts.Include(c => c.Plan).Include(c => c.Picture).FirstOrDefaultAsync(c => c.ContractId == id);
         if (contract != null) return Ok(contract);
         else return NotFound();
     }

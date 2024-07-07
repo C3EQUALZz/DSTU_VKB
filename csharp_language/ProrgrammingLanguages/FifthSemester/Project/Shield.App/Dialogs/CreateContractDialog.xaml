@@ -27,7 +27,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0">
+            <StackPanel Grid.Column="0" Spacing="5">
                 <StackPanel Orientation="Horizontal" Spacing="10">
                     <TextBlock Text="Прочие владельцы:"/>
                     <Button Content="+" Padding="0" Width="20" Height="20" Click="AddOwnerButtonClick"/>
