@@ -44,6 +44,8 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
     public string Address => AddressTB.Text;
     public string Comment => CommentTB.Text;
     public List<string> Owners => OwnersControls.Select(x => x.Value).ToList();
+    public StorageFile Plan;
+    public StorageFile Photo;
 
     private ObservableCollection<RemovableTextBox> OwnersControls { get; set; } = new();
 
@@ -77,6 +79,7 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
         {
             PhotoPath = file.Name;
             PhotoPathTB.Foreground = new SolidColorBrush(Colors.White);
+            Photo = file;
         }
         else
         {
@@ -93,6 +96,7 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
         {
             PlanPath = file.Name;
             PlanPathTB.Foreground = new SolidColorBrush(Colors.White);
+            Plan = file;
         }
         else
         {
