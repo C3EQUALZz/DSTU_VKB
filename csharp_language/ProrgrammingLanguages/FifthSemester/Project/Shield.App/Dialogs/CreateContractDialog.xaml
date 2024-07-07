@@ -17,9 +17,9 @@
             <RowDefinition Height="394"/>
         </Grid.RowDefinitions>
         
-        <TextBox Grid.Row="0" PlaceholderText="ФИО лица, ответственного за вскрытие помещения"/>
-        <TextBox Grid.Row="1" PlaceholderText="Адрес"/>
-        <TextBox Grid.Row="2" PlaceholderText="Комментарий"/>
+        <TextBox x:Name="BaileeTB" Grid.Row="0" PlaceholderText="ФИО лица, ответственного за вскрытие помещения"/>
+        <TextBox x:Name="AddressTB" Grid.Row="1" PlaceholderText="Адрес"/>
+        <TextBox x:Name="CommentTB" Grid.Row="2" PlaceholderText="Комментарий"/>
         <Grid Grid.Row="3" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>

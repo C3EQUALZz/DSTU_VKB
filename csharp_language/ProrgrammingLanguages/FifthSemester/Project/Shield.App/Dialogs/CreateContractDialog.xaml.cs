@@ -40,6 +40,11 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
         }
     }
 
+    public string Bailee => BaileeTB.Text;
+    public string Address => AddressTB.Text;
+    public string Comment => CommentTB.Text;
+    public List<string> Owners => OwnersControls.Select(x => x.Value).ToList();
+
     private ObservableCollection<RemovableTextBox> OwnersControls { get; set; } = new();
 
     public event PropertyChangedEventHandler PropertyChanged;
