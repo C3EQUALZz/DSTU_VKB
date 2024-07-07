@@ -24,7 +24,7 @@ public class ContractController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetAllContracts()
     {
-        return Ok(new GetAllContractsResponse() { Contracts=_context.Contracts.Include(c => c.Plan).Include(c => c.Picture).ToList() });
+        return Ok(new GetAllContractsResponse() { Contracts=_context.Contracts.Include(c => c.Picture).ToList() });
     }
 
     [HttpPost]
