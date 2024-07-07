@@ -27,11 +27,13 @@ public class ContractController : ControllerBase
 
     [HttpPost]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> CreateContract([FromBody] ContractDto dto)
+    public async Task<IActionResult> CreateContract([FromBody] Contract contract)
     {
-        var entity = await _context.Contracts.AddAsync(new Contract { Address=dto.Address, Plan=dto.Plan, Owners=string.Join(";", dto.Owners), Bailee=dto.Bailee });
+        var pictureEntity = await _context.Pictures.AddAsync(contract.Picture);
+        var planEntity = await _context.Plans.AddAsync(contract.Plan);
+        var contractEntity = await _context.Contracts.AddAsync(new Contract { Address=contract.Address, Plan=planEntity.Entity, Owners=contract.Owners, Bailee=contract.Bailee, Comment=contract.Comment, Picture=pictureEntity.Entity });
         await _context.SaveChangesAsync();
-        return Ok(entity.Entity);
+        return Ok(contractEntity.Entity);
     }
 
     [HttpGet("{id}")]

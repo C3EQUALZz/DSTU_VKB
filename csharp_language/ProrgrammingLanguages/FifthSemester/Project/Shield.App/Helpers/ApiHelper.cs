@@ -3,6 +3,7 @@ using Windows.Storage;
 
 using Shield.DataAccess.DTOs;
 using Shield.DataAccess.Models;
+using System.Diagnostics;
 
 namespace Shield.App.Helpers;
 public class ApiHelper
@@ -68,17 +69,20 @@ public class ApiHelper
         return dto;
     }
 
-    public static async Task<Contract?> CreateContract(Contract contract)
+    public static async Task<HttpResponseMessage?> CreateContract(Contract contract)
     {
         using var request = new HttpRequestMessage();
         request.RequestUri = new Uri($"{_baseAddress}/contract");
         request.Method = HttpMethod.Post;
-        request.Content = JsonContent.Create(new ContractDto() { Address=contract.Address, Plan=contract.Plan, Owners=contract.Owners.Split(';').ToList(), Bailee=contract.Bailee });
+        request.Content = JsonContent.Create(contract);
         request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
-        return null;
+
+        var response = await _sharedClient.SendAsync(request);
+
+        return response;
     }
 
-    public static async Task<Contract?> GetContract(int id)
+    public static async Task<HttpResponseMessage?> GetContract(int id)
     {
         using var request = new HttpRequestMessage();
         request.RequestUri = new Uri($"{_baseAddress}/contract/{id}");
@@ -87,16 +91,19 @@ public class ApiHelper
         return null;
     }
 
-    public static async Task<Contract?> DeleteContract(int id)
+    public static async Task<HttpResponseMessage?> DeleteContract(int id)
     {
         using var request = new HttpRequestMessage();
         request.RequestUri = new Uri($"{_baseAddress}/contract/{id}");
         request.Method = HttpMethod.Delete;
         request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
-        return null;
+
+        var response = await _sharedClient.SendAsync(request);
+
+        return response;
     }
 
-    public static async Task<Contract?> UpdateContract(int id, Contract replacer)
+    public static async Task<HttpResponseMessage?> UpdateContract(int id, Contract replacer)
     {
         using var request = new HttpRequestMessage();
         request.RequestUri = new Uri($"{_baseAddress}/contract/{id}");

@@ -5,5 +5,4 @@ public class Plan
     public string Title { get; set; }
     public string Type { get; set; }
     public byte[] Data { get; set; }
-    //public Contract Contract { get; set; }
 }
