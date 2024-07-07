@@ -1,0 +1,6 @@
+@Shield.Web_HostAddress = http://localhost:5080
+
+GET {{Shield.Web_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
