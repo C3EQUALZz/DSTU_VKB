@@ -59,4 +59,14 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
         };
         OwnersControls.Add(rtb);
     }
+
+    private void LoadPhotoButtonClick(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+
+    }
+
+    private void LoadPlanButtonClick(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+
+    }
 }
