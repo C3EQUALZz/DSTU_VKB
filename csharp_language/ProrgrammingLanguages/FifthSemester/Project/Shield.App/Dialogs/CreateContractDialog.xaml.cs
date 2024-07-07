@@ -1,9 +1,13 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Microsoft.UI;
 using Microsoft.UI.Xaml.Controls;
-
+using Microsoft.UI.Xaml.Media;
 using Shield.App.Controls;
+using Shield.App.Helpers;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 
 namespace Shield.App.Dialogs;
 public sealed partial class CreateContractDialog : UserControl, INotifyPropertyChanged
@@ -60,13 +64,35 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
         OwnersControls.Add(rtb);
     }
 
-    private void LoadPhotoButtonClick(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
-    {
+    private async void LoadPhotoButtonClick(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {        
+        var file = await FilePickerHelper.PickSingleFile();
 
+        if (file != null)
+        {
+            PhotoPath = file.Name;
+            PhotoPathTB.Foreground = new SolidColorBrush(Colors.White);
+        }
+        else
+        {
+            PhotoPath = "ошибка";
+            PhotoPathTB.Foreground = new SolidColorBrush(Colors.IndianRed);
+        }
     }
 
-    private void LoadPlanButtonClick(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    private async void LoadPlanButtonClick(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
     {
+        var file = await FilePickerHelper.PickSingleFile("rvt");
 
+        if (file != null)
+        {
+            PlanPath = file.Name;
+            PlanPathTB.Foreground = new SolidColorBrush(Colors.White);
+        }
+        else
+        {
+            PlanPath = "ошибка";
+            PlanPathTB.Foreground = new SolidColorBrush(Colors.IndianRed);
+        }
     }
 }

@@ -40,13 +40,13 @@
             </StackPanel>
 
             <StackPanel Grid.Column="1" HorizontalAlignment="Right">
-                <Button Content="Выбрать фото" Click="LoadPhotoButtonClick"/>
-                <TextBlock Text="{x:Bind PhotoPath, Mode=OneWay}" TextAlignment="Right"/>
+                <Button x:Name="LoadPhotoButton" Content="Выбрать фото" Click="LoadPhotoButtonClick"/>
+                <TextBlock x:Name="PhotoPathTB" Text="{x:Bind PhotoPath, Mode=OneWay}" TextAlignment="Right"/>
             </StackPanel>
 
             <StackPanel Grid.Column="2" HorizontalAlignment="Right">
-                <Button Content="Выбрать план" Click="LoadPlanButtonClick"/>
-                <TextBlock Text="{x:Bind PlanPath, Mode=OneWay}" TextAlignment="Right"/>
+                <Button x:Name="LoadPlanButton" Content="Выбрать план" Click="LoadPlanButtonClick"/>
+                <TextBlock x:Name="PlanPathTB" Text="{x:Bind PlanPath, Mode=OneWay}" TextAlignment="Right"/>
             </StackPanel>
         </Grid>
 
