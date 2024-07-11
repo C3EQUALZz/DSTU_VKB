@@ -9,42 +9,56 @@
     mc:Ignorable="d"
     xmlns:media="using:CommunityToolkit.WinUI.Media"
     xmlns:ui="using:CommunityToolkit.WinUI"
-    
-    Height="80"
     >
 
     <UserControl.Resources>
         <media:AttachedCardShadow x:Key="CommonShadow" Offset="0,3" Opacity="0.4"/>
     </UserControl.Resources>
 
-    <Grid Margin="0 5 0 5" ColumnSpacing="10" ui:Effects.Shadow="{StaticResource CommonShadow}">
+    <Border ui:Effects.Shadow="{StaticResource CommonShadow}" Margin="0 5 0 5">
+        <Grid RowSpacing="5" Padding="5" Background="#333333" CornerRadius="5">
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="60"/>
-        </Grid.ColumnDefinitions>
-
-        <Border Grid.Column="0" CornerRadius="5">
-            <Image Source="{x:Bind Bitmap, Mode=OneWay}" Stretch="UniformToFill" VerticalAlignment="Center"/>
-        </Border>
-
-        <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="30"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="80"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="{x:Bind Bailee}" Style="{StaticResource PageTitleStyle}"/>
-            <TextBlock Grid.Row="1" Text="{x:Bind Address}" Style="{StaticResource BodyTextStyle}" Foreground="DarkGray"/>
+            <Grid Grid.Row="0" ColumnSpacing="10" Background="#3d3d3d" CornerRadius="5" Padding="5">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="60"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" CornerRadius="5">
+                    <Image Source="{x:Bind Bitmap, Mode=OneWay}" Stretch="UniformToFill" VerticalAlignment="Center"/>
+                </Border>
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="{x:Bind Bailee}" Style="{StaticResource PageTitleStyle}"/>
+                    <TextBlock Grid.Row="1" Text="{x:Bind Address}" Style="{StaticResource BodyTextStyle}" Foreground="DarkGray"/>
+
+                </Grid>
+
+                <Button Grid.Column="2">
+                    <Button.Content>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE896;"/>
+                    </Button.Content>
+                </Button>
+
+            </Grid>
+
+            <Grid Grid.Row="1" Background="#3d3d3d" CornerRadius="5" Padding="5">
+
+            </Grid>
 
         </Grid>
-
-        <Button Grid.Column="2">
-            <Button.Content>
-                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE896;"/>
-            </Button.Content>
-        </Button>
-        
-    </Grid>
+    </Border>
+    
 </UserControl>
