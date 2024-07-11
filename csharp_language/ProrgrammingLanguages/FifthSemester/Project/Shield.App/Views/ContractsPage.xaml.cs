@@ -83,14 +83,29 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
         }
     }
 
-    private async void EditContractBtn_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    private async Task EditContract(ContractControl sender)
     {
         
     }
 
-    private async void MoreContractBtn_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    private async Task DeleteContract(ContractControl sender)
+    {
+        var response = await ApiHelper.DeleteContract(sender.ContractId);
+        if (response == null || !response.IsSuccessStatusCode)
+        {
+            Notify("Ошибка", $"Не удалось удалить контракт {(response != null ? $"(ошибка {response.StatusCode})" : "(превышено время ожидания)")}");
+        }
+        await UpdateContractsLV();
+    }
+
+    private async Task ExportContract(ContractControl sender)
     {
 
+    }
+
+    private async Task AlertContract(ContractControl sender)
+    {
+        Notify("ALERT TEST", $"{sender.ContractId}\n{sender.Address}\n{sender.Bailee}\n{sender.Owners}\n{sender.Comment}");
     }
 
     private async void UpdateContractsListBtn_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
@@ -114,25 +129,17 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
             
             foreach (var contract in response.Contracts)
             {
-                contractControls.Add(new(contract));
+                var control = new ContractControl(contract);
+                control.ExportRequested += async (s) => await ExportContract(s);
+                control.EditRequested += async (s) => await EditContract(s);
+                control.DeleteRequested += async (s) => await DeleteContract(s);
+                control.AlertRequested += async (s) => await AlertContract(s);
+                contractControls.Add(control);
             }
         }
         else
         {
             Notify("Ошибка выполнения запроса", "Проверьте подключение к интернету или войдите в другой аккаунт");
-        }
-    }
-
-    private async void DeleteContractBtn_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
-    {
-        if (ContractsLV.SelectedItem is ContractControl cc)
-        {
-            var response = await ApiHelper.DeleteContract(cc.ContractId);
-            if (response == null || !response.IsSuccessStatusCode)
-            {
-                Notify("Ошибка", $"Не удалось удалить контракт {(response != null ? $"(ошибка {response.StatusCode})" : "(превышено время ожидания)" )}");
-            }
-            await UpdateContractsLV();
         }
     }
 
