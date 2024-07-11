@@ -15,7 +15,11 @@
 
         <Border Grid.Column="0">
             <ScrollViewer>
-                <ListView x:Name="ContractsLV" ItemsSource="{x:Bind contractControls, Mode=OneWay}" IsItemClickEnabled="True" SelectionMode="None"/>
+                <ListView x:Name="ContractsLV" ItemsSource="{x:Bind contractControls, Mode=OneWay}" IsItemClickEnabled="True" SelectionMode="None">
+                    <ListView.Resources>
+                        <x:Boolean x:Key="ListViewItemSelectionIndicatorVisualEnabled">False</x:Boolean>
+                    </ListView.Resources>
+                </ListView>
             </ScrollViewer>
         </Border>
 
@@ -24,7 +28,6 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
 
@@ -41,14 +44,6 @@
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE777;" FontSize="16"/>
                             <TextBlock Text="Обновить список"/>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
-                <Button Grid.Row="3" HorizontalAlignment="Stretch" x:Name="DeleteContractBtn" Click="DeleteContractBtn_Click">
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal" Spacing="10">
-                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;" FontSize="16"/>
-                            <TextBlock Text="Удалить"/>
                         </StackPanel>
                     </Button.Content>
                 </Button>
