@@ -16,6 +16,16 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
     public Plan Plan { get; set; }
     public BitmapImage Bitmap { get; set; }
 
+    public delegate void ExportRequestedHandler(ContractControl sender);
+    public delegate void UpdateRequestedHandler(ContractControl sender);
+    public delegate void DeleteRequestedHandler(ContractControl sender);
+    public delegate void AlertRequestedHandler(ContractControl sender);
+
+    public event ExportRequestedHandler ExportRequested;
+    public event UpdateRequestedHandler UpdateRequested;
+    public event DeleteRequestedHandler DeleteRequested;
+    public event AlertRequestedHandler AlertRequested;
+
     public event PropertyChangedEventHandler PropertyChanged;
     
     public ContractControl()

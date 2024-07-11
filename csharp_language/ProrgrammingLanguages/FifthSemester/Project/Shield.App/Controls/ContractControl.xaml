@@ -19,7 +19,7 @@
 
     <Border ui:Effects.Shadow="{StaticResource CommonShadow}" Margin="0 7 0 10">
         
-        <Expander HorizontalAlignment="Stretch">
+        <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top">
            
             <Expander.Header>
 
@@ -27,11 +27,7 @@
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="3*"/>
-                        <ColumnDefinition Width="60"/>
-                        <ColumnDefinition Width="60"/>
-                        <ColumnDefinition Width="60"/>
-                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="4*"/>
                     </Grid.ColumnDefinitions>
 
                     <Border Grid.Column="0" CornerRadius="5">
@@ -49,30 +45,6 @@
 
                     </Grid>
 
-                    <Button Grid.Column="2">
-                        <Button.Content>
-                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE9F9;"/>
-                        </Button.Content>
-                    </Button>
-
-                    <Button Grid.Column="3">
-                        <Button.Content>
-                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE896;"/>
-                        </Button.Content>
-                    </Button>
-
-                    <Button Grid.Column="4">
-                        <Button.Content>
-                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;"/>
-                        </Button.Content>
-                    </Button>
-
-                    <Button Grid.Column="5">
-                        <Button.Content>
-                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;"/>
-                        </Button.Content>
-                    </Button>
-
                 </Grid>
                 
             </Expander.Header>
@@ -80,7 +52,47 @@
             <Expander.Content>
                 
                 <Grid Grid.Row="1" CornerRadius="5" Padding="5">
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="140"/>
+                    </Grid.ColumnDefinitions>
 
+                    <StackPanel Grid.Column="1" Orientation="Vertical" Spacing="5">
+                        <Button HorizontalAlignment="Stretch">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF584;" FontSize="16"/>
+                                    <TextBlock Text="Экспорт"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                        <Button HorizontalAlignment="Stretch">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="16"/>
+                                    <TextBlock Text="Изменить"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                        <Button HorizontalAlignment="Stretch">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;" FontSize="16"/>
+                                    <TextBlock Text="Удалить"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                        <Button HorizontalAlignment="Stretch">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE783;" FontSize="16"/>
+                                    <TextBlock Text="Тревога"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+                    
                 </Grid>
                 
             </Expander.Content>
