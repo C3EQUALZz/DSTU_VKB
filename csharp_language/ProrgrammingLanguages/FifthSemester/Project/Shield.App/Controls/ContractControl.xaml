@@ -12,53 +12,81 @@
     >
 
     <UserControl.Resources>
-        <media:AttachedCardShadow x:Key="CommonShadow" Offset="0,3" Opacity="0.4"/>
+
+        <media:AttachedCardShadow x:Key="CommonShadow" Offset="0,3" Opacity="0.4" CornerRadius="5"/>
+
     </UserControl.Resources>
 
-    <Border ui:Effects.Shadow="{StaticResource CommonShadow}" Margin="0 5 0 5">
-        <Grid RowSpacing="5" Padding="5" Background="#272727" CornerRadius="5">
+    <Border ui:Effects.Shadow="{StaticResource CommonShadow}" Margin="0 7 0 10">
+        
+        <Expander HorizontalAlignment="Stretch">
+           
+            <Expander.Header>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="80"/>
-                <RowDefinition Height="80"/>
-            </Grid.RowDefinitions>
+                <Grid ColumnSpacing="10" CornerRadius="5" Padding="5" Height="80" HorizontalAlignment="Stretch" Margin="-15 0 -25 0">
 
-            <Grid Grid.Row="0" ColumnSpacing="10" Background="#333333" CornerRadius="5" Padding="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="60"/>
+                    </Grid.ColumnDefinitions>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="60"/>
-                </Grid.ColumnDefinitions>
+                    <Border Grid.Column="0" CornerRadius="5">
+                        <Image Source="{x:Bind Bitmap, Mode=OneWay}" Stretch="UniformToFill" VerticalAlignment="Center"/>
+                    </Border>
 
-                <Border Grid.Column="0" CornerRadius="5">
-                    <Image Source="{x:Bind Bitmap, Mode=OneWay}" Stretch="UniformToFill" VerticalAlignment="Center"/>
-                </Border>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
 
-                <Grid Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="30"/>
-                    </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="{x:Bind Bailee}" Style="{StaticResource PageTitleStyle}"/>
+                        <TextBlock Grid.Row="1" Text="{x:Bind Address}" Style="{StaticResource BodyTextStyle}" Foreground="DarkGray"/>
 
-                    <TextBlock Grid.Row="0" Text="{x:Bind Bailee}" Style="{StaticResource PageTitleStyle}"/>
-                    <TextBlock Grid.Row="1" Text="{x:Bind Address}" Style="{StaticResource BodyTextStyle}" Foreground="DarkGray"/>
+                    </Grid>
+
+                    <Button Grid.Column="2">
+                        <Button.Content>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE9F9;"/>
+                        </Button.Content>
+                    </Button>
+
+                    <Button Grid.Column="3">
+                        <Button.Content>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE896;"/>
+                        </Button.Content>
+                    </Button>
+
+                    <Button Grid.Column="4">
+                        <Button.Content>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;"/>
+                        </Button.Content>
+                    </Button>
+
+                    <Button Grid.Column="5">
+                        <Button.Content>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;"/>
+                        </Button.Content>
+                    </Button>
 
                 </Grid>
+                
+            </Expander.Header>
+            
+            <Expander.Content>
+                
+                <Grid Grid.Row="1" CornerRadius="5" Padding="5">
 
-                <Button Grid.Column="2">
-                    <Button.Content>
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE896;"/>
-                    </Button.Content>
-                </Button>
-
-            </Grid>
-
-            <Grid Grid.Row="1" Background="#333333" CornerRadius="5" Padding="5">
-
-            </Grid>
-
-        </Grid>
+                </Grid>
+                
+            </Expander.Content>
+            
+        </Expander>
+        
     </Border>
     
 </UserControl>

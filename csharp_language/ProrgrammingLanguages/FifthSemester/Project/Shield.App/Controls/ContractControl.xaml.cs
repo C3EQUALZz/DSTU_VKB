@@ -4,7 +4,6 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Shield.App.Helpers;
 using Shield.DataAccess.Models;
-using Windows.Storage.Streams;
 
 namespace Shield.App.Controls;
 public sealed partial class ContractControl : UserControl, INotifyPropertyChanged
