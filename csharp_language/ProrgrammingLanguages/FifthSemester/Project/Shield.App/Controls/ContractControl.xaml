@@ -16,14 +16,14 @@
     </UserControl.Resources>
 
     <Border ui:Effects.Shadow="{StaticResource CommonShadow}" Margin="0 5 0 5">
-        <Grid RowSpacing="5" Padding="5" Background="#333333" CornerRadius="5">
+        <Grid RowSpacing="5" Padding="5" Background="#272727" CornerRadius="5">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="80"/>
                 <RowDefinition Height="80"/>
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0" ColumnSpacing="10" Background="#3d3d3d" CornerRadius="5" Padding="5">
+            <Grid Grid.Row="0" ColumnSpacing="10" Background="#333333" CornerRadius="5" Padding="5">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -54,7 +54,7 @@
 
             </Grid>
 
-            <Grid Grid.Row="1" Background="#3d3d3d" CornerRadius="5" Padding="5">
+            <Grid Grid.Row="1" Background="#333333" CornerRadius="5" Padding="5">
 
             </Grid>
 
