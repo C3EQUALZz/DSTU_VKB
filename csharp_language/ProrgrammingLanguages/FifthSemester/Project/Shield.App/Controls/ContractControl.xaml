@@ -59,7 +59,7 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="1" Orientation="Vertical" Spacing="5">
-                        <Button HorizontalAlignment="Stretch">
+                        <Button x:Name="ExportButton" HorizontalAlignment="Stretch" Click="ExportButton_Click">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal" Spacing="10">
                                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF584;" FontSize="16"/>
@@ -67,7 +67,7 @@
                                 </StackPanel>
                             </Button.Content>
                         </Button>
-                        <Button HorizontalAlignment="Stretch">
+                        <Button x:Name="EditButton" HorizontalAlignment="Stretch" Click="EditButton_Click">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal" Spacing="10">
                                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="16"/>
@@ -75,7 +75,7 @@
                                 </StackPanel>
                             </Button.Content>
                         </Button>
-                        <Button HorizontalAlignment="Stretch">
+                        <Button x:Name="DeleteButton" HorizontalAlignment="Stretch" Click="DeleteButton_Click">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal" Spacing="10">
                                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;" FontSize="16"/>
@@ -83,7 +83,7 @@
                                 </StackPanel>
                             </Button.Content>
                         </Button>
-                        <Button HorizontalAlignment="Stretch">
+                        <Button x:Name="AlertButton" HorizontalAlignment="Stretch" Click="AlertButton_Click">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal" Spacing="10">
                                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE783;" FontSize="16"/>

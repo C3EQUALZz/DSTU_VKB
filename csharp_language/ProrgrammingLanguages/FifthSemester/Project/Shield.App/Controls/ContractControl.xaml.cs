@@ -17,12 +17,12 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
     public BitmapImage Bitmap { get; set; }
 
     public delegate void ExportRequestedHandler(ContractControl sender);
-    public delegate void UpdateRequestedHandler(ContractControl sender);
+    public delegate void EditRequestedHandler(ContractControl sender);
     public delegate void DeleteRequestedHandler(ContractControl sender);
     public delegate void AlertRequestedHandler(ContractControl sender);
 
     public event ExportRequestedHandler ExportRequested;
-    public event UpdateRequestedHandler UpdateRequested;
+    public event EditRequestedHandler EditRequested;
     public event DeleteRequestedHandler DeleteRequested;
     public event AlertRequestedHandler AlertRequested;
 
@@ -49,5 +49,25 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
     private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    private void ExportButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+        ExportRequested?.Invoke(this);
+    }
+
+    private void EditButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+        EditRequested?.Invoke(this);
+    }
+
+    private void DeleteButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+        DeleteRequested?.Invoke(this);
+    }
+
+    private void AlertButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+        AlertRequested?.Invoke(this);
     }
 }
