@@ -15,15 +15,13 @@
 
         <Border Grid.Column="0">
             <ScrollViewer>
-                <ListView x:Name="ContractsLV" ItemsSource="{x:Bind contractControls, Mode=OneWay}"/>
+                <ListView x:Name="ContractsLV" ItemsSource="{x:Bind contractControls, Mode=OneWay}" IsItemClickEnabled="True" SelectionMode="None"/>
             </ScrollViewer>
         </Border>
 
         <Border Grid.Column="1" CornerRadius="10" Padding="10" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <Grid RowSpacing="10">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="30"/>
@@ -38,23 +36,7 @@
                         </StackPanel>
                     </Button.Content>
                 </Button>
-                <Button Grid.Row="1" HorizontalAlignment="Stretch" x:Name="EditContractBtn" Click="EditContractBtn_Click">
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal" Spacing="10">
-                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="16"/>
-                            <TextBlock Text="Изменить"/>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
-                <Button Grid.Row="2" HorizontalAlignment="Stretch" x:Name="MoreContractBtn" Click="MoreContractBtn_Click">
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal" Spacing="10">
-                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE712;" FontSize="16"/>
-                            <TextBlock Text="Подробнее"/>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
-                <Button Grid.Row="4" HorizontalAlignment="Stretch" x:Name="UpdateContractsListBtn" Click="UpdateContractsListBtn_Click">
+                <Button Grid.Row="2" HorizontalAlignment="Stretch" x:Name="UpdateContractsListBtn" Click="UpdateContractsListBtn_Click">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE777;" FontSize="16"/>
@@ -62,7 +44,7 @@
                         </StackPanel>
                     </Button.Content>
                 </Button>
-                <Button Grid.Row="5" HorizontalAlignment="Stretch" x:Name="DeleteContractBtn" Click="DeleteContractBtn_Click">
+                <Button Grid.Row="3" HorizontalAlignment="Stretch" x:Name="DeleteContractBtn" Click="DeleteContractBtn_Click">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;" FontSize="16"/>
