@@ -43,7 +43,7 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
     public string Bailee => BaileeTB.Text;
     public string Address => AddressTB.Text;
     public string Comment => CommentTB.Text;
-    public List<string> Owners => OwnersControls.Select(x => x.Value).ToList();
+    public List<string> Owners => OwnersControls.Select(x => x.Value).Where(o => !string.IsNullOrWhiteSpace(o)).ToList();
     public StorageFile Plan;
     public StorageFile Photo;
 
