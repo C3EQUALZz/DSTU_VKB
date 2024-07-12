@@ -16,9 +16,17 @@
         <Border Grid.Column="0">
             <ScrollViewer>
                 <ListView x:Name="ContractsLV" ItemsSource="{x:Bind contractControls, Mode=OneWay}" IsItemClickEnabled="True" SelectionMode="None">
-                    <ListView.Resources>
-                        <x:Boolean x:Key="ListViewItemSelectionIndicatorVisualEnabled">False</x:Boolean>
-                    </ListView.Resources>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <ContentPresenter/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
                 </ListView>
             </ScrollViewer>
         </Border>
