@@ -11,13 +11,13 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
 {
     public int ContractId { get; set; }
     public string Address { get; set; }
-    public string OwnersString { get; set; }
+    public string? OwnersString { get; set; }
     public ObservableCollection<TextBlock> OwnersControls { get; set; } = new();
     public string Bailee { get; set; }
-    public string Comment { get; set; }
+    public string? Comment { get; set; }
     public Plan Plan { get; set; }
     public BitmapImage Bitmap { get; set; }
-    public DateOnly Date { get; set; } = DateOnly.Parse("12-07-2024");
+    public DateOnly Date { get; set; }
 
     public delegate void ExportRequestedHandler(ContractControl sender);
     public delegate void PlanRequestedHandler(ContractControl sender);
@@ -46,18 +46,22 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
         Bailee = c.Bailee;
         Comment = c.Comment;
         Plan = c.Plan;
+        Date = c.SignDate;
         Bitmap = BitmapHelper.BytesToBitmap(c.Picture.Data);
 
         var baileeTB = new TextBlock();
         baileeTB.Text = "1. " + Bailee;
         OwnersControls.Add(baileeTB);
 
-        var splittedOwners = OwnersString.Split(';');
-        for (var i = 0; i < splittedOwners.Count(); i++)
+        if (OwnersString != null)
         {
-            var tb = new TextBlock();
-            tb.Text = $"{i+2}. {splittedOwners[i]}";
-            OwnersControls.Add(tb);
+            var splittedOwners = OwnersString.Split(';');
+            for (var i = 0; i < splittedOwners.Count(); i++)
+            {
+                var tb = new TextBlock();
+                tb.Text = $"{i + 2}. {splittedOwners[i]}";
+                OwnersControls.Add(tb);
+            }
         }
 
         InitializeComponent();

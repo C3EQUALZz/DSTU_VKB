@@ -104,20 +104,27 @@
                     </Grid.ColumnDefinitions>
 
                     <Border Grid.Column="0" CornerRadius="4">
-                        <Image Source="{x:Bind Bitmap}"/>
+                        <Image x:Name="BigThumbnail" Source="{x:Bind Bitmap}"/>
                     </Border>
 
-                    <StackPanel Grid.Column="1" Spacing="10" Orientation="Vertical">
+                    <Grid Grid.Column="1" RowSpacing="10">
 
-                        <TextBlock Text="Владельцы" Style="{StaticResource PageTitleStyle}"/>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock Grid.Row="0" Text="Владельцы" Style="{StaticResource PageTitleStyle}"/>
 
-                        <ListView ItemsSource="{x:Bind OwnersControls}"/>
+                        <ListView Grid.Row="1" ItemsSource="{x:Bind OwnersControls}" SelectionMode="None" MaxHeight="200"/>
 
-                        <TextBlock Text="Комментарий заказчика" Style="{StaticResource PageTitleStyle}"/>
+                        <TextBlock Grid.Row="2" Text="Комментарий заказчика" Style="{StaticResource PageTitleStyle}"/>
 
-                        <TextBlock Text="{x:Bind Comment}" Margin="16 0 0 0"/>
+                        <TextBlock Grid.Row="3" Text="{x:Bind Comment}" Margin="16 0 0 0" TextWrapping="Wrap"/>
 
-                    </StackPanel>
+                    </Grid>
 
                     <Grid Grid.Column="2" RowSpacing="10">
 
