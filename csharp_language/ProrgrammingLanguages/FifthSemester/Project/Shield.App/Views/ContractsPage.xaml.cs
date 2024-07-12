@@ -11,6 +11,7 @@ using Shield.App.Helpers;
 using Shield.App.ViewModels;
 using Shield.DataAccess.DTOs;
 using Shield.DataAccess.Models;
+using System.Net.Http.Json;
 using Windows.Storage;
 
 namespace Shield.App.Views;
@@ -131,6 +132,61 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 
     }
 
+    private async Task PlanContract(ContractControl sender)
+    {
+        var savePicker = new Windows.Storage.Pickers.FileSavePicker();
+        savePicker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.Desktop;
+        savePicker.FileTypeChoices.Add("Revit Document", new List<string>() { ".rvt" });
+        savePicker.SuggestedFileName = $"plan_{sender.ContractId}";
+
+        var hwnd = App.MainWindow.GetWindowHandle();
+        WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hwnd);
+
+        var file = await savePicker.PickSaveFileAsync();
+
+        if (file != null)
+        {
+            CachedFileManager.DeferUpdates(file);
+
+            var response = await ApiHelper.GetContract(sender.ContractId);
+
+            if (response == null || !response.IsSuccessStatusCode)
+            {
+                Notify("Операция отменена", $"Сервер не отвечает или файл не найден в базе данных");
+                await file.DeleteAsync();
+                return;
+            }
+
+            var contract = await response.Content.ReadFromJsonAsync<Contract>();
+
+            if (contract == null)
+            {
+                Notify("Операция отменена", "Ошибка парсинга ответа сервера");
+                await file.DeleteAsync();
+                return;
+            }
+
+            await FileIO.WriteBytesAsync(file, contract.Plan.Data);
+            var status = await CachedFileManager.CompleteUpdatesAsync(file);
+
+            if (status == Windows.Storage.Provider.FileUpdateStatus.Complete)
+            {
+                
+            }
+            else
+            {
+                Notify("Операция отменена", "Файл не может быть сохранен");
+                await file.DeleteAsync();
+                return;
+            }
+        }
+        else
+        {
+            Notify("Операция отменена", "Не выбран файл для записи");
+            return;
+        }
+    }
+
     private async Task AlertContract(ContractControl sender)
     {
         Notify("ALERT TEST", $"{sender.ContractId}\n{sender.Address}\n{sender.Bailee}\n{sender.OwnersString}\n{sender.Comment}");
@@ -159,6 +215,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
             {
                 var control = new ContractControl(contract);
                 control.ExportRequested += async (s) => await ExportContract(s);
+                control.PlanRequested += async (s) => await PlanContract(s);
                 control.EditRequested += async (s) => await EditContract(s);
                 control.DeleteRequested += async (s) => await DeleteContract(s);
                 control.AlertRequested += async (s) => await AlertContract(s);
