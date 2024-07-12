@@ -33,7 +33,15 @@ public class ContractController : ControllerBase
     {
         var pictureEntity = await _context.Pictures.AddAsync(contract.Picture);
         var planEntity = await _context.Plans.AddAsync(contract.Plan);
-        var contractEntity = await _context.Contracts.AddAsync(new Contract { Address=contract.Address, Plan=planEntity.Entity, Owners=contract.Owners, Bailee=contract.Bailee, Comment=contract.Comment, Picture=pictureEntity.Entity });
+        var contractEntity = await _context.Contracts.AddAsync(new Contract { 
+            Address=contract.Address,
+            Comment=contract.Comment,
+            Owners=contract.Owners,
+            Bailee=contract.Bailee,
+            Plan=planEntity.Entity,
+            Picture=pictureEntity.Entity,
+            SignDate=contract.SignDate
+        });
         await _context.SaveChangesAsync();
         return Ok(contractEntity.Entity);
     }
