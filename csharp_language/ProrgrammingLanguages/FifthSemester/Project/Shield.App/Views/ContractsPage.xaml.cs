@@ -55,11 +55,23 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 
         if (result == ContentDialogResult.Primary)
         {
+            if (content.Plan == null)
+            {
+                Notify("Ошибка заполнения формы", "План объекта является обязательным");
+                return;
+            }
+
+            if (content.Photo == null)
+            {
+                Notify("Ошибка заполнения формы", "Фото объекта является обязательным");
+                return;
+            }
+
             var contract = new Contract() {
                 Bailee = content.Bailee,
                 Address = content.Address,
                 Comment = content.Comment,
-                Owners = string.Join(';', content.Owners),
+                Owners = content.Owners.Count > 0 ? string.Join(';', content.Owners) : null,
                 Plan = new() {
                     Title = content.Plan.DisplayName,
                     Type = content.Plan.DisplayType,
@@ -69,14 +81,15 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
                     Title = content.Photo.DisplayName,
                     Type = content.Photo.DisplayType,
                     Data = File.ReadAllBytes(content.Photo.Path)
-                }    
+                },
+                SignDate = DateOnly.FromDateTime(DateTime.Now)
             };
 
             var response = await ApiHelper.CreateContract(contract);
 
             if (response == null || !response.IsSuccessStatusCode)
             {
-                Notify("Ошибка", $"Не удалось создать контракт {(response != null ? $"(ошибка {response.StatusCode})" : "(превышено время ожидания)")}");
+                Notify("Ошибка", $"Не удалось создать контракт {(response != null ? $"(ошибка {response.StatusCode})" : "(превышено время ожидания)")}\nПовторите попытку позже");
             }
 
             await UpdateContractsLV();
