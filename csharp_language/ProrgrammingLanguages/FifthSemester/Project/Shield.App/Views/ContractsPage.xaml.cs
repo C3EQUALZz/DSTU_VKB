@@ -103,12 +103,27 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 
     private async Task DeleteContract(ContractControl sender)
     {
-        var response = await ApiHelper.DeleteContract(sender.ContractId);
-        if (response == null || !response.IsSuccessStatusCode)
+        var dialog = new ContentDialog();
+
+        // XamlRoot must be set in the case of a ContentDialog running in a Desktop app
+        dialog.XamlRoot = this.XamlRoot;
+        dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+        dialog.Title = $"Вы уверены что хотите удалить контракт #{sender.ContractId} ({sender.Bailee})?";
+        dialog.PrimaryButtonText = "Удалить";
+        dialog.CloseButtonText = "Отмена";
+        dialog.DefaultButton = ContentDialogButton.Primary;
+
+        var result = await dialog.ShowAsync();
+
+        if (result == ContentDialogResult.Primary)
         {
-            Notify("Ошибка", $"Не удалось удалить контракт {(response != null ? $"(ошибка {response.StatusCode})" : "(превышено время ожидания)")}");
+            var response = await ApiHelper.DeleteContract(sender.ContractId);
+            if (response == null || !response.IsSuccessStatusCode)
+            {
+                Notify("Ошибка", $"Не удалось удалить контракт {(response != null ? $"(ошибка {response.StatusCode})" : "(превышено время ожидания)")}");
+            }
+            await UpdateContractsLV();
         }
-        await UpdateContractsLV();
     }
 
     private async Task ExportContract(ContractControl sender)
