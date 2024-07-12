@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Shield.App.Helpers;
-using Shield.DataAccess.Models;
+using Shield.DataAccess.DTOs;
 
 namespace Shield.App.Controls;
 public sealed partial class ContractControl : UserControl, INotifyPropertyChanged
@@ -15,7 +15,7 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
     public ObservableCollection<TextBlock> OwnersControls { get; set; } = new();
     public string Bailee { get; set; }
     public string? Comment { get; set; }
-    public Plan Plan { get; set; }
+    public PlanDto Plan { get; set; }
     public BitmapImage Bitmap { get; set; }
     public DateOnly Date { get; set; }
 
@@ -38,7 +38,7 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
         this.InitializeComponent();
     }
 
-    public ContractControl(Contract c)
+    public ContractControl(ContractDto c)
     {
         ContractId = c.ContractId;
         Address = c.Address;

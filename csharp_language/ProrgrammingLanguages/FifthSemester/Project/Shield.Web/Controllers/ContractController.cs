@@ -24,34 +24,115 @@ public class ContractController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetAllContracts()
     {
-        return Ok(new GetAllContractsResponse() { Contracts=_context.Contracts.Include(c => c.Picture).ToList() });
+        return Ok(new GetAllContractsResponse() { Contracts = _context.Contracts.Include(c => c.Picture).Select(entity => new ContractDto()
+        {
+            ContractId = entity.ContractId,
+            Address = entity.Address,
+            Owners = entity.Owners,
+            Bailee = entity.Bailee,
+            Comment = entity.Comment,
+            SignDate = entity.SignDate,
+            Picture = new PictureDto()
+            {
+                PictureId = entity.Picture.PictureId,
+                Title = entity.Picture.Title,
+                Type = entity.Picture.Type,
+                Data = entity.Picture.Data
+            }
+        }).ToList() });
     }
 
     [HttpPost]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> CreateContract([FromBody] Contract contract)
+    public async Task<IActionResult> CreateContract([FromBody] ContractDto contract)
     {
-        var pictureEntity = await _context.Pictures.AddAsync(contract.Picture);
-        var planEntity = await _context.Plans.AddAsync(contract.Plan);
-        var contractEntity = await _context.Contracts.AddAsync(new Contract { 
-            Address=contract.Address,
-            Comment=contract.Comment,
-            Owners=contract.Owners,
-            Bailee=contract.Bailee,
-            Plan=planEntity.Entity,
-            Picture=pictureEntity.Entity,
-            SignDate=contract.SignDate
-        });
+        var c = new Contract
+        {
+            Address = contract.Address,
+            Comment = contract.Comment,
+            Owners = contract.Owners,
+            Bailee = contract.Bailee,
+            SignDate = contract.SignDate
+        };
+
+        var plan = new Plan()
+        {
+            Title = contract.Plan.Title,
+            Type = contract.Plan.Type,
+            Data = contract.Plan.Data,
+            Contract = c
+        };
+
+        var picture = new Picture()
+        {
+            Title = contract.Picture.Title,
+            Type = contract.Picture.Type,
+            Data = contract.Picture.Data,
+            Contract = c
+        };
+
+        c.Plan = plan;
+        c.Picture = picture;
+
+        var entity = (await _context.Contracts.AddAsync(c)).Entity;
+        //await _context.Plans.AddAsync(plan);
+        //await _context.Pictures.AddAsync(picture);
+
         await _context.SaveChangesAsync();
-        return Ok(contractEntity.Entity);
+
+        return Ok(new ContractDto()
+        {
+            ContractId = entity.ContractId,
+            Address = entity.Address,
+            Owners = entity.Owners,
+            Bailee = entity.Bailee,
+            Comment = entity.Comment,
+            SignDate = entity.SignDate,
+            Plan = new PlanDto()
+            {
+                PlanId = entity.Plan.PlanId,
+                Title = entity.Plan.Title,
+                Type = entity.Plan.Type,
+                Data = entity.Plan.Data
+            },
+            Picture = new PictureDto()
+            {
+                PictureId = entity.Picture.PictureId,
+                Title = entity.Picture.Title,
+                Type = entity.Picture.Type,
+                Data = entity.Picture.Data
+            }
+        });
     }
 
     [HttpGet("{id}")]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetContract([FromRoute] int id)
     {
-        var contract = await _context.Contracts.Include(c => c.Plan).Include(c => c.Picture).FirstOrDefaultAsync(c => c.ContractId == id);
-        if (contract != null) return Ok(contract);
+        var entity = await _context.Contracts.Include(c => c.Plan).Include(c => c.Picture).FirstOrDefaultAsync(c => c.ContractId == id);
+        if (entity != null) return Ok(new ContractDto()
+        {
+            ContractId = entity.ContractId,
+            Address = entity.Address,
+            Owners = entity.Owners,
+            Bailee = entity.Bailee,
+            Comment = entity.Comment,
+            SignDate = entity.SignDate,
+            Plan = new PlanDto()
+            {
+                PlanId = entity.Plan.PlanId,
+                Title = entity.Plan.Title,
+                Type = entity.Plan.Type,
+                Data = entity.Plan.Data
+            },
+            Picture = new PictureDto()
+            {
+                PictureId = entity.Picture.PictureId,
+                Title = entity.Picture.Title,
+                Type = entity.Picture.Type,
+                Data = entity.Picture.Data
+            }
+        });
         else return NotFound();
     }
 
@@ -73,17 +154,18 @@ public class ContractController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> UpdateContract([FromRoute] int id, [FromBody] ContractDto dto)
     {
-        var contract = await _context.Contracts.FindAsync(id);
-        if (contract != null)
-        {
-            contract.Address = dto.Address;
-            contract.Plan = dto.Plan;
-            contract.Owners = string.Join(";", dto.Owners);
-            contract.Bailee = dto.Bailee;
+        //var contract = await _context.Contracts.FindAsync(id);
+        //if (contract != null)
+        //{
+        //    contract.Address = dto.Address;
+        //    contract.Plan = dto.Plan;
+        //    contract.Owners = string.Join(";", dto.Owners);
+        //    contract.Bailee = dto.Bailee;
 
-            await _context.SaveChangesAsync();
-            return Ok();
-        }
-        else return NotFound();
+        //    await _context.SaveChangesAsync();
+        //    return Ok();
+        //}
+        //else
+        return NotFound();
     }
 }

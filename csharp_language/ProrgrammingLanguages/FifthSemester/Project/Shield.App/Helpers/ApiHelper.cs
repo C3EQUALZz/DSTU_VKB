@@ -68,7 +68,7 @@ public class ApiHelper
         return dto;
     }
 
-    public static async Task<HttpResponseMessage?> CreateContract(Contract contract)
+    public static async Task<HttpResponseMessage?> CreateContract(ContractDto contract)
     {
         using var request = new HttpRequestMessage();
         request.RequestUri = new Uri($"{_baseAddress}/contract");
@@ -110,7 +110,7 @@ public class ApiHelper
         using var request = new HttpRequestMessage();
         request.RequestUri = new Uri($"{_baseAddress}/contract/{id}");
         request.Method = HttpMethod.Post;
-        request.Content = JsonContent.Create(new ContractDto() { Address = replacer.Address, Plan = replacer.Plan, Owners = replacer.Owners.Split(';').ToList(), Bailee = replacer.Bailee });
+        //request.Content = JsonContent.Create(new ContractDto() { Address = replacer.Address, Plan = replacer.Plan, Owners = replacer.Owners.Split(';').ToList(), Bailee = replacer.Bailee });
         request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
         return null;
     }

@@ -1,10 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.Windows.ApplicationModel.Resources;
 using Shield.App.Controls;
 using Shield.App.Dialogs;
 using Shield.App.Helpers;
@@ -68,7 +66,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
                 return;
             }
 
-            var contract = new Contract() {
+            var contract = new ContractDto() {
                 Bailee = content.Bailee,
                 Address = content.Address,
                 Comment = content.Comment,
@@ -78,7 +76,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
                     Type = content.Plan.DisplayType,
                     Data = File.ReadAllBytes(content.Plan.Path)
                 },
-                Picture = new Picture() {
+                Picture = new() {
                     Title = content.Photo.DisplayName,
                     Type = content.Photo.DisplayType,
                     Data = File.ReadAllBytes(content.Photo.Path)
@@ -90,10 +88,12 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 
             if (response == null || !response.IsSuccessStatusCode)
             {
-                Notify("Ошибка", $"Не удалось создать контракт {(response != null ? $"(ошибка {response.StatusCode})" : "(превышено время ожидания)")}\nПовторите попытку позже");
+                Notify("Ошибка", $"Не удалось создать контракт {(response != null ? $"(ошибка {response.StatusCode}:\n{await response.Content.ReadAsStringAsync()})" : "(превышено время ожидания)")}\nПовторите попытку позже");
             }
-
-            await UpdateContractsLV();
+            else
+            {
+                await UpdateContractsLV();
+            }
         }
     }
 

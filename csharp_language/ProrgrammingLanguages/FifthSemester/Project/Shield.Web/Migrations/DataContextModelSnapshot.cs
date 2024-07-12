@@ -32,27 +32,15 @@ namespace Shield.Web.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Comment")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Owners")
-                        .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("PictureId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("PlanId")
-                        .HasColumnType("INTEGER");
 
                     b.Property<DateOnly>("SignDate")
                         .HasColumnType("TEXT");
 
                     b.HasKey("ContractId");
-
-                    b.HasIndex("PictureId");
-
-                    b.HasIndex("PlanId");
 
                     b.ToTable("Contracts");
                 });
@@ -61,6 +49,9 @@ namespace Shield.Web.Migrations
                 {
                     b.Property<int>("PictureId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ContractId")
                         .HasColumnType("INTEGER");
 
                     b.Property<byte[]>("Data")
@@ -77,6 +68,9 @@ namespace Shield.Web.Migrations
 
                     b.HasKey("PictureId");
 
+                    b.HasIndex("ContractId")
+                        .IsUnique();
+
                     b.ToTable("Pictures");
                 });
 
@@ -84,6 +78,9 @@ namespace Shield.Web.Migrations
                 {
                     b.Property<int>("PlanId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ContractId")
                         .HasColumnType("INTEGER");
 
                     b.Property<byte[]>("Data")
@@ -100,26 +97,41 @@ namespace Shield.Web.Migrations
 
                     b.HasKey("PlanId");
 
+                    b.HasIndex("ContractId")
+                        .IsUnique();
+
                     b.ToTable("Plans");
+                });
+
+            modelBuilder.Entity("Shield.DataAccess.Models.Picture", b =>
+                {
+                    b.HasOne("Shield.DataAccess.Models.Contract", "Contract")
+                        .WithOne("Picture")
+                        .HasForeignKey("Shield.DataAccess.Models.Picture", "ContractId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Contract");
+                });
+
+            modelBuilder.Entity("Shield.DataAccess.Models.Plan", b =>
+                {
+                    b.HasOne("Shield.DataAccess.Models.Contract", "Contract")
+                        .WithOne("Plan")
+                        .HasForeignKey("Shield.DataAccess.Models.Plan", "ContractId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Contract");
                 });
 
             modelBuilder.Entity("Shield.DataAccess.Models.Contract", b =>
                 {
-                    b.HasOne("Shield.DataAccess.Models.Picture", "Picture")
-                        .WithMany()
-                        .HasForeignKey("PictureId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.Navigation("Picture")
                         .IsRequired();
 
-                    b.HasOne("Shield.DataAccess.Models.Plan", "Plan")
-                        .WithMany()
-                        .HasForeignKey("PlanId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.Navigation("Plan")
                         .IsRequired();
-
-                    b.Navigation("Picture");
-
-                    b.Navigation("Plan");
                 });
 #pragma warning restore 612, 618
         }
