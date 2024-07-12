@@ -105,7 +105,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 
     private async Task AlertContract(ContractControl sender)
     {
-        Notify("ALERT TEST", $"{sender.ContractId}\n{sender.Address}\n{sender.Bailee}\n{sender.Owners}\n{sender.Comment}");
+        Notify("ALERT TEST", $"{sender.ContractId}\n{sender.Address}\n{sender.Bailee}\n{sender.OwnersString}\n{sender.Comment}");
     }
 
     private async void UpdateContractsListBtn_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)

@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Microsoft.UI.Xaml.Controls;
@@ -10,11 +11,13 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
 {
     public int ContractId { get; set; }
     public string Address { get; set; }
-    public string Owners { get; set; }
+    public string OwnersString { get; set; }
+    public ObservableCollection<TextBlock> OwnersControls { get; set; } = new();
     public string Bailee { get; set; }
     public string Comment { get; set; }
     public Plan Plan { get; set; }
     public BitmapImage Bitmap { get; set; }
+    public DateOnly Date { get; set; } = DateOnly.Parse("12-07-2024");
 
     public delegate void ExportRequestedHandler(ContractControl sender);
     public delegate void PlanRequestedHandler(ContractControl sender);
@@ -39,11 +42,23 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
     {
         ContractId = c.ContractId;
         Address = c.Address;
-        Owners = c.Owners;
+        OwnersString = c.Owners;
         Bailee = c.Bailee;
         Comment = c.Comment;
         Plan = c.Plan;
         Bitmap = BitmapHelper.BytesToBitmap(c.Picture.Data);
+
+        var baileeTB = new TextBlock();
+        baileeTB.Text = "1. " + Bailee;
+        OwnersControls.Add(baileeTB);
+
+        var splittedOwners = OwnersString.Split(';');
+        for (var i = 0; i < splittedOwners.Count(); i++)
+        {
+            var tb = new TextBlock();
+            tb.Text = $"{i+2}. {splittedOwners[i]}";
+            OwnersControls.Add(tb);
+        }
 
         InitializeComponent();
     }
