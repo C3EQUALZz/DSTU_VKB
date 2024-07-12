@@ -3,7 +3,6 @@ using Windows.Storage;
 
 using Shield.DataAccess.DTOs;
 using Shield.DataAccess.Models;
-using System.Diagnostics;
 
 namespace Shield.App.Helpers;
 public class ApiHelper
@@ -88,7 +87,10 @@ public class ApiHelper
         request.RequestUri = new Uri($"{_baseAddress}/contract/{id}");
         request.Method = HttpMethod.Get;
         request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
-        return null;
+
+        var response = await _sharedClient.SendAsync(request);
+
+        return response;
     }
 
     public static async Task<HttpResponseMessage?> DeleteContract(int id)
