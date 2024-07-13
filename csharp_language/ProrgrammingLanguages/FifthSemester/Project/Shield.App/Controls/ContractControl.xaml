@@ -177,7 +177,13 @@
                             </Button>
                         </StackPanel>
 
-                        <TextBlock Grid.Row="1" Text="{x:Bind Date}" HorizontalAlignment="Right" Style="{StaticResource CaptionTextBlockStyle}"/>
+                        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Right" Spacing="5">
+                            <StackPanel Orientation="Horizontal" Spacing="5" HorizontalAlignment="Right">
+                                <TextBlock Text="{x:Bind Alarms.Count}" Style="{StaticResource CaptionTextBlockStyle}"/>
+                                <FontIcon Glyph="&#xE783;" FontSize="16"/>
+                            </StackPanel>
+                            <TextBlock Text="{x:Bind Date}" Style="{StaticResource CaptionTextBlockStyle}"/>
+                        </StackPanel>
 
                     </Grid>
                     
