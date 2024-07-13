@@ -18,6 +18,7 @@
     <None Remove="Controls\ContractControl.xaml" />
     <None Remove="Controls\RemovableTextBox.xaml" />
     <None Remove="Dialogs\CreateContractDialog.xaml" />
+    <None Remove="Views\AlarmsPage.xaml" />
     <None Remove="Views\ProfilePage.xaml" />
   </ItemGroup>
 
@@ -69,4 +70,12 @@
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
   </PropertyGroup>
+	
+  <ItemGroup>
+    <CustomAdditionalCompileInputs Remove="Views\AlarmsPage.xaml" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <Resource Remove="Views\AlarmsPage.xaml" />
+  </ItemGroup>
 </Project>

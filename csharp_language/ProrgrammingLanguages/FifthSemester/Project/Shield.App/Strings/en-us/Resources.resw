@@ -170,4 +170,7 @@
   <data name="Shell_Profile.Content" xml:space="preserve">
     <value>Профиль</value>
   </data>
+  <data name="Shell_Alarms.Content" xml:space="preserve">
+    <value>Сигнализации</value>
+  </data>
 </root>

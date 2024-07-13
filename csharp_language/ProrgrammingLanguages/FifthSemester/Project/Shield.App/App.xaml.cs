@@ -76,6 +76,8 @@ public partial class App : Application
             services.AddTransient<SettingsPage>();
             services.AddTransient<ContractsViewModel>();
             services.AddTransient<ContractsPage>();
+            services.AddTransient<AlarmsViewModel>();
+            services.AddTransient<AlarmsPage>();
             services.AddTransient<ProfilePage>();
             services.AddTransient<ProfileViewModel>();
             services.AddTransient<ShellPage>();
