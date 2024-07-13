@@ -48,7 +48,13 @@
                         </StackPanel>
                     </Button.Content>
                 </Button>
-                <DropDownButton Grid.Row="1" Content="Сортировать" HorizontalAlignment="Stretch">
+                <DropDownButton Grid.Row="1" HorizontalAlignment="Stretch">
+                    <DropDownButton.Content>
+                        <StackPanel Spacing="10" Orientation="Horizontal">
+                            <FontIcon Glyph="&#xE8CB;" FontSize="16"/>
+                            <TextBlock Text="Сортировать"/>
+                        </StackPanel>
+                    </DropDownButton.Content>
                     <DropDownButton.Flyout>
                         <MenuFlyout Placement="Bottom">
                             <MenuFlyoutItem x:Name="SortNone" Text="Нет" Icon="Cancel" Click="SortNone_Click"/>
