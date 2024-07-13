@@ -31,10 +31,17 @@ public class AlarmController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> CreateAlarm(CreateAlarmDto dto)
     {
+        var contract = await _context.Contracts.FirstOrDefaultAsync(c => c.ContractId == dto.ContractId);
+
+        if (contract == null)
+        {
+            return NotFound();
+        }
+
         var alarm = new Alarm()
         {
             Date = dto.Date,
-            ContractId = dto.ContractId
+            Contract = contract
         };
 
         var entry = await _context.Alarms.AddAsync(alarm);
