@@ -86,12 +86,15 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
     private void AddOwner(string? name = null)
     {
         var rtb = new RemovableTextBox();
-        rtb.TextChanged += (s, tbs, e) => Edited?.Invoke(s);
         if (name != null) rtb.Value = name;
+
+        rtb.TextChanged += (s, tbs, e) => Edited?.Invoke(s);
         rtb.RemoveRequested += (sender) =>
         {
             OwnersControls.Remove(rtb);
+            Edited?.Invoke(rtb);
         };
+
         OwnersControls.Add(rtb);
     }
 
@@ -103,7 +106,6 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
     private void AddOwnerButtonClick(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
     {
         AddOwner();
-        Edited?.Invoke(sender);
     }
 
     private async void LoadPhotoButtonClick(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)

@@ -152,20 +152,71 @@ public class ContractController : ControllerBase
 
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> UpdateContract([FromRoute] int id, [FromBody] ContractDto dto)
+    public async Task<IActionResult> UpdateContract([FromRoute] int id, [FromBody] UpdateContractDto dto)
     {
-        //var contract = await _context.Contracts.FindAsync(id);
-        //if (contract != null)
-        //{
-        //    contract.Address = dto.Address;
-        //    contract.Plan = dto.Plan;
-        //    contract.Owners = string.Join(";", dto.Owners);
-        //    contract.Bailee = dto.Bailee;
+        var entity = await _context.Contracts.Include(c => c.Plan).Include(c => c.Picture).FirstOrDefaultAsync(c => c.ContractId == id);
+        if (entity != null)
+        {
+            if (dto.Address != null && entity.Address != dto.Address) entity.Address = dto.Address;
+            if (dto.Bailee != null && entity.Bailee != dto.Bailee) entity.Bailee = dto.Bailee;
+            if (dto.Owners != null && entity.Owners != dto.Owners) entity.Owners = dto.Owners;
+            if (dto.Comment != null && entity.Comment != dto.Comment) entity.Comment = dto.Comment;
 
-        //    await _context.SaveChangesAsync();
-        //    return Ok();
-        //}
-        //else
-        return NotFound();
+            if (dto.Plan != null)
+            {
+                var plan = new Plan()
+                {
+                    Title = dto.Plan.Title,
+                    Type = dto.Plan.Type,
+                    Data = dto.Plan.Data,
+                    Contract = entity
+                };
+
+                entity.Plan = plan;
+            }
+
+            if (dto.Picture != null)
+            {
+                var picture = new Picture()
+                {
+                    Title = dto.Picture.Title,
+                    Type = dto.Picture.Type,
+                    Data = dto.Picture.Data,
+                    Contract = entity
+                };
+
+                entity.Picture = picture;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new ContractDto()
+            {
+                ContractId = entity.ContractId,
+                Address = entity.Address,
+                Owners = entity.Owners,
+                Bailee = entity.Bailee,
+                Comment = entity.Comment,
+                SignDate = entity.SignDate,
+                Plan = new PlanDto()
+                {
+                    PlanId = entity.Plan.PlanId,
+                    Title = entity.Plan.Title,
+                    Type = entity.Plan.Type,
+                    Data = entity.Plan.Data
+                },
+                Picture = new PictureDto()
+                {
+                    PictureId = entity.Picture.PictureId,
+                    Title = entity.Picture.Title,
+                    Type = entity.Picture.Type,
+                    Data = entity.Picture.Data
+                }
+            });
+        }
+        else
+        {
+            return NotFound();
+        }
     }
 }

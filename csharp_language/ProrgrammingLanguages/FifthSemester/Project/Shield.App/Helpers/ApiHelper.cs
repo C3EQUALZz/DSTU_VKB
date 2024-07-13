@@ -109,10 +109,32 @@ public class ApiHelper
     {
         using var request = new HttpRequestMessage();
         request.RequestUri = new Uri($"{_baseAddress}/contract/{id}");
-        request.Method = HttpMethod.Post;
-        //request.Content = JsonContent.Create(new ContractDto() { Address = replacer.Address, Plan = replacer.Plan, Owners = replacer.Owners.Split(';').ToList(), Bailee = replacer.Bailee });
+        request.Method = HttpMethod.Put;
+
+        var dto = new UpdateContractDto()
+        {
+            Address = replacer.Address,
+            Bailee = replacer.Bailee,
+            Owners = replacer.Owners,
+            Comment = replacer.Comment
+        };
+
+        if (replacer.Plan != null)
+        {
+            dto.Plan = replacer.Plan;
+        }
+
+        if (replacer.Picture != null)
+        {
+            dto.Picture = replacer.Picture;
+        }
+
+        request.Content = JsonContent.Create(dto);
         request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
-        return null;
+        
+        var response = await _sharedClient.SendAsync(request);
+
+        return response;
     }
     private class LoginDto
     {
