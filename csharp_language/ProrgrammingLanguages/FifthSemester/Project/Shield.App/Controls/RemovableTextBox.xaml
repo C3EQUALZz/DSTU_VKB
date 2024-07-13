@@ -14,7 +14,7 @@
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
 
-        <TextBox x:Name="TB" Grid.Column="0"/>
+        <TextBox x:Name="TB" Grid.Column="0" TextChanged="TB_TextChanged"/>
         <Button x:Name="RB" Padding="0" Content="-" Height="20" Width="20" Grid.Column="1" Click="RB_Click"/>
     </Grid>
 </UserControl>

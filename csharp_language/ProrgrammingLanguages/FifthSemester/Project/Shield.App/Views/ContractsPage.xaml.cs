@@ -32,7 +32,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
         ViewModel = App.GetService<ContractsViewModel>();
         InitializeComponent();
 
-        UpdateContractsLV();
+        UpdateContractsList();
     }
 
     private async void CreateContractBtn_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
@@ -60,7 +60,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
                 return;
             }
 
-            if (content.Photo == null)
+            if (content.Picture == null)
             {
                 Notify("Ошибка заполнения формы", "Фото объекта является обязательным");
                 return;
@@ -77,9 +77,9 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
                     Data = File.ReadAllBytes(content.Plan.Path)
                 },
                 Picture = new() {
-                    Title = content.Photo.DisplayName,
-                    Type = content.Photo.DisplayType,
-                    Data = File.ReadAllBytes(content.Photo.Path)
+                    Title = content.Picture.DisplayName,
+                    Type = content.Picture.DisplayType,
+                    Data = File.ReadAllBytes(content.Picture.Path)
                 },
                 SignDate = DateOnly.FromDateTime(DateTime.Now)
             };
@@ -92,14 +92,83 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
             }
             else
             {
-                await UpdateContractsLV();
+                await UpdateContractsList();
             }
         }
     }
 
     private async Task EditContract(ContractControl sender)
     {
+        var dialog = new ContentDialog();
+        var content = new CreateContractDialog(sender.ToDto());
         
+        dialog.XamlRoot = this.XamlRoot;
+        dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+        dialog.Title = "Изменить контракт";
+        dialog.PrimaryButtonText = "Сохранить";
+        dialog.CloseButtonText = "Отмена";
+        dialog.DefaultButton = ContentDialogButton.Primary;
+        dialog.Content = content;
+        dialog.Width = 1400;
+
+        var result = await dialog.ShowAsync();
+
+        if (result == ContentDialogResult.Primary)
+        {
+            // Проверяем, что пользователь изменил какое-либо поле
+            if (!content.IsEdited)
+            {
+                Notify("Изменения не применены", "Не найдено изменений для обновления контракта");
+                return;
+            }
+
+            // Формируем DTO измененного контракта
+            var contract = new ContractDto()
+            {
+                Bailee = content.Bailee,
+                Address = content.Address,
+                Comment = content.Comment,
+                Owners = content.Owners.Count > 0 ? string.Join(';', content.Owners) : null,
+                SignDate = sender.Date
+            };
+
+            // Отдельно проверяем, если пользователь заменил план здания, и,
+            // Если это так, записываем новый файл в DTO
+            if (content.Plan != null)
+            {
+                contract.Plan = new PlanDto()
+                {
+                    Title = content.Plan.DisplayName,
+                    Type = content.Plan.DisplayType,
+                    Data = File.ReadAllBytes(content.Plan.Path)
+                };
+            }
+
+            // Отдельно проверяем, если пользователь заменил изображение здания, и,
+            // Если это так, записываем новый файл в DTO
+            if (content.Picture != null)
+            {
+                contract.Picture = new PictureDto()
+                {
+                    Title = content.Picture.DisplayName,
+                    Type = content.Picture.DisplayType,
+                    Data = File.ReadAllBytes(content.Picture.Path)
+                };
+            }
+
+            // Отправляем на сервер изменения
+            var response = await ApiHelper.UpdateContract(sender.ContractId, contract);
+
+            // Если сервер отвечает кодом ошибки или не отвечаем, сообщим об этом пользователю
+            if (response == null || !response.IsSuccessStatusCode)
+            {
+                Notify("Ошибка", $"Не удалось изменить контракт {(response != null ? $"(ошибка {response.StatusCode}:\n{await response.Content.ReadAsStringAsync()})" : "(превышено время ожидания)")}\nПовторите попытку позже");
+            }
+            else
+            {
+                await UpdateContractsList();
+            }
+        }
     }
 
     private async Task DeleteContract(ContractControl sender)
@@ -123,7 +192,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
             {
                 Notify("Ошибка", $"Не удалось удалить контракт {(response != null ? $"(ошибка {response.StatusCode})" : "(превышено время ожидания)")}");
             }
-            await UpdateContractsLV();
+            await UpdateContractsList();
         }
     }
 
@@ -194,10 +263,10 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 
     private async void UpdateContractsListBtn_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
     {
-        await UpdateContractsLV();
+        await UpdateContractsList();
     }
 
-    private async Task UpdateContractsLV()
+    private async Task UpdateContractsList()
     {
         contractControls.Clear();
 

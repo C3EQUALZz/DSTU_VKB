@@ -105,7 +105,7 @@ public class ApiHelper
         return response;
     }
 
-    public static async Task<HttpResponseMessage?> UpdateContract(int id, Contract replacer)
+    public static async Task<HttpResponseMessage?> UpdateContract(int id, ContractDto replacer)
     {
         using var request = new HttpRequestMessage();
         request.RequestUri = new Uri($"{_baseAddress}/contract/{id}");

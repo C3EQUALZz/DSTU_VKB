@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Shield.App.Controls;
 using Shield.App.Helpers;
+using Shield.DataAccess.DTOs;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
@@ -45,15 +46,53 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
     public string Comment => CommentTB.Text;
     public List<string> Owners => OwnersControls.Select(x => x.Value).Where(o => !string.IsNullOrWhiteSpace(o)).ToList();
     public StorageFile Plan;
-    public StorageFile Photo;
+    public StorageFile Picture;
+
+    public bool IsEdited = false;
 
     private ObservableCollection<RemovableTextBox> OwnersControls { get; set; } = new();
 
+    public delegate void EditedHandler(object sender);
+
+    public event EditedHandler Edited;
     public event PropertyChangedEventHandler PropertyChanged;
 
     public CreateContractDialog()
     {
+        Edited += (s) => IsEdited = true;
+
         this.InitializeComponent();
+    }
+
+    public CreateContractDialog(ContractDto contract)
+    {
+        Edited += (s) => IsEdited = true;
+
+        this.InitializeComponent();
+
+        BaileeTB.Text = contract.Bailee;
+        AddressTB.Text = contract.Address;
+        CommentTB.Text = contract.Comment;
+
+        if (contract.Owners != null)
+        {
+            foreach (var ownerName in contract.Owners.Split(';'))
+            {
+                AddOwner(ownerName);
+            }
+        }
+    }
+
+    private void AddOwner(string? name = null)
+    {
+        var rtb = new RemovableTextBox();
+        rtb.TextChanged += (s, tbs, e) => Edited?.Invoke(s);
+        if (name != null) rtb.Value = name;
+        rtb.RemoveRequested += (sender) =>
+        {
+            OwnersControls.Remove(rtb);
+        };
+        OwnersControls.Add(rtb);
     }
 
     private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
@@ -63,12 +102,8 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
 
     private void AddOwnerButtonClick(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
     {
-        var rtb = new RemovableTextBox();
-        rtb.RemoveRequested += (sender) =>
-        {
-            OwnersControls.Remove(rtb);
-        };
-        OwnersControls.Add(rtb);
+        AddOwner();
+        Edited?.Invoke(sender);
     }
 
     private async void LoadPhotoButtonClick(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
@@ -79,7 +114,8 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
         {
             PhotoPath = file.Name;
             PhotoPathTB.Foreground = new SolidColorBrush(Colors.White);
-            Photo = file;
+            Picture = file;
+            Edited?.Invoke(sender);
         }
         else
         {
@@ -97,11 +133,27 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
             PlanPath = file.Name;
             PlanPathTB.Foreground = new SolidColorBrush(Colors.White);
             Plan = file;
+            Edited?.Invoke(sender);
         }
         else
         {
             PlanPath = "ошибка";
             PlanPathTB.Foreground = new SolidColorBrush(Colors.IndianRed);
         }
+    }
+
+    private void BaileeTB_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        Edited?.Invoke(sender);
+    }
+
+    private void AddressTB_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        Edited?.Invoke(sender);
+    }
+
+    private void CommentTB_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        Edited?.Invoke(sender);
     }
 }

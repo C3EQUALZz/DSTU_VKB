@@ -16,6 +16,7 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
     public string Bailee { get; set; }
     public string? Comment { get; set; }
     public PlanDto Plan { get; set; }
+    public PictureDto Picture { get; set; }
     public BitmapImage Bitmap { get; set; }
     public DateOnly Date { get; set; }
 
@@ -47,6 +48,7 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
         Comment = c.Comment;
         Plan = c.Plan;
         Date = c.SignDate;
+        Picture = c.Picture;
         Bitmap = BitmapHelper.BytesToBitmap(c.Picture.Data);
 
         var baileeTB = new TextBlock();
@@ -66,6 +68,25 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
 
         InitializeComponent();
     }
+
+    // Возвращает ContractDto, где Plan = null
+    public ContractDto ToDto(bool keepDate = true)
+    {
+        return new ContractDto()
+        {
+            Bailee = Bailee,
+            Address = Address,
+            Comment = Comment,
+            Owners = OwnersString,
+            Picture = new()
+            {
+                Title = Picture.Title,
+                Type = Picture.Type,
+                Data = Picture.Data
+            },
+            SignDate = keepDate ? Date : DateOnly.FromDateTime(DateTime.Now)
+        };
+    } 
 
     private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
     {
