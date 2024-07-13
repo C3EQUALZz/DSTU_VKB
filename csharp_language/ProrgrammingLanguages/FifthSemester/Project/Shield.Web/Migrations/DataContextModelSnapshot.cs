@@ -17,6 +17,25 @@ namespace Shield.Web.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.6");
 
+            modelBuilder.Entity("Shield.DataAccess.Models.Alarm", b =>
+                {
+                    b.Property<int>("AlarmId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ContractId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("AlarmId");
+
+                    b.HasIndex("ContractId");
+
+                    b.ToTable("Alarms");
+                });
+
             modelBuilder.Entity("Shield.DataAccess.Models.Contract", b =>
                 {
                     b.Property<int>("ContractId")
@@ -103,6 +122,17 @@ namespace Shield.Web.Migrations
                     b.ToTable("Plans");
                 });
 
+            modelBuilder.Entity("Shield.DataAccess.Models.Alarm", b =>
+                {
+                    b.HasOne("Shield.DataAccess.Models.Contract", "Contract")
+                        .WithMany("Alarms")
+                        .HasForeignKey("ContractId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Contract");
+                });
+
             modelBuilder.Entity("Shield.DataAccess.Models.Picture", b =>
                 {
                     b.HasOne("Shield.DataAccess.Models.Contract", "Contract")
@@ -127,6 +157,8 @@ namespace Shield.Web.Migrations
 
             modelBuilder.Entity("Shield.DataAccess.Models.Contract", b =>
                 {
+                    b.Navigation("Alarms");
+
                     b.Navigation("Picture")
                         .IsRequired();
 

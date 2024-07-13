@@ -14,4 +14,5 @@ public class Contract
     // Navigation properties
     public Plan Plan { get; set; }
     public Picture Picture { get; set; }
+    public ICollection<Alarm> Alarms { get; set; } = new List<Alarm>();
 }
