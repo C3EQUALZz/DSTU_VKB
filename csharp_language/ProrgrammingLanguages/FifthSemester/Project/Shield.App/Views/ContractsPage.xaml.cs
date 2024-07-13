@@ -258,7 +258,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 
     private async Task AlertContract(ContractControl sender)
     {
-        Notify("ALERT TEST", $"{sender.ContractId}\n{sender.Address}\n{sender.Bailee}\n{sender.OwnersString}\n{sender.Comment}");
+        Notify("Сработала сигнализация", $"{sender.Address} - {sender.Bailee}\nID Контракта: {sender.ContractId}\n{sender.Comment}");
     }
 
     private async void UpdateContractsListBtn_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
@@ -274,13 +274,13 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 
         if (response != null)
         {
-            if (response.Contracts.Count == 0)
+            if (response.Count == 0)
             {
                 Notify("Пусто!", "Не найдено контрактов в базе данных");
                 return;
             }
             
-            foreach (var contract in response.Contracts)
+            foreach (var contract in response)
             {
                 var control = new ContractControl(contract);
                 control.ExportRequested += async (s) => await ExportContract(s);

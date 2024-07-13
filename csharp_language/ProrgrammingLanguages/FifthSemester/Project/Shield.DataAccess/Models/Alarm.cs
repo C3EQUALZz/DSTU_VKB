@@ -2,7 +2,7 @@
 public class Alarm
 {
     public int AlarmId { get; set; }
-    public DateOnly Date { get; set; }
+    public DateTime Date { get; set; }
 
     public int ContractId { get; set; }
     public Contract Contract { get; set; }

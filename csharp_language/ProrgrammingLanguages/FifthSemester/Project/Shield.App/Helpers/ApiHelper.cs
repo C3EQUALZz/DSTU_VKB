@@ -3,6 +3,7 @@ using Windows.Storage;
 
 using Shield.DataAccess.DTOs;
 using Shield.DataAccess.Models;
+using System.Diagnostics.Contracts;
 
 namespace Shield.App.Helpers;
 public class ApiHelper
@@ -55,7 +56,7 @@ public class ApiHelper
         }
     }
 
-    public static async Task<GetAllContractsResponse?> GetAllContracts()
+    public static async Task<List<ContractDto>?> GetAllContracts()
     {
         using var request = new HttpRequestMessage();
         request.RequestUri = new Uri($"{_baseAddress}/contract");
@@ -63,7 +64,8 @@ public class ApiHelper
         request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
 
         var response = await _sharedClient.SendAsync(request);
-        var dto = await response.Content.ReadFromJsonAsync<GetAllContractsResponse>();
+
+        var dto = await response.Content.ReadFromJsonAsync<List<ContractDto>>();
 
         return dto;
     }
@@ -136,6 +138,33 @@ public class ApiHelper
 
         return response;
     }
+
+    public static async Task<List<Alarm>?> GetAllAlarms()
+    {
+        using var request = new HttpRequestMessage();
+        request.RequestUri = new Uri($"{_baseAddress}/alarm");
+        request.Method = HttpMethod.Get;
+        request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+
+        var response = await _sharedClient.SendAsync(request);
+        var alarms = await response.Content.ReadFromJsonAsync<List<Alarm>>();
+
+        return alarms;
+    }
+
+    public static async Task<HttpResponseMessage?> CreateAlarm(AlarmDto alarm)
+    {
+        using var request = new HttpRequestMessage();
+        request.RequestUri = new Uri($"{_baseAddress}/alarm");
+        request.Method = HttpMethod.Post;
+        request.Content = JsonContent.Create(alarm);
+        request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+
+        var response = await _sharedClient.SendAsync(request);
+
+        return response;
+    }
+
     private class LoginDto
     {
         public string UserName { get; set; }
