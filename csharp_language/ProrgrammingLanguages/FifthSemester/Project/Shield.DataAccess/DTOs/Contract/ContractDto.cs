@@ -10,4 +10,5 @@ public class ContractDto
 
     public PlanDto Plan { get; set; }
     public PictureDto Picture { get; set; }
+    public ICollection<AlarmDto> Alarms { get; set; } = new List<AlarmDto>();
 }

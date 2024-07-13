@@ -24,7 +24,7 @@ public class ContractController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetAllContracts()
     {
-        return Ok(new GetAllContractsResponse() { Contracts = _context.Contracts.Include(c => c.Picture).Select(entity => new ContractDto()
+        return Ok(new GetAllContractsResponse() { Contracts = _context.Contracts.Include(c => c.Picture).Include(c => c.Alarms).Select(entity => new ContractDto()
         {
             ContractId = entity.ContractId,
             Address = entity.Address,
@@ -38,7 +38,13 @@ public class ContractController : ControllerBase
                 Title = entity.Picture.Title,
                 Type = entity.Picture.Type,
                 Data = entity.Picture.Data
-            }
+            },
+            Alarms = entity.Alarms.Select(a => new AlarmDto()
+            {
+                AlarmId = a.AlarmId,
+                Date = a.Date,
+                ContractId = a.ContractId
+            }).ToList()
         }).ToList() });
     }
 
