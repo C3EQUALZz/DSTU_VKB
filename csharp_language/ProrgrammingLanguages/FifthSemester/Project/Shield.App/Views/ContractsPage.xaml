@@ -35,6 +35,7 @@
             <Grid RowSpacing="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
@@ -47,7 +48,25 @@
                         </StackPanel>
                     </Button.Content>
                 </Button>
-                <Button Grid.Row="2" HorizontalAlignment="Stretch" x:Name="UpdateContractsListBtn" Click="UpdateContractsListBtn_Click">
+                <DropDownButton Grid.Row="1" Content="Сортировать" HorizontalAlignment="Stretch">
+                    <DropDownButton.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem x:Name="SortNone" Text="Нет" Icon="Cancel" Click="SortNone_Click"/>
+                            <MenuFlyoutItem x:Name="SortName" Text="Имя" Icon="Contact" Click="SortName_Click"/>
+                            <MenuFlyoutItem x:Name="SortAddress" Text="Адрес" Click="SortAddress_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE707;"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem x:Name="SortAlarms" Text="Вызовы" Click="SortAlarms_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE783;"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </DropDownButton.Flyout>
+                </DropDownButton>
+                <Button Grid.Row="3" HorizontalAlignment="Stretch" x:Name="UpdateContractsListBtn" Click="UpdateContractsListBtn_Click">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE777;" FontSize="16"/>

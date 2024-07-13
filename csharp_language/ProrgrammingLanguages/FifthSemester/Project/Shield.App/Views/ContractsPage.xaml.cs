@@ -11,6 +11,7 @@ using Shield.DataAccess.DTOs;
 using Shield.DataAccess.Models;
 using System.Net.Http.Json;
 using Windows.Storage;
+using Shield.App.Enums;
 
 namespace Shield.App.Views;
 
@@ -19,6 +20,8 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
     private ObservableCollection<ContractControl> contractControls = new();
     private string NotificationTitle { get; set; }
     private string NotificationSubtitle { get; set; }
+
+    private SortingType SortingType { get; set; } = SortingType.None;
 
     public event PropertyChangedEventHandler PropertyChanged;
 
@@ -292,6 +295,8 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
                 control.AlertRequested += async (s) => await AlertContract(s);
                 contractControls.Add(control);
             }
+
+            ResortContractsList();
         }
         else
         {
@@ -313,5 +318,50 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
     private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    private void ResortContractsList()
+    {
+        if (SortingType != SortingType.None)
+        {
+            switch (SortingType)
+            {
+                case SortingType.Bailee:
+                    contractControls = new(contractControls.OrderBy(c => c.Bailee));
+                    break;
+                case SortingType.Address:
+                    contractControls = new(contractControls.OrderBy(c => c.Address));
+                    break;
+                case SortingType.AlarmsCount:
+                    contractControls = new(contractControls.OrderBy(c => c.Alarms.Count));
+                    break;
+            }
+
+            NotifyPropertyChanged(nameof(contractControls));
+        }
+    }
+
+    private async void SortNone_Click(object sender, RoutedEventArgs e)
+    {
+        SortingType = SortingType.None;
+        await UpdateContractsList();
+    }
+
+    private void SortName_Click(object sender, RoutedEventArgs e)
+    {
+        SortingType = SortingType.Bailee;
+        ResortContractsList();
+    }
+
+    private void SortAddress_Click(object sender, RoutedEventArgs e)
+    {
+        SortingType = SortingType.Address;
+        ResortContractsList();
+    }
+
+    private void SortAlarms_Click(object sender, RoutedEventArgs e)
+    {
+        SortingType = SortingType.AlarmsCount;
+        ResortContractsList();
     }
 }

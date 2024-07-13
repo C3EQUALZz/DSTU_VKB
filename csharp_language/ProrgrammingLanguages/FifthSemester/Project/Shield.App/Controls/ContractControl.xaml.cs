@@ -19,6 +19,7 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
     public PictureDto Picture { get; set; }
     public BitmapImage Bitmap { get; set; }
     public DateOnly Date { get; set; }
+    public List<AlarmDto> Alarms { get; set; }
 
     public delegate void ExportRequestedHandler(ContractControl sender);
     public delegate void PlanRequestedHandler(ContractControl sender);
@@ -49,6 +50,7 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
         Plan = c.Plan;
         Date = c.SignDate;
         Picture = c.Picture;
+        Alarms = c.Alarms.ToList();
         Bitmap = BitmapHelper.BytesToBitmap(c.Picture.Data);
 
         var baileeTB = new TextBlock();
