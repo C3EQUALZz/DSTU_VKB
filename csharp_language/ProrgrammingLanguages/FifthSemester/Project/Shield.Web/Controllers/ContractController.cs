@@ -114,7 +114,7 @@ public class ContractController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetContract([FromRoute] int id)
     {
-        var entity = await _context.Contracts.Include(c => c.Plan).Include(c => c.Picture).FirstOrDefaultAsync(c => c.ContractId == id);
+        var entity = await _context.Contracts.Include(c => c.Plan).Include(c => c.Picture).Include(c => c.Alarms).FirstOrDefaultAsync(c => c.ContractId == id);
         if (entity != null) return Ok(new ContractDto()
         {
             ContractId = entity.ContractId,
@@ -136,7 +136,12 @@ public class ContractController : ControllerBase
                 Title = entity.Picture.Title,
                 Type = entity.Picture.Type,
                 Data = entity.Picture.Data
-            }
+            },
+            Alarms = entity.Alarms.Select(a => new AlarmDto()
+            {
+                AlarmId = a.AlarmId,
+                Date = a.Date
+            }).ToList()
         });
         else return NotFound();
     }
