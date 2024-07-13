@@ -15,6 +15,7 @@ public class PageService : IPageService
     public PageService()
     {
         Configure<ContractsViewModel, ContractsPage>();
+        Configure<AlarmsViewModel, AlarmsPage>();
         Configure<ProfileViewModel, ProfilePage>();
         Configure<SettingsViewModel, SettingsPage>();
     }
