@@ -139,7 +139,7 @@ public class ApiHelper
         return response;
     }
 
-    public static async Task<List<Alarm>?> GetAllAlarms()
+    public static async Task<List<AlarmDto>?> GetAllAlarms()
     {
         using var request = new HttpRequestMessage();
         request.RequestUri = new Uri($"{_baseAddress}/alarm");
@@ -147,12 +147,13 @@ public class ApiHelper
         request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
 
         var response = await _sharedClient.SendAsync(request);
-        var alarms = await response.Content.ReadFromJsonAsync<List<Alarm>>();
+
+        var alarms = await response.Content.ReadFromJsonAsync<List<AlarmDto>>();
 
         return alarms;
     }
 
-    public static async Task<HttpResponseMessage?> CreateAlarm(AlarmDto alarm)
+    public static async Task<HttpResponseMessage?> CreateAlarm(CreateAlarmDto alarm)
     {
         using var request = new HttpRequestMessage();
         request.RequestUri = new Uri($"{_baseAddress}/alarm");

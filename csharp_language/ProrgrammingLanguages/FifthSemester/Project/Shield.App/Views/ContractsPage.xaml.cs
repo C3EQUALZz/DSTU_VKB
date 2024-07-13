@@ -259,6 +259,8 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
     private async Task AlertContract(ContractControl sender)
     {
         Notify("Сработала сигнализация", $"{sender.Address} - {sender.Bailee}\nID Контракта: {sender.ContractId}\n{sender.Comment}");
+
+        await ApiHelper.CreateAlarm(new() { ContractId = sender.ContractId, Date = DateTime.Now });
     }
 
     private async void UpdateContractsListBtn_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)

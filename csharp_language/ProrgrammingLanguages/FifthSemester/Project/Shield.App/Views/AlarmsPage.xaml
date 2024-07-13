@@ -6,10 +6,41 @@
     xmlns:local="using:Shield.App.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Shield.App.Controls"
     mc:Ignorable="d"
     >
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Column="0" Grid.Row="0">
+            <Button x:Name="UpdateListButton" Click="UpdateListButton_Click">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <FontIcon Glyph="&#xE777;" FontSize="16"/>
+                        <TextBlock Text="Обновить список"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+
+        <ListView Grid.Column="0" Grid.Row="1" SelectionMode="None" ItemsSource="{x:Bind AlarmControls}"/>
+
+        <TeachingTip 
+            x:Name="Notification"
+            Title="{x:Bind NotificationTitle, Mode=OneWay}"
+            Subtitle="{x:Bind NotificationSubtitle, Mode=OneWay}"
+            PreferredPlacement="Auto"
+            PlacementMargin="20"
+            IsLightDismissEnabled="True"
+            >
+        </TeachingTip>
     </Grid>
 </Page>

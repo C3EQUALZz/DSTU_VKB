@@ -79,6 +79,7 @@
                     </Border>
 
                     <Grid Grid.Column="1">
+                        
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="30"/>

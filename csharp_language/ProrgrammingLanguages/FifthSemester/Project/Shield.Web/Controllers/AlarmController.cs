@@ -24,7 +24,20 @@ public class AlarmController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetAllAlarms()
     {
-        return Ok(_context.Alarms.Include(a => a.Contract).ToList());
+        return Ok(_context.Alarms.Include(a => a.Contract).Select(a => new AlarmDto()
+        {
+            AlarmId = a.AlarmId,
+            Date = a.Date,
+            Contract = new ContractDto()
+            {
+                ContractId = a.Contract.ContractId,
+                Address = a.Contract.Address,
+                Owners = a.Contract.Owners,
+                Bailee = a.Contract.Bailee,
+                Comment = a.Contract.Comment,
+                SignDate = a.Contract.SignDate,
+            }
+        }).ToList());
     }
 
     [HttpPost]

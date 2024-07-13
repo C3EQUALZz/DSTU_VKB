@@ -15,6 +15,7 @@
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Controls\AlarmControl.xaml" />
     <None Remove="Controls\ContractControl.xaml" />
     <None Remove="Controls\RemovableTextBox.xaml" />
     <None Remove="Dialogs\CreateContractDialog.xaml" />
@@ -45,6 +46,9 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Controls\AlarmControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Controls\RemovableTextBox.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -42,8 +42,7 @@ public class ContractController : ControllerBase
             Alarms = entity.Alarms.Select(a => new AlarmDto()
             {
                 AlarmId = a.AlarmId,
-                Date = a.Date,
-                ContractId = a.ContractId
+                Date = a.Date
             }).ToList()
         }).ToList());
     }
