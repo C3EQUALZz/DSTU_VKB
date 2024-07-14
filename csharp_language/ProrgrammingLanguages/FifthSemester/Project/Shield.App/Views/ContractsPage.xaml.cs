@@ -34,7 +34,6 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
     {
         ViewModel = App.GetService<ContractsViewModel>();
         InitializeComponent();
-
         UpdateContractsList();
     }
 
@@ -43,7 +42,6 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
         var dialog = new ContentDialog();
         var content = new CreateContractDialog();
 
-        // XamlRoot must be set in the case of a ContentDialog running in a Desktop app
         dialog.XamlRoot = this.XamlRoot;
         dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
         dialog.Title = "Новый контракт";
@@ -180,7 +178,6 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
     {
         var dialog = new ContentDialog();
 
-        // XamlRoot must be set in the case of a ContentDialog running in a Desktop app
         dialog.XamlRoot = this.XamlRoot;
         dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
         dialog.Title = $"Вы уверены что хотите удалить контракт #{sender.ContractId} ({sender.Bailee})?";
@@ -263,9 +260,22 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 
     private async Task AlertContract(ContractControl sender)
     {
-        Notify("Сработала сигнализация", $"{sender.Address} - {sender.Bailee}\nID Контракта: {sender.ContractId}\n{sender.Comment}");
+        var dialog = new ContentDialog();
 
-        await ApiHelper.CreateAlarm(new() { ContractId = sender.ContractId, Date = DateTime.Now });
+        dialog.XamlRoot = this.XamlRoot;
+        dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+        dialog.Title = $"Вы уверены что хотите вызвать сигнализацию по объекту #{sender.ContractId} ({sender.Organization})?";
+        dialog.PrimaryButtonText = "Подтвердить";
+        dialog.CloseButtonText = "Отмена";
+        dialog.DefaultButton = ContentDialogButton.Primary;
+
+        var result = await dialog.ShowAsync();
+
+        if (result == ContentDialogResult.Primary)
+        {
+            Notify("Сработала сигнализация", $"{sender.Address} - {sender.Bailee}\nID Контракта: {sender.ContractId}\n{sender.Comment}");
+            await ApiHelper.CreateAlarm(new() { ContractId = sender.ContractId, Date = DateTime.Now });
+        }
     }
 
     private async void UpdateContractsListBtn_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
