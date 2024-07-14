@@ -26,6 +26,13 @@ public class AppUserController : ControllerBase
         _roleManager = roleManager;
     }
 
+    [HttpGet("check")]
+    [Authorize]
+    public async Task<IActionResult> CheckLogin()
+    {
+        return Ok();
+    }
+
     [HttpGet]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetAll()
