@@ -51,7 +51,7 @@
         </Grid>
 
         <Border Grid.Row="4" CornerRadius="5">
-            <WebView2 Source="https://yandex.ru/maps/39/rostov-na-donu/"/>
+            <WebView2 x:Name="WV"/>
         </Border>
     </Grid>
 </UserControl>

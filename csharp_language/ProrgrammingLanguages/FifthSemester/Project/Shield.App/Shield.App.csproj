@@ -46,6 +46,9 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Dialogs\html\map\index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Page Update="Controls\AlarmControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -81,5 +84,9 @@
 	
   <ItemGroup>
     <Resource Remove="Views\AlarmsPage.xaml" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <Folder Include="Dialogs\html\map\" />
   </ItemGroup>
 </Project>

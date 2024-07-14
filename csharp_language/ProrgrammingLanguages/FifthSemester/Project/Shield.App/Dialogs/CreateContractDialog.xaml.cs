@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using Microsoft.UI;
 using Microsoft.UI.Xaml.Controls;
@@ -8,7 +9,7 @@ using Shield.App.Controls;
 using Shield.App.Helpers;
 using Shield.DataAccess.DTOs;
 using Windows.Storage;
-using Windows.Storage.Pickers;
+using Microsoft.Web.WebView2.Core;
 
 namespace Shield.App.Dialogs;
 public sealed partial class CreateContractDialog : UserControl, INotifyPropertyChanged
@@ -51,6 +52,7 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
     public bool IsEdited = false;
 
     private ObservableCollection<RemovableTextBox> OwnersControls { get; set; } = new();
+    private CoreWebView2DevToolsProtocolEventReceiver jsLogReciever;
 
     public delegate void EditedHandler(object sender);
 
@@ -62,6 +64,8 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
         Edited += (s) => IsEdited = true;
 
         this.InitializeComponent();
+
+        InitializeWV();
     }
 
     public CreateContractDialog(ContractDto contract)
@@ -81,6 +85,39 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
                 AddOwner(ownerName);
             }
         }
+
+        Task.Run(InitializeWV);
+    }
+
+    private async Task InitializeWV()
+    {
+        await WV.EnsureCoreWebView2Async();
+
+        var htmlpath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Dialogs", "html");
+        WV.CoreWebView2.SetVirtualHostNameToFolderMapping("app", @$"{htmlpath}", Microsoft.Web.WebView2.Core.CoreWebView2HostResourceAccessKind.Allow);
+        
+        WV.NavigationCompleted += WV_NavigationCompleted;
+        WV.CoreWebView2.WebMessageReceived += CoreWebView2_WebMessageReceived;
+
+        await this.WV.CoreWebView2.CallDevToolsProtocolMethodAsync("Log.enable", "{}");
+        jsLogReciever = WV.CoreWebView2.GetDevToolsProtocolEventReceiver("Log.entryAdded");
+        jsLogReciever.DevToolsProtocolEventReceived += (s, e) =>
+        {
+            System.Diagnostics.Debug.WriteLine(e.ParameterObjectAsJson);
+        };
+
+        WV.CoreWebView2.Navigate("https://app/map/index.html");
+    }
+
+    private void CoreWebView2_WebMessageReceived(CoreWebView2 sender, CoreWebView2WebMessageReceivedEventArgs args)
+    {
+        //System.Diagnostics.Debug.WriteLine(args.WebMessageAsJson);
+        AddressTB.Text = args.WebMessageAsJson[1..^1];
+    }
+
+    private async void WV_NavigationCompleted(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs args)
+    {
+        
     }
 
     private void AddOwner(string? name = null)
