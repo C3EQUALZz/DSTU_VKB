@@ -273,7 +273,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 
         if (result == ContentDialogResult.Primary)
         {
-            Notify("Сработала сигнализация", $"{sender.Address} - {sender.Bailee}\nID Контракта: {sender.ContractId}\n{sender.Comment}");
+            Notify("Сработала сигнализация", $"{sender.Address} - {sender.Organization}\nID Контракта: {sender.ContractId}\nОтветственное лицо: {sender.Bailee}\n{sender.Comment}");
             await ApiHelper.CreateAlarm(new() { ContractId = sender.ContractId, Date = DateTime.Now });
         }
     }
