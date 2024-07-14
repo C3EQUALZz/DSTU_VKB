@@ -17,6 +17,8 @@
   <ItemGroup>
     <None Remove="Controls\AlarmControl.xaml" />
     <None Remove="Controls\ContractControl.xaml" />
+    <None Remove="Controls\RegisterContent.xaml" />
+    <None Remove="Controls\RegisterLoginContent.xaml" />
     <None Remove="Controls\RemovableTextBox.xaml" />
     <None Remove="Dialogs\CreateContractDialog.xaml" />
     <None Remove="Views\AlarmsPage.xaml" />
@@ -46,6 +48,12 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Controls\RegisterContent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\RegisterLoginContent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <None Update="Dialogs\html\map\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

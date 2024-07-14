@@ -58,7 +58,7 @@
             <NavigationView.FooterMenuItems>
                 <NavigationViewItem x:Uid="Shell_Profile" helpers:NavigationHelper.NavigateTo="Shield.App.ViewModels.ProfileViewModel">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE77B;"/>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE779;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.FooterMenuItems>

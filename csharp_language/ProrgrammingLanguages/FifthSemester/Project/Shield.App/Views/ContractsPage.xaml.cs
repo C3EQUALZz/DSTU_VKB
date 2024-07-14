@@ -34,7 +34,6 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
     {
         ViewModel = App.GetService<ContractsViewModel>();
         InitializeComponent();
-        UpdateContractsList();
     }
 
     private async void CreateContractBtn_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
@@ -90,12 +89,11 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 
             if (response == null || !response.IsSuccessStatusCode)
             {
-                Notify("Ошибка", $"Не удалось создать контракт {(response != null ? $"(ошибка {response.StatusCode}:\n{await response.Content.ReadAsStringAsync()})" : "(превышено время ожидания)")}\nПовторите попытку позже");
+                await ProcessResponseErroStatusCode(response);
+                return;
             }
-            else
-            {
-                await UpdateContractsList();
-            }
+
+            await UpdateContractsList();
         }
     }
 
@@ -165,12 +163,11 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
             // Если сервер отвечает кодом ошибки или не отвечаем, сообщим об этом пользователю
             if (response == null || !response.IsSuccessStatusCode)
             {
-                Notify("Ошибка", $"Не удалось изменить контракт {(response != null ? $"(ошибка {response.StatusCode}:\n{await response.Content.ReadAsStringAsync()})" : "(превышено время ожидания)")}\nПовторите попытку позже");
+                await ProcessResponseErroStatusCode(response);
+                return;
             }
-            else
-            {
-                await UpdateContractsList();
-            }
+
+            await UpdateContractsList();
         }
     }
 
@@ -190,10 +187,13 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
         if (result == ContentDialogResult.Primary)
         {
             var response = await ApiHelper.DeleteContract(sender.ContractId);
+
             if (response == null || !response.IsSuccessStatusCode)
             {
-                Notify("Ошибка", $"Не удалось удалить контракт {(response != null ? $"(ошибка {response.StatusCode})" : "(превышено время ожидания)")}");
+                await ProcessResponseErroStatusCode(response);
+                return;
             }
+
             await UpdateContractsList();
         }
     }
@@ -223,8 +223,8 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 
             if (response == null || !response.IsSuccessStatusCode)
             {
-                Notify("Операция отменена", $"Сервер не отвечает или файл не найден в базе данных");
                 await file.DeleteAsync();
+                await ProcessResponseErroStatusCode(response);
                 return;
             }
 
@@ -274,7 +274,14 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
         if (result == ContentDialogResult.Primary)
         {
             Notify("Сработала сигнализация", $"{sender.Address} - {sender.Organization}\nID Контракта: {sender.ContractId}\nОтветственное лицо: {sender.Bailee}\n{sender.Comment}");
-            await ApiHelper.CreateAlarm(new() { ContractId = sender.ContractId, Date = DateTime.Now });
+            
+            var response = await ApiHelper.CreateAlarm(new() { ContractId = sender.ContractId, Date = DateTime.Now });
+
+            if (response == null || !response.IsSuccessStatusCode)
+            {
+                await ProcessResponseErroStatusCode(response);
+                return;
+            }
         }
     }
 
@@ -289,15 +296,23 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 
         var response = await ApiHelper.GetAllContracts();
 
-        if (response != null)
+        if (response == null || !response.IsSuccessStatusCode)
         {
-            if (response.Count == 0)
+            await ProcessResponseErroStatusCode(response);
+            return;
+        }
+
+        var contracts = await response.Content.ReadFromJsonAsync<List<ContractDto>>();
+
+        if (contracts != null)
+        {
+            if (contracts.Count == 0)
             {
                 Notify("Пусто!", "Не найдено контрактов в базе данных");
                 return;
             }
             
-            foreach (var contract in response)
+            foreach (var contract in contracts)
             {
                 var control = new ContractControl(contract);
                 control.ExportRequested += async (s) => await ExportContract(s);
@@ -375,5 +390,106 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
     {
         SortingType = SortingType.AlarmsCount;
         ResortContractsList();
+    }
+
+    private async Task ProcessResponseErroStatusCode(HttpResponseMessage? response, string defaultMessage = "Не удалось выполнить веб-запрос\nПопробуйте повторить позже")
+    {
+        if (response == null)
+        {
+            Notify("Ошибка", "Сервер не отвечает");
+            return;
+        }
+
+        switch (response.StatusCode)
+        {
+            case System.Net.HttpStatusCode.Unauthorized:
+                HttpResponseMessage? resp_t;
+                do
+                {
+                    await ShowAuthDialog();
+                    resp_t = await ApiHelper.CheckConnection();
+                } while (resp_t == null || resp_t.StatusCode == System.Net.HttpStatusCode.Unauthorized);
+                break;
+            case System.Net.HttpStatusCode.Forbidden:
+                Notify("Ошибка", "Недостаточно прав для выполнения операции");
+                break;
+            case System.Net.HttpStatusCode.NotFound:
+                Notify("Ошибка", "Сущность не найдена");
+                break;
+            case System.Net.HttpStatusCode.TooManyRequests:
+                Notify("Ошибка", "Слишком частые запросы на сервер, повторите попытку позже");
+                break;
+            case System.Net.HttpStatusCode.InternalServerError:
+                Notify("Ошибка", "Сервер вызвал исключение - для исправления ошибки обратитесь к разработчику");
+                break;
+            case System.Net.HttpStatusCode.BadRequest:
+                Notify("Ошибка", "Неверно составлен веб-запрос - для исправления ошибки обратитесь к разработчику");
+                break;
+            default:
+                Notify("Ошибка", defaultMessage);
+                break;
+        }
+    }
+
+    private async Task ShowAuthDialog()
+    {
+        var dialog = new ContentDialog();
+        var content = new RegisterLoginContent();
+
+        dialog.XamlRoot = this.XamlRoot;
+        dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+        dialog.Title = $"Авторизация";
+        dialog.PrimaryButtonText = "Подтвердить";
+        dialog.SecondaryButtonText = "Регистрация";
+        dialog.CloseButtonText = "Отмена";
+        dialog.Content = content;
+        dialog.DefaultButton = ContentDialogButton.Primary;
+
+        var result = await dialog.ShowAsync();
+
+        if (result == ContentDialogResult.Primary)
+        {
+            await ApiHelper.Login(content.Login, content.Password);
+        }
+        else if (result == ContentDialogResult.Secondary)
+        {
+            await ShowRegisterDialog();
+        }
+    }
+
+    private async Task ShowRegisterDialog()
+    {
+        var dialog = new ContentDialog();
+        var content = new RegisterContent();
+
+        dialog.XamlRoot = this.XamlRoot;
+        dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+        dialog.Title = $"Регистрация";
+        dialog.PrimaryButtonText = "Подтвердить";
+        dialog.CloseButtonText = "Отмена";
+        dialog.Content = content;
+        dialog.DefaultButton = ContentDialogButton.Primary;
+
+        var result = await dialog.ShowAsync();
+
+        if (result == ContentDialogResult.Primary)
+        {
+            var response = await ApiHelper.Register(content.Login, content.Password, content.Email);
+
+            if (response == null) return;
+
+            if (!response.IsSuccessStatusCode)
+            {
+                Notify("Ошибка регистрации", string.Join("\n", (await response.Content.ReadFromJsonAsync<HttpResponseDto>()).Errors.Values.SelectMany(x => x)));
+                return;
+            }
+
+            await ApiHelper.Login(content.Login, content.Password);
+        }
+    }
+
+    private async void Page_Loaded(object sender, RoutedEventArgs e)
+    {
+        await UpdateContractsList();
     }
 }

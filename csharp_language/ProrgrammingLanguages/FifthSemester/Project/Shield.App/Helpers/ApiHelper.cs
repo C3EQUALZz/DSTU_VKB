@@ -4,6 +4,7 @@ using Windows.Storage;
 using Shield.DataAccess.DTOs;
 using Shield.DataAccess.Models;
 using System.Diagnostics.Contracts;
+using System.Xml.Linq;
 
 namespace Shield.App.Helpers;
 public class ApiHelper
@@ -11,6 +12,16 @@ public class ApiHelper
     private static string _baseAddress = "http://127.0.0.1:5277/api";
     private static HttpClient _sharedClient = new();
     private static string? _token => (string?)ApplicationData.Current.LocalSettings.Values["apiToken"];
+
+    public static async Task<HttpResponseMessage?> CheckConnection()
+    {
+        using var request = new HttpRequestMessage();
+        request.RequestUri = new Uri($"{_baseAddress}/user/check");
+        request.Method = HttpMethod.Get;
+        request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+
+        return await _sharedClient.SendAsync(request);
+    }
 
     public static async Task<object?> Login(string name, string password)
     {
@@ -38,36 +49,24 @@ public class ApiHelper
         }
     }
 
-    public static async Task<string?> Register(string name, string password, string email)
+    public static async Task<HttpResponseMessage?> Register(string name, string password, string email)
     {
         using var request = new HttpRequestMessage();
         request.RequestUri = new Uri($"{_baseAddress}/user/register");
         request.Method = HttpMethod.Post;
         request.Content = JsonContent.Create(new RegisterDto() { UserName = name, Password = password, Email = email });
 
-        try
-        {
-            var response = await _sharedClient.SendAsync(request);
-            return await response.Content.ReadAsStringAsync();
-        }
-        catch (Exception ex)
-        {
-            return ex.Message + (ex.InnerException != null ? "\n" + ex.InnerException.Message : "");
-        }
+        return await _sharedClient.SendAsync(request);
     }
 
-    public static async Task<List<ContractDto>?> GetAllContracts()
+    public static async Task<HttpResponseMessage?> GetAllContracts()
     {
         using var request = new HttpRequestMessage();
         request.RequestUri = new Uri($"{_baseAddress}/contract");
         request.Method = HttpMethod.Get;
         request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
 
-        var response = await _sharedClient.SendAsync(request);
-
-        var dto = await response.Content.ReadFromJsonAsync<List<ContractDto>>();
-
-        return dto;
+        return await _sharedClient.SendAsync(request);
     }
 
     public static async Task<HttpResponseMessage?> CreateContract(ContractDto contract)
