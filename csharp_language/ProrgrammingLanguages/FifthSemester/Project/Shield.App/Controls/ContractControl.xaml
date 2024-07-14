@@ -85,7 +85,7 @@
                             <RowDefinition Height="30"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" Text="{x:Bind Bailee}" Style="{StaticResource PageTitleStyle}"/>
+                        <TextBlock Grid.Row="0" Text="{x:Bind Organization}" Style="{StaticResource PageTitleStyle}"/>
                         <TextBlock Grid.Row="1" Text="{x:Bind Address}" Style="{StaticResource BodyTextStyle}" Foreground="DarkGray"/>
 
                     </Grid>
@@ -96,7 +96,7 @@
             
             <Expander.Content>
                 
-                <Grid Grid.Row="1" CornerRadius="5" Padding="5" ColumnSpacing="10">
+                <Grid CornerRadius="5" Padding="5" ColumnSpacing="10">
                     
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="500"/>
@@ -115,15 +115,21 @@
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
                         
-                        <TextBlock Grid.Row="0" Text="Владельцы" Style="{StaticResource PageTitleStyle}"/>
+                        <TextBlock Grid.Row="0" Text="Ответственное лицо" Style="{StaticResource PageTitleStyle}"/>
 
-                        <ListView Grid.Row="1" ItemsSource="{x:Bind OwnersControls}" SelectionMode="None" MaxHeight="200"/>
+                        <TextBlock Grid.Row="1" Text="{x:Bind Bailee}" Margin="16 0 0 0" FontWeight="Medium" FontSize="18"/>
+                        
+                        <TextBlock Grid.Row="2" Text="Владельцы" Style="{StaticResource PageTitleStyle}"/>
 
-                        <TextBlock Grid.Row="2" Text="Комментарий заказчика" Style="{StaticResource PageTitleStyle}"/>
+                        <ListView Grid.Row="3" ItemsSource="{x:Bind OwnersControls}" SelectionMode="None" MaxHeight="200"/>
 
-                        <TextBlock Grid.Row="3" Text="{x:Bind Comment}" Margin="16 0 0 0" TextWrapping="Wrap"/>
+                        <TextBlock Grid.Row="4" Text="Комментарий заказчика" Style="{StaticResource PageTitleStyle}"/>
+
+                        <TextBlock Grid.Row="5" Text="{x:Bind Comment}" Margin="16 0 0 0" TextWrapping="Wrap"/>
 
                     </Grid>
 

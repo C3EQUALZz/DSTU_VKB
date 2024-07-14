@@ -13,14 +13,16 @@
             <RowDefinition Height="32"/>
             <RowDefinition Height="32"/>
             <RowDefinition Height="32"/>
+            <RowDefinition Height="32"/>
             <RowDefinition Height="*" MaxHeight="80"/>
-            <RowDefinition Height="394"/>
+            <RowDefinition Height="357"/>
         </Grid.RowDefinitions>
 
         <TextBox x:Name="BaileeTB" Grid.Row="0" PlaceholderText="ФИО лица, ответственного за вскрытие помещения" TextChanged="BaileeTB_TextChanged"/>
         <TextBox x:Name="AddressTB" Grid.Row="1" PlaceholderText="Адрес" TextChanged="AddressTB_TextChanged"/>
         <TextBox x:Name="CommentTB" Grid.Row="2" PlaceholderText="Комментарий" TextChanged="CommentTB_TextChanged"/>
-        <Grid Grid.Row="3" VerticalAlignment="Top">
+        <TextBox x:Name="OrganizationTB" Grid.Row="3" PlaceholderText="Название организации" TextChanged="OrganizationTB_TextChanged"/>
+        <Grid Grid.Row="4" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="*"/>
@@ -50,7 +52,7 @@
             </StackPanel>
         </Grid>
 
-        <Border Grid.Row="4" CornerRadius="5">
+        <Border Grid.Row="5" CornerRadius="5">
             <WebView2 x:Name="WV"/>
         </Border>
     </Grid>

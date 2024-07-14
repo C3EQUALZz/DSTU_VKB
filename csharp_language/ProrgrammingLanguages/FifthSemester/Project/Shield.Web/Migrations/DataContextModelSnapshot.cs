@@ -26,7 +26,7 @@ namespace Shield.Web.Migrations
                     b.Property<int>("ContractId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateOnly>("Date")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
                     b.HasKey("AlarmId");
@@ -51,6 +51,10 @@ namespace Shield.Web.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Comment")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Organization")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Owners")

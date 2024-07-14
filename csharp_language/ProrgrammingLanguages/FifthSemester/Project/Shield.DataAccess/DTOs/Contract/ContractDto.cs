@@ -6,6 +6,7 @@ public class ContractDto
     public string? Owners { get; set; }
     public string Bailee { get; set; }
     public string? Comment { get; set; }
+    public string Organization { get; set; }
     public DateOnly SignDate { get; set; }
 
     public PlanDto Plan { get; set; }

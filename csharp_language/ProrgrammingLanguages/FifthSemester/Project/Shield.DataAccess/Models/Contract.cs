@@ -9,6 +9,7 @@ public class Contract
     public string? Owners { get; set; }
     public string Bailee { get; set; }
     public string? Comment { get; set; }
+    public string Organization { get; set; }
     public DateOnly SignDate { get; set; }
 
     // Navigation properties

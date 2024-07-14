@@ -31,6 +31,7 @@ public class ContractController : ControllerBase
             Owners = entity.Owners,
             Bailee = entity.Bailee,
             Comment = entity.Comment,
+            Organization = entity.Organization,
             SignDate = entity.SignDate,
             Picture = new PictureDto()
             {
@@ -57,6 +58,7 @@ public class ContractController : ControllerBase
             Comment = contract.Comment,
             Owners = contract.Owners,
             Bailee = contract.Bailee,
+            Organization = contract.Organization,
             SignDate = contract.SignDate
         };
 
@@ -92,6 +94,7 @@ public class ContractController : ControllerBase
             Owners = entity.Owners,
             Bailee = entity.Bailee,
             Comment = entity.Comment,
+            Organization = entity.Organization,
             SignDate = entity.SignDate,
             Plan = new PlanDto()
             {
@@ -122,6 +125,7 @@ public class ContractController : ControllerBase
             Owners = entity.Owners,
             Bailee = entity.Bailee,
             Comment = entity.Comment,
+            Organization = entity.Organization,
             SignDate = entity.SignDate,
             Plan = new PlanDto()
             {
@@ -171,6 +175,7 @@ public class ContractController : ControllerBase
             if (dto.Bailee != null && entity.Bailee != dto.Bailee) entity.Bailee = dto.Bailee;
             if (dto.Owners != null && entity.Owners != dto.Owners) entity.Owners = dto.Owners;
             if (dto.Comment != null && entity.Comment != dto.Comment) entity.Comment = dto.Comment;
+            if (dto.Organization != null && entity.Organization != dto.Organization) entity.Organization = dto.Organization;
 
             if (dto.Plan != null)
             {
@@ -207,6 +212,7 @@ public class ContractController : ControllerBase
                 Owners = entity.Owners,
                 Bailee = entity.Bailee,
                 Comment = entity.Comment,
+                Organization = entity.Organization,
                 SignDate = entity.SignDate,
                 Plan = new PlanDto()
                 {

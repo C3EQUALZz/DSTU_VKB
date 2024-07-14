@@ -118,7 +118,8 @@ public class ApiHelper
             Address = replacer.Address,
             Bailee = replacer.Bailee,
             Owners = replacer.Owners,
-            Comment = replacer.Comment
+            Comment = replacer.Comment,
+            Organization = replacer.Organization,
         };
 
         if (replacer.Plan != null)

@@ -15,6 +15,7 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
     public ObservableCollection<TextBlock> OwnersControls { get; set; } = new();
     public string Bailee { get; set; }
     public string? Comment { get; set; }
+    public string Organization { get; set; }
     public PlanDto Plan { get; set; }
     public PictureDto Picture { get; set; }
     public BitmapImage Bitmap { get; set; }
@@ -50,12 +51,9 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
         Plan = c.Plan;
         Date = c.SignDate;
         Picture = c.Picture;
+        Organization = c.Organization;
         Alarms = c.Alarms.ToList();
         Bitmap = BitmapHelper.BytesToBitmap(c.Picture.Data);
-
-        var baileeTB = new TextBlock();
-        baileeTB.Text = "1. " + Bailee;
-        OwnersControls.Add(baileeTB);
 
         if (OwnersString != null)
         {
@@ -63,7 +61,7 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
             for (var i = 0; i < splittedOwners.Count(); i++)
             {
                 var tb = new TextBlock();
-                tb.Text = $"{i + 2}. {splittedOwners[i]}";
+                tb.Text = $"{i + 1}. {splittedOwners[i]}";
                 OwnersControls.Add(tb);
             }
         }
@@ -80,6 +78,7 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
             Address = Address,
             Comment = Comment,
             Owners = OwnersString,
+            Organization = Organization,
             Picture = new()
             {
                 Title = Picture.Title,

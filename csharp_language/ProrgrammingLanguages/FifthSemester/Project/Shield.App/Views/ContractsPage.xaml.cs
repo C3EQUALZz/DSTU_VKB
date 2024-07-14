@@ -73,6 +73,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
                 Bailee = content.Bailee,
                 Address = content.Address,
                 Comment = content.Comment,
+                Organization = content.Organization,
                 Owners = content.Owners.Count > 0 ? string.Join(';', content.Owners) : null,
                 Plan = new() {
                     Title = content.Plan.DisplayName,
@@ -131,6 +132,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
                 Bailee = content.Bailee,
                 Address = content.Address,
                 Comment = content.Comment,
+                Organization = content.Organization,
                 Owners = content.Owners.Count > 0 ? string.Join(';', content.Owners) : null,
                 SignDate = sender.Date
             };

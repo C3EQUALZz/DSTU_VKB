@@ -45,6 +45,7 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
     public string Bailee => BaileeTB.Text;
     public string Address => AddressTB.Text;
     public string Comment => CommentTB.Text;
+    public string Organization => OrganizationTB.Text;
     public List<string> Owners => OwnersControls.Select(x => x.Value).Where(o => !string.IsNullOrWhiteSpace(o)).ToList();
     public StorageFile Plan;
     public StorageFile Picture;
@@ -77,6 +78,7 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
         BaileeTB.Text = contract.Bailee;
         AddressTB.Text = contract.Address;
         CommentTB.Text = contract.Comment;
+        OrganizationTB.Text = contract.Organization;
 
         if (contract.Owners != null)
         {
@@ -86,7 +88,7 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
             }
         }
 
-        Task.Run(InitializeWV);
+        InitializeWV();
     }
 
     private async Task InitializeWV()
@@ -96,7 +98,6 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
         var htmlpath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Dialogs", "html");
         WV.CoreWebView2.SetVirtualHostNameToFolderMapping("app", @$"{htmlpath}", Microsoft.Web.WebView2.Core.CoreWebView2HostResourceAccessKind.Allow);
         
-        WV.NavigationCompleted += WV_NavigationCompleted;
         WV.CoreWebView2.WebMessageReceived += CoreWebView2_WebMessageReceived;
 
         await this.WV.CoreWebView2.CallDevToolsProtocolMethodAsync("Log.enable", "{}");
@@ -111,13 +112,7 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
 
     private void CoreWebView2_WebMessageReceived(CoreWebView2 sender, CoreWebView2WebMessageReceivedEventArgs args)
     {
-        //System.Diagnostics.Debug.WriteLine(args.WebMessageAsJson);
         AddressTB.Text = args.WebMessageAsJson[1..^1];
-    }
-
-    private async void WV_NavigationCompleted(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs args)
-    {
-        
     }
 
     private void AddOwner(string? name = null)
@@ -192,6 +187,11 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
     }
 
     private void CommentTB_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        Edited?.Invoke(sender);
+    }
+
+    private void OrganizationTB_TextChanged(object sender, TextChangedEventArgs e)
     {
         Edited?.Invoke(sender);
     }
