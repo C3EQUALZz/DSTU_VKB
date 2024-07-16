@@ -34,6 +34,7 @@
     <PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.0.240109" />
     <PackageReference Include="CommunityToolkit.WinUI.UI" Version="7.1.2" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Media" Version="7.1.2" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="3.0.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231008000" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
@@ -54,7 +55,7 @@
     <Page Update="Controls\RegisterLoginContent.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <None Update="Dialogs\html\map\index.html">
+    <None Update="Misc\html\map\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Page Update="Controls\AlarmControl.xaml">
@@ -92,9 +93,5 @@
 	
   <ItemGroup>
     <Resource Remove="Views\AlarmsPage.xaml" />
-  </ItemGroup>
-	
-  <ItemGroup>
-    <Folder Include="Dialogs\html\map\" />
   </ItemGroup>
 </Project>

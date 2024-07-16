@@ -95,7 +95,7 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
     {
         await WV.EnsureCoreWebView2Async();
 
-        var htmlpath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Dialogs", "html");
+        var htmlpath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Misc", "html");
         WV.CoreWebView2.SetVirtualHostNameToFolderMapping("app", @$"{htmlpath}", Microsoft.Web.WebView2.Core.CoreWebView2HostResourceAccessKind.Allow);
         
         WV.CoreWebView2.WebMessageReceived += CoreWebView2_WebMessageReceived;
