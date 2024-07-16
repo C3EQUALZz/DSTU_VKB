@@ -12,6 +12,9 @@ using Shield.DataAccess.Models;
 using System.Net.Http.Json;
 using Windows.Storage;
 using Shield.App.Enums;
+using System.Reflection;
+using Spire.Doc;
+using Spire.Doc.Fields;
 
 namespace Shield.App.Views;
 
@@ -200,7 +203,46 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 
     private async Task ExportContract(ContractControl sender)
     {
+        // Вызовем диалоговое окно выбора файла, чтобы узнать, куда пользователь хочет сохранить отчет
 
+        var savePicker = new Windows.Storage.Pickers.FileSavePicker();
+        savePicker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.Desktop;
+        savePicker.FileTypeChoices.Add("Word Document", new List<string>() { ".docx" });
+        savePicker.SuggestedFileName = $"report_{sender.ContractId}";
+
+        var hwnd = App.MainWindow.GetWindowHandle();
+        WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hwnd);
+
+        var file = await savePicker.PickSaveFileAsync();
+
+        if (file != null)
+        {
+            var templatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Misc", "WordTemplates", "template.docx");
+            var contract = sender.ToDto();
+
+            // Через Spire.Doc сохраним отчет в выбранный файл
+
+            var doc = new Document();
+            doc.LoadFromFile(templatePath);
+            var replaceDict = new Dictionary<string, string>()
+            {
+                { "#contract.SignDate#", contract.SignDate.ToString() },
+                { "#contract.Organization#", contract.Organization },
+                { "#contract.Bailee#", contract.Bailee },
+                { "#contract.Address#", contract.Address }
+            };
+
+            foreach (var kvp in replaceDict)
+            {
+                doc.Replace(kvp.Key, kvp.Value, true, true);
+            }
+
+            doc.SaveToFile(file.Path);
+
+            doc.Close();
+
+            Notify("Отчет успешно создан", $"Контракт №{contract.ContractId}\n{file.Path}");
+        }
     }
 
     private async Task PlanContract(ContractControl sender)

@@ -74,6 +74,7 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
     {
         return new ContractDto()
         {
+            ContractId = ContractId,
             Bailee = Bailee,
             Address = Address,
             Comment = Comment,
