@@ -9,7 +9,7 @@
     <script type="text/javascript">
         ymaps.ready(init);
 
-        // Инициализация карты
+        // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєР°СЂС‚С‹
         function init() {
             var myInput = document.getElementById("address"),
                 myPlacemark,
@@ -20,19 +20,19 @@
                     searchControlProvider: 'yandex#search'
                 });
 
-            // Слушаем клик на карте.
+            // РЎР»СѓС€Р°РµРј РєР»РёРє РЅР° РєР°СЂС‚Рµ.
             myMap.events.add('click', function (e) {
                 var coords = e.get('coords');
 
-                // Если метка уже создана – просто передвигаем ее.
+                // Р•СЃР»Рё РјРµС‚РєР° СѓР¶Рµ СЃРѕР·РґР°РЅР° вЂ“ РїСЂРѕСЃС‚Рѕ РїРµСЂРµРґРІРёРіР°РµРј РµРµ.
                 if (myPlacemark) {
                     myPlacemark.geometry.setCoordinates(coords);
                 }
-                // Если нет – создаем.
+                // Р•СЃР»Рё РЅРµС‚ вЂ“ СЃРѕР·РґР°РµРј.
                 else {
                     myPlacemark = createPlacemark(coords);
                     myMap.geoObjects.add(myPlacemark);
-                    // Слушаем событие окончания перетаскивания на метке.
+                    // РЎР»СѓС€Р°РµРј СЃРѕР±С‹С‚РёРµ РѕРєРѕРЅС‡Р°РЅРёСЏ РїРµСЂРµС‚Р°СЃРєРёРІР°РЅРёСЏ РЅР° РјРµС‚РєРµ.
                     myPlacemark.events.add('dragend', function () {
                         getAddress(myPlacemark.geometry.getCoordinates());
                     });
@@ -40,19 +40,19 @@
                 getAddress(coords);
             });
 
-            // Создание метки.
+            // РЎРѕР·РґР°РЅРёРµ РјРµС‚РєРё.
             function createPlacemark(coords) {
                 return new ymaps.Placemark(coords, {
-                    iconCaption: 'поиск...'
+                    iconCaption: 'РїРѕРёСЃРє...'
                 }, {
                     preset: 'islands#violetDotIconWithCaption',
                     draggable: true
                 });
             }
 
-            // Определяем адрес по координатам (обратное геокодирование).
+            // РћРїСЂРµРґРµР»СЏРµРј Р°РґСЂРµСЃ РїРѕ РєРѕРѕСЂРґРёРЅР°С‚Р°Рј (РѕР±СЂР°С‚РЅРѕРµ РіРµРѕРєРѕРґРёСЂРѕРІР°РЅРёРµ).
             function getAddress(coords) {
-                myPlacemark.properties.set('iconCaption', 'поиск...');
+                myPlacemark.properties.set('iconCaption', 'РїРѕРёСЃРє...');
                 ymaps.geocode(coords).then(function (res) {
                     var firstGeoObject = res.geoObjects.get(0),
                         address = firstGeoObject.getAddressLine();
@@ -61,21 +61,21 @@
 
                     myPlacemark.properties
                         .set({
-                            // Формируем строку с данными об объекте.
+                            // Р¤РѕСЂРјРёСЂСѓРµРј СЃС‚СЂРѕРєСѓ СЃ РґР°РЅРЅС‹РјРё РѕР± РѕР±СЉРµРєС‚Рµ.
                             iconCaption: [
-                                // Название населенного пункта или вышестоящее административно-территориальное образование.
+                                // РќР°Р·РІР°РЅРёРµ РЅР°СЃРµР»РµРЅРЅРѕРіРѕ РїСѓРЅРєС‚Р° РёР»Рё РІС‹С€РµСЃС‚РѕСЏС‰РµРµ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РёРІРЅРѕ-С‚РµСЂСЂРёС‚РѕСЂРёР°Р»СЊРЅРѕРµ РѕР±СЂР°Р·РѕРІР°РЅРёРµ.
                                 firstGeoObject.getLocalities().length ? firstGeoObject.getLocalities() : firstGeoObject.getAdministrativeAreas(),
-                                // Получаем путь до топонима, если метод вернул null, запрашиваем наименование здания.
+                                // РџРѕР»СѓС‡Р°РµРј РїСѓС‚СЊ РґРѕ С‚РѕРїРѕРЅРёРјР°, РµСЃР»Рё РјРµС‚РѕРґ РІРµСЂРЅСѓР» null, Р·Р°РїСЂР°С€РёРІР°РµРј РЅР°РёРјРµРЅРѕРІР°РЅРёРµ Р·РґР°РЅРёСЏ.
                                 firstGeoObject.getThoroughfare() || firstGeoObject.getPremise()
                             ].filter(Boolean).join(', '),
-                            // В качестве контента балуна задаем строку с адресом объекта.
+                            // Р’ РєР°С‡РµСЃС‚РІРµ РєРѕРЅС‚РµРЅС‚Р° Р±Р°Р»СѓРЅР° Р·Р°РґР°РµРј СЃС‚СЂРѕРєСѓ СЃ Р°РґСЂРµСЃРѕРј РѕР±СЉРµРєС‚Р°.
                             balloonContent: address
                         });
                     myInput.value = address;
                 });
             }
 
-            // Отправляем адрес обратно в WinUI 3
+            // РћС‚РїСЂР°РІР»СЏРµРј Р°РґСЂРµСЃ РѕР±СЂР°С‚РЅРѕ РІ WinUI 3
             function sendAddress(address) {
                 console.log(address);
                 window.chrome.webview.postMessage(address);
