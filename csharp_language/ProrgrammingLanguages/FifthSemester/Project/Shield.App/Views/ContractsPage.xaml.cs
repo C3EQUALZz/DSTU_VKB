@@ -448,7 +448,13 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
                 HttpResponseMessage? resp_t;
                 do
                 {
-                    await ShowAuthDialog();
+                    var logr = await AuthHelper.ShowAuthDialogAsync(this.XamlRoot);
+
+                    if (logr != null)
+                    {
+                        Notify("Ошибка", logr);
+                    }
+
                     resp_t = await ApiHelper.CheckConnection();
                 } while (resp_t == null || resp_t.StatusCode == System.Net.HttpStatusCode.Unauthorized);
                 break;
@@ -470,63 +476,6 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
             default:
                 Notify("Ошибка", defaultMessage);
                 break;
-        }
-    }
-
-    private async Task ShowAuthDialog()
-    {
-        var dialog = new ContentDialog();
-        var content = new RegisterLoginContent();
-
-        dialog.XamlRoot = this.XamlRoot;
-        dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-        dialog.Title = $"Авторизация";
-        dialog.PrimaryButtonText = "Подтвердить";
-        dialog.SecondaryButtonText = "Регистрация";
-        dialog.CloseButtonText = "Отмена";
-        dialog.Content = content;
-        dialog.DefaultButton = ContentDialogButton.Primary;
-
-        var result = await dialog.ShowAsync();
-
-        if (result == ContentDialogResult.Primary)
-        {
-            await ApiHelper.Login(content.Login, content.Password);
-        }
-        else if (result == ContentDialogResult.Secondary)
-        {
-            await ShowRegisterDialog();
-        }
-    }
-
-    private async Task ShowRegisterDialog()
-    {
-        var dialog = new ContentDialog();
-        var content = new RegisterContent();
-
-        dialog.XamlRoot = this.XamlRoot;
-        dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-        dialog.Title = $"Регистрация";
-        dialog.PrimaryButtonText = "Подтвердить";
-        dialog.CloseButtonText = "Отмена";
-        dialog.Content = content;
-        dialog.DefaultButton = ContentDialogButton.Primary;
-
-        var result = await dialog.ShowAsync();
-
-        if (result == ContentDialogResult.Primary)
-        {
-            var response = await ApiHelper.Register(content.Login, content.Password, content.Email);
-
-            if (response == null) return;
-
-            if (!response.IsSuccessStatusCode)
-            {
-                Notify("Ошибка регистрации", string.Join("\n", (await response.Content.ReadFromJsonAsync<HttpResponseDto>()).Errors.Values.SelectMany(x => x)));
-                return;
-            }
-
-            await ApiHelper.Login(content.Login, content.Password);
         }
     }
 
