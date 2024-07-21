@@ -2,9 +2,6 @@
 using Windows.Storage;
 
 using Shield.DataAccess.DTOs;
-using Shield.DataAccess.Models;
-using System.Diagnostics.Contracts;
-using System.Xml.Linq;
 
 namespace Shield.App.Helpers;
 public class ApiHelper
@@ -39,6 +36,12 @@ public class ApiHelper
             if (dto != null)
             {
                 ApplicationData.Current.LocalSettings.Values["apiToken"] = dto.Token;
+                ApplicationData.Current.LocalSettings.Values["profileInfo"] = new ProfileInfoDto()
+                {
+                    Id = dto.Id,
+                    UserName = dto.UserName,
+                    Email = dto.Email
+                };
             }
 
             return dto;
@@ -55,6 +58,26 @@ public class ApiHelper
         request.RequestUri = new Uri($"{_baseAddress}/user/register");
         request.Method = HttpMethod.Post;
         request.Content = JsonContent.Create(new RegisterDto() { UserName = name, Password = password, Email = email });
+
+        return await _sharedClient.SendAsync(request);
+    }
+
+    public static async Task<HttpResponseMessage?> Me()
+    {
+        using var request = new HttpRequestMessage();
+        request.RequestUri = new Uri($"{_baseAddress}/user/me");
+        request.Method = HttpMethod.Get;
+        request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+
+        return await _sharedClient.SendAsync(request);
+    }
+
+    public static async Task<HttpResponseMessage?> GetUserProfile(string id)
+    {
+        using var request = new HttpRequestMessage();
+        request.RequestUri = new Uri($"{_baseAddress}/user/profile/{id}");
+        request.Method = HttpMethod.Get;
+        request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
 
         return await _sharedClient.SendAsync(request);
     }

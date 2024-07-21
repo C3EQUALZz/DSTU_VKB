@@ -445,18 +445,19 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
         switch (response.StatusCode)
         {
             case System.Net.HttpStatusCode.Unauthorized:
-                HttpResponseMessage? resp_t;
-                do
-                {
-                    var logr = await AuthHelper.ShowAuthDialogAsync(this.XamlRoot);
+                //HttpResponseMessage? resp_t;
+                //do
+                //{
+                //    var logr = await AuthHelper.ShowAuthDialogAsync(this.XamlRoot);
 
-                    if (logr != null)
-                    {
-                        Notify("Ошибка", logr);
-                    }
+                //    if (logr != null)
+                //    {
+                //        Notify("Ошибка", logr);
+                //    }
 
-                    resp_t = await ApiHelper.CheckConnection();
-                } while (resp_t == null || resp_t.StatusCode == System.Net.HttpStatusCode.Unauthorized);
+                //    resp_t = await ApiHelper.CheckConnection();
+                //} while (resp_t == null || resp_t.StatusCode == System.Net.HttpStatusCode.Unauthorized);
+                await AuthHelper.ShowAuthDialogAsync(this.XamlRoot);
                 break;
             case System.Net.HttpStatusCode.Forbidden:
                 Notify("Ошибка", "Недостаточно прав для выполнения операции");
