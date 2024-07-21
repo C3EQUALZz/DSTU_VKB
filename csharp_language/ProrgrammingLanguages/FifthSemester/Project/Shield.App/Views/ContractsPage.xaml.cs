@@ -170,7 +170,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
                 return;
             }
 
-            await UpdateContractsList();
+            await RefreshContractControl(sender);
         }
     }
 
