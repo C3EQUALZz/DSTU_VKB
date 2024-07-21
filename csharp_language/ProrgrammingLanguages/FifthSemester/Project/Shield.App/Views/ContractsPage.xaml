@@ -45,7 +45,7 @@
                     <Button.Content>
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE710;" FontSize="16"/>
-                            <TextBlock Text="Создать"/>
+                            <TextBlock x:Uid="CreateContractButton"/>
                         </StackPanel>
                     </Button.Content>
                 </Button>
@@ -53,19 +53,19 @@
                     <DropDownButton.Content>
                         <StackPanel Spacing="10" Orientation="Horizontal">
                             <FontIcon Glyph="&#xE8CB;" FontSize="16"/>
-                            <TextBlock Text="Сортировать"/>
+                            <TextBlock x:Uid="SortContractButton"/>
                         </StackPanel>
                     </DropDownButton.Content>
                     <DropDownButton.Flyout>
                         <MenuFlyout Placement="Bottom">
-                            <MenuFlyoutItem x:Name="SortNone" Text="Нет" Icon="Cancel" Click="SortNone_Click"/>
-                            <MenuFlyoutItem x:Name="SortName" Text="Имя" Icon="Contact" Click="SortName_Click"/>
-                            <MenuFlyoutItem x:Name="SortAddress" Text="Адрес" Click="SortAddress_Click">
+                            <MenuFlyoutItem x:Name="SortNone" x:Uid="SortTypeNo" Icon="Cancel" Click="SortNone_Click"/>
+                            <MenuFlyoutItem x:Name="SortName" x:Uid="SortTypeName" Icon="Contact" Click="SortName_Click"/>
+                            <MenuFlyoutItem x:Name="SortAddress" x:Uid="SortTypeAddress" Click="SortAddress_Click">
                                 <MenuFlyoutItem.Icon>
                                     <FontIcon Glyph="&#xE707;"/>
                                 </MenuFlyoutItem.Icon>
                             </MenuFlyoutItem>
-                            <MenuFlyoutItem x:Name="SortAlarms" Text="Вызовы" Click="SortAlarms_Click">
+                            <MenuFlyoutItem x:Name="SortAlarms" x:Uid="SortTypeAlarms" Click="SortAlarms_Click">
                                 <MenuFlyoutItem.Icon>
                                     <FontIcon Glyph="&#xE783;"/>
                                 </MenuFlyoutItem.Icon>
@@ -77,7 +77,7 @@
                     <Button.Content>
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE777;" FontSize="16"/>
-                            <TextBlock Text="Обновить список"/>
+                            <TextBlock x:Uid="UpdateListContractButton"/>
                         </StackPanel>
                     </Button.Content>
                 </Button>

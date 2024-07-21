@@ -18,9 +18,9 @@
 
         <FontIcon Grid.Row="0" Glyph="&#xE77B;" FontSize="40"/>
 
-        <TextBox x:Name="LoginTB" Grid.Row="1" PlaceholderText="Логин"/>
+        <TextBox x:Uid="LoginBox" x:Name="LoginTB" Grid.Row="1"/>
         
-        <PasswordBox x:Name="PasswordTB" Grid.Row="2" PlaceholderText="Пароль"/>
+        <PasswordBox x:Uid="PasswordBox" x:Name="PasswordTB" Grid.Row="2"/>
 
     </Grid>
 </UserControl>

@@ -13,18 +13,18 @@
     <Grid>
 
         <StackPanel Visibility="{x:Bind IsLoggedIn, Mode=OneWay}" Spacing="5">
-            <TextBlock Text="Имя пользователя:" Style="{StaticResource BodyStrongTextBlockStyle}"/>
+            <TextBlock x:Uid="UserNameProfileHeader" Style="{StaticResource BodyStrongTextBlockStyle}"/>
             <TextBlock Text="{x:Bind Profile.UserName, Mode=OneWay}" Style="{StaticResource CaptionTextBlockStyle}"/>
-            <TextBlock Text="Почта:" Style="{StaticResource BodyStrongTextBlockStyle}"/>
+            <TextBlock x:Uid="AddressProfileHeader" Style="{StaticResource BodyStrongTextBlockStyle}"/>
             <TextBlock Text="{x:Bind Profile.Email, Mode=OneWay}" Style="{StaticResource CaptionTextBlockStyle}"/>
-            <TextBlock Text="Уникальный идентификатор:" Style="{StaticResource BodyStrongTextBlockStyle}"/>
+            <TextBlock x:Uid="UIDProfileHeader" Style="{StaticResource BodyStrongTextBlockStyle}"/>
             <TextBlock Text="{x:Bind Profile.Id, Mode=OneWay}" Style="{StaticResource CaptionTextBlockStyle}"/>
-            <Button x:Name="LogoutButton" Click="LogoutButton_Click" Content="Выйти"/>
+            <Button x:Uid="LogoutButton" x:Name="LogoutButton" Click="LogoutButton_Click"/>
         </StackPanel>
 
         <StackPanel Visibility="{x:Bind IsNotLoggedIn, Mode=OneWay}" Spacing="5">
-            <TextBlock Text="Вход не выполнен. Войдите для получения доступа к сервису." Style="{StaticResource BodyStrongTextBlockStyle}"/>
-            <Button Content="Войти" Click="LoginButton_Click"/>
+            <TextBlock x:Uid="UnauthorizedTip" Style="{StaticResource BodyStrongTextBlockStyle}"/>
+            <Button x:Uid="LoginButton" Click="LoginButton_Click"/>
         </StackPanel>
         
     </Grid>

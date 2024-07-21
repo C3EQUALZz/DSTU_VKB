@@ -19,11 +19,11 @@
 
         <FontIcon Grid.Row="0" Glyph="&#xE77B;" FontSize="40"/>
 
-        <TextBox x:Name="LoginTB" Grid.Row="1" PlaceholderText="Логин"/>
+        <TextBox x:Uid="LoginBox" x:Name="LoginTB" Grid.Row="1"/>
         
-        <TextBox x:Name="EmailTB" Grid.Row="2" PlaceholderText="Почта"/>
+        <TextBox x:Uid="EmailBox" x:Name="EmailTB" Grid.Row="2"/>
 
-        <PasswordBox x:Name="PasswordTB" Grid.Row="3" PlaceholderText="Пароль"/>
+        <PasswordBox x:Uid="PasswordBox" x:Name="PasswordTB" Grid.Row="3"/>
 
     </Grid>
 </UserControl>

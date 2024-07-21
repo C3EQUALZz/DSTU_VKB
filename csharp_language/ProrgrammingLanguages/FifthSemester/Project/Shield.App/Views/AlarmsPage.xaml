@@ -25,7 +25,7 @@
                 <Button.Content>
                     <StackPanel Orientation="Horizontal" Spacing="10">
                         <FontIcon Glyph="&#xE777;" FontSize="16"/>
-                        <TextBlock Text="Обновить список"/>
+                        <TextBlock x:Uid="UpdateListAlarmsButton"/>
                     </StackPanel>
                 </Button.Content>
             </Button>

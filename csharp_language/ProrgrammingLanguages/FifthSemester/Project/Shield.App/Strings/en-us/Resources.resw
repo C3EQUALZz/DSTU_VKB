@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppDisplayName" xml:space="preserve">
-    <value>Shield.App</value>
+    <value>Shield</value>
   </data>
   <data name="AppDescription" xml:space="preserve">
-    <value>Shield.App</value>
+    <value>Проект ОВО в соответствии с ТЗ</value>
   </data>
   <data name="Shell_Contracts.Content" xml:space="preserve">
     <value>Контракты</value>
@@ -172,5 +172,116 @@
   </data>
   <data name="Shell_Alarms.Content" xml:space="preserve">
     <value>Сигнализации</value>
+  </data>
+  <data name="AddressCreateContractDialog.PlaceholderText" xml:space="preserve">
+    <value>Адрес</value>
+  </data>
+  <data name="AddressProfileHeader.Text" xml:space="preserve">
+    <value>Почта:</value>
+  </data>
+  <data name="AlertContractButton.Text" xml:space="preserve">
+    <value>Тревога</value>
+  </data>
+  <data name="BaileeCreateContractDialog.PlaceholderText" xml:space="preserve">
+    <value>ФИО лица, ответственного за вскрытие помещения</value>
+  </data>
+  <data name="BaileeTitle.Text" xml:space="preserve">
+    <value>Ответственное лицо</value>
+  </data>
+  <data name="CommentCreateContractDialog.PlaceholderText" xml:space="preserve">
+    <value>Комментарий</value>
+  </data>
+  <data name="CommentTitle.Text" xml:space="preserve">
+    <value>Комментарий заказчика</value>
+  </data>
+  <data name="CreateContractButton.Text" xml:space="preserve">
+    <value>Создать</value>
+  </data>
+  <data name="DeleteContractButton.Text" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="EditContractButton.Text" xml:space="preserve">
+    <value>Изменить</value>
+  </data>
+  <data name="EmailBox.PlaceholderText" xml:space="preserve">
+    <value>Почта</value>
+  </data>
+  <data name="ExportContractButton.Text" xml:space="preserve">
+    <value>Экспорт</value>
+  </data>
+  <data name="FlyoutAlertButton.Text" xml:space="preserve">
+    <value>Тревога</value>
+  </data>
+  <data name="FlyoutDeleteButton.Text" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="FlyoutEditButton.Text" xml:space="preserve">
+    <value>Изменить</value>
+  </data>
+  <data name="FlyoutExportButton.Text" xml:space="preserve">
+    <value>Экспорт</value>
+  </data>
+  <data name="FlyoutPlanButton.Text" xml:space="preserve">
+    <value>План</value>
+  </data>
+  <data name="LoginBox.PlaceholderText" xml:space="preserve">
+    <value>Логин</value>
+  </data>
+  <data name="LoginButton.Content" xml:space="preserve">
+    <value>Войти</value>
+  </data>
+  <data name="LogoutButton.Content" xml:space="preserve">
+    <value>Выйти</value>
+  </data>
+  <data name="OrganizationCreateContractDialog.PlaceholderText" xml:space="preserve">
+    <value>Название организации</value>
+  </data>
+  <data name="OtherOwnersTB.Text" xml:space="preserve">
+    <value>Прочие владельцы:</value>
+  </data>
+  <data name="OwnersTitle.Text" xml:space="preserve">
+    <value>Владельцы</value>
+  </data>
+  <data name="PasswordBox.PlaceholderText" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="PlanContractButton.Text" xml:space="preserve">
+    <value>План</value>
+  </data>
+  <data name="SortContractButton.Text" xml:space="preserve">
+    <value>Сортировать</value>
+  </data>
+  <data name="SortTypeAddress.Text" xml:space="preserve">
+    <value>Адрес</value>
+  </data>
+  <data name="SortTypeAlarms.Text" xml:space="preserve">
+    <value>Вызовы</value>
+  </data>
+  <data name="SortTypeName.Text" xml:space="preserve">
+    <value>Имя</value>
+  </data>
+  <data name="SortTypeNo.Text" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="UIDProfileHeader.Text" xml:space="preserve">
+    <value>Уникальный идентификатор:</value>
+  </data>
+  <data name="UnauthorizedTip.Text" xml:space="preserve">
+    <value>Вход не выполнен. Войдите для получения доступа к сервису.</value>
+  </data>
+  <data name="UpdateListAlarmsButton.Text" xml:space="preserve">
+    <value>Обновить список</value>
+  </data>
+  <data name="UpdateListContractButton.Text" xml:space="preserve">
+    <value>Обновить список</value>
+  </data>
+  <data name="UploadPhotoButton.Content" xml:space="preserve">
+    <value>Выбрать фото</value>
+  </data>
+  <data name="UploadPlanButton.Content" xml:space="preserve">
+    <value>Выбрать план</value>
+  </data>
+  <data name="UserNameProfileHeader.Text" xml:space="preserve">
+    <value>Имя пользователя:</value>
   </data>
 </root>

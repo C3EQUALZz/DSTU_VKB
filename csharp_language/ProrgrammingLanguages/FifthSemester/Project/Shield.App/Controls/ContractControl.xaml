@@ -25,37 +25,37 @@
                 
                 <MenuFlyout>
                     
-                    <MenuFlyoutItem Text="Экспорт" Click="ExportButton_Click">
+                    <MenuFlyoutItem x:Uid="FlyoutExportButton" Click="ExportButton_Click">
                         <MenuFlyoutItem.Icon>
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF584;" FontSize="16"/>
                         </MenuFlyoutItem.Icon>
                     </MenuFlyoutItem>
-                    
-                    <MenuFlyoutItem Text="План" Click="PlanButton_Click">
+
+                    <MenuFlyoutItem x:Uid="FlyoutPlanButton" Click="PlanButton_Click">
                         <MenuFlyoutItem.Icon>
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEBD2;" FontSize="16"/>
                         </MenuFlyoutItem.Icon>
                     </MenuFlyoutItem>
                     
                     <MenuFlyoutSeparator/>
-                    
-                    <MenuFlyoutItem Text="Изменить" Click="EditButton_Click">
+
+                    <MenuFlyoutItem x:Uid="FlyoutEditButton" Click="EditButton_Click">
                         <MenuFlyoutItem.Icon>
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="16"/>
                         </MenuFlyoutItem.Icon>
                     </MenuFlyoutItem>
                     
                     <MenuFlyoutSeparator/>
-                    
-                    <MenuFlyoutItem Text="Удалить" Click="DeleteButton_Click">
+
+                    <MenuFlyoutItem x:Uid="FlyoutDeleteButton" Click="DeleteButton_Click">
                         <MenuFlyoutItem.Icon>
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;" FontSize="16"/>
                         </MenuFlyoutItem.Icon>
                     </MenuFlyoutItem>
                     
                     <MenuFlyoutSeparator/>
-                    
-                    <MenuFlyoutItem Text="Тревога" Click="AlertButton_Click">
+
+                    <MenuFlyoutItem x:Uid="FlyoutAlertButton" Click="AlertButton_Click">
                         <MenuFlyoutItem.Icon>
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE783;" FontSize="16"/>
                         </MenuFlyoutItem.Icon>
@@ -119,15 +119,15 @@
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
                         
-                        <TextBlock Grid.Row="0" Text="Ответственное лицо" Style="{StaticResource PageTitleStyle}"/>
+                        <TextBlock x:Uid="BaileeTitle" Grid.Row="0" Style="{StaticResource PageTitleStyle}"/>
 
                         <TextBlock Grid.Row="1" Text="{x:Bind Bailee, Mode=OneWay}" Margin="16 0 0 0" FontWeight="Medium" FontSize="18"/>
-                        
-                        <TextBlock Grid.Row="2" Text="Владельцы" Style="{StaticResource PageTitleStyle}"/>
+
+                        <TextBlock x:Uid="OwnersTitle" Grid.Row="2" Style="{StaticResource PageTitleStyle}"/>
 
                         <ListView Grid.Row="3" ItemsSource="{x:Bind OwnersControls}" SelectionMode="None" MaxHeight="200"/>
 
-                        <TextBlock Grid.Row="4" Text="Комментарий заказчика" Style="{StaticResource PageTitleStyle}"/>
+                        <TextBlock x:Uid="CommentTitle" Grid.Row="4" Style="{StaticResource PageTitleStyle}"/>
 
                         <TextBlock Grid.Row="5" Text="{x:Bind Comment, Mode=OneWay}" Margin="16 0 0 0" TextWrapping="Wrap"/>
 
@@ -145,7 +145,7 @@
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal" Spacing="10">
                                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF584;" FontSize="16"/>
-                                        <TextBlock Text="Экспорт"/>
+                                        <TextBlock x:Uid="ExportContractButton"/>
                                     </StackPanel>
                                 </Button.Content>
                             </Button>
@@ -153,7 +153,7 @@
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal" Spacing="10">
                                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEBD2;" FontSize="16"/>
-                                        <TextBlock Text="План"/>
+                                        <TextBlock x:Uid="PlanContractButton"/>
                                     </StackPanel>
                                 </Button.Content>
                             </Button>
@@ -161,7 +161,7 @@
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal" Spacing="10">
                                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="16"/>
-                                        <TextBlock Text="Изменить"/>
+                                        <TextBlock x:Uid="EditContractButton"/>
                                     </StackPanel>
                                 </Button.Content>
                             </Button>
@@ -169,7 +169,7 @@
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal" Spacing="10">
                                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;" FontSize="16"/>
-                                        <TextBlock Text="Удалить"/>
+                                        <TextBlock x:Uid="DeleteContractButton"/>
                                     </StackPanel>
                                 </Button.Content>
                             </Button>
@@ -177,7 +177,7 @@
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal" Spacing="10">
                                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE783;" FontSize="16"/>
-                                        <TextBlock Text="Тревога"/>
+                                        <TextBlock x:Uid="AlertContractButton"/>
                                     </StackPanel>
                                 </Button.Content>
                             </Button>

@@ -18,10 +18,10 @@
             <RowDefinition Height="357"/>
         </Grid.RowDefinitions>
 
-        <TextBox x:Name="BaileeTB" Grid.Row="0" PlaceholderText="ФИО лица, ответственного за вскрытие помещения" TextChanged="BaileeTB_TextChanged"/>
-        <TextBox x:Name="AddressTB" Grid.Row="1" PlaceholderText="Адрес" TextChanged="AddressTB_TextChanged"/>
-        <TextBox x:Name="CommentTB" Grid.Row="2" PlaceholderText="Комментарий" TextChanged="CommentTB_TextChanged"/>
-        <TextBox x:Name="OrganizationTB" Grid.Row="3" PlaceholderText="Название организации" TextChanged="OrganizationTB_TextChanged"/>
+        <TextBox x:Uid="BaileeCreateContractDialog" x:Name="BaileeTB" Grid.Row="0" TextChanged="BaileeTB_TextChanged"/>
+        <TextBox x:Uid="AddressCreateContractDialog" x:Name="AddressTB" Grid.Row="1" TextChanged="AddressTB_TextChanged"/>
+        <TextBox x:Uid="CommentCreateContractDialog" x:Name="CommentTB" Grid.Row="2" TextChanged="CommentTB_TextChanged"/>
+        <TextBox x:Uid="OrganizationCreateContractDialog" x:Name="OrganizationTB" Grid.Row="3" TextChanged="OrganizationTB_TextChanged"/>
         <Grid Grid.Row="4" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
@@ -31,7 +31,7 @@
 
             <StackPanel Grid.Column="0" Spacing="5">
                 <StackPanel Orientation="Horizontal" Spacing="10">
-                    <TextBlock Text="Прочие владельцы:"/>
+                    <TextBlock x:Uid="OtherOwnersTB"/>
                     <Button Content="+" Padding="0" Width="20" Height="20" Click="AddOwnerButtonClick"/>
                 </StackPanel>
                 <Border  MaxHeight="80">
@@ -42,12 +42,12 @@
             </StackPanel>
 
             <StackPanel Grid.Column="1" HorizontalAlignment="Right">
-                <Button x:Name="LoadPhotoButton" Content="Выбрать фото" Click="LoadPhotoButtonClick"/>
+                <Button x:Uid="UploadPhotoButton" x:Name="LoadPhotoButton" Click="LoadPhotoButtonClick"/>
                 <TextBlock x:Name="PhotoPathTB" Text="{x:Bind PhotoPath, Mode=OneWay}" TextAlignment="Right"/>
             </StackPanel>
 
             <StackPanel Grid.Column="2" HorizontalAlignment="Right">
-                <Button x:Name="LoadPlanButton" Content="Выбрать план" Click="LoadPlanButtonClick"/>
+                <Button x:Uid="UploadPlanButton" x:Name="LoadPlanButton" Click="LoadPlanButtonClick"/>
                 <TextBlock x:Name="PlanPathTB" Text="{x:Bind PlanPath, Mode=OneWay}" TextAlignment="Right"/>
             </StackPanel>
         </Grid>
