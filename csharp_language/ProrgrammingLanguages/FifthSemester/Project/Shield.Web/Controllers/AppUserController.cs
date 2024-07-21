@@ -6,6 +6,7 @@ using Shield.Web.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 using Shield.DataAccess.DTOs;
+using System.Security.Claims;
 
 namespace Shield.Web.Controllers;
 
@@ -24,6 +25,45 @@ public class AppUserController : ControllerBase
         _tokenService = tokenService;
         _signInManager = signInManager;
         _roleManager = roleManager;
+    }
+
+    [HttpGet("me")]
+    [Authorize]
+    public async Task<IActionResult> Me()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var user = await _userManager.FindByIdAsync(userId);
+
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(new ProfileInfoDto
+        {
+            Id = userId,
+            UserName = user.UserName,
+            Email = user.Email
+        });
+    }
+
+    [HttpGet("profile/{id}")]
+    [Authorize]
+    public async Task<IActionResult> GetProfile([FromRoute] string id)
+    {
+        var user = await _userManager.FindByIdAsync(id);
+
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(new ProfileInfoDto
+        {
+            Id = id,
+            UserName = user.UserName,
+            Email = user.Email
+        });
     }
 
     [HttpGet("check")]
@@ -93,7 +133,7 @@ public class AppUserController : ControllerBase
         }
 
         var user = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == dto.UserName);
-
+        
         if (user == null)
         {
             return Unauthorized("Invalid username");
@@ -107,7 +147,8 @@ public class AppUserController : ControllerBase
         {
             UserName = user.UserName,
             Email = user.Email,
-            Token = await _tokenService.CreateToken(user)
+            Token = await _tokenService.CreateToken(user),
+            Id = user.Id
         });
     }
 
