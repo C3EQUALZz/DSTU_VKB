@@ -5,7 +5,6 @@ using Microsoft.UI.Xaml.Controls;
 using Shield.App.Controls;
 using Shield.App.Helpers;
 using Shield.App.ViewModels;
-using Windows.UI.Notifications;
 
 namespace Shield.App.Views;
 public sealed partial class AlarmsPage : Page, INotifyPropertyChanged
