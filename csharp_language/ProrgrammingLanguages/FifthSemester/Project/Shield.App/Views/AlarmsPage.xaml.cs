@@ -9,13 +9,10 @@ using Shield.App.ViewModels;
 using Shield.DataAccess.DTOs;
 
 namespace Shield.App.Views;
-public sealed partial class AlarmsPage : Page, INotifyPropertyChanged
+public sealed partial class AlarmsPage : Page
 {
+    private readonly ShellPage Shell;
     private ObservableCollection<AlarmControl> AlarmControls = new();
-    private string NotificationTitle { get; set; }
-    private string NotificationSubtitle { get; set; }
-
-    public event PropertyChangedEventHandler PropertyChanged;
 
     public AlarmsViewModel ViewModel
     {
@@ -26,7 +23,7 @@ public sealed partial class AlarmsPage : Page, INotifyPropertyChanged
     {
         ViewModel = App.GetService<AlarmsViewModel>();
         this.InitializeComponent();
-
+        Shell = ShellPage.Instance;
         LoadAlarms();
     }
 
@@ -36,7 +33,7 @@ public sealed partial class AlarmsPage : Page, INotifyPropertyChanged
 
         if (response == null || !response.IsSuccessStatusCode)
         {
-            Notify("Error".GetLocalized(), "ServerNotRespondingErrorDescription".GetLocalized());
+            Shell.Notify("Error".GetLocalized(), "ServerNotRespondingErrorDescription".GetLocalized());
             return;
         }
 
@@ -44,13 +41,13 @@ public sealed partial class AlarmsPage : Page, INotifyPropertyChanged
 
         if (alarms == null)
         {
-            Notify("Error".GetLocalized(), "UnableToLoadAlarmsErrorDescription".GetLocalized());
+            Shell.Notify("Error".GetLocalized(), "UnableToLoadAlarmsErrorDescription".GetLocalized());
             return;
         }
 
         if (alarms.Count == 0)
         {
-            Notify($"{"Empty".GetLocalized()}!", "EmptyAlarmsListErrorDescription".GetLocalized());
+            Shell.Notify($"{"Empty".GetLocalized()}!", "EmptyAlarmsListErrorDescription".GetLocalized());
             return;
         }
 
@@ -64,21 +61,5 @@ public sealed partial class AlarmsPage : Page, INotifyPropertyChanged
     {
         AlarmControls.Clear();
         await LoadAlarms();
-    }
-
-    private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-
-    private void Notify(string title, string subtitle = "")
-    {
-        NotificationTitle = title;
-        NotificationSubtitle = subtitle;
-
-        NotifyPropertyChanged(nameof(NotificationTitle));
-        NotifyPropertyChanged(nameof(NotificationSubtitle));
-
-        Notification.IsOpen = true;
     }
 }

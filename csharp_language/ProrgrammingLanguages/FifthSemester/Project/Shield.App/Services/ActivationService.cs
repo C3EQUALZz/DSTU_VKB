@@ -5,6 +5,9 @@ using Shield.App.Activation;
 using Shield.App.Contracts.Services;
 using Shield.App.Views;
 
+using Shield.App.Helpers;
+using Shield.App.Dialogs;
+
 namespace Shield.App.Services;
 
 public class ActivationService : IActivationService
@@ -41,6 +44,28 @@ public class ActivationService : IActivationService
 
         // Execute tasks after activation.
         await StartupAsync();
+
+        var root = App.MainWindow.Content as FrameworkElement;
+        if (root != null)
+            root.Loaded += async (s, e) =>
+            {
+                var response = await ApiHelper.CheckConnection();
+
+                if (response == null || !response.IsSuccessStatusCode)
+                {
+                    await ShowLoginNotification(root.XamlRoot);
+                }
+            };
+    }
+
+    private async Task ShowLoginNotification(XamlRoot root)
+    {
+        var response = await AuthHelper.ShowAuthDialogAsync(root);
+
+        if (response != null)
+        {
+            ShellPage.Instance.Notify("Error".GetLocalized(), response);
+        }
     }
 
     private async Task HandleActivationAsync(object activationArgs)

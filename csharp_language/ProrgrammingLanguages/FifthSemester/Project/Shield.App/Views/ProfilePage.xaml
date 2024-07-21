@@ -26,6 +26,5 @@
             <TextBlock x:Uid="UnauthorizedTip" Style="{StaticResource BodyStrongTextBlockStyle}"/>
             <Button x:Uid="LoginButton" Click="LoginButton_Click"/>
         </StackPanel>
-        
     </Grid>
 </Page>

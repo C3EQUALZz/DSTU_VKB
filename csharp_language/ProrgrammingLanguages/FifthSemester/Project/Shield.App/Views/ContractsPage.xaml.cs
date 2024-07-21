@@ -14,14 +14,14 @@ using Windows.Storage;
 using Shield.App.Enums;
 using System.Reflection;
 using Spire.Doc;
+using Shield.App.Services;
 
 namespace Shield.App.Views;
 
 public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 {
+    private readonly ShellPage Shell;
     private ObservableCollection<ContractControl> contractControls = new();
-    private string NotificationTitle { get; set; }
-    private string NotificationSubtitle { get; set; }
 
     private SortingType SortingType { get; set; } = SortingType.None;
 
@@ -35,6 +35,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
     public ContractsPage()
     {
         ViewModel = App.GetService<ContractsViewModel>();
+        Shell = ShellPage.Instance;
         InitializeComponent();
     }
 
@@ -58,13 +59,13 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
         {
             if (content.Plan == null)
             {
-                Notify("FormFillError".GetLocalized(), "PlanIsRequiedError".GetLocalized());
+                Shell.Notify("FormFillError".GetLocalized(), "PlanIsRequiedError".GetLocalized());
                 return;
             }
 
             if (content.Picture == null)
             {
-                Notify("FormFillError".GetLocalized(), "PhotoIsRequiredError".GetLocalized());
+                Shell.Notify("FormFillError".GetLocalized(), "PhotoIsRequiredError".GetLocalized());
                 return;
             }
 
@@ -120,7 +121,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
             // Проверяем, что пользователь изменил какое-либо поле
             if (!content.IsEdited)
             {
-                Notify("ChangedNotAppliedErrorTitle".GetLocalized(), "ChangedNotAppliedErrorDescription".GetLocalized());
+                Shell.Notify("ChangedNotAppliedErrorTitle".GetLocalized(), "ChangedNotAppliedErrorDescription".GetLocalized());
                 return;
             }
 
@@ -240,7 +241,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 
             doc.Close();
 
-            Notify("ReportCreatedNotification".GetLocalized(), $"{"Contract".GetLocalized()} №{contract.ContractId}\n{file.Path}");
+            Shell.Notify("ReportCreatedNotification".GetLocalized(), $"{"Contract".GetLocalized()} №{contract.ContractId}\n{file.Path}");
         }
     }
 
@@ -273,7 +274,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 
             if (contract == null)
             {
-                Notify("OperationCancelled".GetLocalized(), "HttpResponseParseError".GetLocalized());
+                Shell.Notify("OperationCancelled".GetLocalized(), "HttpResponseParseError".GetLocalized());
                 await file.DeleteAsync();
                 return;
             }
@@ -287,14 +288,14 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
             }
             else
             {
-                Notify("OperationCancelled".GetLocalized(), "FileCannotBeSavedError".GetLocalized());
+                Shell.Notify("OperationCancelled".GetLocalized(), "FileCannotBeSavedError".GetLocalized());
                 await file.DeleteAsync();
                 return;
             }
         }
         else
         {
-            Notify("OperationCancelled".GetLocalized(), "FileToWriteNotSelectedError".GetLocalized());
+            Shell.Notify("OperationCancelled".GetLocalized(), "FileToWriteNotSelectedError".GetLocalized());
             return;
         }
     }
@@ -314,7 +315,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 
         if (result == ContentDialogResult.Primary)
         {
-            Notify("AlarmWorked".GetLocalized(), $"{sender.Address} - {sender.Organization}\nID: {sender.ContractId}\n{"Bailee".GetLocalized()}: {sender.Bailee}\n{sender.Comment}");
+            Shell.Notify("AlarmWorked".GetLocalized(), $"{sender.Address} - {sender.Organization}\nID: {sender.ContractId}\n{"Bailee".GetLocalized()}: {sender.Bailee}\n{sender.Comment}");
             
             var response = await ApiHelper.CreateAlarm(new() { ContractId = sender.ContractId, Date = DateTime.Now });
 
@@ -371,7 +372,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
         {
             if (contracts.Count == 0)
             {
-                Notify($"{"Empty".GetLocalized()}!", "NoContractsFound".GetLocalized());
+                Shell.Notify($"{"Empty".GetLocalized()}!", "NoContractsFound".GetLocalized());
                 return;
             }
             
@@ -390,19 +391,8 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
         }
         else
         {
-            Notify("RequestRuntimeError".GetLocalized(), "CheckInternetConnectionOrLogin".GetLocalized());
+            Shell.Notify("RequestRuntimeError".GetLocalized(), "CheckInternetConnectionOrLogin".GetLocalized());
         }
-    }
-
-    private void Notify(string title, string subtitle = "")
-    {
-        NotificationTitle = title;
-        NotificationSubtitle = subtitle;
-
-        NotifyPropertyChanged(nameof(NotificationTitle));
-        NotifyPropertyChanged(nameof(NotificationSubtitle));
-
-        Notification.IsOpen = true;
     }
 
     private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
@@ -459,45 +449,33 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
     {
         if (response == null)
         {
-            Notify("Error".GetLocalized(), "ServerNotRespondingErrorDescription".GetLocalized());
+            Shell.Notify("Error".GetLocalized(), "ServerNotRespondingErrorDescription".GetLocalized());
             return;
         }
 
         switch (response.StatusCode)
         {
             case System.Net.HttpStatusCode.Unauthorized:
-                //HttpResponseMessage? resp_t;
-                //do
-                //{
-                //    var logr = await AuthHelper.ShowAuthDialogAsync(this.XamlRoot);
-
-                //    if (logr != null)
-                //    {
-                //        Notify("Ошибка", logr);
-                //    }
-
-                //    resp_t = await ApiHelper.CheckConnection();
-                //} while (resp_t == null || resp_t.StatusCode == System.Net.HttpStatusCode.Unauthorized);
-                await AuthHelper.ShowAuthDialogAsync(this.XamlRoot);
+                Shell.Notify("Error".GetLocalized(), "NotAuthorizedErrorDescription".GetLocalized());
                 break;
             case System.Net.HttpStatusCode.Forbidden:
-                Notify("Error".GetLocalized(), "NotAllowedErrorDescription".GetLocalized());
+                Shell.Notify("Error".GetLocalized(), "NotAllowedErrorDescription".GetLocalized());
                 break;
             case System.Net.HttpStatusCode.NotFound:
-                Notify("Error".GetLocalized(), "NotFoundErrorDescription".GetLocalized());
+                Shell.Notify("Error".GetLocalized(), "NotFoundErrorDescription".GetLocalized());
                 break;
             case System.Net.HttpStatusCode.TooManyRequests:
-                Notify("Error".GetLocalized(), "TooManyRequestsErrorDescription".GetLocalized());
+                Shell.Notify("Error".GetLocalized(), "TooManyRequestsErrorDescription".GetLocalized());
                 break;
             case System.Net.HttpStatusCode.InternalServerError:
-                Notify("Error".GetLocalized(), "InternalServerErrorDescription".GetLocalized());
+                Shell.Notify("Error".GetLocalized(), "InternalServerErrorDescription".GetLocalized());
                 System.Diagnostics.Debug.WriteLine(await response.Content.ReadAsStringAsync());
                 break;
             case System.Net.HttpStatusCode.BadRequest:
-                Notify("Error".GetLocalized(), "BadRequestErrorDescription".GetLocalized());
+                Shell.Notify("Error".GetLocalized(), "BadRequestErrorDescription".GetLocalized());
                 break;
             default:
-                Notify("Error".GetLocalized(), defaultMessage ?? "DefaultErrorMessageDescription".GetLocalized());
+                Shell.Notify("Error".GetLocalized(), defaultMessage ?? "DefaultErrorMessageDescription".GetLocalized());
                 break;
         }
     }

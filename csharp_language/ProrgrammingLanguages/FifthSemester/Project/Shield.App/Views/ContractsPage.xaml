@@ -83,16 +83,6 @@
                 </Button>
             </Grid>
         </Border>
-
-        <TeachingTip 
-            x:Name="Notification"
-	        Title="{x:Bind NotificationTitle, Mode=OneWay}"
-	        Subtitle="{x:Bind NotificationSubtitle, Mode=OneWay}"
-	        PreferredPlacement="Auto"
-	        PlacementMargin="20"
-	        IsLightDismissEnabled="True"
-	        >
-        </TeachingTip>
-
+        
     </Grid>
 </Page>

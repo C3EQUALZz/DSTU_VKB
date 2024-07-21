@@ -1,4 +1,6 @@
-﻿using Microsoft.UI.Xaml;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 
@@ -11,8 +13,16 @@ using Windows.System;
 namespace Shield.App.Views;
 
 // TODO: Update NavigationViewItem titles and icons in ShellPage.xaml.
-public sealed partial class ShellPage : Page
+public sealed partial class ShellPage : Page, INotifyPropertyChanged
 {
+    public event PropertyChangedEventHandler PropertyChanged;
+    
+    public static ShellPage Instance { get; private set; }
+    
+    private string NotificationTitle { get; set; }
+    private string NotificationSubtitle { get; set; }
+
+
     public ShellViewModel ViewModel
     {
         get;
@@ -33,6 +43,8 @@ public sealed partial class ShellPage : Page
         App.MainWindow.SetTitleBar(AppTitleBar);
         App.MainWindow.Activated += MainWindow_Activated;
         AppTitleBarText.Text = "AppDisplayName".GetLocalized();
+
+        Instance = this;
     }
 
     private void OnLoaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
@@ -90,5 +102,21 @@ public sealed partial class ShellPage : Page
         }
 
         settingsNavigationViewItem.Content = "Параметры";
+    }
+
+    private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    public void Notify(string title, string description = "")
+    {
+        NotificationTitle = title;
+        NotificationSubtitle = description;
+
+        NotifyPropertyChanged(nameof(NotificationTitle));
+        NotifyPropertyChanged(nameof(NotificationSubtitle));
+
+        Notification.IsOpen = true;
     }
 }

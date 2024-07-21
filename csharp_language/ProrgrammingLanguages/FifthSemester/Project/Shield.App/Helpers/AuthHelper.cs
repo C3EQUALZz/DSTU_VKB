@@ -3,6 +3,7 @@ using Shield.App.Controls;
 using Shield.DataAccess.DTOs;
 using Microsoft.UI.Xaml;
 using System.Net.Http.Json;
+using Windows.Storage;
 
 namespace Shield.App.Helpers;
 public static class AuthHelper
@@ -25,7 +26,30 @@ public static class AuthHelper
 
         if (result == ContentDialogResult.Primary)
         {
-            await ApiHelper.Login(content.Login, content.Password);
+            var response = await ApiHelper.Login(content.Login, content.Password);
+
+            if (response == null) return null;
+
+            if (!response.IsSuccessStatusCode)
+            {
+                System.Diagnostics.Debug.WriteLine(await response.Content.ReadAsStringAsync());
+
+                try
+                {
+                    return string.Join("\n", (await response.Content.ReadFromJsonAsync<HttpResponseDto>()).Errors.Values.SelectMany(x => x));
+                }
+                catch
+                {
+                    return await response.Content.ReadAsStringAsync();
+                }
+            }
+
+            var dto = await response.Content.ReadFromJsonAsync<LoginResponseDto>();
+
+            if (dto != null)
+            {
+                ApplicationData.Current.LocalSettings.Values["apiToken"] = dto.Token;
+            }
         }
         else if (result == ContentDialogResult.Secondary)
         {

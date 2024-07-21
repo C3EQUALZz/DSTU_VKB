@@ -9,6 +9,7 @@ using System.Net.Http.Json;
 namespace Shield.App.Views;
 public sealed partial class ProfilePage : Page, INotifyPropertyChanged
 {
+    private readonly ShellPage Shell;
     private bool isLoggedIn = false;
     public bool IsLoggedIn
     {
@@ -32,6 +33,7 @@ public sealed partial class ProfilePage : Page, INotifyPropertyChanged
     public ProfilePage()
     {
         this.InitializeComponent();
+        Shell = ShellPage.Instance;
     }
 
     private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
@@ -60,8 +62,16 @@ public sealed partial class ProfilePage : Page, INotifyPropertyChanged
 
     private async void LoginButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
     {
-        await AuthHelper.ShowAuthDialogAsync(this.XamlRoot);
-        await VerifyLoginStatus();
+        var response = await AuthHelper.ShowAuthDialogAsync(this.XamlRoot);
+
+        if (response == null)
+        {
+            await VerifyLoginStatus();
+        }
+        else
+        {
+            Shell.Notify("Error".GetLocalized(), response);
+        }
     }
 
     private async void Page_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
@@ -71,10 +81,7 @@ public sealed partial class ProfilePage : Page, INotifyPropertyChanged
 
     private void LogoutButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
     {
-        if (ApplicationData.Current.LocalSettings.Values.ContainsKey("apiToken"))
-        {
-            ApplicationData.Current.LocalSettings.Values.Remove("apiToken");
-            IsLoggedIn = false;
-        }
+        ApplicationData.Current.LocalSettings.Values.Remove("apiToken");
+        IsLoggedIn = false;
     }
 }

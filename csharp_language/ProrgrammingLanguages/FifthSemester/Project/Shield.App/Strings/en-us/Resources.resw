@@ -311,6 +311,9 @@
   <data name="NotAllowedErrorDescription" xml:space="preserve">
     <value>Недостаточно прав для выполнения операции</value>
   </data>
+  <data name="NotAuthorizedErrorDescription" xml:space="preserve">
+    <value>Пользователь не авторизован</value>
+  </data>
   <data name="NotFoundErrorDescription" xml:space="preserve">
     <value>Сущность не найдена</value>
   </data>
@@ -337,6 +340,9 @@
   </data>
   <data name="PlanIsRequiedError" xml:space="preserve">
     <value>План объекта является обязательным</value>
+  </data>
+  <data name="Proceed" xml:space="preserve">
+    <value>Продолжить</value>
   </data>
   <data name="Register" xml:space="preserve">
     <value>Регистрация</value>

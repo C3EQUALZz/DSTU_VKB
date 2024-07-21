@@ -20,36 +20,16 @@ public class ApiHelper
         return await _sharedClient.SendAsync(request);
     }
     
-    public static async Task<object?> Login(string name, string password)
+    public static async Task<HttpResponseMessage?> Login(string name, string password)
     {
         using var request = new HttpRequestMessage();
         request.RequestUri = new Uri($"{_baseAddress}/user/login");
         request.Method = HttpMethod.Post;
         request.Content = JsonContent.Create(new LoginDto() { UserName=name, Password=password });
-        ///request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
 
-        try
-        {
-            var response = await _sharedClient.SendAsync(request);
-            var dto = await response.Content.ReadFromJsonAsync<LoginResponseDto>();
+        var response = await _sharedClient.SendAsync(request);
 
-            if (dto != null)
-            {
-                ApplicationData.Current.LocalSettings.Values["apiToken"] = dto.Token;
-                ApplicationData.Current.LocalSettings.Values["profileInfo"] = new ProfileInfoDto()
-                {
-                    Id = dto.Id,
-                    UserName = dto.UserName,
-                    Email = dto.Email
-                };
-            }
-
-            return dto;
-        }
-        catch (Exception ex)
-        {
-            return ex;
-        }
+        return response;
     }
     public static async Task<HttpResponseMessage?> Register(string name, string password, string email)
     {
