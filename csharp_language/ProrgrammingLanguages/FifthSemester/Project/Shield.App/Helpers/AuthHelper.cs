@@ -14,10 +14,10 @@ public static class AuthHelper
 
         dialog.XamlRoot = root;
         dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-        dialog.Title = $"Авторизация";
-        dialog.PrimaryButtonText = "Подтвердить";
-        dialog.SecondaryButtonText = "Регистрация";
-        dialog.CloseButtonText = "Отмена";
+        dialog.Title = "Auth".GetLocalized();
+        dialog.PrimaryButtonText = "Apply".GetLocalized();
+        dialog.SecondaryButtonText = "Register".GetLocalized();
+        dialog.CloseButtonText = "Cancel".GetLocalized();
         dialog.Content = content;
         dialog.DefaultButton = ContentDialogButton.Primary;
 
@@ -34,7 +34,6 @@ public static class AuthHelper
 
         return null;
     }
-
     public static async Task<string?> ShowRegisterDialogAsync(XamlRoot root)
     {
         var dialog = new ContentDialog();
@@ -42,9 +41,9 @@ public static class AuthHelper
 
         dialog.XamlRoot = root;
         dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-        dialog.Title = $"Регистрация";
-        dialog.PrimaryButtonText = "Подтвердить";
-        dialog.CloseButtonText = "Отмена";
+        dialog.Title = "Register".GetLocalized();
+        dialog.PrimaryButtonText = "Apply".GetLocalized();
+        dialog.CloseButtonText = "Cancel".GetLocalized();
         dialog.Content = content;
         dialog.DefaultButton = ContentDialogButton.Primary;
 

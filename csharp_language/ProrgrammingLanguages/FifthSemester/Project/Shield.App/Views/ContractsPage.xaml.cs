@@ -45,9 +45,9 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 
         dialog.XamlRoot = this.XamlRoot;
         dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-        dialog.Title = "Новый контракт";
-        dialog.PrimaryButtonText = "Сохранить";
-        dialog.CloseButtonText = "Отмена";
+        dialog.Title = "CreateContractDialogTitle".GetLocalized();
+        dialog.PrimaryButtonText = "Save".GetLocalized();
+        dialog.CloseButtonText = "Cancel".GetLocalized();
         dialog.DefaultButton = ContentDialogButton.Primary;
         dialog.Content = content;
         dialog.Width = 1400;
@@ -58,13 +58,13 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
         {
             if (content.Plan == null)
             {
-                Notify("Ошибка заполнения формы", "План объекта является обязательным");
+                Notify("FormFillError".GetLocalized(), "PlanIsRequiedError".GetLocalized());
                 return;
             }
 
             if (content.Picture == null)
             {
-                Notify("Ошибка заполнения формы", "Фото объекта является обязательным");
+                Notify("FormFillError".GetLocalized(), "PhotoIsRequiredError".GetLocalized());
                 return;
             }
 
@@ -106,9 +106,9 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
         
         dialog.XamlRoot = this.XamlRoot;
         dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-        dialog.Title = "Изменить контракт";
-        dialog.PrimaryButtonText = "Сохранить";
-        dialog.CloseButtonText = "Отмена";
+        dialog.Title = "EditContractDialogTitle".GetLocalized();
+        dialog.PrimaryButtonText = "Save".GetLocalized();
+        dialog.CloseButtonText = "Cancel".GetLocalized();
         dialog.DefaultButton = ContentDialogButton.Primary;
         dialog.Content = content;
         dialog.Width = 1400;
@@ -120,7 +120,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
             // Проверяем, что пользователь изменил какое-либо поле
             if (!content.IsEdited)
             {
-                Notify("Изменения не применены", "Не найдено изменений для обновления контракта");
+                Notify("ChangedNotAppliedErrorTitle".GetLocalized(), "ChangedNotAppliedErrorDescription".GetLocalized());
                 return;
             }
 
@@ -179,9 +179,9 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 
         dialog.XamlRoot = this.XamlRoot;
         dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-        dialog.Title = $"Вы уверены что хотите удалить контракт #{sender.ContractId} ({sender.Bailee})?";
-        dialog.PrimaryButtonText = "Удалить";
-        dialog.CloseButtonText = "Отмена";
+        dialog.Title = $"{"ContractDeletionApprovalDialogTitle".GetLocalized()} #{sender.ContractId} ({sender.Bailee})?";
+        dialog.PrimaryButtonText = "Delete".GetLocalized();
+        dialog.CloseButtonText = "Cancel".GetLocalized();
         dialog.DefaultButton = ContentDialogButton.Primary;
 
         var result = await dialog.ShowAsync();
@@ -240,7 +240,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 
             doc.Close();
 
-            Notify("Отчет успешно создан", $"Контракт №{contract.ContractId}\n{file.Path}");
+            Notify("ReportCreatedNotification".GetLocalized(), $"{"Contract".GetLocalized()} №{contract.ContractId}\n{file.Path}");
         }
     }
 
@@ -273,7 +273,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 
             if (contract == null)
             {
-                Notify("Операция отменена", "Ошибка парсинга ответа сервера");
+                Notify("OperationCancelled".GetLocalized(), "HttpResponseParseError".GetLocalized());
                 await file.DeleteAsync();
                 return;
             }
@@ -287,14 +287,14 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
             }
             else
             {
-                Notify("Операция отменена", "Файл не может быть сохранен");
+                Notify("OperationCancelled".GetLocalized(), "FileCannotBeSavedError".GetLocalized());
                 await file.DeleteAsync();
                 return;
             }
         }
         else
         {
-            Notify("Операция отменена", "Не выбран файл для записи");
+            Notify("OperationCancelled".GetLocalized(), "FileToWriteNotSelectedError".GetLocalized());
             return;
         }
     }
@@ -305,16 +305,16 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 
         dialog.XamlRoot = this.XamlRoot;
         dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-        dialog.Title = $"Вы уверены что хотите вызвать сигнализацию по объекту #{sender.ContractId} ({sender.Organization})?";
-        dialog.PrimaryButtonText = "Подтвердить";
-        dialog.CloseButtonText = "Отмена";
+        dialog.Title = $"{"ContractAlertApprovalDialogTitle".GetLocalized()} #{sender.ContractId} ({sender.Organization})?";
+        dialog.PrimaryButtonText = "Apply".GetLocalized();
+        dialog.CloseButtonText = "Cancel".GetLocalized();
         dialog.DefaultButton = ContentDialogButton.Primary;
 
         var result = await dialog.ShowAsync();
 
         if (result == ContentDialogResult.Primary)
         {
-            Notify("Сработала сигнализация", $"{sender.Address} - {sender.Organization}\nID Контракта: {sender.ContractId}\nОтветственное лицо: {sender.Bailee}\n{sender.Comment}");
+            Notify("AlarmWorked".GetLocalized(), $"{sender.Address} - {sender.Organization}\nID: {sender.ContractId}\n{"Bailee".GetLocalized()}: {sender.Bailee}\n{sender.Comment}");
             
             var response = await ApiHelper.CreateAlarm(new() { ContractId = sender.ContractId, Date = DateTime.Now });
 
@@ -371,7 +371,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
         {
             if (contracts.Count == 0)
             {
-                Notify("Пусто!", "Не найдено контрактов в базе данных");
+                Notify($"{"Empty".GetLocalized()}!", "NoContractsFound".GetLocalized());
                 return;
             }
             
@@ -390,7 +390,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
         }
         else
         {
-            Notify("Ошибка выполнения запроса", "Проверьте подключение к интернету или войдите в другой аккаунт");
+            Notify("RequestRuntimeError".GetLocalized(), "CheckInternetConnectionOrLogin".GetLocalized());
         }
     }
 
@@ -455,11 +455,11 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
         ResortContractsList();
     }
 
-    private async Task ProcessResponseErroStatusCode(HttpResponseMessage? response, string defaultMessage = "Не удалось выполнить веб-запрос\nПопробуйте повторить позже")
+    private async Task ProcessResponseErroStatusCode(HttpResponseMessage? response, string? defaultMessage = null)
     {
         if (response == null)
         {
-            Notify("Ошибка", "Сервер не отвечает");
+            Notify("Error".GetLocalized(), "ServerNotRespondingErrorDescription".GetLocalized());
             return;
         }
 
@@ -481,23 +481,23 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
                 await AuthHelper.ShowAuthDialogAsync(this.XamlRoot);
                 break;
             case System.Net.HttpStatusCode.Forbidden:
-                Notify("Ошибка", "Недостаточно прав для выполнения операции");
+                Notify("Error".GetLocalized(), "NotAllowedErrorDescription".GetLocalized());
                 break;
             case System.Net.HttpStatusCode.NotFound:
-                Notify("Ошибка", "Сущность не найдена");
+                Notify("Error".GetLocalized(), "NotFoundErrorDescription".GetLocalized());
                 break;
             case System.Net.HttpStatusCode.TooManyRequests:
-                Notify("Ошибка", "Слишком частые запросы на сервер, повторите попытку позже");
+                Notify("Error".GetLocalized(), "TooManyRequestsErrorDescription".GetLocalized());
                 break;
             case System.Net.HttpStatusCode.InternalServerError:
-                Notify("Ошибка", "Сервер вызвал исключение - для исправления ошибки обратитесь к разработчику");
+                Notify("Error".GetLocalized(), "InternalServerErrorDescription".GetLocalized());
                 System.Diagnostics.Debug.WriteLine(await response.Content.ReadAsStringAsync());
                 break;
             case System.Net.HttpStatusCode.BadRequest:
-                Notify("Ошибка", "Неверно составлен веб-запрос - для исправления ошибки обратитесь к разработчику");
+                Notify("Error".GetLocalized(), "BadRequestErrorDescription".GetLocalized());
                 break;
             default:
-                Notify("Ошибка", defaultMessage);
+                Notify("Error".GetLocalized(), defaultMessage ?? "DefaultErrorMessageDescription".GetLocalized());
                 break;
         }
     }

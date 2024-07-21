@@ -19,7 +19,7 @@ public class ApiHelper
 
         return await _sharedClient.SendAsync(request);
     }
-
+    
     public static async Task<object?> Login(string name, string password)
     {
         using var request = new HttpRequestMessage();
@@ -51,7 +51,6 @@ public class ApiHelper
             return ex;
         }
     }
-
     public static async Task<HttpResponseMessage?> Register(string name, string password, string email)
     {
         using var request = new HttpRequestMessage();
@@ -61,7 +60,7 @@ public class ApiHelper
 
         return await _sharedClient.SendAsync(request);
     }
-
+    
     public static async Task<HttpResponseMessage?> Me()
     {
         using var request = new HttpRequestMessage();
@@ -71,7 +70,6 @@ public class ApiHelper
 
         return await _sharedClient.SendAsync(request);
     }
-
     public static async Task<HttpResponseMessage?> GetUserProfile(string id)
     {
         using var request = new HttpRequestMessage();
@@ -81,7 +79,6 @@ public class ApiHelper
 
         return await _sharedClient.SendAsync(request);
     }
-
     public static async Task<HttpResponseMessage?> GetAllContracts()
     {
         using var request = new HttpRequestMessage();
@@ -91,7 +88,6 @@ public class ApiHelper
 
         return await _sharedClient.SendAsync(request);
     }
-
     public static async Task<HttpResponseMessage?> CreateContract(ContractDto contract)
     {
         using var request = new HttpRequestMessage();
@@ -104,7 +100,6 @@ public class ApiHelper
 
         return response;
     }
-
     public static async Task<HttpResponseMessage?> GetContractFull(int id)
     {
         using var request = new HttpRequestMessage();
@@ -116,7 +111,6 @@ public class ApiHelper
 
         return response;
     }
-
     public static async Task<HttpResponseMessage?> GetContractInfo(int id)
     {
         using var request = new HttpRequestMessage();
@@ -128,7 +122,6 @@ public class ApiHelper
 
         return response;
     }
-
     public static async Task<HttpResponseMessage?> DeleteContract(int id)
     {
         using var request = new HttpRequestMessage();
@@ -140,7 +133,6 @@ public class ApiHelper
 
         return response;
     }
-
     public static async Task<HttpResponseMessage?> UpdateContract(int id, ContractDto replacer)
     {
         using var request = new HttpRequestMessage();
@@ -173,8 +165,7 @@ public class ApiHelper
 
         return response;
     }
-
-    public static async Task<List<AlarmDto>?> GetAllAlarms()
+    public static async Task<HttpResponseMessage?> GetAllAlarms()
     {
         using var request = new HttpRequestMessage();
         request.RequestUri = new Uri($"{_baseAddress}/alarm");
@@ -183,11 +174,8 @@ public class ApiHelper
 
         var response = await _sharedClient.SendAsync(request);
 
-        var alarms = await response.Content.ReadFromJsonAsync<List<AlarmDto>>();
-
-        return alarms;
+        return response;
     }
-
     public static async Task<HttpResponseMessage?> CreateAlarm(CreateAlarmDto alarm)
     {
         using var request = new HttpRequestMessage();
@@ -200,13 +188,12 @@ public class ApiHelper
 
         return response;
     }
-
+    
     private class LoginDto
     {
         public string UserName { get; set; }
         public string Password { get; set; }
     }
-
     private class RegisterDto
     {
         public string UserName { get; set; }

@@ -1,10 +1,12 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using Microsoft.UI.Xaml.Controls;
 using Shield.App.Controls;
 using Shield.App.Helpers;
 using Shield.App.ViewModels;
+using Shield.DataAccess.DTOs;
 
 namespace Shield.App.Views;
 public sealed partial class AlarmsPage : Page, INotifyPropertyChanged
@@ -30,17 +32,25 @@ public sealed partial class AlarmsPage : Page, INotifyPropertyChanged
 
     public async Task LoadAlarms()
     {
-        var alarms = await ApiHelper.GetAllAlarms();
+        var response = await ApiHelper.GetAllAlarms();
+
+        if (response == null || !response.IsSuccessStatusCode)
+        {
+            Notify("Error".GetLocalized(), "ServerNotRespondingErrorDescription".GetLocalized());
+            return;
+        }
+
+        var alarms = await response.Content.ReadFromJsonAsync<List<AlarmDto>>();
 
         if (alarms == null)
         {
-            Notify("Ошибка", "Невозможно загрузить историю срабатываний сигнализаций на объектах\nПопробуйте позже");
+            Notify("Error".GetLocalized(), "UnableToLoadAlarmsErrorDescription".GetLocalized());
             return;
         }
 
         if (alarms.Count == 0)
         {
-            Notify("Пусто!", "Не найдено информации о прошлых срабатываниях сигнализаций");
+            Notify($"{"Empty".GetLocalized()}!", "EmptyAlarmsListErrorDescription".GetLocalized());
             return;
         }
 
