@@ -62,6 +62,6 @@ public class AlarmController : ControllerBase
 
         await _context.SaveChangesAsync();
 
-        return Ok(entity);
+        return Ok();
     }
 }
