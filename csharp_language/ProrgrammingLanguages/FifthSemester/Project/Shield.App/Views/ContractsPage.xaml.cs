@@ -261,7 +261,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
         {
             CachedFileManager.DeferUpdates(file);
 
-            var response = await ApiHelper.GetContract(sender.ContractId);
+            var response = await ApiHelper.GetContractFull(sender.ContractId);
 
             if (response == null || !response.IsSuccessStatusCode)
             {
@@ -324,7 +324,29 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
                 await ProcessResponseErroStatusCode(response);
                 return;
             }
+
+            await RefreshContractControl(sender);
         }
+    }
+
+    private async Task RefreshContractControl(ContractControl sender)
+    {
+        var response = await ApiHelper.GetContractInfo(sender.ContractId);
+
+        if (response == null || !response.IsSuccessStatusCode)
+        {
+            await ProcessResponseErroStatusCode(response);
+            return;
+        }
+
+        var dto = await response.Content.ReadFromJsonAsync<ContractDto>();
+
+        if (dto == null)
+        {
+            return;
+        }
+
+        sender.FromDto(dto);
     }
 
     private async void UpdateContractsListBtn_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
@@ -470,6 +492,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
                 break;
             case System.Net.HttpStatusCode.InternalServerError:
                 Notify("Ошибка", "Сервер вызвал исключение - для исправления ошибки обратитесь к разработчику");
+                System.Diagnostics.Debug.WriteLine(await response.Content.ReadAsStringAsync());
                 break;
             case System.Net.HttpStatusCode.BadRequest:
                 Notify("Ошибка", "Неверно составлен веб-запрос - для исправления ошибки обратитесь к разработчику");

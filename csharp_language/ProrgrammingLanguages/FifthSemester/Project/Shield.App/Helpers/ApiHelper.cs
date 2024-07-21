@@ -105,10 +105,22 @@ public class ApiHelper
         return response;
     }
 
-    public static async Task<HttpResponseMessage?> GetContract(int id)
+    public static async Task<HttpResponseMessage?> GetContractFull(int id)
     {
         using var request = new HttpRequestMessage();
         request.RequestUri = new Uri($"{_baseAddress}/contract/{id}");
+        request.Method = HttpMethod.Get;
+        request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+
+        var response = await _sharedClient.SendAsync(request);
+
+        return response;
+    }
+
+    public static async Task<HttpResponseMessage?> GetContractInfo(int id)
+    {
+        using var request = new HttpRequestMessage();
+        request.RequestUri = new Uri($"{_baseAddress}/contract/{id}F");
         request.Method = HttpMethod.Get;
         request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
 

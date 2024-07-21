@@ -69,6 +69,37 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
         InitializeComponent();
     }
 
+    // Обновляет содержимое компонента в соответствии с полученным ContractDto
+    public void FromDto(ContractDto dto)
+    {
+        ContractId = dto.ContractId;
+        Address = dto.Address;
+        OwnersString = dto.Owners;
+        Bailee = dto.Bailee;
+        Comment = dto.Comment;
+        Plan = dto.Plan;
+        Date = dto.SignDate;
+        Picture = dto.Picture;
+        Organization = dto.Organization;
+        Alarms = dto.Alarms.ToList();
+        Bitmap = BitmapHelper.BytesToBitmap(dto.Picture.Data);
+
+        OwnersControls.Clear();
+
+        if (OwnersString != null)
+        {
+            var splittedOwners = OwnersString.Split(';');
+            for (var i = 0; i < splittedOwners.Count(); i++)
+            {
+                var tb = new TextBlock();
+                tb.Text = $"{i + 1}. {splittedOwners[i]}";
+                OwnersControls.Add(tb);
+            }
+        }
+
+        NotifyInfoChanged();
+    }
+
     // Возвращает ContractDto, где Plan = null
     public ContractDto ToDto(bool keepDate = true)
     {
@@ -88,7 +119,19 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
             },
             SignDate = keepDate ? Date : DateOnly.FromDateTime(DateTime.Now)
         };
-    } 
+    }
+
+    // Вызывает PropertyChanged событие для всех информационных полей компонента
+    public void NotifyInfoChanged()
+    {
+        NotifyPropertyChanged(nameof(Address));
+        NotifyPropertyChanged(nameof(Bailee));
+        NotifyPropertyChanged(nameof(Comment));
+        NotifyPropertyChanged(nameof(Date));
+        NotifyPropertyChanged(nameof(Organization));
+        NotifyPropertyChanged(nameof(Alarms));
+        NotifyPropertyChanged(nameof(Bitmap));
+    }
 
     private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
     {

@@ -85,8 +85,8 @@
                             <RowDefinition Height="30"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" Text="{x:Bind Organization}" Style="{StaticResource PageTitleStyle}"/>
-                        <TextBlock Grid.Row="1" Text="{x:Bind Address}" Style="{StaticResource BodyTextStyle}" Foreground="DarkGray"/>
+                        <TextBlock Grid.Row="0" Text="{x:Bind Organization, Mode=OneWay}" Style="{StaticResource PageTitleStyle}"/>
+                        <TextBlock Grid.Row="1" Text="{x:Bind Address, Mode=OneWay}" Style="{StaticResource BodyTextStyle}" Foreground="DarkGray"/>
 
                     </Grid>
 
@@ -105,7 +105,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Border Grid.Column="0" CornerRadius="4">
-                        <Image x:Name="BigThumbnail" Source="{x:Bind Bitmap}"/>
+                        <Image x:Name="BigThumbnail" Source="{x:Bind Bitmap, Mode=OneWay}"/>
                     </Border>
 
                     <Grid Grid.Column="1" RowSpacing="10">
@@ -121,7 +121,7 @@
                         
                         <TextBlock Grid.Row="0" Text="Ответственное лицо" Style="{StaticResource PageTitleStyle}"/>
 
-                        <TextBlock Grid.Row="1" Text="{x:Bind Bailee}" Margin="16 0 0 0" FontWeight="Medium" FontSize="18"/>
+                        <TextBlock Grid.Row="1" Text="{x:Bind Bailee, Mode=OneWay}" Margin="16 0 0 0" FontWeight="Medium" FontSize="18"/>
                         
                         <TextBlock Grid.Row="2" Text="Владельцы" Style="{StaticResource PageTitleStyle}"/>
 
@@ -129,7 +129,7 @@
 
                         <TextBlock Grid.Row="4" Text="Комментарий заказчика" Style="{StaticResource PageTitleStyle}"/>
 
-                        <TextBlock Grid.Row="5" Text="{x:Bind Comment}" Margin="16 0 0 0" TextWrapping="Wrap"/>
+                        <TextBlock Grid.Row="5" Text="{x:Bind Comment, Mode=OneWay}" Margin="16 0 0 0" TextWrapping="Wrap"/>
 
                     </Grid>
 
@@ -185,10 +185,10 @@
 
                         <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Right" Spacing="5">
                             <StackPanel Orientation="Horizontal" Spacing="5" HorizontalAlignment="Right">
-                                <TextBlock Text="{x:Bind Alarms.Count}" Style="{StaticResource CaptionTextBlockStyle}"/>
+                                <TextBlock Text="{x:Bind Alarms.Count, Mode=OneWay}" Style="{StaticResource CaptionTextBlockStyle}"/>
                                 <FontIcon Glyph="&#xE783;" FontSize="16"/>
                             </StackPanel>
-                            <TextBlock Text="{x:Bind Date}" Style="{StaticResource CaptionTextBlockStyle}"/>
+                            <TextBlock Text="{x:Bind Date, Mode=OneWay}" Style="{StaticResource CaptionTextBlockStyle}"/>
                         </StackPanel>
 
                     </Grid>
