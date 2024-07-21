@@ -115,6 +115,43 @@ public class ContractController : ControllerBase
 
     [HttpGet("{id}")]
     [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> GetContractFull([FromRoute] int id)
+    {
+        var entity = await _context.Contracts.Include(c => c.Plan).Include(c => c.Picture).Include(c => c.Alarms).FirstOrDefaultAsync(c => c.ContractId == id);
+        if (entity != null) return Ok(new ContractDto()
+        {
+            ContractId = entity.ContractId,
+            Address = entity.Address,
+            Owners = entity.Owners,
+            Bailee = entity.Bailee,
+            Comment = entity.Comment,
+            Organization = entity.Organization,
+            SignDate = entity.SignDate,
+            Plan = new PlanDto()
+            {
+                PlanId = entity.Plan.PlanId,
+                Title = entity.Plan.Title,
+                Type = entity.Plan.Type,
+                Data = entity.Plan.Data
+            },
+            Picture = new PictureDto()
+            {
+                PictureId = entity.Picture.PictureId,
+                Title = entity.Picture.Title,
+                Type = entity.Picture.Type,
+                Data = entity.Picture.Data
+            },
+            Alarms = entity.Alarms.Select(a => new AlarmDto()
+            {
+                AlarmId = a.AlarmId,
+                Date = a.Date
+            }).ToList()
+        });
+        else return NotFound();
+    }
+
+    [HttpGet("{id}F")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetContract([FromRoute] int id)
     {
         var entity = await _context.Contracts.Include(c => c.Plan).Include(c => c.Picture).Include(c => c.Alarms).FirstOrDefaultAsync(c => c.ContractId == id);
