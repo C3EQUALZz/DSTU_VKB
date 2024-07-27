@@ -101,7 +101,7 @@
 
 <b>Shield.App</b> - это приложение [WinUI 3](https://learn.microsoft.com/en-us/windows/apps/winui/winui3/), используемое в качестве «фронтенда» проекта. 
 
-Описывать механизмы работы фреймворка слишком долго, желающие найдут всю информацию в документации по ссылке выше, здесь вкратце расскажу что я наделал «кастомного».
+Описывать механизмы работы фреймворка слишком долго, желающие найдут всю информацию в документации по ссылке выше, здесь вкратце расскажу что я наделал «кастомного» и какие-то интересные фичи.
 
 ### Template Studio
 
@@ -149,12 +149,18 @@
 ![image](https://github.com/user-attachments/assets/e6a21afb-6e5d-4b23-961d-495e8a9ea264)<br>
 ![image](https://github.com/user-attachments/assets/c33215b1-9e83-4eb9-a02f-b2a060e32ef5)<br>
 
+### Карта
 
-
-
+Для удобства указания адреса объекта в диалоговом окне создания контракта был добавлен элемент управления ```WebView2```, отображающий [эту](Shield.App/Misc/html/map/index.html) HTML страницу. Она содержит ```div``` с Yandex Maps API, где в строке<br>
+```html
+<script src="https://api-maps.yandex.ru/2.1/?apikey=APIKEY&lang=ru_RU" type="text/javascript"></script>
+```
+слово ```APIKEY``` должно быть заменено уникальным токеном [Yandex API](https://developer.tech.yandex.ru/services) (вашим собственным или публикатора приложения)
 
 [Исходный код Shield.App](Shield.App)
 
 ## Shield.App.Core
+
+Вспомогательный проект Template Studio, не требующий внесения изменений
 
 [Исходный код Shield.App.Core](Shield.App.Core)
