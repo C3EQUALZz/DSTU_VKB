@@ -22,6 +22,8 @@
 
 # Структура проекта
 
+![Application Scheme](https://github.com/user-attachments/assets/e052ae32-2a3d-4f44-8830-7e2c0bd27731)
+
 В настоящий момент проект представляет из себя одно решение Visual Studio [Shield.sln](#Shield.sln), содержащее 4 проекта:
 - [Shield.DataAccess](#Shield.DataAccess)
 - [Shield.Web](#Shield.Web)
