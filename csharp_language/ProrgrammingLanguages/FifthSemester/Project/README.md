@@ -99,6 +99,60 @@
 
 ## Shield.App
 
+<b>Shield.App</b> - это приложение [WinUI 3](https://learn.microsoft.com/en-us/windows/apps/winui/winui3/), используемое в качестве «фронтенда» проекта. 
+
+Описывать механизмы работы фреймворка слишком долго, желающие найдут всю информацию в документации по ссылке выше, здесь вкратце расскажу что я наделал «кастомного».
+
+### Template Studio
+
+В проекте для ускорения разработки было принято использовать [Template Studio WinUI 3](https://github.com/microsoft/TemplateStudio) ([расширение для VS](https://marketplace.visualstudio.com/items?itemName=TemplateStudio.TemplateStudioForWinUICs)).
+
+Это небольшое приложение, позволяющее в пару кликов создать приложение WinUI 3, разместив в нем страницу навигации, которая будет открывать указанные вами в TemplateStudio страницы.<br>
+Вся последующая разработка ведется вручную.
+
+![image](https://github.com/user-attachments/assets/35ee5f64-3b4b-4880-91ec-f9035737d667)
+
+### Страницы
+
+Приложение имеет всего 4 [страницы](Shield.App/Views):
+- Контракты ```ContractsPage.xaml + ContractsPage.xaml.cs```
+- Сигнализации ```AlarmsPage.xaml + AlarmsPage.xaml.cs```
+- Профиль ```ProfilePage.xaml + ProfilePage.xaml.cs```
+- Настройки ```SettingsPage.xaml + SettingsPage.xaml.cs```
+
+![image](https://github.com/user-attachments/assets/1dc48323-2678-466f-bcb1-cc39a73e6519)<br>
+![image](https://github.com/user-attachments/assets/3cd8d9b1-0e7b-4a5f-a811-fa7e6476a5d4)<br>
+![image](https://github.com/user-attachments/assets/ef7d6c36-e365-4754-86d8-dacec3d73e98)<br>
+![image](https://github.com/user-attachments/assets/b903b0ef-cb32-4431-ba0c-19be478add46)<br>
+
+### Пользовательские элементы управления
+
+Для удобного управления были реализованы следующие [элементы управления](Sheild.App/Controls): 
+- ```ContractControl.xaml``` + ```ContractControl.xaml.cs```
+- ```AlarmControl.xaml``` + ```AlarmControl.xaml.cs```
+- ```RemovableTextBoxControl.xaml``` + ```RemovableTextBoxControl.xaml.cs```
+
+![image](https://github.com/user-attachments/assets/12c661ce-dad5-475b-ba4e-d04212bfbd6e)<br>
+![image](https://github.com/user-attachments/assets/efc4814d-96ae-45d3-95df-076b0f6fe13e)<br>
+![image](https://github.com/user-attachments/assets/a120f9a5-4d60-4742-b7dc-541a64a713f0)<br>
+
+### Диалоговые окна
+
+Для подтверждения действий или заполнения форм было принято использовать диалоговые окна, содержимое которых является полем ```Content``` диалогового окна и представляет из себя пользовательский элемент управления.
+
+Содержимое [диалоговых окон](Shield.App/Dialogs):
+- ```CreateContractContent.xaml``` + ```CreateContractContent.xaml.cs```
+- ```RegisterContent.xaml``` + ```RegisterContent.xaml.cs```
+- ```LoginContent.xaml``` + ```LoginContent.xaml.cs```
+
+![image](https://github.com/user-attachments/assets/b9c32915-9775-4938-95b1-f1170d04f411)<br>
+![image](https://github.com/user-attachments/assets/e6a21afb-6e5d-4b23-961d-495e8a9ea264)<br>
+![image](https://github.com/user-attachments/assets/c33215b1-9e83-4eb9-a02f-b2a060e32ef5)<br>
+
+
+
+
+
 [Исходный код Shield.App](Shield.App)
 
 ## Shield.App.Core
