@@ -12,7 +12,7 @@
 ## Принцип реализации
 
 Проект принято реализовать с использованием отдельных проектов: «клиент» - классическое приложение Windows для работы администрации ОВО с базой данных, и «сервер» - веб-приложение для манипуляций с единой базой данных всех контрактов предприятия.
-Такое решение было принято для минимизации клиентской нагрузки и возможности многопользовательской работы сервиса - несколько «клиентов» могут работать с одной единственной базой данных одновременно.
+Такое решение было принято для минимизации клиентской нагрузки и возможности многопользовательской работы сервиса - несколько «клиентов» могут работать с одной единственной базой данных одновременно, с возможностью авторизации администраторов, чтобы избежать доступа к функционалу сервиса неуполномоченными на то пользователями.
 
 # Фреймворки
 
@@ -32,16 +32,54 @@
 
 Проект <b>DataAccess</b> представляет из себя библиотеку классов .NET, содержащую все необходимые <i>DTO</i> (Data Transfer Object), используемые для обмена данными между ASP.NET и WinUI 3 посредством веб-запросов, а также все необходимые <i>модели</i> баз данных.
 
-[Исходный код](Shield.DataAccess)
+[Исходный код Shield.DataAccess](Shield.DataAccess)
 
 ## Shield.Web
 
-[Исходный код](Shield.Web)
+Проект <b>Web</b> является небольшим веб-приложением, отвечающим за все манипуляции с контрактами ОВО
+
+### База данных
+
+Выбранный тип СУБД - [SQLite](https://www.sqlite.org/), ввиду «скромного» функционала приложения.
+В среде [.NET](https://dotnet.microsoft.com/ru-ru/) манипуляции с базами данных принято выполнять с помощью фреймворка [Entity Framework](https://learn.microsoft.com/ru-ru/ef/)
+
+Логгирование пользователей реализуется с использованием [Identity Framework](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-8.0&tabs=visual-studio) и [JWT Bearer](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer?view=aspnetcore-8.0)
+
+В приложении задействовано две базы данных:
+- ```Identity.db```
+- ```Data.db```
+
+```Identity.db``` необходима для Identity Framework, содержит информацию о пользователях (слева).<br>
+```Data.db``` содержит информацию о контрактах ОВО (справа).
+
+![Identity.db relationships scheme](https://github.com/user-attachments/assets/8f442e2a-eb41-4610-b96c-6f8792cd8d7f)
+![Data.db relationships scheme](https://github.com/user-attachments/assets/fe020361-41ed-43ac-a59f-c5ef96d8fbb3)
+
+### Контексты
+
+В Entity Framework за создание, изменение и манипуляции с содержимым баз данных отвечают «контексты баз данных» - 1 контекст к 1 базе данных.<br>
+В представленном приложении таких контекстов всего два:
+- [```IdentityContext.cs```](Shield.Web/Data/Contexts/IdentityContext.cs)
+- [```DataContext.cs```](Shield.Web/Data/Contexts/DataContext.cs)
+
+### Модели
+
+Контексты баз данных содержат объекты типа ```DbSet``` - 1 сет к 1 таблице в базе данных.
+
+```IdentityContext``` использует всего одну модель - [```User```](Shield.Web/Data/Models/User.cs) - модель пользователя приложения, наследует ```IdentityUser``` без изменений.
+
+```DataContext``` использует 4 модели:
+- [```Contract```](Shield.DataAccess/Models/Contract.cs)
+- [```Plan```](Shield.DataAccess/Models/Plan.cs)
+- [```Picture```](Shield.DataAccess/Models/Picture.cs)
+- [```Alarm```](Shield.DataAccess/Models/Alarm.cs)
+
+[Исходный код Shield.Web](Shield.Web)
 
 ## Shield.App
 
-[Исходный код](Shield.App)
+[Исходный код Shield.App](Shield.App)
 
 ## Shield.App.Core
 
-[Исходный код](Shield.App.Core)
+[Исходный код Shield.App.Core](Shield.App.Core)
