@@ -74,6 +74,18 @@
 - [```Picture```](Shield.DataAccess/Models/Picture.cs)
 - [```Alarm```](Shield.DataAccess/Models/Alarm.cs)
 
+### REST API
+
+Веб-запросы в <b>ASP.NET</b> реализуются в контроллерах архитектуры MVC. Контроллеры приложения Shield.Web:
+- [```AppUserController```](Shield.Web/Controllers/AppUserController.cs)
+- [```AppRoleController```](Shield.Web/Controllers/RoleController.cs)
+- [```ContractController```](Shield.Web/Controllers/ContractController.cs)
+- [```AlarmController```](Shield.Web/Controllers/AlarmController.cs)
+
+Запросы в контроллерах:
+
+
+
 [Исходный код Shield.Web](Shield.Web)
 
 ## Shield.App
