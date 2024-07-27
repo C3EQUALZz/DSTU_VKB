@@ -84,7 +84,14 @@
 
 Запросы в контроллерах:
 
+![image](https://github.com/user-attachments/assets/b1a64fab-6130-460c-9a9c-dbb9951101ec)<br>
+![image](https://github.com/user-attachments/assets/f7310e75-c128-4807-af2c-8feeab04a58a)
 
+### Примечание
+
+Для запуска SwaggerUI (как на скриншотах запросов выше), необходимо [здесь](Shield.Web/Properties/launchSettings.json) убрать комментирование строк ```"launchBrowser": true```.
+
+Инициализация приложения происходит в скрипте [Program.cs](Shield.Web/Program.cs)
 
 [Исходный код Shield.Web](Shield.Web)
 
