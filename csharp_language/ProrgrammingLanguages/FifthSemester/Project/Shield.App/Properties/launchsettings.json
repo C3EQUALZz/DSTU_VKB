@@ -1,0 +1,10 @@
+﻿{
+    "profiles": {
+      "Shield.App (Package)": {
+        "commandName": "MsixPackage"
+      },
+      "Shield.App (Unpackaged)": {
+        "commandName": "Project"
+      }
+    }
+}
