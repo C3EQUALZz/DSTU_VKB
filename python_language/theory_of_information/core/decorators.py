@@ -18,4 +18,3 @@ def loggable(func):
         return result
 
     return wrapper
-
