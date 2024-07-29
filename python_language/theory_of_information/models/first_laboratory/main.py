@@ -25,11 +25,11 @@ def main() -> None:
     logger.info(f"Длина словаря - {len(dictionary_with_encoded_symbols)}, Закодированное сообщение - {encoded}")
 
     pretty_table = prettytable.PrettyTable()
+    for c in dictionary_with_encoded_symbols:
+        pretty_table.add_column(c, [])
+    pretty_table.add_row(['\n'.join(dictionary_with_encoded_symbols[c]) for c in dictionary_with_encoded_symbols])
 
-    for char in sorted(dictionary_with_encoded_symbols):
-        pretty_table.add_column(fieldname=char, column=dictionary_with_encoded_symbols[char])
-
-    logger.info(pretty_table)
+    logger.info("\n" + str(pretty_table))
 
 
 if __name__ == "__main__":
