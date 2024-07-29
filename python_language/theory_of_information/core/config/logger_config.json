@@ -27,6 +27,12 @@
       "formatter": "simple",
       "stream": "ext://sys.stderr"
     },
+    "info_console": {
+      "class": "logging.StreamHandler",
+      "level": "INFO",
+      "formatter": "simple",
+      "stream": "ext://sys.stdout"
+    },
     "file_json": {
       "class": "logging.handlers.RotatingFileHandler",
       "level": "DEBUG",
@@ -39,7 +45,8 @@
       "class": "logging.handlers.QueueHandler",
       "handlers": [
         "stderr",
-        "file_json"
+        "file_json",
+        "info_console"
       ],
       "respect_handler_level": true
     }
