@@ -96,9 +96,8 @@
 ![image](https://github.com/user-attachments/assets/b1a64fab-6130-460c-9a9c-dbb9951101ec)<br>
 ![image](https://github.com/user-attachments/assets/f7310e75-c128-4807-af2c-8feeab04a58a)
 
-### Примечание
-
-Для запуска SwaggerUI (как на скриншотах запросов выше), необходимо [здесь](Shield.Web/Properties/launchSettings.json) убрать комментирование строк ```"launchBrowser": true```.
+> [!TIP]
+> Для запуска SwaggerUI (как на скриншотах запросов выше), необходимо [здесь](Shield.Web/Properties/launchSettings.json) убрать комментирование строк ```"launchBrowser": true```.
 
 Инициализация приложения происходит в скрипте [Program.cs](Shield.Web/Program.cs)
 
@@ -106,7 +105,7 @@
 
 ## Shield.App
 
-<b>Shield.App</b> - это приложение [WinUI 3](https://learn.microsoft.com/en-us/windows/apps/winui/winui3/), используемое в качестве «фронтенда» проекта. 
+Проект <b>App</b> - это приложение [WinUI 3](https://learn.microsoft.com/en-us/windows/apps/winui/winui3/), используемое в качестве «фронтенда» проекта. 
 
 Описывать механизмы работы фреймворка слишком долго, желающие найдут всю информацию в документации по ссылке выше, здесь вкратце расскажу что я наделал «кастомного» и какие-то интересные фичи.
 
@@ -184,6 +183,20 @@
 
 > [!WARNING]
 > Используется <b>бесплатная</b> версия библиотеки FreeSpire, где действуют некоторые ограничения. Подбробности читайте в документации.
+
+### План объекта
+
+В диалоговом окне создания контракта пользователя просят выбрать из системы изображение объекта и его план ```.rvt``` формата документа [Autodesk Revit](https://www.autodesk.com/products/revit/overview?term=1-YEAR&tab=subscription)
+
+![image](https://github.com/user-attachments/assets/17cf0929-4efe-4d75-8d80-d60386e06e12)
+
+![image](https://github.com/user-attachments/assets/2a2e7a14-ea51-489e-8411-6fce74b3a914)
+
+> [!WARNING]
+> <b>Revit</b>, в особенности в паре с <b>AutoCad</b>, могут вызывать привыкание.<br>
+> Перед применением проконсультируйтесь со строителем.
+
+> Хочу в BIM Хочу в BIM Хочу в BIM
 
 [Исходный код Shield.App](Shield.App)
 
