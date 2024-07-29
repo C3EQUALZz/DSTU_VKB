@@ -1,14 +1,17 @@
 import heapq
 from collections import Counter, namedtuple
 
+from python_language.theory_of_information.core.decorators import loggable
+
 
 class Leaf(namedtuple('Leaf', 'char')):
-
+    @loggable
     def walk(self, code: dict[str, str], acc: str) -> None:
         code[self.char] = acc or "0"
 
 
 class Node(namedtuple('Node', ["left", "right"])):
+    @loggable
     def walk(self, code: dict[str, str], acc: str) -> None:
         """
         :param code:
@@ -21,6 +24,7 @@ class Node(namedtuple('Node', ["left", "right"])):
 class Huffman:
 
     @staticmethod
+    @loggable
     def encode(string: str) -> dict[str, str]:
         queue_with_priority = []
         code = {}
