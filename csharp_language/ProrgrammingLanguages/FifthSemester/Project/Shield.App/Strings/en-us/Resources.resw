@@ -1,0 +1,404 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppDisplayName" xml:space="preserve">
+    <value>Shield</value>
+  </data>
+  <data name="AppDescription" xml:space="preserve">
+    <value>Проект ОВО в соответствии с ТЗ</value>
+  </data>
+  <data name="Shell_Contracts.Content" xml:space="preserve">
+    <value>Контракты</value>
+  </data>
+  <data name="Settings_Personalization.Text" xml:space="preserve">
+    <value>Персонализация</value>
+  </data>
+  <data name="Settings_Theme.Text" xml:space="preserve">
+    <value>Тема</value>
+  </data>
+  <data name="Settings_Theme_Light.Content" xml:space="preserve">
+    <value>Светлая</value>
+  </data>
+  <data name="Settings_Theme_Dark.Content" xml:space="preserve">
+    <value>Темная</value>
+  </data>
+  <data name="Settings_Theme_Default.Content" xml:space="preserve">
+    <value>По умолчанию</value>
+  </data>
+  <data name="Settings_About.Text" xml:space="preserve">
+    <value>О приложении</value>
+  </data>
+  <data name="Settings_AboutDescription.Text" xml:space="preserve">
+    <value>Проект ОВО в соответствии с ТЗ</value>
+  </data>
+  <data name="SettingsPage_PrivacyTermsLink.Content" xml:space="preserve">
+    <value>Репозиторий GitHub</value>
+  </data>
+  <data name="SettingsPage_PrivacyTermsLink.NavigateUri" xml:space="preserve">
+    <value>https://www.github.com/aexra/Shield</value>
+  </data>
+  <data name="AppNotificationSamplePayload" xml:space="preserve">
+    <value>&lt;toast launch="action=ToastClick"&gt;
+  &lt;visual&gt;
+    &lt;binding template="ToastGeneric"&gt;
+      &lt;text&gt;App Notification&lt;/text&gt;
+      &lt;text&gt;&lt;/text&gt;
+      &lt;image placement="appLogoOverride" hint-crop="circle" src="{0}Assets/WindowIcon.ico"/&gt;
+    &lt;/binding&gt;
+  &lt;/visual&gt;
+  &lt;actions&gt;
+    &lt;action content="Settings" arguments="action=Settings"/&gt;
+  &lt;/actions&gt;
+&lt;/toast&gt;</value>
+  </data>
+  <data name="Shell_Profile.Content" xml:space="preserve">
+    <value>Профиль</value>
+  </data>
+  <data name="Shell_Alarms.Content" xml:space="preserve">
+    <value>Сигнализации</value>
+  </data>
+  <data name="AddressCreateContractDialog.PlaceholderText" xml:space="preserve">
+    <value>Адрес</value>
+  </data>
+  <data name="AddressProfileHeader.Text" xml:space="preserve">
+    <value>Почта:</value>
+  </data>
+  <data name="AlarmWorked" xml:space="preserve">
+    <value>Сработала сигнализация</value>
+  </data>
+  <data name="AlertContractButton.Text" xml:space="preserve">
+    <value>Тревога</value>
+  </data>
+  <data name="Apply" xml:space="preserve">
+    <value>Подтвердить</value>
+  </data>
+  <data name="Auth" xml:space="preserve">
+    <value>Авторизация</value>
+  </data>
+  <data name="BadRequestErrorDescription" xml:space="preserve">
+    <value>Неверно составлен веб-запрос - для исправления ошибки обратитесь к разработчику</value>
+  </data>
+  <data name="Bailee" xml:space="preserve">
+    <value>Ответственное лицо</value>
+  </data>
+  <data name="BaileeCreateContractDialog.PlaceholderText" xml:space="preserve">
+    <value>ФИО лица, ответственного за вскрытие помещения</value>
+  </data>
+  <data name="BaileeTitle.Text" xml:space="preserve">
+    <value>Ответственное лицо</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="ChangedNotAppliedErrorDescription" xml:space="preserve">
+    <value>Не найдено изменений для обновления контракта</value>
+  </data>
+  <data name="ChangedNotAppliedErrorTitle" xml:space="preserve">
+    <value>Изменения не применены</value>
+  </data>
+  <data name="CheckInternetConnectionOrLogin" xml:space="preserve">
+    <value>Проверьте подключение к интернету или войдите в другой аккаунт</value>
+  </data>
+  <data name="CommentCreateContractDialog.PlaceholderText" xml:space="preserve">
+    <value>Комментарий</value>
+  </data>
+  <data name="CommentTitle.Text" xml:space="preserve">
+    <value>Комментарий заказчика</value>
+  </data>
+  <data name="Contract" xml:space="preserve">
+    <value>Контракт</value>
+  </data>
+  <data name="ContractAlertApprovalDialogTitle" xml:space="preserve">
+    <value>Вы уверены что хотите вызвать сигнализацию по объекту</value>
+  </data>
+  <data name="ContractDeletionApprovalDialogTitle" xml:space="preserve">
+    <value>Вы уверены что хотите удалить контракт</value>
+  </data>
+  <data name="CreateContractButton.Text" xml:space="preserve">
+    <value>Создать</value>
+  </data>
+  <data name="CreateContractDialogTitle" xml:space="preserve">
+    <value>Новый контракт</value>
+  </data>
+  <data name="DefaultErrorMessageDescription" xml:space="preserve">
+    <value>Не удалось выполнить веб-запрос\nПопробуйте повторить позже</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="DeleteContractButton.Text" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="EditContractButton.Text" xml:space="preserve">
+    <value>Изменить</value>
+  </data>
+  <data name="EditContractDialogTitle" xml:space="preserve">
+    <value>Изменить контракт</value>
+  </data>
+  <data name="EmailBox.PlaceholderText" xml:space="preserve">
+    <value>Почта</value>
+  </data>
+  <data name="Empty" xml:space="preserve">
+    <value>Пусто</value>
+  </data>
+  <data name="EmptyAlarmsListErrorDescription" xml:space="preserve">
+    <value>Не найдено информации о прошлых срабатываниях сигнализаций</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Ошибка</value>
+  </data>
+  <data name="ExportContractButton.Text" xml:space="preserve">
+    <value>Экспорт</value>
+  </data>
+  <data name="FileCannotBeSavedError" xml:space="preserve">
+    <value>Файл не может быть сохранен</value>
+  </data>
+  <data name="FileToWriteNotSelectedError" xml:space="preserve">
+    <value>Не выбран файл для записи</value>
+  </data>
+  <data name="FlyoutAlertButton.Text" xml:space="preserve">
+    <value>Тревога</value>
+  </data>
+  <data name="FlyoutDeleteButton.Text" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="FlyoutEditButton.Text" xml:space="preserve">
+    <value>Изменить</value>
+  </data>
+  <data name="FlyoutExportButton.Text" xml:space="preserve">
+    <value>Экспорт</value>
+  </data>
+  <data name="FlyoutPlanButton.Text" xml:space="preserve">
+    <value>План</value>
+  </data>
+  <data name="FormFillError" xml:space="preserve">
+    <value>Ошибка заполнения формы</value>
+  </data>
+  <data name="HttpResponseParseError" xml:space="preserve">
+    <value>Ошибка парсинга ответа сервера</value>
+  </data>
+  <data name="InternalServerErrorDescription" xml:space="preserve">
+    <value>Сервер вызвал исключение - для исправления ошибки обратитесь к разработчику</value>
+  </data>
+  <data name="LoginBox.PlaceholderText" xml:space="preserve">
+    <value>Логин</value>
+  </data>
+  <data name="LoginButton.Content" xml:space="preserve">
+    <value>Войти</value>
+  </data>
+  <data name="LogoutButton.Content" xml:space="preserve">
+    <value>Выйти</value>
+  </data>
+  <data name="NoContractsFound" xml:space="preserve">
+    <value>Не найдено контрактов в базе данных</value>
+  </data>
+  <data name="NotAllowedErrorDescription" xml:space="preserve">
+    <value>Недостаточно прав для выполнения операции</value>
+  </data>
+  <data name="NotAuthorizedErrorDescription" xml:space="preserve">
+    <value>Пользователь не авторизован</value>
+  </data>
+  <data name="NotFoundErrorDescription" xml:space="preserve">
+    <value>Сущность не найдена</value>
+  </data>
+  <data name="OperationCancelled" xml:space="preserve">
+    <value>Операция отменена</value>
+  </data>
+  <data name="OrganizationCreateContractDialog.PlaceholderText" xml:space="preserve">
+    <value>Название организации</value>
+  </data>
+  <data name="OtherOwnersTB.Text" xml:space="preserve">
+    <value>Прочие владельцы:</value>
+  </data>
+  <data name="OwnersTitle.Text" xml:space="preserve">
+    <value>Владельцы</value>
+  </data>
+  <data name="PasswordBox.PlaceholderText" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="PhotoIsRequiredError" xml:space="preserve">
+    <value>Фото объекта является обязательным</value>
+  </data>
+  <data name="PlanContractButton.Text" xml:space="preserve">
+    <value>План</value>
+  </data>
+  <data name="PlanIsRequiedError" xml:space="preserve">
+    <value>План объекта является обязательным</value>
+  </data>
+  <data name="Proceed" xml:space="preserve">
+    <value>Продолжить</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Регистрация</value>
+  </data>
+  <data name="ReportCreatedNotification" xml:space="preserve">
+    <value>Отчет успешно создан</value>
+  </data>
+  <data name="RequestRuntimeError" xml:space="preserve">
+    <value>Ошибка выполнения запроса</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="ServerNotRespondingErrorDescription" xml:space="preserve">
+    <value>Сервер не отвечает</value>
+  </data>
+  <data name="SortContractButton.Text" xml:space="preserve">
+    <value>Сортировать</value>
+  </data>
+  <data name="SortTypeAddress.Text" xml:space="preserve">
+    <value>Адрес</value>
+  </data>
+  <data name="SortTypeAlarms.Text" xml:space="preserve">
+    <value>Вызовы</value>
+  </data>
+  <data name="SortTypeName.Text" xml:space="preserve">
+    <value>Имя</value>
+  </data>
+  <data name="SortTypeNo.Text" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="TooManyRequestsErrorDescription" xml:space="preserve">
+    <value>Слишком частые запросы на сервер, повторите попытку позже</value>
+  </data>
+  <data name="UIDProfileHeader.Text" xml:space="preserve">
+    <value>Уникальный идентификатор:</value>
+  </data>
+  <data name="UnableToLoadAlarmsErrorDescription" xml:space="preserve">
+    <value>Невозможно загрузить историю срабатываний сигнализаций на объектах\nПопробуйте позже</value>
+  </data>
+  <data name="UnauthorizedTip.Text" xml:space="preserve">
+    <value>Вход не выполнен. Войдите для получения доступа к сервису.</value>
+  </data>
+  <data name="UpdateListAlarmsButton.Text" xml:space="preserve">
+    <value>Обновить список</value>
+  </data>
+  <data name="UpdateListContractButton.Text" xml:space="preserve">
+    <value>Обновить список</value>
+  </data>
+  <data name="UploadPhotoButton.Content" xml:space="preserve">
+    <value>Выбрать фото</value>
+  </data>
+  <data name="UploadPlanButton.Content" xml:space="preserve">
+    <value>Выбрать план</value>
+  </data>
+  <data name="UserNameProfileHeader.Text" xml:space="preserve">
+    <value>Имя пользователя:</value>
+  </data>
+</root>
