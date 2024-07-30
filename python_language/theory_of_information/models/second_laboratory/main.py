@@ -18,13 +18,15 @@ import time
 import logging
 import python_language.theory_of_information.core as core_namespace
 from python_language.theory_of_information.models.second_laboratory import LZ77, Token
+from python_language.theory_of_information.models.second_laboratory.utils import create_table
 
 logger = logging.getLogger(__name__)
 
 
 def lz77_encode(data: str) -> str:
     algorithm = LZ77()
-    return str(algorithm.compress(data))
+    compressed_text = algorithm.compress(data)
+    return "\n" + str(create_table(compressed_text, data))
 
 
 def lz77_decode(data: str) -> str:

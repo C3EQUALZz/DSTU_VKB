@@ -14,7 +14,7 @@ LZ77 управляет словарем, который использует т
 содержимое и размер сжатых данных.
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, astuple
 from typing import Self
 from python_language.theory_of_information.core.decorators import loggable
 
@@ -47,6 +47,9 @@ class Token:
             return (self.offset, self.length, self.indicator) == (other[0], other[1], other[2])
 
         return False
+
+    def __iter__(self):
+        return iter(astuple(self))
 
 
 class LZ77:
