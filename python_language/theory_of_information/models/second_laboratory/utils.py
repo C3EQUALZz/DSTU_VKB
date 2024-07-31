@@ -34,16 +34,15 @@ def update_buffers(
         text: str
 ) -> tuple[list[str], list[str], str, str]:
     """
-    Обновите буферы поиска и предварительного просмотра после обработки токена.
+    Обновляем буфер поиска и предварительного просмотра после обработки токена.
 
-    :param token: The current token being processed.
-    :param decoded_string: The decoded string so far.
-    :param text: Remaining text to encode.
-    :return: Updated search buffer, lookahead buffer, decoded string, and remaining text.
+    :param token: Токен, который нужно обработать.
+    :param decoded_string: Декодированная строка, в которую мы добавляем токены.
+    :param text: Текст, который мы собираемся дополнить.
+    :return: Обновления.
     """
-    offset, length, char = token
-    start = len(decoded_string) - offset if offset != 0 else 0
-    sequence = decoded_string[start:start + length] + char
+    start = max(0, len(decoded_string) - token.offset)
+    sequence = decoded_string[start:start + token.length] + token.indicator
     decoded_string += sequence
     search_buffer = list(decoded_string[-SEARCH_BUFFER_SIZE:])
     remaining_text = text[len(sequence):]
