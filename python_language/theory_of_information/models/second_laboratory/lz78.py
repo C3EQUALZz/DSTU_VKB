@@ -1,6 +1,38 @@
-class LZ78:
+from python_language.theory_of_information.core.abstract_classes import Compressor
+from typing import override, Self, Iterator
+from dataclasses import dataclass, astuple
+from python_language.theory_of_information.core.decorators import loggable
 
-    def compress(self, text: str) -> list[tuple[int, str]]:
+
+@dataclass
+class Token:
+    index: int
+    char: str
+
+    def __repr__(self) -> str:
+        return f"({self.index}, '{self.char}')"
+
+    def __iter__(self) -> Iterator:
+        return iter(astuple(self))
+
+    def __eq__(self, other: Self | list | tuple) -> bool:
+        """
+        Магический метод, который просто проверяет на равенство, нужен больше для тестов
+        """
+        if isinstance(other, Token):
+            return (self.index, self.char) == (other.index, other.char)
+
+        if isinstance(other, (list, tuple)):
+            return (self.index, self.char) == (other[0], other[1])
+
+        return False
+
+
+class LZ78(Compressor):
+
+    @loggable
+    @override
+    def compress(self, text: str) -> list[Token]:
         """
         Compresses the input text using LZ78 algorithm.
 
@@ -16,28 +48,33 @@ class LZ78:
             if current_string not in dictionary:
                 index = len(dictionary) + 1
                 dictionary[current_string] = index
-                compressed.append((dictionary.get(current_string[:-1], 0), char))
+                token = Token(dictionary.get(current_string[:-1], 0), char)
+                compressed.append(token)
                 current_string = ""
 
         return compressed
 
-    def decompress(self, compressed: list[tuple[int, str]]) -> str:
+    @loggable
+    @override
+    def decompress(self, compressed: list[Token]) -> str:
         """
         Decompresses the list of tuples back to the original text using LZ78 algorithm.
 
         :param compressed: List of tuples where each tuple is (index, char).
         :return: Decompressed text.
         """
-        dictionary = {}
-        decoded_string = ""
+        dictionary = {0: ""}
+        decompressed = ""
 
-        for index, char in compressed:
-            if index == 0:
-                decoded_string += char
-            else:
-                prefix = dictionary.get(index, "")
-                decoded_string += prefix + char
-            # Update the dictionary with the new entry
-            dictionary[len(dictionary) + 1] = decoded_string
+        for token in compressed:
+            entry = dictionary.get(token.index, "") + token.char
+            decompressed += entry
+            dictionary[len(dictionary)] = entry
 
-        return decoded_string
+        return decompressed
+
+
+if __name__ == '__main__':
+    result = LZ78().compress("ЗЕЛЕНАЯ_ЗЕЛЕНЬ_ЗЕЛЕНЕЕТ")
+    print(result)
+    print(LZ78().decompress(result))

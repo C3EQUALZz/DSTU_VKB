@@ -1,12 +1,13 @@
-from python_language.theory_of_information.models.second_laboratory import Token
+from python_language.theory_of_information.models.second_laboratory import TokenLZ77, TokenLZ78
 from prettytable import PrettyTable
-from typing import Final
+from typing import Final, overload
 
 SEARCH_BUFFER_SIZE: Final = 9
 LOOK_AHEAD_SIZE: Final = 7
 
 
-def create_table(tokens: list[Token], text: str) -> PrettyTable:
+@overload
+def create_table(tokens: list[TokenLZ77], text: str) -> PrettyTable:
     """
     Создает таблицу, отображающую состояние процесса сжатия LZ77.
 
@@ -29,7 +30,7 @@ def create_table(tokens: list[Token], text: str) -> PrettyTable:
 
 
 def update_buffers(
-        token: Token,
+        token: TokenLZ77,
         decoded_string: str,
         text: str
 ) -> tuple[list[str], list[str], str, str]:
@@ -48,3 +49,19 @@ def update_buffers(
     remaining_text = text[len(sequence):]
     lookahead_buffer = list(remaining_text[:LOOK_AHEAD_SIZE])
     return search_buffer, lookahead_buffer, decoded_string, remaining_text
+
+
+def create_table(tokens: list[TokenLZ78], text: str) -> PrettyTable:
+    table = PrettyTable()
+    table.field_names = ["Входная фраза(в словарь)", "Код", "Позиция в словаре"]
+
+    dictionary = {0: ""}
+    position = 0
+
+    for token in tokens:
+        position += 1
+        entry = dictionary.get(token.index, "") + token.char
+        table.add_row([entry, repr(token), position])
+        dictionary[position] = entry
+
+    return table

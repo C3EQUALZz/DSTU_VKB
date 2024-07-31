@@ -18,8 +18,9 @@ LZ77 управляет словарем, который использует т
 """
 
 from dataclasses import dataclass, astuple
-from typing import Self
+from typing import Self, override
 from python_language.theory_of_information.core.decorators import loggable
+from python_language.theory_of_information.core.abstract_classes import Compressor
 
 
 @dataclass
@@ -55,7 +56,7 @@ class Token:
         return iter(astuple(self))
 
 
-class LZ77:
+class LZ77(Compressor):
     """
     Класс, содержащий методы сжатия и распаковки с использованием алгоритма сжатия LZ77.
     """
@@ -72,6 +73,7 @@ class LZ77:
         self.search_buffer_size = self.window_size - self.lookahead_buffer_size
 
     @loggable
+    @override
     def compress(self, text: str) -> list[Token]:
         """
         Метод, который сжимает заданный текст строки.
@@ -107,6 +109,7 @@ class LZ77:
 
     # noinspection PyMethodMayBeStatic
     @loggable
+    @override
     def decompress(self, tokens: list[Token]) -> str:
         """
         Разжимаем обратно в строку, т.е список токенов в выходную строку.

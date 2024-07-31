@@ -17,7 +17,7 @@
 import time
 import logging
 import python_language.theory_of_information.core as core_namespace
-from python_language.theory_of_information.models.second_laboratory import LZ77, Token
+from python_language.theory_of_information.models.second_laboratory import LZ77, TokenLZ77, LZ78, TokenLZ78
 from python_language.theory_of_information.models.second_laboratory.utils import create_table
 
 logger = logging.getLogger(__name__)
@@ -31,18 +31,20 @@ def lz77_encode(data: str) -> str:
 
 def lz77_decode(data: str) -> str:
     algorithm = LZ77()
-    prepared_data = [Token(*package) for package in eval(data)]
+    prepared_data = [TokenLZ77(*package) for package in eval(data)]
     return str(algorithm.decompress(prepared_data))
 
 
 def lz78_encode(data: str) -> str:
-    # Реализация кодирования LZ78
-    pass
+    algorithm = LZ78()
+    compressed_text = algorithm.compress(data)
+    return "\n" + str(create_table(compressed_text, data))
 
 
 def lz78_decode(data: str) -> str:
-    # Реализация декодирования LZ78
-    pass
+    algorithm = LZ78()
+    prepared_data = [TokenLZ78(*package) for package in eval(data)]
+    return str(algorithm.decompress(prepared_data))
 
 
 def main() -> None:
