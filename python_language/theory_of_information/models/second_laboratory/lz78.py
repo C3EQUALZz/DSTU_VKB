@@ -72,9 +72,3 @@ class LZ78(Compressor):
             dictionary[len(dictionary)] = entry
 
         return decompressed
-
-
-if __name__ == '__main__':
-    result = LZ78().compress("ЗЕЛЕНАЯ_ЗЕЛЕНЬ_ЗЕЛЕНЕЕТ")
-    print(result)
-    print(LZ78().decompress(result))
