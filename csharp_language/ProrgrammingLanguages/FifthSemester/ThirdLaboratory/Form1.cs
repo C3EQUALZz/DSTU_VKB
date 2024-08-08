@@ -12,6 +12,8 @@ namespace ThirdLaboratory
 {
     public partial class Form1 : Form
     {
+        forms.FormFirstQuestion formFirstQuestion;
+        
         public Form1()
         {
             InitializeComponent();
@@ -25,7 +27,7 @@ namespace ThirdLaboratory
             {
                 taskFlowPanel1To5.Height += 10;
 
-                if (taskFlowPanel1To5.Height >= 325)
+                if (taskFlowPanel1To5.Height >= 404)
                 {
                     taskFlowPanel1To5Transition.Stop();
                     menuExpand = true;
@@ -36,7 +38,7 @@ namespace ThirdLaboratory
             {
                 taskFlowPanel1To5.Height -= 10;
 
-                if (taskFlowPanel1To5.Height <= 50)
+                if (taskFlowPanel1To5.Height <= 55)
                 {
                     taskFlowPanel1To5Transition.Stop();
                     menuExpand = false;
@@ -57,21 +59,27 @@ namespace ThirdLaboratory
             {
                 sideBar.Width -= 10;
 
-                if (sideBar.Width <= 98)
+                if (sideBar.Width <= 110)
                 {
                     sideBarExpand = false;
                     sideBarTransition.Stop();
+
+                    
                 }
             }
 
             else
             {
                 sideBar.Width += 10;
-                if (sideBar.Width >= 248)
+                if (sideBar.Width >= 323)
                 {
                     sideBarExpand = true;
                     sideBarTransition.Stop();
 
+                    taskFlowPanel1To5.Width = sideBar.Width;
+                    taskFlowPanel6to10.Width = sideBar.Width;
+                    taskFlowPanel11to15.Width = sideBar.Width;
+                    taskFlowPanel16To20.Width = sideBar.Width;
                 }
             }
         }
