@@ -58,6 +58,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="controllers\FirstQuestionController.cs" />
     <Compile Include="core\classes\RoundedPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -66,12 +67,6 @@
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="core\classes\CustomTextBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="core\classes\CustomTextBox.Designer.cs">
-      <DependentUpon>CustomTextBox.cs</DependentUpon>
     </Compile>
     <Compile Include="forms\FormEighteenthQuestion.cs">
       <SubType>Form</SubType>
@@ -187,10 +182,17 @@
     <Compile Include="forms\FormTwentiethQuestion.Designer.cs">
       <DependentUpon>FormTwentiethQuestion.cs</DependentUpon>
     </Compile>
+    <Compile Include="models\FirstQuestionModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="core\classes\CustomTextBox.resx">
-      <DependentUpon>CustomTextBox.cs</DependentUpon>
+    <Compile Include="core\classes\RoundedTextBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="core\classes\RoundedTextBox.Designer.cs">
+      <DependentUpon>RoundedTextBox.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="core\classes\RoundedTextBox.resx">
+      <DependentUpon>RoundedTextBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
