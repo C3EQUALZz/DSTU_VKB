@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ThirdLaboratory.models
 {
+    /// <summary>
+    /// Модель, которая будет считать сумму нашего массива
+    /// </summary>
+    /// <typeparam name="T">параметр, который может хранится в стеке (целое число, вещественное число и т.п, не объекты)</typeparam>
     internal class FirstQuestionModel<T> where T : struct
     {
         private readonly T[] _array;

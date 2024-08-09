@@ -4,10 +4,12 @@ using ThirdLaboratory.controllers;
 
 namespace ThirdLaboratory.forms
 {
+    /// <summary>
+    /// View для 1 задания
+    /// </summary>
     public partial class FormFirstQuestion : Form
     {
-        private FirstQuestionController<double> _controller;
-
+        private readonly FirstQuestionController<double> _controller;
         private int? lengthOfArray = null;
         private int? startIndex = null;
         private int? endIndex = null;
@@ -15,77 +17,43 @@ namespace ThirdLaboratory.forms
         public FormFirstQuestion()
         {
             InitializeComponent();
+            _controller = new FirstQuestionController<double>();
         }
-
+      
         private void LengthOfArrayInput__TextChanged(object sender, EventArgs e)
         {
-
-            if (lengthOfArrayInput.Texts == "")
-                return;
-
-            try
-            {
-                var buffer = int.Parse(lengthOfArrayInput.Texts);
-
-                if (buffer == 0 || buffer < endIndex || buffer < startIndex)
-                {
-                    MessageBox.Show($"Длина массива (N = {lengthOfArray}) не может быть меньше, чем стартовый срез (K = {startIndex}) и конечный срез (L = {endIndex})");
-                }
-                lengthOfArray = buffer;
-            }
-
-            catch
-            {
-                MessageBox.Show($"Вы ввели не целое число");
-            }
-            
+            HandleTextChanged(lengthOfArrayInput.Texts, ref lengthOfArray);
         }
 
         private void StartSliceOfArrayInput__TextChanged(object sender, EventArgs e)
         {
-            if (startSliceOfArrayInput.Texts == "")
-                return;
-
-            try
-            {
-                var buffer = int.Parse(startSliceOfArrayInput.Texts);
-
-                if (buffer == 0 || buffer > endIndex || buffer > lengthOfArray)
-                {
-                    MessageBox.Show($"Стартовый индекс не может равняться нулю, быть больше конечного индекса или больше длины массивы ");
-                }
-
-                startIndex = buffer;
-            } 
-            
-            catch
-            {
-                MessageBox.Show($"Вы ввели не целое число");
-            }
-            
+            HandleTextChanged(startSliceOfArrayInput.Texts, ref startIndex);
         }
 
         private void EndSliceOfArrayInput__TextChanged(object sender, EventArgs e)
         {
-            if (endSliceOfArrayInput.Texts == "")
+            HandleTextChanged(endSliceOfArrayInput.Texts, ref endIndex);
+        }
+
+        /// <summary>
+        /// Общий обработчик событий для полей, когда текст изменился. 
+        /// Здесь пару "костылей", чтобы не ломался при пустом тексте
+        /// </summary>
+        /// <param name="text">текст, взятый с inline </param>
+        /// <param name="value">ссылка на значение, чтобы сохранить значение</param>
+        private void HandleTextChanged(string text, ref int? value)
+        {
+            if (string.IsNullOrEmpty(text))
                 return;
 
-            try
+            if (int.TryParse(text, out var buffer))
             {
-                var buffer = int.Parse(endSliceOfArrayInput.Texts);
-
-                if (buffer == 0 || buffer < startIndex || buffer > lengthOfArray)
-                {
-                    MessageBox.Show($"Конечный индекс не может равняться нулю или быть меньше, чем стартовый индекс, а также не может быть больше длины массива");
-                }
-                endIndex = buffer;
+                value = buffer;
             }
-
-            catch
+            else
             {
-                MessageBox.Show($"Вы ввели не целое число");
+                MessageBox.Show("Вы ввели не целое число");
             }
-            
         }
 
         private void ClearButton_Click(object sender, EventArgs e)
@@ -94,38 +62,30 @@ namespace ThirdLaboratory.forms
             startSliceOfArrayInput.Clear();
             endSliceOfArrayInput.Clear();
             resultLabel.Text = string.Empty;
+            arrayOfRandomNumbersLabel.Text = string.Empty;
         }
 
         private void ExecuteButton_Click(object sender, EventArgs e)
         {
-
             if (lengthOfArray == null || startIndex == null || endIndex == null)
             {
-                return; 
+                MessageBox.Show("Все поля должны быть заполнены");
+                return;
             }
 
-            try
+            var errorMessage = _controller.ValidateInputs(lengthOfArray, startIndex, endIndex);
+
+            if (errorMessage != null)
             {
-                double[] array = new double[(int) lengthOfArray];
-
-                Random rand = new Random();
-                for (int i = 0; i < array.Length; i++)
-                    array[i] = Math.Round(rand.NextDouble(), 2);
-
-                arrayOfRandomNumbersLabel.Text = "[" + string.Join(", ", array) + "]"; ;
-
-                _controller = new FirstQuestionController<double>(array, (int) startIndex, (int) endIndex);
-
-                var result = _controller.CalculateSum();
-
-                resultLabel.Text = $"Результат: {result}";
-                Console.WriteLine(result);
+                MessageBox.Show(errorMessage);
+                return;
             }
 
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка: {ex.Message}");
-            }
+            var array = _controller.CreateArray((int)lengthOfArray);
+            _controller.InitializeModel(array, (int)startIndex, (int)endIndex);
+            arrayOfRandomNumbersLabel.Text = $"[{string.Join(",", array)}]";
+            resultLabel.Text = $"Результат: {_controller.CalculateSum()}";
+
         }
     }
 }
