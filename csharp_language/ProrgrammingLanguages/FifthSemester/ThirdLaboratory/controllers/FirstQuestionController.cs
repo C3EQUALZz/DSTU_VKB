@@ -26,8 +26,9 @@ namespace ThirdLaboratory.controllers
 
         public double[] CreateArray(int length)
         {
-            double[] array = new double[length];
-            Random rand = new Random();
+            var array = new double[length];
+            var rand = new Random();
+
             for (int i = 0; i < array.Length; i++)
                 array[i] = Math.Round(rand.NextDouble(), 2);
 
@@ -39,7 +40,7 @@ namespace ThirdLaboratory.controllers
             _model = new FirstQuestionModel<T>(array, startIndex, endIndex);
         }
 
-        public dynamic CalculateSum()
+        public dynamic Sum()
         {
             return _model?.Sum();
         }

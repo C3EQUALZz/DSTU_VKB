@@ -200,6 +200,9 @@
     <EmbeddedResource Include="forms\FormFirstQuestion.resx">
       <DependentUpon>FormFirstQuestion.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormNinthQuestion.resx">
+      <DependentUpon>FormNinthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

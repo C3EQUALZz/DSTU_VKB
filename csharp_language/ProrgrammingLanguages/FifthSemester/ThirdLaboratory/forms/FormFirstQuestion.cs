@@ -84,7 +84,7 @@ namespace ThirdLaboratory.forms
             var array = _controller.CreateArray((int)lengthOfArray);
             _controller.InitializeModel(array, (int)startIndex, (int)endIndex);
             arrayOfRandomNumbersLabel.Text = $"[{string.Join(",", array)}]";
-            resultLabel.Text = $"Результат: {_controller.CalculateSum()}";
+            resultLabel.Text = $"Результат: {_controller.Sum()}";
 
         }
     }
