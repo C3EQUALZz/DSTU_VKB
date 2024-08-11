@@ -62,8 +62,10 @@
     <Compile Include="core\classes\RoundedPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="core\FormFactory.cs" />
     <Compile Include="core\interfaces\INinthQuestionModel.cs" />
     <Compile Include="core\interfaces\INinthQuestionView.cs" />
+    <Compile Include="core\MDIProperties.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,17 +90,23 @@
     <Compile Include="forms\FormEleventhQuestion.Designer.cs">
       <DependentUpon>FormEleventhQuestion.cs</DependentUpon>
     </Compile>
+    <Compile Include="forms\FormFifthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FormFifthQuestion.Designer.cs">
+      <DependentUpon>FormFifthQuestion.cs</DependentUpon>
+    </Compile>
     <Compile Include="forms\FormFirstQuestion.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="forms\FormFirstQuestion.Designer.cs">
       <DependentUpon>FormFirstQuestion.cs</DependentUpon>
     </Compile>
-    <Compile Include="forms\FormFiteenthQuestion.cs">
+    <Compile Include="forms\FormFifteenthQuestion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="forms\FormFiteenthQuestion.Designer.cs">
-      <DependentUpon>FormFiteenthQuestion.cs</DependentUpon>
+    <Compile Include="forms\FormFifteenthQuestion.Designer.cs">
+      <DependentUpon>FormFifteenthQuestion.cs</DependentUpon>
     </Compile>
     <Compile Include="forms\FormFourteenthQuestion.cs">
       <SubType>Form</SubType>

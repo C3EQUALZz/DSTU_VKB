@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace ThirdLaboratory.forms
 {
-    public partial class FormFiteenthQuestion : Form
+    public partial class FormFifteenthQuestion : Form
     {
-        public FormFiteenthQuestion()
+        public FormFifteenthQuestion()
         {
             InitializeComponent();
         }
