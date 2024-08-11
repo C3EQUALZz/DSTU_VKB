@@ -9,7 +9,7 @@ namespace ThirdLaboratory.forms
     /// </summary>
     public partial class FormFirstQuestion : Form
     {
-        private readonly FirstQuestionController<double> _controller;
+        private readonly FirstQuestionController _controller;
         private int? lengthOfArray = null;
         private int? startIndex = null;
         private int? endIndex = null;
@@ -17,7 +17,7 @@ namespace ThirdLaboratory.forms
         public FormFirstQuestion()
         {
             InitializeComponent();
-            _controller = new FirstQuestionController<double>();
+            _controller = new FirstQuestionController();
         }
       
         private void LengthOfArrayInput__TextChanged(object sender, EventArgs e)

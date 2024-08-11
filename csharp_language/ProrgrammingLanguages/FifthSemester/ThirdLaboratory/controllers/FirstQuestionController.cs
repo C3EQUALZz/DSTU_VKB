@@ -3,9 +3,9 @@ using System;
 
 namespace ThirdLaboratory.controllers
 {
-    public class FirstQuestionController<T> where T : struct
+    public class FirstQuestionController
     {
-        private FirstQuestionModel<T> _model;
+        private FirstQuestionModel<double> _model;
 
         public string ValidateInputs(int? lengthOfArray, int? startIndex, int? endIndex)
         {
@@ -35,9 +35,9 @@ namespace ThirdLaboratory.controllers
             return array;
         }
 
-        public void InitializeModel(T[] array, int startIndex, int endIndex)
+        public void InitializeModel(double[] array, int startIndex, int endIndex)
         {
-            _model = new FirstQuestionModel<T>(array, startIndex, endIndex);
+            _model = new FirstQuestionModel<double>(array, startIndex, endIndex);
         }
 
         public dynamic Sum()
