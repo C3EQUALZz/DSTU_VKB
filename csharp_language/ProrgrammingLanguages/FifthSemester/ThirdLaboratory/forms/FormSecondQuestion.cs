@@ -16,5 +16,6 @@ namespace ThirdLaboratory.forms
         {
             InitializeComponent();
         }
+
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System.Linq;
+using System;
+using System.Windows.Forms;
 
 namespace ThirdLaboratory.core
 {
@@ -8,7 +10,7 @@ namespace ThirdLaboratory.core
 
         /// <summary>
         /// Класс, который создает форму с заданием, используя паттерн "Простая фабрика"
-        /// В конструктор нужно передать ссылку на форму, чтобы была вставка в приложение. 
+        /// В конструктор нужно передать Tag формы, а точнее строку оттуда.  
         /// </summary>
         /// <param name="mainForm">ссылка на родительскую форму, в которую мы будем вставлять наши формы с задаением</param>
         public FormFactory(Form mainForm)
@@ -17,22 +19,29 @@ namespace ThirdLaboratory.core
         }
 
         /// <summary>
-        /// Создает через небольшие хитрости сам объект формы, который используется для создания формы. 
+        /// Создает через отражение (рефлексия) сам объект формы 
         /// </summary>
         /// <param name="question">номер вопроса, который нужно создать. </param>
         /// <returns>возвращает саму форму для дальнейшей вставки</returns>
-        public T Create<T>() where T : Form, new()
+        public Form Create(string formName)
         {
-            var form = new T
+            // Используем рефлексию для создания формы на основе имени
+            var formType = GetType().Assembly.GetTypes().FirstOrDefault(t => t.Name == formName);
+            if (formType != null && formType.IsSubclassOf(typeof(Form)))
             {
-                MdiParent = _mainForm,
-                Dock = DockStyle.Fill,
-                ControlBox = false
-            };
+                // Используем существующий метод фабрики для инициализации формы
+                // Можно сказать, что у нас относительно абстрактная фабрика, но тут же не совсем расширяемый код, как я видел в книгах. 
+                var formInstance = (Form)Activator.CreateInstance(formType);
+                formInstance.MdiParent = _mainForm;
+                formInstance.Dock = DockStyle.Fill;
+                formInstance.ControlBox = false;
 
-            form.FormClosed += (sender, e) => form = null;
+                formInstance.FormClosed += (sender, e) => formInstance = null;
 
-            return form;
+                return formInstance;
+            }
+
+            throw new ArgumentException($"Неизвестное имя формы: {formName}");
         }
     }
 }

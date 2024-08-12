@@ -136,14 +136,12 @@
             this.panel1.Controls.Add(this.menuButton);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1228, 57);
+            this.panel1.Size = new System.Drawing.Size(921, 46);
             this.panel1.TabIndex = 0;
             // 
             // nightControlBox1
             // 
-            this.nightControlBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.nightControlBox1.BackColor = System.Drawing.Color.Transparent;
             this.nightControlBox1.CloseHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
             this.nightControlBox1.CloseHoverForeColor = System.Drawing.Color.White;
@@ -151,12 +149,13 @@
             this.nightControlBox1.DefaultLocation = true;
             this.nightControlBox1.DisableMaximizeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
             this.nightControlBox1.DisableMinimizeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
+            this.nightControlBox1.Dock = System.Windows.Forms.DockStyle.Right;
             this.nightControlBox1.EnableCloseColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
             this.nightControlBox1.EnableMaximizeButton = true;
             this.nightControlBox1.EnableMaximizeColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
             this.nightControlBox1.EnableMinimizeButton = true;
             this.nightControlBox1.EnableMinimizeColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
-            this.nightControlBox1.Location = new System.Drawing.Point(1089, 0);
+            this.nightControlBox1.Location = new System.Drawing.Point(782, 0);
             this.nightControlBox1.MaximizeHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.nightControlBox1.MaximizeHoverForeColor = System.Drawing.Color.White;
             this.nightControlBox1.MinimizeHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -169,20 +168,18 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(104, 20);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(78, 16);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(217, 23);
+            this.label1.Size = new System.Drawing.Size(170, 17);
             this.label1.TabIndex = 1;
             this.label1.Text = "Лабораторная работа №3";
             // 
             // menuButton
             // 
             this.menuButton.Image = ((System.Drawing.Image)(resources.GetObject("menuButton.Image")));
-            this.menuButton.Location = new System.Drawing.Point(4, 1);
-            this.menuButton.Margin = new System.Windows.Forms.Padding(4);
+            this.menuButton.Location = new System.Drawing.Point(3, 1);
             this.menuButton.Name = "menuButton";
-            this.menuButton.Size = new System.Drawing.Size(76, 53);
+            this.menuButton.Size = new System.Drawing.Size(57, 43);
             this.menuButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.menuButton.TabIndex = 1;
             this.menuButton.TabStop = false;
@@ -215,10 +212,9 @@
             this.sideBar.Controls.Add(this.taskFlowPanel11to15);
             this.sideBar.Controls.Add(this.taskFlowPanel16To20);
             this.sideBar.Dock = System.Windows.Forms.DockStyle.Left;
-            this.sideBar.Location = new System.Drawing.Point(0, 57);
-            this.sideBar.Margin = new System.Windows.Forms.Padding(4);
+            this.sideBar.Location = new System.Drawing.Point(0, 46);
             this.sideBar.Name = "sideBar";
-            this.sideBar.Size = new System.Drawing.Size(331, 764);
+            this.sideBar.Size = new System.Drawing.Size(248, 621);
             this.sideBar.TabIndex = 1;
             // 
             // taskFlowPanel1To5
@@ -235,17 +231,16 @@
             this.taskFlowPanel1To5.Location = new System.Drawing.Point(0, 0);
             this.taskFlowPanel1To5.Margin = new System.Windows.Forms.Padding(0);
             this.taskFlowPanel1To5.Name = "taskFlowPanel1To5";
-            this.taskFlowPanel1To5.Size = new System.Drawing.Size(329, 55);
+            this.taskFlowPanel1To5.Size = new System.Drawing.Size(247, 55);
             this.taskFlowPanel1To5.TabIndex = 13;
             // 
             // panel22
             // 
             this.panel22.Controls.Add(this.firstToFiveButton);
             this.panel22.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel22.Location = new System.Drawing.Point(4, 4);
-            this.panel22.Margin = new System.Windows.Forms.Padding(4);
+            this.panel22.Location = new System.Drawing.Point(3, 3);
             this.panel22.Name = "panel22";
-            this.panel22.Size = new System.Drawing.Size(323, 55);
+            this.panel22.Size = new System.Drawing.Size(242, 45);
             this.panel22.TabIndex = 17;
             // 
             // firstToFiveButton
@@ -260,8 +255,8 @@
             this.firstToFiveButton.Location = new System.Drawing.Point(0, 0);
             this.firstToFiveButton.Margin = new System.Windows.Forms.Padding(0);
             this.firstToFiveButton.Name = "firstToFiveButton";
-            this.firstToFiveButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
-            this.firstToFiveButton.Size = new System.Drawing.Size(323, 55);
+            this.firstToFiveButton.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.firstToFiveButton.Size = new System.Drawing.Size(242, 45);
             this.firstToFiveButton.TabIndex = 14;
             this.firstToFiveButton.Text = "1 - 5 задание";
             this.firstToFiveButton.UseVisualStyleBackColor = false;
@@ -271,10 +266,10 @@
             // 
             this.panel2.Controls.Add(this.firstQuestionButton);
             this.panel2.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel2.Location = new System.Drawing.Point(331, 0);
+            this.panel2.Location = new System.Drawing.Point(248, 0);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(327, 65);
+            this.panel2.Size = new System.Drawing.Size(245, 53);
             this.panel2.TabIndex = 2;
             // 
             // firstQuestionButton
@@ -289,20 +284,20 @@
             this.firstQuestionButton.Location = new System.Drawing.Point(0, 0);
             this.firstQuestionButton.Margin = new System.Windows.Forms.Padding(0);
             this.firstQuestionButton.Name = "firstQuestionButton";
-            this.firstQuestionButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
-            this.firstQuestionButton.Size = new System.Drawing.Size(327, 65);
+            this.firstQuestionButton.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.firstQuestionButton.Size = new System.Drawing.Size(245, 53);
             this.firstQuestionButton.TabIndex = 0;
+            this.firstQuestionButton.Tag = "FormFirstQuestion";
             this.firstQuestionButton.Text = "1 вариант";
             this.firstQuestionButton.UseVisualStyleBackColor = false;
-            this.firstQuestionButton.Click += new System.EventHandler(this.FirstQuestionButton_Click);
+            this.firstQuestionButton.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // panel6
             // 
             this.panel6.Controls.Add(this.secondQuestionButton);
-            this.panel6.Location = new System.Drawing.Point(662, 4);
-            this.panel6.Margin = new System.Windows.Forms.Padding(4);
+            this.panel6.Location = new System.Drawing.Point(496, 3);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(323, 62);
+            this.panel6.Size = new System.Drawing.Size(242, 50);
             this.panel6.TabIndex = 13;
             // 
             // secondQuestionButton
@@ -317,21 +312,22 @@
             this.secondQuestionButton.Location = new System.Drawing.Point(0, 0);
             this.secondQuestionButton.Margin = new System.Windows.Forms.Padding(0);
             this.secondQuestionButton.Name = "secondQuestionButton";
-            this.secondQuestionButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
-            this.secondQuestionButton.Size = new System.Drawing.Size(323, 62);
+            this.secondQuestionButton.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.secondQuestionButton.Size = new System.Drawing.Size(242, 50);
             this.secondQuestionButton.TabIndex = 5;
+            this.secondQuestionButton.Tag = "FormSecondQuestion";
             this.secondQuestionButton.Text = "2 вариант";
             this.secondQuestionButton.UseVisualStyleBackColor = false;
-            this.secondQuestionButton.Click += new System.EventHandler(this.SecondQuestionButton_Click);
+            this.secondQuestionButton.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // panel5
             // 
             this.panel5.Controls.Add(this.thirdQuestionButton);
             this.panel5.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel5.Location = new System.Drawing.Point(989, 0);
+            this.panel5.Location = new System.Drawing.Point(741, 0);
             this.panel5.Margin = new System.Windows.Forms.Padding(0);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(327, 66);
+            this.panel5.Size = new System.Drawing.Size(245, 54);
             this.panel5.TabIndex = 13;
             // 
             // thirdQuestionButton
@@ -346,21 +342,22 @@
             this.thirdQuestionButton.Location = new System.Drawing.Point(0, 0);
             this.thirdQuestionButton.Margin = new System.Windows.Forms.Padding(0);
             this.thirdQuestionButton.Name = "thirdQuestionButton";
-            this.thirdQuestionButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
-            this.thirdQuestionButton.Size = new System.Drawing.Size(327, 66);
+            this.thirdQuestionButton.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.thirdQuestionButton.Size = new System.Drawing.Size(245, 54);
             this.thirdQuestionButton.TabIndex = 4;
+            this.thirdQuestionButton.Tag = "FormThirdQuestion";
             this.thirdQuestionButton.Text = "3 вариант";
             this.thirdQuestionButton.UseVisualStyleBackColor = false;
-            this.thirdQuestionButton.Click += new System.EventHandler(this.ThirdQuestionButton_Click);
+            this.thirdQuestionButton.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // panel4
             // 
             this.panel4.Controls.Add(this.fourthQuestionButton);
             this.panel4.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel4.Location = new System.Drawing.Point(1316, 0);
+            this.panel4.Location = new System.Drawing.Point(986, 0);
             this.panel4.Margin = new System.Windows.Forms.Padding(0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(327, 71);
+            this.panel4.Size = new System.Drawing.Size(245, 58);
             this.panel4.TabIndex = 13;
             // 
             // fourthQuestionButton
@@ -375,21 +372,22 @@
             this.fourthQuestionButton.Location = new System.Drawing.Point(0, 0);
             this.fourthQuestionButton.Margin = new System.Windows.Forms.Padding(0);
             this.fourthQuestionButton.Name = "fourthQuestionButton";
-            this.fourthQuestionButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
-            this.fourthQuestionButton.Size = new System.Drawing.Size(327, 71);
+            this.fourthQuestionButton.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.fourthQuestionButton.Size = new System.Drawing.Size(245, 58);
             this.fourthQuestionButton.TabIndex = 3;
+            this.fourthQuestionButton.Tag = "FormFourthQuestion";
             this.fourthQuestionButton.Text = "4 вариант";
             this.fourthQuestionButton.UseVisualStyleBackColor = false;
-            this.fourthQuestionButton.Click += new System.EventHandler(this.FourthQuestionButton_Click);
+            this.fourthQuestionButton.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // panel3
             // 
             this.panel3.Controls.Add(this.fifthQuestionButton);
             this.panel3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel3.Location = new System.Drawing.Point(1643, 0);
+            this.panel3.Location = new System.Drawing.Point(1231, 0);
             this.panel3.Margin = new System.Windows.Forms.Padding(0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(327, 65);
+            this.panel3.Size = new System.Drawing.Size(245, 53);
             this.panel3.TabIndex = 2;
             // 
             // fifthQuestionButton
@@ -404,12 +402,13 @@
             this.fifthQuestionButton.Location = new System.Drawing.Point(0, 0);
             this.fifthQuestionButton.Margin = new System.Windows.Forms.Padding(0);
             this.fifthQuestionButton.Name = "fifthQuestionButton";
-            this.fifthQuestionButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
-            this.fifthQuestionButton.Size = new System.Drawing.Size(327, 65);
+            this.fifthQuestionButton.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.fifthQuestionButton.Size = new System.Drawing.Size(245, 53);
             this.fifthQuestionButton.TabIndex = 0;
+            this.fifthQuestionButton.Tag = "FormFifthQuestion";
             this.fifthQuestionButton.Text = "5 вариант";
             this.fifthQuestionButton.UseVisualStyleBackColor = false;
-            this.fifthQuestionButton.Click += new System.EventHandler(this.FifthQuestionButton_Click);
+            this.fifthQuestionButton.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // taskFlowPanel6to10
             // 
@@ -425,17 +424,16 @@
             this.taskFlowPanel6to10.Location = new System.Drawing.Point(0, 55);
             this.taskFlowPanel6to10.Margin = new System.Windows.Forms.Padding(0);
             this.taskFlowPanel6to10.Name = "taskFlowPanel6to10";
-            this.taskFlowPanel6to10.Size = new System.Drawing.Size(329, 55);
+            this.taskFlowPanel6to10.Size = new System.Drawing.Size(247, 55);
             this.taskFlowPanel6to10.TabIndex = 14;
             // 
             // panel7
             // 
             this.panel7.Controls.Add(this.sixToTenButton);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel7.Location = new System.Drawing.Point(4, 4);
-            this.panel7.Margin = new System.Windows.Forms.Padding(4);
+            this.panel7.Location = new System.Drawing.Point(3, 3);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(323, 55);
+            this.panel7.Size = new System.Drawing.Size(242, 45);
             this.panel7.TabIndex = 17;
             // 
             // sixToTenButton
@@ -450,8 +448,8 @@
             this.sixToTenButton.Location = new System.Drawing.Point(0, 0);
             this.sixToTenButton.Margin = new System.Windows.Forms.Padding(0);
             this.sixToTenButton.Name = "sixToTenButton";
-            this.sixToTenButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
-            this.sixToTenButton.Size = new System.Drawing.Size(323, 55);
+            this.sixToTenButton.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.sixToTenButton.Size = new System.Drawing.Size(242, 45);
             this.sixToTenButton.TabIndex = 14;
             this.sixToTenButton.Text = "6 - 10 задание";
             this.sixToTenButton.UseVisualStyleBackColor = false;
@@ -460,10 +458,10 @@
             // 
             this.panel8.Controls.Add(this.sixthQuestionButton);
             this.panel8.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel8.Location = new System.Drawing.Point(331, 0);
+            this.panel8.Location = new System.Drawing.Point(248, 0);
             this.panel8.Margin = new System.Windows.Forms.Padding(0);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(327, 65);
+            this.panel8.Size = new System.Drawing.Size(245, 53);
             this.panel8.TabIndex = 2;
             // 
             // sixthQuestionButton
@@ -478,20 +476,20 @@
             this.sixthQuestionButton.Location = new System.Drawing.Point(0, 0);
             this.sixthQuestionButton.Margin = new System.Windows.Forms.Padding(0);
             this.sixthQuestionButton.Name = "sixthQuestionButton";
-            this.sixthQuestionButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
-            this.sixthQuestionButton.Size = new System.Drawing.Size(327, 65);
+            this.sixthQuestionButton.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.sixthQuestionButton.Size = new System.Drawing.Size(245, 53);
             this.sixthQuestionButton.TabIndex = 0;
+            this.sixthQuestionButton.Tag = "FormSixthQuestion";
             this.sixthQuestionButton.Text = "6 вариант";
             this.sixthQuestionButton.UseVisualStyleBackColor = false;
-            this.sixthQuestionButton.Click += new System.EventHandler(this.SixthQuestionButton_Click);
+            this.sixthQuestionButton.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // panel9
             // 
             this.panel9.Controls.Add(this.seventhQuestionButton);
-            this.panel9.Location = new System.Drawing.Point(662, 4);
-            this.panel9.Margin = new System.Windows.Forms.Padding(4);
+            this.panel9.Location = new System.Drawing.Point(496, 3);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(323, 62);
+            this.panel9.Size = new System.Drawing.Size(242, 50);
             this.panel9.TabIndex = 13;
             // 
             // seventhQuestionButton
@@ -506,21 +504,22 @@
             this.seventhQuestionButton.Location = new System.Drawing.Point(0, 0);
             this.seventhQuestionButton.Margin = new System.Windows.Forms.Padding(0);
             this.seventhQuestionButton.Name = "seventhQuestionButton";
-            this.seventhQuestionButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
-            this.seventhQuestionButton.Size = new System.Drawing.Size(323, 62);
+            this.seventhQuestionButton.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.seventhQuestionButton.Size = new System.Drawing.Size(242, 50);
             this.seventhQuestionButton.TabIndex = 5;
+            this.seventhQuestionButton.Tag = "FormSeventhQuestion";
             this.seventhQuestionButton.Text = "7 вариант";
             this.seventhQuestionButton.UseVisualStyleBackColor = false;
-            this.seventhQuestionButton.Click += new System.EventHandler(this.SeventhQuestionButton_Click);
+            this.seventhQuestionButton.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // panel10
             // 
             this.panel10.Controls.Add(this.eigthQuestionButton);
             this.panel10.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel10.Location = new System.Drawing.Point(989, 0);
+            this.panel10.Location = new System.Drawing.Point(741, 0);
             this.panel10.Margin = new System.Windows.Forms.Padding(0);
             this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(327, 66);
+            this.panel10.Size = new System.Drawing.Size(245, 54);
             this.panel10.TabIndex = 13;
             // 
             // eigthQuestionButton
@@ -535,21 +534,22 @@
             this.eigthQuestionButton.Location = new System.Drawing.Point(0, 0);
             this.eigthQuestionButton.Margin = new System.Windows.Forms.Padding(0);
             this.eigthQuestionButton.Name = "eigthQuestionButton";
-            this.eigthQuestionButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
-            this.eigthQuestionButton.Size = new System.Drawing.Size(327, 66);
+            this.eigthQuestionButton.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.eigthQuestionButton.Size = new System.Drawing.Size(245, 54);
             this.eigthQuestionButton.TabIndex = 4;
+            this.eigthQuestionButton.Tag = "FormEigthQuestion";
             this.eigthQuestionButton.Text = "8 вариант";
             this.eigthQuestionButton.UseVisualStyleBackColor = false;
-            this.eigthQuestionButton.Click += new System.EventHandler(this.EigthQuestionButton_Click);
+            this.eigthQuestionButton.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // panel11
             // 
             this.panel11.Controls.Add(this.ninthQuestionButton);
             this.panel11.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel11.Location = new System.Drawing.Point(1316, 0);
+            this.panel11.Location = new System.Drawing.Point(986, 0);
             this.panel11.Margin = new System.Windows.Forms.Padding(0);
             this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(327, 71);
+            this.panel11.Size = new System.Drawing.Size(245, 58);
             this.panel11.TabIndex = 13;
             // 
             // ninthQuestionButton
@@ -564,21 +564,22 @@
             this.ninthQuestionButton.Location = new System.Drawing.Point(0, 0);
             this.ninthQuestionButton.Margin = new System.Windows.Forms.Padding(0);
             this.ninthQuestionButton.Name = "ninthQuestionButton";
-            this.ninthQuestionButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
-            this.ninthQuestionButton.Size = new System.Drawing.Size(327, 71);
+            this.ninthQuestionButton.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.ninthQuestionButton.Size = new System.Drawing.Size(245, 58);
             this.ninthQuestionButton.TabIndex = 3;
+            this.ninthQuestionButton.Tag = "FormNinthQuestion";
             this.ninthQuestionButton.Text = "9 вариант";
             this.ninthQuestionButton.UseVisualStyleBackColor = false;
-            this.ninthQuestionButton.Click += new System.EventHandler(this.NinthQuestionButton_Click);
+            this.ninthQuestionButton.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // panel12
             // 
             this.panel12.Controls.Add(this.tenthQuestionButton);
             this.panel12.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel12.Location = new System.Drawing.Point(1643, 0);
+            this.panel12.Location = new System.Drawing.Point(1231, 0);
             this.panel12.Margin = new System.Windows.Forms.Padding(0);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(327, 65);
+            this.panel12.Size = new System.Drawing.Size(245, 53);
             this.panel12.TabIndex = 2;
             // 
             // tenthQuestionButton
@@ -593,12 +594,13 @@
             this.tenthQuestionButton.Location = new System.Drawing.Point(0, 0);
             this.tenthQuestionButton.Margin = new System.Windows.Forms.Padding(0);
             this.tenthQuestionButton.Name = "tenthQuestionButton";
-            this.tenthQuestionButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
-            this.tenthQuestionButton.Size = new System.Drawing.Size(327, 65);
+            this.tenthQuestionButton.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.tenthQuestionButton.Size = new System.Drawing.Size(245, 53);
             this.tenthQuestionButton.TabIndex = 0;
+            this.tenthQuestionButton.Tag = "FormTenthQuestion";
             this.tenthQuestionButton.Text = "10 вариант";
             this.tenthQuestionButton.UseVisualStyleBackColor = false;
-            this.tenthQuestionButton.Click += new System.EventHandler(this.TenthQuestionButton_Click);
+            this.tenthQuestionButton.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // taskFlowPanel11to15
             // 
@@ -614,17 +616,16 @@
             this.taskFlowPanel11to15.Location = new System.Drawing.Point(0, 110);
             this.taskFlowPanel11to15.Margin = new System.Windows.Forms.Padding(0);
             this.taskFlowPanel11to15.Name = "taskFlowPanel11to15";
-            this.taskFlowPanel11to15.Size = new System.Drawing.Size(329, 55);
+            this.taskFlowPanel11to15.Size = new System.Drawing.Size(247, 55);
             this.taskFlowPanel11to15.TabIndex = 16;
             // 
             // panel19
             // 
             this.panel19.Controls.Add(this.eleventhToFifteenthButton);
             this.panel19.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel19.Location = new System.Drawing.Point(4, 4);
-            this.panel19.Margin = new System.Windows.Forms.Padding(4);
+            this.panel19.Location = new System.Drawing.Point(3, 3);
             this.panel19.Name = "panel19";
-            this.panel19.Size = new System.Drawing.Size(323, 55);
+            this.panel19.Size = new System.Drawing.Size(242, 45);
             this.panel19.TabIndex = 17;
             // 
             // eleventhToFifteenthButton
@@ -639,8 +640,8 @@
             this.eleventhToFifteenthButton.Location = new System.Drawing.Point(0, 0);
             this.eleventhToFifteenthButton.Margin = new System.Windows.Forms.Padding(0);
             this.eleventhToFifteenthButton.Name = "eleventhToFifteenthButton";
-            this.eleventhToFifteenthButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
-            this.eleventhToFifteenthButton.Size = new System.Drawing.Size(323, 55);
+            this.eleventhToFifteenthButton.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.eleventhToFifteenthButton.Size = new System.Drawing.Size(242, 45);
             this.eleventhToFifteenthButton.TabIndex = 14;
             this.eleventhToFifteenthButton.Text = "11 -15 задание";
             this.eleventhToFifteenthButton.UseVisualStyleBackColor = false;
@@ -649,10 +650,10 @@
             // 
             this.panel20.Controls.Add(this.eleventhQuestionButton);
             this.panel20.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel20.Location = new System.Drawing.Point(331, 0);
+            this.panel20.Location = new System.Drawing.Point(248, 0);
             this.panel20.Margin = new System.Windows.Forms.Padding(0);
             this.panel20.Name = "panel20";
-            this.panel20.Size = new System.Drawing.Size(327, 65);
+            this.panel20.Size = new System.Drawing.Size(245, 53);
             this.panel20.TabIndex = 2;
             // 
             // eleventhQuestionButton
@@ -667,20 +668,20 @@
             this.eleventhQuestionButton.Location = new System.Drawing.Point(0, 0);
             this.eleventhQuestionButton.Margin = new System.Windows.Forms.Padding(0);
             this.eleventhQuestionButton.Name = "eleventhQuestionButton";
-            this.eleventhQuestionButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
-            this.eleventhQuestionButton.Size = new System.Drawing.Size(327, 65);
+            this.eleventhQuestionButton.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.eleventhQuestionButton.Size = new System.Drawing.Size(245, 53);
             this.eleventhQuestionButton.TabIndex = 0;
+            this.eleventhQuestionButton.Tag = "FormEleventhQuestion";
             this.eleventhQuestionButton.Text = "11 вариант";
             this.eleventhQuestionButton.UseVisualStyleBackColor = false;
-            this.eleventhQuestionButton.Click += new System.EventHandler(this.EleventhQuestionButton_Click);
+            this.eleventhQuestionButton.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // panel21
             // 
             this.panel21.Controls.Add(this.twelfthQuestionButton);
-            this.panel21.Location = new System.Drawing.Point(662, 4);
-            this.panel21.Margin = new System.Windows.Forms.Padding(4);
+            this.panel21.Location = new System.Drawing.Point(496, 3);
             this.panel21.Name = "panel21";
-            this.panel21.Size = new System.Drawing.Size(323, 62);
+            this.panel21.Size = new System.Drawing.Size(242, 50);
             this.panel21.TabIndex = 13;
             // 
             // twelfthQuestionButton
@@ -695,21 +696,22 @@
             this.twelfthQuestionButton.Location = new System.Drawing.Point(0, 0);
             this.twelfthQuestionButton.Margin = new System.Windows.Forms.Padding(0);
             this.twelfthQuestionButton.Name = "twelfthQuestionButton";
-            this.twelfthQuestionButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
-            this.twelfthQuestionButton.Size = new System.Drawing.Size(323, 62);
+            this.twelfthQuestionButton.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.twelfthQuestionButton.Size = new System.Drawing.Size(242, 50);
             this.twelfthQuestionButton.TabIndex = 5;
+            this.twelfthQuestionButton.Tag = "FormTweflthQuestion";
             this.twelfthQuestionButton.Text = "12 вариант";
             this.twelfthQuestionButton.UseVisualStyleBackColor = false;
-            this.twelfthQuestionButton.Click += new System.EventHandler(this.TwelfthQuestionButton_Click);
+            this.twelfthQuestionButton.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // panel23
             // 
             this.panel23.Controls.Add(this.thirteenthQuestionButton);
             this.panel23.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel23.Location = new System.Drawing.Point(989, 0);
+            this.panel23.Location = new System.Drawing.Point(741, 0);
             this.panel23.Margin = new System.Windows.Forms.Padding(0);
             this.panel23.Name = "panel23";
-            this.panel23.Size = new System.Drawing.Size(327, 66);
+            this.panel23.Size = new System.Drawing.Size(245, 54);
             this.panel23.TabIndex = 13;
             // 
             // thirteenthQuestionButton
@@ -724,21 +726,22 @@
             this.thirteenthQuestionButton.Location = new System.Drawing.Point(0, 0);
             this.thirteenthQuestionButton.Margin = new System.Windows.Forms.Padding(0);
             this.thirteenthQuestionButton.Name = "thirteenthQuestionButton";
-            this.thirteenthQuestionButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
-            this.thirteenthQuestionButton.Size = new System.Drawing.Size(327, 66);
+            this.thirteenthQuestionButton.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.thirteenthQuestionButton.Size = new System.Drawing.Size(245, 54);
             this.thirteenthQuestionButton.TabIndex = 4;
+            this.thirteenthQuestionButton.Tag = "FormThirteenthQuestion";
             this.thirteenthQuestionButton.Text = "13 вариант";
             this.thirteenthQuestionButton.UseVisualStyleBackColor = false;
-            this.thirteenthQuestionButton.Click += new System.EventHandler(this.ThirteenthQuestionButton_Click);
+            this.thirteenthQuestionButton.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // panel24
             // 
             this.panel24.Controls.Add(this.fourteenthQuestionButton);
             this.panel24.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel24.Location = new System.Drawing.Point(1316, 0);
+            this.panel24.Location = new System.Drawing.Point(986, 0);
             this.panel24.Margin = new System.Windows.Forms.Padding(0);
             this.panel24.Name = "panel24";
-            this.panel24.Size = new System.Drawing.Size(327, 71);
+            this.panel24.Size = new System.Drawing.Size(245, 58);
             this.panel24.TabIndex = 13;
             // 
             // fourteenthQuestionButton
@@ -753,21 +756,22 @@
             this.fourteenthQuestionButton.Location = new System.Drawing.Point(0, 0);
             this.fourteenthQuestionButton.Margin = new System.Windows.Forms.Padding(0);
             this.fourteenthQuestionButton.Name = "fourteenthQuestionButton";
-            this.fourteenthQuestionButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
-            this.fourteenthQuestionButton.Size = new System.Drawing.Size(327, 71);
+            this.fourteenthQuestionButton.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.fourteenthQuestionButton.Size = new System.Drawing.Size(245, 58);
             this.fourteenthQuestionButton.TabIndex = 3;
+            this.fourteenthQuestionButton.Tag = "FormFourteenthQuestion";
             this.fourteenthQuestionButton.Text = "14 вариант";
             this.fourteenthQuestionButton.UseVisualStyleBackColor = false;
-            this.fourteenthQuestionButton.Click += new System.EventHandler(this.FourteenthQuestionButton_Click);
+            this.fourteenthQuestionButton.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // panel25
             // 
             this.panel25.Controls.Add(this.fifteenthQuestionButton);
             this.panel25.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel25.Location = new System.Drawing.Point(1643, 0);
+            this.panel25.Location = new System.Drawing.Point(1231, 0);
             this.panel25.Margin = new System.Windows.Forms.Padding(0);
             this.panel25.Name = "panel25";
-            this.panel25.Size = new System.Drawing.Size(327, 65);
+            this.panel25.Size = new System.Drawing.Size(245, 53);
             this.panel25.TabIndex = 2;
             // 
             // fifteenthQuestionButton
@@ -782,12 +786,13 @@
             this.fifteenthQuestionButton.Location = new System.Drawing.Point(0, 0);
             this.fifteenthQuestionButton.Margin = new System.Windows.Forms.Padding(0);
             this.fifteenthQuestionButton.Name = "fifteenthQuestionButton";
-            this.fifteenthQuestionButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
-            this.fifteenthQuestionButton.Size = new System.Drawing.Size(327, 65);
+            this.fifteenthQuestionButton.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.fifteenthQuestionButton.Size = new System.Drawing.Size(245, 53);
             this.fifteenthQuestionButton.TabIndex = 0;
+            this.fifteenthQuestionButton.Tag = "FormFifteenthQuestion";
             this.fifteenthQuestionButton.Text = "15 вариант";
             this.fifteenthQuestionButton.UseVisualStyleBackColor = false;
-            this.fifteenthQuestionButton.Click += new System.EventHandler(this.FifteenthQuestionButton_Click);
+            this.fifteenthQuestionButton.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // taskFlowPanel16To20
             // 
@@ -803,17 +808,16 @@
             this.taskFlowPanel16To20.Location = new System.Drawing.Point(0, 165);
             this.taskFlowPanel16To20.Margin = new System.Windows.Forms.Padding(0);
             this.taskFlowPanel16To20.Name = "taskFlowPanel16To20";
-            this.taskFlowPanel16To20.Size = new System.Drawing.Size(329, 55);
+            this.taskFlowPanel16To20.Size = new System.Drawing.Size(247, 55);
             this.taskFlowPanel16To20.TabIndex = 15;
             // 
             // panel13
             // 
             this.panel13.Controls.Add(this.sixteenToTwentyButton);
             this.panel13.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel13.Location = new System.Drawing.Point(4, 4);
-            this.panel13.Margin = new System.Windows.Forms.Padding(4);
+            this.panel13.Location = new System.Drawing.Point(3, 3);
             this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(323, 55);
+            this.panel13.Size = new System.Drawing.Size(242, 45);
             this.panel13.TabIndex = 17;
             // 
             // sixteenToTwentyButton
@@ -828,8 +832,8 @@
             this.sixteenToTwentyButton.Location = new System.Drawing.Point(0, 0);
             this.sixteenToTwentyButton.Margin = new System.Windows.Forms.Padding(0);
             this.sixteenToTwentyButton.Name = "sixteenToTwentyButton";
-            this.sixteenToTwentyButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
-            this.sixteenToTwentyButton.Size = new System.Drawing.Size(323, 55);
+            this.sixteenToTwentyButton.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.sixteenToTwentyButton.Size = new System.Drawing.Size(242, 45);
             this.sixteenToTwentyButton.TabIndex = 14;
             this.sixteenToTwentyButton.Text = "16 - 20 задание";
             this.sixteenToTwentyButton.UseVisualStyleBackColor = false;
@@ -838,10 +842,10 @@
             // 
             this.panel14.Controls.Add(this.sixteenthQuestionButton);
             this.panel14.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel14.Location = new System.Drawing.Point(331, 0);
+            this.panel14.Location = new System.Drawing.Point(248, 0);
             this.panel14.Margin = new System.Windows.Forms.Padding(0);
             this.panel14.Name = "panel14";
-            this.panel14.Size = new System.Drawing.Size(327, 65);
+            this.panel14.Size = new System.Drawing.Size(245, 53);
             this.panel14.TabIndex = 2;
             // 
             // sixteenthQuestionButton
@@ -856,20 +860,20 @@
             this.sixteenthQuestionButton.Location = new System.Drawing.Point(0, 0);
             this.sixteenthQuestionButton.Margin = new System.Windows.Forms.Padding(0);
             this.sixteenthQuestionButton.Name = "sixteenthQuestionButton";
-            this.sixteenthQuestionButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
-            this.sixteenthQuestionButton.Size = new System.Drawing.Size(327, 65);
+            this.sixteenthQuestionButton.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.sixteenthQuestionButton.Size = new System.Drawing.Size(245, 53);
             this.sixteenthQuestionButton.TabIndex = 0;
+            this.sixteenthQuestionButton.Tag = "FormSixteenthQuestion";
             this.sixteenthQuestionButton.Text = "16 вариант";
             this.sixteenthQuestionButton.UseVisualStyleBackColor = false;
-            this.sixteenthQuestionButton.Click += new System.EventHandler(this.SixteenthQuestionButton_Click);
+            this.sixteenthQuestionButton.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // panel15
             // 
             this.panel15.Controls.Add(this.seventeenthQuestionButton);
-            this.panel15.Location = new System.Drawing.Point(662, 4);
-            this.panel15.Margin = new System.Windows.Forms.Padding(4);
+            this.panel15.Location = new System.Drawing.Point(496, 3);
             this.panel15.Name = "panel15";
-            this.panel15.Size = new System.Drawing.Size(323, 62);
+            this.panel15.Size = new System.Drawing.Size(242, 50);
             this.panel15.TabIndex = 13;
             // 
             // seventeenthQuestionButton
@@ -884,21 +888,22 @@
             this.seventeenthQuestionButton.Location = new System.Drawing.Point(0, 0);
             this.seventeenthQuestionButton.Margin = new System.Windows.Forms.Padding(0);
             this.seventeenthQuestionButton.Name = "seventeenthQuestionButton";
-            this.seventeenthQuestionButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
-            this.seventeenthQuestionButton.Size = new System.Drawing.Size(323, 62);
+            this.seventeenthQuestionButton.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.seventeenthQuestionButton.Size = new System.Drawing.Size(242, 50);
             this.seventeenthQuestionButton.TabIndex = 5;
+            this.seventeenthQuestionButton.Tag = "FormSeventeenthQuestion";
             this.seventeenthQuestionButton.Text = "17 вариант";
             this.seventeenthQuestionButton.UseVisualStyleBackColor = false;
-            this.seventeenthQuestionButton.Click += new System.EventHandler(this.SeventeenthQuestionButton_Click);
+            this.seventeenthQuestionButton.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // panel16
             // 
             this.panel16.Controls.Add(this.eigteenthQuestionButton);
             this.panel16.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel16.Location = new System.Drawing.Point(989, 0);
+            this.panel16.Location = new System.Drawing.Point(741, 0);
             this.panel16.Margin = new System.Windows.Forms.Padding(0);
             this.panel16.Name = "panel16";
-            this.panel16.Size = new System.Drawing.Size(327, 66);
+            this.panel16.Size = new System.Drawing.Size(245, 54);
             this.panel16.TabIndex = 13;
             // 
             // eigteenthQuestionButton
@@ -913,21 +918,22 @@
             this.eigteenthQuestionButton.Location = new System.Drawing.Point(0, 0);
             this.eigteenthQuestionButton.Margin = new System.Windows.Forms.Padding(0);
             this.eigteenthQuestionButton.Name = "eigteenthQuestionButton";
-            this.eigteenthQuestionButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
-            this.eigteenthQuestionButton.Size = new System.Drawing.Size(327, 66);
+            this.eigteenthQuestionButton.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.eigteenthQuestionButton.Size = new System.Drawing.Size(245, 54);
             this.eigteenthQuestionButton.TabIndex = 4;
+            this.eigteenthQuestionButton.Tag = "FormEighteenthQuestion";
             this.eigteenthQuestionButton.Text = "18 вариант";
             this.eigteenthQuestionButton.UseVisualStyleBackColor = false;
-            this.eigteenthQuestionButton.Click += new System.EventHandler(this.EigteenthQuestionButton_Click);
+            this.eigteenthQuestionButton.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // panel17
             // 
             this.panel17.Controls.Add(this.nineteenthQuestionButton);
             this.panel17.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel17.Location = new System.Drawing.Point(1316, 0);
+            this.panel17.Location = new System.Drawing.Point(986, 0);
             this.panel17.Margin = new System.Windows.Forms.Padding(0);
             this.panel17.Name = "panel17";
-            this.panel17.Size = new System.Drawing.Size(327, 71);
+            this.panel17.Size = new System.Drawing.Size(245, 58);
             this.panel17.TabIndex = 13;
             // 
             // nineteenthQuestionButton
@@ -942,21 +948,22 @@
             this.nineteenthQuestionButton.Location = new System.Drawing.Point(0, 0);
             this.nineteenthQuestionButton.Margin = new System.Windows.Forms.Padding(0);
             this.nineteenthQuestionButton.Name = "nineteenthQuestionButton";
-            this.nineteenthQuestionButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
-            this.nineteenthQuestionButton.Size = new System.Drawing.Size(327, 71);
+            this.nineteenthQuestionButton.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.nineteenthQuestionButton.Size = new System.Drawing.Size(245, 58);
             this.nineteenthQuestionButton.TabIndex = 3;
+            this.nineteenthQuestionButton.Tag = "FormNineteenthQuestion";
             this.nineteenthQuestionButton.Text = "19 вариант";
             this.nineteenthQuestionButton.UseVisualStyleBackColor = false;
-            this.nineteenthQuestionButton.Click += new System.EventHandler(this.NineteenthQuestionButton_Click);
+            this.nineteenthQuestionButton.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // panel18
             // 
             this.panel18.Controls.Add(this.twentiethQuestionButton);
             this.panel18.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel18.Location = new System.Drawing.Point(1643, 0);
+            this.panel18.Location = new System.Drawing.Point(1231, 0);
             this.panel18.Margin = new System.Windows.Forms.Padding(0);
             this.panel18.Name = "panel18";
-            this.panel18.Size = new System.Drawing.Size(327, 65);
+            this.panel18.Size = new System.Drawing.Size(245, 53);
             this.panel18.TabIndex = 2;
             // 
             // twentiethQuestionButton
@@ -971,12 +978,13 @@
             this.twentiethQuestionButton.Location = new System.Drawing.Point(0, 0);
             this.twentiethQuestionButton.Margin = new System.Windows.Forms.Padding(0);
             this.twentiethQuestionButton.Name = "twentiethQuestionButton";
-            this.twentiethQuestionButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
-            this.twentiethQuestionButton.Size = new System.Drawing.Size(327, 65);
+            this.twentiethQuestionButton.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.twentiethQuestionButton.Size = new System.Drawing.Size(245, 53);
             this.twentiethQuestionButton.TabIndex = 0;
+            this.twentiethQuestionButton.Tag = "FormTwentiethQuestion";
             this.twentiethQuestionButton.Text = "20 вариант";
             this.twentiethQuestionButton.UseVisualStyleBackColor = false;
-            this.twentiethQuestionButton.Click += new System.EventHandler(this.TwentiethQuestionButton_Click);
+            this.twentiethQuestionButton.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // taskFlowPanel1To5Transition
             // 
@@ -990,15 +998,14 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1228, 821);
+            this.ClientSize = new System.Drawing.Size(921, 667);
             this.Controls.Add(this.sideBar);
             this.Controls.Add(this.panel1);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.IsMdiContainer = true;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Form1";
             this.panel1.ResumeLayout(false);
