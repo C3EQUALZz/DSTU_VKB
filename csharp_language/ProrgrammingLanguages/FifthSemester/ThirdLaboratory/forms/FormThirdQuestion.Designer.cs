@@ -53,8 +53,8 @@
             this.materialButton1.HighEmphasis = true;
             this.materialButton1.Icon = null;
             this.materialButton1.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            this.materialButton1.Location = new System.Drawing.Point(314, 6);
-            this.materialButton1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialButton1.Location = new System.Drawing.Point(488, 7);
+            this.materialButton1.Margin = new System.Windows.Forms.Padding(5, 7, 5, 7);
             this.materialButton1.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             this.materialButton1.Name = "materialButton1";
             this.materialButton1.NoAccentTextColor = System.Drawing.Color.Empty;
@@ -73,8 +73,8 @@
             this.materialButton2.HighEmphasis = true;
             this.materialButton2.Icon = null;
             this.materialButton2.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            this.materialButton2.Location = new System.Drawing.Point(421, 6);
-            this.materialButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialButton2.Location = new System.Drawing.Point(597, 7);
+            this.materialButton2.Margin = new System.Windows.Forms.Padding(5, 7, 5, 7);
             this.materialButton2.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             this.materialButton2.Name = "materialButton2";
             this.materialButton2.NoAccentTextColor = System.Drawing.Color.Empty;
@@ -92,9 +92,10 @@
             this.flowLayoutPanel1.Controls.Add(this.materialButton1);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 405);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 508);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(532, 48);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(709, 50);
             this.flowLayoutPanel1.TabIndex = 2;
             this.flowLayoutPanel1.WrapContents = false;
             // 
@@ -103,18 +104,20 @@
             this.panel1.Controls.Add(this.roundedPanel1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 0);
-            this.panel1.Size = new System.Drawing.Size(532, 74);
+            this.panel1.Padding = new System.Windows.Forms.Padding(5, 5, 5, 0);
+            this.panel1.Size = new System.Drawing.Size(709, 91);
             this.panel1.TabIndex = 3;
             // 
             // roundedPanel1
             // 
             this.roundedPanel1.Controls.Add(this.label1);
             this.roundedPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.roundedPanel1.Location = new System.Drawing.Point(4, 4);
+            this.roundedPanel1.Location = new System.Drawing.Point(5, 5);
+            this.roundedPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.roundedPanel1.Name = "roundedPanel1";
-            this.roundedPanel1.Size = new System.Drawing.Size(524, 70);
+            this.roundedPanel1.Size = new System.Drawing.Size(699, 86);
             this.roundedPanel1.TabIndex = 0;
             // 
             // label1
@@ -123,8 +126,9 @@
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Font = new System.Drawing.Font("MS Reference Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(524, 70);
+            this.label1.Size = new System.Drawing.Size(699, 86);
             this.label1.TabIndex = 0;
             this.label1.Text = "Вариант 3";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -135,22 +139,23 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.roundedPanel2, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 74);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 91);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 37.98711F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 62.01289F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(532, 331);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(709, 417);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
             // roundedPanel2
             // 
             this.roundedPanel2.Controls.Add(this.label2);
             this.roundedPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.roundedPanel2.Location = new System.Drawing.Point(3, 14);
-            this.roundedPanel2.Margin = new System.Windows.Forms.Padding(3, 14, 3, 3);
+            this.roundedPanel2.Location = new System.Drawing.Point(4, 17);
+            this.roundedPanel2.Margin = new System.Windows.Forms.Padding(4, 17, 4, 4);
             this.roundedPanel2.Name = "roundedPanel2";
-            this.roundedPanel2.Size = new System.Drawing.Size(526, 108);
+            this.roundedPanel2.Size = new System.Drawing.Size(701, 137);
             this.roundedPanel2.TabIndex = 0;
             // 
             // label2
@@ -158,23 +163,24 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Location = new System.Drawing.Point(0, 0);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Padding = new System.Windows.Forms.Padding(16, 14, 16, 14);
-            this.label2.Size = new System.Drawing.Size(526, 108);
+            this.label2.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
+            this.label2.Size = new System.Drawing.Size(701, 137);
             this.label2.TabIndex = 0;
             this.label2.Text = resources.GetString("label2.Text");
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // FormThirdQuestion
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(532, 453);
+            this.ClientSize = new System.Drawing.Size(709, 558);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.flowLayoutPanel1);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FormThirdQuestion";
             this.Text = "FormThirdQuestion";
             this.flowLayoutPanel1.ResumeLayout(false);
