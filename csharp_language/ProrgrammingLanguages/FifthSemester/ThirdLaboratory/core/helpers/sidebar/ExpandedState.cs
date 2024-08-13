@@ -10,7 +10,7 @@ namespace ThirdLaboratory.core.helpers.sidebar
 
             if (context.SideBar.Width <= 110)
             {
-                context.SetState(new CollapsedState());
+                context.State = new CollapsedState();
                 context.Timer.Stop();
             }
         }

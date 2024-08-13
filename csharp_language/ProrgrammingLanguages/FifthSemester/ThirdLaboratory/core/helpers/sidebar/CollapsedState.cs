@@ -10,7 +10,8 @@ namespace ThirdLaboratory.core.helpers.sidebar
 
             if (context.SideBar.Width >= 323)
             {
-                context.SetState(new ExpandedState());
+                context.State = new ExpandedState();
+
                 context.Timer.Stop();
 
                 context.TaskFlowPanel1To5.Width = context.SideBar.Width;
