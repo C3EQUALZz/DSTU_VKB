@@ -35,9 +35,13 @@
             this.roundedPanel1 = new ThirdLaboratory.core.classes.RoundedPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.roundedPanel2 = new ThirdLaboratory.core.classes.RoundedPanel();
+            this.label2 = new System.Windows.Forms.Label();
             this.flowLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.roundedPanel1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.roundedPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // materialButton1
@@ -128,14 +132,38 @@
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.roundedPanel2, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 91);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 34.21053F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65.78947F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 23.15419F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 76.84581F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(709, 419);
             this.tableLayoutPanel1.TabIndex = 4;
+            // 
+            // roundedPanel2
+            // 
+            this.roundedPanel2.Controls.Add(this.label2);
+            this.roundedPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.roundedPanel2.Location = new System.Drawing.Point(3, 14);
+            this.roundedPanel2.Margin = new System.Windows.Forms.Padding(3, 14, 3, 3);
+            this.roundedPanel2.Name = "roundedPanel2";
+            this.roundedPanel2.Size = new System.Drawing.Size(703, 80);
+            this.roundedPanel2.TabIndex = 0;
+            // 
+            // label2
+            // 
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(0, 0);
+            this.label2.Name = "label2";
+            this.label2.Padding = new System.Windows.Forms.Padding(18, 20, 18, 20);
+            this.label2.Size = new System.Drawing.Size(703, 80);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Дана матрица размера M × N и целые числа K1 и K2(1 ≤ K1< K2 ≤ M). Поменять местам" +
+    "и строки матрицы с номерами K1 и K2. Обеспечьте контроль вводимых значений.";
             // 
             // FormSeventeenthQuestion
             // 
@@ -153,6 +181,8 @@
             this.flowLayoutPanel1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.roundedPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.roundedPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -167,5 +197,7 @@
         private core.classes.RoundedPanel roundedPanel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private core.classes.RoundedPanel roundedPanel2;
+        private System.Windows.Forms.Label label2;
     }
 }

@@ -38,7 +38,7 @@ namespace ThirdLaboratory
             {
                 taskFlowPanel1To5.Height += 10;
 
-                if (taskFlowPanel1To5.Height >= 320)
+                if (taskFlowPanel1To5.Height >= 400)
                 {
                     taskFlowPanel1To5Transition.Stop();
                     firstToFifthQuestionExpand = true;
@@ -49,7 +49,7 @@ namespace ThirdLaboratory
             {
                 taskFlowPanel1To5.Height -= 10;
 
-                if (taskFlowPanel1To5.Height <= 55)
+                if (taskFlowPanel1To5.Height <= 75)
                 {
                     taskFlowPanel1To5Transition.Stop();
                     firstToFifthQuestionExpand = false;

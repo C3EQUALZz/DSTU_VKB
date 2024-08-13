@@ -3,7 +3,10 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace ThirdLaboratory.core
-{
+{   
+    /// <summary>
+    /// ВЗЯТО ПОЛНОСТЬЮ С ОБЗОРА, Я ВООБЩЕ ХЗ
+    /// </summary>
     public static class MDIProperties
     {
         [DllImport("user32.dll")]
@@ -23,6 +26,8 @@ namespace ThirdLaboratory.core
             uint uFlags
         );
 
+        
+        // Я сам не понимаю что за цифры в 16СС, если что. 
         private const int GWL_EXSTYLE = -20;
         private const int WS_EX_CLIENTEDGE = 0x200;
         private const uint SWP_NOSIZE = 0x0001;

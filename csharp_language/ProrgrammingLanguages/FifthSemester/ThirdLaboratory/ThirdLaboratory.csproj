@@ -209,8 +209,29 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormEighteenthQuestion.resx">
+      <DependentUpon>FormEighteenthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormEigthQuestion.resx">
+      <DependentUpon>FormEigthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormEleventhQuestion.resx">
+      <DependentUpon>FormEleventhQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormFifteenthQuestion.resx">
+      <DependentUpon>FormFifteenthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormFifthQuestion.resx">
+      <DependentUpon>FormFifthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="forms\FormFirstQuestion.resx">
       <DependentUpon>FormFirstQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormFourteenthQuestion.resx">
+      <DependentUpon>FormFourteenthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormFourthQuestion.resx">
+      <DependentUpon>FormFourthQuestion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\FormNinthQuestion.resx">
       <DependentUpon>FormNinthQuestion.cs</DependentUpon>
@@ -218,8 +239,29 @@
     <EmbeddedResource Include="forms\FormSecondQuestion.resx">
       <DependentUpon>FormSecondQuestion.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormSeventeenthQuestion.resx">
+      <DependentUpon>FormSeventeenthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormSeventhQuestion.resx">
+      <DependentUpon>FormSeventhQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormSixteenthQuestion.resx">
+      <DependentUpon>FormSixteenthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormSixthQuestion.resx">
+      <DependentUpon>FormSixthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormTenthQuestion.resx">
+      <DependentUpon>FormTenthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="forms\FormThirdQuestion.resx">
       <DependentUpon>FormThirdQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormThirteenthQuestion.resx">
+      <DependentUpon>FormThirteenthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormTwelfthQuestion.resx">
+      <DependentUpon>FormTwelfthQuestion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
