@@ -7,12 +7,12 @@ using ThirdLaboratory.core.helpers;
 
 namespace ThirdLaboratory
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private readonly FormFactory _formFactory;
         private readonly CommandContext _commandContext;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             this.SetBevel(false);

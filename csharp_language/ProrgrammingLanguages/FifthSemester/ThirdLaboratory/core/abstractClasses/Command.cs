@@ -2,6 +2,10 @@
 
 namespace ThirdLaboratory.core.abstractClasses
 {
+    /// <summary>
+    /// Абстрактный класс, которы описывает команду. 
+    /// Да-да, нужно сделать интерфейс было, но уже так решился, чтобы зря поля не писать и соблюдать принцип DRY
+    /// </summary>
     internal abstract class Command
     {
         protected Panel panel;
