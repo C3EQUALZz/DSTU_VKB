@@ -22,6 +22,9 @@ namespace ThirdLaboratory.core.abstractClasses
             this.targetHeight = targetHeight;
         }
 
+        /// <summary>
+        /// Абстрактный метод запуска команды, которые все обязаны определить.
+        /// </summary>
         public abstract void Execute();
     }
 

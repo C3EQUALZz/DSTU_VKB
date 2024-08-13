@@ -14,6 +14,12 @@ namespace ThirdLaboratory.core.helpers
         public Panel TaskFlowPanel11To15 { get; set; }
         public Panel TaskFlowPanel16To20 { get; set; }
 
+        public ISideBarState State
+        {
+            get => _currentState;
+            set => _currentState = value;
+        }
+
         public SideBarContext(Panel sideBar, Timer timer, Panel taskFlowPanel1To5, Panel taskFlowPanel6To10, Panel taskFlowPanel11To15, Panel taskFlowPanel16To20)
         {
             SideBar = sideBar;
@@ -26,11 +32,6 @@ namespace ThirdLaboratory.core.helpers
             _currentState = new ExpandedState();
         }
 
-        public void SetState(ISideBarState newState)
-        {
-            _currentState = newState;
-        }
-
         public void Handle()
         {
             _currentState.Handle(this);
@@ -39,7 +40,7 @@ namespace ThirdLaboratory.core.helpers
         public void StartAnimation()
         {
             Timer.Start();
-            Handle();  // Начинаем с текущего состояния
+            Handle();
         }
     }
 }
