@@ -59,10 +59,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="controllers\FirstQuestionController.cs" />
+    <Compile Include="core\abstractClasses\Command.cs" />
     <Compile Include="core\classes\RoundedPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="core\FormFactory.cs" />
+    <Compile Include="core\helpers\CollapseCommand.cs" />
+    <Compile Include="core\helpers\CommandContext.cs" />
+    <Compile Include="core\helpers\CommandFactory.cs" />
+    <Compile Include="core\helpers\ComponentFactory.cs" />
+    <Compile Include="core\helpers\ExpandCommand.cs" />
+    <Compile Include="core\helpers\FormFactory.cs" />
     <Compile Include="core\interfaces\INinthQuestionModel.cs" />
     <Compile Include="core\interfaces\INinthQuestionView.cs" />
     <Compile Include="core\MDIProperties.cs" />
@@ -233,6 +239,9 @@
     <EmbeddedResource Include="forms\FormFourthQuestion.resx">
       <DependentUpon>FormFourthQuestion.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormNineteenthQuestion.resx">
+      <DependentUpon>FormNineteenthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="forms\FormNinthQuestion.resx">
       <DependentUpon>FormNinthQuestion.cs</DependentUpon>
     </EmbeddedResource>
@@ -262,6 +271,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="forms\FormTwelfthQuestion.resx">
       <DependentUpon>FormTwelfthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormTwentiethQuestion.resx">
+      <DependentUpon>FormTwentiethQuestion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

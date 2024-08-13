@@ -19,6 +19,7 @@
  - https://youtu.be/N5oZnV3cA64?si=oa5HlabbjPT_0s-s
  - https://youtu.be/3Oma-JnirU8?si=AecER3CeYynITRvf
  - https://youtu.be/Ns0pBlbBZmE?si=AmckUoQds2He2fVX
+ - https://www.iditect.com/faq/csharp/rounded-corners-in-c-windows-forms.html
 
 ---
 

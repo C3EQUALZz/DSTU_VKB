@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using ThirdLaboratory.core;
-using ThirdLaboratory.forms;
+using ThirdLaboratory.core.helpers;
 
 namespace ThirdLaboratory
 {
     public partial class Form1 : Form
     {
-
         private readonly FormFactory _formFactory;
+        private readonly CommandContext _commandContext;
 
         public Form1()
         {
@@ -21,49 +18,25 @@ namespace ThirdLaboratory
             this.SetBevel(false);
 
             _formFactory = new FormFactory(this);
+            _commandContext = new CommandContext(this);
 
             Controls.OfType<MdiClient>().FirstOrDefault().BackColor = Color.FromArgb(232, 234, 237);
         }
 
-        bool firstToFifthQuestionExpand = false;
-        bool sixthToTenthQuestionExpand = false;
-        bool eleventhToFifteenthQuestionExpand = false;
-        bool sixteenthToTwentiethQuestionExpand = false;
+        private void Button_Click(object sender, EventArgs e)
+        {
+            var button = sender as Button;
+            string panelTag = button.Tag.ToString();
+            _commandContext.SetCommand(panelTag);
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            _commandContext.Execute();
+        }
+
 
         bool sideBarExpand = true;
-
-        private void TaskFlowPanel1To5_Tick(object sender, EventArgs e)
-        {
-            if (firstToFifthQuestionExpand == false)
-            {
-                taskFlowPanel1To5.Height += 10;
-
-                if (taskFlowPanel1To5.Height >= 400)
-                {
-                    taskFlowPanel1To5Transition.Stop();
-                    firstToFifthQuestionExpand = true;
-                }
-            }
-
-            else
-            {
-                taskFlowPanel1To5.Height -= 10;
-
-                if (taskFlowPanel1To5.Height <= 75)
-                {
-                    taskFlowPanel1To5Transition.Stop();
-                    firstToFifthQuestionExpand = false;
-                }
-            }
-        }
-
-        private void FirstToFiveButton_Click(object sender, EventArgs e)
-        {
-            taskFlowPanel1To5Transition.Start();
-        }
-
-        
-
         private void TimerTransition_Tick(object sender, EventArgs e)
         {
             if (sideBarExpand)
@@ -87,8 +60,8 @@ namespace ThirdLaboratory
                     sideBarTransition.Stop();
 
                     taskFlowPanel1To5.Width = sideBar.Width;
-                    taskFlowPanel6to10.Width = sideBar.Width;
-                    taskFlowPanel11to15.Width = sideBar.Width;
+                    taskFlowPanel6To10.Width = sideBar.Width;
+                    taskFlowPanel11To15.Width = sideBar.Width;
                     taskFlowPanel16To20.Width = sideBar.Width;
                 }
             }
@@ -118,5 +91,7 @@ namespace ThirdLaboratory
                 }
             }
         }
+
+        
     }
 }

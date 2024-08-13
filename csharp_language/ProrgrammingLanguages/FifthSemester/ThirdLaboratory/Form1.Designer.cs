@@ -52,7 +52,7 @@
             this.fourthQuestionButton = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.fifthQuestionButton = new System.Windows.Forms.Button();
-            this.taskFlowPanel6to10 = new System.Windows.Forms.FlowLayoutPanel();
+            this.taskFlowPanel6To10 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel7 = new System.Windows.Forms.Panel();
             this.sixToTenButton = new System.Windows.Forms.Button();
             this.panel8 = new System.Windows.Forms.Panel();
@@ -65,7 +65,7 @@
             this.ninthQuestionButton = new System.Windows.Forms.Button();
             this.panel12 = new System.Windows.Forms.Panel();
             this.tenthQuestionButton = new System.Windows.Forms.Button();
-            this.taskFlowPanel11to15 = new System.Windows.Forms.FlowLayoutPanel();
+            this.taskFlowPanel11To15 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel19 = new System.Windows.Forms.Panel();
             this.eleventhToFifteenthButton = new System.Windows.Forms.Button();
             this.panel20 = new System.Windows.Forms.Panel();
@@ -93,6 +93,9 @@
             this.twentiethQuestionButton = new System.Windows.Forms.Button();
             this.taskFlowPanel1To5Transition = new System.Windows.Forms.Timer(this.components);
             this.sideBarTransition = new System.Windows.Forms.Timer(this.components);
+            this.taskFlowPanel6To10Transition = new System.Windows.Forms.Timer(this.components);
+            this.taskFlowPanel11To15Transition = new System.Windows.Forms.Timer(this.components);
+            this.taskFlowPanel16To20Transition = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.menuButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
@@ -105,14 +108,14 @@
             this.panel5.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.taskFlowPanel6to10.SuspendLayout();
+            this.taskFlowPanel6To10.SuspendLayout();
             this.panel7.SuspendLayout();
             this.panel8.SuspendLayout();
             this.panel9.SuspendLayout();
             this.panel10.SuspendLayout();
             this.panel11.SuspendLayout();
             this.panel12.SuspendLayout();
-            this.taskFlowPanel11to15.SuspendLayout();
+            this.taskFlowPanel11To15.SuspendLayout();
             this.panel19.SuspendLayout();
             this.panel20.SuspendLayout();
             this.panel21.SuspendLayout();
@@ -136,7 +139,7 @@
             this.panel1.Controls.Add(this.menuButton);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1228, 57);
             this.panel1.TabIndex = 0;
@@ -180,7 +183,7 @@
             // 
             this.menuButton.Image = ((System.Drawing.Image)(resources.GetObject("menuButton.Image")));
             this.menuButton.Location = new System.Drawing.Point(4, 1);
-            this.menuButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.menuButton.Margin = new System.Windows.Forms.Padding(4);
             this.menuButton.Name = "menuButton";
             this.menuButton.Size = new System.Drawing.Size(76, 53);
             this.menuButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -211,12 +214,12 @@
             // 
             this.sideBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(24)))), ((int)(((byte)(29)))));
             this.sideBar.Controls.Add(this.taskFlowPanel1To5);
-            this.sideBar.Controls.Add(this.taskFlowPanel6to10);
-            this.sideBar.Controls.Add(this.taskFlowPanel11to15);
+            this.sideBar.Controls.Add(this.taskFlowPanel6To10);
+            this.sideBar.Controls.Add(this.taskFlowPanel11To15);
             this.sideBar.Controls.Add(this.taskFlowPanel16To20);
             this.sideBar.Dock = System.Windows.Forms.DockStyle.Left;
             this.sideBar.Location = new System.Drawing.Point(0, 57);
-            this.sideBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.sideBar.Margin = new System.Windows.Forms.Padding(4);
             this.sideBar.Name = "sideBar";
             this.sideBar.Size = new System.Drawing.Size(331, 764);
             this.sideBar.TabIndex = 1;
@@ -237,13 +240,14 @@
             this.taskFlowPanel1To5.Name = "taskFlowPanel1To5";
             this.taskFlowPanel1To5.Size = new System.Drawing.Size(329, 68);
             this.taskFlowPanel1To5.TabIndex = 13;
+            this.taskFlowPanel1To5.Tag = "taskFlowPanel1To5";
             // 
             // panel22
             // 
             this.panel22.Controls.Add(this.firstToFiveButton);
             this.panel22.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel22.Location = new System.Drawing.Point(4, 4);
-            this.panel22.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel22.Margin = new System.Windows.Forms.Padding(4);
             this.panel22.Name = "panel22";
             this.panel22.Size = new System.Drawing.Size(323, 55);
             this.panel22.TabIndex = 17;
@@ -263,9 +267,10 @@
             this.firstToFiveButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
             this.firstToFiveButton.Size = new System.Drawing.Size(323, 55);
             this.firstToFiveButton.TabIndex = 14;
+            this.firstToFiveButton.Tag = "taskFlowPanel1To5";
             this.firstToFiveButton.Text = "1 - 5 задание";
             this.firstToFiveButton.UseVisualStyleBackColor = false;
-            this.firstToFiveButton.Click += new System.EventHandler(this.FirstToFiveButton_Click);
+            this.firstToFiveButton.Click += new System.EventHandler(this.Button_Click);
             // 
             // panel2
             // 
@@ -301,7 +306,7 @@
             // 
             this.panel6.Controls.Add(this.secondQuestionButton);
             this.panel6.Location = new System.Drawing.Point(662, 4);
-            this.panel6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel6.Margin = new System.Windows.Forms.Padding(4);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(323, 62);
             this.panel6.TabIndex = 13;
@@ -416,29 +421,30 @@
             this.fifthQuestionButton.UseVisualStyleBackColor = false;
             this.fifthQuestionButton.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
-            // taskFlowPanel6to10
+            // taskFlowPanel6To10
             // 
-            this.taskFlowPanel6to10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(33)))), ((int)(((byte)(36)))));
-            this.taskFlowPanel6to10.Controls.Add(this.panel7);
-            this.taskFlowPanel6to10.Controls.Add(this.panel8);
-            this.taskFlowPanel6to10.Controls.Add(this.panel9);
-            this.taskFlowPanel6to10.Controls.Add(this.panel10);
-            this.taskFlowPanel6to10.Controls.Add(this.panel11);
-            this.taskFlowPanel6to10.Controls.Add(this.panel12);
-            this.taskFlowPanel6to10.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.taskFlowPanel6to10.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.taskFlowPanel6to10.Location = new System.Drawing.Point(0, 68);
-            this.taskFlowPanel6to10.Margin = new System.Windows.Forms.Padding(0);
-            this.taskFlowPanel6to10.Name = "taskFlowPanel6to10";
-            this.taskFlowPanel6to10.Size = new System.Drawing.Size(329, 68);
-            this.taskFlowPanel6to10.TabIndex = 14;
+            this.taskFlowPanel6To10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(33)))), ((int)(((byte)(36)))));
+            this.taskFlowPanel6To10.Controls.Add(this.panel7);
+            this.taskFlowPanel6To10.Controls.Add(this.panel8);
+            this.taskFlowPanel6To10.Controls.Add(this.panel9);
+            this.taskFlowPanel6To10.Controls.Add(this.panel10);
+            this.taskFlowPanel6To10.Controls.Add(this.panel11);
+            this.taskFlowPanel6To10.Controls.Add(this.panel12);
+            this.taskFlowPanel6To10.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.taskFlowPanel6To10.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.taskFlowPanel6To10.Location = new System.Drawing.Point(0, 68);
+            this.taskFlowPanel6To10.Margin = new System.Windows.Forms.Padding(0);
+            this.taskFlowPanel6To10.Name = "taskFlowPanel6To10";
+            this.taskFlowPanel6To10.Size = new System.Drawing.Size(329, 68);
+            this.taskFlowPanel6To10.TabIndex = 14;
+            this.taskFlowPanel6To10.Tag = "taskFlowPanel6To10";
             // 
             // panel7
             // 
             this.panel7.Controls.Add(this.sixToTenButton);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel7.Location = new System.Drawing.Point(4, 4);
-            this.panel7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel7.Margin = new System.Windows.Forms.Padding(4);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(323, 55);
             this.panel7.TabIndex = 17;
@@ -458,8 +464,10 @@
             this.sixToTenButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
             this.sixToTenButton.Size = new System.Drawing.Size(323, 55);
             this.sixToTenButton.TabIndex = 14;
+            this.sixToTenButton.Tag = "taskFlowPanel6To10";
             this.sixToTenButton.Text = "6 - 10 задание";
             this.sixToTenButton.UseVisualStyleBackColor = false;
+            this.sixToTenButton.Click += new System.EventHandler(this.Button_Click);
             // 
             // panel8
             // 
@@ -495,7 +503,7 @@
             // 
             this.panel9.Controls.Add(this.seventhQuestionButton);
             this.panel9.Location = new System.Drawing.Point(662, 4);
-            this.panel9.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel9.Margin = new System.Windows.Forms.Padding(4);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(323, 62);
             this.panel9.TabIndex = 13;
@@ -610,29 +618,30 @@
             this.tenthQuestionButton.UseVisualStyleBackColor = false;
             this.tenthQuestionButton.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
-            // taskFlowPanel11to15
+            // taskFlowPanel11To15
             // 
-            this.taskFlowPanel11to15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(33)))), ((int)(((byte)(36)))));
-            this.taskFlowPanel11to15.Controls.Add(this.panel19);
-            this.taskFlowPanel11to15.Controls.Add(this.panel20);
-            this.taskFlowPanel11to15.Controls.Add(this.panel21);
-            this.taskFlowPanel11to15.Controls.Add(this.panel23);
-            this.taskFlowPanel11to15.Controls.Add(this.panel24);
-            this.taskFlowPanel11to15.Controls.Add(this.panel25);
-            this.taskFlowPanel11to15.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.taskFlowPanel11to15.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.taskFlowPanel11to15.Location = new System.Drawing.Point(0, 136);
-            this.taskFlowPanel11to15.Margin = new System.Windows.Forms.Padding(0);
-            this.taskFlowPanel11to15.Name = "taskFlowPanel11to15";
-            this.taskFlowPanel11to15.Size = new System.Drawing.Size(329, 68);
-            this.taskFlowPanel11to15.TabIndex = 16;
+            this.taskFlowPanel11To15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(33)))), ((int)(((byte)(36)))));
+            this.taskFlowPanel11To15.Controls.Add(this.panel19);
+            this.taskFlowPanel11To15.Controls.Add(this.panel20);
+            this.taskFlowPanel11To15.Controls.Add(this.panel21);
+            this.taskFlowPanel11To15.Controls.Add(this.panel23);
+            this.taskFlowPanel11To15.Controls.Add(this.panel24);
+            this.taskFlowPanel11To15.Controls.Add(this.panel25);
+            this.taskFlowPanel11To15.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.taskFlowPanel11To15.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.taskFlowPanel11To15.Location = new System.Drawing.Point(0, 136);
+            this.taskFlowPanel11To15.Margin = new System.Windows.Forms.Padding(0);
+            this.taskFlowPanel11To15.Name = "taskFlowPanel11To15";
+            this.taskFlowPanel11To15.Size = new System.Drawing.Size(329, 65);
+            this.taskFlowPanel11To15.TabIndex = 16;
+            this.taskFlowPanel11To15.Tag = "taskFlowPanel11To15";
             // 
             // panel19
             // 
             this.panel19.Controls.Add(this.eleventhToFifteenthButton);
             this.panel19.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel19.Location = new System.Drawing.Point(4, 4);
-            this.panel19.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel19.Margin = new System.Windows.Forms.Padding(4);
             this.panel19.Name = "panel19";
             this.panel19.Size = new System.Drawing.Size(323, 55);
             this.panel19.TabIndex = 17;
@@ -652,8 +661,10 @@
             this.eleventhToFifteenthButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
             this.eleventhToFifteenthButton.Size = new System.Drawing.Size(323, 55);
             this.eleventhToFifteenthButton.TabIndex = 14;
+            this.eleventhToFifteenthButton.Tag = "taskFlowPanel11To15";
             this.eleventhToFifteenthButton.Text = "11 -15 задание";
             this.eleventhToFifteenthButton.UseVisualStyleBackColor = false;
+            this.eleventhToFifteenthButton.Click += new System.EventHandler(this.Button_Click);
             // 
             // panel20
             // 
@@ -689,7 +700,7 @@
             // 
             this.panel21.Controls.Add(this.twelfthQuestionButton);
             this.panel21.Location = new System.Drawing.Point(662, 4);
-            this.panel21.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel21.Margin = new System.Windows.Forms.Padding(4);
             this.panel21.Name = "panel21";
             this.panel21.Size = new System.Drawing.Size(323, 62);
             this.panel21.TabIndex = 13;
@@ -709,7 +720,7 @@
             this.twelfthQuestionButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
             this.twelfthQuestionButton.Size = new System.Drawing.Size(323, 62);
             this.twelfthQuestionButton.TabIndex = 5;
-            this.twelfthQuestionButton.Tag = "FormTweflthQuestion";
+            this.twelfthQuestionButton.Tag = "FormTwelfthQuestion";
             this.twelfthQuestionButton.Text = "12 вариант";
             this.twelfthQuestionButton.UseVisualStyleBackColor = false;
             this.twelfthQuestionButton.Click += new System.EventHandler(this.QuestionButton_Click);
@@ -815,18 +826,19 @@
             this.taskFlowPanel16To20.Controls.Add(this.panel18);
             this.taskFlowPanel16To20.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.taskFlowPanel16To20.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.taskFlowPanel16To20.Location = new System.Drawing.Point(0, 204);
+            this.taskFlowPanel16To20.Location = new System.Drawing.Point(0, 201);
             this.taskFlowPanel16To20.Margin = new System.Windows.Forms.Padding(0);
             this.taskFlowPanel16To20.Name = "taskFlowPanel16To20";
             this.taskFlowPanel16To20.Size = new System.Drawing.Size(329, 68);
             this.taskFlowPanel16To20.TabIndex = 15;
+            this.taskFlowPanel16To20.Tag = "taskFlowPanel16To20";
             // 
             // panel13
             // 
             this.panel13.Controls.Add(this.sixteenToTwentyButton);
             this.panel13.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel13.Location = new System.Drawing.Point(4, 4);
-            this.panel13.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel13.Margin = new System.Windows.Forms.Padding(4);
             this.panel13.Name = "panel13";
             this.panel13.Size = new System.Drawing.Size(323, 55);
             this.panel13.TabIndex = 17;
@@ -846,8 +858,10 @@
             this.sixteenToTwentyButton.Padding = new System.Windows.Forms.Padding(33, 0, 0, 0);
             this.sixteenToTwentyButton.Size = new System.Drawing.Size(323, 55);
             this.sixteenToTwentyButton.TabIndex = 14;
+            this.sixteenToTwentyButton.Tag = "taskFlowPanel16To20";
             this.sixteenToTwentyButton.Text = "16 - 20 задание";
             this.sixteenToTwentyButton.UseVisualStyleBackColor = false;
+            this.sixteenToTwentyButton.Click += new System.EventHandler(this.Button_Click);
             // 
             // panel14
             // 
@@ -883,7 +897,7 @@
             // 
             this.panel15.Controls.Add(this.seventeenthQuestionButton);
             this.panel15.Location = new System.Drawing.Point(662, 4);
-            this.panel15.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel15.Margin = new System.Windows.Forms.Padding(4);
             this.panel15.Name = "panel15";
             this.panel15.Size = new System.Drawing.Size(323, 62);
             this.panel15.TabIndex = 13;
@@ -1001,12 +1015,31 @@
             // taskFlowPanel1To5Transition
             // 
             this.taskFlowPanel1To5Transition.Interval = 10;
-            this.taskFlowPanel1To5Transition.Tick += new System.EventHandler(this.TaskFlowPanel1To5_Tick);
+            this.taskFlowPanel1To5Transition.Tag = "taskFlowPanel1To5";
+            this.taskFlowPanel1To5Transition.Tick += new System.EventHandler(this.Timer_Tick);
             // 
             // sideBarTransition
             // 
             this.sideBarTransition.Interval = 10;
             this.sideBarTransition.Tick += new System.EventHandler(this.TimerTransition_Tick);
+            // 
+            // taskFlowPanel6To10Transition
+            // 
+            this.taskFlowPanel6To10Transition.Interval = 10;
+            this.taskFlowPanel6To10Transition.Tag = "taskFlowPanel6To10";
+            this.taskFlowPanel6To10Transition.Tick += new System.EventHandler(this.Timer_Tick);
+            // 
+            // taskFlowPanel11To15Transition
+            // 
+            this.taskFlowPanel11To15Transition.Interval = 10;
+            this.taskFlowPanel11To15Transition.Tag = "taskFlowPanel11To15";
+            this.taskFlowPanel11To15Transition.Tick += new System.EventHandler(this.Timer_Tick);
+            // 
+            // taskFlowPanel16To20Transition
+            // 
+            this.taskFlowPanel16To20Transition.Interval = 10;
+            this.taskFlowPanel16To20Transition.Tag = "taskFlowPanel16To20";
+            this.taskFlowPanel16To20Transition.Tick += new System.EventHandler(this.Timer_Tick);
             // 
             // Form1
             // 
@@ -1018,7 +1051,7 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.IsMdiContainer = true;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Form1";
             this.panel1.ResumeLayout(false);
@@ -1034,14 +1067,14 @@
             this.panel5.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
-            this.taskFlowPanel6to10.ResumeLayout(false);
+            this.taskFlowPanel6To10.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
             this.panel8.ResumeLayout(false);
             this.panel9.ResumeLayout(false);
             this.panel10.ResumeLayout(false);
             this.panel11.ResumeLayout(false);
             this.panel12.ResumeLayout(false);
-            this.taskFlowPanel11to15.ResumeLayout(false);
+            this.taskFlowPanel11To15.ResumeLayout(false);
             this.panel19.ResumeLayout(false);
             this.panel20.ResumeLayout(false);
             this.panel21.ResumeLayout(false);
@@ -1097,7 +1130,7 @@
         private System.Windows.Forms.Button nineteenthQuestionButton;
         private System.Windows.Forms.Panel panel18;
         private System.Windows.Forms.Button twentiethQuestionButton;
-        private System.Windows.Forms.FlowLayoutPanel taskFlowPanel6to10;
+        private System.Windows.Forms.FlowLayoutPanel taskFlowPanel6To10;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Button sixToTenButton;
         private System.Windows.Forms.Panel panel8;
@@ -1110,7 +1143,7 @@
         private System.Windows.Forms.Button ninthQuestionButton;
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.Button tenthQuestionButton;
-        private System.Windows.Forms.FlowLayoutPanel taskFlowPanel11to15;
+        private System.Windows.Forms.FlowLayoutPanel taskFlowPanel11To15;
         private System.Windows.Forms.Panel panel19;
         private System.Windows.Forms.Button eleventhToFifteenthButton;
         private System.Windows.Forms.Panel panel20;
@@ -1124,5 +1157,8 @@
         private System.Windows.Forms.Panel panel25;
         private System.Windows.Forms.Button fifteenthQuestionButton;
         private System.Windows.Forms.Timer sideBarTransition;
+        private System.Windows.Forms.Timer taskFlowPanel6To10Transition;
+        private System.Windows.Forms.Timer taskFlowPanel11To15Transition;
+        private System.Windows.Forms.Timer taskFlowPanel16To20Transition;
     }
 }
