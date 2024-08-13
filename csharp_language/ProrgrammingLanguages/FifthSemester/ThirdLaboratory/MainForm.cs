@@ -11,6 +11,7 @@ namespace ThirdLaboratory
     {
         private readonly FormFactory _formFactory;
         private readonly CommandContext _commandContext;
+        private readonly SideBarContext _sideBarContext;
 
         public MainForm()
         {
@@ -19,6 +20,14 @@ namespace ThirdLaboratory
 
             _formFactory = new FormFactory(this);
             _commandContext = new CommandContext(this);
+            _sideBarContext = new SideBarContext(
+                sideBar, 
+                sideBarTransition,
+                taskFlowPanel1To5,
+                taskFlowPanel6To10,
+                taskFlowPanel11To15,
+                taskFlowPanel16To20
+             );
 
             Controls.OfType<MdiClient>().FirstOrDefault().BackColor = Color.FromArgb(232, 234, 237);
         }
@@ -26,7 +35,7 @@ namespace ThirdLaboratory
         private void Button_Click(object sender, EventArgs e)
         {
             var button = sender as Button;
-            string panelTag = button.Tag.ToString();
+            var panelTag = button.Tag.ToString();
             _commandContext.SetCommand(panelTag);
         }
 
@@ -35,41 +44,14 @@ namespace ThirdLaboratory
             _commandContext.Execute();
         }
 
-
-        bool sideBarExpand = true;
         private void TimerTransition_Tick(object sender, EventArgs e)
         {
-            if (sideBarExpand)
-            {
-                sideBar.Width -= 10;
-
-                if (sideBar.Width <= 110)
-                {
-                    sideBarExpand = false;
-                    sideBarTransition.Stop();
-
-                }
-            }
-
-            else
-            {
-                sideBar.Width += 10;
-                if (sideBar.Width >= 323)
-                {
-                    sideBarExpand = true;
-                    sideBarTransition.Stop();
-
-                    taskFlowPanel1To5.Width = sideBar.Width;
-                    taskFlowPanel6To10.Width = sideBar.Width;
-                    taskFlowPanel11To15.Width = sideBar.Width;
-                    taskFlowPanel16To20.Width = sideBar.Width;
-                }
-            }
+            _sideBarContext.Handle();
         }
 
         private void MenuButton_Click(object sender, EventArgs e)
         {
-            sideBarTransition.Start();
+            _sideBarContext.StartAnimation();
         }
 
         private void QuestionButton_Click(object sender, EventArgs e)
