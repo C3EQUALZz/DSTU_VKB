@@ -4,10 +4,11 @@ using System.Linq;
 using System.Windows.Forms;
 using ThirdLaboratory.core;
 using ThirdLaboratory.core.helpers;
+using ThirdLaboratory.core.interfaces;
 
 namespace ThirdLaboratory
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form, IMainView
     {
         private readonly FormFactory _formFactory;
         private readonly CommandContext _commandContext;
@@ -20,41 +21,34 @@ namespace ThirdLaboratory
 
             _formFactory = new FormFactory(this);
             _commandContext = new CommandContext(this);
-            _sideBarContext = new SideBarContext(
-                sideBar, 
-                sideBarTransition,
-                taskFlowPanel1To5,
-                taskFlowPanel6To10,
-                taskFlowPanel11To15,
-                taskFlowPanel16To20
-             );
+            _sideBarContext = new SideBarContext(this);
 
             Controls.OfType<MdiClient>().FirstOrDefault().BackColor = Color.FromArgb(232, 234, 237);
         }
 
-        private void Button_Click(object sender, EventArgs e)
+        public void Button_Click(object sender, EventArgs e)
         {
             var button = sender as Button;
             var panelTag = button.Tag.ToString();
             _commandContext.SetCommand(panelTag);
         }
 
-        private void Timer_Tick(object sender, EventArgs e)
+        public void Timer_Tick(object sender, EventArgs e)
         {
             _commandContext.Execute();
         }
 
-        private void TimerTransition_Tick(object sender, EventArgs e)
+        public void TimerTransition_Tick(object sender, EventArgs e)
         {
             _sideBarContext.Handle();
         }
 
-        private void MenuButton_Click(object sender, EventArgs e)
+        public void MenuButton_Click(object sender, EventArgs e)
         {
             _sideBarContext.StartAnimation();
         }
 
-        private void QuestionButton_Click(object sender, EventArgs e)
+        public void QuestionButton_Click(object sender, EventArgs e)
         {
             if (sender is Button button && button.Tag is string formName)
             {
