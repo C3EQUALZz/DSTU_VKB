@@ -1,10 +1,11 @@
 ﻿using System.Linq;
 using System;
 using System.Windows.Forms;
+using ThirdLaboratory.core.interfaces;
 
 namespace ThirdLaboratory.core
 {
-    internal class FormFactory
+    internal class FormFactory : IFormFactory
     {
         private readonly Form _mainForm;
 
