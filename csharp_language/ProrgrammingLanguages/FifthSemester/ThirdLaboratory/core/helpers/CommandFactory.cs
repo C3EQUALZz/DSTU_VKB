@@ -10,7 +10,7 @@ namespace ThirdLaboratory.core.helpers
     internal class CommandFactory
     {
         /// <summary>
-        /// Метод, который создает команду закрытия и открытия панели
+        /// Метод, который создает команду закрытия и открытия панели (1 - 5 задание и т.п)
         /// </summary>
         /// <param name="panel">Панель, к которой привязываются данные команды</param>
         /// <param name="timer">Таймер, связанный с панелью для анимации. </param>

@@ -72,10 +72,13 @@
     <Compile Include="core\helpers\sidebar\CollapsedState.cs" />
     <Compile Include="core\helpers\sidebar\ExpandedState.cs" />
     <Compile Include="core\helpers\sidebar\SideBarContext.cs" />
+    <Compile Include="core\interfaces\ICommandContext.cs" />
     <Compile Include="core\interfaces\IFormFactory.cs" />
+    <Compile Include="core\interfaces\IMainPresenter.cs" />
     <Compile Include="core\interfaces\IMainView.cs" />
     <Compile Include="core\interfaces\INinthQuestionModel.cs" />
     <Compile Include="core\interfaces\INinthQuestionView.cs" />
+    <Compile Include="core\interfaces\ISideBarContext.cs" />
     <Compile Include="core\interfaces\ISideBarState.cs" />
     <Compile Include="core\MDIProperties.cs" />
     <Compile Include="MainForm.cs">

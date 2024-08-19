@@ -13,7 +13,6 @@ namespace ThirdLaboratory
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            // Application.Run(new forms.FormNinthQuestion());
             Application.Run(new MainForm());
         }
     }

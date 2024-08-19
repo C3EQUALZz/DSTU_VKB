@@ -1,12 +1,14 @@
 ﻿using System.Windows.Forms;
 using ThirdLaboratory.core.abstractClasses;
+using ThirdLaboratory.core.interfaces;
 
 namespace ThirdLaboratory.core.helpers
 {
     /// <summary>
     /// Здесь реализован паттерн стратегия, который устанавливает состояния для определенной панели. 
+    /// У каждой панели (1 - 5 задание и т.п) есть собственный таймер и тэг
     /// </summary>
-    internal class CommandContext
+    internal class CommandContext : ICommandContext
     {
         private readonly Form mainForm;
         private Command _currentCommand;
@@ -25,6 +27,7 @@ namespace ThirdLaboratory.core.helpers
         /// <summary>
         /// Сеттер для команды, здесь передается тег кнопки, которой нажали. 
         /// С помощью этого будет определяться привязанная панель и таймер. 
+        /// Этот обработчик устанавливается на каждую кнопку (1 - 5 задание и т.п), и он устанавливает состояние (раскрыто или свернуто)
         /// </summary>
         /// <param name="panelTag">тэг кнопки для создания команды</param>
         public void SetCommand(string panelTag)
@@ -38,7 +41,7 @@ namespace ThirdLaboratory.core.helpers
         }
 
         /// <summary>
-        /// Точка запуска у стратегии
+        /// Выполнение команды раскрытия панели
         /// </summary>
         public void Execute()
         {

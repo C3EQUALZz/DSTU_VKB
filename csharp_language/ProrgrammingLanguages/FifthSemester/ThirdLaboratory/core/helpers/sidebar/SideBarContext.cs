@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace ThirdLaboratory.core.helpers
 {
-    internal class SideBarContext
+    internal class SideBarContext : ISideBarContext
     {
         private ISideBarState _currentState;
         public Panel SideBar { get; set; }
@@ -50,11 +50,19 @@ namespace ThirdLaboratory.core.helpers
             _currentState = new ExpandedState();
         }
 
+        /// <summary>
+        /// Метод контекста, который переключает состояние
+        /// </summary>
         public void Handle()
         {
             _currentState.Handle(this);
         }
-
+        
+        /// <summary>
+        /// Метод контекста, который запускает анимацию и переключает. 
+        /// Опять-таки надо было разделить, потому что автор по дурацки сделал реализацию анимации через таймер. 
+        /// Не спрашивайте, дикий костыль, но лучше ничего не придумал. ЛЕГАСИ 
+        /// </summary>
         public void StartAnimation()
         {
             Timer.Start();
