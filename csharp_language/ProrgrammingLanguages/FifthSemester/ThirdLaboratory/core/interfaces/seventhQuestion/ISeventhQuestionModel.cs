@@ -2,6 +2,6 @@
 {
     internal interface ISeventhQuestionModel
     {
-        void Execute();
+        int[,] Execute();
     }
 }

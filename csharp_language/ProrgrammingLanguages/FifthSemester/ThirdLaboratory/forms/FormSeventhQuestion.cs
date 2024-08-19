@@ -10,6 +10,7 @@ namespace ThirdLaboratory.forms
         public FormSeventhQuestion()
         {
             InitializeComponent();
+
         }
 
         /// <summary>
@@ -68,13 +69,13 @@ namespace ThirdLaboratory.forms
 
         public void ClearButton_Click(object sender, EventArgs e)
         {
-            resultListBox.ClearSelected();
+            resultListBox.Items.Clear();
             dataGridView.ClearSelection();
         }
 
         public void ExecuteButton_Click(object sender, EventArgs e)
         {
-
+           
         }
     }
 }

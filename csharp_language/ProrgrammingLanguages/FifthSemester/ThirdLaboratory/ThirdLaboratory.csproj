@@ -84,6 +84,12 @@
     <Compile Include="core\interfaces\secondQuestion\ISecondQuestionModel.cs" />
     <Compile Include="core\interfaces\ISideBarContext.cs" />
     <Compile Include="core\interfaces\ISideBarState.cs" />
+    <Compile Include="core\interfaces\seventhQuestion\ISeventhQuestionModel.cs" />
+    <Compile Include="core\interfaces\seventhQuestion\ISeventhQuestionPresenter.cs" />
+    <Compile Include="core\interfaces\seventhQuestion\ISeventhQuestionView.cs" />
+    <Compile Include="core\interfaces\thirdQuestion\IThirdQuestionModel.cs" />
+    <Compile Include="core\interfaces\thirdQuestion\IThirdQuestionPresenter.cs" />
+    <Compile Include="core\interfaces\thirdQuestion\IThirdQuestionView.cs" />
     <Compile Include="core\MDIProperties.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -214,9 +220,11 @@
     <Compile Include="models\FirstQuestionModel.cs" />
     <Compile Include="models\NinthQuestionModel.cs" />
     <Compile Include="models\SecondQuestionModel.cs" />
+    <Compile Include="models\SeventhQuestionModel.cs" />
     <Compile Include="presenters\MainPresenter.cs" />
     <Compile Include="presenters\NinthQuestionPresenter.cs" />
     <Compile Include="presenters\SecondQuestionPresenter.cs" />
+    <Compile Include="presenters\SeventhQuestionPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="core\classes\RoundedTextBox.cs">
