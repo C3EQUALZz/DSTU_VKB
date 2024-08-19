@@ -74,10 +74,14 @@
     <Compile Include="core\helpers\sidebar\SideBarContext.cs" />
     <Compile Include="core\interfaces\ICommandContext.cs" />
     <Compile Include="core\interfaces\IFormFactory.cs" />
+    <Compile Include="core\interfaces\secondQuestion\ISecondQuestionPresenter.cs" />
+    <Compile Include="core\interfaces\secondQuestion\ISecondQuestionView.cs" />
     <Compile Include="core\interfaces\IMainPresenter.cs" />
     <Compile Include="core\interfaces\IMainView.cs" />
-    <Compile Include="core\interfaces\INinthQuestionModel.cs" />
-    <Compile Include="core\interfaces\INinthQuestionView.cs" />
+    <Compile Include="core\interfaces\ninthQuestion\INinthQuestionModel.cs" />
+    <Compile Include="core\interfaces\ninthQuestion\INinthQuestionView.cs" />
+    <Compile Include="core\interfaces\IQuestionForm.cs" />
+    <Compile Include="core\interfaces\secondQuestion\ISecondQuestionModel.cs" />
     <Compile Include="core\interfaces\ISideBarContext.cs" />
     <Compile Include="core\interfaces\ISideBarState.cs" />
     <Compile Include="core\MDIProperties.cs" />
@@ -209,8 +213,10 @@
     </Compile>
     <Compile Include="models\FirstQuestionModel.cs" />
     <Compile Include="models\NinthQuestionModel.cs" />
+    <Compile Include="models\SecondQuestionModel.cs" />
     <Compile Include="presenters\MainPresenter.cs" />
     <Compile Include="presenters\NinthQuestionPresenter.cs" />
+    <Compile Include="presenters\SecondQuestionPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="core\classes\RoundedTextBox.cs">
@@ -308,6 +314,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="core\helpers\questions\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
