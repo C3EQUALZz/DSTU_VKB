@@ -8,21 +8,27 @@ namespace ThirdLaboratory.models
         private readonly Random _random;
         private int[,] _matrix;
 
+        /// <summary>
+        /// Модель, которая отвечает за 7 вариант
+        /// </summary>
         public SeventhQuestionModel()
         {
             _random = new Random();
         }
 
+        /// <summary>
+        /// Метод, который создает случайную матрицу по размерам, а также заполняет случайными элементами
+        /// </summary>
         public int[,] Execute()
         {
             _matrix = new int[_random.Next(5, 10), _random.Next(5, 10)];
 
-            int rows = _matrix.GetLength(0);
-            int columns = _matrix.GetLength(1);
+            var rows = _matrix.GetLength(0);
+            var columns = _matrix.GetLength(1);
 
-            for (int i = 0; i < rows; i++)
+            for (var i = 0; i < rows; i++)
             {
-                for (int j = 0; j < columns; j++)
+                for (var j = 0; j < columns; j++)
                 {
                     _matrix[i, j] = _random.Next(-100, 100);
                 }

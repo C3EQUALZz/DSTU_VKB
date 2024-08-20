@@ -67,6 +67,9 @@ namespace ThirdLaboratory.forms
             }
         }
 
+        /// <summary>
+        /// Нужно использовать ListBox, как я понимаю, поэтому 
+        /// </summary>
         public List<string> ResultListBoxItems
         {
             get => resultListBox.Items.Cast<string>().ToList();
@@ -89,17 +92,27 @@ namespace ThirdLaboratory.forms
             _presenter.OnGenerateMatrix();
         }
 
+        /// <summary>
+        /// Обработчик на очистку всех полей
+        /// </summary>
         public void ClearButton_Click(object sender, EventArgs e)
         {
             resultListBox.Items.Clear();
             dataGridView.Columns.Clear();
         }
 
+        /// <summary>
+        /// Обработчик на вывод матрицы в ListBox
+        /// </summary>
         public void ExecuteButton_Click(object sender, EventArgs e)
         {
             _presenter.OnExecute();
         }
 
+        /// <summary>
+        /// В паттерне MVP валидация происходит на View.
+        /// Для DataGridView здесь написана валидация, чтобы были только числа
+        /// </summary>
         public void DataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
             var input = e.FormattedValue.ToString();
