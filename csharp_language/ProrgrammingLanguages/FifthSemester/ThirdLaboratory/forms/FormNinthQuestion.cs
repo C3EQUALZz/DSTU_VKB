@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using ThirdLaboratory.core.interfaces;
 using ThirdLaboratory.models;
 using ThirdLaboratory.presenters;
+using ThirdLaboratory.core.helpers.questions;
 
 namespace ThirdLaboratory.forms
 {
@@ -134,7 +135,7 @@ namespace ThirdLaboratory.forms
         /// </summary>
         public void CountOfMatrixRowsTextBox__TextChanged(object sender, EventArgs e)
         {
-            HandleTextChanged(countOfMatrixRowsTextBox.Texts, ref countOfRows);
+            Handlers.HandleTextChanged(countOfMatrixRowsTextBox.Texts, ref countOfRows);
 
             if (countOfRows < 0)
             {
@@ -147,11 +148,11 @@ namespace ThirdLaboratory.forms
         /// </summary>
         public void CountOfMatrixColumnsTextBox__TextChanged(object sender, EventArgs e)
         {
-            HandleTextChanged(countOfMatrixColumnsTextBox.Texts, ref countOfColumns);
+            Handlers.HandleTextChanged(countOfMatrixColumnsTextBox.Texts, ref countOfColumns);
 
             if (countOfColumns < 0)
             {
-                MessageBox.Show("Вы ввели отрицательное число - количество строк, это неправильно. ");
+                MessageBox.Show("Вы ввели отрицательное число - количество столбцов, это неправильно. ");
             }
         }
 
@@ -178,25 +179,5 @@ namespace ThirdLaboratory.forms
 
         }
 
-        /// <summary>
-        /// Общий обработчик событий для полей, когда текст изменился. 
-        /// Здесь пару "костылей", чтобы не ломался при пустом тексте
-        /// </summary>
-        /// <param name="text">текст, взятый с textbox </param>
-        /// <param name="value">ссылка на значение, чтобы сохранить значение</param>
-        private void HandleTextChanged(string text, ref int? value)
-        {
-            if (string.IsNullOrEmpty(text))
-                return;
-
-            if (int.TryParse(text, out var buffer))
-            {
-                value = buffer;
-            }
-            else
-            {
-                MessageBox.Show("Вы ввели не целое число");
-            }
-        }
     }
 }

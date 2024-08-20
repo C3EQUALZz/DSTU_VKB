@@ -69,11 +69,15 @@
     <Compile Include="core\helpers\ComponentFinder.cs" />
     <Compile Include="core\helpers\ExpandCommand.cs" />
     <Compile Include="core\helpers\FormFactory.cs" />
+    <Compile Include="core\helpers\questions\Handlers.cs" />
     <Compile Include="core\helpers\sidebar\CollapsedState.cs" />
     <Compile Include="core\helpers\sidebar\ExpandedState.cs" />
     <Compile Include="core\helpers\sidebar\SideBarContext.cs" />
     <Compile Include="core\interfaces\ICommandContext.cs" />
     <Compile Include="core\interfaces\IFormFactory.cs" />
+    <Compile Include="core\interfaces\nineteenthQuestion\INineteenthQuestionModel.cs" />
+    <Compile Include="core\interfaces\nineteenthQuestion\INineteenthQuestionPresenter.cs" />
+    <Compile Include="core\interfaces\nineteenthQuestion\INineteenthQuestionView.cs" />
     <Compile Include="core\interfaces\secondQuestion\ISecondQuestionPresenter.cs" />
     <Compile Include="core\interfaces\secondQuestion\ISecondQuestionView.cs" />
     <Compile Include="core\interfaces\IMainPresenter.cs" />
@@ -218,10 +222,12 @@
       <DependentUpon>FormTwentiethQuestion.cs</DependentUpon>
     </Compile>
     <Compile Include="models\FirstQuestionModel.cs" />
+    <Compile Include="models\NineteenthQuestionModel.cs" />
     <Compile Include="models\NinthQuestionModel.cs" />
     <Compile Include="models\SecondQuestionModel.cs" />
     <Compile Include="models\SeventhQuestionModel.cs" />
     <Compile Include="presenters\MainPresenter.cs" />
+    <Compile Include="presenters\NineteenthQuestionPresenter.cs" />
     <Compile Include="presenters\NinthQuestionPresenter.cs" />
     <Compile Include="presenters\SecondQuestionPresenter.cs" />
     <Compile Include="presenters\SeventhQuestionPresenter.cs" />
@@ -322,8 +328,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="core\helpers\questions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
