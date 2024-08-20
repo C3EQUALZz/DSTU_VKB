@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using ThirdLaboratory.core.interfaces.seventhQuestion;
 
 namespace ThirdLaboratory.presenters
@@ -20,12 +16,31 @@ namespace ThirdLaboratory.presenters
 
         public void OnGenerateMatrix()
         {
-            _view.Matrix = _model.Execute();
+            var matrix = _model.Execute();
+
+            _view.RowCount = matrix.GetLength(0);
+            _view.ColumnCount = matrix.GetLength(1);
+
+            _view.Matrix = matrix;
         }
 
         public void OnExecute()
         {
-            _model.Execute();
+            var matrix = _view.Matrix;
+            var rows = new List<string>();
+
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                var row = "";
+
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    row += matrix[i, j] + "\t";
+                }
+                rows.Add(row);
+            }
+
+            _view.ResultListBoxItems = rows;
         }
     }
 }

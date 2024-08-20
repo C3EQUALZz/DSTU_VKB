@@ -1,16 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using ThirdLaboratory.core.interfaces.seventhQuestion;
+using ThirdLaboratory.models;
+using ThirdLaboratory.presenters;
 
 namespace ThirdLaboratory.forms
 {
     public partial class FormSeventhQuestion : Form, ISeventhQuestionView
     {
+        private readonly ISeventhQuestionPresenter _presenter;
+
         public FormSeventhQuestion()
         {
             InitializeComponent();
-
+            _presenter = new SeventhQuestionPresenter(this, new SeventhQuestionModel());
         }
 
         /// <summary>
@@ -62,20 +67,51 @@ namespace ThirdLaboratory.forms
             }
         }
 
+        public List<string> ResultListBoxItems
+        {
+            get => resultListBox.Items.Cast<string>().ToList();
+            set
+            {
+                resultListBox.Items.Clear();
+                foreach (var item in value)
+                {
+                    resultListBox.Items.Add(item);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Обработчик, установленный через Designer, на кнопку generateButton
+        /// Здесь запускается создание случайной матрицы
+        /// </summary>
         public void GenerateButton_Click(object sender, EventArgs e)
         {
-
+            _presenter.OnGenerateMatrix();
         }
 
         public void ClearButton_Click(object sender, EventArgs e)
         {
             resultListBox.Items.Clear();
-            dataGridView.ClearSelection();
+            dataGridView.Columns.Clear();
         }
 
         public void ExecuteButton_Click(object sender, EventArgs e)
         {
-           
+            _presenter.OnExecute();
+        }
+
+        public void DataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            var input = e.FormattedValue.ToString();
+
+            if (!int.TryParse(input, out int _))
+            {
+                MessageBox.Show("Пожалуйста, введите только числовые значения.", "Некорректный ввод", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                e.Cancel = true;
+                dataGridView.CancelEdit();
+                dataGridView[e.ColumnIndex, e.RowIndex].Value = string.Empty;
+            }
         }
     }
 }

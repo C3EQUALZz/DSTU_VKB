@@ -6,16 +6,17 @@ namespace ThirdLaboratory.models
     internal class SeventhQuestionModel : ISeventhQuestionModel
     {
         private readonly Random _random;
-        public int[,] _matrix;
+        private int[,] _matrix;
 
         public SeventhQuestionModel()
         {
             _random = new Random();
-            _matrix = new int[6, 6];
         }
 
         public int[,] Execute()
         {
+            _matrix = new int[_random.Next(5, 10), _random.Next(5, 10)];
+
             int rows = _matrix.GetLength(0);
             int columns = _matrix.GetLength(1);
 
@@ -23,7 +24,7 @@ namespace ThirdLaboratory.models
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    _matrix[i, j] = _random.Next(_random.Next(), _random.Next());
+                    _matrix[i, j] = _random.Next(-100, 100);
                 }
             }
 
