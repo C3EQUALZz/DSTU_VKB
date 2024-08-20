@@ -135,7 +135,7 @@ namespace ThirdLaboratory.forms
         /// <summary>
         /// Обработчик событий, установленный через Designer, на поле с вводом количества строк
         /// </summary>
-        private void CountOfRowsInput__TextChanged(object sender, EventArgs e)
+        public void CountOfRowsInput__TextChanged(object sender, EventArgs e)
         {
             Handlers.HandleTextChanged(countOfRowsInput.Texts, ref countOfRows);
 
@@ -148,7 +148,7 @@ namespace ThirdLaboratory.forms
         /// <summary>
         /// Обработчик событий, установленный через Designer, на поле с вводом количества столбцов
         /// </summary>
-        private void CountOfColumnsInput__TextChanged(object sender, EventArgs e)
+        public void CountOfColumnsInput__TextChanged(object sender, EventArgs e)
         {
             Handlers.HandleTextChanged(countOfColumnsInput.Texts, ref countOfColumns);
 
@@ -161,7 +161,7 @@ namespace ThirdLaboratory.forms
         /// <summary>
         /// Обработчик событий, установленный через Designer, на поле с вводом удаляемого столбца
         /// </summary>
-        private void NumberOfDeletingColumn__TextChanged(object sender, EventArgs e)
+        public void NumberOfDeletingColumn__TextChanged(object sender, EventArgs e)
         {
             Handlers.HandleTextChanged(numberOfDeletingColumn.Texts, ref deleteColumnNumber);
 
