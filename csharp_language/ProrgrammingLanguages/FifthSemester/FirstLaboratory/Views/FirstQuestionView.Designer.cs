@@ -1,6 +1,6 @@
-﻿namespace FirstLaboratory.FirstQuestion
+﻿namespace FirstLaboratory.Views
 {
-    partial class TaskForm
+    partial class FirstQuestionView
     {
         /// <summary>
         /// Required designer variable.
@@ -52,8 +52,8 @@
             Margin = new Padding(3, 4, 3, 4);
             Name = "TaskForm";
             Text = "TaskForm";
-            Paint += TaskForm_Paint;
-            Resize += TaskForm_Resize;
+            Paint += PaintEvent;
+            Resize += ResizeEvent;
             ResumeLayout(false);
         }
 
