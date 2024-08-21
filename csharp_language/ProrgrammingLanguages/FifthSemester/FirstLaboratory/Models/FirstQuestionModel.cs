@@ -2,6 +2,10 @@
 
 namespace FirstLaboratory.Models
 {
+    /// <summary>
+    /// Модель в паттерне MVP, здесь устанавливаются базовые параметры для отображения в View
+    /// Грубо говоря, добавил настройки здесь, хотя можно и в View
+    /// </summary>
     internal class FirstQuestionModel : IFirstQuestionModel
     {
         public Color BackgroundColor { get; set; } = Color.Red;
