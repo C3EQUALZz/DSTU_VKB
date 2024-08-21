@@ -1,4 +1,4 @@
-﻿namespace WinFormsAppForLaboratories.Laboratories.FirstLaboratory.SecondQuestion
+﻿namespace FirstLaboratory.SecondQuestion
 {
     partial class TaskForm
     {

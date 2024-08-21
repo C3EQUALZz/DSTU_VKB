@@ -1,6 +1,6 @@
-﻿namespace WinFormsAppForLaboratories.Laboratories.FirstLaboratory.FirstQuestion
+﻿namespace FirstLaboratory.SecondQuestion
 {
-    partial class TaskForm
+    partial class SecondForm
     {
         /// <summary>
         /// Required designer variable.
@@ -33,23 +33,24 @@
             // 
             // ExitButton
             // 
-            ExitButton.Location = new Point(312, 162);
+            ExitButton.Location = new Point(333, 184);
             ExitButton.Name = "ExitButton";
-            ExitButton.Size = new Size(198, 78);
+            ExitButton.Size = new Size(128, 47);
             ExitButton.TabIndex = 0;
-            ExitButton.Text = "Закрыть приложение";
+            ExitButton.Text = "GREENPEACE";
             ExitButton.UseVisualStyleBackColor = true;
             ExitButton.Click += ExitButton_Click;
             // 
-            // TaskForm
+            // SecondForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(ExitButton);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "TaskForm";
-            Text = "TaskForm";
+            Name = "SecondForm";
+            Text = "StartForm";
+            Load += SecondForm_Load;
             ResumeLayout(false);
         }
 
