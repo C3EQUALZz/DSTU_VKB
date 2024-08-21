@@ -1,0 +1,333 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CE3F4C91-CB6B-4553-B194-78DD682F5D64}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>ThirdLaboratory</RootNamespace>
+    <AssemblyName>ThirdLaboratory</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FontAwesome.Sharp, Version=6.6.0.0, Culture=neutral, PublicKeyToken=d16d1e4e568ec10f, processorArchitecture=MSIL">
+      <HintPath>..\packages\FontAwesome.Sharp.6.6.0\lib\net48\FontAwesome.Sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="ReaLTaiizor, Version=3.8.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ReaLTaiizor.3.8.0.6\lib\net48\ReaLTaiizor.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="controllers\FirstQuestionController.cs" />
+    <Compile Include="core\abstractClasses\Command.cs" />
+    <Compile Include="core\classes\RoundedPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="core\helpers\CollapseCommand.cs" />
+    <Compile Include="core\helpers\CommandContext.cs" />
+    <Compile Include="core\helpers\CommandFactory.cs" />
+    <Compile Include="core\helpers\ComponentFinder.cs" />
+    <Compile Include="core\helpers\ExpandCommand.cs" />
+    <Compile Include="core\helpers\FormFactory.cs" />
+    <Compile Include="core\helpers\questions\Handlers.cs" />
+    <Compile Include="core\helpers\sidebar\CollapsedState.cs" />
+    <Compile Include="core\helpers\sidebar\ExpandedState.cs" />
+    <Compile Include="core\helpers\sidebar\SideBarContext.cs" />
+    <Compile Include="core\interfaces\ICommandContext.cs" />
+    <Compile Include="core\interfaces\IFormFactory.cs" />
+    <Compile Include="core\interfaces\nineteenthQuestion\INineteenthQuestionModel.cs" />
+    <Compile Include="core\interfaces\nineteenthQuestion\INineteenthQuestionPresenter.cs" />
+    <Compile Include="core\interfaces\nineteenthQuestion\INineteenthQuestionView.cs" />
+    <Compile Include="core\interfaces\secondQuestion\ISecondQuestionPresenter.cs" />
+    <Compile Include="core\interfaces\secondQuestion\ISecondQuestionView.cs" />
+    <Compile Include="core\interfaces\IMainPresenter.cs" />
+    <Compile Include="core\interfaces\IMainView.cs" />
+    <Compile Include="core\interfaces\ninthQuestion\INinthQuestionModel.cs" />
+    <Compile Include="core\interfaces\ninthQuestion\INinthQuestionView.cs" />
+    <Compile Include="core\interfaces\IQuestionForm.cs" />
+    <Compile Include="core\interfaces\secondQuestion\ISecondQuestionModel.cs" />
+    <Compile Include="core\interfaces\ISideBarContext.cs" />
+    <Compile Include="core\interfaces\ISideBarState.cs" />
+    <Compile Include="core\interfaces\seventhQuestion\ISeventhQuestionModel.cs" />
+    <Compile Include="core\interfaces\seventhQuestion\ISeventhQuestionPresenter.cs" />
+    <Compile Include="core\interfaces\seventhQuestion\ISeventhQuestionView.cs" />
+    <Compile Include="core\interfaces\thirdQuestion\IThirdQuestionModel.cs" />
+    <Compile Include="core\interfaces\thirdQuestion\IThirdQuestionPresenter.cs" />
+    <Compile Include="core\interfaces\thirdQuestion\IThirdQuestionView.cs" />
+    <Compile Include="core\MDIProperties.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FormEighteenthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FormEighteenthQuestion.Designer.cs">
+      <DependentUpon>FormEighteenthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FormEigthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FormEigthQuestion.Designer.cs">
+      <DependentUpon>FormEigthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FormEleventhQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FormEleventhQuestion.Designer.cs">
+      <DependentUpon>FormEleventhQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FormFifthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FormFifthQuestion.Designer.cs">
+      <DependentUpon>FormFifthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FormFirstQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FormFirstQuestion.Designer.cs">
+      <DependentUpon>FormFirstQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FormFifteenthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FormFifteenthQuestion.Designer.cs">
+      <DependentUpon>FormFifteenthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FormFourteenthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FormFourteenthQuestion.Designer.cs">
+      <DependentUpon>FormFourteenthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FormFourthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FormFourthQuestion.Designer.cs">
+      <DependentUpon>FormFourthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FormNineteenthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FormNineteenthQuestion.Designer.cs">
+      <DependentUpon>FormNineteenthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FormNinthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FormNinthQuestion.Designer.cs">
+      <DependentUpon>FormNinthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FormSecondQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FormSecondQuestion.Designer.cs">
+      <DependentUpon>FormSecondQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FormSeventeenthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FormSeventeenthQuestion.Designer.cs">
+      <DependentUpon>FormSeventeenthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FormSeventhQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FormSeventhQuestion.Designer.cs">
+      <DependentUpon>FormSeventhQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FormSixteenthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FormSixteenthQuestion.Designer.cs">
+      <DependentUpon>FormSixteenthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FormSixthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FormSixthQuestion.Designer.cs">
+      <DependentUpon>FormSixthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FormTenthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FormTenthQuestion.Designer.cs">
+      <DependentUpon>FormTenthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FormThirdQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FormThirdQuestion.Designer.cs">
+      <DependentUpon>FormThirdQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FormThirteenthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FormThirteenthQuestion.Designer.cs">
+      <DependentUpon>FormThirteenthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FormTwelfthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FormTwelfthQuestion.Designer.cs">
+      <DependentUpon>FormTwelfthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FormTwentiethQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FormTwentiethQuestion.Designer.cs">
+      <DependentUpon>FormTwentiethQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="models\FirstQuestionModel.cs" />
+    <Compile Include="models\NineteenthQuestionModel.cs" />
+    <Compile Include="models\NinthQuestionModel.cs" />
+    <Compile Include="models\SecondQuestionModel.cs" />
+    <Compile Include="models\SeventhQuestionModel.cs" />
+    <Compile Include="presenters\MainPresenter.cs" />
+    <Compile Include="presenters\NineteenthQuestionPresenter.cs" />
+    <Compile Include="presenters\NinthQuestionPresenter.cs" />
+    <Compile Include="presenters\SecondQuestionPresenter.cs" />
+    <Compile Include="presenters\SeventhQuestionPresenter.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="core\classes\RoundedTextBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="core\classes\RoundedTextBox.Designer.cs">
+      <DependentUpon>RoundedTextBox.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="core\classes\RoundedTextBox.resx">
+      <DependentUpon>RoundedTextBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormEighteenthQuestion.resx">
+      <DependentUpon>FormEighteenthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormEigthQuestion.resx">
+      <DependentUpon>FormEigthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormEleventhQuestion.resx">
+      <DependentUpon>FormEleventhQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormFifteenthQuestion.resx">
+      <DependentUpon>FormFifteenthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormFifthQuestion.resx">
+      <DependentUpon>FormFifthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormFirstQuestion.resx">
+      <DependentUpon>FormFirstQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormFourteenthQuestion.resx">
+      <DependentUpon>FormFourteenthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormFourthQuestion.resx">
+      <DependentUpon>FormFourthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormNineteenthQuestion.resx">
+      <DependentUpon>FormNineteenthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormNinthQuestion.resx">
+      <DependentUpon>FormNinthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormSecondQuestion.resx">
+      <DependentUpon>FormSecondQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormSeventeenthQuestion.resx">
+      <DependentUpon>FormSeventeenthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormSeventhQuestion.resx">
+      <DependentUpon>FormSeventhQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormSixteenthQuestion.resx">
+      <DependentUpon>FormSixteenthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormSixthQuestion.resx">
+      <DependentUpon>FormSixthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormTenthQuestion.resx">
+      <DependentUpon>FormTenthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormThirdQuestion.resx">
+      <DependentUpon>FormThirdQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormThirteenthQuestion.resx">
+      <DependentUpon>FormThirteenthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormTwelfthQuestion.resx">
+      <DependentUpon>FormTwelfthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormTwentiethQuestion.resx">
+      <DependentUpon>FormTwentiethQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
