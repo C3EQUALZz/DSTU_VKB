@@ -10,10 +10,10 @@ using System.Windows.Forms;
 
 namespace FirstLaboratory.ThirdQuestion
 {
-    public partial class TaskForm : Form
+    public partial class SecondQuestionView : Form
     {
         private int openDocuments = 0;
-        public TaskForm()
+        public SecondQuestionView()
         {
             InitializeComponent();
         }

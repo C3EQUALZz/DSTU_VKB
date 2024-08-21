@@ -1,6 +1,6 @@
-﻿namespace FirstLaboratory.SecondQuestion
+﻿namespace FirstLaboratory
 {
-    partial class TaskForm
+    partial class SecondQuestionSubView
     {
         /// <summary>
         /// Required designer variable.
@@ -28,32 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            SwapToSecondForm = new Button();
+            ExitButton = new Button();
             SuspendLayout();
             // 
-            // SwapToSecondForm
+            // ExitButton
             // 
-            SwapToSecondForm.Location = new Point(289, 149);
-            SwapToSecondForm.Name = "SwapToSecondForm";
-            SwapToSecondForm.Size = new Size(239, 103);
-            SwapToSecondForm.TabIndex = 0;
-            SwapToSecondForm.Text = "Переключиться на другую форму";
-            SwapToSecondForm.UseVisualStyleBackColor = true;
-            SwapToSecondForm.Click += SwapToSecondForm_Click;
+            ExitButton.Location = new Point(333, 184);
+            ExitButton.Name = "ExitButton";
+            ExitButton.Size = new Size(128, 47);
+            ExitButton.TabIndex = 0;
+            ExitButton.Text = "GREENPEACE";
+            ExitButton.UseVisualStyleBackColor = true;
+            ExitButton.Click += ExitButton_Click;
             // 
-            // TaskForm
+            // SecondForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(SwapToSecondForm);
-            Name = "TaskForm";
-            Text = "Ковалев Данил ВКБ22";
+            Controls.Add(ExitButton);
+            FormBorderStyle = FormBorderStyle.None;
+            Name = "SecondForm";
+            Text = "StartForm";
+            Load += SecondForm_Load;
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Button SwapToSecondForm;
+        private Button ExitButton;
     }
 }

@@ -8,6 +8,9 @@ namespace FirstLaboratory.Presenters
         private readonly IFirstQuestionView _view;
         private readonly IFirstQuestionModel _model;
 
+        /// <summary>
+        /// Презентер для 1 задания   
+        /// </summary>
         public FirstQuestionPresenter(IFirstQuestionView view, IFirstQuestionModel model)
         {
             _view = view;
@@ -16,6 +19,9 @@ namespace FirstLaboratory.Presenters
             _view.BackgroundColor = _model.BackgroundColor;
         }
 
+        /// <summary>
+        /// Здесь перерисовка окна, чтобы была форма эллипса
+        /// </summary>
         public void OnResize(object sender, EventArgs e)
         {
             _model.Width = _view.Width;
@@ -29,12 +35,18 @@ namespace FirstLaboratory.Presenters
             _view.DrawEllipse(g, _model.BorderPen, _model.Width, _model.Height);
         }
 
+        /// <summary>
+        /// Обработчик событий, который рисует именно эллипс
+        /// </summary>
         public void OnPaint(object sender, EventArgs e)
         {
             using var g = _view.CreateGraphics();
             _view.DrawEllipse(g, _model.BorderPen, _model.Width, _model.Height);
         }
 
+        /// <summary>
+        /// Обработчик событий, который отрабатывает для закрытия приложения
+        /// </summary>
         public void OnExitButtonClick(object sender, EventArgs e)
         {
             Application.Exit();

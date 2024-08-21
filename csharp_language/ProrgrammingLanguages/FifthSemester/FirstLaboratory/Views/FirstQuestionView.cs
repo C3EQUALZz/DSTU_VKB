@@ -21,6 +21,7 @@ namespace FirstLaboratory.Views
         {
             set => BackColor = value;
         }
+
         public new int Width => base.Width;
         public new int Height => base.Height;
         public new Region Region

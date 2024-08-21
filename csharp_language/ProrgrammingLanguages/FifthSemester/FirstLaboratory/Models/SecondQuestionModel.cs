@@ -1,10 +1,11 @@
 ﻿using System.Drawing.Drawing2D;
+using FirstLaboratory.Core.Interfaces.SecondQuestion;
 
 namespace FirstLaboratory.Models
 {
-    internal class SecondQuestionModel
+    internal class SecondQuestionModel : ISecondQuestionModel
     {
-        public static GraphicsPath CreateDiamondPath(int width, int height)
+        public GraphicsPath CreateDiamondPath(int width, int height)
         {
             var path = new GraphicsPath();
             path.AddLines(new[]

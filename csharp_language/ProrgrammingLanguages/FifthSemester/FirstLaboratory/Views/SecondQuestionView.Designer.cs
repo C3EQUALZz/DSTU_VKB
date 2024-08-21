@@ -1,6 +1,6 @@
-﻿namespace FirstLaboratory.SecondQuestion
+﻿namespace FirstLaboratory
 {
-    partial class SecondForm
+    partial class SecondQuestionView
     {
         /// <summary>
         /// Required designer variable.
@@ -28,34 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            ExitButton = new Button();
+            SwapToSecondForm = new Button();
             SuspendLayout();
             // 
-            // ExitButton
+            // SwapToSecondForm
             // 
-            ExitButton.Location = new Point(333, 184);
-            ExitButton.Name = "ExitButton";
-            ExitButton.Size = new Size(128, 47);
-            ExitButton.TabIndex = 0;
-            ExitButton.Text = "GREENPEACE";
-            ExitButton.UseVisualStyleBackColor = true;
-            ExitButton.Click += ExitButton_Click;
+            SwapToSecondForm.Location = new Point(289, 149);
+            SwapToSecondForm.Name = "SwapToSecondForm";
+            SwapToSecondForm.Size = new Size(239, 103);
+            SwapToSecondForm.TabIndex = 0;
+            SwapToSecondForm.Text = "Переключиться на другую форму";
+            SwapToSecondForm.UseVisualStyleBackColor = true;
+            SwapToSecondForm.Click += SwapToSecondForm_Click;
             // 
-            // SecondForm
+            // TaskForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(ExitButton);
-            FormBorderStyle = FormBorderStyle.None;
-            Name = "SecondForm";
-            Text = "StartForm";
-            Load += SecondForm_Load;
+            Controls.Add(SwapToSecondForm);
+            Name = "TaskForm";
+            Text = "Ковалев Данил ВКБ22";
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Button ExitButton;
+        private Button SwapToSecondForm;
     }
 }

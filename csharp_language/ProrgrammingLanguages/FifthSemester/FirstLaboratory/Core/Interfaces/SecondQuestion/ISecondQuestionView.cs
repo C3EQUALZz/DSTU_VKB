@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FirstLaboratory.Core.Interfaces.SecondQuestion
+﻿namespace FirstLaboratory.Core.Interfaces.SecondQuestion
 {
-    internal class ISecondQuestionView
+    internal interface ISecondQuestionView
     {
+        void Hide();
+        void ShowSecondForm();
+        void SwapToSecondForm_Click(object sender, EventArgs e);
     }
 }
