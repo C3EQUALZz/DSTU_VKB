@@ -1,4 +1,4 @@
-namespace WinFormsAppForLaboratories
+﻿namespace WinFormsAppForLaboratories
 {
     internal static class Program
     {
