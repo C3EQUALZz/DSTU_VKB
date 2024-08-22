@@ -1,6 +1,6 @@
-﻿namespace FirstLaboratory.FirstQuestion
+﻿namespace FirstLaboratory
 {
-    partial class TaskForm
+    partial class SecondQuestionSubView
     {
         /// <summary>
         /// Required designer variable.
@@ -33,27 +33,24 @@
             // 
             // ExitButton
             // 
-            ExitButton.Location = new Point(357, 216);
-            ExitButton.Margin = new Padding(3, 4, 3, 4);
+            ExitButton.Location = new Point(333, 184);
             ExitButton.Name = "ExitButton";
-            ExitButton.Size = new Size(226, 104);
+            ExitButton.Size = new Size(128, 47);
             ExitButton.TabIndex = 0;
-            ExitButton.Text = "Закрыть приложение";
+            ExitButton.Text = "GREENPEACE";
             ExitButton.UseVisualStyleBackColor = true;
             ExitButton.Click += ExitButton_Click;
             // 
-            // TaskForm
+            // SecondForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(914, 600);
+            ClientSize = new Size(800, 450);
             Controls.Add(ExitButton);
             FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(3, 4, 3, 4);
-            Name = "TaskForm";
-            Text = "TaskForm";
-            Paint += TaskForm_Paint;
-            Resize += TaskForm_Resize;
+            Name = "SecondForm";
+            Text = "StartForm";
+            Load += SecondForm_Load;
             ResumeLayout(false);
         }
 

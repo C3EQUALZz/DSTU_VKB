@@ -1,3 +1,5 @@
+using FirstLaboratory.Views;
+
 namespace FirstLaboratory
 {
     internal static class Program
@@ -11,7 +13,7 @@ namespace FirstLaboratory
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new ThirdQuestion.TaskForm());
+            Application.Run(new ThirdQuestionView());
         }
     }
 }
