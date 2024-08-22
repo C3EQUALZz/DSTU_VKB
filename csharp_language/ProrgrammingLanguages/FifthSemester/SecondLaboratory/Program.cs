@@ -1,4 +1,4 @@
-﻿namespace WinFormsAppForLaboratories
+﻿namespace SecondLaboratory
 {
     internal static class Program
     {
@@ -6,7 +6,7 @@
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-            Application.Run(new Laboratories.SecondLaboratory.Views.CalculatorView());
+            Application.Run(new Views.CalculatorView());
         }
     }
 }

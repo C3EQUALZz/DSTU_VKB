@@ -1,4 +1,4 @@
-﻿namespace WinFormsAppForLaboratories.Laboratories.SecondLaboratory.Core.Interfaces;
+﻿namespace SecondLaboratory.Core.Interfaces;
 
 public interface ICalculatorView
 {

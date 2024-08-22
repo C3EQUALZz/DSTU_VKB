@@ -1,5 +1,4 @@
-﻿
-namespace WinFormsAppForLaboratories.Laboratories.SecondLaboratory.Models;
+﻿namespace SecondLaboratory.Models;
 
 public class CalculatorModel
 {

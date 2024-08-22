@@ -1,4 +1,4 @@
-﻿namespace WinFormsAppForLaboratories.Laboratories.SecondLaboratory.Core.Classes;
+﻿namespace SecondLaboratory.Core.Classes;
 
 using System.ComponentModel;
 using System.Runtime.InteropServices;
@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 public class EllipseControl : Component
 {
     [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
-    private static extern IntPtr CreateRoundRectRgn(int nL, int nT, int nR, int nB, int nWidthEllipse, int nHeigthEllipse);
+    private static extern nint CreateRoundRectRgn(int nL, int nT, int nR, int nB, int nWidthEllipse, int nHeigthEllipse);
 
     private Control? control;
     private int cornerRadius = 25;
@@ -25,7 +25,7 @@ public class EllipseControl : Component
     }
 
     public int CornerRadius
-    { 
+    {
         get { return cornerRadius; }
         set
         {
@@ -34,7 +34,7 @@ public class EllipseControl : Component
             {
                 control.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, control.Width, control.Height, cornerRadius, cornerRadius));
             }
-        } 
+        }
     }
 
 }

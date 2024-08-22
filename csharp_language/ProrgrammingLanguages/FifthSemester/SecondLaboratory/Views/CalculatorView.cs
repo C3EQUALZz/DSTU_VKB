@@ -1,8 +1,8 @@
-﻿using WinFormsAppForLaboratories.Laboratories.SecondLaboratory.Core.Interfaces;
-using WinFormsAppForLaboratories.Laboratories.SecondLaboratory.Models;
-using WinFormsAppForLaboratories.Laboratories.SecondLaboratory.Presenters;
+﻿using SecondLaboratory.Models;
+using SecondLaboratory.Core.Interfaces;
+using SecondLaboratory.Presenters;
 
-namespace WinFormsAppForLaboratories.Laboratories.SecondLaboratory.Views;
+namespace SecondLaboratory.Views;
 
 public partial class CalculatorView : Form, ICalculatorView
 {

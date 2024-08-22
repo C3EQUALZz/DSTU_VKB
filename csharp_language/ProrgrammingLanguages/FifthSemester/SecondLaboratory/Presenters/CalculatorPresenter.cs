@@ -1,7 +1,7 @@
-﻿using WinFormsAppForLaboratories.Laboratories.SecondLaboratory.Core.Interfaces;
-using WinFormsAppForLaboratories.Laboratories.SecondLaboratory.Models;
+﻿using SecondLaboratory.Core.Interfaces;
+using SecondLaboratory.Models;
 
-namespace WinFormsAppForLaboratories.Laboratories.SecondLaboratory.Presenters;
+namespace SecondLaboratory.Presenters;
 
 public class CalculatorPresenter(ICalculatorView _view, CalculatorModel _model)
 {
@@ -15,7 +15,7 @@ public class CalculatorPresenter(ICalculatorView _view, CalculatorModel _model)
             _view.Display1Text = string.Empty;
         }
 
-        if ((button.Text == "." && !_view.Display1Text.Contains('.')) || button.Text != ".")
+        if (button.Text == "." && !_view.Display1Text.Contains('.') || button.Text != ".")
         {
             _view.Display1Text += button.Text;
         }
@@ -32,7 +32,7 @@ public class CalculatorPresenter(ICalculatorView _view, CalculatorModel _model)
             _view.Result = double.Parse(_view.Display1Text);
         }
 
-        var button = (Button) sender;
+        var button = (Button)sender;
         _view.Operation = button.Text;
         _view.EnterValue = true;
         if (_view.Display1Text != "0")
@@ -110,7 +110,7 @@ public class CalculatorPresenter(ICalculatorView _view, CalculatorModel _model)
 
     public void OnOperationButtonClick(object sender, EventArgs e)
     {
-        var button = (Button) sender;
+        var button = (Button)sender;
         _view.Operation = button.Text;
         double number = double.Parse(_view.Display1Text);
 

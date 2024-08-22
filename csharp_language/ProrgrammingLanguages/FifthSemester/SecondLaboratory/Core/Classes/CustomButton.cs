@@ -1,6 +1,6 @@
 ﻿using System.Drawing.Drawing2D;
 
-namespace WinFormsAppForLaboratories.Laboratories.SecondLaboratory.Core.Classes;
+namespace SecondLaboratory.Core.Classes;
 
 /// <summary>
 /// https://youtu.be/vxc5GopCOMQ?si=lIf4HjTm0DQOK1kU
@@ -14,13 +14,13 @@ public class CustomButton : Button
     public int BorderSize
     {
         get => borderSize;
-        set { borderSize = value; Invalidate();  }
+        set { borderSize = value; Invalidate(); }
     }
 
     public int BorderRadius
     {
         get => borderRadius;
-        set { borderRadius = (value <= Height) ? value : Height; Invalidate(); }
+        set { borderRadius = value <= Height ? value : Height; Invalidate(); }
     }
 
     public Color BackGroundColor
@@ -59,7 +59,7 @@ public class CustomButton : Button
         new(rectangle.X, rectangle.Bottom - radius)
         ];
 
-        float[] startAngles = [ 180, 270, 0, 90 ];
+        float[] startAngles = [180, 270, 0, 90];
 
         // Добавляем дуги
         for (int i = 0; i < points.Length; i++)

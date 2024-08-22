@@ -1,4 +1,4 @@
-﻿namespace WinFormsAppForLaboratories.Laboratories.SecondLaboratory.Views
+﻿namespace SecondLaboratory.Views
 {
     partial class CalculatorView
     {
@@ -28,18 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Core.Classes.CustomButton buttonBackSpace;
+            SecondLaboratory.Core.Classes.CustomButton buttonBackSpace;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CalculatorView));
-            Core.Classes.CustomButton buttonPercent;
-            Core.Classes.CustomButton buttonClearEntry;
-            Core.Classes.CustomButton buttonClear;
-            Core.Classes.CustomButton buttonSquareRoot;
-            Core.Classes.CustomButton buttonSquare;
-            Core.Classes.CustomButton buttonReverseFraction;
-            Core.Classes.CustomButton buttonDivision;
-            Core.Classes.CustomButton buttonMultiply;
-            Core.Classes.CustomButton buttonSubstraction;
-            Core.Classes.CustomButton buttonAdd;
+            SecondLaboratory.Core.Classes.CustomButton buttonPercent;
+            SecondLaboratory.Core.Classes.CustomButton buttonClearEntry;
+            SecondLaboratory.Core.Classes.CustomButton buttonClear;
+            SecondLaboratory.Core.Classes.CustomButton buttonSquareRoot;
+            SecondLaboratory.Core.Classes.CustomButton buttonSquare;
+            SecondLaboratory.Core.Classes.CustomButton buttonReverseFraction;
+            SecondLaboratory.Core.Classes.CustomButton buttonDivision;
+            SecondLaboratory.Core.Classes.CustomButton buttonMultiply;
+            SecondLaboratory.Core.Classes.CustomButton buttonSubstraction;
+            SecondLaboratory.Core.Classes.CustomButton buttonAdd;
             textDisplay1 = new TextBox();
             panelTitle = new Panel();
             iconButton2 = new FontAwesome.Sharp.IconButton();
@@ -915,35 +915,35 @@
         private TextBox textDisplay1;
         private FontAwesome.Sharp.IconButton buttonClearHistory;
         private RichTextBox richTextBoxDisplayHistory;
-        private Core.Classes.EllipseControl ellipseForm;
-        private Core.Classes.CustomButton buttonBackSpace;
-        private Core.Classes.CustomButton customButton7;
-        private Core.Classes.CustomButton customButton6;
-        private Core.Classes.CustomButton customButton5;
-        private Core.Classes.CustomButton customButton4;
-        private Core.Classes.CustomButton customButton3;
-        private Core.Classes.CustomButton buttonPercent;
-        private Core.Classes.CustomButton buttonClear;
-        private Core.Classes.CustomButton buttonClearEntry;
-        private Core.Classes.CustomButton buttonSquareRoot;
-        private Core.Classes.CustomButton buttonSquare;
-        private Core.Classes.CustomButton buttonReverseFraction;
-        private Core.Classes.CustomButton buttonDivision;
-        private Core.Classes.CustomButton buttonNine;
-        private Core.Classes.CustomButton buttonEigth;
-        private Core.Classes.CustomButton buttonSeven;
-        private Core.Classes.CustomButton buttonMultiply;
-        private Core.Classes.CustomButton buttonSix;
-        private Core.Classes.CustomButton buttonFive;
-        private Core.Classes.CustomButton buttonFour;
-        private Core.Classes.CustomButton buttonSubstraction;
-        private Core.Classes.CustomButton buttonThree;
-        private Core.Classes.CustomButton buttonTwo;
-        private Core.Classes.CustomButton buttonOne;
-        private Core.Classes.CustomButton buttonAdd;
-        private Core.Classes.CustomButton buttonDecimal;
-        private Core.Classes.CustomButton buttonZero;
-        private Core.Classes.CustomButton buttonSwapPlusMinus;
-        private Core.Classes.CustomButton buttonEquals;
+        private SecondLaboratory.Core.Classes.EllipseControl ellipseForm;
+        private SecondLaboratory.Core.Classes.CustomButton buttonBackSpace;
+        private SecondLaboratory.Core.Classes.CustomButton customButton7;
+        private SecondLaboratory.Core.Classes.CustomButton customButton6;
+        private     SecondLaboratory.Core.Classes.CustomButton customButton5;
+        private SecondLaboratory.Core.Classes.CustomButton customButton4;
+        private SecondLaboratory.Core.Classes.CustomButton customButton3;
+        private SecondLaboratory.Core.Classes.CustomButton buttonPercent;
+        private SecondLaboratory.Core.Classes.CustomButton buttonClear;
+        private SecondLaboratory.Core.Classes.CustomButton buttonClearEntry;
+        private SecondLaboratory.Core.Classes.CustomButton buttonSquareRoot;
+        private SecondLaboratory.Core.Classes.CustomButton buttonSquare;
+        private SecondLaboratory.Core.Classes.CustomButton buttonReverseFraction;
+        private SecondLaboratory.Core.Classes.CustomButton buttonDivision;
+        private SecondLaboratory.Core.Classes.CustomButton buttonNine;
+        private SecondLaboratory.Core.Classes.CustomButton buttonEigth;
+        private SecondLaboratory.Core.Classes.CustomButton buttonSeven;
+        private SecondLaboratory.Core.Classes.CustomButton buttonMultiply;
+        private SecondLaboratory.Core.Classes.CustomButton buttonSix;
+        private SecondLaboratory.Core.Classes.CustomButton buttonFive;
+        private SecondLaboratory.Core.Classes.CustomButton buttonFour;
+        private SecondLaboratory.Core.Classes.CustomButton buttonSubstraction;
+        private SecondLaboratory.Core.Classes.CustomButton buttonThree;
+        private SecondLaboratory.Core.Classes.CustomButton buttonTwo;
+        private SecondLaboratory.Core.Classes.CustomButton buttonOne;
+        private SecondLaboratory.Core.Classes.CustomButton buttonAdd;
+        private SecondLaboratory.Core.Classes.CustomButton buttonDecimal;
+        private SecondLaboratory.Core.Classes.CustomButton buttonZero;
+        private SecondLaboratory.Core.Classes.CustomButton buttonSwapPlusMinus;
+        private SecondLaboratory.Core.Classes.CustomButton buttonEquals;
     }
 }

@@ -1,10 +1,7 @@
-﻿namespace WinFormsAppForLaboratories.Laboratories.SecondLaboratory.Core.AbstractClasses;
+﻿namespace SecondLaboratory.Core.AbstractClasses;
 
 public class AbstractPresenter
 {
-
-
-
     /// <summary>
     /// Логика закрытия приложения
     /// </summary>
