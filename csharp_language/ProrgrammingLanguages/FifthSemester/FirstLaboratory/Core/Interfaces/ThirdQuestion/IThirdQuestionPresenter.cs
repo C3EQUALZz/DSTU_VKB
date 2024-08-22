@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FirstLaboratory.Core.Interfaces.ThirdQuestion
+﻿namespace FirstLaboratory.Core.Interfaces.ThirdQuestion
 {
     internal interface IThirdQuestionPresenter
     {
+        void OnExitMenuItem_Click(object sender, EventArgs e);
+        void OnWindowCascadeMenuItem_Click(object sender, EventArgs e);
+        void OnWindowTileMenuItem_Click(object sender, EventArgs e);
     }
 }

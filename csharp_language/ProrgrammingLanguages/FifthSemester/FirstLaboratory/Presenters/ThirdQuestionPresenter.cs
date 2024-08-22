@@ -1,25 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FirstLaboratory.Core.Interfaces.ThirdQuestion;
+﻿using FirstLaboratory.Core.Interfaces.ThirdQuestion;
 
 namespace FirstLaboratory.Presenters
 {
-    internal class ThirdQuestionPresenter
+    internal class ThirdQuestionPresenter : IThirdQuestionPresenter
     {
         private readonly IThirdQuestionView _view;
-        private readonly IThirdQuestionModel _model;
 
-        public ThirdQuestionPresenter(IThirdQuestionView view, IThirdQuestionModel model)
+        public ThirdQuestionPresenter(IThirdQuestionView view)
         {
             _view = view;
-            _model = model;
         }
 
+        public void OnExitMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
 
+        public void OnWindowCascadeMenuItem_Click(object sender, EventArgs e)
+        {
+            _view.MdiLayoutType = MdiLayout.Cascade;
+        }
 
+        public void OnWindowTileMenuItem_Click(object sender, EventArgs e)
+        {
+            _view.MdiLayoutType = MdiLayout.TileHorizontal;
+        }
 
     }
 }

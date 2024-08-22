@@ -1,4 +1,4 @@
-﻿namespace FirstLaboratory.ThirdQuestion
+﻿namespace FirstLaboratory.Views
 {
     partial class ThirdQuestionView
     {
