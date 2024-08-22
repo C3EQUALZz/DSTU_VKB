@@ -4,7 +4,9 @@
     {
         int Width { get; }
         int Height { get; }
-        Region Region { get; set; }
         Color BackgroundColor { set; }
+        void ExitButton_Click(object sender, EventArgs e);
+        void SecondForm_Load(object sender, EventArgs e);
+        void SetRegion(Region region);
     }
 }

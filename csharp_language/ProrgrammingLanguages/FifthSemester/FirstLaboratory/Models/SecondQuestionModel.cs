@@ -3,8 +3,14 @@ using FirstLaboratory.Core.Interfaces.SecondQuestion;
 
 namespace FirstLaboratory.Models
 {
+    /// <summary>
+    /// Модель, которая рисует нам окно в форме ромба
+    /// </summary>
     internal class SecondQuestionModel : ISecondQuestionModel
     {
+        /// <summary>
+        /// Здесь создается путь отображения с помощью 4 точек, нагло украл код с stackoverflow. 
+        /// </summary>
         public GraphicsPath CreateDiamondPath(int width, int height)
         {
             var path = new GraphicsPath();

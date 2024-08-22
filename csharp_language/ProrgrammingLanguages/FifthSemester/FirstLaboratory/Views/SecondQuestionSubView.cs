@@ -7,6 +7,10 @@ namespace FirstLaboratory
     public partial class SecondQuestionSubView : Form, ISecondQuestionSubView
     {
         private readonly ISecondQuestionSubPresenter _presenter;
+
+        /// <summary>
+        /// 2 окно, на которое нам нужно переключиться, опять-таки тот же самый View в паттрене MVP для 2 окна
+        /// </summary>
         public SecondQuestionSubView()
         {
             InitializeComponent();
@@ -21,28 +25,32 @@ namespace FirstLaboratory
             set => BackColor = value;
         }
 
-        private Region? _region;
-
-        public new Region Region
-        {
-            get { return _region; }
-            set
-            {
-                _region = value;
-                Invalidate();
-            }
-        }
-
-        private void ExitButton_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Обработчик нажатия на кнопку ExitButton, который установлен через Designer 
+        /// </summary>
+        public void ExitButton_Click(object sender, EventArgs e)
         {
             _presenter.OnExitButtonClick(sender, e);
         }
 
-        private void SecondForm_Load(object sender, EventArgs e)
+        /// <summary>
+        /// Обработчик на загрузку формы, который установлен через Designer
+        /// </summary>
+        public void SecondForm_Load(object sender, EventArgs e)
         {
             _presenter.OnLoad(sender, e);
         }
 
-        
+        /// <summary>
+        /// Здесь использую сеттер вместо свойства, потому что не отрабатывает свойство. 
+        /// Скорее всего модификатор new там все ломает, хотя я не понимаю почему, особенности C#. 
+        /// </summary>
+        /// <param name="region"></param>
+        public void SetRegion(Region region)
+        {
+            Region = region;
+        }
+
+
     }
 }
