@@ -1,6 +1,6 @@
-﻿namespace FirstLaboratory.ThirdQuestion
+﻿namespace FirstLaboratory.Views
 {
-    partial class TaskForm
+    partial class ThirdQuestionView
     {
         /// <summary>
         /// Required designer variable.
