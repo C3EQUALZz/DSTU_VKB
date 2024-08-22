@@ -1,11 +1,16 @@
-﻿namespace FirstLaboratory.ThirdQuestion
+﻿using FirstLaboratory.Core.Interfaces.ThirdQuestion;
+
+namespace FirstLaboratory.ThirdQuestion
 {
-    public partial class SecondQuestionView : Form
+    public partial class ThirdQuestionView : Form
     {
         private int openDocuments = 0;
-        public SecondQuestionView()
+        private readonly IThirdQuestionPresenter _presenter;
+
+        public ThirdQuestionView()
         {
             InitializeComponent();
+            
         }
 
         private void ExitMenuItem_Click(object sender, EventArgs e)
