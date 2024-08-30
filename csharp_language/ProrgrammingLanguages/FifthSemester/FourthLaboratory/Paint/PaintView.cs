@@ -15,7 +15,7 @@ using DoAnPaint.Presenter.Updates;
  */
 namespace DoAnPaint
 {
-    public partial class Form1 : Form, ViewPaint
+    public partial class PaintView : Form, ViewPaint
     {
         private PresenterDraw presenterDraw;
 
@@ -26,7 +26,7 @@ namespace DoAnPaint
         private Graphics gr;
 
 
-        public Form1()
+        public PaintView()
         {
             InitializeComponent();
 

@@ -1,6 +1,6 @@
 ﻿namespace DoAnPaint
 {
-    partial class Form1
+    partial class PaintView
     {
         /// <summary>
         /// Required designer variable.
