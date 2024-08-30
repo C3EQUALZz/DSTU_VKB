@@ -50,6 +50,120 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Graphs\Views\FormEighteenthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormEighteenthQuestion.Designer.cs">
+      <DependentUpon>FormEighteenthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormEighthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormEighthQuestion.Designer.cs">
+      <DependentUpon>FormEighthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormEleventhQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormEleventhQuestion.Designer.cs">
+      <DependentUpon>FormEleventhQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormFifteenthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormFifteenthQuestion.Designer.cs">
+      <DependentUpon>FormFifteenthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormFifthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormFifthQuestion.Designer.cs">
+      <DependentUpon>FormFifthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormFirstQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormFirstQuestion.Designer.cs">
+      <DependentUpon>FormFirstQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormFourteenthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormFourteenthQuestion.Designer.cs">
+      <DependentUpon>FormFourteenthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormFourthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormFourthQuestion.Designer.cs">
+      <DependentUpon>FormFourthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormNineteenthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormNineteenthQuestion.Designer.cs">
+      <DependentUpon>FormNineteenthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormNinthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormNinthQuestion.Designer.cs">
+      <DependentUpon>FormNinthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormSecondQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormSecondQuestion.Designer.cs">
+      <DependentUpon>FormSecondQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormSeventeenthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormSeventeenthQuestion.Designer.cs">
+      <DependentUpon>FormSeventeenthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormSeventhQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormSeventhQuestion.Designer.cs">
+      <DependentUpon>FormSeventhQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormSixteenthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormSixteenthQuestion.Designer.cs">
+      <DependentUpon>FormSixteenthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormSIxthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormSIxthQuestion.Designer.cs">
+      <DependentUpon>FormSIxthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormTenthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormTenthQuestion.Designer.cs">
+      <DependentUpon>FormTenthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormThirdQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormThirdQuestion.Designer.cs">
+      <DependentUpon>FormThirdQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormThirteenthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormThirteenthQuestion.Designer.cs">
+      <DependentUpon>FormThirteenthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormTwelfthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormTwelfthQuestion.Designer.cs">
+      <DependentUpon>FormTwelfthQuestion.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -171,6 +285,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ic_location.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Graphs\Core\Interfaces\" />
+    <Folder Include="Graphs\Models\" />
+    <Folder Include="Graphs\Presenters\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
