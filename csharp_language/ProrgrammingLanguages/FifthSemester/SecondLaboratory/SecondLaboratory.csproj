@@ -49,7 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\CalculatorType.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
+    <Compile Include="Services\NavigationService.cs" />
+    <Compile Include="Structures\NavigationItem.cs" />
     <Compile Include="Views\Calculator\StandartCalculatorForm.cs">
       <SubType>Form</SubType>
     </Compile>
