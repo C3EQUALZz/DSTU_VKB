@@ -3,6 +3,7 @@ using System;
 using System.Windows.Forms;
 
 using SecondLaboratory.Extensions;
+using SecondLaboratory.Views.Calculator;
 
 namespace SecondLaboratory; 
 public partial class ShellForm : Form
@@ -53,6 +54,13 @@ public partial class ShellForm : Form
         }
 
         PageTitleLabel.Text = "<PageTitle>";
+
+        var calcForm = new StandartCalculatorForm();
+        calcForm.TopLevel = false;
+        calcForm.Dock = DockStyle.Fill;
+
+        CalculatorContainerPanel.Controls.Add(calcForm);
+        calcForm.Show();
     }
 
     [DllImport("DwmApi")] //System.Runtime.InteropServices

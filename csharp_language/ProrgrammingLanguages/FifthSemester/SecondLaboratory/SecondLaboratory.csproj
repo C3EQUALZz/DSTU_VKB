@@ -74,6 +74,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Views\Calculator\StandartCalculatorForm.resx">
+      <DependentUpon>StandartCalculatorForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\ShellForm.resx">
       <DependentUpon>ShellForm.cs</DependentUpon>
     </EmbeddedResource>
