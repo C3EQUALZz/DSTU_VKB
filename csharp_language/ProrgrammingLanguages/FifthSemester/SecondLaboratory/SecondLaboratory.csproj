@@ -50,10 +50,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\ControlExtensions.cs" />
-    <Compile Include="ShellForm.cs">
+    <Compile Include="Views\Calculator\StandartCalculatorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ShellForm.Designer.cs">
+    <Compile Include="Views\Calculator\StandartCalculatorForm.Designer.cs">
+      <DependentUpon>StandartCalculatorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShellForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ShellForm.Designer.cs">
       <DependentUpon>ShellForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -68,7 +74,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="ShellForm.resx">
+    <EmbeddedResource Include="Views\ShellForm.resx">
       <DependentUpon>ShellForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -89,6 +95,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\menu-svgrepo-com.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Converter\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
