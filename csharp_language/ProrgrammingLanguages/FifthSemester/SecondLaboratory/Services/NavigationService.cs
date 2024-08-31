@@ -100,7 +100,9 @@ public class NavigationService
                     Font = new System.Drawing.Font("Gadugi", 12),
                     Location = new System.Drawing.Point(ITEMMARGINLEFT, y),
                     FlatStyle = FlatStyle.Flat,
-                    BackColor = System.Drawing.Color.Transparent
+                    BackColor = System.Drawing.Color.Transparent,
+                    Size = new System.Drawing.Size(200, 30),
+                    TextAlign = System.Drawing.ContentAlignment.MiddleLeft
                 };
 
                 button.FlatAppearance.BorderSize = 0;
