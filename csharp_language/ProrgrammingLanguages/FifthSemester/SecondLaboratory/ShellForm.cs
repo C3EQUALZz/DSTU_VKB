@@ -14,7 +14,7 @@ public partial class ShellForm : Form
 
     private void ShellForm_Load(object sender, System.EventArgs e)
     {
-        panel3.SetRoundedShape(10, 10, 1, 1);
+        //panel3.SetRoundedShape(10, 10, 1, 1);
         panel3.Width = 0;
 
         panel3.AutoScroll = true;
@@ -63,5 +63,6 @@ public partial class ShellForm : Form
     private void button1_Click(object sender, EventArgs e)
     {
         panel3.Width = panel3.Width == 0 ? 275 : 0;
+        Console.WriteLine(panel3.Width);
     }
 }
