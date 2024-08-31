@@ -16,6 +16,11 @@ public partial class ShellForm : Form
         InitializeComponent();
 
         NavigationService = new NavigationService();
+
+        NavigationService.Navigated += (i) =>
+        {
+            PageTitleLabel.Text = i.Title;
+        };
     }
 
     private void ShellForm_Load(object sender, System.EventArgs e)

@@ -21,6 +21,9 @@ public class NavigationService
     private const int GROUPMARGINLEFT = 10;
     private const int ITEMMARGINLEFT = 15;
 
+    public delegate void NavigatedHandler(NavigationItem item);
+    public event NavigatedHandler Navigated;
+
     public NavigationService()
     {
         NavigationItems = new List<NavigationItem>();
@@ -65,6 +68,8 @@ public class NavigationService
 
         form.Show();
 
+        Navigated?.Invoke(item);
+
         return item;
     }
 
@@ -93,7 +98,7 @@ public class NavigationService
 
                 var button = new Button()
                 {
-                    Text = group.Key.ToString(),
+                    Text = item.Title,
                     Font = new System.Drawing.Font("Gadugi", 12),
                     Location = new System.Drawing.Point(ITEMMARGINLEFT, y),
                     FlatStyle = FlatStyle.Flat,
