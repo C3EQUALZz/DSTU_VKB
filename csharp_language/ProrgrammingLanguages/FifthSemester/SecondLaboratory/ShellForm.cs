@@ -14,10 +14,12 @@ public partial class ShellForm : Form
 
     private void ShellForm_Load(object sender, System.EventArgs e)
     {
+        // Commented bc of weird dynamic window resizing
         //panel3.SetRoundedShape(10, 10, 1, 1);
-        panel3.Width = 0;
 
-        panel3.AutoScroll = true;
+        NavigationPanel.Width = 0;
+
+        NavigationItemsPanel.AutoScroll = true;
 
         button1.SetRoundedShape(5);
 
@@ -50,7 +52,7 @@ public partial class ShellForm : Form
             button.SetRoundedShape(10);
         }
 
-        PageTitleLabel.Text = "There must be page title";
+        PageTitleLabel.Text = "<PageTitle>";
     }
 
     [DllImport("DwmApi")] //System.Runtime.InteropServices
@@ -64,7 +66,7 @@ public partial class ShellForm : Form
 
     private void button1_Click(object sender, EventArgs e)
     {
-        panel3.Width = panel3.Width == 0 ? 250 : 0;
-        Console.WriteLine(panel3.Width);
+        NavigationPanel.Width = NavigationPanel.Width == 0 ? 250 : 0;
+        Console.WriteLine(NavigationPanel.Width);
     }
 }
