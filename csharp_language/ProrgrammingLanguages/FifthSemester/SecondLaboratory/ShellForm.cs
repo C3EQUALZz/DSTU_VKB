@@ -49,6 +49,8 @@ public partial class ShellForm : Form
         {
             button.SetRoundedShape(10);
         }
+
+        PageTitleLabel.Text = "There must be page title";
     }
 
     [DllImport("DwmApi")] //System.Runtime.InteropServices
