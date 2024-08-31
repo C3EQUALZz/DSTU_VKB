@@ -57,6 +57,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.PageTitleLabel = new System.Windows.Forms.Label();
             this.NavigationItemsPanel = new System.Windows.Forms.Panel();
+            this.CalculatorContainerPanel = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.NavigationPanel.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -67,6 +68,7 @@
             // 
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.NavigationPanel);
+            this.panel1.Controls.Add(this.CalculatorContainerPanel);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -475,6 +477,15 @@
             this.NavigationItemsPanel.Size = new System.Drawing.Size(247, 441);
             this.NavigationItemsPanel.TabIndex = 24;
             // 
+            // CalculatorContainerPanel
+            // 
+            this.CalculatorContainerPanel.BackColor = System.Drawing.Color.Transparent;
+            this.CalculatorContainerPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CalculatorContainerPanel.Location = new System.Drawing.Point(0, 66);
+            this.CalculatorContainerPanel.Name = "CalculatorContainerPanel";
+            this.CalculatorContainerPanel.Size = new System.Drawing.Size(328, 428);
+            this.CalculatorContainerPanel.TabIndex = 3;
+            // 
             // ShellForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 28F);
@@ -529,6 +540,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label PageTitleLabel;
         private System.Windows.Forms.Panel NavigationItemsPanel;
+        private System.Windows.Forms.Panel CalculatorContainerPanel;
     }
 }
 
