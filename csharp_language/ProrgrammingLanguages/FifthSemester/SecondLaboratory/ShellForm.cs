@@ -64,7 +64,7 @@ public partial class ShellForm : Form
 
     private void button1_Click(object sender, EventArgs e)
     {
-        panel3.Width = panel3.Width == 0 ? 275 : 0;
+        panel3.Width = panel3.Width == 0 ? 250 : 0;
         Console.WriteLine(panel3.Width);
     }
 }
