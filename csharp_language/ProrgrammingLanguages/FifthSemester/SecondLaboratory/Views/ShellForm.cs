@@ -40,6 +40,7 @@ public partial class ShellForm : Form
         NavigationService.SetNavigationItemsContainer(NavigationItemsPanel);
 
         NavigationService.Configure();
+        NavigationService.AddNavigationControls();
 
         NavigationService.Navigate<StandartCalculatorForm>();
     }

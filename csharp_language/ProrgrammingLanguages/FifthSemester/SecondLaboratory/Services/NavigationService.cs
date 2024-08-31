@@ -32,8 +32,6 @@ public class NavigationService
     public void Configure()
     {
         AddNavigation<StandartCalculatorForm>("Standart", CalculatorType.Calculator);
-
-        AddNavigationControls();
     }
 
     public NavigationItem AddNavigation<T>(string title, CalculatorType calculatorType) where T : Form
@@ -73,7 +71,7 @@ public class NavigationService
         return item;
     }
 
-    private void AddNavigationControls()
+    public void AddNavigationControls()
     {
         var navigationGroups = GetNavigationGroups();
 
