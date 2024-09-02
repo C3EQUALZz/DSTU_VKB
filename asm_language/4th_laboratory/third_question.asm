@@ -1,6 +1,3 @@
-; Рассматривая байт как набор логических значений x7 x6 x5 x4 x3 x1 x0 (true -1, false - 0), вычислить логическую формулу
-; f=(x7 & x6 & x3 ) V (x6 & x4 & x2 & x1) V (x7 & x6 & x2 & x0)
-
 data segment
     NB db 0h, 0h, 0h, 1h, 0h, 1h,  1h, 1h
     ;     x0, x1, x2 ,x3, x4  x5,  x6  x7
@@ -19,12 +16,12 @@ code segment
         mov dx, 0 ; store f result
 
     CON:
-        ; f=(x7 & x6 & x3 ) V
-        ; (x6 & x4 & x2 & x1) V
-        ; (x7 & x6 & x2 & x0)
+        ; f=(x7 & x6 & x1 ) V
+        ; (x6 & x4 & x2 & x1 & x0) V
+        ; (x7 & x6 & x3 & x1)
 
 
-        ; (x7 & x6 & x3 )
+        ; (x7 & x6 & x1 )
         add bx, 7
         mov ax, [bx]
         sub bx, 7
@@ -37,16 +34,16 @@ code segment
 
         and cx, ax
 
-        add bx, 3
+        add bx, 1
         mov ax, [bx]
-        sub bx, 3
+        sub bx, 1
 
         and cx, ax
 
 
         or dx, cx
 
-        ; (x6 & x4 & x2 & x1)
+        ; (x6 & x4 & x2 & x1 & x0)
 
         add bx, 6
         mov ax, [bx]
@@ -72,11 +69,17 @@ code segment
 
         and cx, ax
 
+        add bx, 0
+        mov ax, [bx]
+        sub bx, 0
+
+        and cx, ax
+
 
         or dx, cx
 
 
-        ; (x7 & x6 & x2 & x0)
+        ; (x7 & x6 & x3 & x1)
         add bx, 7
         mov ax, [bx]
         sub bx, 7
@@ -89,15 +92,15 @@ code segment
 
         and cx, ax
 
-        add bx, 2
+        add bx, 3
         mov ax, [bx]
-        sub bx, 2
+        sub bx, 3
 
         and cx, ax
 
-        add bx, 0
+        add bx, 1
         mov ax, [bx]
-        sub bx, 0
+        sub bx, 1
 
         and cx, ax
 
