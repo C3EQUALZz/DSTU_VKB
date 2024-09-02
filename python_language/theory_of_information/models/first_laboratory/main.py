@@ -10,6 +10,7 @@
 - https://youtu.be/nvCJ7dKC9CE?si=MruEOzHiqpLmZCZ9
 
 """
+import time
 import huffman
 import logging
 import prettytable
@@ -19,17 +20,19 @@ logger = logging.getLogger(__name__)
 
 
 def main() -> None:
-    string_input = input("Введите предложение для алгоритма Хаффмана: ")
-    dictionary_with_encoded_symbols = huffman.Huffman.encode(string_input)
-    encoded = "".join(dictionary_with_encoded_symbols[char] for char in string_input)
-    logger.info(f"Длина словаря - {len(dictionary_with_encoded_symbols)}, Закодированное сообщение - {encoded}")
+    while True:
+        string_input = input("Введите предложение для кодирование с помощью алгоритма Хаффмана: ")
+        dictionary_with_encoded_symbols = huffman.Huffman.encode(string_input)
+        encoded = "".join(dictionary_with_encoded_symbols[char] for char in string_input)
+        logger.info(f"Длина словаря - {len(dictionary_with_encoded_symbols)}, Закодированное сообщение - {encoded}")
 
-    pretty_table = prettytable.PrettyTable()
-    for c in dictionary_with_encoded_symbols:
-        pretty_table.add_column(c, [])
-    pretty_table.add_row(['\n'.join(dictionary_with_encoded_symbols[c]) for c in dictionary_with_encoded_symbols])
+        pretty_table = prettytable.PrettyTable()
+        for c in dictionary_with_encoded_symbols:
+            pretty_table.add_column(c, [])
+        pretty_table.add_row(['\n'.join(dictionary_with_encoded_symbols[c]) for c in dictionary_with_encoded_symbols])
 
-    logger.info("\n" + str(pretty_table))
+        logger.info("\n" + str(pretty_table))
+        time.sleep(0.5)
 
 
 if __name__ == "__main__":
