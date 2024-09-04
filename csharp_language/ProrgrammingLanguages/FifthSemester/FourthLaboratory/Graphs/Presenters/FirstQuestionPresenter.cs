@@ -46,6 +46,10 @@ namespace DoAnPaint.Graphs.Presenters
             }
         }
 
+        /// <summary>
+        /// Главный метод отрисовки, мне не совсем он тоже нравится, так как у него внутри много логики, что нарушает Solid
+        /// С другой стороны, я здесь инкапсулирую внутреннию логику установки легенд и т.п.
+        /// </summary>
         public void Draw()
         {
             var xValues = GenerateXValues();
@@ -54,7 +58,7 @@ namespace DoAnPaint.Graphs.Presenters
 
             SetAxisX(xValues);
             SetAxisY(series);
-            _view.CartesianChart.LegendLocation = LegendLocation.Right;
+            SetLegent(_view);
 
             if (_view.IsAnimationEnabled)
             {
@@ -68,6 +72,10 @@ namespace DoAnPaint.Graphs.Presenters
                 
         }
 
+        /// <summary>
+        /// Генерирует список значений по оси X на основе заданных параметров.
+        /// </summary>
+        /// <returns>Список значений по оси X.</returns>
         private List<double> GenerateXValues()
         {
             var xValues = new List<double>();
@@ -78,6 +86,11 @@ namespace DoAnPaint.Graphs.Presenters
             return xValues;
         }
 
+        /// <summary>
+        /// Создает коллекцию серий на основе выбранных моделей и значений по оси X.
+        /// </summary>
+        /// <param name="xValues">Список значений по оси X.</param>
+        /// <returns>Коллекция серий для отображения на графике.</returns>
         private SeriesCollection GenerateSeriesCollection(List<double> xValues)
         {
             var series = new SeriesCollection();
@@ -99,6 +112,12 @@ namespace DoAnPaint.Graphs.Presenters
             return series;
         }
 
+        /// <summary>
+        /// Создает линию графика для заданной модели и значений.
+        /// </summary>
+        /// <param name="model">Модель, для которой создается линия.</param>
+        /// <param name="values">Значения, соответствующие модели.</param>
+        /// <returns>Объект LineSeries, представляющий линию графика.</returns>
         private LineSeries CreateLineSeries(IModel model, ChartValues<double> values)
         {
             return new LineSeries
@@ -110,6 +129,10 @@ namespace DoAnPaint.Graphs.Presenters
             };
         }
 
+        /// <summary>
+        /// Настраивает ось X графика на основе заданных значений.
+        /// </summary>
+        /// <param name="xValues">Список значений по оси X.</param>
         private void SetAxisX(List<double> xValues)
         {
             var axisX = new Axis
@@ -129,6 +152,10 @@ namespace DoAnPaint.Graphs.Presenters
             _view.CartesianChart.AxisX.Add(axisX);
         }
 
+        /// <summary>
+        /// Настраивает ось Y графика на основе значений серий.
+        /// </summary>
+        /// <param name="series">Коллекция серий, используемая для настройки оси Y.</param>
         private void SetAxisY(SeriesCollection series)
         {
             if (series.Any())
@@ -144,6 +171,17 @@ namespace DoAnPaint.Graphs.Presenters
                 _view.CartesianChart.AxisY[0].MaxValue = 0;
                 _view.CartesianChart.AxisY[0].MinValue = 0;
             }
+        }
+
+
+        /// <summary>
+        /// Немного избыточный метод... Не спорю
+        /// Здесь идет установка легенды справа
+        /// </summary>
+        /// <param name="view"></param>
+        private void SetLegent(IView view)
+        {
+            view.CartesianChart.LegendLocation = LegendLocation.Right;
         }
 
 
