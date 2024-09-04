@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using DoAnPaint.Graphs.Views;
 
 namespace DoAnPaint
 {
@@ -13,7 +14,7 @@ namespace DoAnPaint
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new PaintView());
+            Application.Run(new FormFirstQuestion());
         }
     }
 }

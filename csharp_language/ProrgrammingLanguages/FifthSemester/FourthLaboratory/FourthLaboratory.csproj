@@ -33,13 +33,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.WinForms, Version=0.9.7.1, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.WinForms.0.9.7.1\lib\net45\LiveCharts.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="ReaLTaiizor, Version=3.8.0.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ReaLTaiizor.3.8.0.7\lib\net48\ReaLTaiizor.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Design" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,8 +61,17 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Graphs\Core\Interfaces\FirstQuestion\IModel.cs" />
+    <Compile Include="Graphs\Core\Interfaces\FirstQuestion\IPresenter.cs" />
+    <Compile Include="Graphs\Core\Interfaces\FirstQuestion\IView.cs" />
+    <Compile Include="Graphs\Models\FirstQuestion\FirstModel.cs" />
+    <Compile Include="Graphs\Models\FirstQuestion\SecondModel.cs" />
+    <Compile Include="Graphs\Models\FirstQuestion\ThirdModel.cs" />
+    <Compile Include="Graphs\Presenters\FirstQuestionPresenter.cs" />
     <Compile Include="Graphs\Views\FormEighteenthQuestion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -196,6 +218,9 @@
     <Compile Include="Paint\Utils\CurrentShapeStatus.cs" />
     <Compile Include="Paint\Utils\FindRegion.cs" />
     <Compile Include="Paint\View\ViewPaint.cs" />
+    <EmbeddedResource Include="Graphs\Views\FormFirstQuestion.resx">
+      <DependentUpon>FormFirstQuestion.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainView.resx">
       <DependentUpon>MainView.cs</DependentUpon>
     </EmbeddedResource>
@@ -286,11 +311,7 @@
   <ItemGroup>
     <None Include="Resources\ic_location.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Graphs\Core\Interfaces\" />
-    <Folder Include="Graphs\Models\" />
-    <Folder Include="Graphs\Presenters\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

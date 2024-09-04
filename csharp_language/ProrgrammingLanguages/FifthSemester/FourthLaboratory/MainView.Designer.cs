@@ -42,7 +42,6 @@
             this.materialButton6 = new ReaLTaiizor.Controls.MaterialButton();
             this.materialButton7 = new ReaLTaiizor.Controls.MaterialButton();
             this.materialButton8 = new ReaLTaiizor.Controls.MaterialButton();
-            this.materialButton9 = new ReaLTaiizor.Controls.MaterialButton();
             this.materialButton10 = new ReaLTaiizor.Controls.MaterialButton();
             this.materialButton11 = new ReaLTaiizor.Controls.MaterialButton();
             this.materialButton12 = new ReaLTaiizor.Controls.MaterialButton();
@@ -55,6 +54,7 @@
             this.materialButton19 = new ReaLTaiizor.Controls.MaterialButton();
             this.materialButton20 = new ReaLTaiizor.Controls.MaterialButton();
             this.materialButton21 = new ReaLTaiizor.Controls.MaterialButton();
+            this.materialButton9 = new ReaLTaiizor.Controls.MaterialButton();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
@@ -103,7 +103,7 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(93, 19);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(214, 18);
+            this.label1.Size = new System.Drawing.Size(170, 16);
             this.label1.TabIndex = 2;
             this.label1.Text = "Лабораторная работа №4";
             // 
@@ -166,6 +166,7 @@
             this.materialButton1.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton1.Size = new System.Drawing.Size(64, 36);
             this.materialButton1.TabIndex = 0;
+            this.materialButton1.Tag = "PaintView";
             this.materialButton1.Text = "Paint";
             this.materialButton1.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton1.UseAccentColor = false;
@@ -310,26 +311,6 @@
             this.materialButton8.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton8.UseAccentColor = false;
             this.materialButton8.UseVisualStyleBackColor = true;
-            // 
-            // materialButton9
-            // 
-            this.materialButton9.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialButton9.Density = ReaLTaiizor.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.materialButton9.Depth = 0;
-            this.materialButton9.HighEmphasis = true;
-            this.materialButton9.Icon = null;
-            this.materialButton9.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            this.materialButton9.Location = new System.Drawing.Point(2237, 6);
-            this.materialButton9.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.materialButton9.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
-            this.materialButton9.Name = "materialButton9";
-            this.materialButton9.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.materialButton9.Size = new System.Drawing.Size(110, 36);
-            this.materialButton9.TabIndex = 8;
-            this.materialButton9.Text = "Вариант 20";
-            this.materialButton9.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.materialButton9.UseAccentColor = false;
-            this.materialButton9.UseVisualStyleBackColor = true;
             // 
             // materialButton10
             // 
@@ -570,6 +551,26 @@
             this.materialButton21.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton21.UseAccentColor = false;
             this.materialButton21.UseVisualStyleBackColor = true;
+            // 
+            // materialButton9
+            // 
+            this.materialButton9.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton9.Density = ReaLTaiizor.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.materialButton9.Depth = 0;
+            this.materialButton9.HighEmphasis = true;
+            this.materialButton9.Icon = null;
+            this.materialButton9.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
+            this.materialButton9.Location = new System.Drawing.Point(2237, 6);
+            this.materialButton9.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialButton9.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            this.materialButton9.Name = "materialButton9";
+            this.materialButton9.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.materialButton9.Size = new System.Drawing.Size(110, 36);
+            this.materialButton9.TabIndex = 8;
+            this.materialButton9.Text = "Вариант 20";
+            this.materialButton9.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.materialButton9.UseAccentColor = false;
+            this.materialButton9.UseVisualStyleBackColor = true;
             // 
             // MainView
             // 
