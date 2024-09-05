@@ -37,8 +37,6 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.animationCheckBox = new ReaLTaiizor.Controls.MaterialCheckBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
@@ -47,6 +45,8 @@
             this.graphStartTextBox = new System.Windows.Forms.TextBox();
             this.graphEndTextBox = new System.Windows.Forms.TextBox();
             this.graphStepTextBox = new System.Windows.Forms.TextBox();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.firstChartCheckBox = new ReaLTaiizor.Controls.MaterialCheckBox();
             this.secondChartCheckBox = new ReaLTaiizor.Controls.MaterialCheckBox();
@@ -59,9 +59,9 @@
             this.panel3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
             this.panel4.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -172,26 +172,6 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(261, 167);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.groupBox3);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(3, 215);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(287, 206);
-            this.panel4.TabIndex = 1;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.tableLayoutPanel5);
-            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox3.Location = new System.Drawing.Point(0, 0);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(287, 206);
-            this.groupBox3.TabIndex = 0;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Запуск и выбор";
-            // 
             // animationCheckBox
             // 
             this.animationCheckBox.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -247,11 +227,11 @@
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(6, 46);
+            this.label2.Location = new System.Drawing.Point(9, 46);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(114, 16);
+            this.label2.Size = new System.Drawing.Size(108, 16);
             this.label2.TabIndex = 1;
-            this.label2.Text = "(ось Ox) B (до) =   ";
+            this.label2.Text = "(ось Ox) B (до) = ";
             // 
             // label3
             // 
@@ -288,6 +268,27 @@
             this.graphStepTextBox.Size = new System.Drawing.Size(100, 20);
             this.graphStepTextBox.TabIndex = 5;
             // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.groupBox3);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(3, 215);
+            this.panel4.Name = "panel4";
+            this.panel4.Padding = new System.Windows.Forms.Padding(10);
+            this.panel4.Size = new System.Drawing.Size(287, 206);
+            this.panel4.TabIndex = 1;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.tableLayoutPanel5);
+            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox3.Location = new System.Drawing.Point(10, 10);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(267, 186);
+            this.groupBox3.TabIndex = 1;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Запуск и выбор";
+            // 
             // tableLayoutPanel5
             // 
             this.tableLayoutPanel5.ColumnCount = 1;
@@ -302,14 +303,14 @@
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(281, 187);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(261, 167);
             this.tableLayoutPanel5.TabIndex = 0;
             // 
             // firstChartCheckBox
             // 
             this.firstChartCheckBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.firstChartCheckBox.Depth = 0;
-            this.firstChartCheckBox.Location = new System.Drawing.Point(39, 12);
+            this.firstChartCheckBox.Location = new System.Drawing.Point(29, 9);
             this.firstChartCheckBox.Margin = new System.Windows.Forms.Padding(0);
             this.firstChartCheckBox.MouseLocation = new System.Drawing.Point(-1, -1);
             this.firstChartCheckBox.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
@@ -326,7 +327,7 @@
             // 
             this.secondChartCheckBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.secondChartCheckBox.Depth = 0;
-            this.secondChartCheckBox.Location = new System.Drawing.Point(39, 74);
+            this.secondChartCheckBox.Location = new System.Drawing.Point(29, 64);
             this.secondChartCheckBox.Margin = new System.Windows.Forms.Padding(0);
             this.secondChartCheckBox.MouseLocation = new System.Drawing.Point(-1, -1);
             this.secondChartCheckBox.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
@@ -343,7 +344,7 @@
             // 
             this.thirdChartCheckBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.thirdChartCheckBox.Depth = 0;
-            this.thirdChartCheckBox.Location = new System.Drawing.Point(39, 137);
+            this.thirdChartCheckBox.Location = new System.Drawing.Point(29, 120);
             this.thirdChartCheckBox.Margin = new System.Windows.Forms.Padding(0);
             this.thirdChartCheckBox.MouseLocation = new System.Drawing.Point(-1, -1);
             this.thirdChartCheckBox.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
@@ -374,10 +375,10 @@
             this.groupBox2.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
-            this.panel4.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -393,7 +394,6 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.GroupBox groupBox3;
         private LiveCharts.WinForms.CartesianChart cartesianChart;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private ReaLTaiizor.Controls.MaterialCheckBox animationCheckBox;
@@ -404,6 +404,7 @@
         private System.Windows.Forms.TextBox graphStartTextBox;
         private System.Windows.Forms.TextBox graphEndTextBox;
         private System.Windows.Forms.TextBox graphStepTextBox;
+        private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private ReaLTaiizor.Controls.MaterialCheckBox firstChartCheckBox;
         private ReaLTaiizor.Controls.MaterialCheckBox secondChartCheckBox;
