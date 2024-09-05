@@ -7,13 +7,13 @@ using LiveCharts.Wpf;
 
 namespace DoAnPaint.Graphs.Presenters
 {
-    internal class FirstQuestionPresenter : IPresenter
+    internal class BasePresenter : IPresenter
     {
         private readonly IView _view;
         private readonly List<IModel> _models;
         private readonly List<IModel> _selectedModels;
 
-        public FirstQuestionPresenter(IView view, List<IModel> models)
+        public BasePresenter(IView view, List<IModel> models)
         {
             _view = view;
             _models = models;

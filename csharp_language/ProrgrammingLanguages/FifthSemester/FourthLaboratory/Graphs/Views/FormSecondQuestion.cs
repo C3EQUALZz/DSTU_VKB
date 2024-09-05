@@ -35,7 +35,7 @@ namespace DoAnPaint.Graphs.Views
         public FormSecondQuestion()
         {
             _models = new List<IModel> { new FirstModel(), new SecondModel(), new ThirdModel() };
-            _presenter = new FirstQuestionPresenter(this, _models);
+            _presenter = new BasePresenter(this, _models);
             InitializeComponent();
         }
 

@@ -80,7 +80,7 @@
     <Compile Include="Graphs\Models\ThirdQuestion\FirstModel.cs" />
     <Compile Include="Graphs\Models\ThirdQuestion\SecondModel.cs" />
     <Compile Include="Graphs\Models\ThirdQuestion\ThirdModel.cs" />
-    <Compile Include="Graphs\Presenters\FirstQuestionPresenter.cs" />
+    <Compile Include="Graphs\Presenters\BasePresenter.cs" />
     <Compile Include="Graphs\Views\FormEighteenthQuestion.cs">
       <SubType>Form</SubType>
     </Compile>
