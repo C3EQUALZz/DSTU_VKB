@@ -237,6 +237,9 @@
     <EmbeddedResource Include="Graphs\Views\FormSecondQuestion.resx">
       <DependentUpon>FormSecondQuestion.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Graphs\Views\FormSeventhQuestion.resx">
+      <DependentUpon>FormSeventhQuestion.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Graphs\Views\FormSixthQuestion.resx">
       <DependentUpon>FormSixthQuestion.cs</DependentUpon>
     </EmbeddedResource>
