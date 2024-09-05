@@ -74,6 +74,9 @@
     <Compile Include="Graphs\Core\Interfaces\IModel.cs" />
     <Compile Include="Graphs\Core\Interfaces\IPresenter.cs" />
     <Compile Include="Graphs\Core\Interfaces\IView.cs" />
+    <Compile Include="Graphs\Models\EighthQuestion\FirstModel.cs" />
+    <Compile Include="Graphs\Models\EighthQuestion\SecondModel.cs" />
+    <Compile Include="Graphs\Models\EighthQuestion\ThirdModel.cs" />
     <Compile Include="Graphs\Models\FifthQuestion\FirstModel.cs" />
     <Compile Include="Graphs\Models\FifthQuestion\SecondModel.cs" />
     <Compile Include="Graphs\Models\FifthQuestion\ThirdModel.cs" />
