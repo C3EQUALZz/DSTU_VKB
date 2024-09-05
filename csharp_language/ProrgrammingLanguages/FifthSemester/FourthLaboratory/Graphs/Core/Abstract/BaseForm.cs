@@ -31,6 +31,11 @@ namespace DoAnPaint.Graphs.Core.Abstract
             }
         }
 
+        public BaseForm()
+        {
+            InitializeComponent();
+        }
+
         public BaseForm(List<IModel> models)
         {
             _models = models;
