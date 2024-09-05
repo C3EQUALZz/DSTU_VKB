@@ -1,18 +1,13 @@
-﻿using System;
+﻿using DoAnPaint.Graphs.Core.Abstract;
+using DoAnPaint.Graphs.Core.Interfaces;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using DoAnPaint.Graphs.Models.SeventhQuestion;
 
 namespace DoAnPaint.Graphs.Views
 {
-    public partial class FormSeventhQuestion : Form
+    public partial class FormSeventhQuestion : BaseForm
     {
-        public FormSeventhQuestion()
+        public FormSeventhQuestion() : base(new List<IModel> { new FirstModel(), new SecondModel(), new ThirdModel() })
         {
             InitializeComponent();
         }

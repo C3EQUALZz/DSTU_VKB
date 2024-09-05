@@ -31,6 +31,10 @@ namespace DoAnPaint.Graphs.Core.Abstract
             }
         }
 
+        /// <summary>
+        /// В Visual Studio под капотом для отображения Form используется рефлексия, поэтому этот пустой конструктор нужен
+        /// !!!НЕ ИСПОЛЬЗОВАТЬ ЕГО!!!!
+        /// </summary>
         public BaseForm()
         {
             InitializeComponent();
