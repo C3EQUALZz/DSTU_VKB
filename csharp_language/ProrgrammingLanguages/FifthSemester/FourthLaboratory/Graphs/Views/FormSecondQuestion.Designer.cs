@@ -234,7 +234,6 @@
             this.graphStartTextBox.Name = "graphStartTextBox";
             this.graphStartTextBox.Size = new System.Drawing.Size(100, 20);
             this.graphStartTextBox.TabIndex = 0;
-            this.graphStartTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.GraphStartTextBox_Validating);
             // 
             // label1
             // 
@@ -276,7 +275,6 @@
             this.graphEndTextBox.Name = "graphEndTextBox";
             this.graphEndTextBox.Size = new System.Drawing.Size(100, 20);
             this.graphEndTextBox.TabIndex = 4;
-            this.graphEndTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.GraphEndTextBox_Validating);
             // 
             // graphStepTextBox
             // 
@@ -285,7 +283,6 @@
             this.graphStepTextBox.Name = "graphStepTextBox";
             this.graphStepTextBox.Size = new System.Drawing.Size(100, 20);
             this.graphStepTextBox.TabIndex = 5;
-            this.graphStepTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.GraphStepTextBox_Validating);
             // 
             // firstChartCheckBox
             // 
@@ -303,7 +300,6 @@
             this.firstChartCheckBox.Text = "y = 2 / x";
             this.firstChartCheckBox.UseAccentColor = false;
             this.firstChartCheckBox.UseVisualStyleBackColor = true;
-            this.firstChartCheckBox.CheckedChanged += new System.EventHandler(this.FirstChartCheckBox_CheckedChanged);
             // 
             // secondChartCheckBox
             // 
@@ -321,7 +317,6 @@
             this.secondChartCheckBox.Text = "y = - 3 / x";
             this.secondChartCheckBox.UseAccentColor = false;
             this.secondChartCheckBox.UseVisualStyleBackColor = true;
-            this.secondChartCheckBox.CheckedChanged += new System.EventHandler(this.SecondChartCheckBox_CheckedChanged);
             // 
             // thirdChartCheckBox
             // 
@@ -339,7 +334,6 @@
             this.thirdChartCheckBox.Text = "y = 1 / (2 * x)";
             this.thirdChartCheckBox.UseAccentColor = false;
             this.thirdChartCheckBox.UseVisualStyleBackColor = true;
-            this.thirdChartCheckBox.CheckedChanged += new System.EventHandler(this.ThirdChartCheckBox_CheckedChanged);
             // 
             // cartesianChart
             // 

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cartesianChart = new LiveCharts.WinForms.CartesianChart();
@@ -50,37 +49,10 @@
             this.firstChartCheckBox = new ReaLTaiizor.Controls.MaterialCheckBox();
             this.secondChartCheckBox = new ReaLTaiizor.Controls.MaterialCheckBox();
             this.thirdChartCheckBox = new ReaLTaiizor.Controls.MaterialCheckBox();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
-            this.tableLayoutPanel6.SuspendLayout();
-            this.panel3.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.tableLayoutPanel4.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60.125F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 39.875F));
-            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 450);
-            this.tableLayoutPanel1.TabIndex = 1;
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
@@ -90,7 +62,6 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.cartesianChart);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(10, 10);
             this.groupBox1.Name = "groupBox1";
@@ -112,8 +83,6 @@
             // 
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Controls.Add(this.panel2, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.panel3, 0, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(484, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -125,7 +94,6 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.groupBox2);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
@@ -135,7 +103,6 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.tableLayoutPanel3);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(10, 10);
             this.groupBox2.Name = "groupBox2";
@@ -148,8 +115,6 @@
             // 
             this.tableLayoutPanel3.ColumnCount = 1;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel6, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.animationCheckBox, 0, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -164,12 +129,6 @@
             this.tableLayoutPanel6.ColumnCount = 2;
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel6.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel6.Controls.Add(this.label2, 0, 1);
-            this.tableLayoutPanel6.Controls.Add(this.label3, 0, 2);
-            this.tableLayoutPanel6.Controls.Add(this.graphStartTextBox, 1, 0);
-            this.tableLayoutPanel6.Controls.Add(this.graphEndTextBox, 1, 1);
-            this.tableLayoutPanel6.Controls.Add(this.graphStepTextBox, 1, 2);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
@@ -221,7 +180,6 @@
             this.graphStartTextBox.Name = "graphStartTextBox";
             this.graphStartTextBox.Size = new System.Drawing.Size(100, 20);
             this.graphStartTextBox.TabIndex = 3;
-            this.graphStartTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.GraphStartTextBox_Validating);
             // 
             // graphEndTextBox
             // 
@@ -230,7 +188,6 @@
             this.graphEndTextBox.Name = "graphEndTextBox";
             this.graphEndTextBox.Size = new System.Drawing.Size(100, 20);
             this.graphEndTextBox.TabIndex = 4;
-            this.graphEndTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.GraphEndTextBox_Validating);
             // 
             // graphStepTextBox
             // 
@@ -239,7 +196,6 @@
             this.graphStepTextBox.Name = "graphStepTextBox";
             this.graphStepTextBox.Size = new System.Drawing.Size(100, 20);
             this.graphStepTextBox.TabIndex = 5;
-            this.graphStepTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.GraphStepTextBox_Validating);
             // 
             // animationCheckBox
             // 
@@ -261,7 +217,6 @@
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.groupBox3);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(3, 225);
             this.panel3.Name = "panel3";
@@ -271,7 +226,6 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.tableLayoutPanel4);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Location = new System.Drawing.Point(10, 10);
             this.groupBox3.Name = "groupBox3";
@@ -284,9 +238,6 @@
             // 
             this.tableLayoutPanel4.ColumnCount = 1;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Controls.Add(this.firstChartCheckBox, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.secondChartCheckBox, 0, 1);
-            this.tableLayoutPanel4.Controls.Add(this.thirdChartCheckBox, 0, 2);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -315,7 +266,6 @@
             this.firstChartCheckBox.Text = "y = x ^ 2";
             this.firstChartCheckBox.UseAccentColor = false;
             this.firstChartCheckBox.UseVisualStyleBackColor = true;
-            this.firstChartCheckBox.CheckedChanged += new System.EventHandler(this.FirstChartCheckBox_CheckedChanged);
             // 
             // secondChartCheckBox
             // 
@@ -333,7 +283,6 @@
             this.secondChartCheckBox.Text = "y=−2 * (x−1) ^ 2 + 3";
             this.secondChartCheckBox.UseAccentColor = false;
             this.secondChartCheckBox.UseVisualStyleBackColor = true;
-            this.secondChartCheckBox.CheckedChanged += new System.EventHandler(this.SecondChartCheckBox_CheckedChanged);
             // 
             // thirdChartCheckBox
             // 
@@ -351,40 +300,19 @@
             this.thirdChartCheckBox.Text = "y=1/(3 * ​(x+2) ^ 2) − 4";
             this.thirdChartCheckBox.UseAccentColor = false;
             this.thirdChartCheckBox.UseVisualStyleBackColor = true;
-            this.thirdChartCheckBox.CheckedChanged += new System.EventHandler(this.ThirdChartCheckBox_CheckedChanged);
             // 
             // FormFirstQuestion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.tableLayoutPanel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FormFirstQuestion";
-            this.Text = "FormFirstQuestion";
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.tableLayoutPanel3.ResumeLayout(false);
-            this.tableLayoutPanel3.PerformLayout();
-            this.tableLayoutPanel6.ResumeLayout(false);
-            this.tableLayoutPanel6.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.tableLayoutPanel4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Panel panel3;
@@ -403,5 +331,7 @@
         private ReaLTaiizor.Controls.MaterialCheckBox animationCheckBox;
         private System.Windows.Forms.TextBox graphEndTextBox;
         private System.Windows.Forms.TextBox graphStepTextBox;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace DoAnPaint.Graphs.Core.Interfaces
 {
-    internal interface IModel
+    public interface IModel
     {
         string Name { get; }
 

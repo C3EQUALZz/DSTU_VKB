@@ -1,4 +1,4 @@
-﻿using DoAnPaint.Graphs.Core.Interfaces.ThirdQuestion;
+﻿using DoAnPaint.Graphs.Core.Interfaces;
 using System;
 
 namespace DoAnPaint.Graphs.Models.ThirdQuestion

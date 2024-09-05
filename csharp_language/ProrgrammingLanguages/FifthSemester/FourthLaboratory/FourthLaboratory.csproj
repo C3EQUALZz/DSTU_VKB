@@ -65,9 +65,18 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Graphs\Core\Abstract\BaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Core\Abstract\BaseForm.Designer.cs">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Graphs\Core\Interfaces\IModel.cs" />
     <Compile Include="Graphs\Core\Interfaces\IPresenter.cs" />
     <Compile Include="Graphs\Core\Interfaces\IView.cs" />
+    <Compile Include="Graphs\Models\FifthQuestion\FirstModel.cs" />
+    <Compile Include="Graphs\Models\FifthQuestion\SecondModel.cs" />
+    <Compile Include="Graphs\Models\FifthQuestion\ThirdModel.cs" />
     <Compile Include="Graphs\Models\FirstQuestion\FirstModel.cs" />
     <Compile Include="Graphs\Models\FirstQuestion\SecondModel.cs" />
     <Compile Include="Graphs\Models\FirstQuestion\ThirdModel.cs" />
@@ -77,6 +86,12 @@
     <Compile Include="Graphs\Models\SecondQuestion\FirstModel.cs" />
     <Compile Include="Graphs\Models\SecondQuestion\SecondModel.cs" />
     <Compile Include="Graphs\Models\SecondQuestion\ThirdModel.cs" />
+    <Compile Include="Graphs\Models\SeventhQuestion\FirstModel.cs" />
+    <Compile Include="Graphs\Models\SeventhQuestion\SecondModel.cs" />
+    <Compile Include="Graphs\Models\SeventhQuestion\ThirdModel.cs" />
+    <Compile Include="Graphs\Models\SixthQuestion\FirstModel.cs" />
+    <Compile Include="Graphs\Models\SixthQuestion\SecondModel.cs" />
+    <Compile Include="Graphs\Models\SixthQuestion\ThirdModel.cs" />
     <Compile Include="Graphs\Models\ThirdQuestion\FirstModel.cs" />
     <Compile Include="Graphs\Models\ThirdQuestion\SecondModel.cs" />
     <Compile Include="Graphs\Models\ThirdQuestion\ThirdModel.cs" />
@@ -227,6 +242,9 @@
     <Compile Include="Paint\Utils\CurrentShapeStatus.cs" />
     <Compile Include="Paint\Utils\FindRegion.cs" />
     <Compile Include="Paint\View\ViewPaint.cs" />
+    <EmbeddedResource Include="Graphs\Core\Abstract\BaseForm.resx">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Graphs\Views\FormEighthQuestion.resx">
       <DependentUpon>FormEighthQuestion.cs</DependentUpon>
     </EmbeddedResource>
@@ -238,6 +256,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Graphs\Views\FormFourthQuestion.resx">
       <DependentUpon>FormFourthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Graphs\Views\FormNinthQuestion.resx">
+      <DependentUpon>FormNinthQuestion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Graphs\Views\FormSecondQuestion.resx">
       <DependentUpon>FormSecondQuestion.cs</DependentUpon>

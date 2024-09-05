@@ -3,7 +3,7 @@ using LiveCharts.WinForms;
 
 namespace DoAnPaint.Graphs.Core.Interfaces
 {
-    internal interface IView
+    public interface IView
     {
         SeriesCollection ChartData { get; set; }
         CartesianChart CartesianChart { get; }

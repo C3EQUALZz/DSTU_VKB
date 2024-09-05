@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DoAnPaint.Graphs.Core.Interfaces;
+using System;
 
 namespace DoAnPaint.Graphs.Models.FourthQuestion
 {
-    internal class SecondModel
+    internal class SecondModel : IModel
     {
+        public string Name => "y = log3(x + 1)";
+
+        public double Calculate(double x)
+        {
+            return Math.Log(x + 1, 3);
+        }
     }
 }
