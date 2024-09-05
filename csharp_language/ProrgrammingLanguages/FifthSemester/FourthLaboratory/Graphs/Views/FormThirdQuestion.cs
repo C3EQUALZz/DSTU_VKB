@@ -16,5 +16,20 @@ namespace DoAnPaint.Graphs.Views
         {
             InitializeComponent();
         }
+
+        private void graphStartTextBox_Validating(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void graphEndTextBox_Validating(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void graphStepTextBox_Validating(object sender, CancelEventArgs e)
+        {
+
+        }
     }
 }

@@ -225,6 +225,9 @@
     <Compile Include="Paint\Utils\CurrentShapeStatus.cs" />
     <Compile Include="Paint\Utils\FindRegion.cs" />
     <Compile Include="Paint\View\ViewPaint.cs" />
+    <EmbeddedResource Include="Graphs\Views\FormEighthQuestion.resx">
+      <DependentUpon>FormEighthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Graphs\Views\FormFifthQuestion.resx">
       <DependentUpon>FormFifthQuestion.cs</DependentUpon>
     </EmbeddedResource>

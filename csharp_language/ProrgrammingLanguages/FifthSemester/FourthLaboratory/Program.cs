@@ -14,7 +14,7 @@ namespace DoAnPaint
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormSecondQuestion());
+            Application.Run(new MainView());
         }
     }
 }

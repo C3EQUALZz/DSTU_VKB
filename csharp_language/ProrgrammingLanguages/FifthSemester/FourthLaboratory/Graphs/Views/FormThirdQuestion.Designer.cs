@@ -239,6 +239,7 @@
             this.graphStartTextBox.Name = "graphStartTextBox";
             this.graphStartTextBox.Size = new System.Drawing.Size(100, 20);
             this.graphStartTextBox.TabIndex = 3;
+            this.graphStartTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.graphStartTextBox_Validating);
             // 
             // graphEndTextBox
             // 
@@ -247,6 +248,7 @@
             this.graphEndTextBox.Name = "graphEndTextBox";
             this.graphEndTextBox.Size = new System.Drawing.Size(100, 20);
             this.graphEndTextBox.TabIndex = 4;
+            this.graphEndTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.graphEndTextBox_Validating);
             // 
             // graphStepTextBox
             // 
@@ -255,6 +257,7 @@
             this.graphStepTextBox.Name = "graphStepTextBox";
             this.graphStepTextBox.Size = new System.Drawing.Size(100, 20);
             this.graphStepTextBox.TabIndex = 5;
+            this.graphStepTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.graphStepTextBox_Validating);
             // 
             // panel3
             // 
