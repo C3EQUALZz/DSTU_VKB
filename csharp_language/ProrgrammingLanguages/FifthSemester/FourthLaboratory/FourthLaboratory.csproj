@@ -68,10 +68,17 @@
     <Compile Include="Graphs\Core\Interfaces\FirstQuestion\IModel.cs" />
     <Compile Include="Graphs\Core\Interfaces\FirstQuestion\IPresenter.cs" />
     <Compile Include="Graphs\Core\Interfaces\FirstQuestion\IView.cs" />
+    <Compile Include="Graphs\Core\Interfaces\SecondQuestion\IModel.cs" />
+    <Compile Include="Graphs\Core\Interfaces\SecondQuestion\IPresenter.cs" />
+    <Compile Include="Graphs\Core\Interfaces\SecondQuestion\IView.cs" />
     <Compile Include="Graphs\Models\FirstQuestion\FirstModel.cs" />
     <Compile Include="Graphs\Models\FirstQuestion\SecondModel.cs" />
     <Compile Include="Graphs\Models\FirstQuestion\ThirdModel.cs" />
+    <Compile Include="Graphs\Models\SecondQuestion\FirstModel.cs" />
+    <Compile Include="Graphs\Models\SecondQuestion\SecondModel.cs" />
+    <Compile Include="Graphs\Models\SecondQuestion\ThirdModel.cs" />
     <Compile Include="Graphs\Presenters\FirstQuestionPresenter.cs" />
+    <Compile Include="Graphs\Presenters\SecondQuestionPresenter.cs" />
     <Compile Include="Graphs\Views\FormEighteenthQuestion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -218,11 +225,20 @@
     <Compile Include="Paint\Utils\CurrentShapeStatus.cs" />
     <Compile Include="Paint\Utils\FindRegion.cs" />
     <Compile Include="Paint\View\ViewPaint.cs" />
+    <EmbeddedResource Include="Graphs\Views\FormFifthQuestion.resx">
+      <DependentUpon>FormFifthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Graphs\Views\FormFirstQuestion.resx">
       <DependentUpon>FormFirstQuestion.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Graphs\Views\FormFourthQuestion.resx">
+      <DependentUpon>FormFourthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Graphs\Views\FormSecondQuestion.resx">
       <DependentUpon>FormSecondQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Graphs\Views\FormThirdQuestion.resx">
+      <DependentUpon>FormThirdQuestion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainView.resx">
       <DependentUpon>MainView.cs</DependentUpon>

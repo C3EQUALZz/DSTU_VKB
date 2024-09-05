@@ -15,7 +15,6 @@ namespace FirstLaboratory.Views
         {
             _presenter = new FirstQuestionPresenter(this, new FirstQuestionModel());
             InitializeComponent();
-            
         }
 
         public Color BackgroundColor
