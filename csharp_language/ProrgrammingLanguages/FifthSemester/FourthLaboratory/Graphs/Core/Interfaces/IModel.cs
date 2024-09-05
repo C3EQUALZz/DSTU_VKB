@@ -1,4 +1,4 @@
-﻿namespace DoAnPaint.Graphs.Core.Interfaces.SecondQuestion
+﻿namespace DoAnPaint.Graphs.Core.Interfaces
 {
     internal interface IModel
     {

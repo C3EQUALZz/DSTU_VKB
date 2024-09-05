@@ -31,5 +31,20 @@ namespace DoAnPaint.Graphs.Views
         {
 
         }
+
+        private void firstChartCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void secondChartCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void thirdChartCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

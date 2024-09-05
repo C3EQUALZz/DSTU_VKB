@@ -65,20 +65,22 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphs\Core\Interfaces\FirstQuestion\IModel.cs" />
-    <Compile Include="Graphs\Core\Interfaces\FirstQuestion\IPresenter.cs" />
-    <Compile Include="Graphs\Core\Interfaces\FirstQuestion\IView.cs" />
-    <Compile Include="Graphs\Core\Interfaces\SecondQuestion\IModel.cs" />
-    <Compile Include="Graphs\Core\Interfaces\SecondQuestion\IPresenter.cs" />
-    <Compile Include="Graphs\Core\Interfaces\SecondQuestion\IView.cs" />
+    <Compile Include="Graphs\Core\Interfaces\IModel.cs" />
+    <Compile Include="Graphs\Core\Interfaces\IPresenter.cs" />
+    <Compile Include="Graphs\Core\Interfaces\IView.cs" />
     <Compile Include="Graphs\Models\FirstQuestion\FirstModel.cs" />
     <Compile Include="Graphs\Models\FirstQuestion\SecondModel.cs" />
     <Compile Include="Graphs\Models\FirstQuestion\ThirdModel.cs" />
+    <Compile Include="Graphs\Models\FourthQuestion\FirstModel.cs" />
+    <Compile Include="Graphs\Models\FourthQuestion\SecondModel.cs" />
+    <Compile Include="Graphs\Models\FourthQuestion\ThirdModel.cs" />
     <Compile Include="Graphs\Models\SecondQuestion\FirstModel.cs" />
     <Compile Include="Graphs\Models\SecondQuestion\SecondModel.cs" />
     <Compile Include="Graphs\Models\SecondQuestion\ThirdModel.cs" />
+    <Compile Include="Graphs\Models\ThirdQuestion\FirstModel.cs" />
+    <Compile Include="Graphs\Models\ThirdQuestion\SecondModel.cs" />
+    <Compile Include="Graphs\Models\ThirdQuestion\ThirdModel.cs" />
     <Compile Include="Graphs\Presenters\FirstQuestionPresenter.cs" />
-    <Compile Include="Graphs\Presenters\SecondQuestionPresenter.cs" />
     <Compile Include="Graphs\Views\FormEighteenthQuestion.cs">
       <SubType>Form</SubType>
     </Compile>

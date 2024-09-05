@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DoAnPaint.Graphs.Core.Interfaces.FirstQuestion;
+using DoAnPaint.Graphs.Core.Interfaces;
 using LiveCharts;
 using LiveCharts.Wpf;
 

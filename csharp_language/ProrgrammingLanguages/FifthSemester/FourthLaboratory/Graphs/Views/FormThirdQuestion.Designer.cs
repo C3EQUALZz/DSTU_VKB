@@ -313,6 +313,7 @@
             this.firstChartCheckBox.Text = "y = 2 * exp(x)";
             this.firstChartCheckBox.UseAccentColor = false;
             this.firstChartCheckBox.UseVisualStyleBackColor = true;
+            this.firstChartCheckBox.CheckedChanged += new System.EventHandler(this.firstChartCheckBox_CheckedChanged);
             // 
             // secondChartCheckBox
             // 
@@ -330,6 +331,7 @@
             this.secondChartCheckBox.Text = "y = 2 * exp(−x) + 3";
             this.secondChartCheckBox.UseAccentColor = false;
             this.secondChartCheckBox.UseVisualStyleBackColor = true;
+            this.secondChartCheckBox.CheckedChanged += new System.EventHandler(this.secondChartCheckBox_CheckedChanged);
             // 
             // thirdChartCheckBox
             // 
@@ -347,6 +349,7 @@
             this.thirdChartCheckBox.Text = "y = exp(x) - 1";
             this.thirdChartCheckBox.UseAccentColor = false;
             this.thirdChartCheckBox.UseVisualStyleBackColor = true;
+            this.thirdChartCheckBox.CheckedChanged += new System.EventHandler(this.thirdChartCheckBox_CheckedChanged);
             // 
             // FormThirdQuestion
             // 

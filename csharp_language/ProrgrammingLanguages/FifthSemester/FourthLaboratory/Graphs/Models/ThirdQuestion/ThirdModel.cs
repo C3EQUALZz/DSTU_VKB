@@ -1,15 +1,15 @@
 ﻿using DoAnPaint.Graphs.Core.Interfaces;
+using System;
 
-namespace DoAnPaint.Graphs.Models.FirstQuestion
+namespace DoAnPaint.Graphs.Models.ThirdQuestion
 {
     internal class ThirdModel : IModel
     {
-
-        public string Name => "y = (1/3)(x + 2)^2 - 4";
+        public string Name => "y = exp(x) - 1";
 
         public double Calculate(double x)
         {
-            return (1.0 / 3) * (x + 2) * (x + 2) - 4;
+            return Math.Exp(x) - 1;
         }
     }
 }

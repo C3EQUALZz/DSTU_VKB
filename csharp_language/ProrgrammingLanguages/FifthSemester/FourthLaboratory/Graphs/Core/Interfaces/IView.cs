@@ -1,7 +1,7 @@
 ﻿using LiveCharts;
 using LiveCharts.WinForms;
 
-namespace DoAnPaint.Graphs.Core.Interfaces.SecondQuestion
+namespace DoAnPaint.Graphs.Core.Interfaces
 {
     internal interface IView
     {

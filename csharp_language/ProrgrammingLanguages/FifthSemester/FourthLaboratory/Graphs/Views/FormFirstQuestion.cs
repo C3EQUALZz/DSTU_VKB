@@ -1,4 +1,4 @@
-﻿using DoAnPaint.Graphs.Core.Interfaces.FirstQuestion;
+﻿using DoAnPaint.Graphs.Core.Interfaces;
 using DoAnPaint.Graphs.Models;
 using DoAnPaint.Graphs.Models.FirstQuestion;
 using DoAnPaint.Graphs.Presenters;

@@ -1,4 +1,4 @@
-﻿namespace DoAnPaint.Graphs.Core.Interfaces.FirstQuestion
+﻿namespace DoAnPaint.Graphs.Core.Interfaces
 {
     internal interface IPresenter
     {

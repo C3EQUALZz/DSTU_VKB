@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using LiveCharts.WinForms;
 using LiveCharts;
 using System.Collections.Generic;
-using DoAnPaint.Graphs.Core.Interfaces.SecondQuestion;
+using DoAnPaint.Graphs.Core.Interfaces;
 using DoAnPaint.Graphs.Models.SecondQuestion;
 using DoAnPaint.Graphs.Presenters;
 
@@ -35,7 +35,7 @@ namespace DoAnPaint.Graphs.Views
         public FormSecondQuestion()
         {
             _models = new List<IModel> { new FirstModel(), new SecondModel(), new ThirdModel() };
-            _presenter = new SecondQuestionPresenter(this, _models);
+            _presenter = new FirstQuestionPresenter(this, _models);
             InitializeComponent();
         }
 
