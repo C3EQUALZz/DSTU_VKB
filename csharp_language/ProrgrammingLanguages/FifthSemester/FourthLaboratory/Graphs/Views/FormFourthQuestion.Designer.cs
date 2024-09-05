@@ -31,7 +31,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cartesianChart1 = new LiveCharts.WinForms.CartesianChart();
+            this.cartesianChart = new LiveCharts.WinForms.CartesianChart();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -90,7 +90,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.cartesianChart1);
+            this.groupBox1.Controls.Add(this.cartesianChart);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(10, 10);
             this.groupBox1.Name = "groupBox1";
@@ -99,14 +99,14 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Графики";
             // 
-            // cartesianChart1
+            // cartesianChart
             // 
-            this.cartesianChart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cartesianChart1.Location = new System.Drawing.Point(3, 16);
-            this.cartesianChart1.Name = "cartesianChart1";
-            this.cartesianChart1.Size = new System.Drawing.Size(449, 405);
-            this.cartesianChart1.TabIndex = 0;
-            this.cartesianChart1.Text = "cartesianChart1";
+            this.cartesianChart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cartesianChart.Location = new System.Drawing.Point(3, 16);
+            this.cartesianChart.Name = "cartesianChart";
+            this.cartesianChart.Size = new System.Drawing.Size(449, 405);
+            this.cartesianChart.TabIndex = 0;
+            this.cartesianChart.Text = "cartesianChart1";
             // 
             // tableLayoutPanel2
             // 
@@ -340,7 +340,7 @@
             this.thirdChartCheckBox.Ripple = true;
             this.thirdChartCheckBox.Size = new System.Drawing.Size(203, 37);
             this.thirdChartCheckBox.TabIndex = 2;
-            this.thirdChartCheckBox.Text = "y = 2log5(x)";
+            this.thirdChartCheckBox.Text = "y = 2 * log5(x)";
             this.thirdChartCheckBox.UseAccentColor = false;
             this.thirdChartCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -393,6 +393,6 @@
         private ReaLTaiizor.Controls.MaterialCheckBox firstChartCheckBox;
         private ReaLTaiizor.Controls.MaterialCheckBox secondChartCheckBox;
         private ReaLTaiizor.Controls.MaterialCheckBox thirdChartCheckBox;
-        private LiveCharts.WinForms.CartesianChart cartesianChart1;
+        private LiveCharts.WinForms.CartesianChart cartesianChart;
     }
 }

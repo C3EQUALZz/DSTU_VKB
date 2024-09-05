@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace DoAnPaint.Graphs.Views
 {
-    public partial class FormSIxthQuestion : Form
+    public partial class FormSixthQuestion : Form
     {
-        public FormSIxthQuestion()
+        public FormSixthQuestion()
         {
             InitializeComponent();
         }

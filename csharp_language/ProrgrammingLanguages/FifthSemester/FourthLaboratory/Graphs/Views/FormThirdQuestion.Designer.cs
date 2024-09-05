@@ -324,7 +324,7 @@
             this.secondChartCheckBox.Ripple = true;
             this.secondChartCheckBox.Size = new System.Drawing.Size(203, 37);
             this.secondChartCheckBox.TabIndex = 1;
-            this.secondChartCheckBox.Text = "materialCheckBox3";
+            this.secondChartCheckBox.Text = "y = 2 * exp(−x) + 3";
             this.secondChartCheckBox.UseAccentColor = false;
             this.secondChartCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -341,7 +341,7 @@
             this.thirdChartCheckBox.Ripple = true;
             this.thirdChartCheckBox.Size = new System.Drawing.Size(203, 37);
             this.thirdChartCheckBox.TabIndex = 2;
-            this.thirdChartCheckBox.Text = "materialCheckBox4";
+            this.thirdChartCheckBox.Text = "y = exp(x) - 1";
             this.thirdChartCheckBox.UseAccentColor = false;
             this.thirdChartCheckBox.UseVisualStyleBackColor = true;
             // 

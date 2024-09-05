@@ -163,11 +163,11 @@
     <Compile Include="Graphs\Views\FormSixteenthQuestion.Designer.cs">
       <DependentUpon>FormSixteenthQuestion.cs</DependentUpon>
     </Compile>
-    <Compile Include="Graphs\Views\FormSIxthQuestion.cs">
+    <Compile Include="Graphs\Views\FormSixthQuestion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Graphs\Views\FormSIxthQuestion.Designer.cs">
-      <DependentUpon>FormSIxthQuestion.cs</DependentUpon>
+    <Compile Include="Graphs\Views\FormSixthQuestion.Designer.cs">
+      <DependentUpon>FormSixthQuestion.cs</DependentUpon>
     </Compile>
     <Compile Include="Graphs\Views\FormTenthQuestion.cs">
       <SubType>Form</SubType>
@@ -236,6 +236,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Graphs\Views\FormSecondQuestion.resx">
       <DependentUpon>FormSecondQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Graphs\Views\FormSixthQuestion.resx">
+      <DependentUpon>FormSixthQuestion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Graphs\Views\FormThirdQuestion.resx">
       <DependentUpon>FormThirdQuestion.cs</DependentUpon>
