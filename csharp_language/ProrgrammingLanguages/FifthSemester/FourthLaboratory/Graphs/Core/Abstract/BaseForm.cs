@@ -103,16 +103,30 @@ namespace DoAnPaint.Graphs.Core.Abstract
         /// <param name="modelIndex">Индекс, под которым находится нужный график</param>
         private void ChartCheckBox_CheckedChanged(CheckBox checkBox, int modelIndex)
         {
-            if (checkBox.Checked)
+            if (
+                    string.IsNullOrWhiteSpace(graphStartTextBox.Text) ||
+                    string.IsNullOrWhiteSpace(graphEndTextBox.Text) ||
+                    string.IsNullOrWhiteSpace(graphStepTextBox.Text)
+                )
             {
-                _presenter.SelectModel(_models[modelIndex]);
-            }
-            else
-            {
-                _presenter.DeselectModel(_models[modelIndex]);
+                MessageBox.Show("Заполните поля перед тем, как выбирать функцию");
+                checkBox.Checked = false;
             }
 
-            _presenter.Draw();
+            else
+            {
+                if (checkBox.Checked)
+                {
+                    _presenter.SelectModel(_models[modelIndex]);
+                }
+                else
+                {
+                    _presenter.DeselectModel(_models[modelIndex]);
+                }
+
+                _presenter.Draw();
+            }
+                
         }
 
         /// <summary>

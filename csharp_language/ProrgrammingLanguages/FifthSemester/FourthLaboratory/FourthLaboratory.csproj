@@ -103,6 +103,9 @@
     <Compile Include="Graphs\Models\SixthQuestion\FirstModel.cs" />
     <Compile Include="Graphs\Models\SixthQuestion\SecondModel.cs" />
     <Compile Include="Graphs\Models\SixthQuestion\ThirdModel.cs" />
+    <Compile Include="Graphs\Models\TenthQuestion\FirstModel.cs" />
+    <Compile Include="Graphs\Models\TenthQuestion\SecondModel.cs" />
+    <Compile Include="Graphs\Models\TenthQuestion\ThirdModel.cs" />
     <Compile Include="Graphs\Models\ThirdQuestion\FirstModel.cs" />
     <Compile Include="Graphs\Models\ThirdQuestion\SecondModel.cs" />
     <Compile Include="Graphs\Models\ThirdQuestion\ThirdModel.cs" />
@@ -228,11 +231,11 @@
     <Compile Include="Graphs\Views\FormTwentiethQuestion.Designer.cs">
       <DependentUpon>FormTwentiethQuestion.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainView.cs">
+    <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainView.Designer.cs">
-      <DependentUpon>MainView.cs</DependentUpon>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Paint\PaintView.cs">
       <SubType>Form</SubType>
@@ -293,8 +296,8 @@
     <EmbeddedResource Include="Graphs\Views\FormThirdQuestion.resx">
       <DependentUpon>FormThirdQuestion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainView.resx">
-      <DependentUpon>MainView.cs</DependentUpon>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Paint\PaintView.resx">
       <DependentUpon>PaintView.cs</DependentUpon>

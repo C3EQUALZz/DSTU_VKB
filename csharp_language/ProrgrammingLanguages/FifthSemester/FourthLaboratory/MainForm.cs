@@ -9,11 +9,11 @@ using DoAnPaint.Graphs.Presenters;
 
 namespace DoAnPaint
 {
-    public partial class MainView : Form, IMainView
+    public partial class MainForm : Form, IMainView
     {
         private readonly IMainPresenter _presenter;
 
-        public MainView()
+        public MainForm()
         {
             _presenter = new MainPresenter(this, new FormFactory(this));
 
