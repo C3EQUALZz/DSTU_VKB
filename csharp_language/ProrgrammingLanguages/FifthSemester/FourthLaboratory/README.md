@@ -46,3 +46,21 @@ namespace DoAnPaint.Graphs.Views
 - firstChartCheckBox
 - secondChartCheckBox
 - thirdChartCheckBox
+
+Все они представлены на риснуке ниже
+
+![Пример задания](https://github.com/user-attachments/assets/444527b4-8837-4cd4-9463-dac0427ffda2)
+
+---
+
+Paint я украл и адаптировал, переделав там немногое. Простите за говнокод там
+
+---
+
+Здесь я прилагаю фото, как я все реализовал
+
+![Paint](https://github.com/user-attachments/assets/91b86eb1-dae0-494a-a5f6-320978436715)
+
+![Graphics](https://github.com/user-attachments/assets/7a2970aa-3a1b-4f0a-bc4f-4d3311259eff)
+
+
