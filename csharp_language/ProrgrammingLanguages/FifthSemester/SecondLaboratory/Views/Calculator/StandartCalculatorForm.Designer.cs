@@ -678,7 +678,7 @@
             this.EqualsButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DeepSkyBlue;
             this.EqualsButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.SkyBlue;
             this.EqualsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.EqualsButton.ForeColor = System.Drawing.Color.White;
+            this.EqualsButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.EqualsButton.Location = new System.Drawing.Point(518, 620);
             this.EqualsButton.Margin = new System.Windows.Forms.Padding(5);
             this.EqualsButton.Name = "EqualsButton";
