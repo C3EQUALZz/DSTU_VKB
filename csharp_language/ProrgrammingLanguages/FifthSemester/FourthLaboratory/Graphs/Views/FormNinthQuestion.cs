@@ -1,18 +1,13 @@
-﻿using System;
+﻿using DoAnPaint.Graphs.Core.Abstract;
+using DoAnPaint.Graphs.Core.Interfaces;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using DoAnPaint.Graphs.Models.NinthQuestion;
 
 namespace DoAnPaint.Graphs.Views
 {
-    public partial class FormNinthQuestion : Form
+    public partial class FormNinthQuestion : BaseForm
     {
-        public FormNinthQuestion()
+        public FormNinthQuestion() : base(new List<IModel> { new FirstModel(), new SecondModel(), new ThirdModel() })
         {
             InitializeComponent();
         }

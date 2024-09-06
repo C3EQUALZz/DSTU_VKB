@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DoAnPaint.Graphs.Core.Interfaces;
+using System;
 
 namespace DoAnPaint.Graphs.Models.EighthQuestion
 {
-    internal class SecondModel
+    internal class SecondModel : IModel
     {
+        public string Name => "y = tan(x - pi / 4)";
+
+        public double Calculate(double x)
+        {
+            return Math.Tan(x - Math.PI / 4);
+        }
     }
 }
