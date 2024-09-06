@@ -8,9 +8,10 @@ namespace DoAnPaint.Graphs.Views
 {
     public partial class FormFirstQuestion : BaseForm
     {
-        public FormFirstQuestion() : base(new List<IModel> { new FirstModel(), new SecondModel(), new ThirdModel() })
+        public FormFirstQuestion()
         {
             InitializeComponent();
+            InitializeModels(new List<IModel> { new FirstModel(), new SecondModel(), new ThirdModel() });
         }
 
     }

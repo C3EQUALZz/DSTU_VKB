@@ -10,8 +10,8 @@ namespace DoAnPaint.Graphs.Core.Abstract
 {
     public partial class BaseForm : Form, IView
     {
-        private readonly IPresenter _presenter;
-        private readonly List<IModel> _models;
+        public IPresenter _presenter;
+        public List<IModel> _models;
 
         public double Step { get; set; }
         public double Start { get; set; }
@@ -40,7 +40,7 @@ namespace DoAnPaint.Graphs.Core.Abstract
             InitializeComponent();
         }
 
-        public BaseForm(List<IModel> models)
+        public void InitializeModels(List<IModel> models)
         {
             _models = models;
             _presenter = new BasePresenter(this, _models);

@@ -171,6 +171,7 @@
             this.materialButton1.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton1.UseAccentColor = false;
             this.materialButton1.UseVisualStyleBackColor = true;
+            this.materialButton1.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // materialButton2
             // 
@@ -187,10 +188,12 @@
             this.materialButton2.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton2.Size = new System.Drawing.Size(101, 36);
             this.materialButton2.TabIndex = 1;
+            this.materialButton2.Tag = "FormFirstQuestion";
             this.materialButton2.Text = "Вариант 1";
             this.materialButton2.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton2.UseAccentColor = false;
             this.materialButton2.UseVisualStyleBackColor = true;
+            this.materialButton2.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // materialButton3
             // 
@@ -207,10 +210,12 @@
             this.materialButton3.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton3.Size = new System.Drawing.Size(101, 36);
             this.materialButton3.TabIndex = 2;
+            this.materialButton3.Tag = "FormSecondQuestion";
             this.materialButton3.Text = "Вариант 2";
             this.materialButton3.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton3.UseAccentColor = false;
             this.materialButton3.UseVisualStyleBackColor = true;
+            this.materialButton3.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // materialButton4
             // 
@@ -227,10 +232,12 @@
             this.materialButton4.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton4.Size = new System.Drawing.Size(101, 36);
             this.materialButton4.TabIndex = 3;
+            this.materialButton4.Tag = "FormThirdQuestion";
             this.materialButton4.Text = "Вариант 3";
             this.materialButton4.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton4.UseAccentColor = false;
             this.materialButton4.UseVisualStyleBackColor = true;
+            this.materialButton4.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // materialButton5
             // 
@@ -247,10 +254,12 @@
             this.materialButton5.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton5.Size = new System.Drawing.Size(101, 36);
             this.materialButton5.TabIndex = 4;
+            this.materialButton5.Tag = "FormFourthQuestion";
             this.materialButton5.Text = "Вариант 4";
             this.materialButton5.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton5.UseAccentColor = false;
             this.materialButton5.UseVisualStyleBackColor = true;
+            this.materialButton5.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // materialButton6
             // 
@@ -267,10 +276,12 @@
             this.materialButton6.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton6.Size = new System.Drawing.Size(101, 36);
             this.materialButton6.TabIndex = 5;
+            this.materialButton6.Tag = "FormFifthQuestion";
             this.materialButton6.Text = "Вариант 5";
             this.materialButton6.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton6.UseAccentColor = false;
             this.materialButton6.UseVisualStyleBackColor = true;
+            this.materialButton6.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // materialButton7
             // 
@@ -287,10 +298,12 @@
             this.materialButton7.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton7.Size = new System.Drawing.Size(101, 36);
             this.materialButton7.TabIndex = 6;
+            this.materialButton7.Tag = "FormSixthQuestion";
             this.materialButton7.Text = "Вариант 6";
             this.materialButton7.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton7.UseAccentColor = false;
             this.materialButton7.UseVisualStyleBackColor = true;
+            this.materialButton7.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // materialButton8
             // 
@@ -307,10 +320,12 @@
             this.materialButton8.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton8.Size = new System.Drawing.Size(101, 36);
             this.materialButton8.TabIndex = 7;
+            this.materialButton8.Tag = "FormSeventhQuestion";
             this.materialButton8.Text = "Вариант 7";
             this.materialButton8.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton8.UseAccentColor = false;
             this.materialButton8.UseVisualStyleBackColor = true;
+            this.materialButton8.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // materialButton10
             // 
@@ -327,10 +342,12 @@
             this.materialButton10.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton10.Size = new System.Drawing.Size(101, 36);
             this.materialButton10.TabIndex = 9;
+            this.materialButton10.Tag = "FormEighthQuestion";
             this.materialButton10.Text = "Вариант 8";
             this.materialButton10.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton10.UseAccentColor = false;
             this.materialButton10.UseVisualStyleBackColor = true;
+            this.materialButton10.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // materialButton11
             // 
@@ -347,10 +364,12 @@
             this.materialButton11.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton11.Size = new System.Drawing.Size(101, 36);
             this.materialButton11.TabIndex = 10;
+            this.materialButton11.Tag = "FormNinthQuestion";
             this.materialButton11.Text = "Вариант 9";
             this.materialButton11.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton11.UseAccentColor = false;
             this.materialButton11.UseVisualStyleBackColor = true;
+            this.materialButton11.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // materialButton12
             // 
@@ -367,10 +386,12 @@
             this.materialButton12.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton12.Size = new System.Drawing.Size(110, 36);
             this.materialButton12.TabIndex = 11;
+            this.materialButton12.Tag = "FormTenthQuestion";
             this.materialButton12.Text = "Вариант 10";
             this.materialButton12.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton12.UseAccentColor = false;
             this.materialButton12.UseVisualStyleBackColor = true;
+            this.materialButton12.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // materialButton13
             // 
@@ -387,10 +408,12 @@
             this.materialButton13.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton13.Size = new System.Drawing.Size(110, 36);
             this.materialButton13.TabIndex = 12;
+            this.materialButton13.Tag = "FomEleventhQuestion";
             this.materialButton13.Text = "Вариант 11";
             this.materialButton13.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton13.UseAccentColor = false;
             this.materialButton13.UseVisualStyleBackColor = true;
+            this.materialButton13.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // materialButton14
             // 
@@ -407,10 +430,12 @@
             this.materialButton14.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton14.Size = new System.Drawing.Size(110, 36);
             this.materialButton14.TabIndex = 13;
+            this.materialButton14.Tag = "FormTwelfthQuestion";
             this.materialButton14.Text = "Вариант 12";
             this.materialButton14.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton14.UseAccentColor = false;
             this.materialButton14.UseVisualStyleBackColor = true;
+            this.materialButton14.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // materialButton15
             // 
@@ -427,10 +452,12 @@
             this.materialButton15.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton15.Size = new System.Drawing.Size(110, 36);
             this.materialButton15.TabIndex = 14;
+            this.materialButton15.Tag = "FormThirteenthQuestion";
             this.materialButton15.Text = "Вариант 13";
             this.materialButton15.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton15.UseAccentColor = false;
             this.materialButton15.UseVisualStyleBackColor = true;
+            this.materialButton15.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // materialButton16
             // 
@@ -447,10 +474,12 @@
             this.materialButton16.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton16.Size = new System.Drawing.Size(110, 36);
             this.materialButton16.TabIndex = 15;
+            this.materialButton16.Tag = "FormFourteenthQuestion";
             this.materialButton16.Text = "Вариант 14";
             this.materialButton16.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton16.UseAccentColor = false;
             this.materialButton16.UseVisualStyleBackColor = true;
+            this.materialButton16.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // materialButton17
             // 
@@ -467,10 +496,12 @@
             this.materialButton17.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton17.Size = new System.Drawing.Size(110, 36);
             this.materialButton17.TabIndex = 16;
+            this.materialButton17.Tag = "FormFifteenthQuestion";
             this.materialButton17.Text = "Вариант 15";
             this.materialButton17.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton17.UseAccentColor = false;
             this.materialButton17.UseVisualStyleBackColor = true;
+            this.materialButton17.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // materialButton18
             // 
@@ -487,10 +518,12 @@
             this.materialButton18.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton18.Size = new System.Drawing.Size(110, 36);
             this.materialButton18.TabIndex = 17;
+            this.materialButton18.Tag = "FormSixteenthQuestion";
             this.materialButton18.Text = "Вариант 16";
             this.materialButton18.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton18.UseAccentColor = false;
             this.materialButton18.UseVisualStyleBackColor = true;
+            this.materialButton18.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // materialButton19
             // 
@@ -507,10 +540,12 @@
             this.materialButton19.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton19.Size = new System.Drawing.Size(110, 36);
             this.materialButton19.TabIndex = 18;
+            this.materialButton19.Tag = "FormSeventeenthQuestion";
             this.materialButton19.Text = "Вариант 17";
             this.materialButton19.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton19.UseAccentColor = false;
             this.materialButton19.UseVisualStyleBackColor = true;
+            this.materialButton19.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // materialButton20
             // 
@@ -527,10 +562,12 @@
             this.materialButton20.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton20.Size = new System.Drawing.Size(110, 36);
             this.materialButton20.TabIndex = 19;
+            this.materialButton20.Tag = "FormEighteenthQuestion";
             this.materialButton20.Text = "Вариант 18";
             this.materialButton20.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton20.UseAccentColor = false;
             this.materialButton20.UseVisualStyleBackColor = true;
+            this.materialButton20.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // materialButton21
             // 
@@ -547,10 +584,12 @@
             this.materialButton21.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton21.Size = new System.Drawing.Size(110, 36);
             this.materialButton21.TabIndex = 20;
+            this.materialButton21.Tag = "FormNineteenthQuestion";
             this.materialButton21.Text = "Вариант 19";
             this.materialButton21.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton21.UseAccentColor = false;
             this.materialButton21.UseVisualStyleBackColor = true;
+            this.materialButton21.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // materialButton9
             // 
@@ -567,10 +606,12 @@
             this.materialButton9.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton9.Size = new System.Drawing.Size(110, 36);
             this.materialButton9.TabIndex = 8;
+            this.materialButton9.Tag = "FormTwentiethQuestion";
             this.materialButton9.Text = "Вариант 20";
             this.materialButton9.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton9.UseAccentColor = false;
             this.materialButton9.UseVisualStyleBackColor = true;
+            this.materialButton9.Click += new System.EventHandler(this.QuestionButton_Click);
             // 
             // MainView
             // 

@@ -71,9 +71,14 @@
     <Compile Include="Graphs\Core\Abstract\BaseForm.Designer.cs">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Graphs\Core\Helpers\FormFactory.cs" />
+    <Compile Include="Graphs\Core\Interfaces\IFormFactory.cs" />
+    <Compile Include="Graphs\Core\Interfaces\IMainPresenter.cs" />
+    <Compile Include="Graphs\Core\Interfaces\IMainView.cs" />
     <Compile Include="Graphs\Core\Interfaces\IModel.cs" />
     <Compile Include="Graphs\Core\Interfaces\IPresenter.cs" />
     <Compile Include="Graphs\Core\Interfaces\IView.cs" />
+    <Compile Include="Graphs\Core\MDIProperties.cs" />
     <Compile Include="Graphs\Models\EighthQuestion\FirstModel.cs" />
     <Compile Include="Graphs\Models\EighthQuestion\SecondModel.cs" />
     <Compile Include="Graphs\Models\EighthQuestion\ThirdModel.cs" />
@@ -86,6 +91,9 @@
     <Compile Include="Graphs\Models\FourthQuestion\FirstModel.cs" />
     <Compile Include="Graphs\Models\FourthQuestion\SecondModel.cs" />
     <Compile Include="Graphs\Models\FourthQuestion\ThirdModel.cs" />
+    <Compile Include="Graphs\Models\NinthQuestion\FirstModel.cs" />
+    <Compile Include="Graphs\Models\NinthQuestion\SecondModel.cs" />
+    <Compile Include="Graphs\Models\NinthQuestion\ThirdModel.cs" />
     <Compile Include="Graphs\Models\SecondQuestion\FirstModel.cs" />
     <Compile Include="Graphs\Models\SecondQuestion\SecondModel.cs" />
     <Compile Include="Graphs\Models\SecondQuestion\ThirdModel.cs" />
@@ -99,6 +107,7 @@
     <Compile Include="Graphs\Models\ThirdQuestion\SecondModel.cs" />
     <Compile Include="Graphs\Models\ThirdQuestion\ThirdModel.cs" />
     <Compile Include="Graphs\Presenters\BasePresenter.cs" />
+    <Compile Include="Graphs\Presenters\MainPresenter.cs" />
     <Compile Include="Graphs\Views\FormEighteenthQuestion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -213,6 +222,12 @@
     <Compile Include="Graphs\Views\FormTwelfthQuestion.Designer.cs">
       <DependentUpon>FormTwelfthQuestion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Graphs\Views\FormTwentiethQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormTwentiethQuestion.Designer.cs">
+      <DependentUpon>FormTwentiethQuestion.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -271,6 +286,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Graphs\Views\FormSixthQuestion.resx">
       <DependentUpon>FormSixthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Graphs\Views\FormTenthQuestion.resx">
+      <DependentUpon>FormTenthQuestion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Graphs\Views\FormThirdQuestion.resx">
       <DependentUpon>FormThirdQuestion.cs</DependentUpon>
