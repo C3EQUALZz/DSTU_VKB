@@ -1,11 +1,398 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A793DB4D-CCF3-4770-B850-4508D6E540EE}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DoAnPaint</RootNamespace>
+    <AssemblyName>DoAnPaint</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
-
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.WinForms, Version=0.9.7.1, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.WinForms.0.9.7.1\lib\net45\LiveCharts.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="ReaLTaiizor, Version=3.8.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ReaLTaiizor.3.8.0.7\lib\net48\ReaLTaiizor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphs\Core\Abstract\BaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Core\Abstract\BaseForm.Designer.cs">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Core\Helpers\FormFactory.cs" />
+    <Compile Include="Graphs\Core\Interfaces\IFormFactory.cs" />
+    <Compile Include="Graphs\Core\Interfaces\IMainPresenter.cs" />
+    <Compile Include="Graphs\Core\Interfaces\IMainView.cs" />
+    <Compile Include="Graphs\Core\Interfaces\IModel.cs" />
+    <Compile Include="Graphs\Core\Interfaces\IPresenter.cs" />
+    <Compile Include="Graphs\Core\Interfaces\IView.cs" />
+    <Compile Include="Graphs\Core\MDIProperties.cs" />
+    <Compile Include="Graphs\Models\EighthQuestion\FirstModel.cs" />
+    <Compile Include="Graphs\Models\EighthQuestion\SecondModel.cs" />
+    <Compile Include="Graphs\Models\EighthQuestion\ThirdModel.cs" />
+    <Compile Include="Graphs\Models\FifthQuestion\FirstModel.cs" />
+    <Compile Include="Graphs\Models\FifthQuestion\SecondModel.cs" />
+    <Compile Include="Graphs\Models\FifthQuestion\ThirdModel.cs" />
+    <Compile Include="Graphs\Models\FirstQuestion\FirstModel.cs" />
+    <Compile Include="Graphs\Models\FirstQuestion\SecondModel.cs" />
+    <Compile Include="Graphs\Models\FirstQuestion\ThirdModel.cs" />
+    <Compile Include="Graphs\Models\FourthQuestion\FirstModel.cs" />
+    <Compile Include="Graphs\Models\FourthQuestion\SecondModel.cs" />
+    <Compile Include="Graphs\Models\FourthQuestion\ThirdModel.cs" />
+    <Compile Include="Graphs\Models\NinthQuestion\FirstModel.cs" />
+    <Compile Include="Graphs\Models\NinthQuestion\SecondModel.cs" />
+    <Compile Include="Graphs\Models\NinthQuestion\ThirdModel.cs" />
+    <Compile Include="Graphs\Models\SecondQuestion\FirstModel.cs" />
+    <Compile Include="Graphs\Models\SecondQuestion\SecondModel.cs" />
+    <Compile Include="Graphs\Models\SecondQuestion\ThirdModel.cs" />
+    <Compile Include="Graphs\Models\SeventhQuestion\FirstModel.cs" />
+    <Compile Include="Graphs\Models\SeventhQuestion\SecondModel.cs" />
+    <Compile Include="Graphs\Models\SeventhQuestion\ThirdModel.cs" />
+    <Compile Include="Graphs\Models\SixthQuestion\FirstModel.cs" />
+    <Compile Include="Graphs\Models\SixthQuestion\SecondModel.cs" />
+    <Compile Include="Graphs\Models\SixthQuestion\ThirdModel.cs" />
+    <Compile Include="Graphs\Models\TenthQuestion\FirstModel.cs" />
+    <Compile Include="Graphs\Models\TenthQuestion\SecondModel.cs" />
+    <Compile Include="Graphs\Models\TenthQuestion\ThirdModel.cs" />
+    <Compile Include="Graphs\Models\ThirdQuestion\FirstModel.cs" />
+    <Compile Include="Graphs\Models\ThirdQuestion\SecondModel.cs" />
+    <Compile Include="Graphs\Models\ThirdQuestion\ThirdModel.cs" />
+    <Compile Include="Graphs\Presenters\BasePresenter.cs" />
+    <Compile Include="Graphs\Presenters\MainPresenter.cs" />
+    <Compile Include="Graphs\Views\FormEighteenthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormEighteenthQuestion.Designer.cs">
+      <DependentUpon>FormEighteenthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormEighthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormEighthQuestion.Designer.cs">
+      <DependentUpon>FormEighthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormEleventhQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormEleventhQuestion.Designer.cs">
+      <DependentUpon>FormEleventhQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormFifteenthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormFifteenthQuestion.Designer.cs">
+      <DependentUpon>FormFifteenthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormFifthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormFifthQuestion.Designer.cs">
+      <DependentUpon>FormFifthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormFirstQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormFirstQuestion.Designer.cs">
+      <DependentUpon>FormFirstQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormFourteenthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormFourteenthQuestion.Designer.cs">
+      <DependentUpon>FormFourteenthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormFourthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormFourthQuestion.Designer.cs">
+      <DependentUpon>FormFourthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormNineteenthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormNineteenthQuestion.Designer.cs">
+      <DependentUpon>FormNineteenthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormNinthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormNinthQuestion.Designer.cs">
+      <DependentUpon>FormNinthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormSecondQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormSecondQuestion.Designer.cs">
+      <DependentUpon>FormSecondQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormSeventeenthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormSeventeenthQuestion.Designer.cs">
+      <DependentUpon>FormSeventeenthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormSeventhQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormSeventhQuestion.Designer.cs">
+      <DependentUpon>FormSeventhQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormSixteenthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormSixteenthQuestion.Designer.cs">
+      <DependentUpon>FormSixteenthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormSixthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormSixthQuestion.Designer.cs">
+      <DependentUpon>FormSixthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormTenthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormTenthQuestion.Designer.cs">
+      <DependentUpon>FormTenthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormThirdQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormThirdQuestion.Designer.cs">
+      <DependentUpon>FormThirdQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormThirteenthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormThirteenthQuestion.Designer.cs">
+      <DependentUpon>FormThirteenthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormTwelfthQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormTwelfthQuestion.Designer.cs">
+      <DependentUpon>FormTwelfthQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\Views\FormTwentiethQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\Views\FormTwentiethQuestion.Designer.cs">
+      <DependentUpon>FormTwentiethQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Paint\PaintView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Paint\PaintView.Designer.cs">
+      <DependentUpon>PaintView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Paint\Model\DataManager.cs" />
+    <Compile Include="Paint\Model\GroupShape.cs" />
+    <Compile Include="Paint\Model\MCurve.cs" />
+    <Compile Include="Paint\Model\MEllipse.cs" />
+    <Compile Include="Paint\Model\MLine.cs" />
+    <Compile Include="Paint\Model\MPen.cs" />
+    <Compile Include="Paint\Model\MPolygon.cs" />
+    <Compile Include="Paint\Model\MRectangle.cs" />
+    <Compile Include="Paint\Model\Shape.cs" />
+    <Compile Include="Paint\Presenter\Alter\IPresenterAlter.cs" />
+    <Compile Include="Paint\Presenter\Alter\PresenterAlterImp.cs" />
+    <Compile Include="Paint\Presenter\Draws\IPresenterDraw.cs" />
+    <Compile Include="Paint\Presenter\Draws\PresenterDrawImp.cs" />
+    <Compile Include="Paint\Presenter\Updates\IPresenterUpdate.cs" />
+    <Compile Include="Paint\Presenter\Updates\PresenterUpdateImp.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Paint\Utils\CurrentShapeStatus.cs" />
+    <Compile Include="Paint\Utils\FindRegion.cs" />
+    <Compile Include="Paint\View\IViewPaint.cs" />
+    <EmbeddedResource Include="Graphs\Core\Abstract\BaseForm.resx">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Graphs\Views\FormEighthQuestion.resx">
+      <DependentUpon>FormEighthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Graphs\Views\FormFifthQuestion.resx">
+      <DependentUpon>FormFifthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Graphs\Views\FormFirstQuestion.resx">
+      <DependentUpon>FormFirstQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Graphs\Views\FormFourthQuestion.resx">
+      <DependentUpon>FormFourthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Graphs\Views\FormNinthQuestion.resx">
+      <DependentUpon>FormNinthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Graphs\Views\FormSecondQuestion.resx">
+      <DependentUpon>FormSecondQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Graphs\Views\FormSeventhQuestion.resx">
+      <DependentUpon>FormSeventhQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Graphs\Views\FormSixthQuestion.resx">
+      <DependentUpon>FormSixthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Graphs\Views\FormTenthQuestion.resx">
+      <DependentUpon>FormTenthQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Graphs\Views\FormThirdQuestion.resx">
+      <DependentUpon>FormThirdQuestion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Paint\PaintView.resx">
+      <DependentUpon>PaintView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_edit_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_curve.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_ellipse.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_eraser.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_fill.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_group.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_line.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_pen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_polygon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_rectangle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_select.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_ungroup.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_apple.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_about.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_clear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_location.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>
