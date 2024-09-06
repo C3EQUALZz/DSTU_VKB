@@ -123,7 +123,7 @@ namespace DoAnPaint.Model
         /// <returns></returns>
         public virtual int isHitControlsPoint(Point p)
         {
-            List<Point> points = FindRegion.getControlPoints(this);
+            List<Point> points = FindRegion.GetControlPoints(this);
             for (int i = 0; i < 8; i++)
             {
                 GraphicsPath path = new GraphicsPath();

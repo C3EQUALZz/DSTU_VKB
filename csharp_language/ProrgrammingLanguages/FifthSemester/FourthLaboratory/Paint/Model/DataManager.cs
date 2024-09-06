@@ -1,87 +1,58 @@
-﻿using System;
+﻿using DoAnPaint.Utils;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 
-using DoAnPaint.Model;
-using DoAnPaint.Utils;
 
-
-/*
- * Created by Nguyen Hoang Thinh 17110372 at 19/04/2019
- */
 namespace DoAnPaint.Model
 {
     /// <summary>
-    /// Lớp quản lý các đối tượng hỗ trợ để vẽ hình
+    /// Класс управляет вспомогательными объектами для рисования фигур.
     /// </summary>
     public class DataManager
     {
         public static DataManager instance;
 
-        //TODO: chứa danh sách các hình vẽ
-        public List<Shape> shapeList { get; set; }
+        public List<Shape> ShapeList { get; set; }
 
-        //TODO: chứa hình được chọn hiện tại
-        public Shape shapeToMove { get; set; }
+        public Shape ShapeToMove { get; set; }
 
-        //TODO: vẽ vùng được chọn có kích thước như đối tượng này 
-        public System.Drawing.Rectangle rectangleRegion;
+        public Rectangle rectangleRegion;
 
-        //TODO: thiết lập trạng thái click chuột xuống của người dùng
-        public bool isMouseDown { get; set; }
+        public bool IsMouseDown { get; set; }
 
-        //TODO: thiết lập trạng thái di chuyển hình của người dùng
-        public bool isMovingShape { get; set; }
+        public bool IsMovingShape { get; set; }
 
-        //TODO: thiết lập trạng thái di chuyển chuột của người dùng
-        public bool isMovingMouse { get; set; }
+        public bool IsMovingMouse { get; set; }
 
-        //TODO: thiết lập trạng thái cho biết có phải người dùng đang vẽ đường cong hay không
-        public bool isDrawingCurve { get; set; }
+        public bool IsDrawingCurve { get; set; }
 
-        //TODO: thiết lập trạng thái cho biết có phải người dùng đang vẽ đa giác hay không
-        public bool isDrawingPolygon { get; set; }
+        public bool IsDrawingPolygon { get; set; }
 
-        //TODO: thiết lập trạng thái cho biết có phải người dùng đang vẽ pencil hay không
-        public bool isDrawingPen { get; set; }
+        public bool IsDrawingPen { get; set; }
 
-        //TODO: thiết lập trạng thái cho biết có phải người dùng đang chọn chế độ eraser hay không
-        public bool isDrawingEraser { get; set; }
+        public bool IsDrawingEraser { get; set; }
 
-        //TODO: thiết lập trạng thái cho biết có phải người dùng đang chọn chế độ fill hay không
-        public bool isFill { get; set; }
+        public bool IsFill { get; set; }
 
-        //TODO: thiết lập trạng thái cho biết có phải người dùng đã lưu hình hay chưa
-        public bool isSave{ get; set; }
+        public bool IsSave{ get; set; }
 
-        //TODO: thiết lập trạng thái cho biết có background hiện tại được vẽ hay là chưa
-        public bool isNotNone{ get; set; }
+        public bool IsNotNone{ get; set; }
 
-        //TODO: thiết lập trạng thái cho biết có phải người dùng chọn tất cả các hình hay là không
-        public bool isSelectAll { get; set; }
 
-        //TODO: cho biết điểm điều khiển nào người dùng muốn resize kích thước
-        public int pointToResize { get; set; }
+        public int PointToResize { get; set; }
 
-        //TODO: cho biết trạng thái hình hiện tại là hình nào
-        public CurrentShapeStatus currentShape { get; set; }
+        public CurrentShapeStatus CurrentShape { get; set; }
 
-        //TODO: cho biết vị trí con trỏ chuột hiện tại
-        public Point cursorCurrent { get; set; }
+        public Point CursorCurrent { get; set; }
 
-        //TODO: chứa danh sách các hình
-        public Color colorCurrent { get; set; }
+        public Color ColorCurrent { get; set; }
 
-        //TODO: chứa danh sách các hình
-        public int lineSize { get; set; }
+        public int LineSize { get; set; }
 
         private DataManager()
         {
-            shapeList = new List<Shape>();
-            pointToResize = -1;
+            ShapeList = new List<Shape>();
+            PointToResize = -1;
         }
 
         public static DataManager getInstance()
@@ -91,48 +62,47 @@ namespace DoAnPaint.Model
         }
 
         /// <summary>
-        /// Phương thức cập nhật điểm cuối của hình vẽ
+        /// Метод обновления конечной точки чертежа
         /// </summary>
-        /// <param name="p">cập nhật điểm cuối = p</param>
-        public void updatePointTail(Point p)
+        /// <param name="p">конечная точка обновления</param>
+        public void UpdatePointTail(Point p)
         {
-            shapeList[shapeList.Count - 1].pointTail = p;
+            ShapeList[ShapeList.Count - 1].pointTail = p;
         }
 
         /// <summary>
-        /// Thêm đối tượng line vào danh sách
+        /// =Добавьте объект в список (для дальнейшего выделения)
         /// </summary>
-        /// <param name="line">đối tượng line</param>
-        public void addEntity(Shape shape)
+        /// <param name="line">Сущность (форма), которую мы хотим добавить в набор объектов</param>
+        public void AddEntity(Shape shape)
         {
-            shapeList.Add(shape);
+            ShapeList.Add(shape);
         }
 
         /// <summary>
-        /// Phương thức đặt trạng thái được chọn của tất cả các hình về false
+        /// Метод устанавливает для выбранного состояния всех фигур значение false
         /// </summary>
-        public void offAllShapeSelected()
+        public void OffAllShapeSelected()
         {
-            shapeList.ForEach(shape => shape.isSelected = false);
+            ShapeList.ForEach(shape => shape.isSelected = false);
         }
 
         /// <summary>
-        /// Phương thức tính khoảng cách giữa điểm y và x
+        /// Метод расчета расстояния между точками y и x
         /// </summary>
-        /// <param name="x">điểm x</param>
-        /// <param name="y">điểm y</param>
+        /// <param name="x">кооррдианты точки x</param>
+        /// <param name="y">координаты точки y</param>
         /// <returns></returns>
-        public Point distanceXY(Point x, Point y)
+        public Point DistanceXY(Point x, Point y)
         {
             return new Point(y.X - x.X, y.Y - x.Y);
         }
 
         /// <summary>
-        /// Phương thức cập nhật lại một vùng là hình chữ nhật bao quanh hình vẽ
-        /// ở chế độ chọn hình
+        /// Метод обновляет область, представляющую собой прямоугольник, окружающий рисунок
+        /// в режиме выбора изображения
         /// </summary>
-        /// <param name="p"></param>
-        public void updateRectangleRegion(Point p)
+        public void UpdateRectangleRegion(Point p)
         {         
             rectangleRegion.Width = p.X - rectangleRegion.X;
             rectangleRegion.Height = p.Y - rectangleRegion.Y;

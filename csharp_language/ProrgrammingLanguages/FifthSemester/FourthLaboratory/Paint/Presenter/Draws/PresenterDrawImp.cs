@@ -17,27 +17,27 @@ using DoAnPaint.Model;
  */
 namespace DoAnPaint.Presenter
 {
-    class PresenterDrawImp : PresenterDraw
+    class PresenterDrawImp : IPresenterDraw
     {
-        ViewPaint viewPaint;
+        IViewPaint viewPaint;
 
         DataManager dataManager;
 
-        public PresenterDrawImp(ViewPaint viewPaint)
+        public PresenterDrawImp(IViewPaint viewPaint)
         {
             this.viewPaint = viewPaint;
             dataManager = DataManager.getInstance();
         }
 
-        public void onClickMouseDown(Point p)
+        public void OnClickMouseDown(Point p)
         {
-            dataManager.isSave = false;
-            dataManager.isNotNone = true;
-            if (dataManager.currentShape.Equals(CurrentShapeStatus.Void))
+            dataManager.IsSave = false;
+            dataManager.IsNotNone = true;
+            if (dataManager.CurrentShape.Equals(CurrentShapeStatus.Void))
             {
                 if (!(Control.ModifierKeys == Keys.Control))
-                    dataManager.offAllShapeSelected();
-                viewPaint.refreshDrawing();
+                    dataManager.OffAllShapeSelected();
+                viewPaint.RefreshDrawing();
                 handleClickToSelect(p);
             }
             else
@@ -48,232 +48,232 @@ namespace DoAnPaint.Presenter
 
         public void handleClickToSelect(Point p)
         {
-            for (int i = 0; i < dataManager.shapeList.Count; ++i)
+            for (int i = 0; i < dataManager.ShapeList.Count; ++i)
             {
-                if (!(dataManager.shapeList[i] is MPen))
-                    dataManager.pointToResize = dataManager.shapeList[i].isHitControlsPoint(p);
-                if (dataManager.pointToResize != -1)
+                if (!(dataManager.ShapeList[i] is MPen))
+                    dataManager.PointToResize = dataManager.ShapeList[i].isHitControlsPoint(p);
+                if (dataManager.PointToResize != -1)
                 {
-                    dataManager.shapeList[i].changePoint(dataManager.pointToResize);
-                    dataManager.shapeToMove = dataManager.shapeList[i];
+                    dataManager.ShapeList[i].changePoint(dataManager.PointToResize);
+                    dataManager.ShapeToMove = dataManager.ShapeList[i];
                     break;
                 }
-                else if (dataManager.shapeList[i].isHit(p))
+                else if (dataManager.ShapeList[i].isHit(p))
                 {
-                    dataManager.shapeToMove = dataManager.shapeList[i];
-                    dataManager.shapeList[i].isSelected = true;
-                    if (dataManager.shapeList[i] is MPen)
+                    dataManager.ShapeToMove = dataManager.ShapeList[i];
+                    dataManager.ShapeList[i].isSelected = true;
+                    if (dataManager.ShapeList[i] is MPen)
                     {
-                        if (((MPen)dataManager.shapeList[i]).isEraser)
+                        if (((MPen)dataManager.ShapeList[i]).isEraser)
                         {
-                            dataManager.shapeList[i].isSelected = false;
-                            dataManager.shapeToMove = null;
+                            dataManager.ShapeList[i].isSelected = false;
+                            dataManager.ShapeToMove = null;
                         }
                     }
                     break;
                 }
             }
 
-            if (dataManager.pointToResize != -1)
+            if (dataManager.PointToResize != -1)
             {
-                dataManager.cursorCurrent = p;
+                dataManager.CursorCurrent = p;
             }
-            else if (dataManager.shapeToMove != null)
+            else if (dataManager.ShapeToMove != null)
             {
-                dataManager.isMovingShape = true;
-                dataManager.cursorCurrent = p;
+                dataManager.IsMovingShape = true;
+                dataManager.CursorCurrent = p;
             }
             else
             {
-                dataManager.isMovingMouse = true;
+                dataManager.IsMovingMouse = true;
                 dataManager.rectangleRegion = new Rectangle(p, new Size(0, 0));
             }
         }
 
         private void handleClickToDraw(Point p)
         {
-            dataManager.isMouseDown = true;
-            dataManager.offAllShapeSelected();
-            if (dataManager.currentShape.Equals(CurrentShapeStatus.Line))
+            dataManager.IsMouseDown = true;
+            dataManager.OffAllShapeSelected();
+            if (dataManager.CurrentShape.Equals(CurrentShapeStatus.Line))
             {
-                dataManager.addEntity(new MLine
+                dataManager.AddEntity(new MLine
                 {
                     pointHead = p,
                     pointTail = p,
-                    contourWidth = dataManager.lineSize,
-                    color = dataManager.colorCurrent,
-                    isFill = dataManager.isFill
+                    contourWidth = dataManager.LineSize,
+                    color = dataManager.ColorCurrent,
+                    isFill = dataManager.IsFill
                 });
             }
-            else if (dataManager.currentShape.Equals(CurrentShapeStatus.Rectangle))
+            else if (dataManager.CurrentShape.Equals(CurrentShapeStatus.Rectangle))
             {
-                dataManager.addEntity(new MRectangle
+                dataManager.AddEntity(new MRectangle
                 {
                     pointHead = p,
                     pointTail = p,
-                    contourWidth = dataManager.lineSize,
-                    color = dataManager.colorCurrent,
-                    isFill = dataManager.isFill
+                    contourWidth = dataManager.LineSize,
+                    color = dataManager.ColorCurrent,
+                    isFill = dataManager.IsFill
                 });
             }
-            else if (dataManager.currentShape.Equals(CurrentShapeStatus.Ellipse))
+            else if (dataManager.CurrentShape.Equals(CurrentShapeStatus.Ellipse))
             {
-                dataManager.addEntity(new MEllipse
+                dataManager.AddEntity(new MEllipse
                 {
                     pointHead = p,
                     pointTail = p,
-                    contourWidth = dataManager.lineSize,
-                    color = dataManager.colorCurrent,
-                    isFill = dataManager.isFill
+                    contourWidth = dataManager.LineSize,
+                    color = dataManager.ColorCurrent,
+                    isFill = dataManager.IsFill
                 });
             }
 
-            else if (dataManager.currentShape.Equals(CurrentShapeStatus.Curve))
+            else if (dataManager.CurrentShape.Equals(CurrentShapeStatus.Curve))
             {
-                if (!dataManager.isDrawingCurve)
+                if (!dataManager.IsDrawingCurve)
                 {
-                    dataManager.isDrawingCurve = true;
+                    dataManager.IsDrawingCurve = true;
                     MCurve bezier = new MCurve
                     {
-                        color = dataManager.colorCurrent,
-                        contourWidth = dataManager.lineSize,
-                        isFill = dataManager.isFill
+                        color = dataManager.ColorCurrent,
+                        contourWidth = dataManager.LineSize,
+                        isFill = dataManager.IsFill
                     };
                     bezier.points.Add(p);
                     bezier.points.Add(p);
-                    dataManager.shapeList.Add(bezier);
+                    dataManager.ShapeList.Add(bezier);
                 }
                 else
                 {
-                    MCurve bezier = dataManager.shapeList[dataManager.shapeList.Count - 1] as MCurve;
+                    MCurve bezier = dataManager.ShapeList[dataManager.ShapeList.Count - 1] as MCurve;
                     bezier.points[bezier.points.Count - 1] = p;
                     bezier.points.Add(p);
                 }
-                dataManager.isMouseDown = false;
+                dataManager.IsMouseDown = false;
             }
-            else if (dataManager.currentShape.Equals(CurrentShapeStatus.Polygon))
+            else if (dataManager.CurrentShape.Equals(CurrentShapeStatus.Polygon))
             {
-                if (!dataManager.isDrawingPolygon)
+                if (!dataManager.IsDrawingPolygon)
                 {
-                    dataManager.isDrawingPolygon = true;
+                    dataManager.IsDrawingPolygon = true;
                     MPolygon polygon = new MPolygon
                     {
-                        color = dataManager.colorCurrent,
-                        contourWidth = dataManager.lineSize,
-                        isFill = dataManager.isFill
+                        color = dataManager.ColorCurrent,
+                        contourWidth = dataManager.LineSize,
+                        isFill = dataManager.IsFill
 
                     };
                     polygon.points.Add(p);
                     polygon.points.Add(p);
-                    dataManager.shapeList.Add(polygon);
+                    dataManager.ShapeList.Add(polygon);
                 }
                 else
                 {
-                    MPolygon polygon = dataManager.shapeList[dataManager.shapeList.Count - 1] as MPolygon;
+                    MPolygon polygon = dataManager.ShapeList[dataManager.ShapeList.Count - 1] as MPolygon;
                     polygon.points[polygon.points.Count - 1] = p;
                     polygon.points.Add(p);
                 }
-                dataManager.isMouseDown = false;
+                dataManager.IsMouseDown = false;
             }
-            else if (dataManager.currentShape.Equals(CurrentShapeStatus.Pen))
+            else if (dataManager.CurrentShape.Equals(CurrentShapeStatus.Pen))
             {
-                dataManager.isDrawingPen = true;
+                dataManager.IsDrawingPen = true;
                 MPen pen = new MPen
                 {
-                    color = dataManager.colorCurrent,
-                    contourWidth = dataManager.lineSize,
-                    isFill = dataManager.isFill
+                    color = dataManager.ColorCurrent,
+                    contourWidth = dataManager.LineSize,
+                    isFill = dataManager.IsFill
                 };
                 pen.points.Add(p);
                 pen.points.Add(p);
-                dataManager.shapeList.Add(pen);
+                dataManager.ShapeList.Add(pen);
             }
-            else if (dataManager.currentShape.Equals(CurrentShapeStatus.Eraser))
+            else if (dataManager.CurrentShape.Equals(CurrentShapeStatus.Eraser))
             {
-                dataManager.isDrawingEraser = true;
+                dataManager.IsDrawingEraser = true;
                 MPen pen = new MPen
                 {
                     color = Color.White,
-                    contourWidth = dataManager.lineSize
+                    contourWidth = dataManager.LineSize
                 };
                 pen.isEraser = true;
                 pen.points.Add(p);
                 pen.points.Add(p);
-                dataManager.shapeList.Add(pen);
+                dataManager.ShapeList.Add(pen);
             }
         }
 
-        public void onClickMouseMove(Point p)
+        public void OnClickMouseMove(Point p)
         {
-            if (dataManager.isMouseDown)
+            if (dataManager.IsMouseDown)
             {
-                dataManager.updatePointTail(p);
-                viewPaint.refreshDrawing();
+                dataManager.UpdatePointTail(p);
+                viewPaint.RefreshDrawing();
             }
-            else if (dataManager.pointToResize != -1)
+            else if (dataManager.PointToResize != -1)
             {
-                if (!(dataManager.shapeToMove is GroupShape) && !(dataManager.shapeToMove is MPen))
+                if (!(dataManager.ShapeToMove is GroupShape) && !(dataManager.ShapeToMove is MPen))
                 {
-                    viewPaint.movingControlPoint(dataManager.shapeToMove,
-                        p, dataManager.cursorCurrent,
-                        dataManager.pointToResize);
-                    dataManager.cursorCurrent = p;
+                    viewPaint.MovingControlPoint(dataManager.ShapeToMove,
+                        p, dataManager.CursorCurrent,
+                        dataManager.PointToResize);
+                    dataManager.CursorCurrent = p;
                 }
 
             }
-            else if (dataManager.isMovingShape)
+            else if (dataManager.IsMovingShape)
             {
-                viewPaint.movingShape(dataManager.shapeToMove, dataManager.distanceXY(dataManager.cursorCurrent, p));
-                dataManager.cursorCurrent = p;
+                viewPaint.MovingShape(dataManager.ShapeToMove, dataManager.DistanceXY(dataManager.CursorCurrent, p));
+                dataManager.CursorCurrent = p;
             }
-            else if (dataManager.currentShape.Equals(CurrentShapeStatus.Void))
+            else if (dataManager.CurrentShape.Equals(CurrentShapeStatus.Void))
             {
-                if (dataManager.isMovingMouse)
+                if (dataManager.IsMovingMouse)
                 {
-                    dataManager.updateRectangleRegion(p);
-                    viewPaint.refreshDrawing();
+                    dataManager.UpdateRectangleRegion(p);
+                    viewPaint.RefreshDrawing();
                 }
                 else
                 {
 
                     //TODO: Kiếm tra xem trong danh sách tồn tại hình nào chứa điểm p không
-                    if (dataManager.shapeList.Exists(shape => isInside(shape, p)))
+                    if (dataManager.ShapeList.Exists(shape => isInside(shape, p)))
                     {
-                        viewPaint.setCursor(Cursors.SizeAll);
+                        viewPaint.SetCursor(Cursors.SizeAll);
                     }
                     else
                     {
-                        viewPaint.setCursor(Cursors.Default);
+                        viewPaint.SetCursor(Cursors.Default);
                     }
 
                 }
             }
 
-            if (dataManager.isDrawingCurve)
+            if (dataManager.IsDrawingCurve)
             {
-                MCurve bezier = dataManager.shapeList[dataManager.shapeList.Count - 1] as MCurve;
+                MCurve bezier = dataManager.ShapeList[dataManager.ShapeList.Count - 1] as MCurve;
                 bezier.points[bezier.points.Count - 1] = p;
-                viewPaint.refreshDrawing();
+                viewPaint.RefreshDrawing();
             }
-            else if (dataManager.isDrawingPolygon)
+            else if (dataManager.IsDrawingPolygon)
             {
-                MPolygon polygon = dataManager.shapeList[dataManager.shapeList.Count - 1] as MPolygon;
+                MPolygon polygon = dataManager.ShapeList[dataManager.ShapeList.Count - 1] as MPolygon;
                 polygon.points[polygon.points.Count - 1] = p;
-                viewPaint.refreshDrawing();
+                viewPaint.RefreshDrawing();
             }
-            else if (dataManager.isDrawingPen)
+            else if (dataManager.IsDrawingPen)
             {
-                MPen pen = dataManager.shapeList[dataManager.shapeList.Count - 1] as MPen;
+                MPen pen = dataManager.ShapeList[dataManager.ShapeList.Count - 1] as MPen;
                 pen.points.Add(p);
-                FindRegion.setPointHeadTail(pen);
-                viewPaint.refreshDrawing();
+                FindRegion.SetPointHeadTail(pen);
+                viewPaint.RefreshDrawing();
             }
-            else if (dataManager.isDrawingEraser)
+            else if (dataManager.IsDrawingEraser)
             {
-                MPen pen = dataManager.shapeList[dataManager.shapeList.Count - 1] as MPen;
+                MPen pen = dataManager.ShapeList[dataManager.ShapeList.Count - 1] as MPen;
                 pen.points.Add(p);
-                FindRegion.setPointHeadTail(pen);
-                viewPaint.refreshDrawing();
+                FindRegion.SetPointHeadTail(pen);
+                viewPaint.RefreshDrawing();
             }
         }
 
@@ -288,63 +288,63 @@ namespace DoAnPaint.Presenter
             return shape.isHit(p);
         }
 
-        public void onClickMouseUp()
+        public void OnClickMouseUp()
         {
-            dataManager.isMouseDown = false;
-            if (dataManager.pointToResize != -1)
+            dataManager.IsMouseDown = false;
+            if (dataManager.PointToResize != -1)
             {
-                dataManager.pointToResize = -1;
-                dataManager.shapeToMove = null;
+                dataManager.PointToResize = -1;
+                dataManager.ShapeToMove = null;
             }
-            else if (dataManager.isMovingShape)
+            else if (dataManager.IsMovingShape)
             {
-                dataManager.isMovingShape = false;
-                dataManager.shapeToMove = null;
+                dataManager.IsMovingShape = false;
+                dataManager.ShapeToMove = null;
             }
-            else if (dataManager.isMovingMouse)
+            else if (dataManager.IsMovingMouse)
             {
-                dataManager.isMovingMouse = false;
-                dataManager.offAllShapeSelected();
+                dataManager.IsMovingMouse = false;
+                dataManager.OffAllShapeSelected();
 
                 //TODO: kiểm tra khi kéo chuột chọn một vùng thì có hình nào tồn tại bên
                 //trong hay là không, nếu có thì hình đó được chọn
-                for (int i = 0; i < dataManager.shapeList.Count; ++i)
+                for (int i = 0; i < dataManager.ShapeList.Count; ++i)
                 {
-                    if (dataManager.shapeList[i].isInRegion(dataManager.rectangleRegion))
+                    if (dataManager.ShapeList[i].isInRegion(dataManager.rectangleRegion))
                     {
-                        dataManager.shapeList[i].isSelected = true;
+                        dataManager.ShapeList[i].isSelected = true;
                     }
-                    if (dataManager.shapeList[i] is MPen)
+                    if (dataManager.ShapeList[i] is MPen)
                     {
-                        MPen pen = dataManager.shapeList[i] as MPen;
+                        MPen pen = dataManager.ShapeList[i] as MPen;
                         if (pen.isEraser)
-                            dataManager.shapeList[i].isSelected = false;
+                            dataManager.ShapeList[i].isSelected = false;
                     }
                 }
-                viewPaint.refreshDrawing();
+                viewPaint.RefreshDrawing();
             }
-            if (dataManager.isDrawingPen)
+            if (dataManager.IsDrawingPen)
             {
-                dataManager.isDrawingPen = false;
+                dataManager.IsDrawingPen = false;
             }
-            else if (dataManager.isDrawingEraser)
+            else if (dataManager.IsDrawingEraser)
             {
-                dataManager.isDrawingEraser = false;
+                dataManager.IsDrawingEraser = false;
             }
         }
 
-        public void getDrawing(Graphics g)
+        public void GetDrawing(Graphics g)
         {
-            dataManager.shapeList.ForEach(shape =>
+            dataManager.ShapeList.ForEach(shape =>
             {
-                viewPaint.setDrawing(shape, g);
+                viewPaint.SetDrawing(shape, g);
                 if (shape.isSelected)
                 {
                     drawRegionForShape(shape, g);
                 }
 
             });
-            if (dataManager.isMovingMouse)
+            if (dataManager.IsMovingMouse)
             {
                 using (Pen pen = new Pen(Color.DarkBlue, 1)
                 {
@@ -352,14 +352,14 @@ namespace DoAnPaint.Presenter
                     DashStyle = DashStyle.Custom
                 })
                 {
-                    viewPaint.setDrawingRegionRectangle(pen, dataManager.rectangleRegion, g);
+                    viewPaint.SetDrawingRegionRectangle(pen, dataManager.rectangleRegion, g);
                 }
 
             }
-            if (dataManager.pointToResize != -1)
+            if (dataManager.PointToResize != -1)
             {
-                if (dataManager.shapeToMove is GroupShape) return;
-                drawRegionForShape(dataManager.shapeToMove, g);
+                if (dataManager.ShapeToMove is GroupShape) return;
+                drawRegionForShape(dataManager.ShapeToMove, g);
             }
         }
 
@@ -367,7 +367,7 @@ namespace DoAnPaint.Presenter
         {
             if (shape is MLine)
             {
-                viewPaint.setDrawingLineSelected(shape, new SolidBrush(Color.DarkBlue), g);
+                viewPaint.SetDrawingLineSelected(shape, new SolidBrush(Color.DarkBlue), g);
 
             }
             else if (shape is MPen)
@@ -380,7 +380,7 @@ namespace DoAnPaint.Presenter
                         DashStyle = DashStyle.Custom
                     })
                     {
-                        viewPaint.setDrawingRegionRectangle(pen, shape.getRectangle(), g);
+                        viewPaint.SetDrawingRegionRectangle(pen, shape.getRectangle(), g);
                     }
                 }
             }
@@ -389,7 +389,7 @@ namespace DoAnPaint.Presenter
                 MCurve curve = (MCurve)shape;
                 for (int i = 0; i < curve.points.Count; i++)
                 {
-                    viewPaint.setDrawingCurveSelected(curve.points, new SolidBrush(Color.DarkBlue), g);
+                    viewPaint.SetDrawingCurveSelected(curve.points, new SolidBrush(Color.DarkBlue), g);
                 }
             }
             else if (shape is MPolygon)
@@ -397,7 +397,7 @@ namespace DoAnPaint.Presenter
                 MPolygon polygon = (MPolygon)shape;
                 for (int i = 0; i < polygon.points.Count; i++)
                 {
-                    viewPaint.setDrawingCurveSelected(polygon.points, new SolidBrush(Color.DarkBlue), g);
+                    viewPaint.SetDrawingCurveSelected(polygon.points, new SolidBrush(Color.DarkBlue), g);
                 }
             }
             else
@@ -408,81 +408,81 @@ namespace DoAnPaint.Presenter
                     DashStyle = DashStyle.Custom
                 })
                 {
-                    viewPaint.setDrawingRegionRectangle(pen, shape.getRectangle(shape.pointHead, shape.pointTail), g);
-                    viewPaint.setDrawingCurveSelected(FindRegion.getControlPoints(shape),
+                    viewPaint.SetDrawingRegionRectangle(pen, shape.getRectangle(shape.pointHead, shape.pointTail), g);
+                    viewPaint.SetDrawingCurveSelected(FindRegion.GetControlPoints(shape),
                         new SolidBrush(Color.DarkBlue), g);
                 }
             }
         }
 
-        public void onClickDrawLine()
+        public void OnClickDrawLine()
         {
             setDefaultToDraw();
-            dataManager.currentShape = CurrentShapeStatus.Line;
+            dataManager.CurrentShape = CurrentShapeStatus.Line;
         }
 
-        public void onClickDrawRectangle()
+        public void OnClickDrawRectangle()
         {
             setDefaultToDraw();
-            dataManager.currentShape = CurrentShapeStatus.Rectangle;
+            dataManager.CurrentShape = CurrentShapeStatus.Rectangle;
         }
 
-        public void onClickDrawEllipse()
+        public void OnClickDrawEllipse()
         {
             setDefaultToDraw();
-            dataManager.currentShape = CurrentShapeStatus.Ellipse;
+            dataManager.CurrentShape = CurrentShapeStatus.Ellipse;
         }
 
-        public void onClickDrawBezier()
+        public void OnClickDrawBezier()
         {
             setDefaultToDraw();
-            dataManager.currentShape = CurrentShapeStatus.Curve;
+            dataManager.CurrentShape = CurrentShapeStatus.Curve;
         }
 
-        public void onClickDrawPolygon()
+        public void OnClickDrawPolygon()
         {
             setDefaultToDraw();
-            dataManager.currentShape = CurrentShapeStatus.Polygon;
+            dataManager.CurrentShape = CurrentShapeStatus.Polygon;
         }
 
-        public void onClickDrawPen()
+        public void OnClickDrawPen()
         {
             setDefaultToDraw();
-            dataManager.currentShape = CurrentShapeStatus.Pen;
+            dataManager.CurrentShape = CurrentShapeStatus.Pen;
         }
 
-        public void onClickDrawEraser()
+        public void OnClickDrawEraser()
         {
             setDefaultToDraw();
-            dataManager.currentShape = CurrentShapeStatus.Eraser;
+            dataManager.CurrentShape = CurrentShapeStatus.Eraser;
         }
 
-        public void onClickStopDrawing(MouseButtons mouse)
+        public void OnClickStopDrawing(MouseButtons mouse)
         {
             if (mouse == MouseButtons.Right)
             {
-                if (dataManager.currentShape.Equals(CurrentShapeStatus.Polygon))
+                if (dataManager.CurrentShape.Equals(CurrentShapeStatus.Polygon))
                 {
-                    MPolygon polygon = dataManager.shapeList[dataManager.shapeList.Count - 1] as MPolygon;
+                    MPolygon polygon = dataManager.ShapeList[dataManager.ShapeList.Count - 1] as MPolygon;
                     polygon.points.Remove(polygon.points[polygon.points.Count - 1]);
-                    dataManager.isDrawingPolygon = false;
-                    FindRegion.setPointHeadTail(polygon);
+                    dataManager.IsDrawingPolygon = false;
+                    FindRegion.SetPointHeadTail(polygon);
                 }
-                else if (dataManager.currentShape.Equals(CurrentShapeStatus.Curve))
+                else if (dataManager.CurrentShape.Equals(CurrentShapeStatus.Curve))
                 {
-                    MCurve curve = dataManager.shapeList[dataManager.shapeList.Count - 1] as MCurve;
+                    MCurve curve = dataManager.ShapeList[dataManager.ShapeList.Count - 1] as MCurve;
                     curve.points.Remove(curve.points[curve.points.Count - 1]);
-                    dataManager.isDrawingCurve = false;
-                    FindRegion.setPointHeadTail(curve);
+                    dataManager.IsDrawingCurve = false;
+                    FindRegion.SetPointHeadTail(curve);
                 }
             }
         }
 
         private void setDefaultToDraw()
         {
-            dataManager.offAllShapeSelected();
-            viewPaint.refreshDrawing();
-            viewPaint.setCursor(Cursors.Default);
+            dataManager.OffAllShapeSelected();
+            viewPaint.RefreshDrawing();
+            viewPaint.SetCursor(Cursors.Default);
         }
 
     }

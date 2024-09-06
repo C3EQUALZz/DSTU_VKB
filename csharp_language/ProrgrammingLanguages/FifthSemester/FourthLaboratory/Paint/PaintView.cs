@@ -10,20 +10,18 @@ using DoAnPaint.Presenter;
 using DoAnPaint.Presenter.Alter;
 using DoAnPaint.Presenter.Updates;
 
-/*
- * Created by Nguyen Hoang Thinh 17110372 at 19/04/2019
- */
+
 namespace DoAnPaint
 {
-    public partial class PaintView : Form, ViewPaint
+    public partial class PaintView : Form, IViewPaint
     {
-        private PresenterDraw presenterDraw;
+        private readonly IPresenterDraw presenterDraw;
 
-        private PresenterAlter presenterAlter;
+        private readonly IPresenterAlter presenterAlter;
 
-        private PresenterUpdate presenterUpdate;
+        private readonly IPresenterUpdate presenterUpdate;
 
-        private Graphics gr;
+        private readonly Graphics gr;
 
 
         public PaintView()
@@ -33,226 +31,228 @@ namespace DoAnPaint
             presenterDraw = new PresenterDrawImp(this);
             presenterAlter = new PresenterAlterImp(this);
             presenterUpdate = new PresenterUpdateImp(this);
-            presenterUpdate.onClickSelectColor(ptbColor.BackColor, gr);
-            presenterUpdate.onClickSelectSize(btnLineSize.Value + 1);
+            presenterUpdate.OnClickSelectColor(ptbColor.BackColor, gr);
+            presenterUpdate.OnClickSelectSize(btnLineSize.Value + 1);
 
             gr = ptbDrawing.CreateGraphics();
-
         }
 
-        //Sự kiện click chuột, gửi yêu cầu xử lý nhấn chuột đến presenter
-        private void mouseDown_Event(object sender, MouseEventArgs e)
+        /// <summary>
+        /// Событие щелчка мыши отправляет презентатору запрос на обработку.
+        /// </summary>
+        public void MouseDown_Event(object sender, MouseEventArgs e)
         {
-            presenterDraw.onClickMouseDown(e.Location);
+            presenterDraw.OnClickMouseDown(e.Location);
         }
 
-        //Sự kiện di chuyển chuột, gửi yêu cầu xử lý di chuyển chuột đến presenter
-        private void mouseMove_Event(object sender, MouseEventArgs e)
+        /// <summary>
+        /// Событие перемещения мыши отправляет презентатору запрос обработчика перемещения мыши.
+        /// </summary>
+        public void MouseMove_Event(object sender, MouseEventArgs e)
         {
             lbLocation.Text = e.Location.X + ", " + e.Location.Y + "px";
-            presenterDraw.onClickMouseMove(e.Location);
+            presenterDraw.OnClickMouseMove(e.Location);
         }
 
-        //Callback gọi vẽ lại hình
-        public void refreshDrawing()
+        /// <summary>
+        /// Вызов для перерисовки изображения
+        /// </summary>
+        public void RefreshDrawing()
         {
             ptbDrawing.Invalidate();
         }
 
-        //Xử lý sự kiện click chuột vẽ hình, gửi yêu vẽ hình
-        //theo trạng thái hiện tại đến presenter
-        private void onPaint_Event(object sender, PaintEventArgs e)
+        /// <summary>
+        /// Обработка события щелчка мыши для рисования изображения,
+        /// здесь происходит отправка презентатору запроса на рисование изображения в соответствии с текущим состоянием.
+        /// </summary>
+        public void OnPaint_Event(object sender, PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            presenterDraw.getDrawing(e.Graphics);
-
+            presenterDraw.GetDrawing(e.Graphics);
         }
 
-        //Callback để tiến hành vẽ hình
-        public void setDrawing(Shape shape, Graphics g)
+        /// <summary>
+        /// Вызов для продолжения рисования
+        /// </summary>
+        public void SetDrawing(Shape shape, Graphics g)
         {
             shape.drawShape(g);
         }
 
-        //Xử lý sự kiện click chuột vẽ đường thẳng, gửi yêu cầu đến presenter
-        private void btnLine_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Обработка событие щелчка мыши, чтобы нарисовать линию, отправляю запрос презентеру
+        /// </summary>
+        public void BtnLine_Click(object sender, EventArgs e)
         {
-            presenterDraw.onClickDrawLine();
+            presenterDraw.OnClickDrawLine();
         }
 
-        //Sự kiện thả chuột, gửi yêu cầu xử lý thả chuột đến presenter
-        private void mouseUp_Event(object sender, MouseEventArgs e)
+        /// <summary>
+        /// Событие "отпускания мыши" отправляет презентатору запрос на обработку.
+        /// </summary>
+        public void MouseUp_Event(object sender, MouseEventArgs e)
         {
-            presenterDraw.onClickMouseUp();
+            presenterDraw.OnClickMouseUp();
         }
 
-        private void btnSelect_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Обработчик событий на кнопку, где есть режим "выбор" 
+        /// </summary>
+        public void BtnSelect_Click(object sender, EventArgs e)
         {
-            presenterUpdate.onClickSelectMode();
+            presenterUpdate.OnClickSelectMode();
         }
 
-        public void setCursor(Cursor cursor)
+        /// <summary>
+        /// Сеттер для установки курсора, который выбрал пользователь
+        /// </summary>
+        public void SetCursor(Cursor cursor)
         {
             ptbDrawing.Cursor = cursor;
         }
 
-        public void setDrawingLineSelected(Shape shape, Brush brush, Graphics g)
+        public void SetDrawingLineSelected(Shape shape, Brush brush, Graphics g)
         {
             g.FillRectangle(brush, new Rectangle(shape.pointHead.X - 4, shape.pointHead.Y - 4, 8, 8));
             g.FillRectangle(brush, new Rectangle(shape.pointTail.X - 4, shape.pointTail.Y - 4, 8, 8));
         }
 
-        public void movingShape(Shape shape, Point distance)
+        public void MovingShape(Shape shape, Point distance)
         {
             shape.moveShape(distance);
-            refreshDrawing();
+            RefreshDrawing();
         }
 
-        private void btnRectangle_Click(object sender, EventArgs e)
+        public void BtnRectangle_Click(object sender, EventArgs e)
         {
-            presenterDraw.onClickDrawRectangle();
+            presenterDraw.OnClickDrawRectangle();
         }
 
-        private void btnEllipse_Click(object sender, EventArgs e)
+        public void BtnEllipse_Click(object sender, EventArgs e)
         {
-            presenterDraw.onClickDrawEllipse();
+            presenterDraw.OnClickDrawEllipse();
         }
 
-        public void setDrawingRegionRectangle(Pen p, Rectangle rectangle, Graphics g)
+        public void SetDrawingRegionRectangle(Pen p, Rectangle rectangle, Graphics g)
         {
             g.DrawRectangle(p, rectangle);
         }
 
-        private void btnGroup_Click(object sender, EventArgs e)
+        public void BtnGroup_Click(object sender, EventArgs e)
         {
-            presenterAlter.onClickDrawGroup();
+            presenterAlter.OnClickDrawGroup();
         }
 
-        private void btnUnGroup_Click(object sender, EventArgs e)
+        public void BtnUnGroup_Click(object sender, EventArgs e)
         {
-            presenterAlter.onClickDrawUnGroup();
+            presenterAlter.OnClickDrawUnGroup();
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        public void BtnDelete_Click(object sender, EventArgs e)
         {
-            presenterAlter.onClickDeleteShape();
+            presenterAlter.OnClickDeleteShape();
         }
 
-        private void btnBezier_Click(object sender, EventArgs e)
+        public void BtnBezier_Click(object sender, EventArgs e)
         {
-            presenterDraw.onClickDrawBezier();
+            presenterDraw.OnClickDrawBezier();
         }
 
-        private void btnPolygon_Click(object sender, EventArgs e)
+        public void BtnPolygon_Click(object sender, EventArgs e)
         {
-            presenterDraw.onClickDrawPolygon();
+            presenterDraw.OnClickDrawPolygon();
         }
 
-        public void setDrawingCurveSelected(List<Point> points, Brush brush, Graphics g)
+        public void SetDrawingCurveSelected(List<Point> points, Brush brush, Graphics g)
         {
             for (int i = 0; i < points.Count; ++i)
             {
                 g.FillRectangle(brush, new Rectangle(points[i].X - 4, points[i].Y - 4, 8, 8));
             }
-
         }
 
-        private void btnPen_Click(object sender, EventArgs e)
+        public void BtnPen_Click(object sender, EventArgs e)
         {
-            presenterDraw.onClickDrawPen();
+            presenterDraw.OnClickDrawPen();
         }
 
-        private void btnEraser_Click(object sender, EventArgs e)
+        public void BtnEraser_Click(object sender, EventArgs e)
         {
-            presenterDraw.onClickDrawEraser();
+            presenterDraw.OnClickDrawEraser();
         }
 
-        private void ptbEditColor_Click(object sender, EventArgs e)
+        public void PtbEditColor_Click(object sender, EventArgs e)
         {
             ColorDialog colorDialog = new ColorDialog();
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
-                presenterUpdate.onClickSelectColor(colorDialog.Color, gr);
+                presenterUpdate.OnClickSelectColor(colorDialog.Color, gr);
             }
         }
 
-        public void setColor(Color color)
+        public void SetColor(Color color)
         {
             ptbColor.BackColor = color;
         }
 
-        private void btnLineSize_Scroll(object sender, EventArgs e)
+        public void BtnLineSize_Scroll(object sender, EventArgs e)
         {
-            presenterUpdate.onClickSelectSize(btnLineSize.Value + 1);
+            presenterUpdate.OnClickSelectSize(btnLineSize.Value + 1);
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Nguyễn Hoàng Thịnh - 17110372");
-        }
-
-        private void btnChangeColor_Click(object sender, EventArgs e)
+        public void BtnChangeColor_Click(object sender, EventArgs e)
         {
             PictureBox ptb = sender as PictureBox;
             ptbColor.BackColor = ptb.BackColor;
-            presenterUpdate.onClickSelectColor(ptb.BackColor, gr);
+            presenterUpdate.OnClickSelectColor(ptb.BackColor, gr);
         }
 
-        private void ptbDrawing_MouseClick(object sender, MouseEventArgs e)
+        public void PtbDrawing_MouseClick(object sender, MouseEventArgs e)
         {
-            presenterDraw.onClickStopDrawing(e.Button);
+            presenterDraw.OnClickStopDrawing(e.Button);
         }
 
-        private void pictureBox31_Click(object sender, EventArgs e)
-        {
-            presenterAlter.onClickShutdown(ptbDrawing);
-        }
-
-        public void movingControlPoint(Shape shape, Point pointCurrent, Point previous, int indexPoint)
+        public void MovingControlPoint(Shape shape, Point pointCurrent, Point previous, int indexPoint)
         {
             shape.moveControlPoint(pointCurrent, previous, indexPoint);
-            refreshDrawing();
+            RefreshDrawing();
         }
 
-        private void btnClear_Click(object sender, EventArgs e)
+        public void BtnClear_Click(object sender, EventArgs e)
         {
-            presenterAlter.onClickClearAll(ptbDrawing);
+            presenterAlter.OnClickClearAll(ptbDrawing);
         }
 
-        private void btnFill_Click(object sender, EventArgs e)
+        public void BtnFill_Click(object sender, EventArgs e)
         {
             Button btn = sender as Button;
-            presenterUpdate.onClickSelectFill(btn, gr);
+            presenterUpdate.OnClickSelectFill(btn, gr);
         }
 
-        public void setColor(Button btn, Color color)
+        public void SetColor(Button btn, Color color)
         {
             btn.BackColor = color;
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        public void BtnSave_Click(object sender, EventArgs e)
         {
-            presenterAlter.onClickSaveImage(ptbDrawing);
+            presenterAlter.OnClickSaveImage(ptbDrawing);
         }
 
-        private void btnOpen_Click(object sender, EventArgs e)
+        public void BtnOpen_Click(object sender, EventArgs e)
         {
-            presenterAlter.onClickOpenImage(ptbDrawing);
+            presenterAlter.OnClickOpenImage(ptbDrawing);
         }
 
-        private void btnNew_Click(object sender, EventArgs e)
+        public void BtnNew_Click(object sender, EventArgs e)
         {
-            presenterAlter.onClickNewImage(ptbDrawing);
+            presenterAlter.OnClickNewImage(ptbDrawing);
         }
 
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        public void Form_KeyDown(object sender, KeyEventArgs e)
         {
-            presenterAlter.onUseKeyStrokes(ptbDrawing, e.KeyCode);
+            presenterAlter.OnUseKeyStrokes(ptbDrawing, e.KeyCode);
         }
 
     }

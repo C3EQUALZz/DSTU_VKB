@@ -1,28 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Drawing;
-
 using DoAnPaint.Model;
 
 
-/*
- * Created by Nguyen Hoang Thinh 17110372 at 19/04/2019
- */
 namespace DoAnPaint.Utils
 {
     /// <summary>
-    /// Lớp tìm vùng bao bọc của một hình vẽ
+    /// Класс, который находит ограничивающую область рисунка
     /// </summary>
     public class FindRegion
     {
         /// <summary>
-        /// Phương thức thiết lập điểm đầu và cuối cho hình thuộc lớp GroupShape
+        /// Метод установки начальной и конечной точек фигуры принадлежит классу GroupShape.
         /// </summary>
-        /// <param name="group"></param>
-        public static void setPointHeadTail(GroupShape group)
+        public static void SetPointHeadTail(GroupShape group)
         {
             int minX = int.MaxValue,minY = int.MaxValue;
             int maxX = int.MinValue, maxY = int.MinValue;
@@ -72,10 +63,10 @@ namespace DoAnPaint.Utils
         }
 
         /// <summary>
-        /// Phương thức thiết lập điểm đầu và cuối cho hình thuộc lớp MCurve
+        /// Метод установки начальной и конечной точек фигуры принадлежит классу MCurve.
         /// </summary>
         /// <param name="curve"></param>
-        public static void setPointHeadTail(MCurve curve)
+        public static void SetPointHeadTail(MCurve curve)
         {
             int minX = int.MaxValue, minY = int.MaxValue;
             int maxX = int.MinValue, maxY = int.MinValue;
@@ -103,10 +94,9 @@ namespace DoAnPaint.Utils
         }
 
         /// <summary>
-        /// Phương thức thiết lập điểm đầu và cuối cho hình thuộc lớp MPolygon
+        /// Метод установки начальной и конечной точек фигуры принадлежит классу MPolygon.
         /// </summary>
-        /// <param name="polygon"></param>
-        public static void setPointHeadTail(MPolygon polygon)
+        public static void SetPointHeadTail(MPolygon polygon)
         {
             int minX = int.MaxValue, minY = int.MaxValue;
             int maxX = int.MinValue, maxY = int.MinValue;
@@ -134,10 +124,9 @@ namespace DoAnPaint.Utils
         }
 
         /// <summary>
-        /// Phương thức thiết lập điểm đầu và cuối cho hình thuộc lớp MPen
+        /// Метод установки начальной и конечной точек изображения принадлежит классу MPen.
         /// </summary>
-        /// <param name="pen"></param>
-        public static void setPointHeadTail(MPen pen)
+        public static void SetPointHeadTail(MPen pen)
         {
             int minX = int.MaxValue, minY = int.MaxValue;
             int maxX = int.MinValue, maxY = int.MinValue;
@@ -165,11 +154,11 @@ namespace DoAnPaint.Utils
         }
 
         /// <summary>
-        /// Phương thức nhận tất cả điểm điều khiển của một hình
+        /// Метод получения всех контрольных точек фигуры
         /// </summary>
-        /// <param name="shape">Hình cần nhận điểm điều khiển</param>
-        /// <returns>Danh sách điểm điều khiển</returns>
-        public static List<Point> getControlPoints(Shape shape)
+        /// <param name="shape">Изображение должно получить контрольные точки</param>
+        /// <returns>Список контрольных точек</returns>
+        public static List<Point> GetControlPoints(Shape shape)
         {
             List<Point> points = new List<Point>();
             int xCenter = (shape.pointHead.X + shape.pointTail.X) / 2;

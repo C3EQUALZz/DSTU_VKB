@@ -186,7 +186,7 @@
             this.ptbEditColor.Size = new System.Drawing.Size(67, 62);
             this.ptbEditColor.TabIndex = 14;
             this.ptbEditColor.TabStop = false;
-            this.ptbEditColor.Click += new System.EventHandler(this.ptbEditColor_Click);
+            this.ptbEditColor.Click += new System.EventHandler(this.PtbEditColor_Click);
             // 
             // pictureBox21
             // 
@@ -308,7 +308,7 @@
             this.pictureBox11.Size = new System.Drawing.Size(33, 31);
             this.pictureBox11.TabIndex = 37;
             this.pictureBox11.TabStop = false;
-            this.pictureBox11.Click += new System.EventHandler(this.btnChangeColor_Click);
+            this.pictureBox11.Click += new System.EventHandler(this.BtnChangeColor_Click);
             // 
             // pictureBox12
             // 
@@ -320,7 +320,7 @@
             this.pictureBox12.Size = new System.Drawing.Size(30, 31);
             this.pictureBox12.TabIndex = 36;
             this.pictureBox12.TabStop = false;
-            this.pictureBox12.Click += new System.EventHandler(this.btnChangeColor_Click);
+            this.pictureBox12.Click += new System.EventHandler(this.BtnChangeColor_Click);
             // 
             // pictureBox13
             // 
@@ -332,7 +332,7 @@
             this.pictureBox13.Size = new System.Drawing.Size(30, 31);
             this.pictureBox13.TabIndex = 35;
             this.pictureBox13.TabStop = false;
-            this.pictureBox13.Click += new System.EventHandler(this.btnChangeColor_Click);
+            this.pictureBox13.Click += new System.EventHandler(this.BtnChangeColor_Click);
             // 
             // pictureBox14
             // 
@@ -344,7 +344,7 @@
             this.pictureBox14.Size = new System.Drawing.Size(30, 31);
             this.pictureBox14.TabIndex = 34;
             this.pictureBox14.TabStop = false;
-            this.pictureBox14.Click += new System.EventHandler(this.btnChangeColor_Click);
+            this.pictureBox14.Click += new System.EventHandler(this.BtnChangeColor_Click);
             // 
             // pictureBox15
             // 
@@ -356,7 +356,7 @@
             this.pictureBox15.Size = new System.Drawing.Size(30, 31);
             this.pictureBox15.TabIndex = 33;
             this.pictureBox15.TabStop = false;
-            this.pictureBox15.Click += new System.EventHandler(this.btnChangeColor_Click);
+            this.pictureBox15.Click += new System.EventHandler(this.BtnChangeColor_Click);
             // 
             // pictureBox16
             // 
@@ -368,7 +368,7 @@
             this.pictureBox16.Size = new System.Drawing.Size(30, 31);
             this.pictureBox16.TabIndex = 32;
             this.pictureBox16.TabStop = false;
-            this.pictureBox16.Click += new System.EventHandler(this.btnChangeColor_Click);
+            this.pictureBox16.Click += new System.EventHandler(this.BtnChangeColor_Click);
             // 
             // pictureBox17
             // 
@@ -380,7 +380,7 @@
             this.pictureBox17.Size = new System.Drawing.Size(30, 31);
             this.pictureBox17.TabIndex = 31;
             this.pictureBox17.TabStop = false;
-            this.pictureBox17.Click += new System.EventHandler(this.btnChangeColor_Click);
+            this.pictureBox17.Click += new System.EventHandler(this.BtnChangeColor_Click);
             // 
             // pictureBox18
             // 
@@ -392,7 +392,7 @@
             this.pictureBox18.Size = new System.Drawing.Size(30, 31);
             this.pictureBox18.TabIndex = 30;
             this.pictureBox18.TabStop = false;
-            this.pictureBox18.Click += new System.EventHandler(this.btnChangeColor_Click);
+            this.pictureBox18.Click += new System.EventHandler(this.BtnChangeColor_Click);
             // 
             // pictureBox19
             // 
@@ -404,7 +404,7 @@
             this.pictureBox19.Size = new System.Drawing.Size(33, 31);
             this.pictureBox19.TabIndex = 29;
             this.pictureBox19.TabStop = false;
-            this.pictureBox19.Click += new System.EventHandler(this.btnChangeColor_Click);
+            this.pictureBox19.Click += new System.EventHandler(this.BtnChangeColor_Click);
             // 
             // pictureBox20
             // 
@@ -416,7 +416,7 @@
             this.pictureBox20.Size = new System.Drawing.Size(33, 31);
             this.pictureBox20.TabIndex = 28;
             this.pictureBox20.TabStop = false;
-            this.pictureBox20.Click += new System.EventHandler(this.btnChangeColor_Click);
+            this.pictureBox20.Click += new System.EventHandler(this.BtnChangeColor_Click);
             // 
             // pictureBox7
             // 
@@ -428,7 +428,7 @@
             this.pictureBox7.Size = new System.Drawing.Size(33, 31);
             this.pictureBox7.TabIndex = 27;
             this.pictureBox7.TabStop = false;
-            this.pictureBox7.Click += new System.EventHandler(this.btnChangeColor_Click);
+            this.pictureBox7.Click += new System.EventHandler(this.BtnChangeColor_Click);
             // 
             // pictureBox8
             // 
@@ -440,7 +440,7 @@
             this.pictureBox8.Size = new System.Drawing.Size(30, 31);
             this.pictureBox8.TabIndex = 26;
             this.pictureBox8.TabStop = false;
-            this.pictureBox8.Click += new System.EventHandler(this.btnChangeColor_Click);
+            this.pictureBox8.Click += new System.EventHandler(this.BtnChangeColor_Click);
             // 
             // pictureBox9
             // 
@@ -452,7 +452,7 @@
             this.pictureBox9.Size = new System.Drawing.Size(30, 31);
             this.pictureBox9.TabIndex = 25;
             this.pictureBox9.TabStop = false;
-            this.pictureBox9.Click += new System.EventHandler(this.btnChangeColor_Click);
+            this.pictureBox9.Click += new System.EventHandler(this.BtnChangeColor_Click);
             // 
             // pictureBox10
             // 
@@ -464,7 +464,7 @@
             this.pictureBox10.Size = new System.Drawing.Size(30, 31);
             this.pictureBox10.TabIndex = 24;
             this.pictureBox10.TabStop = false;
-            this.pictureBox10.Click += new System.EventHandler(this.btnChangeColor_Click);
+            this.pictureBox10.Click += new System.EventHandler(this.BtnChangeColor_Click);
             // 
             // pictureBox4
             // 
@@ -476,7 +476,7 @@
             this.pictureBox4.Size = new System.Drawing.Size(30, 31);
             this.pictureBox4.TabIndex = 23;
             this.pictureBox4.TabStop = false;
-            this.pictureBox4.Click += new System.EventHandler(this.btnChangeColor_Click);
+            this.pictureBox4.Click += new System.EventHandler(this.BtnChangeColor_Click);
             // 
             // pictureBox5
             // 
@@ -488,7 +488,7 @@
             this.pictureBox5.Size = new System.Drawing.Size(30, 31);
             this.pictureBox5.TabIndex = 22;
             this.pictureBox5.TabStop = false;
-            this.pictureBox5.Click += new System.EventHandler(this.btnChangeColor_Click);
+            this.pictureBox5.Click += new System.EventHandler(this.BtnChangeColor_Click);
             // 
             // pictureBox6
             // 
@@ -500,7 +500,7 @@
             this.pictureBox6.Size = new System.Drawing.Size(30, 31);
             this.pictureBox6.TabIndex = 21;
             this.pictureBox6.TabStop = false;
-            this.pictureBox6.Click += new System.EventHandler(this.btnChangeColor_Click);
+            this.pictureBox6.Click += new System.EventHandler(this.BtnChangeColor_Click);
             // 
             // pictureBox3
             // 
@@ -512,7 +512,7 @@
             this.pictureBox3.Size = new System.Drawing.Size(30, 31);
             this.pictureBox3.TabIndex = 20;
             this.pictureBox3.TabStop = false;
-            this.pictureBox3.Click += new System.EventHandler(this.btnChangeColor_Click);
+            this.pictureBox3.Click += new System.EventHandler(this.BtnChangeColor_Click);
             // 
             // pictureBox2
             // 
@@ -524,7 +524,7 @@
             this.pictureBox2.Size = new System.Drawing.Size(33, 31);
             this.pictureBox2.TabIndex = 19;
             this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.btnChangeColor_Click);
+            this.pictureBox2.Click += new System.EventHandler(this.BtnChangeColor_Click);
             // 
             // pictureBox1
             // 
@@ -536,7 +536,7 @@
             this.pictureBox1.Size = new System.Drawing.Size(33, 31);
             this.pictureBox1.TabIndex = 18;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.btnChangeColor_Click);
+            this.pictureBox1.Click += new System.EventHandler(this.BtnChangeColor_Click);
             // 
             // label1
             // 
@@ -571,7 +571,7 @@
             this.btnLineSize.Name = "btnLineSize";
             this.btnLineSize.Size = new System.Drawing.Size(94, 56);
             this.btnLineSize.TabIndex = 15;
-            this.btnLineSize.Scroll += new System.EventHandler(this.btnLineSize_Scroll);
+            this.btnLineSize.Scroll += new System.EventHandler(this.BtnLineSize_Scroll);
             // 
             // btnLine
             // 
@@ -586,7 +586,7 @@
             this.btnLine.TabIndex = 0;
             this.toolTip2.SetToolTip(this.btnLine, "Line");
             this.btnLine.UseVisualStyleBackColor = false;
-            this.btnLine.Click += new System.EventHandler(this.btnLine_Click);
+            this.btnLine.Click += new System.EventHandler(this.BtnLine_Click);
             // 
             // btnBezier
             // 
@@ -601,7 +601,7 @@
             this.btnBezier.TabIndex = 10;
             this.toolTip2.SetToolTip(this.btnBezier, "Curve");
             this.btnBezier.UseVisualStyleBackColor = false;
-            this.btnBezier.Click += new System.EventHandler(this.btnBezier_Click);
+            this.btnBezier.Click += new System.EventHandler(this.BtnBezier_Click);
             // 
             // btnEllipse
             // 
@@ -616,7 +616,7 @@
             this.btnEllipse.TabIndex = 5;
             this.toolTip2.SetToolTip(this.btnEllipse, "Ellipse");
             this.btnEllipse.UseVisualStyleBackColor = false;
-            this.btnEllipse.Click += new System.EventHandler(this.btnEllipse_Click);
+            this.btnEllipse.Click += new System.EventHandler(this.BtnEllipse_Click);
             // 
             // btnRectangle
             // 
@@ -631,7 +631,7 @@
             this.btnRectangle.TabIndex = 4;
             this.toolTip2.SetToolTip(this.btnRectangle, "Rectangle");
             this.btnRectangle.UseVisualStyleBackColor = false;
-            this.btnRectangle.Click += new System.EventHandler(this.btnRectangle_Click);
+            this.btnRectangle.Click += new System.EventHandler(this.BtnRectangle_Click);
             // 
             // btnPolygon
             // 
@@ -646,7 +646,7 @@
             this.btnPolygon.TabIndex = 9;
             this.toolTip2.SetToolTip(this.btnPolygon, "Polygon");
             this.btnPolygon.UseVisualStyleBackColor = false;
-            this.btnPolygon.Click += new System.EventHandler(this.btnPolygon_Click);
+            this.btnPolygon.Click += new System.EventHandler(this.BtnPolygon_Click);
             // 
             // toolTip1
             // 
@@ -674,7 +674,7 @@
             this.btnPen.TabIndex = 11;
             this.toolTip2.SetToolTip(this.btnPen, "Pencil");
             this.btnPen.UseVisualStyleBackColor = false;
-            this.btnPen.Click += new System.EventHandler(this.btnPen_Click);
+            this.btnPen.Click += new System.EventHandler(this.BtnPen_Click);
             // 
             // btnEraser
             // 
@@ -689,7 +689,7 @@
             this.btnEraser.TabIndex = 12;
             this.toolTip2.SetToolTip(this.btnEraser, "Eraser");
             this.btnEraser.UseVisualStyleBackColor = false;
-            this.btnEraser.Click += new System.EventHandler(this.btnEraser_Click);
+            this.btnEraser.Click += new System.EventHandler(this.BtnEraser_Click);
             // 
             // btnFill
             // 
@@ -704,7 +704,7 @@
             this.btnFill.TabIndex = 14;
             this.toolTip2.SetToolTip(this.btnFill, "Fill Shape");
             this.btnFill.UseVisualStyleBackColor = false;
-            this.btnFill.Click += new System.EventHandler(this.btnFill_Click);
+            this.btnFill.Click += new System.EventHandler(this.BtnFill_Click);
             // 
             // btnUnGroup
             // 
@@ -719,7 +719,7 @@
             this.btnUnGroup.TabIndex = 7;
             this.toolTip2.SetToolTip(this.btnUnGroup, "Ungroup Shape");
             this.btnUnGroup.UseVisualStyleBackColor = false;
-            this.btnUnGroup.Click += new System.EventHandler(this.btnUnGroup_Click);
+            this.btnUnGroup.Click += new System.EventHandler(this.BtnUnGroup_Click);
             // 
             // btnDelete
             // 
@@ -734,7 +734,7 @@
             this.btnDelete.TabIndex = 8;
             this.toolTip2.SetToolTip(this.btnDelete, "Delete");
             this.btnDelete.UseVisualStyleBackColor = false;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            this.btnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
             // btnGroup
             // 
@@ -749,7 +749,7 @@
             this.btnGroup.TabIndex = 6;
             this.toolTip2.SetToolTip(this.btnGroup, "Group Shape");
             this.btnGroup.UseVisualStyleBackColor = false;
-            this.btnGroup.Click += new System.EventHandler(this.btnGroup_Click);
+            this.btnGroup.Click += new System.EventHandler(this.BtnGroup_Click);
             // 
             // btnSelect
             // 
@@ -764,7 +764,7 @@
             this.btnSelect.TabIndex = 3;
             this.toolTip2.SetToolTip(this.btnSelect, "Select");
             this.btnSelect.UseVisualStyleBackColor = false;
-            this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
+            this.btnSelect.Click += new System.EventHandler(this.BtnSelect_Click);
             // 
             // btnNew
             // 
@@ -779,7 +779,7 @@
             this.btnNew.TabIndex = 6;
             this.toolTip2.SetToolTip(this.btnNew, "New");
             this.btnNew.UseVisualStyleBackColor = false;
-            this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
+            this.btnNew.Click += new System.EventHandler(this.BtnNew_Click);
             // 
             // btnOpen
             // 
@@ -794,7 +794,7 @@
             this.btnOpen.TabIndex = 8;
             this.toolTip2.SetToolTip(this.btnOpen, "Open");
             this.btnOpen.UseVisualStyleBackColor = false;
-            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
+            this.btnOpen.Click += new System.EventHandler(this.BtnOpen_Click);
             // 
             // btnSave
             // 
@@ -809,7 +809,7 @@
             this.btnSave.TabIndex = 7;
             this.toolTip2.SetToolTip(this.btnSave, "Save ");
             this.btnSave.UseVisualStyleBackColor = false;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
             // btnClear
             // 
@@ -824,7 +824,7 @@
             this.btnClear.TabIndex = 3;
             this.toolTip2.SetToolTip(this.btnClear, "Clear All");
             this.btnClear.UseVisualStyleBackColor = false;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            this.btnClear.Click += new System.EventHandler(this.BtnClear_Click);
             // 
             // openFile
             // 
@@ -840,11 +840,11 @@
             this.ptbDrawing.Size = new System.Drawing.Size(1530, 447);
             this.ptbDrawing.TabIndex = 2;
             this.ptbDrawing.TabStop = false;
-            this.ptbDrawing.Paint += new System.Windows.Forms.PaintEventHandler(this.onPaint_Event);
-            this.ptbDrawing.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ptbDrawing_MouseClick);
-            this.ptbDrawing.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDown_Event);
-            this.ptbDrawing.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mouseMove_Event);
-            this.ptbDrawing.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mouseUp_Event);
+            this.ptbDrawing.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_Event);
+            this.ptbDrawing.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PtbDrawing_MouseClick);
+            this.ptbDrawing.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MouseDown_Event);
+            this.ptbDrawing.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MouseMove_Event);
+            this.ptbDrawing.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MouseUp_Event);
             // 
             // tableLayoutPanel4
             // 
@@ -1127,7 +1127,7 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PAINT";
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.ptbEditColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox21)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox22)).EndInit();
