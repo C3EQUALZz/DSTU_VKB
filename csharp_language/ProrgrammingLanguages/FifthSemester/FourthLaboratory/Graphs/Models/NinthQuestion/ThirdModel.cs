@@ -5,7 +5,7 @@ namespace DoAnPaint.Graphs.Models.NinthQuestion
 {
     internal class ThirdModel : IModel
     {
-        public string Name => "y = (3 / (2 * sqrt(2pi))) * exp(-0.35 * (x+2))";
+        public string Name => "y = (3/(2*sqrt(2pi)))*exp(-0.35*(x+2))";
 
         public double Calculate(double x)
         {

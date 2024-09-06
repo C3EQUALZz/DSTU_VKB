@@ -51,6 +51,9 @@ namespace DoAnPaint.Graphs.Core.Abstract
         {
             _models = models;
             _presenter = new BasePresenter(this, _models);
+            firstChartCheckBox.Text = _models[0].Name;
+            secondChartCheckBox.Text = _models[1].Name;
+            thirdChartCheckBox.Text = _models[2].Name;
         }
 
         /// <summary>
