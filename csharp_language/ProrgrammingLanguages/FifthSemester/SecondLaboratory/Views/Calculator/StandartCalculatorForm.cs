@@ -11,7 +11,8 @@ namespace SecondLaboratory.Views.Calculator
 
         private void StandartCalculatorForm_Load(object sender, System.EventArgs e)
         {
-            
+            OperationHistoryLabel.Text = string.Empty;
+            OperationLabel.Text = "0";
         }
     }
 }
