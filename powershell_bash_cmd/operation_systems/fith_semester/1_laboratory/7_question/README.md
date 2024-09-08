@@ -7,7 +7,7 @@ MD  D:\PycharmProjects\DSTU_VKB\powershell_bash_cmd\operation_systems\fith_semes
 
 Команда для создания 
 ```
-COPY %WINDIR%\*.png D:\PycharmProjects\DSTU_VKB\powershell_bash_cmd\operation_systems\fith_semester\1_laboratory\7_question\WinEx /S & %WINDIR%\*.jpg D:\PycharmProjects\DSTU_VKB\powershell_bash_cmd\operation_systems\fith_semester\1_laboratory\7_question\WinEx /S
+COPY D:\PycharmProjects\DSTU_VKB\powershell_bash_cmd\operation_systems\fith_semester\1_laboratory\7_question\test_images\*.png D:\PycharmProjects\DSTU_VKB\powershell_bash_cmd\operation_systems\fith_semester\1_laboratory\7_question\WinEx /S & D:\PycharmProjects\DSTU_VKB\powershell_bash_cmd\operation_systems\fith_semester\1_laboratory\7_question\test_images\*.jpg D:\PycharmProjects\DSTU_VKB\powershell_bash_cmd\operation_systems\fith_semester\1_laboratory\7_question\WinEx /S
 ```
 
 
@@ -23,5 +23,5 @@ MD  D:\PycharmProjects\DSTU_VKB\powershell_bash_cmd\operation_systems\fith_semes
 ```
 
 ```
-COPY %WINDIR%\*.exe D:\PycharmProjects\DSTU_VKB\powershell_bash_cmd\operation_systems\fith_semester\1_laboratory\7_question\WinEx
+COPY D:\PycharmProjects\DSTU_VKB\powershell_bash_cmd\operation_systems\fith_semester\1_laboratory\7_question\test_exe\*.exe D:\PycharmProjects\DSTU_VKB\powershell_bash_cmd\operation_systems\fith_semester\1_laboratory\7_question\WinEx
 ```
