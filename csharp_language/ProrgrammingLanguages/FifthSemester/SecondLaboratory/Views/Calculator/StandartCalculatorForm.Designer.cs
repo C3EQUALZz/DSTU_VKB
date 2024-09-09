@@ -688,6 +688,7 @@
             this.CButton.TabIndex = 2;
             this.CButton.Text = "C";
             this.CButton.UseVisualStyleBackColor = false;
+            this.CButton.Click += new System.EventHandler(this.CButton_Click);
             // 
             // CEButton
             // 

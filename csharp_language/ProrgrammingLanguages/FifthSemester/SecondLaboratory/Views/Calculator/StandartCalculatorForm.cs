@@ -34,6 +34,10 @@ namespace SecondLaboratory.Views.Calculator
             {
                 OperationHistoryLabel.Text = $"{lastNumber} {operation.Sign}";
             }
+            else
+            {
+                OperationHistoryLabel.Text = string.Empty;
+            }
         }
 
         // HELP
@@ -142,6 +146,15 @@ namespace SecondLaboratory.Views.Calculator
             {
                 number = '-' + number;
             }
+
+            UpdateUI();
+        }
+
+        private void CButton_Click(object sender, System.EventArgs e)
+        {
+            lastNumber = null;
+            operation = null;
+            number = "0";
 
             UpdateUI();
         }
