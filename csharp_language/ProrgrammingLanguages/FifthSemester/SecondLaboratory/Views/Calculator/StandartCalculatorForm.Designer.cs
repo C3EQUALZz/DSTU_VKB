@@ -313,6 +313,7 @@
             this.EqualsButton.TabIndex = 23;
             this.EqualsButton.Text = "=";
             this.EqualsButton.UseVisualStyleBackColor = false;
+            this.EqualsButton.Click += new System.EventHandler(this.EqualsButton_Click);
             // 
             // PointButton
             // 
@@ -382,6 +383,7 @@
             this.PlusButton.TabIndex = 19;
             this.PlusButton.Text = "+";
             this.PlusButton.UseVisualStyleBackColor = false;
+            this.PlusButton.Click += new System.EventHandler(this.BinaryOperation_Click);
             // 
             // ThreeButton
             // 
@@ -453,6 +455,7 @@
             this.MinusButton.TabIndex = 15;
             this.MinusButton.Text = "-";
             this.MinusButton.UseVisualStyleBackColor = false;
+            this.MinusButton.Click += new System.EventHandler(this.BinaryOperation_Click);
             // 
             // SixButton
             // 
@@ -522,8 +525,9 @@
             this.MultiplicationButton.Name = "MultiplicationButton";
             this.MultiplicationButton.Size = new System.Drawing.Size(167, 117);
             this.MultiplicationButton.TabIndex = 11;
-            this.MultiplicationButton.Text = "x";
+            this.MultiplicationButton.Text = "×";
             this.MultiplicationButton.UseVisualStyleBackColor = false;
+            this.MultiplicationButton.Click += new System.EventHandler(this.BinaryOperation_Click);
             // 
             // NineButton
             // 
@@ -593,8 +597,9 @@
             this.DivisionButton.Name = "DivisionButton";
             this.DivisionButton.Size = new System.Drawing.Size(167, 117);
             this.DivisionButton.TabIndex = 7;
-            this.DivisionButton.Text = "/";
+            this.DivisionButton.Text = "÷";
             this.DivisionButton.UseVisualStyleBackColor = false;
+            this.DivisionButton.Click += new System.EventHandler(this.BinaryOperation_Click);
             // 
             // SquareRootButton
             // 

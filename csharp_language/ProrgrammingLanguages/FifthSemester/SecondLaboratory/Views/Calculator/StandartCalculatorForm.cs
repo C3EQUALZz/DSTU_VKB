@@ -6,9 +6,9 @@ namespace SecondLaboratory.Views.Calculator
 {
     public partial class StandartCalculatorForm : Form
     {
-        private string lastNumber = string.Empty;
+        private string lastNumber = null;
         private string number = "0";
-        private CalculatorOperationType operation = null;
+        private BinaryOperation operation = null;
 
         public StandartCalculatorForm()
         {
@@ -30,9 +30,9 @@ namespace SecondLaboratory.Views.Calculator
         {
             OperationLabel.Text = number;
 
-            if (operation != null && number != "0")
+            if (operation != null)
             {
-                OperationHistoryLabel.Text = $"{lastNumber} {operation.Sign} {number}";
+                OperationHistoryLabel.Text = $"{lastNumber} {operation.Sign}";
             }
         }
 
@@ -72,6 +72,15 @@ namespace SecondLaboratory.Views.Calculator
             }
         }
 
+        private void Calculate()
+        {
+            if (lastNumber != null && operation != null)
+            {
+                number = operation.Run(double.Parse(lastNumber), double.Parse(number)).ToString();
+                lastNumber = null;
+            }
+        }
+
         private void DigitButton_Click(object sender, System.EventArgs e)
         {
             var digit = (sender as Button).Text;
@@ -99,6 +108,28 @@ namespace SecondLaboratory.Views.Calculator
             }
 
             UpdateUI();
+        }
+
+        private void EqualsButton_Click(object sender, System.EventArgs e)
+        {
+            OperationHistoryLabel.Text += $" {number} =";
+
+            Calculate();
+
+            OperationLabel.Text = number;
+        }
+
+        private void BinaryOperation_Click(object sender, System.EventArgs e)
+        {
+            Calculate();
+
+            lastNumber = number;
+
+            operation = BinaryOperation.All.Find(o => o.Sign == (sender as Button).Text);
+
+            UpdateUI();
+
+            number = "0";
         }
     }
 }

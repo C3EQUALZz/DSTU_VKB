@@ -49,7 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums\CalculatorOperationType.cs" />
+    <Compile Include="Enums\BinaryOperation.cs" />
     <Compile Include="Enums\CalculatorType.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="Services\NavigationService.cs" />
