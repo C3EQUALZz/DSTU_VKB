@@ -171,7 +171,7 @@ namespace SecondLaboratory.Views.Calculator
                 return;
             }
             
-            x = y;
+            if (!calculated) x = y;
 
             UpdateAll();
 
