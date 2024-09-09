@@ -1,13 +1,15 @@
 ﻿using SecondLaboratory.Enums;
 using SecondLaboratory.Extensions;
+using System;
 using System.Windows.Forms;
 
 namespace SecondLaboratory.Views.Calculator
 {
     public partial class StandartCalculatorForm : Form
     {
-        private string lastNumber = null;
-        private string number = "0";
+        private string x = null;
+        private string y = "0";
+        private string result = null;
         private BinaryOperation operation = null;
 
         private double? memoryCell = null;
@@ -21,21 +23,10 @@ namespace SecondLaboratory.Views.Calculator
         private void StandartCalculatorForm_Load(object sender, System.EventArgs e)
         {
             OperationHistoryLabel.Text = string.Empty;
-            OperationLabel.Text = "0";
+            ResultLabel.Text = "0";
 
             // NOT WORKING
             //RoundButtons();
-        }
-
-        private void UpdateAll()
-        {
-            UpdateNumber();
-            UpdateOperation();
-        }
-
-        private void UpdateNumber()
-        {
-            OperationLabel.Text = number;
         }
 
         private void ResetFlags()
@@ -43,9 +34,22 @@ namespace SecondLaboratory.Views.Calculator
             calculated = false;
         }
 
-        private void UpdateOperation(bool showNumber = false, string end = "")
+        private void UpdateAll()
         {
-            OperationHistoryLabel.Text = $"{(lastNumber != null ? $"{lastNumber}" : "")}{(lastNumber != null && operation != null ? $" {operation.Sign}" : "")} {(showNumber ? number : "")}{end}";
+            UpdateResult();
+            UpdateOperation();
+        }
+        private void UpdateResult()
+        {
+            ResultLabel.Text = result;
+        }
+        private void UpdateOperation(bool showY = false)
+        {
+            OperationHistoryLabel.Text = $"{(x != null ? $"{x}" : "")}{(x != null && operation != null ? $" {operation.Sign}" : "")} {(showY ? y : "")}";
+        }
+        private void UpdateOperation(Func<string, string> modifyY)
+        {
+            OperationHistoryLabel.Text = $"{(x != null ? $"{x}" : "")}{(x != null && operation != null ? $" {operation.Sign}" : "")} {modifyY(y)}";
         }
 
         // HELP
@@ -86,10 +90,10 @@ namespace SecondLaboratory.Views.Calculator
 
         private void Calculate()
         {
-            if (lastNumber != null && operation != null)
+            if (x != null && operation != null)
             {
-                number = operation.Run(double.Parse(lastNumber), double.Parse(number)).ToString();
-                lastNumber = null;
+                x = operation.Run(double.Parse(x), double.Parse(y)).ToString();
+                result = x;
                 calculated = true;
             }
         }
@@ -98,101 +102,140 @@ namespace SecondLaboratory.Views.Calculator
         {
             if (calculated)
             {
-                number = "0";
+                y = "0";
                 ResetFlags();
             }
 
             var digit = (sender as Button).Text;
 
-            if (number == "0" && digit != ",")
+            if (y == "0" && digit != ",")
             {
-                number = string.Empty;
+                y = null;
             }
 
-            number += digit;
+            y += digit;
+            result = y;
 
-            UpdateNumber();
+            UpdateResult();
         }
         private void BackspaceButton_Click(object sender, System.EventArgs e)
         {
             if (calculated)
             {
+                x = null;
+                operation = null;
+
                 UpdateAll();
                 ResetFlags();
                 return;
             }
 
-            if (number != "0")
-            {
-                number = number.Substring(0, number.Length - 1);
+            if (y == null) return;
 
-                if (number.Length < 1)
+            if (y != "0")
+            {
+                y = y.Substring(0, y.Length - 1);
+
+                if (y.Length < 1)
                 {
-                    number = "0";
+                    y = "0";
                 }
+
+                result = y;
             }
 
-            UpdateNumber();
+            UpdateResult();
         }
         private void EqualsButton_Click(object sender, System.EventArgs e)
         {
-            UpdateOperation(true, " =");
+            if (y == null)
+            {
+                y = x;
+            }
+            UpdateOperation(x => $"{x} =");
             Calculate();
-            UpdateNumber();
+            UpdateResult();
         }
         
         private void BinaryOperation_Click(object sender, System.EventArgs e)
         {
-            Calculate();
+            var change = y == null && operation != null;
+
+            if (!change) Calculate();
 
             operation = BinaryOperation.All.Find(o => o.Sign == (sender as Button).Text);
-            lastNumber = number;
+            
+            if (change)
+            {
+                UpdateOperation();
+                return;
+            }
+            
+            x = y;
 
             UpdateAll();
 
-            number = "0";
+            y = null;
         }
         private void UnaryOperation_Click(object sender, System.EventArgs e)
         {
-            number = UnaryOperation.All.Find(o => o.Sign == (sender as Button).Text).Run(double.Parse(number)).ToString();
-            UpdateNumber();
-            UpdateOperation(true);
+            var op = UnaryOperation.All.Find(o => o.Sign == (sender as Button).Text);
+            UpdateOperation(op.Modify);
+            result = op.Run(double.Parse(y)).ToString();
+            y = result;
+            UpdateResult();
         }
         
         private void NegateButton_Click(object sender, System.EventArgs e)
         {
-            if (number[0] == '-')
+            if (y != null)
             {
-                number = number.Substring(1);
-            }
-            else if (number != "0")
-            {
-                number = '-' + number;
-            }
+                if (y[0] == '-')
+                {
+                    result = y.Substring(1);
+                }
+                else if (y != "0")
+                {
+                    result = '-' + y;
+                }
 
-            UpdateAll();
+                UpdateOperation(x => $"negate({x})");
+                UpdateResult();
+
+                y = result;
+            }
         }
         private void PercentButton_Click(object sender, System.EventArgs e)
         {
-            if (lastNumber != null)
+            if (x != null)
             {
-                number = (double.Parse(lastNumber) / 100 * double.Parse(number)).ToString();
-                UpdateNumber();
+                y = (double.Parse(x) / 100 * double.Parse(y)).ToString();
+                result = y;
+                UpdateResult();
                 UpdateOperation(true);
             }
         }
         
         private void CButton_Click(object sender, System.EventArgs e)
         {
-            lastNumber = null;
+            x = null;
+            result = null;
             operation = null;
-            number = "0";
+            y = "0";
 
             UpdateAll();
         }
         private void CEButton_Click(object sender, System.EventArgs e)
         {
-            number = "0";
+            if (calculated)
+            {
+                operation = null;
+                x = null;
+                UpdateOperation();
+            }
+
+            y = "0";
+            result = y;
             UpdateAll();
         }
         
@@ -205,12 +248,12 @@ namespace SecondLaboratory.Views.Calculator
         }
         private void MRButton_Click(object sender, System.EventArgs e)
         {
-            number = memoryCell.ToString();
+            y = memoryCell.ToString();
             UpdateAll();
         }
         private void MSButton_Click(object sender, System.EventArgs e)
         {
-            memoryCell = double.Parse(number);
+            memoryCell = double.Parse(y);
 
             MCButton.Enabled = true;
             MRButton.Enabled = true;
@@ -223,7 +266,7 @@ namespace SecondLaboratory.Views.Calculator
                 return;
             }
 
-            memoryCell += double.Parse(number);
+            memoryCell += double.Parse(y);
         }
         private void MMButton_Click(object sender, System.EventArgs e)
         {
@@ -233,7 +276,7 @@ namespace SecondLaboratory.Views.Calculator
                 return;
             }
 
-            memoryCell -= double.Parse(number);
+            memoryCell -= double.Parse(y);
         }
     }
 }

@@ -31,7 +31,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.OperationHistoryLabel = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.OperationLabel = new System.Windows.Forms.Label();
+            this.ResultLabel = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.MMButton = new System.Windows.Forms.Button();
@@ -98,25 +98,25 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.OperationLabel);
+            this.panel2.Controls.Add(this.ResultLabel);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 36);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(687, 51);
             this.panel2.TabIndex = 0;
             // 
-            // OperationLabel
+            // ResultLabel
             // 
-            this.OperationLabel.AutoSize = true;
-            this.OperationLabel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.OperationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.OperationLabel.ForeColor = System.Drawing.Color.White;
-            this.OperationLabel.Location = new System.Drawing.Point(320, 0);
-            this.OperationLabel.Name = "OperationLabel";
-            this.OperationLabel.Size = new System.Drawing.Size(367, 55);
-            this.OperationLabel.TabIndex = 0;
-            this.OperationLabel.Text = "OperationLabel";
-            this.OperationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ResultLabel.AutoSize = true;
+            this.ResultLabel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.ResultLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ResultLabel.ForeColor = System.Drawing.Color.White;
+            this.ResultLabel.Location = new System.Drawing.Point(398, 0);
+            this.ResultLabel.Name = "ResultLabel";
+            this.ResultLabel.Size = new System.Drawing.Size(289, 55);
+            this.ResultLabel.TabIndex = 0;
+            this.ResultLabel.Text = "ResultLabel";
+            this.ResultLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // panel3
             // 
@@ -768,7 +768,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label OperationHistoryLabel;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label OperationLabel;
+        private System.Windows.Forms.Label ResultLabel;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
