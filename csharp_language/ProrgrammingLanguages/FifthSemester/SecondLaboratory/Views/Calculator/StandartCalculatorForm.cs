@@ -143,6 +143,13 @@ namespace SecondLaboratory.Views.Calculator
             number = "0";
         }
 
+        private void UnaryOperation_Click(object sender, System.EventArgs e)
+        {
+            number = UnaryOperation.All.Find(o => o.Sign == (sender as Button).Text).Run(double.Parse(number)).ToString();
+            UpdateUI();
+            OperationHistoryLabel.Text += $" {number}";
+        }
+
         private void NegateButton_Click(object sender, System.EventArgs e)
         {
             if (number[0] == '-')

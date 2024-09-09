@@ -617,8 +617,9 @@
             this.SquareRootButton.Name = "SquareRootButton";
             this.SquareRootButton.Size = new System.Drawing.Size(166, 117);
             this.SquareRootButton.TabIndex = 6;
-            this.SquareRootButton.Text = "sqrt(x)";
+            this.SquareRootButton.Text = "√x";
             this.SquareRootButton.UseVisualStyleBackColor = false;
+            this.SquareRootButton.Click += new System.EventHandler(this.UnaryOperation_Click);
             // 
             // SquareButton
             // 
@@ -634,8 +635,9 @@
             this.SquareButton.Name = "SquareButton";
             this.SquareButton.Size = new System.Drawing.Size(166, 117);
             this.SquareButton.TabIndex = 5;
-            this.SquareButton.Text = "x^2";
+            this.SquareButton.Text = "x²";
             this.SquareButton.UseVisualStyleBackColor = false;
+            this.SquareButton.Click += new System.EventHandler(this.UnaryOperation_Click);
             // 
             // InvertButton
             // 
@@ -653,6 +655,7 @@
             this.InvertButton.TabIndex = 4;
             this.InvertButton.Text = "1/x";
             this.InvertButton.UseVisualStyleBackColor = false;
+            this.InvertButton.Click += new System.EventHandler(this.UnaryOperation_Click);
             // 
             // BackspaceButton
             // 

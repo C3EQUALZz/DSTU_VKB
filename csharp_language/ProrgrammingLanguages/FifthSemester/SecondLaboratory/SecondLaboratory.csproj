@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Enums\BinaryOperation.cs" />
     <Compile Include="Enums\CalculatorType.cs" />
+    <Compile Include="Enums\UnaryOperation.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Structures\NavigationItem.cs" />
