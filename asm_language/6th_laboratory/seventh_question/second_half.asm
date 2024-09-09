@@ -1,6 +1,6 @@
 data segment
-    prompt1 db 'Enter first string: ',13,10,'$'
-    prompt2 db 13,10,'Enter substring: '
+    prompt1 db 'Enter first string: $'
+    prompt2 db 13,10,'Enter substring: $'
     crlf db 13,10,'$'
     txtno db 13,10,'Not '
     txtyes db 'exists $'
