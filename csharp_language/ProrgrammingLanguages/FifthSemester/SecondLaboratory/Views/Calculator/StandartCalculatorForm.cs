@@ -1,10 +1,15 @@
-﻿using SecondLaboratory.Extensions;
+﻿using SecondLaboratory.Enums;
+using SecondLaboratory.Extensions;
 using System.Windows.Forms;
 
 namespace SecondLaboratory.Views.Calculator
 {
     public partial class StandartCalculatorForm : Form
     {
+        private string lastNumber = string.Empty;
+        private string number = "0";
+        private CalculatorOperationType operation = null;
+
         public StandartCalculatorForm()
         {
             InitializeComponent();
@@ -17,6 +22,18 @@ namespace SecondLaboratory.Views.Calculator
 
             // NOT WORKING
             //RoundButtons();
+        }
+
+
+
+        private void UpdateUI()
+        {
+            OperationLabel.Text = number;
+
+            if (operation != null && number != "0")
+            {
+                OperationHistoryLabel.Text = $"{lastNumber} {operation.Sign} {number}";
+            }
         }
 
         // HELP
@@ -53,6 +70,35 @@ namespace SecondLaboratory.Views.Calculator
             {
                 button.SetRoundedShape(10);
             }
+        }
+
+        private void DigitButton_Click(object sender, System.EventArgs e)
+        {
+            var digit = (sender as Button).Text;
+
+            if (number == "0")
+            {
+                number = string.Empty;
+            }
+
+            number += digit;
+
+            UpdateUI();
+        }
+
+        private void BackspaceButton_Click(object sender, System.EventArgs e)
+        {
+            if (number != "0")
+            {
+                number = number.Substring(0, number.Length - 1);
+
+                if (number.Length < 1)
+                {
+                    number = "0";
+                }
+            }
+
+            UpdateUI();
         }
     }
 }
