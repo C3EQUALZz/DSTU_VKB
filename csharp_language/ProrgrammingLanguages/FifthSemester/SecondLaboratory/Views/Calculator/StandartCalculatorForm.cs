@@ -85,7 +85,7 @@ namespace SecondLaboratory.Views.Calculator
         {
             var digit = (sender as Button).Text;
 
-            if (number == "0")
+            if (number == "0" && digit != ",")
             {
                 number = string.Empty;
             }
@@ -130,6 +130,20 @@ namespace SecondLaboratory.Views.Calculator
             UpdateUI();
 
             number = "0";
+        }
+
+        private void NegateButton_Click(object sender, System.EventArgs e)
+        {
+            if (number[0] == '-')
+            {
+                number = number.Substring(1);
+            }
+            else if (number != "0")
+            {
+                number = '-' + number;
+            }
+
+            UpdateUI();
         }
     }
 }

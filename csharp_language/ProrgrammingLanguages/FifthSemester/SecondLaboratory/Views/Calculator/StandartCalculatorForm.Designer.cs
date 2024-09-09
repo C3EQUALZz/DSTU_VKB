@@ -331,6 +331,7 @@
             this.PointButton.TabIndex = 22;
             this.PointButton.Text = ",";
             this.PointButton.UseVisualStyleBackColor = false;
+            this.PointButton.Click += new System.EventHandler(this.DigitButton_Click);
             // 
             // ZeroButton
             // 
@@ -366,6 +367,7 @@
             this.PMButton.TabIndex = 20;
             this.PMButton.Text = "+/-";
             this.PMButton.UseVisualStyleBackColor = false;
+            this.PMButton.Click += new System.EventHandler(this.NegateButton_Click);
             // 
             // PlusButton
             // 
