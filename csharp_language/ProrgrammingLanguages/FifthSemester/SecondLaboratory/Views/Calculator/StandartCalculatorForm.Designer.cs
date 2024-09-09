@@ -706,6 +706,7 @@
             this.CEButton.TabIndex = 1;
             this.CEButton.Text = "CE";
             this.CEButton.UseVisualStyleBackColor = false;
+            this.CEButton.Click += new System.EventHandler(this.CEButton_Click);
             // 
             // PercentButton
             // 

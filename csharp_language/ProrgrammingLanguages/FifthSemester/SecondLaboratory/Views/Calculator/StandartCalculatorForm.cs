@@ -158,5 +158,12 @@ namespace SecondLaboratory.Views.Calculator
 
             UpdateUI();
         }
+
+        private void CEButton_Click(object sender, System.EventArgs e)
+        {
+            number = "0";
+
+            UpdateUI();
+        }
     }
 }
