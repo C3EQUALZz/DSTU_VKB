@@ -30,7 +30,7 @@ namespace SecondLaboratory.Views.Calculator
         {
             OperationLabel.Text = number;
 
-            if (operation != null && lastNumber != null)
+            if (lastNumber != null && operation != null)
             {
                 OperationHistoryLabel.Text = $"{lastNumber} {operation.Sign}";
             }
