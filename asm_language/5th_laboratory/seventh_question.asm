@@ -32,18 +32,11 @@ CODE_S segment
         inc si
 
         cmp al, ' '
-        je new_line
+        je print_new_line
 
         mov ah, 02h
         mov dl, al
         int 21h
-
-        jmp iterate_buffer
-
-        new_line:
-            mov ah, 09h
-            lea dx, new
-            int 21h
 
         jmp iterate_buffer
 
