@@ -10,6 +10,8 @@ namespace SecondLaboratory.Views.Calculator
         private string number = "0";
         private BinaryOperation operation = null;
 
+        private double? memoryCell = null;
+
         public StandartCalculatorForm()
         {
             InitializeComponent();
@@ -188,6 +190,50 @@ namespace SecondLaboratory.Views.Calculator
                 UpdateUI();
                 OperationHistoryLabel.Text += $" {number}";
             }
+        }
+
+        private void MCButton_Click(object sender, System.EventArgs e)
+        {
+            memoryCell = null;
+
+            MCButton.Enabled = false;
+            MRButton.Enabled = false;
+        }
+
+        private void MRButton_Click(object sender, System.EventArgs e)
+        {
+            number = memoryCell.ToString();
+            UpdateUI();
+        }
+
+        private void MSButton_Click(object sender, System.EventArgs e)
+        {
+            memoryCell = double.Parse(number);
+
+            MCButton.Enabled = true;
+            MRButton.Enabled = true;
+        }
+
+        private void MPButton_Click(object sender, System.EventArgs e)
+        {
+            if (memoryCell == null)
+            {
+                MSButton_Click(sender, e);
+                return;
+            }
+
+            memoryCell += double.Parse(number);
+        }
+
+        private void MMButton_Click(object sender, System.EventArgs e)
+        {
+            if (memoryCell == null)
+            {
+                MSButton_Click(sender, e);
+                return;
+            }
+
+            memoryCell -= double.Parse(number);
         }
     }
 }

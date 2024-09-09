@@ -163,6 +163,7 @@
             this.MMButton.TabIndex = 4;
             this.MMButton.Text = "M-";
             this.MMButton.UseVisualStyleBackColor = true;
+            this.MMButton.Click += new System.EventHandler(this.MMButton_Click);
             // 
             // MPButton
             // 
@@ -179,6 +180,7 @@
             this.MPButton.TabIndex = 3;
             this.MPButton.Text = "M+";
             this.MPButton.UseVisualStyleBackColor = true;
+            this.MPButton.Click += new System.EventHandler(this.MPButton_Click);
             // 
             // MSButton
             // 
@@ -195,10 +197,12 @@
             this.MSButton.TabIndex = 2;
             this.MSButton.Text = "MS";
             this.MSButton.UseVisualStyleBackColor = true;
+            this.MSButton.Click += new System.EventHandler(this.MSButton_Click);
             // 
             // MRButton
             // 
             this.MRButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MRButton.Enabled = false;
             this.MRButton.FlatAppearance.BorderSize = 0;
             this.MRButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.MRButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
@@ -211,10 +215,12 @@
             this.MRButton.TabIndex = 1;
             this.MRButton.Text = "MR";
             this.MRButton.UseVisualStyleBackColor = true;
+            this.MRButton.Click += new System.EventHandler(this.MRButton_Click);
             // 
             // MCButton
             // 
             this.MCButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MCButton.Enabled = false;
             this.MCButton.FlatAppearance.BorderSize = 0;
             this.MCButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.MCButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
@@ -227,6 +233,7 @@
             this.MCButton.TabIndex = 0;
             this.MCButton.Text = "MC";
             this.MCButton.UseVisualStyleBackColor = true;
+            this.MCButton.Click += new System.EventHandler(this.MCButton_Click);
             // 
             // panel4
             // 
