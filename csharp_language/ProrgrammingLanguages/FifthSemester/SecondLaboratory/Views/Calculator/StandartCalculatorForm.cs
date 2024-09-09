@@ -253,6 +253,8 @@ namespace SecondLaboratory.Views.Calculator
         }
         private void MSButton_Click(object sender, System.EventArgs e)
         {
+            if (y == null) return;
+
             memoryCell = double.Parse(y);
 
             MCButton.Enabled = true;
@@ -260,6 +262,8 @@ namespace SecondLaboratory.Views.Calculator
         }
         private void MPButton_Click(object sender, System.EventArgs e)
         {
+            if (y == null) return;
+
             if (memoryCell == null)
             {
                 MSButton_Click(sender, e);
@@ -270,6 +274,8 @@ namespace SecondLaboratory.Views.Calculator
         }
         private void MMButton_Click(object sender, System.EventArgs e)
         {
+            if (y == null) return;
+
             if (memoryCell == null)
             {
                 MSButton_Click(sender, e);
