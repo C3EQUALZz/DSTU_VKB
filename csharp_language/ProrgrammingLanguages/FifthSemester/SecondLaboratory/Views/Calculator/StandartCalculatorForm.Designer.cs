@@ -724,6 +724,7 @@
             this.PercentButton.TabIndex = 0;
             this.PercentButton.Text = "%";
             this.PercentButton.UseVisualStyleBackColor = false;
+            this.PercentButton.Click += new System.EventHandler(this.PercentButton_Click);
             // 
             // StandartCalculatorForm
             // 

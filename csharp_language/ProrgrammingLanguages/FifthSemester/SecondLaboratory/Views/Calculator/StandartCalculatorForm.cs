@@ -30,7 +30,7 @@ namespace SecondLaboratory.Views.Calculator
         {
             OperationLabel.Text = number;
 
-            if (operation != null)
+            if (operation != null && lastNumber != null)
             {
                 OperationHistoryLabel.Text = $"{lastNumber} {operation.Sign}";
             }
@@ -116,7 +116,14 @@ namespace SecondLaboratory.Views.Calculator
 
         private void EqualsButton_Click(object sender, System.EventArgs e)
         {
-            OperationHistoryLabel.Text += $" {number} =";
+            if (operation != null && lastNumber != null)
+            {
+                OperationHistoryLabel.Text = $"{lastNumber} {operation.Sign} {number} =";
+            }
+            else
+            {
+                OperationHistoryLabel.Text = $"{number} =";
+            }
 
             Calculate();
 
@@ -164,6 +171,16 @@ namespace SecondLaboratory.Views.Calculator
             number = "0";
 
             UpdateUI();
+        }
+
+        private void PercentButton_Click(object sender, System.EventArgs e)
+        {
+            if (lastNumber != null)
+            {
+                number = (double.Parse(lastNumber) / 100 * double.Parse(number)).ToString();
+                UpdateUI();
+                OperationHistoryLabel.Text += $" {number}";
+            }
         }
     }
 }
