@@ -9,7 +9,7 @@ namespace ThirdLaboratory.core
     /// </summary>
     internal class ExpandCommand : Command
     {
-        public ExpandCommand(Panel panel, Timer timer) : base(panel, timer, 10, 400) { }
+        public ExpandCommand(Panel panel, Timer timer) : base(panel, timer, 10, 320) { }
 
         /// <summary>
         /// Запуск определенного метода для работы. 
