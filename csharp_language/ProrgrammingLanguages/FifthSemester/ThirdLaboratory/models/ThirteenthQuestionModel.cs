@@ -24,6 +24,8 @@ namespace ThirdLaboratory.Models
 
         public int[] Execute(int rowIndex)
         {
+            rowIndex -= 1;
+
             var row = new int[Columns];
 
             for (var j = 0; j < Columns; j++)

@@ -10,6 +10,7 @@ namespace ThirdLaboratory.Core.Interfaces.ThirteenthQuestion
         int RowCount { get; set; }
         int ColumnCount { get; set; }
         int[,] Matrix { get; set; }
+        string OutputText { get; set; }
         void CountOfRows_Validating(object sender, CancelEventArgs e);
         void CountOfColumns_Validating(object sender, CancelEventArgs e);
         void NumberOfRow_Validating(object sender, CancelEventArgs e);

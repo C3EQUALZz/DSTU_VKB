@@ -3,11 +3,15 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 using ThirdLaboratory.Core.Interfaces.ThirteenthQuestion;
+using ThirdLaboratory.Models;
+using ThirdLaboratory.Presenters;
 
 namespace ThirdLaboratory.forms
 {
     public partial class FormThirteenthQuestion : Form, IThirteenthQuestionView
     {
+        private readonly IThirteenthQuestionPresenter _presenter;
+
         /// <summary>
         /// Свойство для установки или получения значения хедеров - строк.
         /// Я использую, чтобы можно было установить значения, подписав все. 
@@ -116,6 +120,7 @@ namespace ThirdLaboratory.forms
 
         public FormThirteenthQuestion()
         {
+            _presenter = new ThirteenthQuestionPresenter(this, new ThirteenthQuestionModel());
             InitializeComponent();
         }
 
@@ -151,7 +156,7 @@ namespace ThirdLaboratory.forms
 
         public void GenerateRandomMatrixButton_Click(object sender, EventArgs e)
         {
-            
+            _presenter.OnCreateMatrix(int.Parse(countOfRows.Texts), int.Parse(countOfColumns.Texts));
         }
 
         public void ClearButton_Click(object sender, EventArgs e)
@@ -171,7 +176,7 @@ namespace ThirdLaboratory.forms
 
         public void ExecuteButton_Click(object sender, EventArgs e)
         {
-
+            _presenter.OnExecute(int.Parse(numberOfRow.Texts));
         }
     }
 }

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using ThirdLaboratory.Core.Interfaces.ThirteenthQuestion;
 
 namespace ThirdLaboratory.Presenters
 {
-    internal class ThirteenthQuestionPresenter
+    internal class ThirteenthQuestionPresenter : IThirteenthQuestionPresenter
     {
         private readonly IThirteenthQuestionView _view;
         private readonly IThirteenthQuestionModel _model;
@@ -38,7 +34,7 @@ namespace ThirdLaboratory.Presenters
         /// <param name="index">номер столбца, который хотим удалить</param>
         public void OnExecute(int index)
         {
-            _model.Execute(index);
+            _view.OutputText = $"Строка под номером {index} " + string.Join(", ", _model.Execute(index));
         }
 
     }
