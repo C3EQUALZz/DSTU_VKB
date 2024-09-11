@@ -219,9 +219,9 @@ namespace SecondLaboratory.Views.Calculator
         private void CButton_Click(object sender, System.EventArgs e)
         {
             x = null;
-            result = null;
             operation = null;
             y = "0";
+            result = y;
 
             UpdateAll();
         }
@@ -249,6 +249,7 @@ namespace SecondLaboratory.Views.Calculator
         private void MRButton_Click(object sender, System.EventArgs e)
         {
             y = memoryCell.ToString();
+            result = y;
             UpdateAll();
         }
         private void MSButton_Click(object sender, System.EventArgs e)
