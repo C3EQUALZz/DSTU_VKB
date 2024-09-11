@@ -1,0 +1,12 @@
+ Volume in drive C is System Windows
+ Volume Serial Number is 9A47-8939
+
+ Directory of C:\Windows
+
+07.05.2022  08:19               670 WindowsShell.Manifest
+07.05.2022  08:24    <DIR>          LanguageOverlayCache
+07.05.2022  08:24    <DIR>          ELAMBKUP
+02.09.2024  15:59    <DIR>          Installer
+04.09.2024  09:23    <DIR>          ..
+               1 File(s)            670 bytes
+               4 Dir(s)  17 743 654 912 bytes free
