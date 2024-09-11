@@ -108,6 +108,11 @@ namespace SecondLaboratory.Views.Calculator
 
             var digit = (sender as Button).Text;
 
+            if (digit == "," && result != null && result.Contains(","))
+            {
+                return;
+            }
+
             if (y == "0" && digit != ",")
             {
                 y = null;
