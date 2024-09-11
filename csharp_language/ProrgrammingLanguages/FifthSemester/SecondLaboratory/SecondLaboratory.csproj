@@ -61,6 +61,12 @@
     <Compile Include="Views\Calculator\StandartCalculatorForm.Designer.cs">
       <DependentUpon>StandartCalculatorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Converter\ConverterBaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Converter\ConverterBaseForm.Designer.cs">
+      <DependentUpon>ConverterBaseForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\ShellForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,6 +87,9 @@
     </Compile>
     <EmbeddedResource Include="Views\Calculator\StandartCalculatorForm.resx">
       <DependentUpon>StandartCalculatorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Converter\ConverterBaseForm.resx">
+      <DependentUpon>ConverterBaseForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\ShellForm.resx">
       <DependentUpon>ShellForm.cs</DependentUpon>
@@ -104,8 +113,6 @@
   <ItemGroup>
     <None Include="Resources\menu-svgrepo-com.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Converter\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

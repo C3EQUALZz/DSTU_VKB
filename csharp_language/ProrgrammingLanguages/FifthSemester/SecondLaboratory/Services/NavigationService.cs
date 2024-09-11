@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using SecondLaboratory.Extensions;
+using SecondLaboratory.Views.Converter;
 
 namespace SecondLaboratory.Services;
 
@@ -32,6 +33,7 @@ public class NavigationService
     public void Configure()
     {
         AddNavigation<StandartCalculatorForm>("Standart", CalculatorType.Calculator);
+        AddNavigation<ConverterBaseForm>("ConverterBase", CalculatorType.Converter);
     }
 
     public NavigationItem AddNavigation<T>(string title, CalculatorType calculatorType) where T : Form

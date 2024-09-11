@@ -20,6 +20,7 @@ public partial class ShellForm : Form
         NavigationService.Navigated += (i) =>
         {
             PageTitleLabel.Text = i.Title;
+            NavigationPanel.Width = 0;
         };
     }
 
