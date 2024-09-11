@@ -2,12 +2,10 @@
 using SecondLaboratory.Views.Calculator;
 using SecondLaboratory.Enums;
 using System.Windows.Forms;
-using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.Linq;
 using SecondLaboratory.Extensions;
-using SecondLaboratory.Views.Converter;
 using SecondLaboratory.Views.Converter.Converters;
 
 namespace SecondLaboratory.Services;
