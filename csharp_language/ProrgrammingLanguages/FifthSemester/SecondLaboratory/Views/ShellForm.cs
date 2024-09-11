@@ -33,7 +33,7 @@ public partial class ShellForm : Form
 
         NavigationItemsPanel.AutoScroll = true;
 
-        button1.SetRoundedShape(5);
+        NavigationButton.SetRoundedShape(5);
 
         PageTitleLabel.Text = "<PageTitle>";
 
@@ -55,7 +55,7 @@ public partial class ShellForm : Form
             DwmSetWindowAttribute(Handle, 20, new[] { 1 }, 4);
     }
 
-    private void button1_Click(object sender, EventArgs e)
+    private void NavigationButton_Click(object sender, EventArgs e)
     {
         NavigationPanel.Width = NavigationPanel.Width == 0 ? 250 : 0;
     }

@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.NavigationButton = new System.Windows.Forms.Button();
             this.NavigationPanel = new System.Windows.Forms.Panel();
             this.NavigationItemsPanel = new System.Windows.Forms.Panel();
             this.CalculatorContainerPanel = new System.Windows.Forms.Panel();
@@ -45,7 +45,7 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.NavigationButton);
             this.panel1.Controls.Add(this.NavigationPanel);
             this.panel1.Controls.Add(this.CalculatorContainerPanel);
             this.panel1.Controls.Add(this.panel2);
@@ -55,24 +55,24 @@
             this.panel1.Size = new System.Drawing.Size(328, 494);
             this.panel1.TabIndex = 0;
             // 
-            // button1
+            // NavigationButton
             // 
-            this.button1.BackColor = System.Drawing.Color.Transparent;
-            this.button1.BackgroundImage = global::SecondLaboratory.Properties.Resources.menu_svgrepo_com;
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
-            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(18, 16);
-            this.button1.Margin = new System.Windows.Forms.Padding(0);
-            this.button1.Name = "button1";
-            this.button1.Padding = new System.Windows.Forms.Padding(5);
-            this.button1.Size = new System.Drawing.Size(20, 20);
-            this.button1.TabIndex = 0;
-            this.button1.TabStop = false;
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.NavigationButton.BackColor = System.Drawing.Color.Transparent;
+            this.NavigationButton.BackgroundImage = global::SecondLaboratory.Properties.Resources.menu_svgrepo_com;
+            this.NavigationButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.NavigationButton.FlatAppearance.BorderSize = 0;
+            this.NavigationButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
+            this.NavigationButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
+            this.NavigationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NavigationButton.Location = new System.Drawing.Point(18, 16);
+            this.NavigationButton.Margin = new System.Windows.Forms.Padding(0);
+            this.NavigationButton.Name = "NavigationButton";
+            this.NavigationButton.Padding = new System.Windows.Forms.Padding(5);
+            this.NavigationButton.Size = new System.Drawing.Size(20, 20);
+            this.NavigationButton.TabIndex = 0;
+            this.NavigationButton.TabStop = false;
+            this.NavigationButton.UseVisualStyleBackColor = false;
+            this.NavigationButton.Click += new System.EventHandler(this.NavigationButton_Click);
             // 
             // NavigationPanel
             // 
@@ -151,7 +151,7 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button NavigationButton;
         private System.Windows.Forms.Panel NavigationPanel;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label PageTitleLabel;
