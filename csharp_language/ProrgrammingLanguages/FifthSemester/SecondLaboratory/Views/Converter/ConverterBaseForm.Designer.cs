@@ -115,6 +115,7 @@
             this.LValueLabel.TabIndex = 0;
             this.LValueLabel.Text = "LValueLabel";
             this.LValueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LValueLabel.Click += new System.EventHandler(this.Side_Click);
             // 
             // tableLayoutPanel2
             // 
@@ -171,6 +172,7 @@
             this.RValueLabel.TabIndex = 1;
             this.RValueLabel.Text = "RValueLabel";
             this.RValueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.RValueLabel.Click += new System.EventHandler(this.Side_Click);
             // 
             // tableLayoutPanel3
             // 
