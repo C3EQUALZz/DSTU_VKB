@@ -48,9 +48,15 @@
             this.NineButton = new System.Windows.Forms.Button();
             this.EightButton = new System.Windows.Forms.Button();
             this.SevenButton = new System.Windows.Forms.Button();
+            this.LValueLabel = new System.Windows.Forms.Label();
+            this.LTitleLabel = new System.Windows.Forms.Label();
+            this.RValueLabel = new System.Windows.Forms.Label();
+            this.RTitleLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,7 +71,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(605, 150);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(605, 60);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // tableLayoutPanel2
@@ -75,11 +81,11 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel5, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 150);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 60);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(605, 150);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(605, 60);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // tableLayoutPanel3
@@ -88,39 +94,43 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel6, 0, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 300);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 120);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(605, 428);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(605, 608);
             this.tableLayoutPanel3.TabIndex = 2;
             // 
             // tableLayoutPanel4
             // 
             this.tableLayoutPanel4.ColumnCount = 1;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.Controls.Add(this.LTitleLabel, 0, 1);
+            this.tableLayoutPanel4.Controls.Add(this.LValueLabel, 0, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(5, 15);
-            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(5, 15, 5, 15);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 5);
+            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(595, 120);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(599, 50);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
             // tableLayoutPanel5
             // 
             this.tableLayoutPanel5.ColumnCount = 1;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.Controls.Add(this.RTitleLabel, 0, 1);
+            this.tableLayoutPanel5.Controls.Add(this.RValueLabel, 0, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(5, 15);
-            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(5, 15, 5, 15);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 5);
+            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 2;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(595, 120);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(599, 50);
             this.tableLayoutPanel5.TabIndex = 1;
             // 
             // tableLayoutPanel6
@@ -154,7 +164,7 @@
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(599, 422);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(599, 602);
             this.tableLayoutPanel6.TabIndex = 0;
             // 
             // CEButton
@@ -169,7 +179,7 @@
             this.CEButton.Location = new System.Drawing.Point(201, 2);
             this.CEButton.Margin = new System.Windows.Forms.Padding(2);
             this.CEButton.Name = "CEButton";
-            this.CEButton.Size = new System.Drawing.Size(195, 80);
+            this.CEButton.Size = new System.Drawing.Size(195, 116);
             this.CEButton.TabIndex = 2;
             this.CEButton.Text = "CE";
             this.CEButton.UseVisualStyleBackColor = false;
@@ -186,7 +196,7 @@
             this.BackspaceButton.Location = new System.Drawing.Point(400, 2);
             this.BackspaceButton.Margin = new System.Windows.Forms.Padding(2);
             this.BackspaceButton.Name = "BackspaceButton";
-            this.BackspaceButton.Size = new System.Drawing.Size(197, 80);
+            this.BackspaceButton.Size = new System.Drawing.Size(197, 116);
             this.BackspaceButton.TabIndex = 3;
             this.BackspaceButton.Text = "<-";
             this.BackspaceButton.UseVisualStyleBackColor = false;
@@ -200,10 +210,10 @@
             this.PointButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.PointButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.PointButton.ForeColor = System.Drawing.Color.White;
-            this.PointButton.Location = new System.Drawing.Point(400, 338);
+            this.PointButton.Location = new System.Drawing.Point(400, 482);
             this.PointButton.Margin = new System.Windows.Forms.Padding(2);
             this.PointButton.Name = "PointButton";
-            this.PointButton.Size = new System.Drawing.Size(197, 82);
+            this.PointButton.Size = new System.Drawing.Size(197, 118);
             this.PointButton.TabIndex = 33;
             this.PointButton.Text = ",";
             this.PointButton.UseVisualStyleBackColor = false;
@@ -217,10 +227,10 @@
             this.ZeroButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.ZeroButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ZeroButton.ForeColor = System.Drawing.Color.White;
-            this.ZeroButton.Location = new System.Drawing.Point(201, 338);
+            this.ZeroButton.Location = new System.Drawing.Point(201, 482);
             this.ZeroButton.Margin = new System.Windows.Forms.Padding(2);
             this.ZeroButton.Name = "ZeroButton";
-            this.ZeroButton.Size = new System.Drawing.Size(195, 82);
+            this.ZeroButton.Size = new System.Drawing.Size(195, 118);
             this.ZeroButton.TabIndex = 32;
             this.ZeroButton.Text = "0";
             this.ZeroButton.UseVisualStyleBackColor = false;
@@ -234,10 +244,10 @@
             this.ThreeButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.ThreeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ThreeButton.ForeColor = System.Drawing.Color.White;
-            this.ThreeButton.Location = new System.Drawing.Point(400, 254);
+            this.ThreeButton.Location = new System.Drawing.Point(400, 362);
             this.ThreeButton.Margin = new System.Windows.Forms.Padding(2);
             this.ThreeButton.Name = "ThreeButton";
-            this.ThreeButton.Size = new System.Drawing.Size(197, 80);
+            this.ThreeButton.Size = new System.Drawing.Size(197, 116);
             this.ThreeButton.TabIndex = 31;
             this.ThreeButton.Text = "3";
             this.ThreeButton.UseVisualStyleBackColor = false;
@@ -251,10 +261,10 @@
             this.TwoButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.TwoButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.TwoButton.ForeColor = System.Drawing.Color.White;
-            this.TwoButton.Location = new System.Drawing.Point(201, 254);
+            this.TwoButton.Location = new System.Drawing.Point(201, 362);
             this.TwoButton.Margin = new System.Windows.Forms.Padding(2);
             this.TwoButton.Name = "TwoButton";
-            this.TwoButton.Size = new System.Drawing.Size(195, 80);
+            this.TwoButton.Size = new System.Drawing.Size(195, 116);
             this.TwoButton.TabIndex = 30;
             this.TwoButton.Text = "2";
             this.TwoButton.UseVisualStyleBackColor = false;
@@ -268,10 +278,10 @@
             this.OneButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.OneButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.OneButton.ForeColor = System.Drawing.Color.White;
-            this.OneButton.Location = new System.Drawing.Point(2, 254);
+            this.OneButton.Location = new System.Drawing.Point(2, 362);
             this.OneButton.Margin = new System.Windows.Forms.Padding(2);
             this.OneButton.Name = "OneButton";
-            this.OneButton.Size = new System.Drawing.Size(195, 80);
+            this.OneButton.Size = new System.Drawing.Size(195, 116);
             this.OneButton.TabIndex = 29;
             this.OneButton.Text = "1";
             this.OneButton.UseVisualStyleBackColor = false;
@@ -285,10 +295,10 @@
             this.SixButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.SixButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SixButton.ForeColor = System.Drawing.Color.White;
-            this.SixButton.Location = new System.Drawing.Point(400, 170);
+            this.SixButton.Location = new System.Drawing.Point(400, 242);
             this.SixButton.Margin = new System.Windows.Forms.Padding(2);
             this.SixButton.Name = "SixButton";
-            this.SixButton.Size = new System.Drawing.Size(197, 80);
+            this.SixButton.Size = new System.Drawing.Size(197, 116);
             this.SixButton.TabIndex = 28;
             this.SixButton.Text = "6";
             this.SixButton.UseVisualStyleBackColor = false;
@@ -302,10 +312,10 @@
             this.FiveButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.FiveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.FiveButton.ForeColor = System.Drawing.Color.White;
-            this.FiveButton.Location = new System.Drawing.Point(201, 170);
+            this.FiveButton.Location = new System.Drawing.Point(201, 242);
             this.FiveButton.Margin = new System.Windows.Forms.Padding(2);
             this.FiveButton.Name = "FiveButton";
-            this.FiveButton.Size = new System.Drawing.Size(195, 80);
+            this.FiveButton.Size = new System.Drawing.Size(195, 116);
             this.FiveButton.TabIndex = 27;
             this.FiveButton.Text = "5";
             this.FiveButton.UseVisualStyleBackColor = false;
@@ -319,10 +329,10 @@
             this.FourButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.FourButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.FourButton.ForeColor = System.Drawing.Color.White;
-            this.FourButton.Location = new System.Drawing.Point(2, 170);
+            this.FourButton.Location = new System.Drawing.Point(2, 242);
             this.FourButton.Margin = new System.Windows.Forms.Padding(2);
             this.FourButton.Name = "FourButton";
-            this.FourButton.Size = new System.Drawing.Size(195, 80);
+            this.FourButton.Size = new System.Drawing.Size(195, 116);
             this.FourButton.TabIndex = 26;
             this.FourButton.Text = "4";
             this.FourButton.UseVisualStyleBackColor = false;
@@ -336,10 +346,10 @@
             this.NineButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.NineButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.NineButton.ForeColor = System.Drawing.Color.White;
-            this.NineButton.Location = new System.Drawing.Point(400, 86);
+            this.NineButton.Location = new System.Drawing.Point(400, 122);
             this.NineButton.Margin = new System.Windows.Forms.Padding(2);
             this.NineButton.Name = "NineButton";
-            this.NineButton.Size = new System.Drawing.Size(197, 80);
+            this.NineButton.Size = new System.Drawing.Size(197, 116);
             this.NineButton.TabIndex = 25;
             this.NineButton.Text = "9";
             this.NineButton.UseVisualStyleBackColor = false;
@@ -353,10 +363,10 @@
             this.EightButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.EightButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.EightButton.ForeColor = System.Drawing.Color.White;
-            this.EightButton.Location = new System.Drawing.Point(201, 86);
+            this.EightButton.Location = new System.Drawing.Point(201, 122);
             this.EightButton.Margin = new System.Windows.Forms.Padding(2);
             this.EightButton.Name = "EightButton";
-            this.EightButton.Size = new System.Drawing.Size(195, 80);
+            this.EightButton.Size = new System.Drawing.Size(195, 116);
             this.EightButton.TabIndex = 24;
             this.EightButton.Text = "8";
             this.EightButton.UseVisualStyleBackColor = false;
@@ -370,13 +380,65 @@
             this.SevenButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.SevenButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SevenButton.ForeColor = System.Drawing.Color.White;
-            this.SevenButton.Location = new System.Drawing.Point(2, 86);
+            this.SevenButton.Location = new System.Drawing.Point(2, 122);
             this.SevenButton.Margin = new System.Windows.Forms.Padding(2);
             this.SevenButton.Name = "SevenButton";
-            this.SevenButton.Size = new System.Drawing.Size(195, 80);
+            this.SevenButton.Size = new System.Drawing.Size(195, 116);
             this.SevenButton.TabIndex = 23;
             this.SevenButton.Text = "7";
             this.SevenButton.UseVisualStyleBackColor = false;
+            // 
+            // LValueLabel
+            // 
+            this.LValueLabel.AutoSize = true;
+            this.LValueLabel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.LValueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.LValueLabel.ForeColor = System.Drawing.Color.White;
+            this.LValueLabel.Location = new System.Drawing.Point(3, 0);
+            this.LValueLabel.Name = "LValueLabel";
+            this.LValueLabel.Size = new System.Drawing.Size(175, 25);
+            this.LValueLabel.TabIndex = 0;
+            this.LValueLabel.Text = "LValueLabel";
+            this.LValueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // LTitleLabel
+            // 
+            this.LTitleLabel.AutoSize = true;
+            this.LTitleLabel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.LTitleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.LTitleLabel.ForeColor = System.Drawing.Color.White;
+            this.LTitleLabel.Location = new System.Drawing.Point(3, 25);
+            this.LTitleLabel.Name = "LTitleLabel";
+            this.LTitleLabel.Size = new System.Drawing.Size(156, 25);
+            this.LTitleLabel.TabIndex = 1;
+            this.LTitleLabel.Text = "LTitleLabel";
+            this.LTitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // RValueLabel
+            // 
+            this.RValueLabel.AutoSize = true;
+            this.RValueLabel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.RValueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.RValueLabel.ForeColor = System.Drawing.Color.White;
+            this.RValueLabel.Location = new System.Drawing.Point(3, 0);
+            this.RValueLabel.Name = "RValueLabel";
+            this.RValueLabel.Size = new System.Drawing.Size(179, 25);
+            this.RValueLabel.TabIndex = 1;
+            this.RValueLabel.Text = "RValueLabel";
+            this.RValueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // RTitleLabel
+            // 
+            this.RTitleLabel.AutoSize = true;
+            this.RTitleLabel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.RTitleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.RTitleLabel.ForeColor = System.Drawing.Color.White;
+            this.RTitleLabel.Location = new System.Drawing.Point(3, 25);
+            this.RTitleLabel.Name = "RTitleLabel";
+            this.RTitleLabel.Size = new System.Drawing.Size(160, 25);
+            this.RTitleLabel.TabIndex = 2;
+            this.RTitleLabel.Text = "RTitleLabel";
+            this.RTitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // ConverterBaseForm
             // 
@@ -393,6 +455,10 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.tableLayoutPanel4.PerformLayout();
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel5.PerformLayout();
             this.tableLayoutPanel6.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -420,5 +486,9 @@
         private System.Windows.Forms.Button NineButton;
         private System.Windows.Forms.Button EightButton;
         private System.Windows.Forms.Button SevenButton;
+        private System.Windows.Forms.Label LValueLabel;
+        private System.Windows.Forms.Label LTitleLabel;
+        private System.Windows.Forms.Label RTitleLabel;
+        private System.Windows.Forms.Label RValueLabel;
     }
 }
