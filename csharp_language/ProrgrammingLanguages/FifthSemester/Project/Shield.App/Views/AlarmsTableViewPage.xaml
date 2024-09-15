@@ -11,26 +11,30 @@
     <Grid>
         <controls:DataGrid
             AutoGenerateColumns="False"
-            ItemsSource="{x:Bind ViewModel.Alarms, Mode=OneWay}">
+            ItemsSource="{x:Bind ViewModel.Alarms, Mode=OneWay}"
+            GridLinesVisibility="All"
+            AlternatingRowBackground="#202020"
+            CanUserSortColumns="True"
+            Sorting="DataGrid_Sorting">
             <controls:DataGrid.Columns>
                 <controls:DataGridTextColumn 
-                    Header="AlarmId" 
+                    Header="AlarmId" Tag="AlarmId" 
                     Width="SizeToHeader"
                     Binding="{Binding AlarmId}"/>
                 <controls:DataGridTextColumn 
-                    Header="Date" 
+                    Header="Date" Tag="Date" 
                     Width="SizeToCells"
                     Binding="{Binding Date}"/>
                 <controls:DataGridTextColumn 
-                    Header="Organization" 
+                    Header="Organization" Tag="Organization" 
                     Width="SizeToCells"
                     Binding="{Binding Organization}"/>
                 <controls:DataGridTextColumn 
-                    Header="Address" 
+                    Header="Address" Tag="Address" 
                     Width="SizeToCells"
                     Binding="{Binding Address}"/>
                 <controls:DataGridTextColumn 
-                    Header="Result" 
+                    Header="Result" Tag="Result" 
                     Width="SizeToHeader"
                     Binding="{Binding Result}"/>
             </controls:DataGrid.Columns>
