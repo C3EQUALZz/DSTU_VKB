@@ -198,7 +198,7 @@
     <value>Ответственное лицо</value>
   </data>
   <data name="BaileeCreateContractDialog.PlaceholderText" xml:space="preserve">
-    <value>ФИО лица, ответственного за вскрытие помещения</value>
+    <value>ФИО ответственного лица</value>
   </data>
   <data name="BaileeTitle.Text" xml:space="preserve">
     <value>Ответственное лицо</value>
@@ -400,5 +400,8 @@
   </data>
   <data name="UserNameProfileHeader.Text" xml:space="preserve">
     <value>Имя пользователя:</value>
+  </data>
+  <data name="LegalEntityTextBlock.Text" xml:space="preserve">
+    <value>Юридическое лицо</value>
   </data>
 </root>

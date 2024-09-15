@@ -46,6 +46,7 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
     public string Address => AddressTB.Text;
     public string Comment => CommentTB.Text;
     public string Organization => OrganizationTB.Text;
+    public bool IsLegalEntity => LegalEntityCB.IsChecked.Value;
     public List<string> Owners => OwnersControls.Select(x => x.Value).Where(o => !string.IsNullOrWhiteSpace(o)).ToList();
     public StorageFile Plan;
     public StorageFile Picture;

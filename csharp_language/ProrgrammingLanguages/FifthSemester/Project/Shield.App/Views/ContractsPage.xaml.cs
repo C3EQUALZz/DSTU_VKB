@@ -74,6 +74,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
                 Address = content.Address,
                 Comment = content.Comment,
                 Organization = content.Organization,
+                IsLegalEntity = content.IsLegalEntity,
                 Owners = content.Owners.Count > 0 ? string.Join(';', content.Owners) : null,
                 Plan = new() {
                     Title = content.Plan.DisplayName,
