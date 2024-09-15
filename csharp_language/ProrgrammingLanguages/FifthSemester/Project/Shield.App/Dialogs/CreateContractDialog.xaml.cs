@@ -80,6 +80,7 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
         AddressTB.Text = contract.Address;
         CommentTB.Text = contract.Comment;
         OrganizationTB.Text = contract.Organization;
+        LegalEntityCB.IsChecked = contract.IsLegalEntity;
 
         if (contract.Owners != null)
         {
