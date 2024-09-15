@@ -16,6 +16,7 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
     public string Bailee { get; set; }
     public string? Comment { get; set; }
     public string Organization { get; set; }
+    public bool IsLegalEntity { get; set; }
     public PlanDto Plan { get; set; }
     public PictureDto Picture { get; set; }
     public BitmapImage Bitmap { get; set; }
@@ -52,6 +53,7 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
         Date = c.SignDate;
         Picture = c.Picture;
         Organization = c.Organization;
+        IsLegalEntity = c.IsLegalEntity;
         Alarms = c.Alarms.ToList();
         Bitmap = BitmapHelper.BytesToBitmap(c.Picture.Data);
 
@@ -80,6 +82,7 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
         Plan = dto.Plan;
         Date = dto.SignDate;
         Picture = dto.Picture;
+        IsLegalEntity = dto.IsLegalEntity;
         Organization = dto.Organization;
         Alarms = dto.Alarms.ToList();
         Bitmap = BitmapHelper.BytesToBitmap(dto.Picture.Data);
@@ -111,6 +114,7 @@ public sealed partial class ContractControl : UserControl, INotifyPropertyChange
             Comment = Comment,
             Owners = OwnersString,
             Organization = Organization,
+            IsLegalEntity = IsLegalEntity,
             Picture = new()
             {
                 Title = Picture.Title,

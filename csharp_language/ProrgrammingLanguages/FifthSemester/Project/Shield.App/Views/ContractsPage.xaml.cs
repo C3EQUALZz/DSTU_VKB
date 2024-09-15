@@ -134,7 +134,8 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
                 Comment = content.Comment,
                 Organization = content.Organization,
                 Owners = content.Owners.Count > 0 ? string.Join(';', content.Owners) : null,
-                SignDate = sender.Date
+                SignDate = sender.Date,
+                IsLegalEntity = content.IsLegalEntity,
             };
 
             // Отдельно проверяем, если пользователь заменил план здания, и,
