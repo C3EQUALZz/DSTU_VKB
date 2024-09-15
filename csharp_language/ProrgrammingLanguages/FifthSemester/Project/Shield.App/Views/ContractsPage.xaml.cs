@@ -482,6 +482,11 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 
     private async void Page_Loaded(object sender, RoutedEventArgs e)
     {
+        AuthHelper.Instance.Login += async () =>
+        {
+            await UpdateContractsList();
+        };
+
         await UpdateContractsList();
     }
 }
