@@ -10,9 +10,30 @@
 
     <Grid>
         <controls:DataGrid
-            AutoGenerateColumns="True"
+            AutoGenerateColumns="False"
             ItemsSource="{x:Bind ViewModel.Alarms, Mode=OneWay}">
-            
+            <controls:DataGrid.Columns>
+                <controls:DataGridTextColumn 
+                    Header="AlarmId" 
+                    Width="SizeToHeader"
+                    Binding="{Binding AlarmId}"/>
+                <controls:DataGridTextColumn 
+                    Header="Date" 
+                    Width="SizeToCells"
+                    Binding="{Binding Date}"/>
+                <controls:DataGridTextColumn 
+                    Header="Organization" 
+                    Width="SizeToCells"
+                    Binding="{Binding Organization}"/>
+                <controls:DataGridTextColumn 
+                    Header="Address" 
+                    Width="SizeToCells"
+                    Binding="{Binding Address}"/>
+                <controls:DataGridTextColumn 
+                    Header="Result" 
+                    Width="SizeToHeader"
+                    Binding="{Binding Result}"/>
+            </controls:DataGrid.Columns>
         </controls:DataGrid>
     </Grid>
 </Page>

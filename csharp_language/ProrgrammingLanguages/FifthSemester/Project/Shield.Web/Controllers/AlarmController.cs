@@ -37,6 +37,7 @@ public class AlarmController : ControllerBase
                 Bailee = a.Contract.Bailee,
                 Comment = a.Contract.Comment,
                 SignDate = a.Contract.SignDate,
+                Organization = a.Contract.Organization,
                 IsLegalEntity = a.Contract.IsLegalEntity,
             }
         }).ToList());

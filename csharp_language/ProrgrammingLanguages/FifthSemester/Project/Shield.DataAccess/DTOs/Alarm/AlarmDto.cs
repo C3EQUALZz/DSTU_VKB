@@ -7,4 +7,7 @@ public class AlarmDto
     public DateTime? Date { get; set; }
     public ContractDto? Contract { get; set; }
     public AlarmResult? Result { get; set; }
+
+    public string? Organization => Contract?.Organization;
+    public string? Address => Contract?.Address;
 }

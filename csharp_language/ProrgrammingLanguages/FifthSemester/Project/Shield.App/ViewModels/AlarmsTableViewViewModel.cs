@@ -42,9 +42,9 @@ public partial class AlarmsTableViewViewModel : ObservableRecipient
             Shell.Notify($"{"Empty".GetLocalized()}!", "EmptyAlarmsListErrorDescription".GetLocalized());
             return [];
         }
-#if DEBUG
-        Shell.Notify($"Alarms found: {alarms.Count}");
-#endif
+//#if DEBUG
+//        Shell.Notify($"Alarms found: {alarms.Count}");
+//#endif
 
         return alarms;
     }
