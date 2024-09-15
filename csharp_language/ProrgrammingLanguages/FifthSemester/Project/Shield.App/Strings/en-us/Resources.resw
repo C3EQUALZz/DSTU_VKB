@@ -404,4 +404,7 @@
   <data name="LegalEntityTextBlock.Text" xml:space="preserve">
     <value>Юридическое лицо</value>
   </data>
+  <data name="Robbery" xml:space="preserve">
+    <value>Ограбление</value>
+  </data>
 </root>

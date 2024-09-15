@@ -313,13 +313,23 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
         dialog.CloseButtonText = "Cancel".GetLocalized();
         dialog.DefaultButton = ContentDialogButton.Primary;
 
+        var sp = new StackPanel() { Orientation = Orientation.Horizontal, Spacing = 5 };
+
+        var tb = new TextBlock() { Text = "Robbery".GetLocalized(), VerticalAlignment = VerticalAlignment.Center };
+        var cb = new CheckBox();
+
+        sp.Children.Add(tb);
+        sp.Children.Add(cb);
+
+        dialog.Content = sp;
+
         var result = await dialog.ShowAsync();
 
         if (result == ContentDialogResult.Primary)
         {
             Shell.Notify("AlarmWorked".GetLocalized(), $"{sender.Address} - {sender.Organization}\nID: {sender.ContractId}\n{"Bailee".GetLocalized()}: {sender.Bailee}\n{sender.Comment}");
             
-            var response = await ApiHelper.CreateAlarm(new() { ContractId = sender.ContractId, Date = DateTime.Now });
+            var response = await ApiHelper.CreateAlarm(new() { ContractId = sender.ContractId, Date = DateTime.Now, Result = cb.IsChecked.Value ? DataAccess.Enums.AlarmResult.Robbery : DataAccess.Enums.AlarmResult.False });
 
             if (response == null || !response.IsSuccessStatusCode)
             {
