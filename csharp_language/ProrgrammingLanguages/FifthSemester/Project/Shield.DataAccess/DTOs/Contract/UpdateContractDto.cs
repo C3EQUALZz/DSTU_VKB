@@ -8,6 +8,7 @@ public class UpdateContractDto
     public string? Comment { get; set; }
     public string? Organization { get; set; }
     public DateOnly? SignDate { get; set; }
+    public bool? IsLegalEntity { get; set; }
 
     public PlanDto? Plan { get; set; }
     public PictureDto? Picture { get; set; }
