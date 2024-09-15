@@ -35,7 +35,7 @@
                     Binding="{Binding Address}"/>
                 <controls:DataGridTextColumn 
                     Header="Result" Tag="Result" 
-                    Width="SizeToHeader"
+                    Width="SizeToCells"
                     Binding="{Binding Result}"/>
             </controls:DataGrid.Columns>
         </controls:DataGrid>
