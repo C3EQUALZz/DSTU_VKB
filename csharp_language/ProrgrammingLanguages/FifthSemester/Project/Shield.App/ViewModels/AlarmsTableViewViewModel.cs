@@ -12,9 +12,13 @@ public partial class AlarmsTableViewViewModel : ObservableRecipient
     private ShellPage Shell = ShellPage.Instance;
     public List<DateTime> Dates => Alarms.Select(a => a.Date.Value).Order().ToList();
 
-    public List<AlarmDto> AlarmsDB;
-    public DateTimeOffset? PickedFrom;
-    public DateTimeOffset? PickedUntil;
+    public List<AlarmDto> AlarmsDB { get; private set; }
+
+    [ObservableProperty]
+    public DateTimeOffset? m_PickedFrom;
+
+    [ObservableProperty]
+    public DateTimeOffset? m_PickedUntil;
 
     [ObservableProperty]
     public List<AlarmDto> m_Alarms;

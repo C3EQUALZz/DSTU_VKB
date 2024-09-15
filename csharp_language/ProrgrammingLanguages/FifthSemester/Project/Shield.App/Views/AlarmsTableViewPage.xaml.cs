@@ -17,30 +17,11 @@ public sealed partial class AlarmsTableViewPage : Page
         InitializeComponent();
     }
 
-    private async void Page_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
-    {
-        await ViewModel.LoadAlarms();
-    }
-
-    private void DataGrid_Sorting(object sender, CommunityToolkit.WinUI.UI.Controls.DataGridColumnEventArgs e)
-    {
-        ApplySorting(e.Column, false);
-    }
-
-    private void CheckBox_Checked(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
-    {
-        ViewModel.EnableSearch = false;
-    }
-
-    private void CheckBox_Unchecked(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
-    {
-        ViewModel.EnableSearch = true;
-    }
-
     private void ApplyFiltering()
     {
         ViewModel.Alarms = new(from item in ViewModel.AlarmsDB
-                           where (ViewModel.PickedFrom != null ? ViewModel.PickedFrom <= item.Date : true) && (ViewModel.PickedUntil != null ? item.Date <= ViewModel.PickedUntil : true)
+                           where ViewModel.PickedFrom == null || ViewModel.PickedFrom.Value.Date <= item.Date.Value.Date
+                           where ViewModel.PickedUntil == null || item.Date.Value.Date <= ViewModel.PickedUntil.Value.Date
                            select item);
     }
     private void ApplySorting(DataGridColumn? columnToSort = null, bool preserveDirection = true)
@@ -246,13 +227,40 @@ public sealed partial class AlarmsTableViewPage : Page
         }
     }
 
+    private async void Page_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+        await ViewModel.LoadAlarms();
+        ShowAllCB.IsChecked = true;
+    }
+
+    private void DataGrid_Sorting(object sender, CommunityToolkit.WinUI.UI.Controls.DataGridColumnEventArgs e)
+    {
+        ApplySorting(e.Column, false);
+    }
+
+    private void ShowAllCB_Checked(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+        ViewModel.EnableSearch = false;
+
+        ViewModel.PickedFrom = null;
+        ViewModel.PickedUntil = null;
+        FromCDP.Date = null;
+        UntilCDP.Date = null;
+
+        ApplyFiltering();
+        ApplySorting();
+    }
+    private void ShowAllCB_Unchecked(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+        ViewModel.EnableSearch = true;
+    }
+
     private void FromCDP_DateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args)
     {
         ViewModel.PickedFrom = args.NewDate;
         ApplyFiltering();
         ApplySorting();
     }
-
     private void UntilCDP_DateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args)
     {
         ViewModel.PickedUntil = args.NewDate;

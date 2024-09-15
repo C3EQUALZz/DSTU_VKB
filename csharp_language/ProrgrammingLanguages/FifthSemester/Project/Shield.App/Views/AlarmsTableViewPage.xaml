@@ -18,7 +18,7 @@
         <StackPanel Grid.Row="0" Spacing="5">
             <StackPanel Orientation="Horizontal" Spacing="5">
                 <TextBlock Text="Показать все" VerticalAlignment="Center"/>
-                <CheckBox IsChecked="True" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
+                <CheckBox x:Name="ShowAllCB" Checked="ShowAllCB_Checked" Unchecked="ShowAllCB_Unchecked"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Spacing="5">
                 <TextBlock x:Name="FromTB" Text="С" VerticalAlignment="Center"/>
