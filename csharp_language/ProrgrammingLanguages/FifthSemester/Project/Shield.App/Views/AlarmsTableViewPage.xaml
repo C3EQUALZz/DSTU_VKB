@@ -4,12 +4,43 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     mc:Ignorable="d"
+	xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     Loaded="Page_Loaded">
 
-    <Grid>
+    <Grid RowSpacing="10">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Spacing="5">
+            <StackPanel Orientation="Horizontal" Spacing="5">
+                <TextBlock Text="Показать все" VerticalAlignment="Center"/>
+                <CheckBox IsChecked="True" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Spacing="5">
+                <TextBlock x:Name="FromTB" Text="С" VerticalAlignment="Center"/>
+                <CalendarDatePicker 
+                    x:Name="FromCDP" 
+                    IsEnabled="{x:Bind ViewModel.EnableSearch, Mode=OneWay}"
+                    MinDate="{x:Bind ViewModel.StartDate, Mode=OneWay}" 
+                    MaxDate="{x:Bind ViewModel.EndDate, Mode=OneWay}"
+                    DateChanged="FromCDP_DateChanged"/>
+                <TextBlock x:Name="UntilTB" Text="по" VerticalAlignment="Center"/>
+                <CalendarDatePicker 
+                    x:Name="UntilCDP" 
+                    IsEnabled="{x:Bind ViewModel.EnableSearch, Mode=OneWay}"
+                    MinDate="{x:Bind ViewModel.StartDate, Mode=OneWay}" 
+                    MaxDate="{x:Bind ViewModel.EndDate, Mode=OneWay}"
+                    DateChanged="UntilCDP_DateChanged"/>
+            </StackPanel>
+        </StackPanel>
+        
         <controls:DataGrid
+            x:Name="AlarmsDG"
+            Grid.Row="1"
             AutoGenerateColumns="False"
             ItemsSource="{x:Bind ViewModel.Alarms, Mode=OneWay}"
             GridLinesVisibility="All"
@@ -39,5 +70,6 @@
                     Binding="{Binding Result}"/>
             </controls:DataGrid.Columns>
         </controls:DataGrid>
+        
     </Grid>
 </Page>

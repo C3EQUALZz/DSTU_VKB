@@ -10,16 +10,31 @@ namespace Shield.App.ViewModels;
 public partial class AlarmsTableViewViewModel : ObservableRecipient
 {
     private ShellPage Shell = ShellPage.Instance;
+    public List<DateTime> Dates => Alarms.Select(a => a.Date.Value).Order().ToList();
+
+    public List<AlarmDto> AlarmsDB;
+    public DateTimeOffset? PickedFrom;
+    public DateTimeOffset? PickedUntil;
 
     [ObservableProperty]
     public List<AlarmDto> m_Alarms;
 
+    [ObservableProperty]
+    public bool m_EnableSearch;
+
+    [ObservableProperty]
+    public DateTimeOffset m_StartDate;
+
+    [ObservableProperty]
+    public DateTimeOffset m_EndDate;
+
     public AlarmsTableViewViewModel()
     {
         Alarms = [];
+        EnableSearch = false;
     }
 
-    public async Task<List<AlarmDto>> GetAlarms()
+    public async Task<List<AlarmDto>> LoadAlarms()
     {
         var response = await ApiHelper.GetAllAlarms();
 
@@ -42,10 +57,17 @@ public partial class AlarmsTableViewViewModel : ObservableRecipient
             Shell.Notify($"{"Empty".GetLocalized()}!", "EmptyAlarmsListErrorDescription".GetLocalized());
             return [];
         }
-//#if DEBUG
-//        Shell.Notify($"Alarms found: {alarms.Count}");
-//#endif
+        //#if DEBUG
+        //        Shell.Notify($"Alarms found: {alarms.Count}");
+        //#endif
 
-        return alarms;
+        var dates = alarms.Select(a => a.Date.Value).Order().ToList();
+        StartDate = dates[0];
+        EndDate = dates[^1];
+
+        AlarmsDB = alarms;
+        Alarms = new List<AlarmDto>(alarms);
+
+        return Alarms;
     }
 }
