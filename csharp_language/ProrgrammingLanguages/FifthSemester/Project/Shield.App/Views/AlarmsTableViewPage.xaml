@@ -11,7 +11,7 @@
     <Grid RowSpacing="10">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="70"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -20,7 +20,7 @@
                 <TextBlock Text="Показать все" VerticalAlignment="Center"/>
                 <CheckBox x:Name="ShowAllCB" Checked="ShowAllCB_Checked" Unchecked="ShowAllCB_Unchecked"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Spacing="5">
+            <StackPanel Orientation="Horizontal" Spacing="5" Visibility="{x:Bind ViewModel.EnableSearch, Mode=OneWay}">
                 <TextBlock x:Name="FromTB" Text="С" VerticalAlignment="Center"/>
                 <CalendarDatePicker 
                     x:Name="FromCDP" 
