@@ -18,6 +18,7 @@ public class PageService : IPageService
         Configure<AlarmsViewModel, AlarmsPage>();
         Configure<ProfileViewModel, ProfilePage>();
         Configure<SettingsViewModel, SettingsPage>();
+        Configure<AlarmsTableViewViewModel, AlarmsTableViewPage>();
     }
 
     public Type GetPageType(string key)

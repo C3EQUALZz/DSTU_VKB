@@ -51,6 +51,8 @@ public sealed partial class AlarmsPage : Page
             return;
         }
 
+        alarms.Reverse();
+
         foreach (var alarm in alarms)
         {
             AlarmControls.Add(new(alarm));

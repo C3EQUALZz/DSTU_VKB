@@ -28,6 +28,7 @@ public class AlarmController : ControllerBase
         {
             AlarmId = a.AlarmId,
             Date = a.Date,
+            Result = a.Result,
             Contract = new ContractDto()
             {
                 ContractId = a.Contract.ContractId,
@@ -36,6 +37,8 @@ public class AlarmController : ControllerBase
                 Bailee = a.Contract.Bailee,
                 Comment = a.Contract.Comment,
                 SignDate = a.Contract.SignDate,
+                Organization = a.Contract.Organization,
+                IsLegalEntity = a.Contract.IsLegalEntity,
             }
         }).ToList());
     }
@@ -54,7 +57,8 @@ public class AlarmController : ControllerBase
         var alarm = new Alarm()
         {
             Date = dto.Date,
-            Contract = contract
+            Contract = contract,
+            Result = dto.Result,
         };
 
         var entry = await _context.Alarms.AddAsync(alarm);

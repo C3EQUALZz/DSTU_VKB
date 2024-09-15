@@ -18,7 +18,20 @@
             <RowDefinition Height="357"/>
         </Grid.RowDefinitions>
 
-        <TextBox x:Uid="BaileeCreateContractDialog" x:Name="BaileeTB" Grid.Row="0" TextChanged="BaileeTB_TextChanged"/>
+        <Grid Grid.Row="0" ColumnSpacing="5">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="130"/>
+                <ColumnDefinition Width="24"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBox Grid.Column="0" x:Uid="BaileeCreateContractDialog" x:Name="BaileeTB" TextChanged="BaileeTB_TextChanged"/>
+            <TextBlock Grid.Column="1" x:Uid="LegalEntityTextBlock" TextAlignment="Center" VerticalAlignment="Center"/>
+            <CheckBox Grid.Column="2" x:Name="LegalEntityCB" Checked="LegalEntityCB_Checked" Unchecked="LegalEntityCB_Unchecked"/>
+            
+        </Grid>
+        
         <TextBox x:Uid="AddressCreateContractDialog" x:Name="AddressTB" Grid.Row="1" TextChanged="AddressTB_TextChanged"/>
         <TextBox x:Uid="CommentCreateContractDialog" x:Name="CommentTB" Grid.Row="2" TextChanged="CommentTB_TextChanged"/>
         <TextBox x:Uid="OrganizationCreateContractDialog" x:Name="OrganizationTB" Grid.Row="3" TextChanged="OrganizationTB_TextChanged"/>
