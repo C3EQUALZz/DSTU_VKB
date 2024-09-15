@@ -27,14 +27,16 @@
                     IsEnabled="{x:Bind ViewModel.EnableSearch, Mode=OneWay}"
                     MinDate="{x:Bind ViewModel.StartDate, Mode=OneWay}" 
                     MaxDate="{x:Bind ViewModel.EndDate, Mode=OneWay}"
-                    DateChanged="FromCDP_DateChanged"/>
+                    DateChanged="FromCDP_DateChanged"
+                    PlaceholderText="Выберите дату"/>
                 <TextBlock x:Name="UntilTB" Text="по" VerticalAlignment="Center"/>
                 <CalendarDatePicker 
                     x:Name="UntilCDP" 
                     IsEnabled="{x:Bind ViewModel.EnableSearch, Mode=OneWay}"
                     MinDate="{x:Bind ViewModel.StartDate, Mode=OneWay}" 
                     MaxDate="{x:Bind ViewModel.EndDate, Mode=OneWay}"
-                    DateChanged="UntilCDP_DateChanged"/>
+                    DateChanged="UntilCDP_DateChanged"
+                    PlaceholderText="Выберите дату"/>
             </StackPanel>
         </StackPanel>
         
@@ -49,24 +51,24 @@
             Sorting="DataGrid_Sorting">
             <controls:DataGrid.Columns>
                 <controls:DataGridTextColumn 
-                    Header="AlarmId" Tag="AlarmId" 
+                    Header="ID" Tag="AlarmId" 
                     Width="SizeToHeader"
                     Binding="{Binding AlarmId}"/>
                 <controls:DataGridTextColumn 
-                    Header="Date" Tag="Date" 
+                    Header="Дата" Tag="Date" 
                     Width="SizeToCells"
                     Binding="{Binding Date}"/>
                 <controls:DataGridTextColumn 
-                    Header="Organization" Tag="Organization" 
+                    Header="Организация" Tag="Organization" 
                     Width="SizeToCells"
                     Binding="{Binding Organization}"/>
                 <controls:DataGridTextColumn 
-                    Header="Address" Tag="Address" 
+                    Header="Адрес" Tag="Address" 
                     Width="SizeToCells"
                     Binding="{Binding Address}"/>
                 <controls:DataGridTextColumn 
-                    Header="Result" Tag="Result" 
-                    Width="SizeToCells"
+                    Header="Результат вызова" Tag="Result" 
+                    Width="SizeToHeader"
                     Binding="{Binding Result}"/>
             </controls:DataGrid.Columns>
         </controls:DataGrid>
