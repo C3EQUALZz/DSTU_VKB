@@ -407,4 +407,10 @@
   <data name="Robbery" xml:space="preserve">
     <value>Ограбление</value>
   </data>
+  <data name="Shell_AlarmsTableView.Content" xml:space="preserve">
+    <value>Сигнализации - таблица</value>
+  </data>
+  <data name="Shell_AlarmsCardView.Content" xml:space="preserve">
+    <value>Сигнализации - карточки</value>
+  </data>
 </root>
