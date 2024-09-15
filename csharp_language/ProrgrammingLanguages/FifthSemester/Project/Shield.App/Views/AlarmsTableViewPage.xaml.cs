@@ -14,4 +14,9 @@ public sealed partial class AlarmsTableViewPage : Page
         ViewModel = App.GetService<AlarmsTableViewViewModel>();
         InitializeComponent();
     }
+
+    private async void Page_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+        ViewModel.Alarms = await ViewModel.GetAlarms();
+    }
 }
