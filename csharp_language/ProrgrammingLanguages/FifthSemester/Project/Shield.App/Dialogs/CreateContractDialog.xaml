@@ -28,7 +28,7 @@
             
             <TextBox Grid.Column="0" x:Uid="BaileeCreateContractDialog" x:Name="BaileeTB" TextChanged="BaileeTB_TextChanged"/>
             <TextBlock Grid.Column="1" x:Uid="LegalEntityTextBlock" TextAlignment="Center" VerticalAlignment="Center"/>
-            <CheckBox Grid.Column="2" x:Name="LegalEntityCB"/>
+            <CheckBox Grid.Column="2" x:Name="LegalEntityCB" Checked="LegalEntityCB_Checked" Unchecked="LegalEntityCB_Unchecked"/>
             
         </Grid>
         

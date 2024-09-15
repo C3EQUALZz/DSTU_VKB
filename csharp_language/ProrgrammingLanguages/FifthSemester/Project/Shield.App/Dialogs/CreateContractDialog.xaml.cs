@@ -106,7 +106,7 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
         jsLogReciever = WV.CoreWebView2.GetDevToolsProtocolEventReceiver("Log.entryAdded");
         jsLogReciever.DevToolsProtocolEventReceived += (s, e) =>
         {
-            System.Diagnostics.Debug.WriteLine(e.ParameterObjectAsJson);
+            //System.Diagnostics.Debug.WriteLine(e.ParameterObjectAsJson);
         };
 
         WV.CoreWebView2.Navigate("https://app/map/index.html");
@@ -194,6 +194,16 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
     }
 
     private void OrganizationTB_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        Edited?.Invoke(sender);
+    }
+
+    private void LegalEntityCB_Checked(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+        Edited?.Invoke(sender);
+    }
+
+    private void LegalEntityCB_Unchecked(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
     {
         Edited?.Invoke(sender);
     }

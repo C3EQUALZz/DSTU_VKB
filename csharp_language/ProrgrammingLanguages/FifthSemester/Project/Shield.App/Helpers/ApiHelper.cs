@@ -126,6 +126,7 @@ public class ApiHelper
             Owners = replacer.Owners,
             Comment = replacer.Comment,
             Organization = replacer.Organization,
+            IsLegalEntity = replacer.IsLegalEntity,
         };
 
         if (replacer.Plan != null)
