@@ -69,7 +69,7 @@
                 <controls:DataGridTextColumn 
                     Header="Результат вызова" Tag="Result" 
                     Width="SizeToHeader"
-                    Binding="{Binding Result}"/>
+                    Binding="{Binding ResultLocalizationTag}"/>
             </controls:DataGrid.Columns>
         </controls:DataGrid>
         

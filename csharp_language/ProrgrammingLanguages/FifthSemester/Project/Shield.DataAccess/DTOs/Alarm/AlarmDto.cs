@@ -1,4 +1,6 @@
 ﻿using Shield.DataAccess.Enums;
+using Shield.DataAccess.Extensions;
+using Shield.DataAccess.Attributes;
 
 namespace Shield.DataAccess.DTOs;
 public class AlarmDto
@@ -10,4 +12,5 @@ public class AlarmDto
 
     public string? Organization => Contract?.Organization;
     public string? Address => Contract?.Address;
+    public string? ResultLocalizationTag => Result?.GetAttribute<LocalizationTagAttribute>()?.Tag;
 }
