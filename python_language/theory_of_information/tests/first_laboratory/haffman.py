@@ -1,7 +1,7 @@
 # https://huffman.ooz.ie/
 
 import pytest
-from python_language.theory_of_information.models.first_laboratory import Huffman
+from python_language.theory_of_information.models.first_dot_first_laboratory import Huffman
 
 
 def test_minimal_correct():
