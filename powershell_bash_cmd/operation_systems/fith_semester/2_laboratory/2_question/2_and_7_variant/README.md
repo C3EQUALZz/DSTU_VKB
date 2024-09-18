@@ -20,7 +20,7 @@ $formattedItems = $items | Select-Object Name, @{Name="Size (Bytes)";Expression=
 $formattedItems | Format-Table -AutoSize
 
 # Записываем результат в текстовый файл
-$formattedItems | tee "D:\PycharmProjects\DSTU_VKB\powershell_bash_cmd\operation_systems\fith_semester\2_laboratory\2_question\2_and_7_variant\result.txt" -Encoding UTF8
+$formattedItems | tee "D:\PycharmProjects\DSTU_VKB\powershell_bash_cmd\operation_systems\fith_semester\2_laboratory\2_question\2_and_7_variant\result.txt"
 ```
 
 Объяснение: 
