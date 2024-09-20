@@ -25,7 +25,7 @@ export function App() {
         <>
             <Router>
                 <Layout>
-                    <Sider width={270} collapsed={collapsed} collapsible trigger={null} theme={darkTheme ? "dark" : "light"}>
+                    <Sider width={270} style={{height: '100vh'}} collapsed={collapsed} collapsible trigger={null} theme={darkTheme ? "dark" : "light"}>
                         <Logo />
                         <MenuList darkTheme={darkTheme} />
                         <ToggleThemeButton darkTheme={darkTheme} toggleTheme={toggleTheme} />
