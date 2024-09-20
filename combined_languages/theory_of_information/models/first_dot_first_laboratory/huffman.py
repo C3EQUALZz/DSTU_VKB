@@ -1,7 +1,7 @@
 import heapq
 from collections import Counter, namedtuple
 
-from python_language.theory_of_information.core.decorators import loggable
+from python_language.theory_of_information.backend.core.decorators import loggable
 
 
 class Leaf(namedtuple('Leaf', 'char')):
