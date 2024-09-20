@@ -1,6 +1,6 @@
 import {FireFilled} from "@ant-design/icons";
 
-const Logo = () => {
+export function Logo() {
     return (
         <div className="logo">
             <div className="logo-icon">
@@ -9,5 +9,3 @@ const Logo = () => {
         </div>
     )
 }
-
-export default Logo;

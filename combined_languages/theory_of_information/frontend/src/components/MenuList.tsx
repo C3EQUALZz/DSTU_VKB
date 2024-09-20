@@ -1,43 +1,40 @@
-import {Menu} from "antd"
-import {
-    HomeOutlined,
-    AppstoreOutlined,
-    AreaChartOutlined,
-    PayCircleOutlined,
-    SettingOutlined,
-    BarsOutlined
-} from "@ant-design/icons"
+import { Menu } from "antd"
+import { BarsOutlined } from "@ant-design/icons"
 import React from "react";
-import {MenuListProps} from "../interfaces/MenuList";
+import { MenuListProps } from "../interfaces/MenuList";
 
-const MenuList: React.FC<MenuListProps> = ({ darkTheme }) => {
+export const MenuList: React.FC<MenuListProps> = ({ darkTheme }) => {
     return (
         <Menu theme={darkTheme ? "dark" : "light"} mode="inline" className="menu-bar">
-            <Menu.Item key="home" icon={<HomeOutlined />}>
-                Home
-            </Menu.Item>
-            <Menu.Item key="activity" icon={<AppstoreOutlined />}>
-                Activity
-            </Menu.Item>
-            <Menu.SubMenu key="subtasks" icon={<BarsOutlined />} title="Tasks">
+            <Menu.SubMenu key="fifth-semester-menu" icon={<BarsOutlined />} title="Пятый семестр">
                 <Menu.Item key="task-1">
-                    Task 1
+                    Лабораторная работа №1
                 </Menu.Item>
                 <Menu.Item key="task-2">
-                    Task 2
+                    Лабораторная работа №2
+                </Menu.Item>
+                <Menu.Item key="task-3">
+                    Лабораторная работа №3
+                </Menu.Item>
+                <Menu.Item key="task-4">
+                    Лабораторная работа №4
                 </Menu.Item>
             </Menu.SubMenu>
-            <Menu.Item key="progress" icon={<AreaChartOutlined />}>
-                Progress
-            </Menu.Item>
-            <Menu.Item key="payment" icon={<PayCircleOutlined />}>
-                Payment
-            </Menu.Item>
-            <Menu.Item key="setting" icon={<SettingOutlined />}>
-                Settings
-            </Menu.Item>
+            <Menu.SubMenu key="sixth-semester-menu" icon={<BarsOutlined />} title="Шестой семестр">
+                <Menu.Item key="task-1">
+                    Лабораторная работа №1
+                </Menu.Item>
+                <Menu.Item key="task-2">
+                    Лабораторная работа №2
+                </Menu.Item>
+                <Menu.Item key="task-3">
+                    Лабораторная работа №3
+                </Menu.Item>
+                <Menu.Item key="task-4">
+                    Лабораторная работа №4
+                </Menu.Item>
+            </Menu.SubMenu>
+
         </Menu>
     )
 }
-
-export default MenuList;
