@@ -7,10 +7,12 @@ import {
     SettingOutlined,
     BarsOutlined
 } from "@ant-design/icons"
+import React from "react";
+import {MenuListProps} from "../interfaces/MenuList";
 
-const MenuList = () => {
+const MenuList: React.FC<MenuListProps> = ({ darkTheme }) => {
     return (
-        <Menu theme="dark" mode="inline" className="menu-bar">
+        <Menu theme={darkTheme ? "dark" : "light"} mode="inline" className="menu-bar">
             <Menu.Item key="home" icon={<HomeOutlined />}>
                 Home
             </Menu.Item>
