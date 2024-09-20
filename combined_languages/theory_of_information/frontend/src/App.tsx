@@ -12,7 +12,7 @@ import { FirstLaboratory, SecondLaboratory, ThirdLaboratory, FourthLaboratory } 
 
 
 
-const {Header, Sider} = Layout;
+const {Header, Sider, Content} = Layout;
 
 export function App() {
     const [darkTheme, setDarkTheme] = useState<boolean>(true);
@@ -34,17 +34,16 @@ export function App() {
                         <Header style={{padding: 0, background: colorBgContainer}}>
                             <Button className="toggle" type="text" icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />} onClick={() => setCollapsed(!collapsed)} />
                         </Header>
-
-
+                        <Content style={{ padding: '24px', background: colorBgContainer }}>
+                           <Routes>
+                                <Route path="/" element={<FirstLaboratory />}/>
+                                <Route path="/5-sem/2-lab" element={<SecondLaboratory />} />
+                                <Route path="/5-sem/3-lab" element={<ThirdLaboratory />} />
+                                <Route path="/5-sem/4-lab" element={<FourthLaboratory />} />
+                            </Routes>
+                        </Content>
                     </Layout>
                 </Layout>
-                    <Routes>
-                        <Route path="/" element={<FirstLaboratory />}/>
-                        <Route path="/5-sem/2-lab" element={<SecondLaboratory />} />
-                        <Route path="/5-sem/3-lab" element={<ThirdLaboratory />} />
-                        <Route path="/5-sem/4-lab" element={<FourthLaboratory />} />
-                    </Routes>
-
             </Router>
         </>
     )
