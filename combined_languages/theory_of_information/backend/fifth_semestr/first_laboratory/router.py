@@ -16,10 +16,9 @@ async def create_histogram_and_get_entropy(
 ):
 
     try:
-        ignore_pattern_compiled = re.compile(ignore_pattern)
         file_content = await file.read()
 
-        model = Model(file_content.decode('utf-8'), ignore_pattern_compiled)
+        model = Model(file_content.decode('utf-8'), ignore_pattern)
         histogram = model.create_histogram()
         return {"histogram": histogram}
 
@@ -34,10 +33,9 @@ async def calculate_entropy(
 ) -> dict[str, float]:
 
     try:
-        ignore_pattern_compiled = re.compile(ignore_pattern)
         file_content = await file.read()
 
-        model = Model(file_content.decode('utf-8'), ignore_pattern_compiled)
+        model = Model(file_content.decode('utf-8'), ignore_pattern)
         entropy = model.calculate_entropy()
         return {"entropy": entropy}
 

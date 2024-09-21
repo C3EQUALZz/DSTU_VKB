@@ -6,7 +6,7 @@ export const Histogram: React.FC<HistogramProps> = ({ histogramData }) => {
     return (
         <Row justify="center" align="middle">
             {histogramData && (
-                <Col span={24} style={{ justifyContent: 'center', alignItems: 'center' }}>
+                <Col span={24} style={{ justifyContent: 'center', alignItems: 'center'}}>
                     <Plot
                         data={[
                             {
@@ -17,7 +17,7 @@ export const Histogram: React.FC<HistogramProps> = ({ histogramData }) => {
                         ]}
                         layout={{
                             title: 'Гистограмма вероятностей символов',
-                            xaxis: { title: 'Символы' },
+                            xaxis: { title: 'Символы', tickangle: 0, automargin: true, tickfont: { size: 10 } },
                             yaxis: { title: 'Вероятность', range: [0, 1] },
                         }}
                         style={{ width: '100%', height: '100%' }}
