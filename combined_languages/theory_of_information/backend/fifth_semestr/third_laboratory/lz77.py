@@ -19,8 +19,8 @@ LZ77 управляет словарем, который использует т
 
 from dataclasses import dataclass, astuple
 from typing import Self, override
-from python_language.theory_of_information.backend.core.decorators import loggable
-from python_language.theory_of_information.backend.core import Compressor
+from combined_languages.theory_of_information.backend.core.decorators import loggable
+from combined_languages.theory_of_information.backend.core.abstract_classes import Compressor
 
 
 @dataclass

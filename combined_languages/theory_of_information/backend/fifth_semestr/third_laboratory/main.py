@@ -16,9 +16,9 @@
 """
 import time
 import logging
-import python_language.theory_of_information.backend.core as core_namespace
-from python_language.theory_of_information.models.second_laboratory import LZ77, TokenLZ77, LZ78, TokenLZ78
-from python_language.theory_of_information.models.second_laboratory.utils import create_table
+import combined_languages.theory_of_information.backend.core as core_namespace
+from combined_languages.theory_of_information.backend.fifth_semestr.third_laboratory import LZ77, TokenLZ77, LZ78, TokenLZ78
+from combined_languages.theory_of_information.backend.fifth_semestr.third_laboratory.utils import create_table
 
 logger = logging.getLogger(__name__)
 

@@ -1,7 +1,7 @@
-from python_language.theory_of_information.backend.core import Compressor
+from combined_languages.theory_of_information.backend.core.abstract_classes import Compressor
 from typing import override, Self, Iterator
 from dataclasses import dataclass, astuple
-from python_language.theory_of_information.backend.core.decorators import loggable
+from combined_languages.theory_of_information.backend.core.decorators import loggable
 
 
 @dataclass

@@ -8,10 +8,10 @@ import pathlib
 def setup_logger() -> None:
     project_root = next(p for p in pathlib.Path(__file__).parents if p.parts[-1] == 'DSTU_VKB')
 
-    logs_path = project_root / "python_language/theory_of_information/logs"
+    logs_path = project_root / "combined_languages/theory_of_information/logs"
     logs_path.mkdir(exist_ok=True)
 
-    config_file = project_root / "python_language/theory_of_information/core/config/logger_config.json"
+    config_file = project_root / "combined_languages/theory_of_information/core/config/logger_config.json"
 
     with open(config_file) as f_in:
         config = json.load(f_in)

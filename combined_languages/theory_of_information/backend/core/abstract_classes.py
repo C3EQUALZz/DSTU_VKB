@@ -2,8 +2,8 @@ from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from python_language.theory_of_information.models.second_laboratory import TokenLZ77
-    from python_language.theory_of_information.models.second_laboratory import TokenLZ78
+    from combined_languages.theory_of_information.backend.fifth_semestr.third_laboratory import TokenLZ77
+    from combined_languages.theory_of_information.backend.fifth_semestr.third_laboratory import TokenLZ78
 
 
 class Compressor(ABC):

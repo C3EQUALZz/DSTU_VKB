@@ -7,7 +7,7 @@
       "datefmt": "%Y-%m-%dT%H:%M:%S%z"
     },
     "json": {
-      "()": "python_language.theory_of_information.core.config.formatters.MyJSONFormatter",
+      "()": "combined_languages.theory_of_information.core.config.formatters.MyJSONFormatter",
       "fmt_keys": {
         "level": "levelname",
         "message": "message",
@@ -37,7 +37,7 @@
       "class": "logging.handlers.RotatingFileHandler",
       "level": "DEBUG",
       "formatter": "json",
-      "filename": "python_language/theory_of_information/logs/my_app.log.jsonl",
+      "filename": "combined_languages/theory_of_information/logs/my_app.log.jsonl",
       "maxBytes": 10000,
       "backupCount": 3
     },

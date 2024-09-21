@@ -14,7 +14,7 @@ import time
 import huffman
 import logging
 import prettytable
-import python_language.theory_of_information.backend.core as core_namespace
+import combined_languages.theory_of_information.backend.core as core_namespace
 
 logger = logging.getLogger(__name__)
 
