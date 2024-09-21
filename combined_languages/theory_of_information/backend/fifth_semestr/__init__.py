@@ -1,0 +1,1 @@
+from .first_laboratory.router import router as first_laboratory_router
