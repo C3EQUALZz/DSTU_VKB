@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Plot from 'react-plotly.js';
-import { Form, Input, Button, Typography, Layout, Row, Col } from 'antd';
+import { Form, Input, Button, Typography, Layout } from 'antd';
+import { Histogram } from "../../components/Histogram";
 
 const { Title, Paragraph } = Typography;
 const { Header, Content } = Layout;
@@ -9,7 +9,7 @@ const { Header, Content } = Layout;
 export function FirstLaboratory() {
     const [file, setFile] = useState<File | null>(null);
     const [entropy, setEntropy] = useState<number | null>(null);
-    const [histogramData, setHistogramData] = useState<any | null>(null);
+    const [histogramData, setHistogramData] = useState<HistogramData | null>(null);
     const [ignorePattern, setIgnorePattern] = useState<string>("");
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -110,25 +110,7 @@ export function FirstLaboratory() {
                 )}
 
                 {histogramData && (
-                    <Row gutter={16}>
-                        <Col span={24}>
-                            <Plot
-                                data={[
-                                    {
-                                        x: histogramData.x,
-                                        y: histogramData.y,
-                                        type: 'scatter',
-                                        mode: 'markers',
-                                    }
-                                ]}
-                                layout={{
-                                    title: 'Гистограмма вероятностей символов',
-                                    xaxis: { title: 'Символы' },
-                                    yaxis: { title: 'Вероятность', range: [0, 1] },
-                                }}
-                            />
-                        </Col>
-                    </Row>
+                    <Histogram histogramData={histogramData} />
                 )}
             </Content>
         </Layout>

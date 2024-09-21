@@ -38,7 +38,10 @@ export function App() {
 
     const footerStyle = {
         background: darkTheme ? '#001529' : '#f0f2f5',
-        color: darkTheme ? '#fff' : '#000'
+        color: darkTheme ? '#fff' : '#000',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
     };
 
     const textStyle = {
@@ -91,7 +94,10 @@ export function App() {
                         <Typography.Text strong style={textStyle}>
                             Выполнил: Ковалев Данил ВКБ32
                         </Typography.Text>
-                        <a href="https://github.com/ваш_профиль" target="_blank" rel="noopener noreferrer" style={{ marginLeft: '10px' }}>
+                        <a
+                            href="https://github.com/C3EQUALZz"
+                            target="_blank" rel="noopener noreferrer"
+                            style={{ marginLeft: '10px' }}>
                             <GithubOutlined />
                         </a>
                     </Footer>
