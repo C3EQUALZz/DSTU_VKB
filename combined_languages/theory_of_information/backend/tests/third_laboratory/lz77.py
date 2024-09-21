@@ -1,6 +1,6 @@
 import pytest
-from python_language.theory_of_information.models.second_laboratory import LZ77
-from python_language.theory_of_information.models.second_laboratory.lz77 import Token
+
+from combined_languages.theory_of_information.backend.fifth_semestr.third_laboratory import LZ77, TokenLZ77
 
 
 @pytest.fixture()
@@ -24,22 +24,22 @@ def parametrize_compress_test_cases():
 
 def parametrize_decompress_test_cases():
     return [
-        ([Token(0, 0, 'c'), Token(0, 0, 'a'), Token(0, 0, 'b'),
-          Token(0, 0, 'r'), Token(3, 1, 'c'), Token(2, 1, 'd'),
-          Token(7, 4, 'r'), Token(3, 5, 'd')], 'cabracadabrarrarrad'),
+        ([TokenLZ77(0, 0, 'c'), TokenLZ77(0, 0, 'a'), TokenLZ77(0, 0, 'b'),
+          TokenLZ77(0, 0, 'r'), TokenLZ77(3, 1, 'c'), TokenLZ77(2, 1, 'd'),
+          TokenLZ77(7, 4, 'r'), TokenLZ77(3, 5, 'd')], 'cabracadabrarrarrad'),
 
-        ([Token(0, 0, 'a'), Token(0, 0, 'b'), Token(2, 2, 'c'),
-          Token(4, 3, 'a'), Token(2, 2, 'a')], 'ababcbababaa'),
+        ([TokenLZ77(0, 0, 'a'), TokenLZ77(0, 0, 'b'), TokenLZ77(2, 2, 'c'),
+          TokenLZ77(4, 3, 'a'), TokenLZ77(2, 2, 'a')], 'ababcbababaa'),
 
-        ([Token(0, 0, 'a'), Token(1, 1, 'c'), Token(3, 4, 'b'),
-          Token(3, 3, 'a'), Token(1, 2, 'c')], 'aacaacabcabaaac')
+        ([TokenLZ77(0, 0, 'a'), TokenLZ77(1, 1, 'c'), TokenLZ77(3, 4, 'b'),
+          TokenLZ77(3, 3, 'a'), TokenLZ77(1, 2, 'c')], 'aacaacabcabaaac')
     ]
 
 
 @pytest.mark.parametrize("text,expected", parametrize_compress_test_cases())
 def test_lz77_compression(algorithm, text, expected):
     compressed = algorithm.compress(text)
-    assert compressed == [Token(*t) for t in expected]
+    assert compressed == [TokenLZ77(*t) for t in expected]
 
 
 @pytest.mark.parametrize("list_with_tokens,expected", parametrize_decompress_test_cases())

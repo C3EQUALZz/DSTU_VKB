@@ -1,5 +1,6 @@
 import pytest
-from python_language.theory_of_information.models.second_laboratory import LZ78, TokenLZ78
+
+from combined_languages.theory_of_information.backend.fifth_semestr.third_laboratory import LZ78, TokenLZ78
 
 
 @pytest.fixture()
