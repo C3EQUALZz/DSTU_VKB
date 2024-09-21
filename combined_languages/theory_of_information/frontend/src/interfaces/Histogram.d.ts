@@ -1,5 +1,5 @@
 interface HistogramData {
-    x: number[];
+    x: string[];
     y: number[];
 }
 

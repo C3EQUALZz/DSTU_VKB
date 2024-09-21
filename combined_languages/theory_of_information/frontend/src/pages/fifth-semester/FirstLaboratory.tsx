@@ -46,10 +46,8 @@ export function FirstLaboratory() {
                 },
             });
 
-            console.log(histogramResponse.data);
-
             // Данные возвращаются как объект с полями x и y
-            setHistogramData(histogramResponse.data);
+            setHistogramData(histogramResponse.data.histogram);
         } catch (error) {
             alert("Произошла ошибка при загрузке файла.");
         }
