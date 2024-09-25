@@ -8,3 +8,13 @@
 > Хотя для тех же файлов скриптов .bat, .cmd, имеется отдельный пункт меню Run As administrator.
 > В случае с PowerShell приходится открывать консоль Power Shell с повышенными правами и указывать полный путь к файлу скрипта, что не удобно.
 
+Для запуска PowerShell скрипта нужно будет выполнить следующие команды: 
+
+```
+Set-ExecutionPolicy Unrestricted -Scope Process
+cd D:\PycharmProjects\DSTU_VKB\powershell_bash_cmd\operation_systems\fith_semester\3_laboratory\6_question\3_sub
+./execute.ps1
+```
+
+Вы должны принять, что нужно будет запускать 1 раз только. 
+
