@@ -1,4 +1,4 @@
-# Параметры задачи
+                                                                                                                             # Параметры задачи
 $taskName = "RunPowerShellScriptAtSpecificTime"
 $taskDescription = "This task runs a PowerShell script at a specific time."
 $taskAction = "powershell.exe"

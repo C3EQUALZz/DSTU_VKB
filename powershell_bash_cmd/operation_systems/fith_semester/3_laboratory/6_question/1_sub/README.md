@@ -25,9 +25,8 @@
     - На вкладке "Триггеры" (Triggers) нажмите "Создать" (New) и выберите "При загрузке" (At startup). Нажмите "ОК".
     - На вкладке "Действия" (Actions) нажмите "Создать" (New) и выберите "Запустить программу" (Start a program).
         - В поле "Программа или скрипт" (Program/script) введите powershell.exe.
-        - В поле "Добавить аргументы (необязательно)" (Add arguments (optional)) введите -File "C:\Path\To\Your\Script\StartupScript.ps1".
+        - В поле "Добавить аргументы (необязательно)" (Add arguments (optional)) введите -File "D:\PycharmProjects\DSTU_VKB\powershell_bash_cmd\operation_systems\fith_semester\3_laboratory\6_question\1_sub\hello.ps1".
         - Нажмите "ОК".
-    - На вкладке "Условия" (Conditions) убедитесь, что опция "Запускать только при питании от сети" (Start the task only if the computer is on AC power) не выбрана.
     - На вкладке "Параметры" (Settings) выберите "Разрешить запуск при запросе" (Allow task to be run on demand) и "Запускать задачу при доступности" (Run task as soon as possible after a scheduled start is missed).
     - Нажмите "ОК" для сохранения задачи.
 

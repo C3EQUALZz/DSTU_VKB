@@ -10,7 +10,6 @@ Get-CimInstance -Class Win32_BIOS
 
 ```
 Get-WmiObject -Class Win32_BIOS | Format-List *
-
 ```
 
 - Можно вывести интересующие параметры
@@ -18,3 +17,5 @@ Get-WmiObject -Class Win32_BIOS | Format-List *
 ```
 Get-WmiObject -Class Win32_BIOS | Select SMBIOSBIOSVersion, Manufacturer, SerialNumber, ReleaseDate
 ```
+
+
