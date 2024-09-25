@@ -1,7 +1,11 @@
-﻿using CommunityToolkit.WinUI.UI.Controls;
+﻿using System.Reflection;
+using CommunityToolkit.WinUI.UI.Controls;
 using Microsoft.UI.Xaml.Controls;
+using Shield.App.Helpers;
+using Shield.App.Misc;
 using Shield.App.ViewModels;
 using Shield.DataAccess.DTOs;
+using Spire.Doc;
 
 namespace Shield.App.Views;
 public sealed partial class AlarmsTableViewPage : Page
@@ -266,5 +270,64 @@ public sealed partial class AlarmsTableViewPage : Page
         ViewModel.PickedUntil = args.NewDate;
         ApplyFiltering();
         ApplySorting();
+    }
+
+    private async void ExportMFI_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+        var menuFlyoutItem = sender as MenuFlyoutItem;
+
+        if (menuFlyoutItem?.DataContext is AlarmDto alarm)
+        {
+            // Вызовем диалоговое окно выбора файла, чтобы узнать, куда пользователь хочет сохранить отчет
+
+            var savePicker = new Windows.Storage.Pickers.FileSavePicker();
+            savePicker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.Desktop;
+            savePicker.FileTypeChoices.Add("Word Document", new List<string>() { ".docx" });
+            savePicker.SuggestedFileName = $"alarm_report_{alarm.AlarmId}";
+
+            var hwnd = App.MainWindow.GetWindowHandle();
+            WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hwnd);
+
+            var file = await savePicker.PickSaveFileAsync();
+
+            if (file != null)
+            {
+                var templatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Misc", "WordTemplates", "alarm_report_template.docx");
+
+                // Через Spire.Doc сохраним отчет в выбранный файл
+
+                var doc = new Document();
+                doc.LoadFromFile(templatePath);
+
+                var rnd = new Random();
+                var stolenItem = StolenItem.Items[rnd.Next(0, StolenItem.Items.Count)];
+
+                var replaceDict = new Dictionary<string, string>()
+            {
+                { "#contract.Organization#", alarm.Contract.Organization },
+                { "#contract.Address#", alarm.Contract.Address },
+                { "#report.Date#", DateTime.Now.ToString()[..10] },
+                { "#contract.Bailee#", alarm.Contract.Bailee },
+                { "#contract.Owners#", alarm.Contract.Owners.Replace(";", ", ") },
+                { "#alarm.Date#", alarm.Date.Value.Date.ToString()[..10] },
+                { "#alarm.Time#",  $"{alarm.Date.Value.Date.Hour}:{alarm.Date.Value.Date.Minute}:{alarm.Date.Value.Date.Second}"},
+                { "#item.Name#",  $"{stolenItem.Name}"},
+                { "#item.Meta#",  $"{stolenItem.Meta}"},
+                { "#item.Count#",  $"{rnd.Next(0, 1001)}"},
+                { "#item.Price#",  $"{stolenItem.Price}"},
+            };
+
+                foreach (var kvp in replaceDict)
+                {
+                    doc.Replace(kvp.Key, kvp.Value, true, true);
+                }
+
+                doc.SaveToFile(file.Path);
+
+                doc.Close();
+
+                ShellPage.Instance.Notify("ReportCreatedNotification".GetLocalized(), $"{"Contract".GetLocalized()} №{alarm.Contract.ContractId}\n{file.Path}");
+            }
+        }
     }
 }

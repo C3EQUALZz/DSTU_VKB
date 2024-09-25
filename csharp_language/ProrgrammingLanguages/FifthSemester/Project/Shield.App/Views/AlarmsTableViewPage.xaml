@@ -49,6 +49,23 @@
             AlternatingRowBackground="#202020"
             CanUserSortColumns="True"
             Sorting="DataGrid_Sorting">
+
+            <controls:DataGrid.RowStyle>
+                <Style TargetType="controls:DataGridRow">
+                    <Setter Property="ContextFlyout">
+                        <Setter.Value>
+                            <MenuFlyout>
+                                <MenuFlyoutItem x:Name="ExportMFI" x:Uid="FlyoutExportButton" Click="ExportMFI_Click">
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF584;" FontSize="16"/>
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </controls:DataGrid.RowStyle>
+            
             <controls:DataGrid.Columns>
                 <controls:DataGridTextColumn 
                     Header="ID" Tag="AlarmId" 

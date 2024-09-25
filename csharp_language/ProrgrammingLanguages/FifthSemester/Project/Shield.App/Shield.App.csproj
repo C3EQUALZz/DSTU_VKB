@@ -55,6 +55,9 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Misc\WordTemplates\alarm_report_template.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Misc\WordTemplates\template.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
