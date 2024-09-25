@@ -16,7 +16,7 @@ $Acl3.SetAccessRule($Rule)
 Set-Acl -Path "D:\PycharmProjects\DSTU_VKB\powershell_bash_cmd\operation_systems\fith_semester\3_laboratory\6_question\11_sub" -AclObject $Acl3
 # Исключить NTFS доступ к папке для пользователя или группы:
 $Acl4 = Get-Acl -Path "D:\PycharmProjects\DSTU_VKB\powershell_bash_cmd\operation_systems\fith_semester\3_laboratory\6_question\11_sub"
-$Acl4.GetAccessRules($true, $false, [System.Security.Principal.NTAccount]) | where { $_.IdentityReference -eq "srmvo" } | foreach { $Acl4.RemoveAccessRule($_) }
+$Acl4.GetAccessRules($true, $false, [System.Security.Principal.NTAccount]) | where { $_.IdentityReference -eq "danko" } | foreach { $Acl4.RemoveAccessRule($_) }
 Set-Acl -Path "D:\PycharmProjects\DSTU_VKB\powershell_bash_cmd\operation_systems\fith_semester\3_laboratory\6_question\11_sub" -AclObject $Acl4
 # Лишить указанную учетную запись прав на все вложенные объекты в указанной папке:
 icacls "D:\PycharmProjects\DSTU_VKB\powershell_bash_cmd\operation_systems\fith_semester\3_laboratory\6_question\11_sub" /deny "Tester":(OI)(CI)N /T
