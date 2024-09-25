@@ -62,7 +62,7 @@ class Model:
         # Тут двойная фильтрация, чтобы пользователь мог свою вводить по приколу
         filtered_text = self.ignore_pattern.sub('', string=self.text)
 
-        translation_table = dict.fromkeys(map(ord, '@#$^&*{}[]<><=>=/|=+-"\'«»—…`'), None)
+        translation_table = dict.fromkeys(map(ord, '@#$^&*{}[]<><=>=/|=+-"\'«»—…`()№'), None)
 
         filtered_text = filtered_text.translate(translation_table)
 
