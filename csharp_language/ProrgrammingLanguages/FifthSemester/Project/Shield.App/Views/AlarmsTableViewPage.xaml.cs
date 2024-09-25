@@ -310,7 +310,7 @@ public sealed partial class AlarmsTableViewPage : Page
                 { "#contract.Bailee#", alarm.Contract.Bailee },
                 { "#contract.Owners#", alarm.Contract.Owners.Replace(";", ", ") },
                 { "#alarm.Date#", alarm.Date.Value.Date.ToString()[..10] },
-                { "#alarm.Time#",  $"{alarm.Date.Value.Date.Hour}:{alarm.Date.Value.Date.Minute}:{alarm.Date.Value.Date.Second}"},
+                { "#alarm.Time#",  $"{alarm.Date.Value.Hour}:{alarm.Date.Value.Minute}:{alarm.Date.Value.Second}"},
                 { "#item.Name#",  $"{stolenItem.Name}"},
                 { "#item.Meta#",  $"{stolenItem.Meta}"},
                 { "#item.Count#",  $"{rnd.Next(0, 1001)}"},
