@@ -1,5 +1,5 @@
 import pytest
-from python_language.probability_theory_and_mathematical_statistics.second_test_work.main import DataInteraction
+from python_language.probability_theory_and_mathematical_statistics.mathematical_statistics.second_test_work.main import DataInteraction
 
 data = [*range(1000)]
 
