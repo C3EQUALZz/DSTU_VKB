@@ -94,6 +94,9 @@
     <Compile Include="Core\Interfaces\SeventhQuestion\ISeventhQuestionModel.cs" />
     <Compile Include="Core\Interfaces\SeventhQuestion\ISeventhQuestionPresenter.cs" />
     <Compile Include="Core\Interfaces\SeventhQuestion\ISeventhQuestionView.cs" />
+    <Compile Include="Core\Interfaces\SixthQuestion\ISixthQuestionModel.cs" />
+    <Compile Include="Core\Interfaces\SixthQuestion\ISixthQuestionPresenter.cs" />
+    <Compile Include="Core\Interfaces\SixthQuestion\ISixthQuestionView.cs" />
     <Compile Include="Core\Interfaces\ThirdQuestion\IThirdQuestionModel.cs" />
     <Compile Include="Core\Interfaces\ThirdQuestion\IThirdQuestionPresenter.cs" />
     <Compile Include="Core\Interfaces\ThirdQuestion\IThirdQuestionView.cs" />
@@ -108,8 +111,10 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\FifthQuestionModel.cs" />
+    <Compile Include="Models\SixthQuestionModel.cs" />
     <Compile Include="Models\ThirteenthQuestionModel.cs" />
     <Compile Include="Presenters\FifthQuestionPresenter.cs" />
+    <Compile Include="Presenters\SixthQuestionPresenter.cs" />
     <Compile Include="Presenters\ThirteenthQuestionPresenter.cs" />
     <Compile Include="Views\FormEighteenthQuestion.cs">
       <SubType>Form</SubType>

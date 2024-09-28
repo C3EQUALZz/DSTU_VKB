@@ -71,10 +71,10 @@
             this.flowLayoutPanel1.Controls.Add(this.clearButton);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 518);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 407);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(665, 48);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(532, 46);
             this.flowLayoutPanel1.TabIndex = 1;
             this.flowLayoutPanel1.WrapContents = false;
             // 
@@ -86,8 +86,8 @@
             this.executeButton.HighEmphasis = true;
             this.executeButton.Icon = null;
             this.executeButton.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            this.executeButton.Location = new System.Drawing.Point(554, 6);
-            this.executeButton.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.executeButton.Location = new System.Drawing.Point(422, 5);
+            this.executeButton.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.executeButton.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             this.executeButton.Name = "executeButton";
             this.executeButton.NoAccentTextColor = System.Drawing.Color.Empty;
@@ -107,8 +107,8 @@
             this.clearButton.HighEmphasis = true;
             this.clearButton.Icon = null;
             this.clearButton.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            this.clearButton.Location = new System.Drawing.Point(447, 6);
-            this.clearButton.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.clearButton.Location = new System.Drawing.Point(317, 5);
+            this.clearButton.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.clearButton.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             this.clearButton.Name = "clearButton";
             this.clearButton.NoAccentTextColor = System.Drawing.Color.Empty;
@@ -127,18 +127,18 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(5, 5, 5, 0);
-            this.panel1.Size = new System.Drawing.Size(665, 92);
+            this.panel1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 0);
+            this.panel1.Size = new System.Drawing.Size(532, 74);
             this.panel1.TabIndex = 2;
             // 
             // roundedPanel1
             // 
             this.roundedPanel1.Controls.Add(this.label1);
             this.roundedPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.roundedPanel1.Location = new System.Drawing.Point(5, 5);
+            this.roundedPanel1.Location = new System.Drawing.Point(4, 4);
             this.roundedPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.roundedPanel1.Name = "roundedPanel1";
-            this.roundedPanel1.Size = new System.Drawing.Size(655, 87);
+            this.roundedPanel1.Size = new System.Drawing.Size(524, 70);
             this.roundedPanel1.TabIndex = 0;
             // 
             // label1
@@ -147,9 +147,9 @@
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Font = new System.Drawing.Font("MS Reference Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Margin = new System.Windows.Forms.Padding(10);
+            this.label1.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(655, 87);
+            this.label1.Size = new System.Drawing.Size(524, 70);
             this.label1.TabIndex = 0;
             this.label1.Text = "Вариант 1";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -158,10 +158,9 @@
             // 
             this.panel2.Controls.Add(this.tableLayoutPanel1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 92);
-            this.panel2.Margin = new System.Windows.Forms.Padding(4);
+            this.panel2.Location = new System.Drawing.Point(0, 74);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(665, 426);
+            this.panel2.Size = new System.Drawing.Size(532, 333);
             this.panel2.TabIndex = 3;
             // 
             // tableLayoutPanel1
@@ -172,23 +171,22 @@
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 108F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 86F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(665, 426);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(532, 333);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // roundedPanel2
             // 
             this.roundedPanel2.Controls.Add(this.label2);
             this.roundedPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.roundedPanel2.Location = new System.Drawing.Point(4, 17);
-            this.roundedPanel2.Margin = new System.Windows.Forms.Padding(4, 17, 4, 4);
+            this.roundedPanel2.Location = new System.Drawing.Point(3, 14);
+            this.roundedPanel2.Margin = new System.Windows.Forms.Padding(3, 14, 3, 3);
             this.roundedPanel2.Name = "roundedPanel2";
-            this.roundedPanel2.Size = new System.Drawing.Size(657, 87);
+            this.roundedPanel2.Size = new System.Drawing.Size(526, 69);
             this.roundedPanel2.TabIndex = 0;
             // 
             // label2
@@ -197,10 +195,10 @@
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(0, 0);
-            this.label2.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
+            this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label2.Name = "label2";
-            this.label2.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
-            this.label2.Size = new System.Drawing.Size(657, 87);
+            this.label2.Padding = new System.Windows.Forms.Padding(16, 14, 16, 14);
+            this.label2.Size = new System.Drawing.Size(526, 69);
             this.label2.TabIndex = 0;
             this.label2.Text = resources.GetString("label2.Text");
             // 
@@ -211,23 +209,21 @@
             this.tableLayoutPanel2.Controls.Add(this.roundedPanel3, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.roundedPanel4, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 112);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 89);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 62.5F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 37.5F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(657, 310);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(526, 241);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // roundedPanel3
             // 
             this.roundedPanel3.Controls.Add(this.resultLabel);
             this.roundedPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.roundedPanel3.Location = new System.Drawing.Point(4, 197);
-            this.roundedPanel3.Margin = new System.Windows.Forms.Padding(4);
+            this.roundedPanel3.Location = new System.Drawing.Point(3, 153);
             this.roundedPanel3.Name = "roundedPanel3";
-            this.roundedPanel3.Size = new System.Drawing.Size(649, 109);
+            this.roundedPanel3.Size = new System.Drawing.Size(520, 85);
             this.roundedPanel3.TabIndex = 0;
             // 
             // resultLabel
@@ -238,8 +234,8 @@
             this.resultLabel.Location = new System.Drawing.Point(0, 0);
             this.resultLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.resultLabel.Name = "resultLabel";
-            this.resultLabel.Padding = new System.Windows.Forms.Padding(15);
-            this.resultLabel.Size = new System.Drawing.Size(649, 109);
+            this.resultLabel.Padding = new System.Windows.Forms.Padding(12, 12, 12, 12);
+            this.resultLabel.Size = new System.Drawing.Size(520, 85);
             this.resultLabel.TabIndex = 0;
             this.resultLabel.Text = "Результат";
             // 
@@ -247,10 +243,9 @@
             // 
             this.roundedPanel4.Controls.Add(this.tableLayoutPanel3);
             this.roundedPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.roundedPanel4.Location = new System.Drawing.Point(4, 4);
-            this.roundedPanel4.Margin = new System.Windows.Forms.Padding(4);
+            this.roundedPanel4.Location = new System.Drawing.Point(3, 3);
             this.roundedPanel4.Name = "roundedPanel4";
-            this.roundedPanel4.Size = new System.Drawing.Size(649, 185);
+            this.roundedPanel4.Size = new System.Drawing.Size(520, 144);
             this.roundedPanel4.TabIndex = 1;
             // 
             // tableLayoutPanel3
@@ -276,7 +271,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 24.99941F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.00192F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.00315F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(649, 185);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(520, 144);
             this.tableLayoutPanel3.TabIndex = 2;
             // 
             // lengthOfArrayInput
@@ -289,15 +284,14 @@
             this.lengthOfArrayInput.BorderSize = 2;
             this.lengthOfArrayInput.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lengthOfArrayInput.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lengthOfArrayInput.Location = new System.Drawing.Point(328, 4);
-            this.lengthOfArrayInput.Margin = new System.Windows.Forms.Padding(4);
+            this.lengthOfArrayInput.Location = new System.Drawing.Point(263, 3);
             this.lengthOfArrayInput.Multiline = false;
             this.lengthOfArrayInput.Name = "lengthOfArrayInput";
-            this.lengthOfArrayInput.Padding = new System.Windows.Forms.Padding(10, 8, 10, 8);
+            this.lengthOfArrayInput.Padding = new System.Windows.Forms.Padding(8, 6, 8, 6);
             this.lengthOfArrayInput.PasswordChar = false;
             this.lengthOfArrayInput.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.lengthOfArrayInput.PlaceholderText = "Введите такое N, что 1 < K <= L <= N";
-            this.lengthOfArrayInput.Size = new System.Drawing.Size(317, 40);
+            this.lengthOfArrayInput.Size = new System.Drawing.Size(254, 32);
             this.lengthOfArrayInput.TabIndex = 2;
             this.lengthOfArrayInput.Texts = "";
             this.lengthOfArrayInput.UnderlinedStyle = false;
@@ -313,15 +307,14 @@
             this.startSliceOfArrayInput.BorderSize = 2;
             this.startSliceOfArrayInput.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.startSliceOfArrayInput.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.startSliceOfArrayInput.Location = new System.Drawing.Point(328, 50);
-            this.startSliceOfArrayInput.Margin = new System.Windows.Forms.Padding(4);
+            this.startSliceOfArrayInput.Location = new System.Drawing.Point(263, 38);
             this.startSliceOfArrayInput.Multiline = false;
             this.startSliceOfArrayInput.Name = "startSliceOfArrayInput";
-            this.startSliceOfArrayInput.Padding = new System.Windows.Forms.Padding(10, 8, 10, 8);
+            this.startSliceOfArrayInput.Padding = new System.Windows.Forms.Padding(8, 6, 8, 6);
             this.startSliceOfArrayInput.PasswordChar = false;
             this.startSliceOfArrayInput.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.startSliceOfArrayInput.PlaceholderText = "Введите такое K, что 1 < K <= L <= N ";
-            this.startSliceOfArrayInput.Size = new System.Drawing.Size(317, 40);
+            this.startSliceOfArrayInput.Size = new System.Drawing.Size(254, 32);
             this.startSliceOfArrayInput.TabIndex = 0;
             this.startSliceOfArrayInput.Texts = "";
             this.startSliceOfArrayInput.UnderlinedStyle = false;
@@ -332,10 +325,10 @@
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(72, 14);
+            this.label3.Location = new System.Drawing.Point(53, 11);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(179, 17);
+            this.label3.Size = new System.Drawing.Size(154, 13);
             this.label3.TabIndex = 1;
             this.label3.Text = "Введите N (размер массива)";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -345,10 +338,10 @@
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(54, 60);
+            this.label4.Location = new System.Drawing.Point(36, 46);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(216, 17);
+            this.label4.Size = new System.Drawing.Size(187, 13);
             this.label4.TabIndex = 3;
             this.label4.Text = "Введите K (начало среза включая)";
             // 
@@ -357,10 +350,10 @@
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(59, 106);
+            this.label5.Location = new System.Drawing.Point(40, 81);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(206, 17);
+            this.label5.Size = new System.Drawing.Size(180, 13);
             this.label5.TabIndex = 4;
             this.label5.Text = "Введите L (конец среза включая)";
             // 
@@ -369,10 +362,10 @@
             this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(83, 153);
+            this.label6.Location = new System.Drawing.Point(60, 118);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(157, 17);
+            this.label6.Size = new System.Drawing.Size(139, 13);
             this.label6.TabIndex = 5;
             this.label6.Text = "Массив случайных чисел";
             // 
@@ -386,15 +379,14 @@
             this.endSliceOfArrayInput.BorderSize = 2;
             this.endSliceOfArrayInput.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.endSliceOfArrayInput.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.endSliceOfArrayInput.Location = new System.Drawing.Point(329, 96);
-            this.endSliceOfArrayInput.Margin = new System.Windows.Forms.Padding(4);
+            this.endSliceOfArrayInput.Location = new System.Drawing.Point(264, 73);
             this.endSliceOfArrayInput.Multiline = false;
             this.endSliceOfArrayInput.Name = "endSliceOfArrayInput";
-            this.endSliceOfArrayInput.Padding = new System.Windows.Forms.Padding(10, 8, 10, 8);
+            this.endSliceOfArrayInput.Padding = new System.Windows.Forms.Padding(8, 6, 8, 6);
             this.endSliceOfArrayInput.PasswordChar = false;
             this.endSliceOfArrayInput.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.endSliceOfArrayInput.PlaceholderText = "Введите такое L, что 1 < K <= L <= N";
-            this.endSliceOfArrayInput.Size = new System.Drawing.Size(315, 40);
+            this.endSliceOfArrayInput.Size = new System.Drawing.Size(252, 32);
             this.endSliceOfArrayInput.TabIndex = 6;
             this.endSliceOfArrayInput.Texts = "";
             this.endSliceOfArrayInput.UnderlinedStyle = false;
@@ -405,18 +397,18 @@
             this.arrayOfRandomNumbersLabel.BackColor = System.Drawing.Color.Transparent;
             this.arrayOfRandomNumbersLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.arrayOfRandomNumbersLabel.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.arrayOfRandomNumbersLabel.Location = new System.Drawing.Point(334, 148);
-            this.arrayOfRandomNumbersLabel.Margin = new System.Windows.Forms.Padding(10);
+            this.arrayOfRandomNumbersLabel.Location = new System.Drawing.Point(268, 114);
+            this.arrayOfRandomNumbersLabel.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.arrayOfRandomNumbersLabel.Name = "arrayOfRandomNumbersLabel";
-            this.arrayOfRandomNumbersLabel.Size = new System.Drawing.Size(305, 27);
+            this.arrayOfRandomNumbersLabel.Size = new System.Drawing.Size(244, 22);
             this.arrayOfRandomNumbersLabel.TabIndex = 7;
             this.arrayOfRandomNumbersLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // FormFirstQuestion
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(665, 566);
+            this.ClientSize = new System.Drawing.Size(532, 453);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.flowLayoutPanel1);
