@@ -292,7 +292,7 @@ public sealed partial class AlarmsTableViewPage : Page
 
             if (file != null)
             {
-                var templatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Misc", "WordTemplates", "alarm_report_template.docx");
+                var templatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Misc", "WordTemplates", $"{(alarm.Result == DataAccess.Enums.AlarmResult.Robbery ? "alarm_report_steal_template.docx" : "alarm_report_false_template.docx")}");
 
                 // Через Spire.Doc сохраним отчет в выбранный файл
 
