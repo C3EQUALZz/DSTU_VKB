@@ -413,4 +413,10 @@
   <data name="Shell_AlarmsCardView.Content" xml:space="preserve">
     <value>Сигнализации - карточки</value>
   </data>
+  <data name="AlarmCreatedNotification" xml:space="preserve">
+    <value>Отчет создан</value>
+  </data>
+  <data name="Alarm" xml:space="preserve">
+    <value>Сигнализация</value>
+  </data>
 </root>
