@@ -326,7 +326,7 @@ public sealed partial class AlarmsTableViewPage : Page
 
                 doc.Close();
 
-                ShellPage.Instance.Notify("AlarmCreatedNotification".GetLocalized(), $"{"Alarm".GetLocalized()} №{alarm.Contract.ContractId}\n{file.Path}");
+                ShellPage.Instance.Notify("AlarmCreatedNotification".GetLocalized(), $"{"Alarm".GetLocalized()} №{alarm.AlarmId}\n{file.Path}");
             }
         }
     }
