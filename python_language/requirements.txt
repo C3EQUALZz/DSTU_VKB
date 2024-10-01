@@ -45,3 +45,4 @@ pytest
 fastapi
 uvicorn
 python-multipart
+docx2txt

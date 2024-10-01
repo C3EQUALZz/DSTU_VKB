@@ -1,1 +1,1 @@
-from .huffman import Huffman, Leaf, Node
+from .model import Model

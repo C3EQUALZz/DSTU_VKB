@@ -1,29 +1,29 @@
 import math
 
 from collections import Counter
-from typing import Mapping, AnyStr, Final
+from typing import Mapping, AnyStr, TypeVar, Generic, Union
 
-IGNORE_PATTERN: Final[AnyStr] = r'[^а-яА-Яa-zA-Z0-9 ,.]'
+T = TypeVar('T', bound=Union[str, bytes])
 
-class Model:
-    def __init__(self, text: bytes) -> None:
+class Model(Generic[T]):
+    def __init__(self, text: T) -> None:
         """
         :param text: Строка с текстом для анализа.
         """
         self.text = text
 
     @property
-    def text(self) -> bytes:
+    def text(self) -> T:
         return self.__text
 
     @text.setter
-    def text(self, user_text: bytes) -> None:
-        if not isinstance(user_text, bytes):
+    def text(self, user_text: T) -> None:
+        if not isinstance(user_text, (bytes, str)):
             raise ValueError("Ожидается строка в качестве входных данных")
         self.__text = user_text
 
 
-    def create_histogram(self) -> dict[str, list[AnyStr] | AnyStr]:
+    def create_histogram(self) -> dict[str, list[int | float] | AnyStr]:
         """
         Создаем и возвращаем JSON с гистограммой вероятностей символов.
         """
@@ -38,7 +38,7 @@ class Model:
             "type": "bar"
         }
 
-    def calculate_character_probabilities(self) -> Mapping[bytes, float]:
+    def calculate_character_probabilities(self) -> Mapping[int, float]:
         """
         Подсчет вероятности символов текста.
         """
