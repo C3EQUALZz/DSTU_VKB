@@ -64,7 +64,7 @@
     <None Update="Misc\WordTemplates\alarm_report_template.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Misc\WordTemplates\template.docx">
+    <None Update="Misc\WordTemplates\contract_report_template.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Page Update="Controls\RegisterContent.xaml">
@@ -111,9 +111,5 @@
 	
   <ItemGroup>
     <Resource Remove="Views\AlarmsPage.xaml" />
-  </ItemGroup>
-	
-  <ItemGroup>
-    <Folder Include="Misc\WordTemplates\" />
   </ItemGroup>
 </Project>
