@@ -2,6 +2,8 @@ from fastapi import APIRouter, HTTPException, UploadFile, File, Depends, status
 from typing import Tuple
 from docx import Document
 
+import PyPDF2
+
 from combined_languages.theory_of_information.backend.fifth_semestr.second_laboratory.model import Model
 
 router = APIRouter(
@@ -23,6 +25,8 @@ async def process_file(file: UploadFile = File(...)) -> Tuple[bytes, str, str]:
         decoded_content = file_content.decode("utf-8")
     elif file_extension in ("docx", "doc"):
         decoded_content = process_docx(file)
+    elif file_extension == "pdf":
+        decoded_content = process_pdf(file)
     else:
         decoded_content = ""
 
@@ -33,11 +37,14 @@ def process_docx(file: UploadFile) -> str:
     """
     Обрабатывает файл формата .docx и возвращает текст.
     """
-    doc = Document(file.file)  # Чтение docx файла
-    full_text = []
-    for paragraph in doc.paragraphs:
-        full_text.append(paragraph.text)
-    return '\n'.join(full_text)
+    return "\n".join(paragraph.text for paragraph in Document(file.file).paragraphs)
+
+def process_pdf(file: UploadFile) -> str:
+    """
+    Обрабатывает файл формата pdf и возвращает текст.
+    """
+    pdf_reader = PyPDF2.PdfReader(file.file)
+    return "".join(pdf_reader.pages[page_num].extract_text() for page_num in range(len(pdf_reader.pages)))
 
 
 @router.post("/histogram")
