@@ -24,8 +24,10 @@ class Node(namedtuple('Node', ["left", "right"])):
 class Huffman:
 
     @staticmethod
-    @loggable
-    def encode(string: str) -> dict[str, str]:
+    def build_tree(string: str) -> dict[str, str]:
+        """
+        Построение дерева Хаффмана, чтобы в дальнейшем закодировать слово
+        """
         queue_with_priority = []
         code = {}
 
@@ -37,7 +39,7 @@ class Huffman:
         count = 0
         while len(queue_with_priority) > 1:
             minimal_frequency, _, left = heapq.heappop(queue_with_priority)
-            pre_minimal_freq, _, right = heapq.heappop(queue_with_priority)
+            _, pre_minimal_freq, right = heapq.heappop(queue_with_priority)
             heapq.heappush(queue_with_priority, (minimal_frequency + pre_minimal_freq, count, Node(left, right)))
             count += 1
 
@@ -46,3 +48,28 @@ class Huffman:
             root.walk(code, "")
 
         return code
+
+    @loggable
+    def encode(self, string: str, code: dict[str, str]) -> str:
+        return "".join(code[char] for char in string)
+
+    @staticmethod
+    @loggable
+    def decode(encoded_string: str, code: dict[str, str]) -> str:
+        """
+        Метод для декодирования последовательности символов.
+        :param encoded_string: Закодированное слово, которое нужно вернуть в исходное.
+        :param code: Таблица символов соответствия (дерево - Хаффмана), где каждому символу вы назначили код
+        """
+        #
+        reverse_code = {v: k for k, v in code.items()}
+        decoded_string = ""
+        temp = ""
+
+        for bit in encoded_string:
+            temp += bit
+            if temp in reverse_code:
+                decoded_string += reverse_code[temp]
+                temp = ""
+
+        return decoded_string
