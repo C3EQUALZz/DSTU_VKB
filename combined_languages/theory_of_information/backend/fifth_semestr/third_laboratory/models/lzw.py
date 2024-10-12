@@ -8,17 +8,17 @@
 Важный момент: алгоритм LZW не обеспечивает сжатие полноценно, в результате может выйти файл, который больше по размеру
 """
 from combined_languages.theory_of_information.backend.core.decorators import loggable
-
+from combined_languages.theory_of_information.backend.core.abstract_classes import Compressor
 import struct
 
 
-class LZW:
+class LZW(Compressor):
     def __init__(self) -> None:
         self.DICTIONARY_SIZE: int = 114112
         self.maximum_table_size: int = pow(2, int(self.DICTIONARY_SIZE))
 
     @loggable
-    def encode(self, data: str) -> bytes:
+    def compress(self, data: str) -> bytes:
         """
         Здесь происходит логика сжатия данных
         """
@@ -46,7 +46,7 @@ class LZW:
         return b"".join(struct.pack('>H', int(data)) for data in compressed_data)
 
     @loggable
-    def decode(self, compressed_data: bytes) -> str:
+    def decompress(self, compressed_data: bytes) -> str:
         # Building and initializing the dictionary.
         dictionary = {x: chr(x) for x in range(self.DICTIONARY_SIZE)}
 

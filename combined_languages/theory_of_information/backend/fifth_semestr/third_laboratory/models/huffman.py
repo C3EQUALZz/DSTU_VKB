@@ -49,8 +49,9 @@ class Huffman:
 
         return code
 
+    @staticmethod
     @loggable
-    def encode(self, string: str, code: dict[str, str]) -> str:
+    def encode(string: str, code: dict[str, str]) -> str:
         return "".join(code[char] for char in string)
 
     @staticmethod
