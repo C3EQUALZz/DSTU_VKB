@@ -20,27 +20,40 @@ namespace ThirdLaboratory.Presenters
         public void OnCellValidate(object sender, DataGridViewCellValidatingEventArgs e)
         {
             var dataGridView = sender as DataGridView;
+            var error = e as DataGridViewCellValidatingEventArgs;
 
-            string columnName = dataGridView.Columns[e.ColumnIndex].Name;
+            string columnName = dataGridView.Columns[error.ColumnIndex].Name;
+            string value = error.FormattedValue.ToString();
+
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                dataGridView.Rows[error.RowIndex].ErrorText = "Поле не может быть пустым.";
+                error.Cancel = true;
+                MessageBox.Show("Поле не может быть пустым.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             if (columnName == "Owner")
             {
-                if (!_model.IsValidOwner(e.FormattedValue.ToString()))
+                if (!_model.IsValidOwner(value))
                 {
-                    dataGridView.Rows[e.RowIndex].ErrorText = "Фамилия и имя должны начинаться с большой буквы и состоять из букв алфавита кириллицы.";
-                    e.Cancel = true;
+                    dataGridView.Rows[error.RowIndex].ErrorText = "Фамилия и имя должны начинаться с большой буквы и состоять только из букв.";
+                    error.Cancel = true;
+                    MessageBox.Show("Фамилия и имя должны начинаться с большой буквы и состоять только из букв.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
             else if (columnName == "Number")
             {
-                if (!_model.IsValidCarNumber(e.FormattedValue.ToString()))
+                if (!_model.IsValidCarNumber(value))
                 {
-                    dataGridView.Rows[e.RowIndex].ErrorText = "Номер машины должен соответствовать принятому формату.";
-                    e.Cancel = true;
+                    dataGridView.Rows[error.RowIndex].ErrorText = "Номер машины должен соответствовать принятому формату.";
+                    error.Cancel = true;
+                    MessageBox.Show("Номер машины должен соответствовать принятому формату.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
+
 
         /// <summary>
         /// Здесь идет обработка вывода для ListBox

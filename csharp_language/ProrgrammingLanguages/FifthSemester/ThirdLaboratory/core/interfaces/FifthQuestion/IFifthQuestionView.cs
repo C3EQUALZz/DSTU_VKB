@@ -8,7 +8,7 @@ namespace ThirdLaboratory.Core.Interfaces.FifthQuestion
     {
         int RowCount { get; set; }
         int ColumnCount { get; set; }
-        int[,] Matrix { get; set; }
+        string[,] Matrix { get; set; }
         List<string> ResultListBoxItems { get; set; }
         void ExecuteButton_Click(object sender, EventArgs e);
         void ClearButton_Click(object sender, EventArgs e);

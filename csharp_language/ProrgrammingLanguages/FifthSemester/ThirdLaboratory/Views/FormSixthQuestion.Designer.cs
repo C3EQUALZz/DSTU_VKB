@@ -337,7 +337,7 @@
             this.scholarShipRangeTextBox.TabIndex = 5;
             this.scholarShipRangeTextBox.Texts = "";
             this.scholarShipRangeTextBox.UnderlinedStyle = false;
-            this.scholarShipRangeTextBox._TextChanged += new System.EventHandler(this.ScholarShipRangeTextBox__TextChanged);
+            // this.scholarShipRangeTextBox._TextChanged += new System.EventHandler(this.ScholarShipRangeTextBox__TextChanged);
             // 
             // roundedPanel4
             // 

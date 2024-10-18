@@ -42,18 +42,16 @@ namespace ThirdLaboratory.forms
         /// Свойство, которое позволяет получить все значения из dataGridView в виде матрицы int[rows, columns]
         /// Можно также установить значения в матрицы, подменив
         /// </summary>
-        public int[,] Matrix
+        public string[,] Matrix
         {
             get
             {
-                var matrix = new int[RowCount, ColumnCount];
+                var matrix = new string[RowCount, ColumnCount];
                 Enumerable.Range(0, RowCount).ToList().ForEach(i =>
                     Enumerable.Range(0, ColumnCount).ToList().ForEach(j =>
                     {
-                        if (int.TryParse(dataGridView[j, i].Value?.ToString(), out int value))
-                        {
-                            matrix[i, j] = value;
-                        }
+                        matrix[i, j] = dataGridView[j, i].Value?.ToString();
+
                     })
                 );
                 return matrix;
