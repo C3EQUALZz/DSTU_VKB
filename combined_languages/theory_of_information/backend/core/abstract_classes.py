@@ -8,7 +8,7 @@ if TYPE_CHECKING:
 
 class Compressor(ABC):
     @abstractmethod
-    def compress(self, text: str) -> "list[TokenLZ77] | list[TokenLZ78]":
+    def compress(self, text: str) -> "list[TokenLZ77] | list[TokenLZ78] | bytes":
         raise NotImplementedError
 
     @abstractmethod

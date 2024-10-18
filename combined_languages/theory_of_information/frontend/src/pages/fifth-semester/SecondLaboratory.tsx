@@ -8,18 +8,17 @@ const { Header, Content } = Layout;
 
 export function SecondLaboratory() {
     const [file, setFile] = useState<File | null>(null);
-    const [entropy, setEntropy] = useState<number | null>(null);
-    const [histogramData, setHistogramData] = useState<HistogramData | null>(null);
-    const [ignorePattern, setIgnorePattern] = useState<string>("");
+    const [entropy, setEntropy] = useState<{ text_entropy: number | null, file_entropy: number | null }>({
+        text_entropy: null,
+        file_entropy: null
+    });
+    const [textHistogramData, setTextHistogramData] = useState<HistogramData | null>(null);
+    const [fileHistogramData, setFileHistogramData] = useState<HistogramData | null>(null);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {
             setFile(event.target.files[0]);
         }
-    };
-
-    const handleIgnorePatternChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setIgnorePattern(event.target.value);
     };
 
     const handleSubmit = async () => {
@@ -37,7 +36,11 @@ export function SecondLaboratory() {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            setEntropy(entropyResponse.data.entropy);
+
+            setEntropy({
+                text_entropy: entropyResponse.data.text_entropy ?? null,
+                file_entropy: entropyResponse.data.file_entropy ?? null,
+            });
 
             const histogramResponse = await axios.post('http://localhost:8002/api/fifth_semester/second_laboratory/histogram', formData, {
                 headers: {
@@ -45,9 +48,11 @@ export function SecondLaboratory() {
                 },
             });
 
-            // Данные возвращаются как объект с полями x и y
-            setHistogramData(histogramResponse.data.histogram);
-        } catch (error) {
+            // Проверка на наличие гистограммы текста и файла
+            setTextHistogramData(histogramResponse.data.text_histogram || null);
+            setFileHistogramData(histogramResponse.data.file_histogram || null);
+
+        } catch {
             alert("Произошла ошибка при загрузке файла.");
         }
     };
@@ -55,43 +60,28 @@ export function SecondLaboratory() {
     return (
         <Layout>
             <Header style={{ padding: '0 24px', background: '#fff', textAlign: 'center' }}>
-                <Title level={1}>Лабораторная работа №1 «Энтропия текста»</Title>
+                <Title level={1}>Лабораторная работа №2 «Энтропия файла и текста»</Title>
             </Header>
             <Content style={{ padding: '24px' }}>
                 <Typography style={{marginBottom: "10px"}}>
-                    Необходимо подсчитать энтропию текста, содержащегося в файле. <br /><br />
+                    Необходимо подсчитать энтропию файла (любого), если в этом файле есть текст – то сравнить энтропию файла и текста.. <br /><br />
 
                     Входные данные: <br />
-                    Файл с текстом (можете сами себе поставить ограничения на разрешение файла)
-                    В данных файлах содержаться различные буквы (латиница и кириллица), знаки
-                    препинаний, цифры. Символы {`@ # $ ^ & * {} [] < > <= >= / \ | = + `} можете удалять. Не
-                    забывайте, что пробел тоже символ. <br /><br />
+                    Файл с любым расширением <br /><br />
 
                     Выходные данные: <br />
-                    1. Гистограмма появления всех символов, которые встретились в тексте, возможны три
-                    варианта построения гистограммы:<br/>
-                    а. полная гистограмма всех символов на одной оси <br/>
-                    б. 3-4 разных гистограмм, разбитых по смыслу (отдельно кириллица, латиница,
-                    символы) <br/>
-                    в. полная таблица символ-частота (вероятность) а гистограмма – первые 10-20 часто
-                    встречаемых символов <br/>
-                    2. Энтропия текста <br/><br/>
+                    1. Гистограмма появления всех бит <br />
+                    2. Энтропия файла <br />
+                    3. Если файл содержит текст – энтропия текста <br /><br />
 
                     Язык: любой, кроме Паскаля, Делфи, Бейсика и подобных <br/>
-                    Интерфейс – нужен, конкретных требований к нему на первой лабе не предъявляю<br/>
+                    Интерфейс – нужен<br/>
                 </Typography>
                 <Form onFinish={handleSubmit} layout="vertical">
                     <Form.Item>
                         <Input type="file" onChange={handleFileChange} />
                     </Form.Item>
-                    <Form.Item label="Игнорируемый паттерн">
-                        <Input
-                            type="text"
-                            value={ignorePattern}
-                            onChange={handleIgnorePatternChange}
-                            placeholder="Введите игнорируемый паттерн по умолчанию: [@#$\^\&\*\{\}\[\]<>+=/\\|£№]"
-                        />
-                    </Form.Item>
+
                     <Form.Item>
                         <Button type="primary" htmlType="submit">
                             Загрузить
@@ -99,14 +89,32 @@ export function SecondLaboratory() {
                     </Form.Item>
                 </Form>
 
-                {entropy && (
+                {/* Render only if entropy is available */}
+                {entropy.text_entropy !== null && (
                     <Paragraph>
-                        <strong>Энтропия:</strong> {entropy}
+                        <strong>Энтропия текста:</strong> {entropy.text_entropy}
                     </Paragraph>
                 )}
 
-                {histogramData && (
-                    <Histogram histogramData={histogramData} />
+                {entropy.file_entropy !== null && (
+                    <Paragraph>
+                        <strong>Энтропия файла:</strong> {entropy.file_entropy}
+                    </Paragraph>
+                )}
+
+                {/* Render histograms only if the corresponding data exists */}
+                {textHistogramData && (
+                    <div>
+                        <Title level={3}>Гистограмма текста</Title>
+                        <Histogram histogramData={textHistogramData} />
+                    </div>
+                )}
+
+                {fileHistogramData && (
+                    <div>
+                        <Title level={3}>Гистограмма файла</Title>
+                        <Histogram histogramData={fileHistogramData} />
+                    </div>
                 )}
             </Content>
         </Layout>

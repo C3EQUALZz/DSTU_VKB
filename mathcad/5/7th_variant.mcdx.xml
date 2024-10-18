@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ConversionLog Date="29.09.2024 13:47:22">
+  <WorksheetData SourceVersion="14/15" Source="D:\PycharmProjects\DSTU_VKB\mathcad\5\7th_variant.xmcd" Destination="D:\PycharmProjects\DSTU_VKB\mathcad\5\7th_variant.mcdx" />
+  <Worksheet SourceRegionCount="44" WorksheetIssueCount="0" RegionsWithIssueCount="10"><IssueGroup Category="Расхождения в отображении" Count="10"><ConversionIssue Count="2" Text="Изображение оператора изменилось по сравнению с документом-источником. Точность результатов при этом сохраняется." /><ConversionIssue Count="8" Text="В данной версии PTC Mathcad результаты не могут отображаться в виде таблиц. Результат отображается в виде матрицы. Его точность при этом сохраняется." /></IssueGroup><IssueGroup Category="Расхождения в расчетах" Count="1"><ConversionIssue Count="1" Text="При преобразовании изменился шрифт формул. Проверьте, не изменились ли результаты расчетов." /></IssueGroup></Worksheet>
+</ConversionLog>

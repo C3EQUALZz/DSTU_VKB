@@ -25,9 +25,13 @@ Set-ExecutionPolicy RemoteSigned -Scope Process
 ```
 
 ### Проверяем текущие настройки ExecutionPolicy для всех областей
+```
 Get-ExecutionPolicy -List
+```
 
 ## 2. Настроить политику на запуск только подписанных скриптов
 
 ###  Изменяем политику на AllSigned (разрешает запуск только подписанных скриптов)
+```
 Set-ExecutionPolicy  AllSigned -Scope Process
+```
