@@ -21,17 +21,19 @@ class Node(namedtuple('Node', ["left", "right"])):
         self.right.walk(code, acc + "1")
 
 
-class Huffman:
+class Tree:
+    def __init__(self, dictionary_with_freq: dict[str, float]) -> None:
+        self.dictionary_with_freq = dictionary_with_freq
 
-    @staticmethod
-    def build_tree(string: str) -> dict[str, str]:
+    # noinspection PyMethodMayBeStatic
+    def build(self) -> dict[str, str]:
         """
         Построение дерева Хаффмана, чтобы в дальнейшем закодировать слово
         """
         queue_with_priority = []
         code = {}
 
-        for char, freq in Counter(string).items():
+        for char, freq in self.dictionary_with_freq.items():
             queue_with_priority.append((freq, len(queue_with_priority), Leaf(char)))
 
         heapq.heapify(queue_with_priority)
@@ -49,21 +51,23 @@ class Huffman:
 
         return code
 
-    @staticmethod
-    @loggable
-    def encode(string: str, code: dict[str, str]) -> str:
-        return "".join(code[char] for char in string)
 
-    @staticmethod
+class Huffman:
+    def __init__(self, tree: Tree) -> None:
+        self.tree = tree.build()
+
     @loggable
-    def decode(encoded_string: str, code: dict[str, str]) -> str:
+    def encode(self, string: str) -> str:
+        return "".join(self.tree[char] for char in string)
+
+    @loggable
+    def decode(self, encoded_string: str) -> str:
         """
         Метод для декодирования последовательности символов.
         :param encoded_string: Закодированное слово, которое нужно вернуть в исходное.
         :param code: Таблица символов соответствия (дерево - Хаффмана), где каждому символу вы назначили код
         """
-        #
-        reverse_code = {v: k for k, v in code.items()}
+        reverse_code = {v: k for k, v in self.tree.items()}
         decoded_string = ""
         temp = ""
 
@@ -74,3 +78,15 @@ class Huffman:
                 temp = ""
 
         return decoded_string
+
+
+if __name__ == "__main__":
+    word = "Привет, мир!"
+    map_with_freq = {char: count / len(word) for char, count in Counter(word).items()}
+    tree = Tree(map_with_freq)
+    print(tree.build())
+    coder = Huffman(tree)
+    encoded = coder.encode(word)
+    print(encoded)
+    decoded = coder.decode(encoded)
+    print(decoded)

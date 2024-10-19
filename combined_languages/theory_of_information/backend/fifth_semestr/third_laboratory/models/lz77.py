@@ -82,6 +82,8 @@ class LZ77(Compressor):
         :return: the compressed text as a list of Tokens
         """
 
+        text = text.strip()
+
         output = []
         search_buffer = ""
 

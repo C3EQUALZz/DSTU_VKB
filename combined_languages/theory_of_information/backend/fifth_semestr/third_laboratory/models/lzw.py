@@ -68,3 +68,10 @@ class LZW(Compressor):
             string = dictionary[code]
 
         return decompressed_data
+
+if __name__ == "__main__":
+    compressor = LZW()
+    a = compressor.compress("Привет, мир!")
+    print(a)
+    b = compressor.decompress(a)
+    print(b)

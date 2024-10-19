@@ -1,5 +1,5 @@
 from combined_languages.theory_of_information.backend.core.abstract_classes import Compressor
-from typing import override, Self, Iterator
+from typing import Self, Iterator
 from dataclasses import dataclass, astuple
 from combined_languages.theory_of_information.backend.core.decorators import loggable
 
@@ -31,7 +31,6 @@ class Token:
 class LZ78(Compressor):
 
     @loggable
-    @override
     def compress(self, text: str) -> list[Token]:
         """
         Compresses the input text using LZ78 algorithm.
@@ -55,7 +54,6 @@ class LZ78(Compressor):
         return compressed
 
     @loggable
-    @override
     def decompress(self, compressed: list[Token]) -> str:
         """
         Decompresses the list of tuples back to the original text using LZ78 algorithm.

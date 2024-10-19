@@ -45,4 +45,5 @@ pytest
 fastapi
 uvicorn
 python-multipart
-docx2txt
+python-docx
+pypdf2
