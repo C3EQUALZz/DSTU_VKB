@@ -8,7 +8,7 @@ namespace ThirdLaboratory.core.helpers.sidebar
         {
             context.SideBar.Width -= 10;
 
-            if (context.SideBar.Width <= 110)
+            if (context.SideBar.Width <= 90)
             {
                 context.State = new CollapsedState();
                 context.Timer.Stop();

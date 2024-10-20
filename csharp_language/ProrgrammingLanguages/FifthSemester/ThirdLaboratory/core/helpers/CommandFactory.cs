@@ -18,7 +18,7 @@ namespace ThirdLaboratory.core.helpers
         public static Command CreateCommand(Panel panel, Timer timer)
         {
 
-            if (panel.Height >= 400)
+            if (panel.Height >= 320)
             {
                 return new CollapseCommand(panel, timer);
             }

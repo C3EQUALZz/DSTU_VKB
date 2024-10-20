@@ -1,4 +1,3 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34916.146
@@ -7,9 +6,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThirdLaboratory", "ThirdLab
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FirstLaboratory", "FirstLaboratory\FirstLaboratory.csproj", "{B2F2AB62-9453-486D-BAB0-BADCB33DD85E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FourthLaboratory", "FourthLaboratory\FourthLaboratory.csproj", "{2045D4F9-975D-4477-AD93-26161702D756}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecondLaboratory", "SecondLaboratory\SecondLaboratory.csproj", "{CCC07C76-234A-4C86-9934-4A808B5AB037}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FourthLaboratory", "FourthLaboratory\FourthLaboratory.csproj", "{A793DB4D-CCF3-4770-B850-4508D6E540EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

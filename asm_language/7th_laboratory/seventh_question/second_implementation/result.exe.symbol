@@ -1,0 +1,26 @@
+< THE SYMBOL TABLE >  result.exe  --  emu8086 assembler version: 4.08 
+===================================================================================================
+Name                     	Offset    	Size      	Type      	Segment   
+===================================================================================================
+CODE                     	00000     	-5        	SEGMENT   	(ITSELF)  
+MAIN                     	00000     	-1        	NEAR      	code      
+@11                      	0002C     	-1        	LABEL     	code      
+@12                      	0003C     	-1        	LABEL     	code      
+@13                      	0004E     	-1        	LABEL     	code      
+@31                      	00068     	-1        	LABEL     	code      
+GETTEXTSCREENPRM         	0006D     	-1        	NEAR      	code      
+OUTSYMB                  	0007A     	-1        	NEAR      	code      
+INT1CH_HANDLER           	0008C     	-1        	NEAR      	code      
+@IH1                     	000B9     	-1        	LABEL     	code      
+OLD_INT1CH               	000C4     	2         	VAR       	code      
+DATA                     	0000D     	-5        	SEGMENT   	(ITSELF)  
+STARTMSG                 	00000     	1         	VAR       	data      
+SCRACTPGNUM              	0001C     	1         	VAR       	data      
+COUNTERVAL               	0001D     	1         	VAR       	data      
+KEYPRESSFLAG             	0001E     	1         	VAR       	data      
+EXITFLAG                 	0001F     	1         	VAR       	data      
+STK                      	0000F     	-5        	SEGMENT   	(ITSELF)  
+===================================================================================================
+[ 18.09.2024  --  20:10:17 ] 
+< END >
+ 

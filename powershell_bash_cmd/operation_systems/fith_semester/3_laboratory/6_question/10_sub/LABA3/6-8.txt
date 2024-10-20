@@ -1,0 +1,51 @@
+#Информация по всем командам
+
+Get-Command -Module Storage
+
+#список дисков, доступных на логическом уровне в системе
+
+Get-Disk | ft -AutoSize
+
+#информация о физических дисках
+
+Get-PhysicalDisk
+
+#Информация по разделам дисков
+
+Get-Partition
+
+#Список всех логических разделов Windows
+
+Get-Volume
+
+----------------------------------------------------------------------------
+
+#Перевести диск в онлайн
+
+Get-Disk | Where-Object IsOffline –Eq $True | Set-Disk –IsOffline $False
+
+#Инициализировать диск под номером 1
+
+Initialize-Disk -Number 1
+
+#Инициализировать все диски с таблицой раздело RAW (по умолчанию все диски её создают)
+
+Get-Disk | Where-Object PartitionStyle –Eq 'RAW' | Initialize-Disk
+
+----------------------------------------------------------------------------
+
+#Создать раздел на 10 гб с буквой тома L
+
+New-Partition –DiskNumber 1 -Size 10gb -DriveLetter L
+
+#Переименовать раздел на другую букву U
+
+Set-Partition –DriveLetter L -NewDriveLetter U
+
+#Отформотировать раздел
+
+Format-Volume -DriveLetter L -FileSystem NTFS -NewFileSystemLabel DBData -Confirm:$false
+
+#Удаление всех разделов на диске 1
+
+Get-Partition –DiskNumber 1 | Remove-Partition -Confirm:$false

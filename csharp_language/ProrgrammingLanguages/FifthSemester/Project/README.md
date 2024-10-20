@@ -120,16 +120,18 @@
 
 ### Страницы
 
-Приложение имеет всего 4 [страницы](Shield.App/Views):
+Приложение имеет всего 5 [страниц](Shield.App/Views):
 - Контракты ```ContractsPage.xaml + ContractsPage.xaml.cs```
-- Сигнализации ```AlarmsPage.xaml + AlarmsPage.xaml.cs```
+- Сигнализации в карточном представлении ```AlarmsPage.xaml + AlarmsPage.xaml.cs```
+- Сигнализации в табличном представлении с сортировками по всем столбцам и фильтрами по времени ```AlarmsTableViewPage.xaml + AlarmsTableViewPage.xaml.cs```
 - Профиль ```ProfilePage.xaml + ProfilePage.xaml.cs```
 - Настройки ```SettingsPage.xaml + SettingsPage.xaml.cs```
 
-![image](https://github.com/user-attachments/assets/1dc48323-2678-466f-bcb1-cc39a73e6519)<br>
-![image](https://github.com/user-attachments/assets/3cd8d9b1-0e7b-4a5f-a811-fa7e6476a5d4)<br>
-![image](https://github.com/user-attachments/assets/ef7d6c36-e365-4754-86d8-dacec3d73e98)<br>
-![image](https://github.com/user-attachments/assets/b903b0ef-cb32-4431-ba0c-19be478add46)<br>
+![image](https://github.com/user-attachments/assets/fb4f0cab-e082-4797-aecd-01db781253bf)
+![image](https://github.com/user-attachments/assets/d05dac63-a08c-42bd-9129-ed7c274a9ddb)
+![image](https://github.com/user-attachments/assets/c43668ec-ef26-4af1-ab23-772442be932d)
+![image](https://github.com/user-attachments/assets/7d02d8b4-8f76-4f8b-b64f-906ea097b638)
+![image](https://github.com/user-attachments/assets/4b54611d-1bf4-48f2-af60-6bc2d1634822)
 
 > [!TIP]
 > Вы можете добавить свои страницы в проект, для этого нужно:

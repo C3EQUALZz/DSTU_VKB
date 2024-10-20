@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ConversionLog Date="29.09.2024 15:12:25">
+  <WorksheetData SourceVersion="14/15" Source="D:\PycharmProjects\DSTU_VKB\mathcad\6\7th_variant.xmcd" Destination="D:\PycharmProjects\DSTU_VKB\mathcad\6\7th_variant.mcdx" />
+  <Worksheet SourceRegionCount="122" WorksheetIssueCount="0" RegionsWithIssueCount="5"><IssueGroup Category="Расхождения в отображении" Count="5"><ConversionIssue Count="5" Text="В данной версии PTC Mathcad результаты не могут отображаться в виде таблиц. Результат отображается в виде матрицы. Его точность при этом сохраняется." /></IssueGroup></Worksheet>
+</ConversionLog>

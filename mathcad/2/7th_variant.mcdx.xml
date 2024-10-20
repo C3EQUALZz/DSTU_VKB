@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ConversionLog Date="27.09.2024 23:33:12">
+  <WorksheetData SourceVersion="14/15" Source="D:\PycharmProjects\DSTU_VKB\mathcad\2\7th_variant.xmcd" Destination="D:\PycharmProjects\DSTU_VKB\mathcad\2\7th_variant.mcdx" />
+  <Worksheet SourceRegionCount="65" WorksheetIssueCount="0" RegionsWithIssueCount="8"><IssueGroup Category="Расхождения в расчетах" Count="1"><ConversionIssue Count="1" Text="При преобразовании изменился шрифт формул. Проверьте, не изменились ли результаты расчетов." /></IssueGroup><IssueGroup Category="Расхождения в отображении" Count="8"><ConversionIssue Count="4" Text="Изображение оператора изменилось по сравнению с документом-источником. Точность результатов при этом сохраняется." /><ConversionIssue Count="4" Text="Отображение экспоненциального представления изменилось из исходного документа. Точность результатов при этом сохраняется." /></IssueGroup></Worksheet>
+</ConversionLog>

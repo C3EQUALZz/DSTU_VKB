@@ -9,7 +9,7 @@ namespace ThirdLaboratory.core
     /// </summary>
     internal class CollapseCommand : Command
     {
-        public CollapseCommand(Panel panel, Timer timer) : base(panel, timer, -10, 75) { }
+        public CollapseCommand(Panel panel, Timer timer) : base(panel, timer, -10, 60) { }
 
         /// <summary>
         /// У нас работает до определенных размеров, после чего прекращается работа. 

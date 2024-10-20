@@ -1,11 +1,11 @@
 ; 7: Ввести с клавиатуры строку, состоящую из нескольких слов. Вывести каждое слово на экран в отдельной строке, т.е. выдать слова с столбик.
 
-segment DATA_S
+DATA_S segment
     buffer db 255 dup('$')
     new db 10, 13, '$'
 DATA_S ends
 
-segment CODE_S
+CODE_S segment
     assume cs:CODE_S, ds:DATA_S
 
     start:
@@ -32,18 +32,11 @@ segment CODE_S
         inc si
 
         cmp al, ' '
-        je new_line
+        je print_new_line
 
         mov ah, 02h
         mov dl, al
         int 21h
-
-        jmp iterate_buffer
-
-        new_line:
-            mov ah, 09h
-            lea dx, new
-            int 21h
 
         jmp iterate_buffer
 

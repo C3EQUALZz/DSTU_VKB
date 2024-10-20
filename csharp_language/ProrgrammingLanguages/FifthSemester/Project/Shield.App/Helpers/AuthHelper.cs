@@ -6,8 +6,17 @@ using System.Net.Http.Json;
 using Windows.Storage;
 
 namespace Shield.App.Helpers;
-public static class AuthHelper
+public class AuthHelper
 {
+    public delegate void LoginHandler();
+    public delegate void RegisterHandler();
+
+    public event LoginHandler Login;
+    public event RegisterHandler Register;
+
+    private static AuthHelper _instance;
+    public static AuthHelper Instance => _instance ??= new AuthHelper();
+
     public static async Task<string?> ShowAuthDialogAsync(XamlRoot root)
     {
         var dialog = new ContentDialog();
@@ -49,6 +58,7 @@ public static class AuthHelper
             if (dto != null)
             {
                 ApplicationData.Current.LocalSettings.Values["apiToken"] = dto.Token;
+                Instance.Login?.Invoke();
             }
         }
         else if (result == ContentDialogResult.Secondary)
@@ -84,6 +94,7 @@ public static class AuthHelper
                 return string.Join("\n", (await response.Content.ReadFromJsonAsync<HttpResponseDto>()).Errors.Values.SelectMany(x => x));
             }
 
+            Instance.Register?.Invoke();
             await ApiHelper.Login(content.Login, content.Password);
         }
 

@@ -46,6 +46,7 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
     public string Address => AddressTB.Text;
     public string Comment => CommentTB.Text;
     public string Organization => OrganizationTB.Text;
+    public bool IsLegalEntity => LegalEntityCB.IsChecked.Value;
     public List<string> Owners => OwnersControls.Select(x => x.Value).Where(o => !string.IsNullOrWhiteSpace(o)).ToList();
     public StorageFile Plan;
     public StorageFile Picture;
@@ -79,6 +80,7 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
         AddressTB.Text = contract.Address;
         CommentTB.Text = contract.Comment;
         OrganizationTB.Text = contract.Organization;
+        LegalEntityCB.IsChecked = contract.IsLegalEntity;
 
         if (contract.Owners != null)
         {
@@ -104,7 +106,7 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
         jsLogReciever = WV.CoreWebView2.GetDevToolsProtocolEventReceiver("Log.entryAdded");
         jsLogReciever.DevToolsProtocolEventReceived += (s, e) =>
         {
-            System.Diagnostics.Debug.WriteLine(e.ParameterObjectAsJson);
+            //System.Diagnostics.Debug.WriteLine(e.ParameterObjectAsJson);
         };
 
         WV.CoreWebView2.Navigate("https://app/map/index.html");
@@ -192,6 +194,16 @@ public sealed partial class CreateContractDialog : UserControl, INotifyPropertyC
     }
 
     private void OrganizationTB_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        Edited?.Invoke(sender);
+    }
+
+    private void LegalEntityCB_Checked(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+        Edited?.Invoke(sender);
+    }
+
+    private void LegalEntityCB_Unchecked(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
     {
         Edited?.Invoke(sender);
     }

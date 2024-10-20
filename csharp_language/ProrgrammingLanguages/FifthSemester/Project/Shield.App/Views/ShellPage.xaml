@@ -49,10 +49,28 @@
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xF571;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem x:Uid="Shell_Alarms" helpers:NavigationHelper.NavigateTo="Shield.App.ViewModels.AlarmsViewModel">
+                <NavigationViewItem x:Uid="Shell_Alarms" SelectsOnInvoked="False">
+
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE7BA;"/>
                     </NavigationViewItem.Icon>
+
+                    <NavigationViewItem.MenuItems>
+                        
+                        <NavigationViewItem x:Uid="Shell_AlarmsCardView" helpers:NavigationHelper.NavigateTo="Shield.App.ViewModels.AlarmsViewModel">
+                            <NavigationViewItem.Icon>
+                                <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8C7;"/>
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        
+                        <NavigationViewItem x:Uid="Shell_AlarmsTableView" helpers:NavigationHelper.NavigateTo="Shield.App.ViewModels.AlarmsTableViewViewModel">
+                            <NavigationViewItem.Icon>
+                                <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8FD;"/>
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        
+                    </NavigationViewItem.MenuItems>
+
                 </NavigationViewItem>
             </NavigationView.MenuItems>
             <NavigationView.FooterMenuItems>

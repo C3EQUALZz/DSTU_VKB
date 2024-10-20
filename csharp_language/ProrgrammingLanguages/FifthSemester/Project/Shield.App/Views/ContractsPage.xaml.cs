@@ -74,6 +74,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
                 Address = content.Address,
                 Comment = content.Comment,
                 Organization = content.Organization,
+                IsLegalEntity = content.IsLegalEntity,
                 Owners = content.Owners.Count > 0 ? string.Join(';', content.Owners) : null,
                 Plan = new() {
                     Title = content.Plan.DisplayName,
@@ -133,7 +134,8 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
                 Comment = content.Comment,
                 Organization = content.Organization,
                 Owners = content.Owners.Count > 0 ? string.Join(';', content.Owners) : null,
-                SignDate = sender.Date
+                SignDate = sender.Date,
+                IsLegalEntity = content.IsLegalEntity,
             };
 
             // Отдельно проверяем, если пользователь заменил план здания, и,
@@ -217,7 +219,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 
         if (file != null)
         {
-            var templatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Misc", "WordTemplates", "template.docx");
+            var templatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Misc", "WordTemplates", "contract_report_template.docx");
             var contract = sender.ToDto();
 
             // Через Spire.Doc сохраним отчет в выбранный файл
@@ -311,13 +313,23 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
         dialog.CloseButtonText = "Cancel".GetLocalized();
         dialog.DefaultButton = ContentDialogButton.Primary;
 
+        var sp = new StackPanel() { Orientation = Orientation.Horizontal, Spacing = 5 };
+
+        var tb = new TextBlock() { Text = "Robbery".GetLocalized(), VerticalAlignment = VerticalAlignment.Center };
+        var cb = new CheckBox();
+
+        sp.Children.Add(tb);
+        sp.Children.Add(cb);
+
+        dialog.Content = sp;
+
         var result = await dialog.ShowAsync();
 
         if (result == ContentDialogResult.Primary)
         {
             Shell.Notify("AlarmWorked".GetLocalized(), $"{sender.Address} - {sender.Organization}\nID: {sender.ContractId}\n{"Bailee".GetLocalized()}: {sender.Bailee}\n{sender.Comment}");
             
-            var response = await ApiHelper.CreateAlarm(new() { ContractId = sender.ContractId, Date = DateTime.Now });
+            var response = await ApiHelper.CreateAlarm(new() { ContractId = sender.ContractId, Date = DateTime.Now, Result = cb.IsChecked.Value ? DataAccess.Enums.AlarmResult.Robbery : DataAccess.Enums.AlarmResult.False });
 
             if (response == null || !response.IsSuccessStatusCode)
             {
@@ -482,6 +494,11 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 
     private async void Page_Loaded(object sender, RoutedEventArgs e)
     {
+        AuthHelper.Instance.Login += async () =>
+        {
+            await UpdateContractsList();
+        };
+
         await UpdateContractsList();
     }
 }

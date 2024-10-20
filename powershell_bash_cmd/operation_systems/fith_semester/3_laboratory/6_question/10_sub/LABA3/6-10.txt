@@ -1,0 +1,29 @@
+# 1. Чтобы заархивировать Compress-Archive [-Path] String[] [-DestinationPath] String  [-CompressionLevel String ] [-Update]
+
+# -Path - задаётся путь к файлам или каталогам, которые нужно заархивировать
+# -DestinationPath – указывает местоположение создаваемого ZIP файла
+# -CompressionLevel – задает уровень сжатия (NoCompression, Optimal или Fastest)
+# -Update — позволяет добавить/обновить файлы в уже существующем ZIP архиве	
+# -Force — если архив с указанным именем уже существует, он будет перезаписан
+
+#Compress-Archive -Path [Сюда вводите путь без скобок что заархивировать] -DestinationPath [Сюда вводим путь, куда сохранять архив, и название файла с расширением .zip Также без скобок] -CompressionLevel Optimal
+
+# Пример, я архивирую каталог с лабами для powershell
+
+Compress-Archive -Path C:\Users\1\Desktop\PowerShell\ -DestinationPath C:\Users\1\Desktop\PowerShell\archive.zip -CompressionLevel Optimal
+
+# Если нужно, например, заархивировать только txt файлы, то просто поставте в первом пути указатель *.txt
+# C:\Users\1\Desktop\PowerShell\*.txt
+
+
+# 2. Чтобы распаковать zip файл есть команда Expand-Archive [-Path] String [-DestinationPath] String [-Force]  [-Confirm]
+
+#Пример распаковки файла, полученного выше (учитываем, что будет распаковано именно содержимое, а не создаваться отдельный каталог с названием архива и его содержимым)
+
+Expand-Archive -Path C:\Users\1\Desktop\PowerShell\archive.zip -DestinationPath C:\Users\1\Desktop\PowerShell 
+
+
+# -Path - задаётся путь к архиву, который нужно распаковать
+# -DestinationPath – указывает местоположение распаковки содержимого архива	
+# -Force — если содержимое с указанным именем уже существует, оно будет перезаписано
+# -Confirm - отображение приглашение подверждения перед выполнением действия

@@ -33,6 +33,7 @@ public class ContractController : ControllerBase
             Comment = entity.Comment,
             Organization = entity.Organization,
             SignDate = entity.SignDate,
+            IsLegalEntity = entity.IsLegalEntity,
             Picture = new PictureDto()
             {
                 PictureId = entity.Picture.PictureId,
@@ -59,7 +60,8 @@ public class ContractController : ControllerBase
             Owners = contract.Owners,
             Bailee = contract.Bailee,
             Organization = contract.Organization,
-            SignDate = contract.SignDate
+            SignDate = contract.SignDate,
+            IsLegalEntity = contract.IsLegalEntity,
         };
 
         var plan = new Plan()
@@ -96,6 +98,7 @@ public class ContractController : ControllerBase
             Comment = entity.Comment,
             Organization = entity.Organization,
             SignDate = entity.SignDate,
+            IsLegalEntity = entity.IsLegalEntity,
             Plan = new PlanDto()
             {
                 PlanId = entity.Plan.PlanId,
@@ -127,6 +130,7 @@ public class ContractController : ControllerBase
             Comment = entity.Comment,
             Organization = entity.Organization,
             SignDate = entity.SignDate,
+            IsLegalEntity = entity.IsLegalEntity,
             Plan = new PlanDto()
             {
                 PlanId = entity.Plan.PlanId,
@@ -164,6 +168,7 @@ public class ContractController : ControllerBase
             Comment = entity.Comment,
             Organization = entity.Organization,
             SignDate = entity.SignDate,
+            IsLegalEntity = entity.IsLegalEntity,
             Plan = new PlanDto()
             {
                 PlanId = entity.Plan.PlanId,
@@ -213,6 +218,7 @@ public class ContractController : ControllerBase
             if (dto.Owners != null && entity.Owners != dto.Owners) entity.Owners = dto.Owners;
             if (dto.Comment != null && entity.Comment != dto.Comment) entity.Comment = dto.Comment;
             if (dto.Organization != null && entity.Organization != dto.Organization) entity.Organization = dto.Organization;
+            if (dto.IsLegalEntity != null && entity.IsLegalEntity != dto.IsLegalEntity) entity.IsLegalEntity = dto.IsLegalEntity.Value;
 
             if (dto.Plan != null)
             {
@@ -251,6 +257,7 @@ public class ContractController : ControllerBase
                 Comment = entity.Comment,
                 Organization = entity.Organization,
                 SignDate = entity.SignDate,
+                IsLegalEntity = entity.IsLegalEntity,
                 Plan = new PlanDto()
                 {
                     PlanId = entity.Plan.PlanId,

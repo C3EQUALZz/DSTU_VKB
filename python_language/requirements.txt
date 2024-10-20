@@ -42,4 +42,8 @@ coloraide
 pandas
 seaborn
 pytest
-
+fastapi
+uvicorn
+python-multipart
+python-docx
+pypdf2

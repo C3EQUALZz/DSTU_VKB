@@ -24,7 +24,8 @@
                     <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
 
-                <FontIcon Grid.Column="0" Glyph="&#xE783;"/>
+                <FontIcon Grid.Column="0" Glyph="&#xE711;" Visibility="{x:Bind isFalse}"/>
+                <FontIcon Grid.Column="0" Glyph="&#xE730;" Visibility="{x:Bind isRobbery}"/>
 
                 <Grid Grid.Column="1">
 

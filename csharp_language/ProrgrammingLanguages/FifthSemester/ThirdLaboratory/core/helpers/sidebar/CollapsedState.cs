@@ -8,7 +8,7 @@ namespace ThirdLaboratory.core.helpers.sidebar
         {
             context.SideBar.Width += 10;
 
-            if (context.SideBar.Width >= 323)
+            if (context.SideBar.Width >= 230)
             {
                 context.State = new ExpandedState();
 

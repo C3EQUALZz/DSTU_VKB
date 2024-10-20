@@ -1167,6 +1167,25 @@ gradle-app.setting
 # Raspberry Pi Pico disassembler file
 *.dis
 
+# Logs
+logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
 
 
 

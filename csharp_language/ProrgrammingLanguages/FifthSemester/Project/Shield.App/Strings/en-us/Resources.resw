@@ -198,7 +198,7 @@
     <value>Ответственное лицо</value>
   </data>
   <data name="BaileeCreateContractDialog.PlaceholderText" xml:space="preserve">
-    <value>ФИО лица, ответственного за вскрытие помещения</value>
+    <value>ФИО ответственного лица</value>
   </data>
   <data name="BaileeTitle.Text" xml:space="preserve">
     <value>Ответственное лицо</value>
@@ -400,5 +400,23 @@
   </data>
   <data name="UserNameProfileHeader.Text" xml:space="preserve">
     <value>Имя пользователя:</value>
+  </data>
+  <data name="LegalEntityTextBlock.Text" xml:space="preserve">
+    <value>Юридическое лицо</value>
+  </data>
+  <data name="Robbery" xml:space="preserve">
+    <value>Ограбление</value>
+  </data>
+  <data name="Shell_AlarmsTableView.Content" xml:space="preserve">
+    <value>Сигнализации - таблица</value>
+  </data>
+  <data name="Shell_AlarmsCardView.Content" xml:space="preserve">
+    <value>Сигнализации - карточки</value>
+  </data>
+  <data name="AlarmCreatedNotification" xml:space="preserve">
+    <value>Отчет создан</value>
+  </data>
+  <data name="Alarm" xml:space="preserve">
+    <value>Сигнализация</value>
   </data>
 </root>

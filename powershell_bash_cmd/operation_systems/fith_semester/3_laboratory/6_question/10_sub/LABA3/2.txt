@@ -1,0 +1,2 @@
+# Переходим по этому пути в реестре HKLM:\SOFTWARE\Microsoft\PowerShell\3\PoweShellEngine"
+# Правее от PowerShellVersion можно узнать версию (в моём случае 5.1.19041.1)
