@@ -1,5 +1,7 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from pathlib import Path
+import redis
+import io
 
 from fastapi.responses import StreamingResponse
 
@@ -19,6 +21,7 @@ router = APIRouter(
     tags=["Пятый семестр"],
 )
 
+r = redis.Redis()
 
 @router.post(
     "/encode-huffman",
@@ -29,8 +32,8 @@ async def encode_huffman(file_input: UploadFile = File(...)):
     tree, pickled_data = command.execute()
 
     filename = f"encoded-{Path(file_input.filename).stem}.pkl"
-    with open(filename, "wb") as f:
-        f.write(pickled_data)
+
+    await r.set(filename, pickled_data)
 
     return {
         "metadata": tree,
@@ -147,15 +150,15 @@ async def decode_lzw(file_input: UploadFile = File(...)):
 
 @router.get("/download/{filename}")
 async def download_file(filename: str):
-    # Проверка на существование файла
-    file_path = f"./{filename}"
-    if not Path(file_path).exists():
+    pickled_data = await r.get(filename)
+
+    if not pickled_data:
         raise HTTPException(status_code=404, detail="File not found")
 
-    # Отправка файла через StreamingResponse
-    file_stream = open(file_path, "rb")
+    memory_file = io.BytesIO(pickled_data)
+
     return StreamingResponse(
-        file_stream,
+        memory_file,
         media_type="application/octet-stream",
         headers={"Content-Disposition": f"attachment; filename={filename}"}
     )
