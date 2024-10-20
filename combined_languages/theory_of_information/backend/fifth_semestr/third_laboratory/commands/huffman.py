@@ -8,8 +8,8 @@ from collections import Counter
 
 
 class EncodeCommand(Command):
-    def __init__(self, data: str) -> None:
-        self.data = data
+    def __init__(self, data: bytes) -> None:
+        self.data = data.decode("utf-8")
 
     def execute(self) -> tuple[str, bytes]:
         map_with_freq = {char: count / len(self.data) for char, count in Counter(self.data).items()}

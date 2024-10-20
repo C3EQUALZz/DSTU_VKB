@@ -179,3 +179,8 @@ class LZ77(Compressor):
             text_index + 1,
             window_index + 1
         )
+
+if __name__ == "__main__":
+    coder = LZ77()
+    result = coder.compress("Привет мир! Мировозрение меня пугает, но очень интересует на самом деле. Как жить то?")
+    print(result)

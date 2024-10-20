@@ -15,7 +15,7 @@ import struct
 class LZW(Compressor):
     def __init__(self) -> None:
         self.DICTIONARY_SIZE: int = 114112
-        self.maximum_table_size: int = pow(2, int(self.DICTIONARY_SIZE))
+        self.maximum_table_size: int = 65536
 
     @loggable
     def compress(self, data: str) -> bytes:
@@ -43,7 +43,7 @@ class LZW(Compressor):
         if string in dictionary:
             compressed_data.append(dictionary[string])
 
-        return b"".join(struct.pack('>H', int(data)) for data in compressed_data)
+        return b"".join(struct.pack('>H', data) for data in compressed_data)
 
     @loggable
     def decompress(self, compressed_data: bytes) -> str:
@@ -54,7 +54,7 @@ class LZW(Compressor):
         compressed_data = [int.from_bytes(compressed_data[i:i + 2], 'big') for i in range(0, len(compressed_data), 2)]
 
         # LZW Decompression algorithm
-        next_code = 256
+        next_code = self.DICTIONARY_SIZE
         decompressed_data = ""
         string = ""
 
@@ -68,10 +68,3 @@ class LZW(Compressor):
             string = dictionary[code]
 
         return decompressed_data
-
-if __name__ == "__main__":
-    compressor = LZW()
-    a = compressor.compress("Привет, мир!")
-    print(a)
-    b = compressor.decompress(a)
-    print(b)
