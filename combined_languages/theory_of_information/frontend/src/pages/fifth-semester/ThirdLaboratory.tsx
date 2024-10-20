@@ -1,29 +1,34 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
-import { Form, Input, Button, Typography, Layout, message, Radio, Row, Col } from 'antd';
+import {Form, Input, Button, Typography, Layout, message, Radio} from 'antd';
+import {RadioChangeEvent} from 'antd/lib/radio';
+import { saveAs } from 'file-saver';
 
-import { RadioChangeEvent } from 'antd/lib/radio';
+const {Title, Text} = Typography;
+const {Header, Content} = Layout;
 
-const { Title } = Typography;
-const { Header, Content } = Layout;
-
-type AlgorithmType = 'huffman-encode' | 'lz77-encode' | 'lz78-encode' | 'lzw-encode';
+type AlgorithmType = 'huffman-encode' | 'lz77-encode' | 'lz78-encode' | 'lzw-encode'
+    | 'huffman-decode' | 'lz77-decode' | 'lz78-decode' | 'lzw-decode';
 
 const ALGORITHM_URLS: Record<AlgorithmType, string> = {
     'huffman-encode': '/fifth_semester/third_laboratory/encode-huffman',
     'lz77-encode': '/fifth_semester/third_laboratory/encode-lz77',
     'lz78-encode': '/fifth_semester/third_laboratory/encode-lz78',
     'lzw-encode': '/fifth_semester/third_laboratory/encode-lzw',
+    'huffman-decode': '/fifth_semester/third_laboratory/decode-huffman',
+    "lz77-decode": "/fifth_semester/third_laboratory/decode-lz77",
+    "lz78-decode": "/fifth_semester/third_laboratory/decode-lz78",
+    "lzw-decode": "/fifth_semester/third_laboratory/decode-lzw",
 };
 
 export function ThirdLaboratory() {
     const [file, setFile] = useState<File | null>(null);
     const [selectedAlgorithm, setSelectedAlgorithm] = useState<AlgorithmType>('huffman-encode');
+    const [metadata, setMetadata] = useState<string | null>(null);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files) {
-            setFile(event.target.files[0]);
-        }
+        const selectedFile = event.target.files?.[0] || null;
+        setFile(selectedFile);
     };
 
     const handleAlgorithmChange = (event: RadioChangeEvent) => {
@@ -39,22 +44,15 @@ export function ThirdLaboratory() {
         const formData = new FormData();
         formData.append('file_input', file);
 
-        // Формируем URL динамически на основе выбранного алгоритма
         const url = `http://localhost:8002/api${ALGORITHM_URLS[selectedAlgorithm]}`;
 
         try {
-            const response = await axios.post(url, formData, {
-                responseType: 'blob', // Для загрузки файла
-            });
+            const response = await axios.post(url, formData, {responseType: 'json'});
+            const {download_link, metadata} = response.data;
 
-            const urlBlob = window.URL.createObjectURL(new Blob([response.data]));
-            const link = document.createElement('a');
-            link.href = urlBlob;
-            link.setAttribute('download', 'output.txt'); // Имя файла при загрузке
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
+            await downloadFile(download_link);
 
+            setMetadata(JSON.stringify(metadata, null, 2));
             message.success("Файл успешно закодирован!");
 
         } catch (error) {
@@ -63,92 +61,64 @@ export function ThirdLaboratory() {
         }
     };
 
+    const downloadFile = async (url: string) => {
+    try {
+        const response = await axios.get("http://localhost:8002" + url, { responseType: 'blob' });
+
+        // Проверяем, что ответ содержит данные
+        if (response.status === 200) {
+            const filename = url.split('/').pop(); // Извлекаем имя файла из URL
+            saveAs(response.data, filename); // Сохраняем файл с помощью file-saver
+        } else {
+            message.error("Ошибка при скачивании файла.");
+        }
+    } catch (error) {
+        message.error("Ошибка при скачивании файла.");
+        console.error(error);
+    }
+};
+
     return (
         <Layout>
-            <Header style={{ padding: '0 24px', background: '#fff', textAlign: 'center' }}>
+            <Header style={{padding: '0 24px', background: '#fff', textAlign: 'center'}}>
                 <Title level={1}>Лабораторная работа №3 «Сжатие данных»</Title>
             </Header>
-            <Content style={{ padding: '24px' }}>
-                <Typography style={{ marginBottom: "10px" }}>
-                    Необходимо закодировать текст, хранящийся в файле <br /> <br />
-
-                    <b> Входные данные: </b> <br />
-                    Файл с текстом, работайте со всеми символами в нем (пробел тоже символ!) <br /> <br />
-
-                    <b> Выходные данные: </b> <br />
-                    Закодированные последовательности 3х алгоритмов <br /> <br />
-
-                    Выберите алгоритм и загрузите файл для кодирования. <br />
+            <Content style={{padding: '24px'}}>
+                <Typography style={{marginBottom: "10px"}}>
+                    Необходимо закодировать текст, хранящийся в файле <br/> <br/>
+                    <b> Входные данные: </b> <br/>
+                    Файл с текстом, работайте со всеми символами в нем (пробел тоже символ!) <br/> <br/>
+                    <b> Выходные данные: </b> <br/>
+                    Закодированные последовательности 3х алгоритмов <br/> <br/>
+                    Выберите алгоритм и загрузите файл для кодирования. <br/>
                 </Typography>
 
-                <Typography>
-                    <b> Алгоритм Хаффана </b> <br/>
-                    Используя данный алгоритм и кодируете, и декодируете.
-                    При кодировании выводите таблицу соответствия «символ – битовая строка». Далее
-                    закодированный текст сохраняете либо в тот же файл, где был исходный, либо в другой,
-                    но для декодирования считываете также всю кодовую строку из файла. При
-                    декодировании можно использовать уже построенную таблицу соответствий «символ –
-                    битовая строка» (напомню, в жизни при декодировании чаще используется вариант
-                    нового построения дерева, но для этого передают закодированную последовательность, а
-                    также символ + его частота). <br/> <br/>
-
-                    <b> Алгоритмы LZ77, LZ78 </b> <br/>
-                    Здесь делаете по вариантам, у кого номер по списку четный – 78, у кого нечетный 77. Только
-                    кодируете.
-                    Одним из этих алгоритмов кодируете, выводите в файл и(или) на экран (в интерфейсе)
-                    результат, т.е. сам пакет, всю таблицу выводить не обязательно, ориентироваться и уметь
-                    объяснить почему пакет выглядит так или иначе. <br/> <br/>
-
-                    <b> Алгоритм LZW. </b> <br/>
-                    Только кодируете. Результат в битовом представлении выводите в файл и(или) на экран (в интерфейсе).
-                    Но, все промежуточные таблицы выводите в файл (можно в два разных файла, если удобнее
-                    так). Файл с любым расширением, возможно, будет удобнее csv, xls.
-                    Язык: любой, кроме Паскаля, Делфи, Бейсика и подобных
-                    Интерфейс – нужен, при чем не одна кнопка, которая сразу все запускает, а для каждого
-                    действия необходимо его вызвать нажатием, либо выбором файла. <br/> <br/>
-                </Typography>
-
-                <Form onFinish={handleSubmit} layout="vertical">
-                    <Form.Item>
-                        <Input type="file" onChange={handleFileChange} />
+                <Form layout="vertical" onFinish={handleSubmit}>
+                    <Form.Item label="Выберите файл">
+                        <Input type="file" onChange={handleFileChange}/>
                     </Form.Item>
-                     <Form.Item label="Выберите алгоритм">
+
+                    <Form.Item label="Выберите алгоритм">
                         <Radio.Group onChange={handleAlgorithmChange} value={selectedAlgorithm}>
-                            <Row gutter={[7, 7]}>
-                                <Col span={5}>
-                                    <Radio value="huffman-encode">Алгоритм Хаффмана (Кодирование)</Radio>
-                                </Col>
-                                <Col span={5}>
-                                    <Radio value="lz77-encode">Алгоритм LZ77 (Кодирование)</Radio>
-                                </Col>
-                                <Col span={5}>
-                                    <Radio value="lz78-encode">Алгоритм LZ78 (Кодирование)</Radio>
-                                </Col>
-                                <Col span={5}>
-                                    <Radio value="lzw-encode">Алгоритм LZW (Кодирование)</Radio>
-                                </Col>
-                                <Col span={5}>
-                                    <Radio value="huffman-decode">Алгоритм Хаффмана (Декодирование)</Radio>
-                                </Col>
-                                <Col span={5}>
-                                    <Radio value="lz77-decode">Алгоритм LZ77 (Декодирование)</Radio>
-                                </Col>
-                                <Col span={5}>
-                                    <Radio value="lz78-decode">Алгоритм LZ78 (Декодирование)</Radio>
-                                </Col>
-                                <Col span={5}>
-                                    <Radio value="lzw-decode">Алгоритм LZW (Декодирование)</Radio>
-                                </Col>
-                            </Row>
+                            {Object.keys(ALGORITHM_URLS).map((algorithm) => (
+                                <Radio key={algorithm} value={algorithm}>
+                                    {algorithm.replace(/-/g, ' ').replace(/^\w/, (c) => c.toUpperCase())}
+                                </Radio>
+                            ))}
                         </Radio.Group>
                     </Form.Item>
 
                     <Form.Item>
-                        <Button type="primary" htmlType="submit">
-                            Выполнить
-                        </Button>
+                        <Button type="primary" htmlType="submit">Закодировать</Button>
                     </Form.Item>
                 </Form>
+
+                {metadata && (
+                    <div style={{marginTop: '20px'}}>
+                        <Title level={4}>Метаданные:</Title>
+                        <Text code>{metadata}</Text>
+                    </div>
+                )}
             </Content>
         </Layout>
     );
