@@ -219,7 +219,7 @@ public sealed partial class ContractsPage : Page, INotifyPropertyChanged
 
         if (file != null)
         {
-            var templatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Misc", "WordTemplates", "template.docx");
+            var templatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Misc", "WordTemplates", "contract_report_template.docx");
             var contract = sender.ToDto();
 
             // Через Spire.Doc сохраним отчет в выбранный файл
