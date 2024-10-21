@@ -2,6 +2,9 @@ from fastapi import APIRouter, UploadFile, File, HTTPException
 from pathlib import Path
 import redis.asyncio as redis
 import io
+import pickle
+import logging
+import json
 from fastapi.responses import StreamingResponse
 
 from combined_languages.theory_of_information.backend.fifth_semestr.third_laboratory.commands import (
@@ -19,6 +22,8 @@ router = APIRouter(
     prefix="/fifth_semester/third_laboratory",
     tags=["Пятый семестр"],
 )
+
+logger = logging.getLogger("uvicorn")
 
 r = redis.Redis()
 
@@ -93,4 +98,25 @@ async def download_file(filename: str):
         memory_file,
         media_type="application/octet-stream",
         headers={"Content-Disposition": f"attachment; filename={filename}"}
+    )
+
+@router.get("/download_txt/{filename}")
+async def download_txt_file(filename: str):
+    pickled_data = await r.get(filename)
+
+    if not pickled_data:
+        raise HTTPException(status_code=404, detail="File not found")
+
+    data = pickle.loads(pickled_data)
+
+    json_data = json.dumps(data)
+
+    byte_stream = io.BytesIO()
+    byte_stream.write(json_data.encode('utf-8'))
+    byte_stream.seek(0)
+
+    return StreamingResponse(
+        byte_stream,
+        media_type="application/octet-stream",
+        headers={"Content-Disposition": f"attachment; filename={filename.replace('pkl', 'txt')}"}
     )
