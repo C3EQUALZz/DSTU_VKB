@@ -1,8 +1,7 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from pathlib import Path
-import redis
+import redis.asyncio as redis
 import io
-
 from fastapi.responses import StreamingResponse
 
 from combined_languages.theory_of_information.backend.fifth_semestr.third_laboratory.commands import (
@@ -23,130 +22,63 @@ router = APIRouter(
 
 r = redis.Redis()
 
-@router.post(
-    "/encode-huffman",
-    description="View для кодирования текста с помощью алгоритма Хаффмана",
-)
-async def encode_huffman(file_input: UploadFile = File(...)):
-    command = HuffmanEncodeCommand(file_input.file.read())
-    tree, pickled_data = command.execute()
+# Общая функция для обработки кодирования
+async def process_encode(file_input: UploadFile, command_class):
+    command = command_class(file_input.file.read())
+    metadata, pickled_data = command.execute()
 
     filename = f"encoded-{Path(file_input.filename).stem}.pkl"
-
     await r.set(filename, pickled_data)
 
     return {
-        "metadata": tree,
-        "download_link": f"/api/download/{filename}"
+        "metadata": metadata,
+        "download_link": f"/api/fifth_semester/third_laboratory/download/{filename}"
     }
 
-
-@router.post(
-    "/decode-huffman",
-    description="View для декодирования текста с помощью алгоритма Хаффмана"
-)
-async def decode_huffman(file_input: UploadFile = File(...)):
-    command = HuffmanDecodeCommand(file_input.file.read())
-    tree, byte_stream = command.execute()
+# Общая функция для обработки декодирования
+async def process_decode(file_input: UploadFile, command_class):
+    command = command_class(file_input.file.read())
+    metadata, byte_stream = command.execute()
 
     filename = f"{Path(file_input.filename).stem.replace('encoded', 'decoded')}.txt"
-    with open(filename, "wb") as f:
-        f.write(byte_stream.read())
+    await r.set(filename, byte_stream.read())
 
     return {
-        "metadata": tree,
-        "download_link": f"/api/download/{filename}"
+        "metadata": metadata,
+        "download_link": f"/api/fifth_semester/third_laboratory/download/{filename}"
     }
 
+@router.post("/encode-huffman")
+async def encode_huffman(file_input: UploadFile = File(...)):
+    return await process_encode(file_input, HuffmanEncodeCommand)
+
+@router.post("/decode-huffman")
+async def decode_huffman(file_input: UploadFile = File(...)):
+    return await process_decode(file_input, HuffmanDecodeCommand)
 
 @router.post("/encode-lz77")
 async def encode_lz77(file_input: UploadFile = File(...)):
-    command = LZ77EncodeCommand(file_input.file.read())
-    list_with_tokens, pickled_data = command.execute()
-
-    filename = f"encoded-{Path(file_input.filename).stem}.pkl"
-    with open(filename, "wb") as f:
-        f.write(pickled_data)
-
-    return {
-        "metadata": list_with_tokens,
-        "download_link": f"/api/download/{filename}"
-    }
-
+    return await process_encode(file_input, LZ77EncodeCommand)
 
 @router.post("/decode-lz77")
 async def decode_lz77(file_input: UploadFile = File(...)):
-    command = LZ77DecodeCommand(file_input.file.read())
-    list_with_tokens, byte_stream = command.execute()
-
-    filename = f"{Path(file_input.filename).stem.replace('encoded', 'decoded')}.txt"
-    with open(filename, "wb") as f:
-        f.write(byte_stream.read())
-
-    return {
-        "metadata": list_with_tokens,
-        "download_link": f"/api/download/{filename}"
-    }
-
+    return await process_decode(file_input, LZ77DecodeCommand)
 
 @router.post("/encode-lz78")
 async def encode_lz78(file_input: UploadFile = File(...)):
-    command = LZ78EncodeCommand(file_input.file.read())
-    list_with_tokens, pickled_data = command.execute()
-
-    filename = f"encoded-{Path(file_input.filename).stem}.pkl"
-    with open(filename, "wb") as f:
-        f.write(pickled_data)
-
-    return {
-        "metadata": list_with_tokens,
-        "download_link": f"/api/download/{filename}"
-    }
-
+    return await process_encode(file_input, LZ78EncodeCommand)
 
 @router.post("/decode-lz78")
 async def decode_lz78(file_input: UploadFile = File(...)):
-    command = LZ78DecodeCommand(file_input.file.read())
-    list_with_tokens, byte_stream = command.execute()
-
-    filename = f"{Path(file_input.filename).stem.replace('encoded', 'decoded')}.txt"
-    with open(filename, "wb") as f:
-        f.write(byte_stream.read())
-
-    return {
-        "metadata": list_with_tokens,
-        "download_link": f"/api/download/{filename}"
-    }
+    return await process_decode(file_input, LZ78DecodeCommand)
 
 @router.post("/encode-lzw")
 async def encode_lzw(file_input: UploadFile = File(...)):
-    command = LZWEncodeCommand(file_input.file.read())
-    list_with_tokens, pickled_data = command.execute()
-
-    filename = f"encoded-{Path(file_input.filename).stem}.pkl"
-    with open(filename, "wb") as f:
-        f.write(pickled_data)
-
-    return {
-        "metadata": str(list_with_tokens),
-        "download_link": f"/api/download/{filename}"
-    }
-
-
+    return await process_encode(file_input, LZWEncodeCommand)
 
 @router.post("/decode-lzw")
 async def decode_lzw(file_input: UploadFile = File(...)):
-    command = LZWDecodeCommand(file_input.file.read())
-    list_with_tokens, byte_stream = command.execute()
-
-    filename = f"{Path(file_input.filename).stem.replace('encoded', 'decoded')}.txt"
-    with open(filename, "wb") as f:
-        f.write(byte_stream.read())
-
-    return {
-        "metadata": list_with_tokens,
-        "download_link": f"/api/download/{filename}"
-    }
+    return await process_decode(file_input, LZWDecodeCommand)
 
 @router.get("/download/{filename}")
 async def download_file(filename: str):

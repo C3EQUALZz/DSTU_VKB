@@ -9,7 +9,8 @@ from combined_languages.theory_of_information.backend.fifth_semestr import (
 app = FastAPI(
     title="Лабораторные по теории информации",
     version="1.0.0",
-    root_path="/api"
+    root_path="/api",
+    debug=True,
 )
 
 
