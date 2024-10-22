@@ -14,6 +14,9 @@ import struct
 
 class LZW(Compressor):
     def __init__(self) -> None:
+        """
+        Логика сжатия алгоритма LZW
+        """
         self.DICTIONARY_SIZE: int = 114112
         self.maximum_table_size: int = 65536
 
@@ -24,13 +27,18 @@ class LZW(Compressor):
         """
         dictionary_size = self.DICTIONARY_SIZE
 
+        # Создаем таблицу символов в памяти, чтобы дальше алгоритм LZW считывал
         dictionary = {chr(i): i for i in range(self.DICTIONARY_SIZE)}
 
+        # Здесь у нас для накапливания строки
         string = ""
+
         compressed_data = []
 
         for symbol in data:
+            # Здесь мы считываем символ по одному
             string_plus_symbol = string + symbol
+            # Если символ уже был в словаре, то у нас уже новая строка
             if string_plus_symbol in dictionary:
                 string = string_plus_symbol
             else:

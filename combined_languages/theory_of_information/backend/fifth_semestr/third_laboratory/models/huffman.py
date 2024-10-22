@@ -1,31 +1,47 @@
 import heapq
-from collections import Counter, namedtuple
+from collections import Counter
+from dataclasses import dataclass
 
 from combined_languages.theory_of_information.backend.core.decorators import loggable
 
+@dataclass
+class Leaf:
+    """
+    Класс, который описывает символ для нужного узла.
+    В зависимости от вероятностей нам выдается 0 или 1.
+    """
+    char: str
 
-class Leaf(namedtuple('Leaf', 'char')):
     @loggable
     def walk(self, code: dict[str, str], acc: str) -> None:
         code[self.char] = acc or "0"
 
+@dataclass
+class Node:
+    """
+    Сущность, которая обозначает текущую развилку.
+    Вот, например, у нас символы a и d, вот здесь стоит выбор.
+    Я придумал назвать - узел
+    """
+    left: Leaf
+    right: Leaf
 
-class Node(namedtuple('Node', ["left", "right"])):
     @loggable
     def walk(self, code: dict[str, str], acc: str) -> None:
         """
-        :param code:
-        :param acc: префикс кода, который мы накопили, спускаясь от корня до данного узла или листа
+        :param code: Словарь, который обозначает соотношение символа и его кода. Например, p = 111, k = 10 и т.д.
+        :param acc: Префикс кода, который мы накопили, спускаясь от корня до данного узла или листа
         """
         self.left.walk(code, acc + "0")
         self.right.walk(code, acc + "1")
 
-
+@dataclass
 class Tree:
-    def __init__(self, dictionary_with_freq: dict[str, float]) -> None:
-        self.dictionary_with_freq = dictionary_with_freq
+    """
+    Класс, который строит дерево Хаффмана на основе частот символов.
+    """
+    dictionary_with_freq: dict[str, float]
 
-    # noinspection PyMethodMayBeStatic
     def build(self) -> dict[str, str]:
         """
         Построение дерева Хаффмана, чтобы в дальнейшем закодировать слово
@@ -33,6 +49,7 @@ class Tree:
         queue_with_priority = []
         code = {}
 
+        # Здесь создается очередь с приоритетом, которая заполняется по признаку частота - уникальный индекс - элемент
         for char, freq in self.dictionary_with_freq.items():
             queue_with_priority.append((freq, len(queue_with_priority), Leaf(char)))
 
@@ -47,6 +64,7 @@ class Tree:
 
         if queue_with_priority:
             [(_freq, _count, root)] = queue_with_priority
+            root: Node
             root.walk(code, "")
 
         return code
@@ -58,6 +76,10 @@ class Huffman:
 
     @loggable
     def encode(self, string: str) -> str:
+        """
+        Метод для кодирования данных на основе дерева. Сама логика алгоритма находится в классе Tree
+        Здесь же только encode, то есть сама замена.
+        """
         return "".join(self.tree[char] for char in string)
 
     @loggable
@@ -65,7 +87,6 @@ class Huffman:
         """
         Метод для декодирования последовательности символов.
         :param encoded_string: Закодированное слово, которое нужно вернуть в исходное.
-        :param code: Таблица символов соответствия (дерево - Хаффмана), где каждому символу вы назначили код
         """
         reverse_code = {v: k for k, v in self.tree.items()}
         decoded_string = ""
