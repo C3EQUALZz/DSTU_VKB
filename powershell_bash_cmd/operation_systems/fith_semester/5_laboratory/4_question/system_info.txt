@@ -1,0 +1,374 @@
+System Information
+Linux c3equalz-Matebook-Ubuntu 6.8.0-45-generic #45-Ubuntu SMP PREEMPT_DYNAMIC Fri Aug 30 12:02:04 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
+
+Disk Information
+NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+loop0         7:0    0  55,4M  1 loop /snap/core18/2846
+loop1         7:1    0     4K  1 loop /snap/bare/5
+loop2         7:2    0  74,3M  1 loop /snap/core22/1564
+loop3         7:3    0  74,2M  1 loop /snap/core22/1621
+loop4         7:4    0 269,8M  1 loop /snap/firefox/4793
+loop5         7:5    0   272M  1 loop /snap/firefox/5091
+loop6         7:6    0  10,7M  1 loop /snap/firmware-updater/127
+loop7         7:7    0  11,1M  1 loop /snap/firmware-updater/147
+loop8         7:8    0 505,1M  1 loop /snap/gnome-42-2204/176
+loop9         7:9    0  91,7M  1 loop /snap/gtk-common-themes/1535
+loop10        7:10   0 689,8M  1 loop /snap/pycharm-community/414
+loop11        7:11   0  10,5M  1 loop /snap/snap-store/1173
+loop12        7:12   0  10,7M  1 loop /snap/snap-store/1218
+loop13        7:13   0  38,8M  1 loop /snap/snapd/21759
+loop14        7:14   0   500K  1 loop /snap/snapd-desktop-integration/178
+loop15        7:15   0   568K  1 loop /snap/snapd-desktop-integration/253
+sda           8:0    0 238,5G  0 disk 
+├─sda1        8:1    0    16M  0 part 
+├─sda2        8:2    0   954M  0 part /boot
+├─sda3        8:3    0     1G  0 part /boot/efi
+├─sda4        8:4    0  14,9G  0 part [SWAP]
+├─sda5        8:5    0  37,3G  0 part /
+└─sda6        8:6    0  37,3G  0 part /home
+nvme0n1     259:0    0 476,9G  0 disk 
+├─nvme0n1p1 259:1    0   100M  0 part 
+├─nvme0n1p2 259:2    0    16M  0 part 
+├─nvme0n1p3 259:3    0 215,9G  0 part 
+├─nvme0n1p4 259:4    0 260,2G  0 part 
+└─nvme0n1p5 259:5    0   780M  0 part 
+
+Disk Partition Information
+Диск /dev/loop0: 55,36 MiB, 58052608 байт, 113384 секторов
+Единицы: секторов по 1 * 512 = 512 байт
+Размер сектора (логический/физический): 512 байт / 512 байт
+Размер I/O (минимальный/оптимальный): 512 байт / 512 байт
+
+
+Диск /dev/loop1: 4 KiB, 4096 байт, 8 секторов
+Единицы: секторов по 1 * 512 = 512 байт
+Размер сектора (логический/физический): 512 байт / 512 байт
+Размер I/O (минимальный/оптимальный): 512 байт / 512 байт
+
+
+Диск /dev/loop2: 74,27 MiB, 77881344 байт, 152112 секторов
+Единицы: секторов по 1 * 512 = 512 байт
+Размер сектора (логический/физический): 512 байт / 512 байт
+Размер I/O (минимальный/оптимальный): 512 байт / 512 байт
+
+
+Диск /dev/loop3: 74,25 MiB, 77852672 байт, 152056 секторов
+Единицы: секторов по 1 * 512 = 512 байт
+Размер сектора (логический/физический): 512 байт / 512 байт
+Размер I/O (минимальный/оптимальный): 512 байт / 512 байт
+
+
+Диск /dev/loop4: 269,77 MiB, 282873856 байт, 552488 секторов
+Единицы: секторов по 1 * 512 = 512 байт
+Размер сектора (логический/физический): 512 байт / 512 байт
+Размер I/O (минимальный/оптимальный): 512 байт / 512 байт
+
+
+Диск /dev/loop5: 271,98 MiB, 285192192 байт, 557016 секторов
+Единицы: секторов по 1 * 512 = 512 байт
+Размер сектора (логический/физический): 512 байт / 512 байт
+Размер I/O (минимальный/оптимальный): 512 байт / 512 байт
+
+
+Диск /dev/loop6: 10,72 MiB, 11239424 байт, 21952 секторов
+Единицы: секторов по 1 * 512 = 512 байт
+Размер сектора (логический/физический): 512 байт / 512 байт
+Размер I/O (минимальный/оптимальный): 512 байт / 512 байт
+
+
+Диск /dev/loop7: 11,11 MiB, 11649024 байт, 22752 секторов
+Единицы: секторов по 1 * 512 = 512 байт
+Размер сектора (логический/физический): 512 байт / 512 байт
+Размер I/O (минимальный/оптимальный): 512 байт / 512 байт
+
+
+Диск /dev/nvme0n1: 476,94 GiB, 512110190592 байт, 1000215216 секторов
+Disk model: KBG40ZNV512G KIOXIA                     
+Единицы: секторов по 1 * 512 = 512 байт
+Размер сектора (логический/физический): 512 байт / 512 байт
+Размер I/O (минимальный/оптимальный): 512 байт / 512 байт
+Тип метки диска: gpt
+Идентификатор диска: A1C5485D-6281-DF43-99D7-789E2BA790F1
+
+Устр-во           начало      Конец   Секторы Размер Тип
+/dev/nvme0n1p1      2048     206847    204800   100M EFI
+/dev/nvme0n1p2    206848     239615     32768    16M Зарезервированный раздел Microsoft
+/dev/nvme0n1p3    239616  452968076 452728461 215,9G Microsoft basic data
+/dev/nvme0n1p4 452968080  998615039 545646960 260,2G Microsoft basic data
+/dev/nvme0n1p5 998615040 1000212479   1597440   780M Среда для восстановления Microsoft
+
+
+Диск /dev/sda: 238,47 GiB, 256060514304 байт, 500118192 секторов
+Disk model: RTL9210 NVME    
+Единицы: секторов по 1 * 512 = 512 байт
+Размер сектора (логический/физический): 512 байт / 512 байт
+Размер I/O (минимальный/оптимальный): 512 байт / 512 байт
+Тип метки диска: gpt
+Идентификатор диска: 7E4E63AD-C386-4A7D-8103-95726335D3AC
+
+Устр-во       начало     Конец  Секторы Размер Тип
+/dev/sda1         34     32767    32734    16M Зарезервированный раздел Microsoft
+/dev/sda2      32768   1986559  1953792   954M Microsoft basic data
+/dev/sda3    1986560   4188159  2201600     1G EFI
+/dev/sda4    4188160  35438591 31250432  14,9G Linux своп
+/dev/sda5   35438592 113563647 78125056  37,3G Файловая система Linux
+/dev/sda6  113563648 191688703 78125056  37,3G Файловая система Linux
+
+
+Диск /dev/loop8: 505,09 MiB, 529625088 байт, 1034424 секторов
+Единицы: секторов по 1 * 512 = 512 байт
+Размер сектора (логический/физический): 512 байт / 512 байт
+Размер I/O (минимальный/оптимальный): 512 байт / 512 байт
+
+
+Диск /dev/loop9: 91,69 MiB, 96141312 байт, 187776 секторов
+Единицы: секторов по 1 * 512 = 512 байт
+Размер сектора (логический/физический): 512 байт / 512 байт
+Размер I/O (минимальный/оптимальный): 512 байт / 512 байт
+
+
+Диск /dev/loop10: 689,78 MiB, 723288064 байт, 1412672 секторов
+Единицы: секторов по 1 * 512 = 512 байт
+Размер сектора (логический/физический): 512 байт / 512 байт
+Размер I/O (минимальный/оптимальный): 512 байт / 512 байт
+
+
+Диск /dev/loop11: 10,54 MiB, 11051008 байт, 21584 секторов
+Единицы: секторов по 1 * 512 = 512 байт
+Размер сектора (логический/физический): 512 байт / 512 байт
+Размер I/O (минимальный/оптимальный): 512 байт / 512 байт
+
+
+Диск /dev/loop12: 10,67 MiB, 11186176 байт, 21848 секторов
+Единицы: секторов по 1 * 512 = 512 байт
+Размер сектора (логический/физический): 512 байт / 512 байт
+Размер I/O (минимальный/оптимальный): 512 байт / 512 байт
+
+
+Диск /dev/loop13: 38,83 MiB, 40714240 байт, 79520 секторов
+Единицы: секторов по 1 * 512 = 512 байт
+Размер сектора (логический/физический): 512 байт / 512 байт
+Размер I/O (минимальный/оптимальный): 512 байт / 512 байт
+
+
+Диск /dev/loop14: 500 KiB, 512000 байт, 1000 секторов
+Единицы: секторов по 1 * 512 = 512 байт
+Размер сектора (логический/физический): 512 байт / 512 байт
+Размер I/O (минимальный/оптимальный): 512 байт / 512 байт
+
+
+Диск /dev/loop15: 568 KiB, 581632 байт, 1136 секторов
+Единицы: секторов по 1 * 512 = 512 байт
+Размер сектора (логический/физический): 512 байт / 512 байт
+Размер I/O (минимальный/оптимальный): 512 байт / 512 байт
+
+Filesystem Information
+Файл.система   Размер Использовано  Дост Использовано% Cмонтировано в
+tmpfs            1,5G         2,0M  1,5G            1% /run
+/dev/sda5         37G         7,9G   27G           23% /
+tmpfs            7,5G          11M  7,5G            1% /dev/shm
+tmpfs            5,0M          12K  5,0M            1% /run/lock
+efivarfs         148K          48K   95K           34% /sys/firmware/efi/efivars
+/dev/sda2        921M         117M  741M           14% /boot
+/dev/sda6         37G         1,1G   34G            3% /home
+/dev/sda3        1,1G         6,2M  1,1G            1% /boot/efi
+tmpfs            1,5G         136K  1,5G            1% /run/user/1000
+
+Loaded Kernel Modules
+Module                  Size  Used by
+rfcomm                 98304  4
+snd_seq_dummy          12288  0
+snd_hrtimer            12288  1
+qrtr                   53248  2
+cmac                   12288  3
+algif_hash             12288  1
+algif_skcipher         16384  1
+af_alg                 32768  6 algif_hash,algif_skcipher
+bnep                   32768  2
+binfmt_misc            24576  1
+nls_iso8859_1          12288  1
+amdgpu              17100800  145
+snd_acp_legacy_mach    24576  0
+snd_acp_mach           45056  1 snd_acp_legacy_mach
+snd_soc_nau8821        61440  1 snd_acp_mach
+snd_acp_renoir         16384  1
+snd_acp_i2s            16384  1 snd_acp_renoir
+snd_acp_pdm            12288  1 snd_acp_renoir
+snd_soc_dmic           12288  1
+snd_acp_pcm            12288  1 snd_acp_renoir
+snd_sof_amd_acp63      16384  0
+snd_sof_amd_vangogh    16384  0
+snd_sof_amd_rembrandt    16384  0
+intel_rapl_msr         20480  0
+intel_rapl_common      40960  1 intel_rapl_msr
+snd_sof_amd_renoir     16384  0
+snd_sof_amd_acp        53248  4 snd_sof_amd_rembrandt,snd_sof_amd_vangogh,snd_sof_amd_acp63,snd_sof_amd_renoir
+snd_sof_pci            24576  4 snd_sof_amd_rembrandt,snd_sof_amd_vangogh,snd_sof_amd_acp63,snd_sof_amd_renoir
+snd_sof_xtensa_dsp     12288  1 snd_sof_amd_acp
+edac_mce_amd           28672  0
+snd_sof               380928  2 snd_sof_amd_acp,snd_sof_pci
+snd_soc_es8316         49152  1
+snd_hda_codec_hdmi     94208  1
+kvm_amd               208896  0
+snd_sof_utils          16384  1 snd_sof
+uvcvideo              139264  0
+snd_hda_intel          61440  1
+rtw88_8822ce           12288  0
+snd_soc_core          438272  7 snd_soc_nau8821,snd_acp_mach,snd_sof,snd_acp_legacy_mach,snd_acp_pcm,snd_soc_es8316,snd_soc_dmic
+snd_intel_dspcfg       36864  2 snd_hda_intel,snd_sof
+amdxcp                 12288  1 amdgpu
+videobuf2_vmalloc      20480  1 uvcvideo
+rtw88_8822c           507904  1 rtw88_8822ce
+kvm                  1404928  1 kvm_amd
+drm_exec               12288  1 amdgpu
+snd_intel_sdw_acpi     16384  1 snd_intel_dspcfg
+uvc                    12288  1 uvcvideo
+btusb                  77824  0
+gpu_sched              61440  1 amdgpu
+videobuf2_memops       16384  1 videobuf2_vmalloc
+snd_hda_codec         204800  2 snd_hda_codec_hdmi,snd_hda_intel
+rtw88_pci              32768  1 rtw88_8822ce
+snd_compress           28672  1 snd_soc_core
+drm_buddy              20480  1 amdgpu
+btrtl                  32768  1 btusb
+videobuf2_v4l2         36864  1 uvcvideo
+drm_suballoc_helper    16384  1 amdgpu
+ac97_bus               12288  1 snd_soc_core
+snd_hda_core          139264  3 snd_hda_codec_hdmi,snd_hda_intel,snd_hda_codec
+rtw88_core            360448  2 rtw88_pci,rtw88_8822c
+snd_pci_ps             24576  0
+irqbypass              12288  1 kvm
+drm_ttm_helper         12288  1 amdgpu
+snd_pcm_dmaengine      16384  1 snd_soc_core
+btintel                57344  1 btusb
+videodev              352256  2 videobuf2_v4l2,uvcvideo
+ttm                   110592  2 amdgpu,drm_ttm_helper
+snd_hwdep              20480  1 snd_hda_codec
+snd_rpl_pci_acp6x      16384  0
+snd_seq_midi           24576  0
+btbcm                  24576  1 btusb
+drm_display_helper    237568  1 amdgpu
+videobuf2_common       81920  4 videobuf2_vmalloc,videobuf2_v4l2,uvcvideo,videobuf2_memops
+btmtk                  12288  1 btusb
+snd_seq_midi_event     16384  1 snd_seq_midi
+crct10dif_pclmul       12288  1
+snd_acp_pci            12288  0
+snd_rawmidi            57344  1 snd_seq_midi
+cec                    94208  1 drm_display_helper
+mac80211             1720320  2 rtw88_pci,rtw88_core
+polyval_clmulni        12288  0
+mc                     81920  4 videodev,videobuf2_v4l2,uvcvideo,videobuf2_common
+snd_acp_legacy_common    16384  2 snd_acp_renoir,snd_acp_pci
+bluetooth            1028096  34 btrtl,btmtk,btintel,btbcm,bnep,btusb,rfcomm
+snd_seq               114688  9 snd_seq_midi,snd_seq_midi_event,snd_seq_dummy
+polyval_generic        12288  1 polyval_clmulni
+snd_pci_acp6x          16384  0
+rc_core                73728  1 cec
+ghash_clmulni_intel    16384  0
+sha256_ssse3           32768  0
+snd_seq_device         16384  3 snd_seq,snd_seq_midi,snd_rawmidi
+snd_pcm               192512  17 snd_sof_amd_acp,snd_soc_nau8821,snd_hda_codec_hdmi,snd_pci_acp6x,snd_acp_mach,snd_hda_intel,snd_hda_codec,snd_sof,snd_compress,snd_acp_legacy_mach,snd_soc_core,snd_acp_pcm,snd_sof_utils,snd_soc_es8316,snd_hda_core,snd_pci_ps,snd_pcm_dmaengine
+snd_pci_acp5x          16384  0
+i2c_algo_bit           16384  1 amdgpu
+snd_timer              49152  3 snd_seq,snd_hrtimer,snd_pcm
+sha1_ssse3             32768  0
+ecdh_generic           16384  2 bluetooth
+aesni_intel           356352  4
+ecc                    45056  1 ecdh_generic
+snd_rn_pci_acp3x       16384  0
+snd                   143360  18 snd_seq,snd_seq_device,snd_hda_codec_hdmi,snd_hwdep,snd_acp_mach,snd_hda_intel,snd_hda_codec,snd_sof,snd_timer,snd_compress,snd_acp_legacy_mach,snd_soc_core,snd_pcm,snd_rawmidi
+cfg80211             1323008  2 rtw88_core,mac80211
+snd_acp_config         20480  9 snd_rn_pci_acp3x,snd_pci_acp6x,snd_pci_acp5x,snd_sof_amd_rembrandt,snd_sof_amd_vangogh,snd_sof_amd_acp63,snd_acp_pci,snd_pci_ps,snd_sof_amd_renoir
+snd_soc_acpi           16384  4 snd_sof_amd_acp,snd_acp_renoir,snd_acp_config,snd_acp_pcm
+crypto_simd            16384  1 aesni_intel
+snd_pci_acp3x          16384  0
+soundcore              16384  1 snd
+cryptd                 24576  3 crypto_simd,ghash_clmulni_intel
+libarc4                12288  1 mac80211
+ccp                   143360  1 kvm_amd
+rapl                   20480  0
+amd_pmc                45056  0
+i2c_piix4              32768  0
+input_leds             12288  0
+k10temp                16384  0
+huawei_wmi             20480  0
+wmi_bmof               12288  0
+joydev                 32768  0
+ledtrig_audio          12288  1 huawei_wmi
+serio_raw              20480  0
+sparse_keymap          12288  1 huawei_wmi
+mac_hid                12288  0
+msr                    12288  0
+parport_pc             53248  0
+ppdev                  24576  0
+lp                     28672  0
+parport                73728  3 parport_pc,lp,ppdev
+efi_pstore             12288  0
+nfnetlink              20480  1
+dmi_sysfs              24576  0
+ip_tables              32768  0
+x_tables               65536  1 ip_tables
+autofs4                57344  2
+uas                    28672  0
+usb_storage            86016  7 uas
+nvme                   61440  0
+hid_multitouch         36864  0
+nvme_core             208896  1 nvme
+hid_generic            12288  0
+video                  73728  1 amdgpu
+xhci_pci               24576  0
+crc32_pclmul           12288  0
+xhci_pci_renesas       20480  1 xhci_pci
+nvme_auth              28672  1 nvme_core
+i2c_hid_acpi           12288  0
+i2c_hid                40960  1 i2c_hid_acpi
+wmi                    28672  3 video,huawei_wmi,wmi_bmof
+hid                   180224  3 i2c_hid,hid_multitouch,hid_generic
+
+CPU Information
+Архитектура:                          x86_64
+CPU op-mode(s):                       32-bit, 64-bit
+Address sizes:                        48 bits physical, 48 bits virtual
+Порядок байт:                         Little Endian
+CPU(s):                               12
+On-line CPU(s) list:                  0-11
+ID прроизводителя:                    AuthenticAMD
+Имя модели:                           AMD Ryzen 5 5500U with Radeon Graphics
+Семейство ЦПУ:                        23
+Модель:                               104
+Потоков на ядро:                      2
+Ядер на сокет:                        6
+Сокетов:                              1
+Степпинг:                             1
+CPU(s) scaling MHz:                   27%
+CPU max MHz:                          4056,0000
+CPU min MHz:                          400,0000
+BogoMIPS:                             4191,97
+Флаги:                                fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc cpuid extd_apicid aperfmperf rapl pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx cpb cat_l3 cdp_l3 hw_pstate ssbd mba ibrs ibpb stibp vmmcall fsgsbase bmi1 avx2 smep bmi2 cqm rdt_a rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local clzero irperf xsaveerptr rdpru wbnoinvd cppc arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold avic v_vmsave_vmload vgif v_spec_ctrl umip rdpid overflow_recov succor smca
+Виртуализация:                        AMD-V
+L1d cache:                            192 KiB (6 instances)
+L1i cache:                            192 KiB (6 instances)
+L2 cache:                             3 MiB (6 instances)
+L3 cache:                             8 MiB (2 instances)
+NUMA node(s):                         1
+NUMA node0 CPU(s):                    0-11
+Vulnerability Gather data sampling:   Not affected
+Vulnerability Itlb multihit:          Not affected
+Vulnerability L1tf:                   Not affected
+Vulnerability Mds:                    Not affected
+Vulnerability Meltdown:               Not affected
+Vulnerability Mmio stale data:        Not affected
+Vulnerability Reg file data sampling: Not affected
+Vulnerability Retbleed:               Mitigation; untrained return thunk; SMT enabled with STIBP protection
+Vulnerability Spec rstack overflow:   Mitigation; Safe RET
+Vulnerability Spec store bypass:      Mitigation; Speculative Store Bypass disabled via prctl
+Vulnerability Spectre v1:             Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:             Mitigation; Retpolines; IBPB conditional; STIBP always-on; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected
+Vulnerability Srbds:                  Not affected
+Vulnerability Tsx async abort:        Not affected
+
+Memory Information
+               total        used        free      shared  buff/cache   available
+Память:         14Gi       3,1Gi        10Gi        65Mi       2,0Gi        11Gi
+Подкачка:       14Gi          0B        14Gi
+
