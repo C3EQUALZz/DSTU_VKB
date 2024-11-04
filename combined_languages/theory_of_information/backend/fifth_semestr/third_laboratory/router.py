@@ -20,7 +20,7 @@ from combined_languages.theory_of_information.backend.fifth_semestr.third_labora
 
 router = APIRouter(
     prefix="/fifth_semester/third_laboratory",
-    tags=["Пятый семестр"],
+    tags=["Пятый семестр", "3 лабораторная"],
 )
 
 logger = logging.getLogger("uvicorn")

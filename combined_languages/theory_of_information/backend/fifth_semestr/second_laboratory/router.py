@@ -8,7 +8,7 @@ from combined_languages.theory_of_information.backend.fifth_semestr.second_labor
 
 router = APIRouter(
     prefix="/fifth_semester/second_laboratory",
-    tags=["Пятый семестр"],
+    tags=["Пятый семестр", "2 лабораторная"],
 )
 
 
