@@ -1,0 +1,8 @@
+Package: calculator
+Version: 1.0
+Section: utils
+Priority: optional
+Architecture: amd64
+Installed-Size: 419
+Maintainer: c3equalz
+Description: simple ariphmetic calculator written on bash
