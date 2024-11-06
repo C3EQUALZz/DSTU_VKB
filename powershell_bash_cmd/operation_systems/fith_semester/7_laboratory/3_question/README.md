@@ -59,4 +59,11 @@ fi
 
 7. Обновляем `sudo update-grub`
 
+---
+
+Если параметры кастомизации Grub не работают, то скачайте тему для Grub.
+Вот вам [примеры](https://www.gnome-look.org/browse?cat=109), где можно посмотреть. 
+
+Я использовал данную [тему](https://www.gnome-look.org/p/2206122). Установка моей темы [здесь описана](https://github.com/vinceliuice/Elegant-grub2-themes)
+
 
