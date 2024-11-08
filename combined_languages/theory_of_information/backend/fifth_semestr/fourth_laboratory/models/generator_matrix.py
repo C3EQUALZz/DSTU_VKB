@@ -1,13 +1,16 @@
-from typing import List
+from typing import List, cast
 
-from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.models.base import Matrix, \
-    SystematicMatrix
-from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.factories import MatrixFactory
+from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.models.base import Matrix
+from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.models.generator_systematic_matrix import \
+    GSystematicMatrix
+from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.factories.systematic import \
+    SystematicMatrixFactory
 
 
 class GMatrix(Matrix):
     def __init__(self, matrix: List[List[int]]) -> None:
         super().__init__(matrix)
+        SystematicMatrixFactory.register("G", GSystematicMatrix)
 
     def to_systematic_form(self) -> "GSystematicMatrix":
         """
@@ -16,13 +19,4 @@ class GMatrix(Matrix):
         Returns:
             NDArray[np.int_]: Модифицированная проверочная матрица в систематическом виде.
         """
-        # Создаем копию матрицы для изменений и определяем размер
-        return MatrixFactory.create_systematic_matrix(self, "G")
-
-
-class GSystematicMatrix(SystematicMatrix):
-    def __init__(self, matrix: List[List[int]]) -> None:
-        super().__init__(matrix)
-
-    def find_another_type_matrix(self) -> "SystematicMatrix":
-        return MatrixFactory.create_inverse_matrix(self, "G")
+        return cast(GSystematicMatrix, SystematicMatrixFactory.create(self, "G"))

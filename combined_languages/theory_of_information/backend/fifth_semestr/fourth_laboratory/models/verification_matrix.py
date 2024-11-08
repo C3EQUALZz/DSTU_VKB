@@ -1,13 +1,16 @@
-from typing import List
+from typing import List, cast
 
-from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.models.base import Matrix, \
-    SystematicMatrix
-from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.factories import MatrixFactory
+from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.models.base import Matrix
+from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.models.verification_systematic_matrix import \
+    HSystematicMatrix
+from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.factories.systematic import \
+    SystematicMatrixFactory
 
 
 class HMatrix(Matrix):
     def __init__(self, matrix: List[List[int]]) -> None:
         super().__init__(matrix)
+        SystematicMatrixFactory.register("H", HSystematicMatrix)
 
     def to_systematic_form(self) -> "HSystematicMatrix":
         """
@@ -16,13 +19,4 @@ class HMatrix(Matrix):
         Returns:
             NDArray[np.int_]: Модифицированная проверочная матрица в систематическом виде.
         """
-        # Создаем копию матрицы для изменений и определяем размер
-        return MatrixFactory.create_systematic_matrix(self, "H")
-
-
-class HSystematicMatrix(SystematicMatrix):
-    def __init__(self, matrix: List[List[int]]) -> None:
-        super().__init__(matrix)
-
-    def find_another_type_matrix(self) -> "SystematicMatrix":
-        return MatrixFactory.create_systematic_matrix(self, "H")
+        return cast(HSystematicMatrix, SystematicMatrixFactory.create(self, "H"))
