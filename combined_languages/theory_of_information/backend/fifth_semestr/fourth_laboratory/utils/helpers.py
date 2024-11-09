@@ -64,4 +64,3 @@ def get_verification_systematic_transposed_matrix(
         return cast(HSystematicMatrix, gen_or_check_systematic_matrix.transpose())
 
     raise ValueError(f"Неправильный тип матрицы {inverse_systematic_matrix.__class__.__name__}")
-
