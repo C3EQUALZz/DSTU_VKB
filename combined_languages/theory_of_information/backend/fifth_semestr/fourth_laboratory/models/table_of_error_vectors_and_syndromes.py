@@ -13,9 +13,11 @@ class TableOfErrorVectorsAndSyndromes:
     syndromes: np.ndarray[np.ndarray[int]]
 
 
-def create_table_of_error_vectors_and_syndromes(verification_systematic_matrix_transposed: "HSystematicMatrix"):
+def create_table_of_error_vectors_and_syndromes(
+        verification_systematic_matrix_transposed: "HSystematicMatrix"
+) -> TableOfErrorVectorsAndSyndromes:
     n = len(verification_systematic_matrix_transposed)
     vector = np.vstack((np.zeros(n, dtype=int), np.fliplr(np.diag(np.ones(n, dtype=int)))))
     vector_of_errors: np.ndarray[np.ndarray[int]] = cast(np.ndarray[np.ndarray[int]], vector)
-    syndromes = vector_of_errors @ verification_systematic_matrix_transposed
+    syndromes = (vector_of_errors @ verification_systematic_matrix_transposed.matrix) % 2
     return TableOfErrorVectorsAndSyndromes(vector_of_errors, syndromes)
