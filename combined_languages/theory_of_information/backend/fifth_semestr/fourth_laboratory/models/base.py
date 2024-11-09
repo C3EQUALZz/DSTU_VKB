@@ -13,6 +13,9 @@ class Matrix:
     def transpose(self) -> "Matrix":
         return Matrix(self.matrix.transpose().tolist())
 
+    def __len__(self) -> int:
+        return len(self.matrix)
+
     @property
     def shape(self) -> tuple[int, ...]:
         return self.matrix.shape
@@ -22,8 +25,6 @@ class Matrix:
 
     def __str__(self) -> str:
         return "\n".join(str(row) for row in self.matrix)
-
-
 
 
 class SystematicMatrix(Matrix):
