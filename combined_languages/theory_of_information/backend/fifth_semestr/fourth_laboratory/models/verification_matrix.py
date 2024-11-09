@@ -10,7 +10,7 @@ from combined_languages.theory_of_information.backend.fifth_semestr.fourth_labor
 class HMatrix(Matrix):
     def __init__(self, matrix: List[List[int]]) -> None:
         super().__init__(matrix)
-        SystematicMatrixFactory.register("H", HSystematicMatrix)
+        SystematicMatrixFactory.register("H", "verification_systematic_matrix.HSystematicMatrix")
 
     def to_systematic_form(self) -> "HSystematicMatrix":
         """
