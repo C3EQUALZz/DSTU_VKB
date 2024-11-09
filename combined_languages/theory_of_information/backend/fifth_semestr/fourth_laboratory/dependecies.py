@@ -37,10 +37,14 @@ from combined_languages.theory_of_information.backend.fifth_semestr.fourth_labor
     create_table_of_error_vectors_and_syndromes
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.helpers import \
     get_info_for_encoding, get_verification_systematic_transposed_matrix
+from typing import AnyStr, Literal, List
 import numpy as np
 
 
-def generate_errors(word: str, n: int) -> str:
+def generate_errors(
+        word: AnyStr,
+        n: int
+) -> AnyStr:
     """
     Здесь происходит имитация канала передачи информации.
 
@@ -57,7 +61,11 @@ def generate_errors(word: str, n: int) -> str:
     return "".join(map(str, array))
 
 
-def encode(word: str, matrix: list[list[int]], type_matrix: str) -> str:
+def encode(
+        word: AnyStr,
+        matrix: List[List[int]],
+        type_matrix: Literal["G", "H"]
+) -> AnyStr:
     """
     Здесь происходит вся логика кодирования сообщения (ТОЛЬКО КОДИРОВАНИЕ, БЕЗ КАНАЛА).
 
@@ -89,11 +97,23 @@ def encode(word: str, matrix: list[list[int]], type_matrix: str) -> str:
     return "".join(map(str, encoded_word))
 
 
-def decode(encoded_with_errors: str, matrix: list[list[int]], type_matrix: str) -> str:
+def decode(
+        encoded_with_errors: AnyStr,
+        matrix: List[List[int]],
+        type_matrix: Literal["G", "H"]
+) -> AnyStr:
+    """
+    Функция для декодирования потока байтов после добавок ошибок из канала.
+    :param encoded_with_errors: Поток байтов, пришедший после канала сообщений.
+    :param matrix: Матрица, которая пользовалась при кодировании (вручную пользователь вводил).
+    :param type_matrix: Тип матрицы, который ввел пользователь (G или H).
+    :returns: Декодированное слово в utf-8. Задумано получить то же самое, что ввел пользователь.
+    """
     code_table, generation_sys_matrix = get_info_for_encoding(matrix, type_matrix)
     verification_systematic_matrix_transposed = get_verification_systematic_transposed_matrix(matrix, type_matrix)
     table = create_table_of_error_vectors_and_syndromes(verification_systematic_matrix_transposed)
     count_columns = len(generation_sys_matrix[0])
+    # Здесь создаем блоки v, как в методичке с размером k, где k - количество колонок.
     blocks = [list(map(int, encoded_with_errors[i:i + count_columns]))
               for i in range(0, len(encoded_with_errors), count_columns)]
 
@@ -115,21 +135,24 @@ def decode(encoded_with_errors: str, matrix: list[list[int]], type_matrix: str) 
 
     byte_array = bytearray(int(byte, 2) for byte in byte_chunks)
 
-   #  print("".join(map(str, decoded_binary_word)))
-
     return byte_array.decode('utf-8')
 
 
-def execute(word: str, matrix: list[list[int]], type_matrix: str) -> str:
+def execute(
+        word: AnyStr,
+        matrix: List[List[int]],
+        type_matrix: Literal["G", "H"]
+) -> AnyStr:
     """
     Запуск всех шагов по выполнению лабораторной работы.
-    Args:
-        word:
-        matrix:
-        type_matrix:
+    - Кодирование
+    - Канал с ошибками
+    - Декодирование
 
-    Returns:
-
+    :param word: Слово, которое ввел пользователь для кодирования.
+    :param matrix: Матрица, введенная пользователем для выполнения алгоритма.
+    :param type_matrix: Тип матрицы (G или H)
+    :returns: Словарь с данными на frontend
     """
     encoded_word = encode(word, matrix, type_matrix)
     encoded_word_with_errors = generate_errors(encoded_word, len(matrix[0]))
