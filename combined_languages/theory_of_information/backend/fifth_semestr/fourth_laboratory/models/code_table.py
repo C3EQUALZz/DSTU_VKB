@@ -10,9 +10,9 @@ if TYPE_CHECKING:
 
 @dataclass
 class CodeTable:
-    information_words_column: np.ndarray
-    code_words_column: np.ndarray
-    hamming_weights_column: np.ndarray
+    information_words_column: np.ndarray[np.ndarray[int]]
+    code_words_column: np.ndarray[np.ndarray[int]]
+    hamming_weights_column: np.ndarray[int]
 
     def __iter__(self):
         return zip(self.information_words_column, self.code_words_column, self.hamming_weights_column)
