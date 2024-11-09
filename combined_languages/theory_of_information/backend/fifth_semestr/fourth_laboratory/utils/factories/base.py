@@ -3,7 +3,7 @@ from typing import Any
 
 
 class Factory(ABC):
-    @staticmethod
+    @classmethod
     @abstractmethod
-    def create(matrix, matrix_type: str) -> Any:
+    def create(cls, matrix, matrix_type: str) -> Any:
         ...
