@@ -1,3 +1,5 @@
+from typing import List, Literal
+
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.models.generator_matrix import \
     GMatrix
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.models.verification_matrix import \
@@ -8,10 +10,10 @@ from combined_languages.theory_of_information.backend.fifth_semestr.fourth_labor
 
 
 class MatrixFactory(Factory):
-    @staticmethod
-    def create(matrix: list[list[int]], matrix_type: str) -> Matrix:
+    @classmethod
+    def create(cls, matrix: List[List[int]], matrix_type: Literal["G", "H"]) -> Matrix:
         if matrix_type in ("G", "generator", "порождающая"):
             return GMatrix(matrix)
         if matrix_type in ("H", "checks", "проверочная"):
             return HMatrix(matrix)
-        raise ValueError("Invalid matrix type. Use 'G' or 'H'.")
+        raise ValueError("Неправильный тип матрицы. У вас на выбор есть 'G' или 'H'.")
