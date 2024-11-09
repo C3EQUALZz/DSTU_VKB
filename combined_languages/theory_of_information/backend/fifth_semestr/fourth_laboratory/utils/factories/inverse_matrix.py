@@ -41,7 +41,7 @@ class InverseMatrixFactory(Factory):
             new_matrix = np.hstack((required_columns, eye_matrix)).tolist()
             return matrix_cls(new_matrix)
         if matrix_type == "H":
-            required_columns = matrix[:, (n - k):].transpose().matrix
+            required_columns = matrix[:, :(n - k)].transpose().matrix
             eye_matrix = np.eye(n - k, dtype=required_columns.dtype)
             new_matrix = np.hstack((eye_matrix, required_columns)).tolist()
             return matrix_cls(new_matrix)
