@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 import numpy as np
 
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.factories.base import \
-    Factory
+    RegistryFactory
 
 if TYPE_CHECKING:
     from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.models.base import Matrix
@@ -11,12 +11,7 @@ if TYPE_CHECKING:
         SystematicMatrix
 
 
-class SystematicMatrixFactory(Factory):
-    _registry = {}
-
-    @classmethod
-    def register(cls, matrix_type: str, matrix_cls) -> None:
-        cls._registry[matrix_type] = matrix_cls
+class SystematicMatrixFactory(RegistryFactory):
 
     @classmethod
     def create(cls, matrix: "Matrix", matrix_type: str) -> "SystematicMatrix":
