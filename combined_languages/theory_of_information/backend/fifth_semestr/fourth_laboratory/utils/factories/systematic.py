@@ -33,5 +33,5 @@ class SystematicMatrixFactory(RegistryFactory):
         else:
             raise ValueError(f"Неправильный тип матрицы {matrix_cls}. Используйте 'G' или 'H'.")
 
-        Registry.log(f"{matrix_cls.__name__}", "\n".join(map(str, result)))
+        Registry.log(f"{matrix_cls.__name__}", result)
         return matrix_cls(result)

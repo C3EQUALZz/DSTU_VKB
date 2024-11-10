@@ -34,6 +34,8 @@ class InverseMatrixFactory(RegistryFactory):
         else:
             raise ValueError(f"Неизвестный тип матрицы: {matrix_type}")
 
-        Registry.log(f"Обратная матрица: {matrix_cls.__name__}", "\n".join(map(str, new_matrix)))
+        Registry.log(f"Параметр k {matrix_cls.__name__}", k)
+        Registry.log(f"Параметр n {matrix_cls.__name__}", n)
+        Registry.log(f"Обратная матрица: {matrix_cls.__name__}", new_matrix)
 
         return matrix_cls(new_matrix)

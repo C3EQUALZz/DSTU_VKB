@@ -32,7 +32,7 @@ execute(
     "H"
 )
 """
-
+from pprint import pprint
 from typing import AnyStr, Literal, List, Mapping
 
 import numpy as np
@@ -189,7 +189,7 @@ if __name__ == '__main__':
         [1, 0, 1, 0, 0, 0, 1]
     ]
 
-    print(execute(
+    pprint(execute(
         "Как дела?",
         matrix,
         "H"

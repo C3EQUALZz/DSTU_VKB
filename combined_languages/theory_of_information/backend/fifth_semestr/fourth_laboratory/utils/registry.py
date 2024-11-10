@@ -1,4 +1,4 @@
-from typing import Mapping, AnyStr
+from typing import Mapping, AnyStr, Any
 
 
 class Singleton:
@@ -14,7 +14,7 @@ class Registry(Singleton):
     __registry = {}
 
     @classmethod
-    def log(cls, state: AnyStr, comment: AnyStr) -> None:
+    def log(cls, state: AnyStr, comment: Any) -> None:
         cls.__registry[state] = comment
 
     @classmethod
