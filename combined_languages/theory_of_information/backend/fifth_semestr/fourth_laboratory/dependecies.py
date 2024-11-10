@@ -37,8 +37,11 @@ from combined_languages.theory_of_information.backend.fifth_semestr.fourth_labor
     create_table_of_error_vectors_and_syndromes
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.helpers import \
     get_info_for_encoding, get_verification_systematic_transposed_matrix
-from typing import AnyStr, Literal, List
+from typing import AnyStr, Literal, List, Mapping
 import numpy as np
+
+from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.registry import Registry
+
 
 def generate_errors(
         word: AnyStr,
@@ -141,7 +144,7 @@ def execute(
         word: AnyStr,
         matrix: List[List[int]],
         type_matrix: Literal["G", "H"]
-) -> AnyStr:
+) -> Mapping[AnyStr, AnyStr]:
     """
     Запуск всех шагов по выполнению лабораторной работы.
     - Кодирование
@@ -153,12 +156,15 @@ def execute(
     :param type_matrix: Тип матрицы (G или H)
     :returns: Словарь с данными на frontend
     """
+    Registry.clear()
+
     encoded_word = encode(word, matrix, type_matrix)
     encoded_word_with_errors = generate_errors(encoded_word, len(matrix[0]))
     decoded_word = decode(encoded_word_with_errors, matrix, type_matrix)
+
     print(decoded_word)
 
-    return ""
+    return Registry().get_all_info()
 
 
 if __name__ == '__main__':
