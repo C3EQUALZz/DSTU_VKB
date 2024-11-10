@@ -11,7 +11,7 @@ from combined_languages.theory_of_information.backend.fifth_semestr.fourth_labor
 class GMatrix(Matrix):
     def __init__(self, matrix: List[List[int]]) -> None:
         super().__init__(matrix)
-        Registry.log(f"{self.__class__.__name__}", "\n".join(map(str, matrix)))
+        Registry.log(f"{self.__class__.__name__}", matrix)
         SystematicMatrixFactory.register("G", "generator_systematic_matrix.GSystematicMatrix")
 
     def to_systematic_form(self) -> "GSystematicMatrix":
