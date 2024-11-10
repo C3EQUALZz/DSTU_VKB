@@ -40,7 +40,6 @@ from combined_languages.theory_of_information.backend.fifth_semestr.fourth_labor
 from typing import AnyStr, Literal, List
 import numpy as np
 
-
 def generate_errors(
         word: AnyStr,
         n: int
@@ -135,7 +134,7 @@ def decode(
 
     byte_array = bytearray(int(byte, 2) for byte in byte_chunks)
 
-    return byte_array.decode('utf-8')
+    return ''.join(char for char in byte_array.decode('utf-8') if char.isprintable())
 
 
 def execute(
