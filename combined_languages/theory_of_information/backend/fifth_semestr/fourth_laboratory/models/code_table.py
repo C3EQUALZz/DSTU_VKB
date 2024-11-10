@@ -2,7 +2,6 @@ from typing import TYPE_CHECKING, cast
 import itertools
 import numpy as np
 from dataclasses import dataclass, asdict
-from prettytable import PrettyTable
 
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.registry import Registry
 
@@ -62,8 +61,12 @@ def find_errors(table: CodeTable) -> Errors:
     :param: таблица, которая состоит из информационных слов, кодовых слов и весов Хэмминга
     :returns: количество обнаружения ошибок и ошибок для исправления
     """
-    d_min = np.min(table.hamming_weights_column > 0)
-    finds = d_min - 1
-    corr = int((d_min - 1) / 2)
+    d_min = np.min(table.hamming_weights_column[table.hamming_weights_column > 0]).item()
+    count_of_find_errors = d_min - 1
+    count_of_corrections = int((d_min - 1) / 2)
 
-    return Errors(finds, corr)
+    Registry.log("Минимальное расстояние Хэмминга", d_min)
+    Registry.log("Количество обнаруживающих ошибок p", count_of_find_errors)
+    Registry.log("Количество исправляющих ошибок", count_of_corrections)
+
+    return Errors(count_of_find_errors, count_of_corrections)

@@ -37,6 +37,8 @@ from typing import AnyStr, Literal, List, Mapping
 
 import numpy as np
 
+from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.models.code_table import \
+    find_errors
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.models.table_of_error_vectors_and_syndromes import \
     create_table_of_error_vectors_and_syndromes
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.helpers import \
@@ -96,6 +98,8 @@ def encode(
         # Получаем соответствующее значение из столбца кодовых слов
         encoded_block = code_table.code_words_column[index]
         encoded_word.extend(encoded_block)
+
+    _ = find_errors(code_table)
 
     return "".join(map(str, encoded_word))
 
