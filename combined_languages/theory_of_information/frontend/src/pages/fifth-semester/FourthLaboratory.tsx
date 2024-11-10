@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Layout, Typography, Form, Select, Button, Table, InputNumber } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
-import { PlusOutlined } from '@ant-design/icons';
+import React, {useState, useEffect, useCallback} from 'react';
+import {Layout, Typography, Form, Select, Button, Table, InputNumber, Input} from 'antd';
+import type {ColumnsType} from 'antd/es/table';
 
-const { Header, Content } = Layout;
-const { Title } = Typography;
-const { Option } = Select;
+const {Header, Content} = Layout;
+const {Title} = Typography;
+const {Option} = Select;
 
 interface MatrixCell {
     key: number;
@@ -23,30 +22,32 @@ export const FourthLaboratory: React.FC = () => {
     const [columns, setColumns] = useState<number>(3);
     const [matrixData, setMatrixData] = useState<MatrixRow[]>([]);
     const [columnsConfig, setColumnsConfig] = useState<ColumnsType<MatrixRow>>([]);
+    const [wordInput, setWordInput] = useState<string>("");
 
     const handleMatrixTypeChange = (value: string) => setMatrixType(value);
+    const handleWordInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setWordInput(e.target.value);
 
     // Генерация начальных данных для матрицы
-    const initializeMatrixData = () => {
-        const initialMatrixData: MatrixRow[] = Array.from({ length: rows }, (_, rowIndex) => ({
+    const initializeMatrixData = useCallback(() => {
+        const initialMatrixData: MatrixRow[] = Array.from({length: rows}, (_, rowIndex) => ({
             key: rowIndex,
-            cells: Array.from({ length: columns }, (_, cellIndex) => ({
+            cells: Array.from({length: columns}, (_, cellIndex) => ({
                 key: cellIndex,
                 value: 0
             }))
         }));
         setMatrixData(initialMatrixData);
-    };
+    }, [rows, columns])
 
     // Обновляем данные и столбцы при изменении размеров
     useEffect(() => {
         initializeMatrixData();
 
         // Обновляем columnsConfig при изменении количества столбцов
-        const updatedColumnsConfig: ColumnsType<MatrixRow> = Array.from({ length: columns }, (_, i) => ({
+        const updatedColumnsConfig: ColumnsType<MatrixRow> = Array.from({length: columns}, (_, i) => ({
             title: `Col ${i + 1}`,
             dataIndex: `col${i}`,
-            render: (_: any, row: MatrixRow) =>
+            render: (_: unknown, row: MatrixRow) =>
                 row.cells[i] ? (
                     <InputNumber
                         min={0}
@@ -57,7 +58,7 @@ export const FourthLaboratory: React.FC = () => {
                 ) : null,
         }));
         setColumnsConfig(updatedColumnsConfig);
-    }, [rows, columns]);
+    }, [rows, columns, initializeMatrixData]);
 
     // Обработка изменения значения в ячейке
     const handleCellChange = (rowIndex: number, cellIndex: number, newValue: number) => {
@@ -68,32 +69,57 @@ export const FourthLaboratory: React.FC = () => {
         });
     };
 
+    // Обработка отправки данных на backend
+    const handleSubmit = () => {
+        // Формируем данные для отправки на backend
+        const data = {
+            matrixType,
+            rows,
+            columns,
+            matrixData,
+            wordInput
+        };
+        console.log("Sending data to backend:", data);
+        // Здесь вы можете вызвать метод для отправки данных на backend
+    };
+
     return (
         <Layout>
-            <Header style={{ padding: '0 24px', background: '#fff', textAlign: 'center' }}>
+            <Header style={{padding: '0 24px', background: '#fff', textAlign: 'center'}}>
                 <Title level={2}>Лабораторная работа №4 «Матричное представление блочных кодов»</Title>
             </Header>
-            <Content style={{ padding: '20px' }}>
+            <Content style={{padding: '20px'}}>
                 <Typography.Paragraph>
                     Введите параметры и создайте матрицу для кодирования.
                 </Typography.Paragraph>
 
-                <Form layout="inline" style={{ marginBottom: '20px' }}>
+                <Form layout="inline" style={{marginBottom: '20px'}}>
                     <Form.Item label="Тип матрицы">
-                        <Select defaultValue="G" onChange={handleMatrixTypeChange} style={{ width: 120 }}>
+                        <Select defaultValue="G" onChange={handleMatrixTypeChange} style={{width: 120}}>
                             <Option value="G">Порождающая</Option>
                             <Option value="H">Проверочная</Option>
                         </Select>
                     </Form.Item>
                     <Form.Item label="Количество строк">
-                        <InputNumber min={1} value={rows} onChange={(value) => setRows(value || 1)} />
+                        <InputNumber min={1} value={rows} onChange={(value) => setRows(value || 1)}/>
                     </Form.Item>
                     <Form.Item label="Количество столбцов">
-                        <InputNumber min={1} value={columns} onChange={(value) => setColumns(value || 1)} />
+                        <InputNumber min={1} value={columns} onChange={(value) => setColumns(value || 1)}/>
+                    </Form.Item>
+                </Form>
+
+                <Form layout="inline" style={{marginBottom: '20px'}}>
+                    <Form.Item label="Введите слово">
+                        <Input
+                            placeholder="введите свой текст"
+                            value={wordInput}
+                            onChange={handleWordInputChange}
+                            style={{width: 200}}
+                        />
                     </Form.Item>
                     <Form.Item>
-                        <Button type="primary" onClick={initializeMatrixData} icon={<PlusOutlined />}>
-                            Создать матрицу
+                        <Button type="primary" onClick={handleSubmit}>
+                            Закодировать
                         </Button>
                     </Form.Item>
                 </Form>
