@@ -1,7 +1,8 @@
-from typing import TYPE_CHECKING, cast
 import itertools
-import numpy as np
 from dataclasses import dataclass, asdict
+from typing import TYPE_CHECKING, cast
+
+import numpy as np
 
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.registry import Registry
 

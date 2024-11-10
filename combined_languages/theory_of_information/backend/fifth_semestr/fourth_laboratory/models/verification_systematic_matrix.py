@@ -9,7 +9,7 @@ from combined_languages.theory_of_information.backend.fifth_semestr.fourth_labor
 class HSystematicMatrix(SystematicMatrix):
     def __init__(self, matrix: List[List[int]]) -> None:
         super().__init__(matrix)
-        InverseMatrixFactory.register("H","generator_matrix.GSystematicMatrix")
+        InverseMatrixFactory.register("H", "generator_matrix.GSystematicMatrix")
 
     def find_another_type_matrix(self) -> "SystematicMatrix":
         return InverseMatrixFactory.create(self, "H")

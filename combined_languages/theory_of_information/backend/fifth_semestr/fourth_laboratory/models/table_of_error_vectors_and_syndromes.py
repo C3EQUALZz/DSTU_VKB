@@ -1,6 +1,9 @@
-import numpy as np
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 from typing import TYPE_CHECKING, cast
+
+import numpy as np
+
+from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.registry import Registry
 
 if TYPE_CHECKING:
     from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.models.verification_systematic_matrix import \
@@ -11,6 +14,14 @@ if TYPE_CHECKING:
 class TableOfErrorVectorsAndSyndromes:
     errors: np.ndarray[np.ndarray[int]]
     syndromes: np.ndarray[np.ndarray[int]]
+
+    def __post_init__(self) -> None:
+        data = asdict(self)
+
+        for key, value in data.items():
+            data[key] = value.tolist()
+
+        Registry.log(f"Таблица синдромов и векторов ошибок {self.__class__.__name__}", data)
 
 
 def create_table_of_error_vectors_and_syndromes(
