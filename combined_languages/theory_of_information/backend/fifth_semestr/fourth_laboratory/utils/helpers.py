@@ -8,6 +8,7 @@ from combined_languages.theory_of_information.backend.fifth_semestr.fourth_labor
     HSystematicMatrix
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.factories.matrix import \
     MatrixFactory
+from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.registry import Registry
 
 if TYPE_CHECKING:
     from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.models.code_table import \
@@ -58,9 +59,12 @@ def get_verification_systematic_transposed_matrix(
     inverse_systematic_matrix = gen_or_check_systematic_matrix.find_another_type_matrix()
 
     if inverse_systematic_matrix.__class__.__name__ == "HSystematicMatrix":
-        return cast(HSystematicMatrix, inverse_systematic_matrix.transpose())
+        result = cast(HSystematicMatrix, inverse_systematic_matrix.transpose())
+    elif inverse_systematic_matrix.__class__.__name__ == "GSystematicMatrix":
+        result = cast(HSystematicMatrix, gen_or_check_systematic_matrix.transpose())
+    else:
+        raise ValueError(f"Неправильный тип матрицы {inverse_systematic_matrix.__class__.__name__}")
 
-    if inverse_systematic_matrix.__class__.__name__ == "GSystematicMatrix":
-        return cast(HSystematicMatrix, gen_or_check_systematic_matrix.transpose())
+    Registry.log("Транспонированная проверочная систематическая матрица HSystematicMatrix", result)
 
-    raise ValueError(f"Неправильный тип матрицы {inverse_systematic_matrix.__class__.__name__}")
+    return result
