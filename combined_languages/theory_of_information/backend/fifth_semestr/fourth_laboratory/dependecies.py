@@ -33,13 +33,14 @@ execute(
 )
 """
 
+from typing import AnyStr, Literal, List, Mapping
+
+import numpy as np
+
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.models.table_of_error_vectors_and_syndromes import \
     create_table_of_error_vectors_and_syndromes
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.helpers import \
     get_info_for_encoding, get_verification_systematic_transposed_matrix
-from typing import AnyStr, Literal, List, Mapping
-import numpy as np
-
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.registry import Registry
 
 
