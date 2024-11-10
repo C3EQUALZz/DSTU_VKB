@@ -65,6 +65,6 @@ def get_verification_systematic_transposed_matrix(
     else:
         raise ValueError(f"Неправильный тип матрицы {inverse_systematic_matrix.__class__.__name__}")
 
-    Registry.log("Транспонированная проверочная систематическая матрица HSystematicMatrix", result)
+    Registry.log("Транспонированная проверочная систематическая матрица HSystematicMatrix", result.matrix.tolist())
 
     return result
