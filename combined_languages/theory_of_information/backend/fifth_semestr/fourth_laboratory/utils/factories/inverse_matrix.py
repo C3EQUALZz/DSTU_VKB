@@ -5,6 +5,7 @@ import numpy as np
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.models.base import Matrix
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.factories.base import \
     RegistryFactory
+from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.registry import Registry
 
 if TYPE_CHECKING:
     from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.models.base import \
@@ -24,11 +25,15 @@ class InverseMatrixFactory(RegistryFactory):
             required_columns = matrix[:, -(n - k):].transpose().matrix
             eye_matrix = np.eye(n - k, dtype=required_columns.dtype)
             new_matrix = np.hstack((required_columns, eye_matrix)).tolist()
-            return matrix_cls(new_matrix)
-        if matrix_type == "H":
+
+        elif matrix_type == "H":
             required_columns = matrix[:, :(n - k)].transpose().matrix
             eye_matrix = np.eye(n - k, dtype=required_columns.dtype)
             new_matrix = np.hstack((eye_matrix, required_columns)).tolist()
-            return matrix_cls(new_matrix)
 
-        raise ValueError(f"Неизвестный тип матрицы: {matrix_type}")
+        else:
+            raise ValueError(f"Неизвестный тип матрицы: {matrix_type}")
+
+        Registry.log(f"Обратная матрица: {matrix_cls.__name__}", "\n".join(map(str, new_matrix)))
+
+        return matrix_cls(new_matrix)
