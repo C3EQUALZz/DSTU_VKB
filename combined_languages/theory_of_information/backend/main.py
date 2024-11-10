@@ -4,6 +4,7 @@ from combined_languages.theory_of_information.backend.fifth_semestr import (
     first_laboratory_router as fifth_sem_first_laboratory_router,
     second_laboratory_router as fifth_sem_second_laboratory_router,
     third_laboratory_router as fifth_sem_third_laboratory_router,
+    fourth_laboratory_router as fifth_sem_fourth_laboratory_router,
 )
 
 app = FastAPI(
@@ -32,3 +33,4 @@ app.add_middleware(
 app.include_router(fifth_sem_first_laboratory_router)
 app.include_router(fifth_sem_second_laboratory_router)
 app.include_router(fifth_sem_third_laboratory_router)
+app.include_router(fifth_sem_fourth_laboratory_router)

@@ -164,36 +164,6 @@ def execute(
 
     encoded_word = encode(word, matrix, type_matrix)
     encoded_word_with_errors = generate_errors(encoded_word, len(matrix[0]))
-    decoded_word = decode(encoded_word_with_errors, matrix, type_matrix)
-
-    print(decoded_word)
+    _ = decode(encoded_word_with_errors, matrix, type_matrix)
 
     return Registry().get_all_info()
-
-
-if __name__ == '__main__':
-    matrix = [
-        [1, 0, 0, 1, 0, 0, 1],
-        [0, 1, 1, 0, 0, 0, 1],
-        [0, 1, 0, 1, 1, 0, 0],
-        [0, 1, 0, 1, 0, 1, 1]
-    ]
-
-    execute(
-        "Огромное сообщение",
-        matrix,
-        'G'
-    )
-
-    matrix = [
-        [1, 1, 0, 0, 0, 1, 1],
-        [0, 0, 0, 0, 1, 1, 0],
-        [0, 0, 0, 1, 0, 1, 1],
-        [1, 0, 1, 0, 0, 0, 1]
-    ]
-
-    print(execute(
-        "Как дела?",
-        matrix,
-        "H"
-    ))
