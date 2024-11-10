@@ -188,8 +188,8 @@ if __name__ == '__main__':
         [1, 0, 1, 0, 0, 0, 1]
     ]
 
-    execute(
+    print(execute(
         "Как дела?",
         matrix,
         "H"
-    )
+    ))

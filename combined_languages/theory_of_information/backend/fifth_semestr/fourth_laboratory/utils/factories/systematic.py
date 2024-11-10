@@ -4,6 +4,7 @@ import numpy as np
 
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.factories.base import \
     RegistryFactory
+from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.registry import Registry
 
 if TYPE_CHECKING:
     from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.models.base import Matrix
@@ -26,7 +27,11 @@ class SystematicMatrixFactory(RegistryFactory):
         identity_matrix = np.eye(rows, dtype=int)
 
         if matrix_type in ("G", "generator", "порождающая"):
-            return matrix_cls(np.hstack((identity_matrix, matrix_reduced)).tolist())
-        if matrix_type in ("H", "checks", "проверочная"):
-            return matrix_cls(np.hstack((matrix_reduced, identity_matrix)).tolist())
-        raise ValueError(f"Неправильный тип матрицы {matrix_cls}. Используйте 'G' или 'H'.")
+            result = np.hstack((identity_matrix, matrix_reduced)).tolist()
+        elif matrix_type in ("H", "checks", "проверочная"):
+            result = np.hstack((matrix_reduced, identity_matrix)).tolist()
+        else:
+            raise ValueError(f"Неправильный тип матрицы {matrix_cls}. Используйте 'G' или 'H'.")
+
+        Registry.log(f"{matrix_cls.__name__}", "\n".join(map(str, result)))
+        return matrix_cls(result)
