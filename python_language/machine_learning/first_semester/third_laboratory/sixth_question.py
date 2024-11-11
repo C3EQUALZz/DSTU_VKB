@@ -5,7 +5,7 @@
 import numpy as np
 
 
-def create_vector(n: int, m: int) -> np.array:
+def create_vector(n: int, m: int) -> np.ndarray[int]:
     return np.arange(n, m)
 
 

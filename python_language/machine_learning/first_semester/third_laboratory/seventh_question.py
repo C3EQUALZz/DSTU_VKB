@@ -4,7 +4,7 @@
 import numpy as np
 
 
-def expand_array(arr: np.array) -> np.array:
+def expand_array(arr: np.ndarray[int]) -> np.ndarray[int]:
     return arr[::-1]
 
 

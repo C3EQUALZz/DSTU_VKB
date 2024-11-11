@@ -4,7 +4,7 @@
 import numpy as np
 
 
-def create_array(n: int) -> np.array:
+def create_array(n: int) -> np.ndarray[np.ndarray[np.ndarray[float]]]:
     return np.random.randn(n, n, n)
 
 

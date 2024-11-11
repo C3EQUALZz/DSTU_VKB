@@ -4,7 +4,7 @@
 import numpy as np
 
 
-def create_vector(n: int) -> np.ndarray:
+def create_vector(n: int) -> np.ndarray[np.ndarray[int]]:
     return np.zeros(n, dtype=int)
 
 

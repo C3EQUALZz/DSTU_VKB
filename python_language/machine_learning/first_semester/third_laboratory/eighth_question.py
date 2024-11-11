@@ -4,7 +4,7 @@
 import numpy as np
 
 
-def create_matrix(n: int) -> np.array:
+def create_matrix(n: int) -> np.ndarray[np.ndarray[int]]:
     arr = np.ones((n, n), dtype=int)
     arr[1:-1, 1:-1] = 0
     return arr

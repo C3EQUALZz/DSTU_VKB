@@ -6,7 +6,7 @@ import numpy as np
 
 # np.where возвращает почему-то кортеж, поэтому тут индексация с 0 получается
 
-def find_non_nullable(arr: np.array) -> np.array:
+def find_non_nullable(arr: np.ndarray[int]) -> np.ndarray[int]:
     return np.where(arr != 0)[0]
 
 

@@ -4,7 +4,7 @@
 import numpy as np
 
 
-def replace_max_to_zero(arr: np.array) -> np.array:
+def replace_max_to_zero(arr: np.ndarray[int]) -> np.ndarray[int]:
     arr[np.argmax(arr)] = 0
     return arr
 

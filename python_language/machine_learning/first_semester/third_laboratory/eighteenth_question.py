@@ -4,7 +4,7 @@
 import numpy as np
 
 
-def fill_matrix(matrix: np.array) -> np.array:
+def fill_matrix(matrix: np.ndarray[np.ndarray[int]]) -> np.ndarray[np.ndarray[int]]:
     matrix[1:-1, 1:-1] = 1
     return matrix
 

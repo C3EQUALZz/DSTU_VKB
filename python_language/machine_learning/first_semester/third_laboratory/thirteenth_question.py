@@ -4,7 +4,7 @@
 import numpy as np
 
 
-def check_zero_column(arr: np.array) -> bool:
+def check_zero_column(arr: np.ndarray[np.ndarray[int]]) -> bool:
     return np.any(arr.sum(axis=0) == 0)
 
 

@@ -5,7 +5,7 @@
 import numpy as np
 
 
-def create_ones(n: int) -> np.array:
+def create_ones(n: int) -> np.ndarray[int]:
     return np.ones((n, n), dtype=int)
 
 
