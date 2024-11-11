@@ -16,7 +16,7 @@ class Position(IntEnum):
     LowerRight = 4
 
 
-def draw(x: np.ndarray[int], y: np.ndarray[int]) -> None:
+def draw_and_legend_position(x: np.ndarray[int], y: np.ndarray[int]) -> None:
     plt.plot(x, y, label="График")
     plt.legend(loc=Position.Optimal)
     plt.show()
@@ -25,7 +25,7 @@ def draw(x: np.ndarray[int], y: np.ndarray[int]) -> None:
 def main() -> None:
     x = np.linspace(1, 50, 50, dtype=int)
     y = np.random.randint(0, 20, 50)
-    draw(x, y)
+    draw_and_legend_position(x, y)
 
 
 if __name__ == '__main__':
