@@ -4,6 +4,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+np.random.seed(1)
 
 def draw_and_change_font_size(x: np.ndarray[int], y: np.ndarray[int]) -> None:
     plt.plot(x, y, label="График")
