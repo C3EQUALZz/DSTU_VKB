@@ -16,7 +16,7 @@ class Pair:
     y: np.ndarray[int] = field(default_factory=lambda: np.random.randint(0, 20, 50))
 
 
-def draw_and_change_vertical_distance(first_pair_of_points: Pair, second_pair_of_points: Pair) -> None:
+def draw_and_make_few_columns(first_pair_of_points: Pair, second_pair_of_points: Pair) -> None:
     plt.plot(first_pair_of_points.x, first_pair_of_points.y, color='blue', label='Первый график')
     plt.plot(second_pair_of_points.x, second_pair_of_points.y, color='red', label='Второй график')
     plt.legend(ncol=2)
@@ -24,7 +24,7 @@ def draw_and_change_vertical_distance(first_pair_of_points: Pair, second_pair_of
 
 
 def main() -> None:
-    draw_and_change_vertical_distance(Pair(), Pair())
+    draw_and_make_few_columns(Pair(), Pair())
 
 
 if __name__ == '__main__':
