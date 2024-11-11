@@ -4,23 +4,22 @@
 """
 
 
-def ladder(size: int) -> list[str]:
+def ladder(size: int) -> str:
     result: list[str] = []
 
     for i in range(1, size + 1):
-        ascending_part = ''.join(str(x) for x in range(1, i + 1))
-        descending_part = ''.join(str(x) for x in range(i - 1, 0, -1))
-        spaces = ' ' * (size - i)
-        result.append(spaces + ascending_part + descending_part)
+        spaces = " " * ((size * 2) - 2 * i)
+        numbers = ' '.join(map(str, range(1, i + 1))) + ' ' + ' '.join(map(str, range(i - 1, 0, -1))) if i > 1 else '1'
+        result.append(spaces + numbers)
 
-    return result
+    return "\n".join(result)
 
 
 def main() -> None:
     user_input = input("Введите положительное число - количество строк пирамиды: ")
 
     if user_input.isdigit():
-        print("\n".join(ladder(int(user_input))))
+        print(ladder(int(user_input)))
     else:
         print("Вы ввели не число")
 

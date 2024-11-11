@@ -25,7 +25,7 @@
 """
 
 
-def ladder(number: int) -> list[str]:
+def ladder(number: int) -> str:
     result: list[str] = []
 
     for row in range(1, number + 1):
@@ -36,12 +36,12 @@ def ladder(number: int) -> list[str]:
         if buffer:
             result.append(buffer)
 
-    return result
+    return "\n".join(result)
 
 
 def main() -> None:
     if (user_input := input("Введите положительное число - количество строк лестницы: ")).isdigit():
-        print("\n".join(ladder(int(user_input))))
+        print(ladder(int(user_input)))
     else:
         print("Вы ввели не число")
 
