@@ -32,7 +32,7 @@ execute(
     "H"
 )
 """
-from typing import AnyStr, Literal, List, Mapping
+from typing import AnyStr, Literal, List, Mapping, Union
 
 import numpy as np
 
@@ -148,7 +148,7 @@ def execute(
         word: AnyStr,
         matrix: List[List[int]],
         type_matrix: Literal["G", "H"]
-) -> Mapping[AnyStr, AnyStr]:
+) -> Mapping[AnyStr, Union[List[List[int]], int]]:
     """
     Запуск всех шагов по выполнению лабораторной работы.
     - Кодирование

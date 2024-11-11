@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {Layout, Typography, Form, Select, Button, Table, InputNumber, Input} from 'antd';
 import type {ColumnsType} from 'antd/es/table';
+import axios from "axios";
 
 const {Header, Content} = Layout;
 const {Title} = Typography;
@@ -70,17 +71,21 @@ export const FourthLaboratory: React.FC = () => {
     };
 
     // Обработка отправки данных на backend
-    const handleSubmit = () => {
-        // Формируем данные для отправки на backend
+    const handleSubmit = async () => {
+
         const data = {
-            matrixType,
-            rows,
-            columns,
-            matrixData,
-            wordInput
+            word: wordInput,
+            matrix: matrixData.map(row => row.cells.map(cell => cell.value)),
+            type_matrix: matrixType
         };
         console.log("Sending data to backend:", data);
-        // Здесь вы можете вызвать метод для отправки данных на backend
+
+        try {
+            const response = await axios.post('http://localhost:8002/fifth_semester/fourth_laboratory/', data);
+            console.log("Response from backend:", response.data);
+        } catch (error) {
+            console.error("Error sending data to backend:", error);
+        }
     };
 
     return (
