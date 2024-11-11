@@ -2,7 +2,9 @@ from fastapi import HTTPException
 from fastapi.routing import APIRouter
 
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.dependecies import execute
-from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.schemas import LaboratoryRequest
+from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.schemas import (
+    LaboratoryRequest,
+)
 
 router = APIRouter(
     prefix="/fifth_semester/fourth_laboratory",
@@ -10,7 +12,9 @@ router = APIRouter(
 )
 
 
-@router.post("/")
+@router.post(
+    "/",
+)
 async def process(request_body: LaboratoryRequest):
     try:
         result = execute(
