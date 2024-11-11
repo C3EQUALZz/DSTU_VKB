@@ -2,6 +2,7 @@ import React, {useState, useEffect, useCallback} from 'react';
 import {Layout, Typography, Form, Select, Button, Table, InputNumber, Input} from 'antd';
 import type {ColumnsType} from 'antd/es/table';
 import axios from "axios";
+import {DataDisplay} from "../../components/MatricesAndOtherData.tsx";
 
 const {Header, Content} = Layout;
 const {Title} = Typography;
@@ -24,6 +25,7 @@ export const FourthLaboratory: React.FC = () => {
     const [matrixData, setMatrixData] = useState<MatrixRow[]>([]);
     const [columnsConfig, setColumnsConfig] = useState<ColumnsType<MatrixRow>>([]);
     const [wordInput, setWordInput] = useState<string>("");
+    const [data, setData] = useState(null);
 
     const handleMatrixTypeChange = (value: string) => setMatrixType(value);
     const handleWordInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setWordInput(e.target.value);
@@ -82,6 +84,7 @@ export const FourthLaboratory: React.FC = () => {
 
         try {
             const response = await axios.post('http://localhost:8002/fifth_semester/fourth_laboratory/', data);
+            setData(response.data)
             console.log("Response from backend:", response.data);
         } catch (error) {
             console.error("Error sending data to backend:", error);
@@ -137,6 +140,10 @@ export const FourthLaboratory: React.FC = () => {
                     rowKey="key"
                 />
             </Content>
+            <Content>
+                {data && <DataDisplay data={data} />}
+            </Content>
+
         </Layout>
     );
 };
