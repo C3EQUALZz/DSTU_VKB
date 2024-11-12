@@ -37,6 +37,8 @@ def create_table_of_error_vectors_and_syndromes(
     В последующих строках есть единственная 1, которая с каждой новой строкой сдвигается влево.
 
     :param verification_systematic_matrix_transposed: Транспонированная проверочная систематическая матрица Hsys^T.
+    :param errors: для генерации столбца ошибок векторов нам нужно знать сколько вообще есть исправляющих ошибок,
+    поэтому передаю объект Errors.
     :return: Возвращает объект, представляющий собой совокупность таблицы векторов и синдромов.
     """
     n = len(verification_systematic_matrix_transposed)
