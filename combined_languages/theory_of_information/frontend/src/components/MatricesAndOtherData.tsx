@@ -52,7 +52,7 @@ export const DataDisplay: React.FC<DataDisplayProps> = ({data}) => {
                     title: 'HSystematicMatrix',
                     content: data.HSystematicMatrix ? (
                         <MatrixDisplay matrix={data.HSystematicMatrix}/>
-                    ) : data['Обратная матрица: HSystematicMatrix']
+                    ) : <MatrixDisplay matrix={data['Обратная матрица: HSystematicMatrix']}/>
                 },
                 {
                     title: 'Параметр n GSystematicMatrix',
