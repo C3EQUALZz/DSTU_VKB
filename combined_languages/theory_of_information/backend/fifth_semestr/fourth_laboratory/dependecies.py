@@ -98,8 +98,6 @@ def encode(
         encoded_block = code_table.code_words_column[index]
         encoded_word.extend(encoded_block)
 
-    _ = find_errors(code_table)
-
     return "".join(map(str, encoded_word))
 
 
@@ -117,7 +115,10 @@ def decode(
     """
     code_table, generation_sys_matrix = get_info_for_encoding(matrix, type_matrix)
     verification_systematic_matrix_transposed = get_verification_systematic_transposed_matrix(matrix, type_matrix)
-    table = create_table_of_error_vectors_and_syndromes(verification_systematic_matrix_transposed)
+    table = create_table_of_error_vectors_and_syndromes(
+        verification_systematic_matrix_transposed,
+        find_errors(code_table)
+    )
     count_columns = len(generation_sys_matrix[0])
     # Здесь создаем блоки v, как в методичке с размером k, где k - количество колонок.
     blocks = [list(map(int, encoded_with_errors[i:i + count_columns]))
@@ -167,3 +168,18 @@ def execute(
     _ = decode(encoded_word_with_errors, matrix, type_matrix)
 
     return Registry().get_all_info()
+
+
+if __name__ == "__main__":
+    matrix = [
+        [1, 0, 0, 1, 0, 0, 1],
+        [0, 1, 1, 0, 0, 0, 1],
+        [0, 1, 0, 1, 1, 0, 0],
+        [0, 1, 0, 1, 0, 1, 1]
+    ]
+
+    print(execute(
+        "Огромное сообщение",
+        matrix,
+        'G'
+    ))

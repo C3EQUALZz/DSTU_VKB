@@ -22,11 +22,15 @@ class InverseMatrixFactory(RegistryFactory):
         k = matrix.shape[0]
 
         if matrix_type == "G":
+            Registry.log("Параметр k GSystematicMatrix", len(matrix[0]))
+            Registry.log("Параметр n GSystematicMatrix", len(matrix))
             required_columns = matrix[:, -(n - k):].transpose().matrix
             eye_matrix = np.eye(n - k, dtype=required_columns.dtype)
             new_matrix = np.hstack((required_columns, eye_matrix)).tolist()
 
         elif matrix_type == "H":
+            Registry.log("Параметр k HSystematicMatrix", len(matrix[0]))
+            Registry.log("Параметр n HSystematicMatrix", len(matrix))
             required_columns = matrix[:, :(n - k)].transpose().matrix
             eye_matrix = np.eye(n - k, dtype=required_columns.dtype)
             new_matrix = np.hstack((eye_matrix, required_columns)).tolist()
@@ -34,8 +38,8 @@ class InverseMatrixFactory(RegistryFactory):
         else:
             raise ValueError(f"Неизвестный тип матрицы: {matrix_type}")
 
-        Registry.log(f"Параметр k {matrix_cls.__name__}", k)
-        Registry.log(f"Параметр n {matrix_cls.__name__}", n)
+        Registry.log(f"Параметр k {matrix_cls.__name__}", len(new_matrix))
+        Registry.log(f"Параметр n {matrix_cls.__name__}", len(new_matrix[0]))
         Registry.log(f"Обратная матрица: {matrix_cls.__name__}", new_matrix)
 
         return matrix_cls(new_matrix)
