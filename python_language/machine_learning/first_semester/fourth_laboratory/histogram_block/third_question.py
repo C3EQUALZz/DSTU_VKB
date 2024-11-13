@@ -1,5 +1,5 @@
 """
-2. Как отобразить значение каждого столбца на гистограмме с помощью Matplotlib?
+3. Как аннотировать столбцы в Barplot с помощью Matplotlib на Python?
 """
 import matplotlib.pyplot as plt
 from dataclasses import dataclass, field
@@ -13,17 +13,16 @@ class Column:
     name: str = field(default_factory=lambda: f"{choice(string.ascii_uppercase)}")
 
 
-def draw_histogram_and_show_value_of_each_column(*args: Column) -> None:
+def draw_bar_plot_and_annotate_each_column(*args: Column) -> None:
     names = [column.name for column in args]
     values = [column.data for column in args]
 
     bars = plt.barh(names, values)
 
     for bar in bars:
-        plt.text(
-            bar.get_width(),
-            bar.get_y() + bar.get_height() / 2,
+        plt.annotate(
             str(bar.get_width()),
+            (bar.get_width(), bar.get_y() + bar.get_height() / 2),
             va='center', ha='left'
         )
 
@@ -31,11 +30,11 @@ def draw_histogram_and_show_value_of_each_column(*args: Column) -> None:
 
 
 def main() -> None:
-    draw_histogram_and_show_value_of_each_column(
+    draw_bar_plot_and_annotate_each_column(
         Column(),
         Column(),
         Column(),
-        Column()
+        Column(),
     )
 
 
