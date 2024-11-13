@@ -49,7 +49,6 @@ def draw_graphs_and_fill_the_space_between_them(*args: Function) -> None:
         # )
 
     plt.legend(loc=Position.LowerLeft)
-    plt.grid()
     plt.show()
 
 
