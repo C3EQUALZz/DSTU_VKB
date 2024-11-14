@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 @dataclass
 class Piece:
     size: int = field(default_factory=lambda: randint(10, 50))
-    label: str = field(default_factory=lambda: choice(string.ascii_uppercase))
+    label: str = field(default_factory=lambda: f"Категория - {choice(string.ascii_uppercase)}")
 
 
 def draw_pie_chart(*args: Piece) -> None:
