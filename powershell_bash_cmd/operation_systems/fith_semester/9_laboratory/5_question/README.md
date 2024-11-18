@@ -20,6 +20,9 @@ cd /var/local/repository
 sudo cp /home/c3equalz/Рабочий стол/Projects/DSTU_VKB/powershell_bash_cmd/operation_systems/fith_semester/9_laboratory/5_question/calculator.deb /var/local/repository
 ```
 
+[IMPORTANT!]
+> Добавьте ещё подписанный туда файл, который является `deb.gpg`, используя вышеописанную команду 
+
 4. Теперь нужно запустить команду для генерации информации о репозитории.
 
 ```bash
@@ -38,7 +41,7 @@ sudo nano /etc/apt/sources.list.d/local.list
 - Добавьте строчку в этот файл
 
 ```bash
-deb file:/var/local/repository/ 24.04/
+deb [trusted=yes] file:/var/local/repository/ /
 ```
 
 6. Теперь надо обновить индекс для `apt`
