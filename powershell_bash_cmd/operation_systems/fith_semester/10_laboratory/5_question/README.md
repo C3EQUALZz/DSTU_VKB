@@ -3,7 +3,7 @@
 Компилируйте ядро и соберите пакет:
 
 ```bash
-make -j$(nproc)
+sudo make -j$(nproc)
 sudo make modules_install
 sudo make install
 ```
@@ -24,3 +24,5 @@ make-kpkg --initrd --append-to-version=-yourname kernel_image kernel_headers
 ```bash
 make defconfig
 ```
+
+![alt text](image.png)
