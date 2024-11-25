@@ -4,7 +4,7 @@
 import numpy as np
 
 
-# np.where возвращает почему-то кортеж, поэтому тут индексация с 0 получается
+# np.where возвращает Tuple, но второй параметр из condition добавляется под второй параметр кортежа
 
 def find_non_nullable(arr: np.ndarray[int]) -> np.ndarray[int]:
     return np.where(arr != 0)[0]
