@@ -2,9 +2,7 @@
 2. Как изменить цвет графика в Matplotlib с помощью Python?
 """
 
-"""
-1. Как изменить прозрачность графика в Matplotlib с помощью Python?
-"""
+
 from dataclasses import dataclass, field
 from random import randint, choice
 

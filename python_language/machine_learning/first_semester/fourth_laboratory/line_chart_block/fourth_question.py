@@ -24,7 +24,7 @@ def draw_several_vertical_lines(*args: Line) -> None:
 
 
 def main() -> None:
-    draw_several_vertical_lines(Line(), Line(), Line())
+    draw_several_vertical_lines(*(Line() for _ in range(5)))
 
 
 if __name__ == '__main__':

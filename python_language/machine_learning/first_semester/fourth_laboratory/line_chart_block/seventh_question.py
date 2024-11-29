@@ -40,13 +40,13 @@ def draw_graphs_and_fill_the_space_between_them(*args: Function) -> None:
             label=f'Область между {first_function.label} и {second_function.label}'
         )
 
-        # plt.fill_between(
-        #     first_function.x,
-        #     first_function.y,
-        #     second_function.y,
-        #     where=cast(Sequence[bool], (first_function.y < second_function.y)),
-        #     color='lightgreen',
-        # )
+        plt.fill_between(
+            first_function.x,
+            first_function.y,
+            second_function.y,
+            where=cast(Sequence[bool], (first_function.y < second_function.y)),
+            color='lightgreen',
+        )
 
     plt.legend(loc=Position.LowerLeft)
     plt.show()
