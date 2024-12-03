@@ -31,8 +31,8 @@ def main() -> None:
     series = create_series(start=0, end=20, count=15)
 
     print("Series:", series,
-          "Ratios to previous elements:", calculate_ratios(series),
-          "\nMean of filtered ratios (<= 1.5):", mean_of_filtered_ratios(series),
+          "Отношение к прошлым элементам", calculate_ratios(series),
+          "Среднее после фильтрации (<= 1.5):", mean_of_filtered_ratios(series),
           sep='\n\n')
 
 

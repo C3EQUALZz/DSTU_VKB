@@ -42,10 +42,10 @@ def main() -> None:
 
     new_series = create_new_series(s)
     print(
-        "Old Series:", s,
-        "New Series:", new_series,
-        "Sum of elements at indices 3 and 5:", sum_selected_elements(new_series, (3, 5)),
-        "Variance of integer elements:", variance_of_integer_elements(new_series),
+        "Старый Series: ", s,
+        "Новый Series: ", new_series,
+        "Сумма элементов под индексами 3 и 5: ", sum_selected_elements(new_series, (3, 5)),
+        "Дисперсия: ", variance_of_integer_elements(new_series),
         sep="\n\n"
     )
 
