@@ -2,9 +2,9 @@
 1. Для поля tr_type датафрейма transactions посчитайте частоту встречаемости всех типов транзакций tr_type в transactions.
 2. Из перечисленных вариантов выберите те, которые попали в топ-5 транзакций по частоте встречаемости.
 """
-import numpy as np
-import pandas as pd
 import zipfile
+
+import pandas as pd
 
 
 def read_data(zip_filepath: str, csv_filename: str) -> pd.DataFrame:
