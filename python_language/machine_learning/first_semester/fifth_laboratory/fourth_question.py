@@ -17,9 +17,30 @@ import zipfile
 
 np.random.seed(242)
 
-def read
 
-with zipfile.ZipFile('data.zip', 'r') as zip_ref:
-    with zip_ref.open('tr_types.csv', 'r') as f:
-        df = pd.read_csv(f, sep=';')
-        print(df.sample(100))
+def read_data(zip_filepath: str, csv_filename: str) -> pd.DataFrame:
+    with zipfile.ZipFile(zip_filepath, 'r') as zip_ref:
+        with zip_ref.open(csv_filename, 'r') as f:
+            return pd.read_csv(f, sep=';')
+
+
+def sample_and_calculate_ratio(df: pd.DataFrame, sample_size: int, substring: str) -> float:
+    sampled_df = df.sample(sample_size, random_state=242)
+    count_with_substring = sampled_df.loc[sampled_df.tr_description.str.lower().str.contains(substring)].shape[0]
+    ratio = count_with_substring / sample_size
+    return round(ratio, 2)
+
+
+def main() -> None:
+    zip_filepath = 'data.zip'
+    csv_filename = 'tr_types.csv'
+    sample_size = 100
+    substring = 'плата'
+
+    df = read_data(zip_filepath, csv_filename)
+    ratio = sample_and_calculate_ratio(df, sample_size, substring)
+    print(f"{ratio:.2f}")
+
+
+if __name__ == "__main__":
+    main()
