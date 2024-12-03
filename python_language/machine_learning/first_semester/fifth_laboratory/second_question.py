@@ -15,6 +15,7 @@ np.var(, ddof=0) или встроенной в python функции: .var(ddof
 """
 import pandas as pd
 import numpy as np
+import sys
 
 
 def create_new_series(s: pd.Series, start: int = 2, end: int = 12) -> pd.Series:
@@ -26,7 +27,7 @@ def sum_selected_elements(s: pd.Series, indices: tuple[int, int]) -> float:
     try:
         return round(s[indices[0]] + s[indices[1]], 2)
     except TypeError as err:
-        print(f"All values must be int or float for correct work, error: {err}")
+        print(f"All values must be int or float for correct work, error: {err}", file=sys.stderr)
         return s[indices[0]]
 
 
