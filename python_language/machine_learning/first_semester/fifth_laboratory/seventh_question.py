@@ -39,11 +39,7 @@ def main() -> None:
         print(f"Файл с именем {file[1]}. Значения: ", frame, sep="\n\n")
         frames.append(frame)
 
-    df = merge_pandas_frames(
-        *frames
-    )
-
-    print("В результате слияний получилось: ", df, sep="\n\n")
+    print("В результате слияний получилось: ", merge_pandas_frames(*frames), sep="\n\n")
 
 
 if __name__ == '__main__':
