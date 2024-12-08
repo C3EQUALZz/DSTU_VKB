@@ -6,4 +6,5 @@
 Требуемое ПО:
 - [https://blog.netskills.ru/2022/08/cisco-packet-tracer-82.html](https://rsload.net/soft/manager/33873-cisco-packet-tracer.html#comment)
  (Не обязательно крякать, просто нужно установить именно эту версию)
+
 Для успешной работы в приложении необходимо просто отключить сеть, перед тем как запустить приложение
