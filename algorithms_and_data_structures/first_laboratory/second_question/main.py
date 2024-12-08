@@ -6,7 +6,7 @@ from random import randint
 from time import perf_counter_ns
 from typing import Final, Tuple, Callable, MutableSequence
 
-from algorithms_and_data_structures.first_laboratory.first_question.base import CT
+from algorithms_and_data_structures.core.types import CT
 from algorithms_and_data_structures.first_laboratory.first_question.bubble import bubble_sort
 from algorithms_and_data_structures.first_laboratory.first_question.insertion import insertion_sort
 from algorithms_and_data_structures.first_laboratory.first_question.selection import selection_sort

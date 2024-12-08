@@ -1,6 +1,6 @@
 from typing import MutableSequence
 
-from .base import CT
+from algorithms_and_data_structures.core.types import CT
 
 
 def selection_sort(lst: MutableSequence[CT]) -> MutableSequence[CT]:
