@@ -13,10 +13,6 @@ import numpy as np
 import pandas as pd
 
 
-def create_series(start: int, end: int, count: int) -> pd.Series:
-    return pd.Series(np.linspace(start, end, count))
-
-
 def calculate_ratios(series: pd.Series, shift: int = 1) -> pd.Series:
     return series / series.shift(shift)
 
@@ -28,7 +24,7 @@ def mean_of_filtered_ratios(series: pd.Series, threshold: float = 1.5) -> float:
 
 
 def main() -> None:
-    series = create_series(start=0, end=20, count=15)
+    series = pd.Series(np.linspace(0, 20, 15))
 
     print("Series:", series,
           "Отношение к прошлым элементам", calculate_ratios(series),

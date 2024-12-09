@@ -16,10 +16,6 @@ from typing import Any, Callable
 np.random.seed(242)
 
 
-def create_series(size: int = 100) -> pd.Series:
-    return pd.Series(data=np.random.normal(size=size))
-
-
 def raise_to_the_power_and_increase_index(old_series: pd.Series) -> pd.Series:
     new_series = pd.Series(old_series) ** 3
     new_series.index *= 3
@@ -31,7 +27,7 @@ def func_with_predicate(series: pd.Series, predicate: Any, func: Callable[[pd.Se
 
 
 def main() -> None:
-    series = create_series()
+    series = pd.Series(data=np.random.normal(size=100))
 
     print(
         "Series: ", series,
