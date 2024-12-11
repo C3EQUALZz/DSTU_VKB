@@ -4,6 +4,7 @@ from combined_languages.theory_of_information.backend.fifth_semestr.fifth_labora
     decrease_matrix
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.models.generator_systematic_matrix import \
     GSystematicMatrix
+from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.registry import Registry
 
 
 def short_the_code(g_sys: GSystematicMatrix, indexes_to_delete: Tuple[Tuple[int, int], ...]) -> GSystematicMatrix:
@@ -14,7 +15,11 @@ def short_the_code(g_sys: GSystematicMatrix, indexes_to_delete: Tuple[Tuple[int,
     :param g_sys: Порождающая систематическая матрица
     :param indexes_to_delete: кортеж из индексов, под которыми мы должны удалить значения.
     """
-    return GSystematicMatrix(decrease_matrix(g_sys, indexes_to_delete))
+    result = GSystematicMatrix(decrease_matrix(g_sys, indexes_to_delete))
+
+    Registry.log("Матрица после укорочения кода", result)
+
+    return result
 
 
 def main() -> None:
