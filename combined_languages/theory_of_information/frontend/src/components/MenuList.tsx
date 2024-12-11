@@ -27,6 +27,10 @@ export const MenuList: React.FC<MenuListProps> = ({ darkTheme }) => {
                     label: <Link to="/5-sem/4-lab">Лабораторная работа №4</Link>,
                     key: 'fifth-sem-task-4',
                 },
+                {
+                    label: <Link to="/5-sem/5-lab">Лабораторная работа №5</Link>,
+                    key: 'fifth-sem-task-5',
+                }
             ],
         },
         {

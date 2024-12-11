@@ -9,7 +9,8 @@ import {
     FirstLaboratory as FirstLaboratoryFifthSem,
     SecondLaboratory as SecondLaboratoryFifthSem,
     ThirdLaboratory as ThirdLaboratoryFifthSem,
-    FourthLaboratory as FourthLaboratoryFifthSem
+    FourthLaboratory as FourthLaboratoryFifthSem,
+    FifthLaboratory as FifthLaboratoryFifthSem
 } from "./pages/fifth-semester";
 import {
     FirstLaboratory as FirstLaboratorySixthSem,
@@ -84,6 +85,7 @@ export function App() {
                             <Route path="/5-sem/2-lab" element={<SecondLaboratoryFifthSem />} />
                             <Route path="/5-sem/3-lab" element={<ThirdLaboratoryFifthSem />} />
                             <Route path="/5-sem/4-lab" element={<FourthLaboratoryFifthSem />} />
+                            <Route path="/5-sem/5-lab" element={<FifthLaboratoryFifthSem />} />
                             <Route path="/6-sem/1-lab" element={<FirstLaboratorySixthSem />} />
                             <Route path="/6-sem/2-lab" element={<SecondLaboratorySixthSem />} />
                             <Route path="/6-sem/3-lab" element={<ThirdLaboratorySixthSem />} />
