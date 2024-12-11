@@ -58,7 +58,7 @@ npm i
 Вы должны находиться в папке `DSTU_VKB` - корень проекта, а дальше запускать через консоль, используя команду ниже
 
 ```bash
-uvicorn combined_languages.theory_of_information.backend.main:app --reload --port 8002
+uvicorn combined_languages.theory_of_information.backend.main:app --port 8002
 ```
 
 ### Запуск frontend:
