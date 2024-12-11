@@ -17,7 +17,7 @@ def short_the_code(g_sys: GSystematicMatrix, indexes_to_delete: Tuple[Tuple[int,
     """
     result = GSystematicMatrix(decrease_matrix(g_sys, indexes_to_delete))
 
-    Registry.log("Матрица после укорочения кода", result)
+    Registry.log("Матрица после укорочения кода", result.matrix)
 
     return result
 

@@ -1,4 +1,5 @@
 from collections.abc import Mapping
+from copy import copy
 from typing import Literal, List, Optional, Tuple, Final
 
 from combined_languages.theory_of_information.backend.fifth_semestr.fifth_laboratory.scripts.decreasing_matrix.code_shortening import \
@@ -15,6 +16,8 @@ from combined_languages.theory_of_information.backend.fifth_semestr.fourth_labor
     GMatrix
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.models.verification_matrix import \
     HMatrix
+from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.factories.systematic import \
+    SystematicMatrixFactory
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.helpers import \
     get_info_for_encoding
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.registry import Registry
@@ -30,7 +33,7 @@ results = {}
 
 
 def get_info_about_matrix(matrix, type_matrix):
-    code_table, _ = get_info_for_encoding(matrix, type_matrix)
+    code_table, _ = get_info_for_encoding(matrix.matrix, type_matrix)
     _ = find_errors(code_table)
 
 
@@ -52,18 +55,22 @@ def execute(
     else:
         raise ValueError("Неизвестный тип матрицы")
 
-    get_info_about_matrix(matrix, type_matrix)
+    systematic_matrix = SystematicMatrixFactory.create(matrix, type_matrix)
 
-    results["До применения алгоритма"] = Registry.get_all_info()
+    get_info_about_matrix(systematic_matrix, type_matrix)
+
+    results["До применения алгоритма"] = copy(Registry.get_all_info())
 
     Registry.clear()
 
     if algorithm in ("shortening", "perforation"):
-        algorithms[algorithm][0](matrix, indexes)
+        systematic_matrix = algorithms[algorithm][0](matrix, indexes)
     else:
-        algorithms[algorithm][0](matrix)
+        systematic_matrix = algorithms[algorithm][0](matrix)
 
-    results["После применения алгоритма"] = Registry.get_all_info()
+    get_info_about_matrix(systematic_matrix, type_matrix)
+
+    results["После применения алгоритма"] = copy(Registry.get_all_info())
 
     Registry.clear()
 

@@ -4,6 +4,7 @@ from combined_languages.theory_of_information.backend.fifth_semestr.fifth_labora
     decrease_matrix
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.models.verification_systematic_matrix import \
     HSystematicMatrix
+from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.registry import Registry
 
 
 def punch_the_code(h_sys: HSystematicMatrix, indexes_to_delete: Tuple[Tuple[int, int], ...]) -> HSystematicMatrix:
@@ -14,4 +15,8 @@ def punch_the_code(h_sys: HSystematicMatrix, indexes_to_delete: Tuple[Tuple[int,
     :param h_sys: Проверочная систематическая матрица.
     :param indexes_to_delete: Кортеж из индексов, под которыми мы должны удалить значения.
     """
-    return HSystematicMatrix(decrease_matrix(h_sys, indexes_to_delete))
+    result = HSystematicMatrix(decrease_matrix(h_sys, indexes_to_delete))
+
+    Registry.log("Матрица после перфорации матрицы", result.matrix)
+
+    return result
