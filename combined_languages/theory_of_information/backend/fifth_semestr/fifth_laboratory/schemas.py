@@ -1,10 +1,10 @@
 from typing import Literal, List, Optional, Tuple
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class LaboratoryRequest(BaseModel):
     algorithm: Literal["shortening", "extension", "perforation", "completion"]
-    matrix: List[List[int]]
+    matrix: List[List[int]] = Field(..., alias="formattedMatrix")
     type_matrix: Literal["G", "H"]
-    indexes: Optional[Tuple[Tuple[int, int], ...]] = None
+    indexes: Optional[List[List[int]]] = None

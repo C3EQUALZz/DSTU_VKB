@@ -25,7 +25,7 @@ def extend_the_code(h_sys: HSystematicMatrix) -> HSystematicMatrix:
 
     result = HSystematicMatrix(extended_matrix.tolist())
 
-    Registry.log("Матрица после расширения кода", result.matrix)
+    Registry.log("Матрица после расширения кода", result.matrix.tolist())
 
     return HSystematicMatrix(extended_matrix.tolist())
 

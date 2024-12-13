@@ -17,6 +17,25 @@ def punch_the_code(h_sys: HSystematicMatrix, indexes_to_delete: Tuple[Tuple[int,
     """
     result = HSystematicMatrix(decrease_matrix(h_sys, indexes_to_delete))
 
-    Registry.log("Матрица после перфорации матрицы", result.matrix)
+    Registry.log("Матрица после перфорации матрицы", result.matrix.tolist())
 
     return result
+
+
+def main() -> None:
+    matrix = [
+        [1, 1, 0, 1, 1, 0, 0, 0],
+        [1, 0, 1, 1, 0, 1, 0, 0],
+        [1, 0, 0, 1, 0, 0, 1, 0],
+        [0, 1, 1, 1, 0, 0, 0, 1]
+    ]
+
+    indexes_to_delete = ((1, 1),)
+
+    new_matrix = punch_the_code(HSystematicMatrix(matrix), indexes_to_delete)
+
+    print(new_matrix)
+
+
+if __name__ == '__main__':
+    main()

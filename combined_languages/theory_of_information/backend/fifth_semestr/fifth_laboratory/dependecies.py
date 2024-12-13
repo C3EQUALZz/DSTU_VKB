@@ -2,6 +2,8 @@ from collections.abc import Mapping
 from copy import copy
 from typing import Literal, List, Optional, Tuple, Final
 
+import numpy as np
+
 from combined_languages.theory_of_information.backend.fifth_semestr.fifth_laboratory.scripts.decreasing_matrix.code_shortening import \
     short_the_code
 from combined_languages.theory_of_information.backend.fifth_semestr.fifth_laboratory.scripts.decreasing_matrix.perforation import \
@@ -31,6 +33,16 @@ algorithms: Final = {
 
 results = {}
 
+def replace_numpy_with_list(data):
+    if isinstance(data, dict):
+        return {key: replace_numpy_with_list(value) for key, value in data.items()}
+    elif isinstance(data, list):
+        return [replace_numpy_with_list(item) for item in data]
+    elif isinstance(data, np.ndarray):
+        return data.tolist()  # Преобразуем numpy массив в список
+    else:
+        return data
+
 
 def get_info_about_matrix(matrix, type_matrix):
     code_table, _ = get_info_for_encoding(matrix.matrix, type_matrix)
@@ -42,7 +54,7 @@ def execute(
         matrix: List[List[int]],
         type_matrix: Literal["G", "H"],
         indexes: Optional[Tuple[Tuple[int, int], ...]] = None,
-) -> Mapping[str, Mapping[str, str]]:
+):
     Registry.clear()
 
     if algorithms[algorithm][1] != type_matrix:
@@ -74,7 +86,7 @@ def execute(
 
     Registry.clear()
 
-    return results
+    return replace_numpy_with_list(results)
 
 
 if __name__ == "__main__":

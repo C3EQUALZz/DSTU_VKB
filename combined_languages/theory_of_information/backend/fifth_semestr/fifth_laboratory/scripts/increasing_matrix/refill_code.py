@@ -14,7 +14,7 @@ def refill_code(g_sys: GSystematicMatrix) -> GSystematicMatrix:
 
     result = GSystematicMatrix(np.vstack((np.ones(len(g_sys[0])), g_sys.matrix)).tolist())
 
-    Registry.log("Матрица после пополнения кода", result.matrix)
+    Registry.log("Матрица после пополнения кода", result.matrix.tolist())
 
     return result
 

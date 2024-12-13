@@ -26,7 +26,7 @@ type ColumnConfig = {
 
 export const FifthLaboratory: React.FC = () => {
     const [algorithm, setAlgorithm] = useState<string>('shortening');
-    const [matrixType, setMatrixType] = useState<string>('G');
+    const [type_matrix, setMatrixType] = useState<string>('G');
     const [rows, setRows] = useState<number>(3);
     const [columns, setColumns] = useState<number>(3);
     const [matrixData, setMatrixData] = useState<MatrixData>([]);
@@ -80,14 +80,14 @@ export const FifthLaboratory: React.FC = () => {
         const formattedMatrix = matrixData.map(row => row.cells.map(cell => cell.value));
         const payload = {
             algorithm,
-            matrixType,
-            matrix: formattedMatrix
+            type_matrix,
+            formattedMatrix
         };
 
         console.log('Sending data to backend:', payload);
 
         try {
-            const response = await axios.post('http://localhost:8002/laboratory/', payload);
+            const response = await axios.post('http://localhost:8002/fifth_semester/fifth_laboratory/', payload);
             console.log('Response from backend:', response.data);
         } catch (error) {
             console.error('Error sending data to backend:', error);
