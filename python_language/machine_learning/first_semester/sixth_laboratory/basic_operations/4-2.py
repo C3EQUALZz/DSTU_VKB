@@ -1,7 +1,7 @@
 """
-Задание 3
+Задание 4
 
-3. Вырежите произвольный фрагмент изображения и выполните его поворот.
+2. Вырежите произвольный фрагмент изображения и выполните его зеркальное отражение одним из способов.
 """
 import zipfile
 from typing import Optional
@@ -28,29 +28,12 @@ def read_image_from_zip(zip_file_path: str, image_name: str) -> Optional[np.ndar
     return image
 
 
-def rotate_image(image: np.ndarray, angle: float) -> np.ndarray:
-    """Поворачивает изображение на заданный угол.
-
-    Args:
-        image (np.ndarray): Исходное изображение.
-        angle (float): Угол поворота в градусах.
-
-    Returns:
-        np.ndarray: Повернутое изображение.
-    """
-    (h, w) = image.shape[:2]
-    center = (w / 2, h / 2)
-    rotation_matrix = cv2.getRotationMatrix2D(center, angle, 1.0)
-    rotated_image = cv2.warpAffine(image, rotation_matrix, (w, h))
-    return rotated_image
-
-
 def process_image(image: np.ndarray) -> None:
     crop = image[550:1000, 850:1250]
-    rotated_image = rotate_image(crop, 90)
+    flipped = cv2.flip(crop, 1)
 
     cv2.imshow("Original Image", image)
-    cv2.imshow("Inverted and reduces image", rotated_image)
+    cv2.imshow("Flipped Image", flipped)
 
     cv2.waitKey(0)
     cv2.destroyAllWindows()
@@ -59,7 +42,6 @@ def process_image(image: np.ndarray) -> None:
 def main() -> None:
     zip_file_path = '../images_to_notebook.zip'
     image_name = 'testfile.jpeg'
-
     image = read_image_from_zip(zip_file_path, image_name)
     process_image(image)
 
