@@ -1,36 +1,27 @@
 import sys
 from itertools import combinations
-from typing import List
 
 from algorithms_and_data_structures.fourth_laboratory.first_question.bfs import bfs
 from algorithms_and_data_structures.fourth_laboratory.first_question.core.nonoriented import NonOrientedGraph
 from algorithms_and_data_structures.fourth_laboratory.first_question.dfs import dfs
 
 
-def create_graph_from_user_input() -> NonOrientedGraph:
-    n: int = int(input('Введите количество вершин: '))
-
+def create_graph_from_user_input(n: int) -> NonOrientedGraph:
+    """
+    Функция для создания графа на основе ввода пользователя.
+    Вынес в отдельную функцию, так как в таком случае main будет перегружен кодом.
+    :param n: Количество вершин.
+    :returns: Возвращает неориентированный граф.
+    """
     graph: NonOrientedGraph[str] = NonOrientedGraph()
 
-    # Создаем матрицу смежности
-    matrix: List[List[int]] = [[0 for _ in range(n)] for _ in range(n)]
-
-    # Генерируем все возможные комбинации вершин
     edges = list(combinations(range(1, n + 1), 2))
 
-    # Запрашиваем у пользователя наличие связи между вершинами
     for vertex1, vertex2 in edges:
         s = f'Есть ли связь между вершинами {chr(64 + vertex1)} и {chr(64 + vertex2)}? (да/нет) '
         response = input(s).strip().lower()
         if response in ('да', 'yes'):
             graph.add_edge(chr(vertex1 + 64), chr(64 + vertex2))
-            matrix[vertex1 - 1][vertex2 - 1] = 1
-            matrix[vertex2 - 1][vertex1 - 1] = 1
-
-    # Выводим матрицу смежности
-    print(' ', *[chr(x + 64) for x in range(1, n + 1)])
-    for index, row in enumerate(matrix, start=1):
-        print(chr(index + 64), *row)
 
     return graph
 
@@ -38,8 +29,8 @@ def create_graph_from_user_input() -> NonOrientedGraph:
 def main() -> None:
     while True:
         questions = {
-            "1": dfs,
-            "2": bfs,
+            "1": bfs,
+            "2": dfs,
         }
 
         user_input = input("Что вы хотите сделать? Поиск в ширину (1) или поиск в глубину (2)? ")
@@ -47,7 +38,10 @@ def main() -> None:
         if user_input not in questions:
             continue
 
-        graph = create_graph_from_user_input()
+        n: int = int(input('Введите количество вершин: '))
+
+        graph = create_graph_from_user_input(n)
+        print(graph)
 
         start_vertex = input("Введите начальную вершину: ")
 

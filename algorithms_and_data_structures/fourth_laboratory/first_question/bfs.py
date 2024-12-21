@@ -26,7 +26,7 @@ def bfs(graph: BaseGraph[T], start_node: T, target_node: T) -> List[T]:
             path_found = True
             break
 
-        for next_node in graph.get_neighbors(current_node):  # Используем метод get_neighbors
+        for next_node in graph.get_neighbors(current_node):
             if next_node not in visited:
                 queue.put(next_node)
                 parent[next_node] = current_node

@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from collections import defaultdict
-from typing import TypeVar, Generic, List, Dict
+from typing import TypeVar, Generic, List, Dict, Iterator
 
 T = TypeVar('T')
 
@@ -34,5 +34,20 @@ class BaseGraph(ABC, Generic[T]):
         """
         return self._graph[node]
 
+    def __iter__(self) -> Iterator[T]:
+        """
+        Метод для итерации по вершинам графа.
+        В данном контексте он нужен для in, чтобы я при вводе проверил наличие вершины в графе.
+        :returns: Итератор по вершинам графа.
+        """
+        return iter(self._graph.keys())
+
+    def __len__(self) -> int:
+        return len(self._graph)
+
+    @abstractmethod
     def __str__(self) -> str:
-        return '\n'.join(f"{key}: {value}" for key, value in self._graph.items())
+        """
+        Метод для печати матрицы смежности, зная граф.
+        """
+        ...
