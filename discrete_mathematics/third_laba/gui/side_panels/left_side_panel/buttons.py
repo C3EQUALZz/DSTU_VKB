@@ -5,8 +5,7 @@
 from functools import partial
 
 from PyQt6 import QtWidgets
-from python_language.discrete_mathematics.third_laba.gui.side_panels.signals import Signals
-from python_language.discrete_mathematics.third_laba.gui.side_panels.rigth_side_panel import RightSidePanel
+from discrete_mathematics.third_laba.gui.side_panels.signals import Signals
 
 
 class ButtonPanel(QtWidgets.QWidget):
