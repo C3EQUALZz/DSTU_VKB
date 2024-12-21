@@ -1,8 +1,8 @@
 import sys
 from itertools import combinations
 
+from algorithms_and_data_structures.fourth_laboratory.core.unweighted import NonOrientedGraph
 from algorithms_and_data_structures.fourth_laboratory.first_question.bfs import bfs
-from algorithms_and_data_structures.fourth_laboratory.first_question.core.nonoriented import NonOrientedGraph
 from algorithms_and_data_structures.fourth_laboratory.first_question.dfs import dfs
 
 

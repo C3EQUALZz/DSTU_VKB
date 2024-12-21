@@ -16,16 +16,6 @@ class BaseGraph(ABC, Generic[T]):
     def __init__(self) -> None:
         self._graph: Dict[T, List[T]] = defaultdict(list)
 
-    @abstractmethod
-    def add_edge(self, u: T, v: T) -> None:
-        """
-        Добавить дугу графа.
-        :param u: Первая вершина графа.
-        :param v: Вторая вершина графа.
-        :returns: Ничего не возвращает.
-        """
-        ...
-
     def get_neighbors(self, node: T) -> List[T]:
         """
         Метод для получения соседних вершин.
@@ -51,3 +41,38 @@ class BaseGraph(ABC, Generic[T]):
         Метод для печати матрицы смежности, зная граф.
         """
         ...
+
+
+class BaseUnWeightedGraph(BaseGraph[T], ABC):
+    def __init__(self) -> None:
+        super().__init__()
+
+    @abstractmethod
+    def add_edge(self, u: T, v: T) -> None:
+        """
+        Добавить дугу графа.
+        :param u: Первая вершина графа.
+        :param v: Вторая вершина графа.
+        :returns: Ничего не возвращает.
+        """
+        ...
+
+
+class BaseWeightedGraph(BaseGraph[T], ABC):
+    def __init__(self) -> None:
+        super().__init__()
+        self._weights: Dict[T, Dict[T, float]] = defaultdict(dict)
+
+    @abstractmethod
+    def add_edge(self, u: T, v: T, weight: float) -> None:
+        """
+        Добавить дугу графа.
+        :param u: Первая вершина графа.
+        :param v: Вторая вершина графа.
+        :param weight: Вес направления от 1 вершины к другой.
+        :returns: Ничего не возвращает.
+        """
+        ...
+
+    def get_weight(self, u: T, v: T) -> float:
+        return self._weights[u].get(v, float('inf'))

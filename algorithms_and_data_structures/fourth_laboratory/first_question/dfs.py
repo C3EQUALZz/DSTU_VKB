@@ -1,11 +1,11 @@
 from typing import List, Optional, Set, TypeVar
 
-from algorithms_and_data_structures.fourth_laboratory.first_question.core.base import BaseGraph
+from algorithms_and_data_structures.fourth_laboratory.core.base import BaseUnWeightedGraph
 
 T = TypeVar("T")
 
 def dfs(
-        graph: BaseGraph[T],
+        graph: BaseUnWeightedGraph[T],
         start: T,
         target: T,
         path: Optional[List[T]] = None,
