@@ -1,7 +1,11 @@
+"""
+Реализовать НОК и НОД
+"""
+
 from decimal import Decimal
 
 
-def gcd(a: Decimal, b: Decimal):
+def gcd(a: Decimal, b: Decimal) -> Decimal:
     """
     Вычисление НОД
     Наибольший общий делитель
@@ -14,7 +18,7 @@ def gcd(a: Decimal, b: Decimal):
     return a + b
 
 
-def lcm(a: Decimal, b: Decimal):
+def lcm(a: Decimal, b: Decimal) -> Decimal:
     """
     Наименьшее общее кратное (НОК)
     Наименьшее натуральное число,
@@ -25,9 +29,13 @@ def lcm(a: Decimal, b: Decimal):
     return a * b // gcd(a, b)
 
 
-if __name__ == "__main__":
+def main() -> None:
     try:
         a, b = map(Decimal, input("Введите 2 числа: ").split())
         print(f"НОД двух чисел {gcd(a, b)}", f"НОК двух чисел {lcm(a, b)}", sep='\n')
     except ValueError:
         print("Неверный тип данных")
+
+
+if __name__ == "__main__":
+    main()
