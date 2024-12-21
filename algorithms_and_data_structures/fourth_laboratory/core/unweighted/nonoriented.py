@@ -1,5 +1,7 @@
 from typing import TypeVar, List
 
+from prettytable import PrettyTable
+
 from algorithms_and_data_structures.fourth_laboratory.core.base import BaseUnWeightedGraph
 
 T = TypeVar('T')
@@ -37,8 +39,11 @@ class NonOrientedGraph(BaseUnWeightedGraph[T]):
                 matrix[index1][index2] = 1
                 matrix[index2][index1] = 1
 
-        result = ' ' + ' '.join(chr(x + 65) for x in range(n)) + '\n'
-        for index, row in enumerate(matrix):
-            result += chr(index + 65) + ' ' + ' '.join(map(str, row)) + '\n'
+        # Создаем таблицу
+        table = PrettyTable()
+        table.field_names = [' '] + [chr(x + 65) for x in range(n)]
 
-        return result.strip()
+        for index, row in enumerate(matrix):
+            table.add_row([chr(index + 65)] + row)
+
+        return str(table)
