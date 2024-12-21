@@ -44,7 +44,7 @@ def info_cur_dir_modules() -> list:
     Функция, благодаря которой мы можем узнать информацию о находящихся рядом папок.
     """
     package_path = lang_module.__path__[0]
-    list_modules = [importlib.import_module(f"python_language.programming_languages_python.{name}") for _, name, _
+    list_modules = [importlib.import_module(f"programming_languages_python.{name}") for _, name, _
                     in pkgutil.walk_packages([package_path]) if name.endswith("lang")]
 
     list_modules.sort(key=lambda module: parse_ordinal(module.__name__.split(".")[-1].split("_")[0]))
