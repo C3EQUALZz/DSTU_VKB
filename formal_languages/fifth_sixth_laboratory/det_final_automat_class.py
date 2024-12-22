@@ -28,7 +28,7 @@ from typing import Final, Self, AnyStr, Set, MutableMapping, List
 
 from automata.fa.nfa import NFA
 
-from python_language.formal_languages.fifth_sixth_laboratory.non_det_final_automat_class import (
+from formal_languages.fifth_sixth_laboratory.non_det_final_automat_class import (
     NonDeterministicFiniteAutomaton)
 
 PATH_TO_DIAGRAM: Final = os.path.join(os.path.curdir, "test_dfa.png")

@@ -32,8 +32,8 @@ exit
 """
 from typing import Any, Generator
 
-from python_language.formal_languages.third_laboratory import remove_unreachable_symbols
-from python_language.formal_languages.useful_functions import get_rules_from_console
+from formal_languages.third_laboratory import remove_unreachable_symbols
+from formal_languages.useful_functions import get_rules_from_console
 
 
 def delete_chains(rules: dict[str, list[str]]) -> dict[str, list[str]]:

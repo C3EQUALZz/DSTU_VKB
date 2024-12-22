@@ -8,8 +8,8 @@ from typing import MutableMapping, Self, AnyStr, Set, Final
 
 from automata.fa.nfa import NFA
 
-from ..fifth_sixth_laboratory.det_final_automat_class import DeterministicFiniteAutomaton
-from .graph_class import Graph
+from formal_languages.fifth_sixth_laboratory.det_final_automat_class import DeterministicFiniteAutomaton
+from graph_class import Graph
 
 PATH_TO_DIAGRAM: Final = os.path.join(os.path.curdir, "test_dfa_removed.png")
 

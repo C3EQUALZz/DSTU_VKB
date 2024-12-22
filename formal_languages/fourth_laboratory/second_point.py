@@ -12,7 +12,7 @@ B -> bde
 B -> bef
 exit
 """
-from python_language.formal_languages.useful_functions import get_rules_from_console
+from formal_languages.useful_functions import get_rules_from_console
 from collections import defaultdict
 
 

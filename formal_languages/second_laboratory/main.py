@@ -34,8 +34,8 @@ a + * ( )
 
 from typing import Mapping, Set, List, AnyStr
 
-from python_language.formal_languages.first_laboratory import is_context_free
-from python_language.formal_languages.useful_functions import get_rules_from_console
+from formal_languages.first_laboratory import is_context_free
+from formal_languages.useful_functions import get_rules_from_console
 
 
 def check_grammar_exist(grammar: Mapping[AnyStr, List[AnyStr]], set_of_non_terminals: Set[AnyStr],

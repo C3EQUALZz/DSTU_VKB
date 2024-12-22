@@ -1,10 +1,11 @@
 import pytest
 
-from python_language.formal_languages.first_laboratory import (
+from formal_languages.first_laboratory import (
     is_left_linear,
     is_right_linear,
     is_context_free,
-    is_context_sensitive)
+    is_context_sensitive
+)
 
 
 def test_left_linear_grammar_correct():

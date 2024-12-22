@@ -3,7 +3,7 @@
 """
 
 from typing import Generator, Any
-from python_language.formal_languages.useful_functions import get_rules_from_console
+from formal_languages.useful_functions import get_rules_from_console
 
 
 def _processing_terminal_values(grammar_inner: dict[str, list[str]], symbol: str) -> Generator[str, Any, None]:

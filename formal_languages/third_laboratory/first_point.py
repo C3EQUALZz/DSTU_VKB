@@ -37,7 +37,7 @@ Y -> aYa
 Y -> y|E
 exit
 """
-from python_language.formal_languages.useful_functions import get_rules_from_console
+from formal_languages.useful_functions import get_rules_from_console
 
 
 def remove_useless_symbol(grammar_inner: dict[str, list[str]],

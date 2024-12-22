@@ -7,11 +7,11 @@
 - http://www.cs.um.edu.mt/gordon.pace/Research/Software/Relic/Transformations/RG/toFSA.html
 
 """
-from python_language.formal_languages.fifth_sixth_laboratory.grammar_class import Grammar
-from python_language.formal_languages.fifth_sixth_laboratory.non_det_final_automat_class import (
+from formal_languages.fifth_sixth_laboratory.grammar_class import Grammar
+from formal_languages.fifth_sixth_laboratory.non_det_final_automat_class import (
     NonDeterministicFiniteAutomaton)
-from python_language.formal_languages.fifth_sixth_laboratory.det_final_automat_class import DeterministicFiniteAutomaton
-from python_language.formal_languages.fifth_sixth_laboratory.table_ex import make_table
+from formal_languages.fifth_sixth_laboratory.det_final_automat_class import DeterministicFiniteAutomaton
+from formal_languages.fifth_sixth_laboratory.table_ex import make_table
 
 
 def main() -> None:

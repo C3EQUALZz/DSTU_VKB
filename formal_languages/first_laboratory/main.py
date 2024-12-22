@@ -12,7 +12,7 @@
 """
 import re
 from typing import Pattern, AnyStr, Set, Mapping, List
-from python_language.formal_languages.useful_functions import get_rules_from_console
+from formal_languages.useful_functions import get_rules_from_console
 
 
 def is_left_linear(*,

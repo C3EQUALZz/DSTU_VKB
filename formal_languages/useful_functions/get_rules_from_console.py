@@ -2,7 +2,6 @@
 Во многих лабораторных работах происходит запрос грамматики через консоль, поэтому вынес отдельную функцию, чтобы обрабатывать
 """
 from collections import defaultdict
-import re
 
 
 def get_rules_from_console(key="remove"):

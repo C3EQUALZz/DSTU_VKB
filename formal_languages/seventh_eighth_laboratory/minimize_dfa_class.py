@@ -13,7 +13,7 @@ from dataclasses import dataclass
 from automata.fa.nfa import NFA
 import re
 
-from .remove_unreachable_states_dfa_class import RemovedUselessSymbolsDFA
+from remove_unreachable_states_dfa_class import RemovedUselessSymbolsDFA
 
 PATH_TO_DIAGRAM: Final = os.path.join(os.path.curdir, "test_dfa_min.png")
 

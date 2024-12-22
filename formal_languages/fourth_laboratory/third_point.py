@@ -16,7 +16,7 @@ exit
 from collections import defaultdict
 from typing import Iterator
 
-from python_language.formal_languages.useful_functions import get_rules_from_console
+from formal_languages.useful_functions import get_rules_from_console
 
 
 def _split_rules(rules: list[str], non_terminal: str) -> tuple[Iterator[str], Iterator[str]]:
