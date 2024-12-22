@@ -1,0 +1,5 @@
+terminaltables
+tqdm
+colorama
+networkx
+matplotlib
