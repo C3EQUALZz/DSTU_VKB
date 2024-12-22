@@ -2,9 +2,9 @@
 Здесь логика обычного шифра Цезаря
 
 """
-from python_language.cybersecurity_base.twelve_labor_security.enums import Letters
+from cybersecurity_base.twelfth_laboratory.enums import Letters
 from .exceptions import NoSupport
-from python_language.cybersecurity_base.twelve_labor_security.abstract_class_cyphers import Cypher
+from cybersecurity_base.twelfth_laboratory.abstract_class_cyphers import Cypher
 import re
 
 

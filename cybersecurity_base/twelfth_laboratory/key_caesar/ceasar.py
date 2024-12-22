@@ -1,7 +1,7 @@
 import re
 
 from .exceptions import BadStep, BadWord
-from python_language.cybersecurity_base.twelve_labor_security.abstract_class_cyphers import Cypher
+from cybersecurity_base.twelfth_laboratory.abstract_class_cyphers import Cypher
 
 
 class CaesarWithWord(Cypher):
