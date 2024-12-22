@@ -39,16 +39,17 @@
 Если же отсутствует любая информация, то автор не писал ввиду лени.  
 
 
----
+# Полезные ссылки
 
 Ещё репозитории с лабораторными работами: 
 - https://github.com/yaromochka/DSTU
 - https://github.com/Din0zaBr/DSTU
 - https://github.com/Kikuzawa/DSTU
   
----
+# Статистика репозитория
+
 ![GitHub repo size](https://img.shields.io/github/repo-size/C3EQUALZz/DSTU_VKB)
 
----
-
 ![user_statistics](https://count.getloli.com/@DSTU_VKB?name=DSTU_VKB&theme=rule34&padding=7&offset=5&align=center&scale=1&pixelated=1&darkmode=auto)
+
+
