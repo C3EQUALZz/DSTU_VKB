@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "backend-pacman-app"
+version = "0.1.0"
+description = "Backend written with FastAPI for pacman game"
+authors = ["c3equalz"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
