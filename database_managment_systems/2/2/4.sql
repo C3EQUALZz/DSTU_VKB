@@ -1,0 +1,3 @@
+SELECT *
+FROM "STUDENT"
+WHERE "NAME" LIKE 'И%' OR "NAME" LIKE 'С%'

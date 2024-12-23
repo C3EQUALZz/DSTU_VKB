@@ -1,0 +1,3 @@
+UPDATE "UNIVERSITY"
+SET "RATING" = "RATING"+5
+WHERE "CITY" = 'Санкт-Петербург'

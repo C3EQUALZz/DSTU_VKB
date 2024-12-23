@@ -1,0 +1,2 @@
+INSERT INTO "SUBJECT"("SEMESTR", "SUBJ_NAME", "HOUR", "SUBJ_ID")
+VALUES ('4', 'Алгебра', '72', '201')
