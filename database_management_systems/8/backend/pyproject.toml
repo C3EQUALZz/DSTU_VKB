@@ -11,6 +11,8 @@ python = "^3.11"
 fastapi = "^0.115.6"
 pyjwt = {extras = ["crypto"], version = "^2.10.1"}
 pydantic-settings = "^2.7.0"
+bcrypt = "^4.2.1"
+motor = "^3.6.0"
 
 
 [build-system]

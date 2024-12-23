@@ -6,11 +6,11 @@ router = APIRouter(
 )
 
 
-@router.post("/login")
+@router.post("/login/")
 async def login(schema):
     ...
 
 
-@router.post("/register")
+@router.post("/register/")
 async def register(schema):
     ...
