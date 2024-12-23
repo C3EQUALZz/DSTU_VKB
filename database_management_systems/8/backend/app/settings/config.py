@@ -1,0 +1,43 @@
+import os.path
+from abc import ABC
+from functools import lru_cache
+from pathlib import Path
+
+from pydantic import Field, field_validator
+from pydantic_settings import SettingsConfigDict, BaseSettings
+
+
+class CommonSettings(BaseSettings, ABC):
+    """
+    Класс, от которого каждая настройка должна наследоваться.
+    Написано с той целью, чтобы не было дублирования кода по настройке model_config.
+    """
+    model_config = SettingsConfigDict(
+        env_file=os.path.expanduser("database_management_systems/8/backend/.env"),
+        env_file_encoding="utf-8",
+        extra="allow"
+    )
+
+
+class AuthSettings(CommonSettings):
+    """
+    Общие настройки аутентификации
+    """
+
+    private_key_path: Path = Field(alias="PRIVATE_KEY")
+    public_key_path: Path = Field(alias="PUBLIC_KEY")
+    algorithm: str = Field(default="RS256", alias="ALGORITHM")
+    access_token_expire_minutes: int = Field(default=5, alias="ACCESS_TOKEN_EXPIRE_MINUTES")
+    refresh_token_expire_minutes: int = Field(default=10, alias="REFRESH_TOKEN_EXPIRE_MINUTES")
+
+
+class Settings(CommonSettings):
+    auth: AuthSettings = AuthSettings()
+
+
+@lru_cache(maxsize=1)
+def get_settings() -> Settings:
+    return Settings()
+
+
+settings = get_settings()
