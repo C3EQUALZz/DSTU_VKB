@@ -13,6 +13,7 @@ pyjwt = {extras = ["crypto"], version = "^2.10.1"}
 pydantic-settings = "^2.7.0"
 bcrypt = "^4.2.1"
 motor = "^3.6.0"
+dishka = "^1.4.2"
 
 
 [build-system]

@@ -1,0 +1,71 @@
+version: '3.7'
+
+services:
+
+  ######################################
+  # PORTAINER
+  #
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: always
+    volumes:
+      - /var/run/tools.sock:/var/run/tools.sock:rw
+      - portainer_data:/data:rw
+    ports:
+      - "9999:9000"
+    networks:
+      - backend
+
+  ######################################
+  # MONGO DB
+  #
+  mongo:
+    container_name: chat-mongodb
+    image: mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: ${MONGO_DB_DATABASE_NAME:?}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_DB_ADMIN_USERNAME:?}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_DB_ADMIN_PASSWORD:?}
+    volumes:
+      - mongodb_data:/data/db
+    env_file:
+      - ../.env
+    networks:
+      - backend
+
+  ######################################
+  # MONGO-EXPRESS
+  #
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express:latest
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_DB_ADMIN_USERNAME:?}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_DB_ADMIN_PASSWORD:?}
+      ME_CONFIG_MONGODB_URL: ${MONGO_DB_URL:?}
+      ME_CONFIG_BASICAUTH: "false"
+    depends_on:
+      - mongo
+    env_file:
+      - ../.env
+    networks:
+      - backend
+
+
+#&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+#&&&&&&&&&&&&&&&&&&&&&&&&&&&&      VOLUMES       &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+#&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+volumes:
+  mongodb_data:
+    driver: local
+  portainer_data:
+    driver: local
+
+networks:
+  backend:
+    driver: bridge

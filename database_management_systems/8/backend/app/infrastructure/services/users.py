@@ -44,6 +44,11 @@ class UsersService:
             users: List[UserEntity] = await uow.users.list()
             return users
 
+    async def delete_user(self, oid: str) -> None:
+        async with self._uow as uow:
+            await uow.users.delete(oid)
+            await uow.commit()
+
     async def check_user_existence(
             self, oid: Optional[str] = None,
             email: Optional[str] = None,

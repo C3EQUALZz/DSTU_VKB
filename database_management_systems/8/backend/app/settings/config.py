@@ -1,8 +1,7 @@
 import os.path
 from abc import ABC
-from functools import lru_cache
 
-from pydantic import Field
+from pydantic import Field, MongoDsn
 from pydantic_settings import SettingsConfigDict, BaseSettings
 
 
@@ -30,13 +29,11 @@ class AuthSettings(CommonSettings):
     refresh_token_expire_minutes: int = Field(default=10, alias="REFRESH_TOKEN_EXPIRE_MINUTES")
 
 
+class MongoSettings(CommonSettings):
+    database_name: str = Field(alias="MONGO_DB_NAME")
+    url: MongoDsn = Field(alias="MONGO_DB_URL")
+
+
 class Settings(CommonSettings):
     auth: AuthSettings = AuthSettings()
-
-
-@lru_cache(maxsize=1)
-def get_settings() -> Settings:
-    return Settings()
-
-
-settings = get_settings()
+    database: MongoSettings = MongoSettings()

@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
 
@@ -7,6 +7,11 @@ class ApplicationException(Exception, ABC):
     @property
     def message(self) -> str:
         return "An application error has occurred"
+
+    @property
+    @abstractmethod
+    def status_code(self) -> int:
+        ...
 
     def __str__(self) -> str:
         return self.message

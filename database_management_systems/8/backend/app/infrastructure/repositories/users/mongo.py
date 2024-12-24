@@ -1,11 +1,11 @@
 from typing import Optional, List, override
 
 from app.domain.entities.user import UserEntity
-from app.infrastructure.repositories.common.mongo import BaseMongoDBRepository
+from app.infrastructure.repositories.common.mongo import MotorAbstractRepository
 from app.infrastructure.repositories.users.base import UsersRepository
 
 
-class MongoDBUserRepository(UsersRepository, BaseMongoDBRepository):
+class MotorUserRepository(UsersRepository, MotorAbstractRepository):
     @override
     async def get_by_email(self, email: str) -> Optional[UserEntity]:
         user = await self._collection.find_one(filter={'email': email})

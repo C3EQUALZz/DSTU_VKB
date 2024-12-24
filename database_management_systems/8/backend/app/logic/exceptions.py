@@ -11,6 +11,9 @@ class LogicException(ApplicationException, ABC):
     def message(self) -> str:
         return "An logic error has occurred"
 
+    def status_code(self) -> int:
+        ...
+
 
 @dataclass(eq=False)
 class UserAlreadyExistsException(LogicException):
@@ -25,6 +28,7 @@ class UserAlreadyExistsException(LogicException):
         return HTTPStatus.CONFLICT.value
 
 
+@dataclass(eq=False)
 class InvalidPasswordException(LogicException):
     @property
     def message(self) -> str:
@@ -44,3 +48,16 @@ class MessageBusMessageException(LogicException):
     @property
     def status(self) -> int:
         return HTTPStatus.BAD_REQUEST.value
+
+
+@dataclass(eq=False)
+class UserNotFoundException(LogicException):
+    value: str
+
+    @property
+    def message(self) -> str:
+        return f"User with {self.value=} was not found"
+
+    @property
+    def status_code(self) -> int:
+        return HTTPStatus.NOT_FOUND.value

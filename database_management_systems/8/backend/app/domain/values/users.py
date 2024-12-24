@@ -51,7 +51,7 @@ class Email(BaseValueObject[str]):
 
 @dataclass(frozen=True)
 class Password(BaseValueObject[str]):
-    value: str
+    value: bytes
 
     def validate(self) -> None:
         if not self.value:
