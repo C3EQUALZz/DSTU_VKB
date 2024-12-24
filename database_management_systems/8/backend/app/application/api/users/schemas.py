@@ -5,3 +5,7 @@ class CreateUserSchema(BaseModel):
     name: str
     email: str
     password: str
+
+
+class ErrorMessageScheme(BaseModel):
+    error: str

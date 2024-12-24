@@ -1,10 +1,12 @@
+from typing import List
+
 from app.domain.entities.user import UserEntity
 from app.domain.values.users import Password
 from app.infrastructure.exceptions import UserNotFoundError
 from app.infrastructure.security.utils.coders import hash_password, validate_password
 from app.infrastructure.services.users import UsersService
 from app.logic.commands.users import CreateUserCommand, VerifyUserCredentialsCommand, UpdateUserCommand, \
-    DeleteUserCommand
+    DeleteUserCommand, GetAllUsersCommand
 from app.logic.exceptions import UserAlreadyExistsException, InvalidPasswordException, UserNotFoundException
 from app.logic.handlers.users.base import UsersCommandHandler
 
@@ -16,8 +18,8 @@ class CreateUserCommandHandler(UsersCommandHandler[CreateUserCommand]):
         """
         user_service: UsersService = UsersService(uow=self._uow)
 
-        if user_service.check_user_existence(email=command.email, name=command.name):
-            raise UserAlreadyExistsException
+        if await user_service.check_user_existence(name=command.name, email=command.email):
+            raise UserAlreadyExistsException(command.email)
 
         new_user: UserEntity = UserEntity(**await command.to_dict())
         new_user.password = Password(hash_password(command.password))
@@ -52,6 +54,18 @@ class DeleteUserCommandHandler(UsersCommandHandler[DeleteUserCommand]):
             raise UserNotFoundException(str(command.oid))
 
         await user_service.delete_user(oid=command.oid)
+
+
+class GetAllUsersCommandHandler(UsersCommandHandler[GetAllUsersCommand]):
+    async def __call__(self, command: GetAllUsersCommand) -> List[UserEntity]:
+        """
+        Get all users and signaling that operation was successfully executed.
+        :param command: command to execute which must be linked in app/logic/handlers/__init__
+        :return: domain entity of the list of users
+        """
+        user_service: UsersService = UsersService(uow=self._uow)
+
+        return await user_service.get_all_users()
 
 
 class VerifyUserCredentialsCommandHandler(UsersCommandHandler[VerifyUserCredentialsCommand]):

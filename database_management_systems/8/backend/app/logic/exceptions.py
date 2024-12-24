@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from http import HTTPStatus
 
@@ -10,9 +10,6 @@ class LogicException(ApplicationException, ABC):
     @property
     def message(self) -> str:
         return "An logic error has occurred"
-
-    def status_code(self) -> int:
-        ...
 
 
 @dataclass(eq=False)
@@ -59,5 +56,5 @@ class UserNotFoundException(LogicException):
         return f"User with {self.value=} was not found"
 
     @property
-    def status_code(self) -> int:
+    def status(self) -> int:
         return HTTPStatus.NOT_FOUND.value

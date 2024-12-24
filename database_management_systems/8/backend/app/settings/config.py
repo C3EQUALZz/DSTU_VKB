@@ -30,7 +30,7 @@ class AuthSettings(CommonSettings):
 
 
 class MongoSettings(CommonSettings):
-    database_name: str = Field(alias="MONGO_DB_NAME")
+    database_name: str = Field(alias="MONGO_DB_DATABASE_NAME")
     url: MongoDsn = Field(alias="MONGO_DB_URL")
 
 

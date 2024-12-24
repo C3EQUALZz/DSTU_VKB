@@ -10,7 +10,7 @@ class ApplicationException(Exception, ABC):
 
     @property
     @abstractmethod
-    def status_code(self) -> int:
+    def status(self) -> int:
         ...
 
     def __str__(self) -> str:

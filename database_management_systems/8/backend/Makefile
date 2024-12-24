@@ -2,8 +2,8 @@ DC = docker compose
 EXEC = docker exec -it
 LOGS = docker logs
 ENV = --env-file .env
-APP_FILE = docker_compose/app.yml
-STORAGES_FILE= docker_compose/storages.yml
+APP_FILE = docker/app.yml
+STORAGES_FILE= docker/storages.yml
 APP_CONTAINER = microservice-chat-app-backend
 
 .PHONY: app
