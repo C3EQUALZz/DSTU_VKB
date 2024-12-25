@@ -2,6 +2,7 @@ from typing import List
 
 from dishka.integrations.fastapi import FromDishka, DishkaRoute
 from fastapi import APIRouter, HTTPException
+from motor.motor_asyncio import AsyncIOMotorClient
 from starlette import status
 
 from app.application.api.users.schemas import CreateUserSchema, ErrorMessageScheme
@@ -69,7 +70,7 @@ async def get_users(uow: FromDishka[UsersUnitOfWork]) -> List[UserEntity]:
         return messagebus.command_result
 
     except ApplicationException as e:
-        raise HTTPException(status_code=e.status_code, detail=str(e))
+        raise HTTPException(status_code=e.status, detail=str(e))
 
 
 @router.get("/{user_id}/")
@@ -77,15 +78,17 @@ async def get_user(user_id: int):
     try:
         ...
     except ApplicationException as e:
-        raise HTTPException(status_code=e.status_code, detail=str(e))
+        raise HTTPException(status_code=e.status, detail=str(e))
 
 
 @router.patch("/{user_id}/")
 async def update_user(user_id: int):
     try:
-        ...
+        client = AsyncIOMotorClient("mongodb://root:root@mongodb-pacman-app:27017", serverSelectionTimeoutMS=3000)
+        await client.admin.command("ping")
+        return "MongoDB доступен"
     except ApplicationException as e:
-        raise HTTPException(status_code=e.status_code, detail=str(e))
+        raise HTTPException(status_code=e.status, detail=str(e))
 
 
 @router.delete(

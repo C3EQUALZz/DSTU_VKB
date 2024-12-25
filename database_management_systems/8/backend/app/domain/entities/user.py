@@ -22,7 +22,7 @@ class UserEntity(BaseEntity):
     def from_document(cls: Type[Self], document: Mapping[str, Any]) -> Self:
         oid = document["oid"]
         email = Email(value=document["email"])
-        username = Username(value=document["username"])
+        username = Username(value=document["name"])
         password = Password(value=document["password"])
         created_at = document["created_at"]
         is_verified = document["is_verified"]

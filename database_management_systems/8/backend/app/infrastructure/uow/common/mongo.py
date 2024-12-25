@@ -33,24 +33,20 @@ class MotorAbstractUnitOfWork(AbstractUnitOfWork):
         """
         Commits or aborts the transaction based on whether an exception occurred.
         """
-        if exc_type is None:
-            await self.commit()
-        else:
-            await self.rollback()
-
-        await super().__aexit__(exc_type, exc_value, traceback)
+        if self._session and self._session.in_transaction:
+            await super().__aexit__(exc_type, exc_value, traceback)
         await self._session.end_session()
 
     async def commit(self) -> None:
         """
         Commits the transaction.
         """
-        if self._session:
+        if self._session and self._session.in_transaction:
             await self._session.commit_transaction()
 
     async def rollback(self) -> None:
         """
         Aborts the transaction.
         """
-        if self._session:
+        if self._session and self._session.in_transaction:
             await self._session.abort_transaction()

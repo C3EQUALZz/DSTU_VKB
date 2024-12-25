@@ -14,7 +14,7 @@ class MotorUserRepository(UsersRepository, MotorAbstractRepository):
 
     @override
     async def get_by_username(self, username: str) -> Optional[UserEntity]:
-        user = await self._collection.find_one(filter={"username": username})
+        user = await self._collection.find_one(filter={"name": username})
         if user:
             return UserEntity.from_document(user)
 
