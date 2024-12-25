@@ -1,7 +1,11 @@
 from typing import (
     Optional,
     Self,
+    Type,
+    Any
 )
+
+from traceback import TracebackException
 
 from app.infrastructure.uow.base import AbstractUnitOfWork
 from motor.motor_asyncio import (
@@ -16,10 +20,10 @@ class MotorAbstractUnitOfWork(AbstractUnitOfWork):
     Unit of work interface for MongoDB using Motor with transaction support.
     """
 
-    def __init__(self, client: AsyncIOMotorClient, database_name: str) -> None:
+    def __init__(self, client: AsyncIOMotorClient[Any], database_name: str) -> None:
         super().__init__()
-        self._client: AsyncIOMotorClient = client
-        self._database_name: str = database_name
+        self._client = client
+        self._database_name = database_name
 
         self._database: Optional[AsyncIOMotorDatabase] = None
         self._session: Optional[AsyncIOMotorClientSession] = None
@@ -33,24 +37,31 @@ class MotorAbstractUnitOfWork(AbstractUnitOfWork):
         self._session.start_transaction()
         return await super().__aenter__()
 
-    async def __aexit__(self, exc_type, exc_value, traceback) -> None:
+    async def __aexit__(
+            self,
+            exc_type: Optional[Type[BaseException]],
+            exc_value: Optional[BaseException],
+            traceback: Optional[TracebackException]
+    ) -> None:
         """
         Commits or aborts the transaction based on whether an exception occurred.
         """
-        if self._session and self._session.in_transaction:
+        if self._session and bool(self._session.in_transaction):
             await super().__aexit__(exc_type, exc_value, traceback)
-        await self._session.end_session()
+
+        if self._session is not None:
+            await self._session.end_session()
 
     async def commit(self) -> None:
         """
         Commits the transaction.
         """
-        if self._session and self._session.in_transaction:
+        if self._session and bool(self._session.in_transaction):
             await self._session.commit_transaction()
 
     async def rollback(self) -> None:
         """
         Aborts the transaction.
         """
-        if self._session and self._session.in_transaction:
+        if self._session and bool(self._session.in_transaction):
             await self._session.abort_transaction()

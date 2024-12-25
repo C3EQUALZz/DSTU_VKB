@@ -13,14 +13,13 @@ class MotorUserRepository(UsersRepository, MotorAbstractRepository):
     @override
     async def get_by_email(self, email: str) -> Optional[UserEntity]:
         user = await self._collection.find_one(filter={"email": email})
-        if user:
-            return UserEntity.from_document(user)
+        return UserEntity.from_document(user) if user else None
 
     @override
     async def get_by_username(self, username: str) -> Optional[UserEntity]:
         user = await self._collection.find_one(filter={"name": username})
-        if user:
-            return UserEntity.from_document(user)
+        return UserEntity.from_document(user) if user else None
+
 
     @override
     async def add(self, user: UserEntity) -> UserEntity:
@@ -30,8 +29,7 @@ class MotorUserRepository(UsersRepository, MotorAbstractRepository):
     @override
     async def get(self, oid: str) -> Optional[UserEntity]:
         user = await self._collection.find_one(filter={"oid": oid})
-        if user:
-            return UserEntity.from_document(user)
+        return UserEntity.from_document(user) if user else None
 
     @override
     async def update(self, oid: str, model: UserEntity) -> UserEntity:

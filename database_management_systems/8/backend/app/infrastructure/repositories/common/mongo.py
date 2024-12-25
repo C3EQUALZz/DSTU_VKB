@@ -1,5 +1,5 @@
 from abc import ABC
-
+from typing import Dict, Any
 from motor.motor_asyncio import (
     AsyncIOMotorClientSession,
     AsyncIOMotorCollection,
@@ -9,8 +9,8 @@ from motor.motor_asyncio import (
 class MotorAbstractRepository(ABC):
     def __init__(
         self,
-        collection: AsyncIOMotorCollection,
+        collection: AsyncIOMotorCollection[Dict[str, Any]],
         session: AsyncIOMotorClientSession,
     ) -> None:
-        self._collection: AsyncIOMotorCollection = collection
-        self._session: AsyncIOMotorClientSession = session
+        self._collection = collection
+        self._session = session

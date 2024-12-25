@@ -62,5 +62,5 @@ class Password(BaseValueObject[bytes]):
         if value_length not in range(3, 100):
             raise InvalidPasswordLength(str(value_length))
 
-    def as_generic_type(self) -> str:
-        return str(self.value)
+    def as_generic_type(self) -> bytes:
+        return self.value

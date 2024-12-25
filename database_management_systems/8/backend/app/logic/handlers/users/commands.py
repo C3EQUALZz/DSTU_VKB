@@ -119,7 +119,7 @@ class VerifyUserCredentialsCommandHandler(UsersCommandHandler[VerifyUserCredenti
         elif await users_service.check_existence(name=command.name):
             user = await users_service.get_by_name(name=command.name)
         else:
-            raise UserNotFoundError
+            raise UserNotFoundError(command.name)
 
         if not validate_password(password=command.password, hashed_password=user.password.as_generic_type()):
             raise InvalidPasswordException

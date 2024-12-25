@@ -58,8 +58,7 @@ class UsersService:
 
     async def get_all(self) -> List[UserEntity]:
         async with self._uow as uow:
-            users: List[UserEntity] = await uow.users.list()
-            return users
+            return await uow.users.list()
 
     async def delete(self, oid: str) -> None:
         async with self._uow as uow:
