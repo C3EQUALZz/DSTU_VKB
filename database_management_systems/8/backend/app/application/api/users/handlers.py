@@ -15,6 +15,8 @@ from app.application.api.users.schemas import (
 from app.core.types.handlers import (
     CommandHandlerMapping,
     EventHandlerMapping,
+    CT,
+    ET
 )
 from app.exceptions import ApplicationException
 from app.infrastructure.uow.users.base import UsersUnitOfWork
@@ -36,7 +38,6 @@ from dishka.integrations.fastapi import (
     FromDishka,
 )
 
-
 router = APIRouter(prefix="/users", tags=["users"], route_class=DishkaRoute)
 
 
@@ -49,10 +50,10 @@ router = APIRouter(prefix="/users", tags=["users"], route_class=DishkaRoute)
     },
 )
 async def create_user(
-    scheme: CreateUserSchemaRequest,
-    uow: FromDishka[UsersUnitOfWork],
-    events: FromDishka[EventHandlerMapping],
-    commands: FromDishka[CommandHandlerMapping],
+        scheme: CreateUserSchemaRequest,
+        uow: FromDishka[UsersUnitOfWork],
+        events: FromDishka[EventHandlerMapping[ET]],
+        commands: FromDishka[CommandHandlerMapping[CT]],
 ) -> UserSchemeResponse:
     try:
         bootstrap: Bootstrap = Bootstrap(
@@ -71,9 +72,9 @@ async def create_user(
 
 @router.get("/")
 async def get_users(
-    uow: FromDishka[UsersUnitOfWork],
-    events: FromDishka[EventHandlerMapping],
-    commands: FromDishka[CommandHandlerMapping],
+        uow: FromDishka[UsersUnitOfWork],
+        events: FromDishka[EventHandlerMapping[ET]],
+        commands: FromDishka[CommandHandlerMapping[CT]],
 ) -> List[UserSchemeResponse]:
     try:
         bootstrap: Bootstrap = Bootstrap(
@@ -92,10 +93,10 @@ async def get_users(
 
 @router.get("/{user_id}/")
 async def get_user(
-    user_id: str,
-    uow: FromDishka[UsersUnitOfWork],
-    events: FromDishka[EventHandlerMapping],
-    commands: FromDishka[CommandHandlerMapping],
+        user_id: str,
+        uow: FromDishka[UsersUnitOfWork],
+        events: FromDishka[EventHandlerMapping[ET]],
+        commands: FromDishka[CommandHandlerMapping[CT]],
 ) -> UserSchemeResponse:
     try:
         bootstrap: Bootstrap = Bootstrap(
@@ -114,10 +115,10 @@ async def get_user(
 
 @router.patch("/{user_id}/")
 async def update_user(
-    scheme: UpdateUserSchemaRequest,
-    uow: FromDishka[UsersUnitOfWork],
-    events: FromDishka[EventHandlerMapping],
-    commands: FromDishka[CommandHandlerMapping],
+        scheme: UpdateUserSchemaRequest,
+        uow: FromDishka[UsersUnitOfWork],
+        events: FromDishka[EventHandlerMapping[ET]],
+        commands: FromDishka[CommandHandlerMapping[CT]],
 ) -> UserSchemeResponse:
     try:
         bootstrap: Bootstrap = Bootstrap(
@@ -143,10 +144,10 @@ async def update_user(
     },
 )
 async def delete_user(
-    user_id: str,
-    uow: FromDishka[UsersUnitOfWork],
-    events: FromDishka[EventHandlerMapping],
-    commands: FromDishka[CommandHandlerMapping],
+        user_id: str,
+        uow: FromDishka[UsersUnitOfWork],
+        events: FromDishka[EventHandlerMapping[ET]],
+        commands: FromDishka[CommandHandlerMapping[CT]],
 ) -> None:
     try:
         bootstrap: Bootstrap = Bootstrap(

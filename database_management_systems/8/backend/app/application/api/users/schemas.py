@@ -1,18 +1,19 @@
 from typing import Self
 
 from app.domain.entities.user import UserEntity
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 
 
 class CreateUserSchemaRequest(BaseModel):
     name: str
-    email: str
+    email: EmailStr
     password: str
 
 
 class UpdateUserSchemaRequest(BaseModel):
+    oid: str
     name: str
-    email: str
+    email: EmailStr
     password: str
 
 
@@ -27,4 +28,4 @@ class UserSchemeResponse(BaseModel):
 
     @classmethod
     def from_entity(cls, entity: UserEntity) -> Self:
-        return cls(name=entity.name, email=entity.email, oid=entity.oid)
+        return cls(name=entity.name.as_generic_type(), email=entity.email.as_generic_type(), oid=entity.oid)

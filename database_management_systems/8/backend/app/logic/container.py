@@ -1,9 +1,11 @@
 import logging
-from typing import Any
+from typing import Any, cast
 
 from app.core.types.handlers import (
     CommandHandlerMapping,
     EventHandlerMapping,
+    CT,
+    ET
 )
 from app.infrastructure.uow.users.base import UsersUnitOfWork
 from app.infrastructure.uow.users.mongo import MotorUsersUnitOfWork
@@ -34,23 +36,23 @@ logger = logging.getLogger(__name__)
 
 class HandlerProvider(Provider):
     @provide(scope=Scope.APP)
-    async def get_mapping_and_command_handlers(self) -> CommandHandlerMapping:
+    async def get_mapping_and_command_handlers(self) -> CommandHandlerMapping[CT]:
         """
         Here you have to link commands and command handlers for future inject in Bootstrap
         """
-        return {
+        return cast(CommandHandlerMapping[CT], {
             CreateUserCommand: CreateUserCommandHandler,
             GetAllUsersCommand: GetAllUsersCommandHandler,
             GetUserByIdCommand: GetUserByIdCommandHandler,
             UpdateUserCommand: UpdateUserCommandHandler,
-        }
+        })
 
     @provide(scope=Scope.APP)
-    async def get_mapping_event_and_event_handlers(self) -> EventHandlerMapping:
+    async def get_mapping_event_and_event_handlers(self) -> EventHandlerMapping[ET]:
         """
         Here you have to link events and event handlers for future inject in Bootstrap
         """
-        return {}
+        return cast(EventHandlerMapping[ET], {})
 
 
 class AppProvider(Provider):

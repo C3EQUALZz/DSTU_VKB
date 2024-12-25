@@ -12,6 +12,7 @@ class CreateUserCommand(AbstractCommand):
 
 @dataclass(frozen=True)
 class UpdateUserCommand(AbstractCommand):
+    oid: str
     name: str
     password: str
     email: str

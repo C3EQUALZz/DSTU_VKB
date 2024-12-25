@@ -50,10 +50,10 @@ class UpdateUserCommandHandler(UsersCommandHandler[UpdateUserCommand]):
         """
         user_service: UsersService = UsersService(uow=self._uow)
 
-        if await user_service.check_existence(name=command.name, email=command.email):
-            raise UserAlreadyExistsException(command.email)
+        if await user_service.check_existence(oid=command.oid):
+            raise UserAlreadyExistsException(command.oid)
 
-        user: UserEntity = await user_service.get_by_email(command.email)
+        user: UserEntity = await user_service.get_by_id(command.oid)
 
         updated_user = UserEntity(**await command.to_dict())
         updated_user.oid = user.oid
