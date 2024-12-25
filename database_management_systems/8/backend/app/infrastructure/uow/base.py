@@ -2,10 +2,13 @@ from abc import (
     ABC,
     abstractmethod,
 )
+from traceback import TracebackException
 from typing import (
     Generator,
     List,
     Self,
+    Optional,
+    Type
 )
 
 from app.logic.events.base import AbstractEvent
@@ -22,7 +25,12 @@ class AbstractUnitOfWork(ABC):
     async def __aenter__(self) -> Self:
         return self
 
-    async def __aexit__(self, *args, **kwargs) -> None:
+    async def __aexit__(
+            self,
+            exc_type: Optional[Type[BaseException]],
+            exc_value: Optional[BaseException],
+            traceback: Optional[TracebackException]
+    ) -> None:
         await self.rollback()
 
     @abstractmethod

@@ -50,7 +50,7 @@ class Email(BaseValueObject[str]):
 
 
 @dataclass(frozen=True)
-class Password(BaseValueObject[str]):
+class Password(BaseValueObject[bytes]):
     value: bytes
 
     def validate(self) -> None:

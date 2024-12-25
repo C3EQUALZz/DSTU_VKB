@@ -40,10 +40,8 @@ class MotorUserRepository(UsersRepository, MotorAbstractRepository):
         return model
 
     @override
-    async def delete(self, user_oid: str) -> Optional[UserEntity]:
-        user = await self._collection.find_one_and_delete(filter={"oid": user_oid})
-        if user:
-            return UserEntity.from_document(user)
+    async def delete(self, user_oid: str) -> None:
+        await self._collection.find_one_and_delete(filter={"oid": user_oid})
 
     @override
     async def list(self) -> List[UserEntity]:
