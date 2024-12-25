@@ -31,14 +31,10 @@ class Bootstrap:
             commands_handlers_for_injection: CommandHandlerMapping,
             dependencies: Optional[Dict[str, Any]] = None,
     ) -> None:
-        self._uow: AbstractUnitOfWork = uow
+        self._uow = uow
         self._dependencies: Dict[str, Any] = {'uow': self._uow}
-        self._events_handlers_for_injection: Dict[Type[AbstractEvent], List[Type[AbstractEventHandler]]] = (
-            events_handlers_for_injection
-        )
-        self._commands_handlers_for_injection: Dict[Type[AbstractCommand], Type[AbstractCommandHandler]] = (
-            commands_handlers_for_injection
-        )
+        self._events_handlers_for_injection = events_handlers_for_injection
+        self._commands_handlers_for_injection = commands_handlers_for_injection
 
         if dependencies:
             self._dependencies.update(dependencies)
