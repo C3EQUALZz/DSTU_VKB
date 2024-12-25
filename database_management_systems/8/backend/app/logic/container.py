@@ -1,8 +1,5 @@
 import logging
 
-from app.infrastructure.uow.users.base import UsersUnitOfWork
-from app.infrastructure.uow.users.mongo import MotorUsersUnitOfWork
-from app.settings.config import Settings
 from dishka import (
     from_context,
     make_async_container,
@@ -12,8 +9,45 @@ from dishka import (
 )
 from motor.motor_asyncio import AsyncIOMotorClient
 
+from app.core.types.handlers import CommandHandlerMapping, EventHandlerMapping
+from app.infrastructure.uow.users.base import UsersUnitOfWork
+from app.infrastructure.uow.users.mongo import MotorUsersUnitOfWork
+from app.logic.commands.users import (
+    CreateUserCommand,
+    GetAllUsersCommand,
+    GetUserByIdCommand,
+    UpdateUserCommand,
+)
+from app.logic.handlers.users.commands import (
+    CreateUserCommandHandler,
+    GetAllUsersCommandHandler,
+    GetUserByIdCommandHandler,
+    UpdateUserCommandHandler,
+)
+from app.settings.config import Settings
 
 logger = logging.getLogger(__name__)
+
+
+class HandlerProvider(Provider):
+    @provide(scope=Scope.APP)
+    async def get_mapping_and_command_handlers(self) -> CommandHandlerMapping:
+        """
+        Here you have to link commands and command handlers for future inject in Bootstrap
+        """
+        return {
+            CreateUserCommand: CreateUserCommandHandler,
+            GetAllUsersCommand: GetAllUsersCommandHandler,
+            GetUserByIdCommand: GetUserByIdCommandHandler,
+            UpdateUserCommand: UpdateUserCommandHandler,
+        }
+
+    @provide(scope=Scope.APP)
+    async def get_mapping_event_and_event_handlers(self) -> EventHandlerMapping:
+        """
+        Here you have to link events and event handlers for future inject in Bootstrap
+        """
+        return {}
 
 
 class AppProvider(Provider):
@@ -35,6 +69,7 @@ class AppProvider(Provider):
 
 container = make_async_container(
     AppProvider(),
+    HandlerProvider(),
     context={
         Settings: Settings(),
     }
