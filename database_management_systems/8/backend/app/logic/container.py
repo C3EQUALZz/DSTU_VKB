@@ -1,18 +1,9 @@
 import logging
 
-from app.infrastructure.uow.users.base import UsersUnitOfWork
-from app.infrastructure.uow.users.mongo import MotorUsersUnitOfWork
-from app.settings.config import Settings
-from dishka import (
-    from_context,
-    make_async_container,
-    provide,
-    Provider,
-    Scope,
+from app.core.types.handlers import (
+    CommandHandlerMapping,
+    EventHandlerMapping,
 )
-from motor.motor_asyncio import AsyncIOMotorClient
-
-from app.core.types.handlers import CommandHandlerMapping, EventHandlerMapping
 from app.infrastructure.uow.users.base import UsersUnitOfWork
 from app.infrastructure.uow.users.mongo import MotorUsersUnitOfWork
 from app.logic.commands.users import (
@@ -27,6 +18,16 @@ from app.logic.handlers.users.commands import (
     GetUserByIdCommandHandler,
     UpdateUserCommandHandler,
 )
+from app.settings.config import Settings
+from dishka import (
+    from_context,
+    make_async_container,
+    provide,
+    Provider,
+    Scope,
+)
+from motor.motor_asyncio import AsyncIOMotorClient
+
 
 logger = logging.getLogger(__name__)
 
@@ -74,5 +75,5 @@ container = make_async_container(
     HandlerProvider(),
     context={
         Settings: Settings(),
-    }
+    },
 )

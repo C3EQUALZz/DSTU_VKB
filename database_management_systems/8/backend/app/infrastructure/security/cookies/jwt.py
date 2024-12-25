@@ -29,9 +29,7 @@ class PyJWTCookieTokenManager(BaseCookieTokenManager):
 
     async def get_payload(self, token: str) -> str:
         try:
-            payload: dict = jwt.decode(
-                token, self._token_secret_key, algorithms=[self._algorithm]
-            )
+            payload: dict = jwt.decode(token, self._token_secret_key, algorithms=[self._algorithm])
             user_oid = payload.get("sub")
 
         except jwt.ExpiredSignatureError:

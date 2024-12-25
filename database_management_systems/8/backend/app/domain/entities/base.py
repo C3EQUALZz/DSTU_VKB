@@ -26,7 +26,7 @@ class BaseEntity(ABC):
 
     def __post_init__(self) -> None:
         for field_name, field_type in get_type_hints(self).items():
-            if field_name == 'oid':
+            if field_name == "oid":
                 continue
 
             value = getattr(self, field_name, None)
@@ -36,9 +36,7 @@ class BaseEntity(ABC):
                 except (ValueError, TypeError):
                     raise CastException(f"'{field_name}' with value '{value}' to {field_type}")
 
-    def to_dict(
-            self, exclude: Optional[Set[str]] = None, include: Optional[Dict[str, Any]] = None
-    ) -> Dict[str, Any]:
+    def to_dict(self, exclude: Optional[Set[str]] = None, include: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """
         Create a dictionary representation of the entity.
 

@@ -13,8 +13,7 @@ class ApplicationException(Exception, ABC):
 
     @property
     @abstractmethod
-    def status(self) -> int:
-        ...
+    def status(self) -> int: ...
 
     def __str__(self) -> str:
         return self.message

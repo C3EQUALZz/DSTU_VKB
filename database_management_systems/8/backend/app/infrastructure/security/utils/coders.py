@@ -3,9 +3,9 @@ import jwt
 
 
 def encode_jwt(
-        payload: dict,
-        private_key: str,
-        algorithm: str,
+    payload: dict,
+    private_key: str,
+    algorithm: str,
 ) -> str:
     return jwt.encode(
         payload=payload,
@@ -14,11 +14,7 @@ def encode_jwt(
     )
 
 
-def decode_jwt(
-        token: str | bytes,
-        public_key: str,
-        algorithm: str
-) -> str:
+def decode_jwt(token: str | bytes, public_key: str, algorithm: str) -> str:
     decoded = jwt.decode(
         token,
         public_key,
@@ -28,7 +24,7 @@ def decode_jwt(
 
 
 def hash_password(
-        password: str,
+    password: str,
 ) -> bytes:
     salt = bcrypt.gensalt()
     pwd_bytes: bytes = password.encode()
@@ -36,8 +32,8 @@ def hash_password(
 
 
 def validate_password(
-        password: str,
-        hashed_password: str,
+    password: str,
+    hashed_password: str,
 ) -> bool:
     return bcrypt.checkpw(
         password=password.encode(),

@@ -6,11 +6,7 @@ from abc import (
 
 class BaseTokenManger(ABC):
     def __init__(
-            self,
-            token_secret_key: str,
-            algorithm: str,
-            access_token_expire_minutes: int,
-            refresh_token_expire_days: int
+        self, token_secret_key: str, algorithm: str, access_token_expire_minutes: int, refresh_token_expire_days: int
     ) -> None:
         self._token_secret_key: str = token_secret_key
         self._algorithm: str = algorithm

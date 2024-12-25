@@ -12,7 +12,7 @@ from app.infrastructure.repositories.users.base import UsersRepository
 class MotorUserRepository(UsersRepository, MotorAbstractRepository):
     @override
     async def get_by_email(self, email: str) -> Optional[UserEntity]:
-        user = await self._collection.find_one(filter={'email': email})
+        user = await self._collection.find_one(filter={"email": email})
         if user:
             return UserEntity.from_document(user)
 

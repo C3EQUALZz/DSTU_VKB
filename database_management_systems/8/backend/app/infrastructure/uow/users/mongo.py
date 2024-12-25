@@ -9,5 +9,5 @@ from app.infrastructure.uow.users.base import UsersUnitOfWork
 class MotorUsersUnitOfWork(MotorAbstractUnitOfWork, UsersUnitOfWork):
     async def __aenter__(self) -> Self:
         uow = await super().__aenter__()
-        self.users: UsersRepository = MotorUserRepository(collection=self._database['users'], session=self._session)
+        self.users: UsersRepository = MotorUserRepository(collection=self._database["users"], session=self._session)
         return uow

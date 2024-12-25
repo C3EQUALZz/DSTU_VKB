@@ -8,9 +8,9 @@ from motor.motor_asyncio import (
 
 class MotorAbstractRepository(ABC):
     def __init__(
-            self,
-            collection: AsyncIOMotorCollection,
-            session: AsyncIOMotorClientSession,
+        self,
+        collection: AsyncIOMotorCollection,
+        session: AsyncIOMotorClientSession,
     ) -> None:
         self._collection: AsyncIOMotorCollection = collection
         self._session: AsyncIOMotorClientSession = session

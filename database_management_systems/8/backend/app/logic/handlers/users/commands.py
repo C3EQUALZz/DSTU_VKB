@@ -61,7 +61,6 @@ class UpdateUserCommandHandler(UsersCommandHandler[UpdateUserCommand]):
         return await user_service.update(updated_user)
 
 
-
 class DeleteUserCommandHandler(UsersCommandHandler[DeleteUserCommand]):
     async def __call__(self, command: DeleteUserCommand) -> None:
         """

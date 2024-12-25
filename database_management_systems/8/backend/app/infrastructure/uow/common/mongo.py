@@ -16,11 +16,7 @@ class MotorAbstractUnitOfWork(AbstractUnitOfWork):
     Unit of work interface for MongoDB using Motor with transaction support.
     """
 
-    def __init__(
-            self,
-            client: AsyncIOMotorClient,
-            database_name: str
-    ) -> None:
+    def __init__(self, client: AsyncIOMotorClient, database_name: str) -> None:
         super().__init__()
         self._client: AsyncIOMotorClient = client
         self._database_name: str = database_name

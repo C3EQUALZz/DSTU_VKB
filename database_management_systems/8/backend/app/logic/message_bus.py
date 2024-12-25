@@ -26,10 +26,10 @@ HT = TypeVar("HT", bound=AbstractHandler)
 
 class MessageBus:
     def __init__(
-            self,
-            uow: AbstractUnitOfWork,
-            event_handlers: Dict[Type[ET], List[AbstractEventHandler[ET]]],
-            command_handlers: Dict[Type[CT], AbstractCommandHandler[CT]],
+        self,
+        uow: AbstractUnitOfWork,
+        event_handlers: Dict[Type[ET], List[AbstractEventHandler[ET]]],
+        command_handlers: Dict[Type[CT], AbstractCommandHandler[CT]],
     ) -> None:
         self._uow = uow
         self._event_handlers = event_handlers

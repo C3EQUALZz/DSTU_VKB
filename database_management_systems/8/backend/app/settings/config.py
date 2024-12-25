@@ -16,10 +16,11 @@ class CommonSettings(BaseSettings, ABC):
     Класс, от которого каждая настройка должна наследоваться.
     Написано с той целью, чтобы не было дублирования кода по настройке model_config.
     """
+
     model_config = SettingsConfigDict(
         env_file=os.path.expanduser("database_management_systems/8/backend/.env"),
         env_file_encoding="utf-8",
-        extra="allow"
+        extra="allow",
     )
 
 

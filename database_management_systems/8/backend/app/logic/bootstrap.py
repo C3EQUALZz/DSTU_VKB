@@ -8,7 +8,11 @@ from typing import (
     Type,
 )
 
-from app.core.types.handlers import HT, EventHandlerMapping, CommandHandlerMapping
+from app.core.types.handlers import (
+    CommandHandlerMapping,
+    EventHandlerMapping,
+    HT,
+)
 from app.infrastructure.uow.base import AbstractUnitOfWork
 from app.logic.commands.base import AbstractCommand
 from app.logic.events.base import AbstractEvent
@@ -25,14 +29,14 @@ class Bootstrap:
     """
 
     def __init__(
-            self,
-            uow: AbstractUnitOfWork,
-            events_handlers_for_injection: EventHandlerMapping,
-            commands_handlers_for_injection: CommandHandlerMapping,
-            dependencies: Optional[Dict[str, Any]] = None,
+        self,
+        uow: AbstractUnitOfWork,
+        events_handlers_for_injection: EventHandlerMapping,
+        commands_handlers_for_injection: CommandHandlerMapping,
+        dependencies: Optional[Dict[str, Any]] = None,
     ) -> None:
         self._uow = uow
-        self._dependencies: Dict[str, Any] = {'uow': self._uow}
+        self._dependencies: Dict[str, Any] = {"uow": self._uow}
         self._events_handlers_for_injection = events_handlers_for_injection
         self._commands_handlers_for_injection = commands_handlers_for_injection
 
@@ -46,10 +50,7 @@ class Bootstrap:
         """
 
         injected_event_handlers: Dict[Type[AbstractEvent], List[AbstractEventHandler]] = {
-            event_type: [
-                await self._inject_dependencies(handler=handler)
-                for handler in event_handlers
-            ]
+            event_type: [await self._inject_dependencies(handler=handler) for handler in event_handlers]
             for event_type, event_handlers in self._events_handlers_for_injection.items()
         }
 
@@ -64,10 +65,7 @@ class Bootstrap:
             command_handlers=injected_command_handlers,
         )
 
-    async def _inject_dependencies(
-            self,
-            handler: Type[HT]
-    ) -> HT:
+    async def _inject_dependencies(self, handler: Type[HT]) -> HT:
         """
         Inspecting handler to know its signature and init params, after which only necessary dependencies will be
         injected to the handler.
@@ -75,8 +73,6 @@ class Bootstrap:
 
         params: MappingProxyType[str, inspect.Parameter] = inspect.signature(handler).parameters
         handler_dependencies: Dict[str, Any] = {
-            name: dependency
-            for name, dependency in self._dependencies.items()
-            if name in params
+            name: dependency for name, dependency in self._dependencies.items() if name in params
         }
         return handler(**handler_dependencies)

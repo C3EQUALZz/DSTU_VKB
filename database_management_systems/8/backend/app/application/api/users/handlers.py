@@ -11,7 +11,10 @@ from app.application.api.users.schemas import (
     ErrorMessageScheme,
     UpdateUserSchema,
 )
-from app.core.types.handlers import EventHandlerMapping, CommandHandlerMapping
+from app.core.types.handlers import (
+    CommandHandlerMapping,
+    EventHandlerMapping,
+)
 from app.domain.entities.user import UserEntity
 from app.exceptions import ApplicationException
 from app.infrastructure.uow.users.base import UsersUnitOfWork
@@ -33,11 +36,8 @@ from dishka.integrations.fastapi import (
     FromDishka,
 )
 
-router = APIRouter(
-    prefix="/users",
-    tags=["users"],
-    route_class=DishkaRoute
-)
+
+router = APIRouter(prefix="/users", tags=["users"], route_class=DishkaRoute)
 
 
 @router.post(
@@ -46,28 +46,22 @@ router = APIRouter(
     responses={
         status.HTTP_409_CONFLICT: {"model": UserAlreadyExistsException},
         status.HTTP_400_BAD_REQUEST: {"model": ErrorMessageScheme},
-    }
+    },
 )
 async def create_user(
-        scheme: CreateUserSchema,
-        uow: FromDishka[UsersUnitOfWork],
-        events: FromDishka[EventHandlerMapping],
-        commands: FromDishka[CommandHandlerMapping]
+    scheme: CreateUserSchema,
+    uow: FromDishka[UsersUnitOfWork],
+    events: FromDishka[EventHandlerMapping],
+    commands: FromDishka[CommandHandlerMapping],
 ) -> UserEntity:
     try:
         bootstrap: Bootstrap = Bootstrap(
-            uow=uow,
-            events_handlers_for_injection=events,
-            commands_handlers_for_injection=commands
+            uow=uow, events_handlers_for_injection=events, commands_handlers_for_injection=commands
         )
 
         messagebus: MessageBus = await bootstrap.get_messagebus()
 
-        await messagebus.handle(
-            CreateUserCommand(
-                **scheme.model_dump()
-            )
-        )
+        await messagebus.handle(CreateUserCommand(**scheme.model_dump()))
 
         return messagebus.command_result
 
@@ -77,22 +71,18 @@ async def create_user(
 
 @router.get("/")
 async def get_users(
-        uow: FromDishka[UsersUnitOfWork],
-        events: FromDishka[EventHandlerMapping],
-        commands: FromDishka[CommandHandlerMapping]
+    uow: FromDishka[UsersUnitOfWork],
+    events: FromDishka[EventHandlerMapping],
+    commands: FromDishka[CommandHandlerMapping],
 ) -> List[UserEntity]:
     try:
         bootstrap: Bootstrap = Bootstrap(
-            uow=uow,
-            events_handlers_for_injection=events,
-            commands_handlers_for_injection=commands
+            uow=uow, events_handlers_for_injection=events, commands_handlers_for_injection=commands
         )
 
         messagebus: MessageBus = await bootstrap.get_messagebus()
 
-        await messagebus.handle(
-            GetAllUsersCommand()
-        )
+        await messagebus.handle(GetAllUsersCommand())
 
         return messagebus.command_result
 
@@ -102,23 +92,19 @@ async def get_users(
 
 @router.get("/{user_id}/")
 async def get_user(
-        user_id: str,
-        uow: FromDishka[UsersUnitOfWork],
-        events: FromDishka[EventHandlerMapping],
-        commands: FromDishka[CommandHandlerMapping]
+    user_id: str,
+    uow: FromDishka[UsersUnitOfWork],
+    events: FromDishka[EventHandlerMapping],
+    commands: FromDishka[CommandHandlerMapping],
 ) -> UserEntity:
     try:
         bootstrap: Bootstrap = Bootstrap(
-            uow=uow,
-            events_handlers_for_injection=events,
-            commands_handlers_for_injection=commands
+            uow=uow, events_handlers_for_injection=events, commands_handlers_for_injection=commands
         )
 
         messagebus: MessageBus = await bootstrap.get_messagebus()
 
-        await messagebus.handle(
-            GetUserByIdCommand(oid=user_id)
-        )
+        await messagebus.handle(GetUserByIdCommand(oid=user_id))
 
         return messagebus.command_result
 
@@ -128,23 +114,19 @@ async def get_user(
 
 @router.patch("/{user_id}/")
 async def update_user(
-        scheme: UpdateUserSchema,
-        uow: FromDishka[UsersUnitOfWork],
-        events: FromDishka[EventHandlerMapping],
-        commands: FromDishka[CommandHandlerMapping]
+    scheme: UpdateUserSchema,
+    uow: FromDishka[UsersUnitOfWork],
+    events: FromDishka[EventHandlerMapping],
+    commands: FromDishka[CommandHandlerMapping],
 ) -> UserEntity:
     try:
         bootstrap: Bootstrap = Bootstrap(
-            uow=uow,
-            events_handlers_for_injection=events,
-            commands_handlers_for_injection=commands
+            uow=uow, events_handlers_for_injection=events, commands_handlers_for_injection=commands
         )
 
         messagebus: MessageBus = await bootstrap.get_messagebus()
 
-        await messagebus.handle(
-            UpdateUserCommand(**scheme.model_dump())
-        )
+        await messagebus.handle(UpdateUserCommand(**scheme.model_dump()))
 
         return messagebus.command_result
 
@@ -158,27 +140,21 @@ async def update_user(
     responses={
         status.HTTP_400_BAD_REQUEST: {"model": ErrorMessageScheme},
         status.HTTP_404_NOT_FOUND: {"model": UserNotFoundException},
-    }
+    },
 )
 async def delete_user(
-        user_id: str,
-        uow: FromDishka[UsersUnitOfWork],
-        events: FromDishka[EventHandlerMapping],
-        commands: FromDishka[CommandHandlerMapping]
+    user_id: str,
+    uow: FromDishka[UsersUnitOfWork],
+    events: FromDishka[EventHandlerMapping],
+    commands: FromDishka[CommandHandlerMapping],
 ) -> None:
     try:
         bootstrap: Bootstrap = Bootstrap(
-            uow=uow,
-            events_handlers_for_injection=events,
-            commands_handlers_for_injection=commands
+            uow=uow, events_handlers_for_injection=events, commands_handlers_for_injection=commands
         )
 
         messagebus: MessageBus = await bootstrap.get_messagebus()
-        await messagebus.handle(
-            DeleteUserCommand(
-                oid=user_id
-            )
-        )
+        await messagebus.handle(DeleteUserCommand(oid=user_id))
 
         return messagebus.command_result
 

@@ -7,7 +7,10 @@ from typing import (
     Generic,
 )
 
-from app.core.types.handlers import ET, CT
+from app.core.types.handlers import (
+    CT,
+    ET,
+)
 from app.infrastructure.uow.base import AbstractUnitOfWork
 
 

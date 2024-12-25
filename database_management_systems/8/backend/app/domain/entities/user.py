@@ -42,10 +42,5 @@ class UserEntity(BaseEntity):
         is_verified = document["is_verified"]
 
         return cls(
-            oid=oid,
-            email=email,
-            name=username,
-            password=password,
-            created_at=created_at,
-            is_verified=is_verified
+            oid=oid, email=email, name=username, password=password, created_at=created_at, is_verified=is_verified
         )
