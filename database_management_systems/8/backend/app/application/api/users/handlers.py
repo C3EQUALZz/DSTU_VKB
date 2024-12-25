@@ -27,10 +27,6 @@ from app.logic.exceptions import (
     UserAlreadyExistsException,
     UserNotFoundException,
 )
-from app.logic.handlers import (
-    COMMANDS_HANDLERS_FOR_INJECTION,
-    EVENTS_HANDLERS_FOR_INJECTION,
-)
 from app.logic.message_bus import MessageBus
 from dishka.integrations.fastapi import (
     DishkaRoute,
