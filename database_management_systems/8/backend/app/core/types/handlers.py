@@ -18,5 +18,5 @@ ET = TypeVar("ET", bound=AbstractEvent)
 CT = TypeVar("CT", bound=AbstractCommand)
 HT = TypeVar("HT", bound=AbstractHandler)
 
-CommandHandlerMapping = Dict[Type[CT], Type[AbstractCommandHandler[CT]]]
-EventHandlerMapping = Dict[Type[ET], List[Type[AbstractEventHandler[ET]]]]
+CommandHandlerMapping = Dict[Type[AbstractCommand], Type[AbstractCommandHandler[AbstractCommand]]]
+EventHandlerMapping = Dict[Type[AbstractEvent], List[Type[AbstractEventHandler[AbstractEvent]]]]

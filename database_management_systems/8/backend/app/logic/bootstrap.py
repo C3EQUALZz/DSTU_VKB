@@ -11,8 +11,9 @@ from typing import (
 from app.core.types.handlers import (
     CommandHandlerMapping,
     EventHandlerMapping,
-    HT,
+    HT
 )
+
 from app.infrastructure.uow.base import AbstractUnitOfWork
 from app.logic.commands.base import AbstractCommand
 from app.logic.events.base import AbstractEvent
@@ -31,8 +32,8 @@ class Bootstrap:
     def __init__(
         self,
         uow: AbstractUnitOfWork,
-        events_handlers_for_injection: EventHandlerMapping,
-        commands_handlers_for_injection: CommandHandlerMapping,
+        events_handlers_for_injection: EventHandlerMapping, # type: ignore
+        commands_handlers_for_injection: CommandHandlerMapping, # type: ignore
         dependencies: Optional[Dict[str, Any]] = None,
     ) -> None:
         self._uow = uow
@@ -49,12 +50,12 @@ class Bootstrap:
         after which returns messagebus instance.
         """
 
-        injected_event_handlers: Dict[Type[AbstractEvent], List[AbstractEventHandler]] = {
+        injected_event_handlers: Dict[Type[AbstractEvent], List[AbstractEventHandler[AbstractEvent]]] = {
             event_type: [await self._inject_dependencies(handler=handler) for handler in event_handlers]
             for event_type, event_handlers in self._events_handlers_for_injection.items()
         }
 
-        injected_command_handlers: Dict[Type[AbstractCommand], AbstractCommandHandler] = {
+        injected_command_handlers: Dict[Type[AbstractCommand], AbstractCommandHandler[AbstractCommand]] = {
             command_type: await self._inject_dependencies(handler=handler)
             for command_type, handler in self._commands_handlers_for_injection.items()
         }

@@ -4,7 +4,6 @@ from typing import (
     Dict,
     List,
     Type,
-    TypeVar,
     Union,
 )
 
@@ -15,26 +14,20 @@ from app.logic.exceptions import MessageBusMessageException
 from app.logic.handlers.base import (
     AbstractCommandHandler,
     AbstractEventHandler,
-    AbstractHandler,
 )
-
-
-ET = TypeVar("ET", bound=AbstractEvent)
-CT = TypeVar("CT", bound=AbstractCommand)
-HT = TypeVar("HT", bound=AbstractHandler)
 
 
 class MessageBus:
     def __init__(
         self,
         uow: AbstractUnitOfWork,
-        event_handlers: Dict[Type[ET], List[AbstractEventHandler[ET]]],
-        command_handlers: Dict[Type[CT], AbstractCommandHandler[CT]],
+        event_handlers: Dict[Type[AbstractEvent], List[AbstractEventHandler[AbstractEvent]]],
+        command_handlers: Dict[Type[AbstractCommand], AbstractCommandHandler[AbstractCommand]],
     ) -> None:
         self._uow = uow
         self._event_handlers = event_handlers
         self._command_handlers = command_handlers
-        self._queue: Queue = Queue()
+        self._queue: Queue[Union[AbstractEvent, AbstractCommand]] = Queue()
         self._command_result: Any = None
 
     async def handle(self, message: Union[AbstractEvent, AbstractCommand]) -> None:
@@ -48,14 +41,14 @@ class MessageBus:
             else:
                 raise MessageBusMessageException()
 
-    async def _handle_event(self, event: ET) -> None:
+    async def _handle_event(self, event: AbstractEvent) -> None:
         for handler in self._event_handlers[type(event)]:
             await handler(event)
             for event in self._uow.get_events():
                 self._queue.put_nowait(event)
 
-    async def _handle_command(self, command: CT) -> None:
-        handler: AbstractCommandHandler = self._command_handlers[type(command)]
+    async def _handle_command(self, command: AbstractCommand) -> None:
+        handler: AbstractCommandHandler[AbstractCommand] = self._command_handlers[type(command)]
         self._command_result = await handler(command)
         for event in self._uow.get_events():
             self._queue.put_nowait(event)

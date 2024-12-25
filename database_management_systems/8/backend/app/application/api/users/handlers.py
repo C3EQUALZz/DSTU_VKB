@@ -1,5 +1,9 @@
 from typing import List
 
+from dishka.integrations.fastapi import (
+    DishkaRoute,
+    FromDishka,
+)
 from fastapi import (
     APIRouter,
     HTTPException,
@@ -14,9 +18,7 @@ from app.application.api.users.schemas import (
 )
 from app.core.types.handlers import (
     CommandHandlerMapping,
-    EventHandlerMapping,
-    CT,
-    ET
+    EventHandlerMapping
 )
 from app.exceptions import ApplicationException
 from app.infrastructure.uow.users.base import UsersUnitOfWork
@@ -33,10 +35,6 @@ from app.logic.exceptions import (
     UserNotFoundException,
 )
 from app.logic.message_bus import MessageBus
-from dishka.integrations.fastapi import (
-    DishkaRoute,
-    FromDishka,
-)
 
 router = APIRouter(prefix="/users", tags=["users"], route_class=DishkaRoute)
 
@@ -52,8 +50,8 @@ router = APIRouter(prefix="/users", tags=["users"], route_class=DishkaRoute)
 async def create_user(
         scheme: CreateUserSchemaRequest,
         uow: FromDishka[UsersUnitOfWork],
-        events: FromDishka[EventHandlerMapping[ET]],
-        commands: FromDishka[CommandHandlerMapping[CT]],
+        events: FromDishka[EventHandlerMapping],
+        commands: FromDishka[CommandHandlerMapping],
 ) -> UserSchemeResponse:
     try:
         bootstrap: Bootstrap = Bootstrap(
@@ -73,8 +71,8 @@ async def create_user(
 @router.get("/")
 async def get_users(
         uow: FromDishka[UsersUnitOfWork],
-        events: FromDishka[EventHandlerMapping[ET]],
-        commands: FromDishka[CommandHandlerMapping[CT]],
+        events: FromDishka[EventHandlerMapping],
+        commands: FromDishka[CommandHandlerMapping],
 ) -> List[UserSchemeResponse]:
     try:
         bootstrap: Bootstrap = Bootstrap(
@@ -95,8 +93,8 @@ async def get_users(
 async def get_user(
         user_id: str,
         uow: FromDishka[UsersUnitOfWork],
-        events: FromDishka[EventHandlerMapping[ET]],
-        commands: FromDishka[CommandHandlerMapping[CT]],
+        events: FromDishka[EventHandlerMapping],
+        commands: FromDishka[CommandHandlerMapping],
 ) -> UserSchemeResponse:
     try:
         bootstrap: Bootstrap = Bootstrap(
@@ -117,8 +115,8 @@ async def get_user(
 async def update_user(
         scheme: UpdateUserSchemaRequest,
         uow: FromDishka[UsersUnitOfWork],
-        events: FromDishka[EventHandlerMapping[ET]],
-        commands: FromDishka[CommandHandlerMapping[CT]],
+        events: FromDishka[EventHandlerMapping],
+        commands: FromDishka[CommandHandlerMapping],
 ) -> UserSchemeResponse:
     try:
         bootstrap: Bootstrap = Bootstrap(
@@ -146,8 +144,8 @@ async def update_user(
 async def delete_user(
         user_id: str,
         uow: FromDishka[UsersUnitOfWork],
-        events: FromDishka[EventHandlerMapping[ET]],
-        commands: FromDishka[CommandHandlerMapping[CT]],
+        events: FromDishka[EventHandlerMapping],
+        commands: FromDishka[CommandHandlerMapping],
 ) -> None:
     try:
         bootstrap: Bootstrap = Bootstrap(
