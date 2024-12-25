@@ -1,11 +1,10 @@
 from abc import ABC
 
+from app.core.types.handlers import ET, CT
 from app.infrastructure.uow.users.base import UsersUnitOfWork
 from app.logic.handlers.base import (
     AbstractCommandHandler,
-    AbstractEventHandler,
-    CT,
-    ET,
+    AbstractEventHandler
 )
 
 

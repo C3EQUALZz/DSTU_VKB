@@ -64,7 +64,7 @@ sections=[
 [tool.mypy]
 files = ["app", "tests"]
 python_version = "3.12"
-# plugins = ['pydantic.mypy']
+plugins = ['pydantic.mypy']
 strict = true
 pretty = true
 
@@ -133,7 +133,7 @@ convention = "google"
 keep-runtime-typing = true
 
 [tool.pytest.ini_options]
-# addopts = "--asyncio-mode=auto"
+addopts = "--asyncio-mode=auto"
 xfail_strict=true
 testpaths = [
     "tests",

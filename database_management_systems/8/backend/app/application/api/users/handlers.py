@@ -7,15 +7,15 @@ from fastapi import (
 from starlette import status
 
 from app.application.api.users.schemas import (
-    CreateUserSchema,
+    CreateUserSchemaRequest,
     ErrorMessageScheme,
-    UpdateUserSchema,
+    UpdateUserSchemaRequest,
+    UserSchemeResponse,
 )
 from app.core.types.handlers import (
     CommandHandlerMapping,
     EventHandlerMapping,
 )
-from app.domain.entities.user import UserEntity
 from app.exceptions import ApplicationException
 from app.infrastructure.uow.users.base import UsersUnitOfWork
 from app.logic.bootstrap import Bootstrap
@@ -49,11 +49,11 @@ router = APIRouter(prefix="/users", tags=["users"], route_class=DishkaRoute)
     },
 )
 async def create_user(
-    scheme: CreateUserSchema,
+    scheme: CreateUserSchemaRequest,
     uow: FromDishka[UsersUnitOfWork],
     events: FromDishka[EventHandlerMapping],
     commands: FromDishka[CommandHandlerMapping],
-) -> UserEntity:
+) -> UserSchemeResponse:
     try:
         bootstrap: Bootstrap = Bootstrap(
             uow=uow, events_handlers_for_injection=events, commands_handlers_for_injection=commands
@@ -63,7 +63,7 @@ async def create_user(
 
         await messagebus.handle(CreateUserCommand(**scheme.model_dump()))
 
-        return messagebus.command_result
+        return UserSchemeResponse.from_entity(messagebus.command_result)
 
     except ApplicationException as e:
         raise HTTPException(status_code=e.status, detail=str(e))
@@ -74,7 +74,7 @@ async def get_users(
     uow: FromDishka[UsersUnitOfWork],
     events: FromDishka[EventHandlerMapping],
     commands: FromDishka[CommandHandlerMapping],
-) -> List[UserEntity]:
+) -> List[UserSchemeResponse]:
     try:
         bootstrap: Bootstrap = Bootstrap(
             uow=uow, events_handlers_for_injection=events, commands_handlers_for_injection=commands
@@ -84,7 +84,7 @@ async def get_users(
 
         await messagebus.handle(GetAllUsersCommand())
 
-        return messagebus.command_result
+        return [UserSchemeResponse.from_entity(entity=entity) for entity in messagebus.command_result]
 
     except ApplicationException as e:
         raise HTTPException(status_code=e.status, detail=str(e))
@@ -96,7 +96,7 @@ async def get_user(
     uow: FromDishka[UsersUnitOfWork],
     events: FromDishka[EventHandlerMapping],
     commands: FromDishka[CommandHandlerMapping],
-) -> UserEntity:
+) -> UserSchemeResponse:
     try:
         bootstrap: Bootstrap = Bootstrap(
             uow=uow, events_handlers_for_injection=events, commands_handlers_for_injection=commands
@@ -106,7 +106,7 @@ async def get_user(
 
         await messagebus.handle(GetUserByIdCommand(oid=user_id))
 
-        return messagebus.command_result
+        return UserSchemeResponse.from_entity(messagebus.command_result)
 
     except ApplicationException as e:
         raise HTTPException(status_code=e.status, detail=str(e))
@@ -114,11 +114,11 @@ async def get_user(
 
 @router.patch("/{user_id}/")
 async def update_user(
-    scheme: UpdateUserSchema,
+    scheme: UpdateUserSchemaRequest,
     uow: FromDishka[UsersUnitOfWork],
     events: FromDishka[EventHandlerMapping],
     commands: FromDishka[CommandHandlerMapping],
-) -> UserEntity:
+) -> UserSchemeResponse:
     try:
         bootstrap: Bootstrap = Bootstrap(
             uow=uow, events_handlers_for_injection=events, commands_handlers_for_injection=commands
@@ -128,7 +128,7 @@ async def update_user(
 
         await messagebus.handle(UpdateUserCommand(**scheme.model_dump()))
 
-        return messagebus.command_result
+        return UserSchemeResponse.from_entity(messagebus.command_result)
 
     except ApplicationException as e:
         raise HTTPException(status_code=e.status, detail=str(e))
