@@ -6,23 +6,17 @@ from typing import (
     List,
     Optional,
     Type,
-    TypeVar,
 )
 
+from app.core.types.handlers import HT, EventHandlerMapping, CommandHandlerMapping
 from app.infrastructure.uow.base import AbstractUnitOfWork
 from app.logic.commands.base import AbstractCommand
 from app.logic.events.base import AbstractEvent
 from app.logic.handlers.base import (
     AbstractCommandHandler,
     AbstractEventHandler,
-    AbstractHandler,
 )
 from app.logic.message_bus import MessageBus
-
-
-ET = TypeVar("ET", bound=AbstractEvent)
-CT = TypeVar("CT", bound=AbstractCommand)
-HT = TypeVar("HT", bound=AbstractHandler)
 
 
 class Bootstrap:
@@ -33,18 +27,14 @@ class Bootstrap:
     def __init__(
             self,
             uow: AbstractUnitOfWork,
-            events_handlers_for_injection: Dict[Type[ET], List[Type[AbstractEventHandler[ET]]]],
-            commands_handlers_for_injection: Dict[Type[CT], Type[AbstractCommandHandler[CT]]],
+            events_handlers_for_injection: EventHandlerMapping,
+            commands_handlers_for_injection: CommandHandlerMapping,
             dependencies: Optional[Dict[str, Any]] = None,
     ) -> None:
-        self._uow: AbstractUnitOfWork = uow
+        self._uow = uow
         self._dependencies: Dict[str, Any] = {'uow': self._uow}
-        self._events_handlers_for_injection: Dict[Type[AbstractEvent], List[Type[AbstractEventHandler]]] = (
-            events_handlers_for_injection
-        )
-        self._commands_handlers_for_injection: Dict[Type[AbstractCommand], Type[AbstractCommandHandler]] = (
-            commands_handlers_for_injection
-        )
+        self._events_handlers_for_injection = events_handlers_for_injection
+        self._commands_handlers_for_injection = commands_handlers_for_injection
 
         if dependencies:
             self._dependencies.update(dependencies)
