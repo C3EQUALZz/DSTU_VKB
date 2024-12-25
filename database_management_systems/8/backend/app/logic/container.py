@@ -1,11 +1,17 @@
 import logging
 
-from dishka import Provider, Scope, provide, from_context, make_async_container
-from motor.motor_asyncio import AsyncIOMotorClient
-
 from app.infrastructure.uow.users.base import UsersUnitOfWork
 from app.infrastructure.uow.users.mongo import MotorUsersUnitOfWork
 from app.settings.config import Settings
+from dishka import (
+    from_context,
+    make_async_container,
+    provide,
+    Provider,
+    Scope,
+)
+from motor.motor_asyncio import AsyncIOMotorClient
+
 
 logger = logging.getLogger(__name__)
 

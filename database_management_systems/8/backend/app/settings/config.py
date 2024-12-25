@@ -1,8 +1,14 @@
 import os.path
 from abc import ABC
 
-from pydantic import Field, MongoDsn
-from pydantic_settings import SettingsConfigDict, BaseSettings
+from pydantic import (
+    Field,
+    MongoDsn,
+)
+from pydantic_settings import (
+    BaseSettings,
+    SettingsConfigDict,
+)
 
 
 class CommonSettings(BaseSettings, ABC):

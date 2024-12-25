@@ -1,8 +1,8 @@
-from dishka.integrations.fastapi import setup_dishka
 from fastapi import FastAPI
 
 from app.application.api.users.handlers import router as user_router
 from app.logic.container import container
+from dishka.integrations.fastapi import setup_dishka
 
 
 def create_app() -> FastAPI:

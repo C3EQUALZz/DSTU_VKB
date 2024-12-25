@@ -1,5 +1,12 @@
-from abc import ABC, abstractmethod
-from typing import Self, List, Generator
+from abc import (
+    ABC,
+    abstractmethod,
+)
+from typing import (
+    Generator,
+    List,
+    Self,
+)
 
 from app.logic.events.base import AbstractEvent
 

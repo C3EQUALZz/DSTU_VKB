@@ -1,8 +1,14 @@
-from datetime import UTC, datetime, timedelta
+from datetime import (
+    datetime,
+    timedelta,
+    UTC,
+)
 
 import jwt
-
-from app.infrastructure.exceptions import ExpiredToken, InvalidToken
+from app.infrastructure.exceptions import (
+    ExpiredToken,
+    InvalidToken,
+)
 from app.infrastructure.security.cookies.base import BaseCookieTokenManager
 
 

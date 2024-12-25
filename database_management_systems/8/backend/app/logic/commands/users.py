@@ -12,7 +12,9 @@ class CreateUserCommand(AbstractCommand):
 
 @dataclass(frozen=True)
 class UpdateUserCommand(AbstractCommand):
-    ...
+    name: str
+    password: str
+    email: str
 
 
 @dataclass(frozen=True)
@@ -23,11 +25,6 @@ class DeleteUserCommand(AbstractCommand):
 @dataclass(frozen=True)
 class GetUserByIdCommand(AbstractCommand):
     oid: str
-
-
-@dataclass(frozen=True)
-class GetUserByEmailCommand(AbstractCommand):
-    email: str
 
 
 @dataclass(frozen=True)

@@ -1,6 +1,9 @@
 from abc import ABC
 
-from motor.motor_asyncio import AsyncIOMotorCollection, AsyncIOMotorClientSession
+from motor.motor_asyncio import (
+    AsyncIOMotorClientSession,
+    AsyncIOMotorCollection,
+)
 
 
 class MotorAbstractRepository(ABC):

@@ -19,6 +19,7 @@ from app.logic.handlers.base import (
 )
 from app.logic.message_bus import MessageBus
 
+
 ET = TypeVar("ET", bound=AbstractEvent)
 CT = TypeVar("CT", bound=AbstractCommand)
 HT = TypeVar("HT", bound=AbstractHandler)

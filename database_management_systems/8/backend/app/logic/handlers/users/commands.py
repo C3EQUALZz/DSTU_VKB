@@ -3,11 +3,24 @@ from typing import List
 from app.domain.entities.user import UserEntity
 from app.domain.values.users import Password
 from app.infrastructure.exceptions import UserNotFoundError
-from app.infrastructure.security.utils.coders import hash_password, validate_password
+from app.infrastructure.security.utils.coders import (
+    hash_password,
+    validate_password,
+)
 from app.infrastructure.services.users import UsersService
-from app.logic.commands.users import CreateUserCommand, VerifyUserCredentialsCommand, UpdateUserCommand, \
-    DeleteUserCommand, GetAllUsersCommand
-from app.logic.exceptions import UserAlreadyExistsException, InvalidPasswordException, UserNotFoundException
+from app.logic.commands.users import (
+    CreateUserCommand,
+    DeleteUserCommand,
+    GetAllUsersCommand,
+    GetUserByIdCommand,
+    UpdateUserCommand,
+    VerifyUserCredentialsCommand,
+)
+from app.logic.exceptions import (
+    InvalidPasswordException,
+    UserAlreadyExistsException,
+    UserNotFoundException,
+)
 from app.logic.handlers.users.base import UsersCommandHandler
 
 
@@ -18,15 +31,13 @@ class CreateUserCommandHandler(UsersCommandHandler[CreateUserCommand]):
         """
         user_service: UsersService = UsersService(uow=self._uow)
 
-        if await user_service.check_user_existence(name=command.name, email=command.email):
+        if await user_service.check_existence(name=command.name, email=command.email):
             raise UserAlreadyExistsException(command.email)
 
         new_user: UserEntity = UserEntity(**await command.to_dict())
         new_user.password = Password(hash_password(command.password))
 
-        new_user = await user_service.create_user(new_user)
-
-        return new_user
+        return await user_service.add(new_user)
 
 
 class UpdateUserCommandHandler(UsersCommandHandler[UpdateUserCommand]):
@@ -37,7 +48,18 @@ class UpdateUserCommandHandler(UsersCommandHandler[UpdateUserCommand]):
         :param command: command to execute which must be linked in app/logic/handlers/__init__
         :return: domain entity of the updated book
         """
-        ...
+        user_service: UsersService = UsersService(uow=self._uow)
+
+        if await user_service.check_existence(name=command.name, email=command.email):
+            raise UserAlreadyExistsException(command.email)
+
+        user: UserEntity = await user_service.get_by_email(command.email)
+
+        updated_user = UserEntity(**await command.to_dict())
+        updated_user.oid = user.oid
+
+        return await user_service.update(updated_user)
+
 
 
 class DeleteUserCommandHandler(UsersCommandHandler[DeleteUserCommand]):
@@ -50,10 +72,10 @@ class DeleteUserCommandHandler(UsersCommandHandler[DeleteUserCommand]):
         """
         user_service: UsersService = UsersService(uow=self._uow)
 
-        if not user_service.check_user_existence(oid=command.oid):
+        if not user_service.check_existence(oid=command.oid):
             raise UserNotFoundException(str(command.oid))
 
-        await user_service.delete_user(oid=command.oid)
+        await user_service.delete(oid=command.oid)
 
 
 class GetAllUsersCommandHandler(UsersCommandHandler[GetAllUsersCommand]):
@@ -65,7 +87,23 @@ class GetAllUsersCommandHandler(UsersCommandHandler[GetAllUsersCommand]):
         """
         user_service: UsersService = UsersService(uow=self._uow)
 
-        return await user_service.get_all_users()
+        return await user_service.get_all()
+
+
+class GetUserByIdCommandHandler(UsersCommandHandler[GetUserByIdCommand]):
+    async def __call__(self, command: GetUserByIdCommand) -> UserEntity:
+        """
+        Gets user by id, if user with provided credentials exist, and updates event signaling that
+        operation was successfully executed. In other case raises UserNotFoundException.
+        param command: command to execute which must be linked in app/logic/handlers/__init__
+        :return: domain entity of the user by id
+        """
+        user_service: UsersService = UsersService(uow=self._uow)
+
+        if not await user_service.check_existence(oid=command.oid):
+            raise UserNotFoundException(str(command.oid))
+
+        return await user_service.get_by_id(oid=command.oid)
 
 
 class VerifyUserCredentialsCommandHandler(UsersCommandHandler[VerifyUserCredentialsCommand]):
@@ -77,10 +115,10 @@ class VerifyUserCredentialsCommandHandler(UsersCommandHandler[VerifyUserCredenti
         users_service: UsersService = UsersService(uow=self._uow)
 
         user: UserEntity
-        if await users_service.check_user_existence(email=command.name):
-            user = await users_service.get_user_by_email(email=command.name)
-        elif await users_service.check_user_existence(name=command.name):
-            user = await users_service.get_user_by_name(name=command.name)
+        if await users_service.check_existence(email=command.name):
+            user = await users_service.get_by_email(email=command.name)
+        elif await users_service.check_existence(name=command.name):
+            user = await users_service.get_by_name(name=command.name)
         else:
             raise UserNotFoundError
 

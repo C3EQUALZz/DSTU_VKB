@@ -1,4 +1,8 @@
-from typing import Optional, List, override
+from typing import (
+    List,
+    Optional,
+    override,
+)
 
 from app.domain.entities.user import UserEntity
 from app.infrastructure.repositories.common.mongo import MotorAbstractRepository

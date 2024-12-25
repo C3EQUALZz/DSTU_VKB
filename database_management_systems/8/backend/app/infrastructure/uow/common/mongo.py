@@ -1,6 +1,14 @@
-from typing import Self, Optional
-from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase, AsyncIOMotorClientSession
+from typing import (
+    Optional,
+    Self,
+)
+
 from app.infrastructure.uow.base import AbstractUnitOfWork
+from motor.motor_asyncio import (
+    AsyncIOMotorClient,
+    AsyncIOMotorClientSession,
+    AsyncIOMotorDatabase,
+)
 
 
 class MotorAbstractUnitOfWork(AbstractUnitOfWork):
