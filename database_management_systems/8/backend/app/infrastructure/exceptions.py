@@ -9,7 +9,11 @@ from app.exceptions import ApplicationException
 class InfrastructureException(ApplicationException, ABC):
     @property
     def message(self) -> str:
-        return "Infrastructure exeption has occurred"
+        return "Infrastructure exception has occurred"
+
+    @property
+    def status(self) -> int:
+        return HTTPStatus.INTERNAL_SERVER_ERROR.value
 
 
 @dataclass(eq=False)
@@ -19,7 +23,7 @@ class InvalidToken(InfrastructureException):
         return "Token is invalid"
 
     @property
-    def status_code(self) -> int:
+    def status(self) -> int:
         return HTTPStatus.UNAUTHORIZED.value
 
 
@@ -30,7 +34,7 @@ class ExpiredToken(InfrastructureException):
         return "Token has expired"
 
     @property
-    def status_code(self) -> int:
+    def status(self) -> int:
         return HTTPStatus.UNAUTHORIZED.value
 
 
@@ -41,7 +45,7 @@ class AttributeException(InfrastructureException):
         return "USER_ATTRIBUTE_REQUIRED! User id or email or username is required"
 
     @property
-    def status_code(self) -> int:
+    def status(self) -> int:
         return HTTPStatus.BAD_REQUEST.value
 
 
@@ -54,5 +58,5 @@ class UserNotFoundError(InfrastructureException):
         return f"Couldn't find user {self.value}"
 
     @property
-    def status_code(self) -> int:
+    def status(self) -> int:
         return HTTPStatus.NOT_FOUND.value

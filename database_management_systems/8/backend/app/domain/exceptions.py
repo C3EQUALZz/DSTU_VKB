@@ -12,7 +12,7 @@ class DomainException(ApplicationException, ABC):
         return "Exception on domain layer"
 
     @property
-    def status_code(self) -> int:
+    def status(self) -> int:
         return HTTPStatus.UNPROCESSABLE_ENTITY.value
 
 
