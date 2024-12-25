@@ -25,7 +25,7 @@ class MotorAbstractUnitOfWork(AbstractUnitOfWork):
         self._client = client
         self._database_name = database_name
 
-        self._database: Optional[AsyncIOMotorDatabase] = None
+        self._database: Optional[AsyncIOMotorDatabase[Any]] = None
         self._session: Optional[AsyncIOMotorClientSession] = None
 
     async def __aenter__(self) -> Self:
