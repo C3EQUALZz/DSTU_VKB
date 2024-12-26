@@ -32,6 +32,9 @@ class UserEntity(BaseEntity):
     is_verified: bool = field(default=False, kw_only=True)
     created_at: datetime = field(default_factory=lambda: datetime.now(UTC))
 
+    __eq__ = BaseEntity.__eq__
+    __hash__ = BaseEntity.__hash__
+
     @classmethod
     def from_document(cls: Type[Self], document: Mapping[str, Any]) -> Self:
         oid = document["oid"]
@@ -42,5 +45,10 @@ class UserEntity(BaseEntity):
         is_verified = document["is_verified"]
 
         return cls(
-            oid=oid, email=email, name=username, password=password, created_at=created_at, is_verified=is_verified
+            oid=oid,
+            email=email,
+            name=username,
+            password=password,
+            created_at=created_at,
+            is_verified=is_verified
         )

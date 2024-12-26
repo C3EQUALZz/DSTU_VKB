@@ -32,7 +32,4 @@ class GetUserByIdCommand(AbstractCommand):
 class GetAllUsersCommand(AbstractCommand): ...
 
 
-@dataclass(frozen=True)
-class VerifyUserCredentialsCommand(AbstractCommand):
-    name: str
-    password: str
+
