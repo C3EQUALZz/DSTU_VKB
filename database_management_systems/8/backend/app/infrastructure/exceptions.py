@@ -60,3 +60,16 @@ class UserNotFoundException(InfrastructureException):
     @property
     def status(self) -> int:
         return HTTPStatus.NOT_FOUND.value
+
+
+@dataclass(eq=False)
+class ScoreNotFoundException(InfrastructureException):
+    value: str
+
+    @property
+    def message(self) -> str:
+        return f"Couldn't find score {self.value}"
+
+    @property
+    def status(self) -> int:
+        return HTTPStatus.NOT_FOUND.value

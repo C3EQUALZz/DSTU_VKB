@@ -40,5 +40,5 @@ class AbstractRepository(ABC, Generic[BaseEntityType]):
         raise NotImplementedError
 
     @abstractmethod
-    async def list(self) -> List[BaseEntityType]:
+    async def list(self, start: int = 0, limit: int = 10) -> List[BaseEntityType]:
         raise NotImplementedError

@@ -39,5 +39,5 @@ class UsersRepository(AbstractRepository[UserEntity], ABC):
         raise NotImplementedError
 
     @abstractmethod
-    async def list(self) -> List[UserEntity]:
+    async def list(self, start: int = 0, limit: int = 10) -> List[UserEntity]:
         raise NotImplementedError
