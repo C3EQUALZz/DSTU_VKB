@@ -3,12 +3,12 @@ from dataclasses import dataclass
 from typing import override
 
 from app.domain.exceptions import (
-    EmptyEmail,
-    EmptyPassword,
-    EmptyUsername,
-    InvalidEmail,
-    InvalidPasswordLength,
-    InvalidUsernameLength,
+    EmptyEmailException,
+    EmptyPasswordException,
+    EmptyUsernameException,
+    InvalidEmailException,
+    InvalidPasswordLengthException,
+    InvalidUsernameLengthException,
 )
 from app.domain.values.base import BaseValueObject
 
@@ -20,13 +20,14 @@ class Username(BaseValueObject[str]):
     @override
     def validate(self) -> None:
         if not self.value:
-            raise EmptyUsername()
+            raise EmptyUsernameException()
 
         value_length = len(self.value)
 
         if value_length not in range(3, 16):
-            raise InvalidUsernameLength(self.value)
+            raise InvalidUsernameLengthException(self.value)
 
+    @override
     def as_generic_type(self) -> str:
         return str(self.value)
 
@@ -38,11 +39,11 @@ class Email(BaseValueObject[str]):
     @override
     def validate(self) -> None:
         if not self.value:
-            raise EmptyEmail()
+            raise EmptyEmailException()
 
         email_validate_pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
         if not re.match(email_validate_pattern, self.value):
-            raise InvalidEmail(self.value)
+            raise InvalidEmailException(self.value)
 
     @override
     def as_generic_type(self) -> str:
@@ -53,14 +54,16 @@ class Email(BaseValueObject[str]):
 class Password(BaseValueObject[bytes]):
     value: bytes
 
+    @override
     def validate(self) -> None:
         if not self.value:
-            raise EmptyPassword()
+            raise EmptyPasswordException()
 
         value_length = len(self.value)
 
         if value_length not in range(3, 100):
-            raise InvalidPasswordLength(str(value_length))
+            raise InvalidPasswordLengthException(str(value_length))
 
+    @override
     def as_generic_type(self) -> bytes:
         return self.value

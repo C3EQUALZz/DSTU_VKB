@@ -26,7 +26,7 @@ class CastException(DomainException):
 
 
 @dataclass(eq=False)
-class InvalidUsernameLength(DomainException):
+class InvalidUsernameLengthException(DomainException):
     username_value: str
 
     @property
@@ -35,21 +35,21 @@ class InvalidUsernameLength(DomainException):
 
 
 @dataclass(eq=False)
-class EmptyUsername(DomainException):
+class EmptyUsernameException(DomainException):
     @property
     def message(self) -> str:
         return "Username is empty"
 
 
 @dataclass(eq=False)
-class EmptyPassword(DomainException):
+class EmptyPasswordException(DomainException):
     @property
     def message(self) -> str:
         return "Password is empty"
 
 
 @dataclass(eq=False)
-class InvalidPasswordLength(DomainException):
+class InvalidPasswordLengthException(DomainException):
     length: str
 
     @property
@@ -58,16 +58,34 @@ class InvalidPasswordLength(DomainException):
 
 
 @dataclass(eq=False)
-class EmptyEmail(DomainException):
+class EmptyEmailException(DomainException):
     @property
     def message(self) -> str:
         return "Email is empty"
 
 
 @dataclass(eq=False)
-class InvalidEmail(DomainException):
+class InvalidEmailException(DomainException):
     email: str
 
     @property
     def message(self) -> str:
         return f"The provided email is invalid: {self.email}"
+
+
+@dataclass(eq=False)
+class InvalidOIDException(DomainException):
+    oid: str
+
+    @property
+    def message(self) -> str:
+        return f"The provided OID is invalid: {self.oid}"
+
+
+@dataclass(eq=False)
+class EmptyScoreException(DomainException):
+    value: str
+
+    @property
+    def message(self) -> str:
+        return f"The provided value is empty: {self.value}"
