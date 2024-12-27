@@ -16,6 +16,8 @@ motor = "^3.6.0"
 dishka = "^1.4.2"
 uvicorn = "^0.34.0"
 pydantic = {extras = ["email"], version = "^2.10.4"}
+authx = "^1.4.1"
+python-multipart = "^0.0.20"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.3"

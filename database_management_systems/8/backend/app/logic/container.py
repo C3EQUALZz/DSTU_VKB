@@ -1,11 +1,18 @@
 import logging
 from typing import Any, cast
 
+from dishka import (
+    from_context,
+    make_async_container,
+    provide,
+    Provider,
+    Scope,
+)
+from motor.motor_asyncio import AsyncIOMotorClient
+
 from app.core.types.handlers import (
     CommandHandlerMapping,
-    EventHandlerMapping,
-    CT,
-    ET
+    EventHandlerMapping
 )
 from app.infrastructure.uow.users.base import UsersUnitOfWork
 from app.infrastructure.uow.users.mongo import MotorUsersUnitOfWork
@@ -22,16 +29,25 @@ from app.logic.handlers.users.commands import (
     UpdateUserCommandHandler,
 )
 from app.settings.config import Settings
-from dishka import (
-    from_context,
-    make_async_container,
-    provide,
-    Provider,
-    Scope,
-)
-from motor.motor_asyncio import AsyncIOMotorClient
+from authx import AuthXConfig, AuthX
 
 logger = logging.getLogger(__name__)
+
+
+class AuthProvider(Provider):
+    settings = from_context(provides=Settings, scope=Scope.APP)
+
+    @provide(scope=Scope.APP)
+    async def get_config(self, settings: Settings) -> AuthXConfig:
+        return AuthXConfig(
+            JWT_ALGORITHM="RS256",
+            JWT_PRIVATE_KEY=settings.auth.private_key,
+            JWT_PUBLIC_KEY=settings.auth.public_key
+        )
+
+    @provide(scope=Scope.APP)
+    async def get_security(self, config: AuthXConfig) -> AuthX:
+        return AuthX(config=config)
 
 
 class HandlerProvider(Provider):
@@ -75,6 +91,7 @@ class AppProvider(Provider):
 container = make_async_container(
     AppProvider(),
     HandlerProvider(),
+    AuthProvider(),
     context={
         Settings: Settings(),
     },

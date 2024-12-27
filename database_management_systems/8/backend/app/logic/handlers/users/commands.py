@@ -70,7 +70,7 @@ class DeleteUserCommandHandler(UsersCommandHandler[DeleteUserCommand]):
         if not user_service.check_existence(oid=command.oid):
             raise UserNotFoundException(str(command.oid))
 
-        await user_service.delete(oid=command.oid)
+        return await user_service.delete(oid=command.oid)
 
 
 class GetAllUsersCommandHandler(UsersCommandHandler[GetAllUsersCommand]):
