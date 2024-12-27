@@ -6,7 +6,7 @@ from typing import (
 from app.domain.entities.user import UserEntity
 from app.infrastructure.exceptions import (
     AttributeException,
-    UserNotFoundError,
+    UserNotFoundException,
 )
 from app.infrastructure.uow.users.base import UsersUnitOfWork
 
@@ -25,7 +25,7 @@ class UsersService:
         async with self._uow as uow:
             user: Optional[UserEntity] = await uow.users.get_by_email(email)
             if not user:
-                raise UserNotFoundError(email)
+                raise UserNotFoundException(email)
 
             return user
 
@@ -34,7 +34,7 @@ class UsersService:
             existing_user: Optional[UserEntity] = await uow.users.get(user.oid)
 
             if not existing_user:
-                raise UserNotFoundError(user.oid)
+                raise UserNotFoundException(user.oid)
 
             updated_user = await uow.users.update(oid=existing_user.oid, model=user)
             await uow.commit()
@@ -44,7 +44,7 @@ class UsersService:
         async with self._uow as uow:
             user: Optional[UserEntity] = await uow.users.get_by_username(name)
             if not user:
-                raise UserNotFoundError(name)
+                raise UserNotFoundException(name)
 
             return user
 
@@ -52,7 +52,7 @@ class UsersService:
         async with self._uow as uow:
             user: Optional[UserEntity] = await uow.users.get(oid=oid)
             if not user:
-                raise UserNotFoundError(str(oid))
+                raise UserNotFoundException(str(oid))
 
             return user
 

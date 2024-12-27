@@ -1,18 +1,12 @@
 import logging
-from typing import Any, cast
-
-from dishka import (
-    from_context,
-    make_async_container,
-    provide,
-    Provider,
-    Scope,
+from typing import (
+    Any,
+    cast,
 )
-from motor.motor_asyncio import AsyncIOMotorClient
 
 from app.core.types.handlers import (
     CommandHandlerMapping,
-    EventHandlerMapping
+    EventHandlerMapping,
 )
 from app.infrastructure.uow.users.base import UsersUnitOfWork
 from app.infrastructure.uow.users.mongo import MotorUsersUnitOfWork
@@ -31,7 +25,19 @@ from app.logic.handlers.users.commands import (
     UpdateUserCommandHandler,
 )
 from app.settings.config import Settings
-from authx import AuthXConfig, AuthX
+from authx import (
+    AuthX,
+    AuthXConfig,
+)
+from dishka import (
+    from_context,
+    make_async_container,
+    provide,
+    Provider,
+    Scope,
+)
+from motor.motor_asyncio import AsyncIOMotorClient
+
 
 logger = logging.getLogger(__name__)
 

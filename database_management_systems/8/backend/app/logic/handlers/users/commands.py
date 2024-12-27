@@ -2,9 +2,7 @@ from typing import List
 
 from app.domain.entities.user import UserEntity
 from app.domain.values.users import Password
-from app.infrastructure.security.utils.coders import (
-    hash_password,
-)
+from app.infrastructure.security.utils.coders import hash_password
 from app.infrastructure.services.users import UsersService
 from app.logic.commands.users import (
     CreateUserCommand,

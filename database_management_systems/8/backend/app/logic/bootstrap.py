@@ -11,9 +11,8 @@ from typing import (
 from app.core.types.handlers import (
     CommandHandlerMapping,
     EventHandlerMapping,
-    HT
+    HT,
 )
-
 from app.infrastructure.uow.base import AbstractUnitOfWork
 from app.logic.commands.base import AbstractCommand
 from app.logic.events.base import AbstractEvent

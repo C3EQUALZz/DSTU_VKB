@@ -1,23 +1,46 @@
 import logging
 from typing import Annotated
 
-from authx import TokenPayload, AuthX
-from dishka import FromDishka
-from dishka.integrations.fastapi import DishkaRoute
-from fastapi import APIRouter, Depends, HTTPException
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi import (
+    APIRouter,
+    Depends,
+    HTTPException,
+)
+from fastapi.security import (
+    OAuth2PasswordBearer,
+    OAuth2PasswordRequestForm,
+)
 from starlette import status
 from starlette.requests import Request
 
-from app.application.api.auth.schemas import TokenRequest, UserSchemeResponse
-from app.core.types.handlers import EventHandlerMapping, CommandHandlerMapping
+from app.application.api.auth.schemas import (
+    TokenRequest,
+    UserSchemeResponse,
+)
+from app.core.types.handlers import (
+    CommandHandlerMapping,
+    EventHandlerMapping,
+)
 from app.domain.entities.user import UserEntity
 from app.exceptions import ApplicationException
+from app.infrastructure.exceptions import UserNotFoundException
 from app.infrastructure.uow.users.base import UsersUnitOfWork
 from app.logic.bootstrap import Bootstrap
 from app.logic.commands.auth import VerifyUserCredentialsCommand
 from app.logic.commands.users import GetUserByIdCommand
+from app.logic.exceptions import InvalidPasswordException
 from app.logic.message_bus import MessageBus
+from authx import (
+    AuthX,
+    TokenPayload,
+)
+from authx.exceptions import (
+    AuthXException,
+    RevokedTokenError,
+)
+from dishka import FromDishka
+from dishka.integrations.fastapi import DishkaRoute
+
 
 router = APIRouter(
     prefix="/auth",
@@ -32,7 +55,12 @@ logger = logging.getLogger(__name__)
 
 @router.post(
     "/login/",
-    status_code=status.HTTP_201_CREATED
+    status_code=status.HTTP_200_OK,
+    summary="Endpoint for user logging",
+    responses={
+        status.HTTP_404_NOT_FOUND: {"model": UserNotFoundException},
+        status.HTTP_401_UNAUTHORIZED: {"model": InvalidPasswordException}
+    }
 )
 async def login(
         form: Annotated[OAuth2PasswordRequestForm, Depends()],
@@ -64,15 +92,26 @@ async def login(
 
 @router.post(
     "/refresh/",
-    response_model_exclude_none=True
+    status_code=status.HTTP_200_OK,
+    response_model_exclude_none=True,
+    responses={
+        status.HTTP_401_UNAUTHORIZED: {"model": RevokedTokenError},
+    }
+
 )
 async def refresh(
         security: FromDishka[AuthX],
         request: Request
 ) -> TokenRequest:
-    refresh_payload: TokenPayload = await security.refresh_token_required(request)
-    access_token = security.create_access_token(refresh_payload.sub)
-    return TokenRequest(access_token=access_token)
+    try:
+        refresh_payload: TokenPayload = await security.refresh_token_required(request)
+        return TokenRequest(access_token=security.create_access_token(refresh_payload.sub))
+    except AuthXException as e:
+        logger.error(e)
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(e))
+    except ApplicationException as e:
+        logger.error(e)
+        raise HTTPException(status_code=e.status, detail=e.message)
 
 
 @router.get(
@@ -97,9 +136,12 @@ async def get_me(
 
         messagebus: MessageBus = await bootstrap.get_messagebus()
         await messagebus.handle(GetUserByIdCommand(access_token.sub))
-
         return UserSchemeResponse.from_entity(messagebus.command_result)
 
+    except AuthXException as e:
+        logger.error(e)
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(e))
     except ApplicationException as e:
         logger.error(e)
-        raise HTTPException(status_code=e.status, detail=e.message, headers={"WWW-Authenticate": "Bearer"})
+        raise HTTPException(status_code=e.status, detail=e.message)
+

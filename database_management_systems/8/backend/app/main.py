@@ -3,8 +3,8 @@ from typing import AsyncGenerator
 
 from fastapi import FastAPI
 
-from app.application.api.users import user_router
 from app.application.api.auth import auth_router
+from app.application.api.users import user_router
 from app.logic.container import container
 from dishka.integrations.fastapi import setup_dishka
 

@@ -1,11 +1,10 @@
+from traceback import TracebackException
 from typing import (
+    Any,
     Optional,
     Self,
     Type,
-    Any
 )
-
-from traceback import TracebackException
 
 from app.infrastructure.uow.base import AbstractUnitOfWork
 from motor.motor_asyncio import (

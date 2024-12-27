@@ -50,7 +50,7 @@ class AttributeException(InfrastructureException):
 
 
 @dataclass(eq=False)
-class UserNotFoundError(InfrastructureException):
+class UserNotFoundException(InfrastructureException):
     value: str
 
     @property

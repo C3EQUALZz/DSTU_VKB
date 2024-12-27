@@ -1,9 +1,5 @@
 from typing import List
 
-from dishka.integrations.fastapi import (
-    DishkaRoute,
-    FromDishka,
-)
 from fastapi import (
     APIRouter,
     HTTPException,
@@ -18,7 +14,7 @@ from app.application.api.users.schemas import (
 )
 from app.core.types.handlers import (
     CommandHandlerMapping,
-    EventHandlerMapping
+    EventHandlerMapping,
 )
 from app.exceptions import ApplicationException
 from app.infrastructure.uow.users.base import UsersUnitOfWork
@@ -35,6 +31,11 @@ from app.logic.exceptions import (
     UserNotFoundException,
 )
 from app.logic.message_bus import MessageBus
+from dishka.integrations.fastapi import (
+    DishkaRoute,
+    FromDishka,
+)
+
 
 router = APIRouter(prefix="/users", tags=["users"], route_class=DishkaRoute)
 
@@ -55,7 +56,9 @@ async def create_user(
 ) -> UserSchemeResponse:
     try:
         bootstrap: Bootstrap = Bootstrap(
-            uow=uow, events_handlers_for_injection=events, commands_handlers_for_injection=commands
+            uow=uow,
+            events_handlers_for_injection=events,
+            commands_handlers_for_injection=commands
         )
 
         messagebus: MessageBus = await bootstrap.get_messagebus()
@@ -76,7 +79,9 @@ async def get_users(
 ) -> List[UserSchemeResponse]:
     try:
         bootstrap: Bootstrap = Bootstrap(
-            uow=uow, events_handlers_for_injection=events, commands_handlers_for_injection=commands
+            uow=uow,
+            events_handlers_for_injection=events,
+            commands_handlers_for_injection=commands
         )
 
         messagebus: MessageBus = await bootstrap.get_messagebus()
@@ -98,7 +103,9 @@ async def get_user(
 ) -> UserSchemeResponse:
     try:
         bootstrap: Bootstrap = Bootstrap(
-            uow=uow, events_handlers_for_injection=events, commands_handlers_for_injection=commands
+            uow=uow,
+            events_handlers_for_injection=events,
+            commands_handlers_for_injection=commands
         )
 
         messagebus: MessageBus = await bootstrap.get_messagebus()
@@ -111,7 +118,10 @@ async def get_user(
         raise HTTPException(status_code=e.status, detail=str(e))
 
 
-@router.patch("/{user_id}/")
+@router.patch(
+    "/{user_id}/",
+    status_code=status.HTTP_200_OK
+)
 async def update_user(
         scheme: UpdateUserSchemaRequest,
         uow: FromDishka[UsersUnitOfWork],
@@ -120,7 +130,9 @@ async def update_user(
 ) -> UserSchemeResponse:
     try:
         bootstrap: Bootstrap = Bootstrap(
-            uow=uow, events_handlers_for_injection=events, commands_handlers_for_injection=commands
+            uow=uow,
+            events_handlers_for_injection=events,
+            commands_handlers_for_injection=commands
         )
 
         messagebus: MessageBus = await bootstrap.get_messagebus()
@@ -149,7 +161,9 @@ async def delete_user(
 ) -> None:
     try:
         bootstrap: Bootstrap = Bootstrap(
-            uow=uow, events_handlers_for_injection=events, commands_handlers_for_injection=commands
+            uow=uow,
+            events_handlers_for_injection=events,
+            commands_handlers_for_injection=commands
         )
 
         messagebus: MessageBus = await bootstrap.get_messagebus()

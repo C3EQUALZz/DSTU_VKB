@@ -6,9 +6,9 @@ from traceback import TracebackException
 from typing import (
     Generator,
     List,
-    Self,
     Optional,
-    Type
+    Self,
+    Type,
 )
 
 from app.logic.events.base import AbstractEvent

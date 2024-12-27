@@ -1,5 +1,5 @@
 from app.domain.entities.user import UserEntity
-from app.infrastructure.exceptions import UserNotFoundError
+from app.infrastructure.exceptions import UserNotFoundException
 from app.infrastructure.security.utils.coders import validate_password
 from app.infrastructure.services.users import UsersService
 from app.logic.commands.auth import VerifyUserCredentialsCommand
@@ -21,7 +21,7 @@ class VerifyUserCredentialsCommandHandler(AuthCommandHandler[VerifyUserCredentia
         elif await users_service.check_existence(name=command.name):
             user = await users_service.get_by_name(name=command.name)
         else:
-            raise UserNotFoundError(command.name)
+            raise UserNotFoundException(command.name)
 
         if not validate_password(password=command.password, hashed_password=user.password.as_generic_type()):
             raise InvalidPasswordException
