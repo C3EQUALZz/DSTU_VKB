@@ -1,9 +1,10 @@
 from pydantic import BaseModel, EmailStr
+from typing import Optional
 
-
-class TokenInfo(BaseModel):
+class TokenRequest(BaseModel):
     access_token: str
-    token_type: str
+    refresh_token: Optional[str] = None
+    token_type: str = "bearer"
 
 
 class UserLoginSchemaRequest(BaseModel):

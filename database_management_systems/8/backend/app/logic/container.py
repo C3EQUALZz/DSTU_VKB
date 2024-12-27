@@ -16,12 +16,14 @@ from app.core.types.handlers import (
 )
 from app.infrastructure.uow.users.base import UsersUnitOfWork
 from app.infrastructure.uow.users.mongo import MotorUsersUnitOfWork
+from app.logic.commands.auth import VerifyUserCredentialsCommand
 from app.logic.commands.users import (
     CreateUserCommand,
     GetAllUsersCommand,
     GetUserByIdCommand,
     UpdateUserCommand,
 )
+from app.logic.handlers.auth.commands import VerifyUserCredentialsCommandHandler
 from app.logic.handlers.users.commands import (
     CreateUserCommandHandler,
     GetAllUsersCommandHandler,
@@ -61,6 +63,7 @@ class HandlerProvider(Provider):
             GetAllUsersCommand: GetAllUsersCommandHandler,
             GetUserByIdCommand: GetUserByIdCommandHandler,
             UpdateUserCommand: UpdateUserCommandHandler,
+            VerifyUserCredentialsCommand: VerifyUserCredentialsCommandHandler,
         })
 
     @provide(scope=Scope.APP)

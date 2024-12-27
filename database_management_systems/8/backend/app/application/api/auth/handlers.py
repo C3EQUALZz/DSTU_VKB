@@ -6,7 +6,9 @@ from dishka.integrations.fastapi import DishkaRoute
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from starlette import status
+from starlette.requests import Request
 
+from app.application.api.auth.schemas import TokenRequest
 from app.core.types.handlers import EventHandlerMapping, CommandHandlerMapping
 from app.domain.entities.user import UserEntity
 from app.exceptions import ApplicationException
@@ -14,11 +16,10 @@ from app.infrastructure.uow.users.base import UsersUnitOfWork
 from app.logic.bootstrap import Bootstrap
 from app.logic.commands.auth import VerifyUserCredentialsCommand
 from app.logic.message_bus import MessageBus
-from app.logic.container import container
 
 router = APIRouter(
     prefix="/auth",
-    tags=["Auth"],
+    tags=["auth"],
     route_class=DishkaRoute
 )
 
@@ -35,7 +36,7 @@ async def login(
         uow: FromDishka[UsersUnitOfWork],
         events: FromDishka[EventHandlerMapping],
         commands: FromDishka[CommandHandlerMapping]
-):
+) -> TokenRequest:
     try:
         bootstrap: Bootstrap = Bootstrap(
             uow=uow,
@@ -47,26 +48,22 @@ async def login(
         await messagebus.handle(VerifyUserCredentialsCommand(name=form.username, password=form.password))
         user: UserEntity = messagebus.command_result
 
-        access_token = security.create_access_token(uid=user.oid)
-        refresh_token = security.create_refresh_token(uid=user.oid)
-
-        return {
-            "access_token": access_token,
-            "refresh_token": refresh_token
-        }
+        return TokenRequest(
+            access_token=security.create_access_token(uid=user.oid),
+            refresh_token=security.create_refresh_token(uid=user.oid)
+        )
 
     except ApplicationException as e:
         raise HTTPException(status_code=e.status, detail=e.message, headers={"WWW-Authenticate": "Bearer"})
 
 
-async def get_security() -> AuthX:
-    return await container.get(AuthX)
-
-
-@router.post("/refresh/")
+@router.post(
+    "/refresh/"
+)
 async def refresh(
         security: FromDishka[AuthX],
-        refresh_payload: TokenPayload = Depends(security.refresh_token_required)
+        request: Request
 ):
+    refresh_payload: TokenPayload = await security.refresh_token_required(request)
     access_token = security.create_access_token(refresh_payload.sub)
     return {"access_token": access_token}
