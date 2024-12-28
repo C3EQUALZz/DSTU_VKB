@@ -20,9 +20,10 @@ class Tree<T extends Comparable<T>> {
         var newForest = new LinkedList<Node<T>>();
 
         while (!forest.isEmpty()) {
+            var leftChild = newForest.isEmpty() ? forest.removeFirst() : newForest.removeFirst();
             var rightChild = forest.removeFirst();
-            Node<T> leftChild = newForest.isEmpty() && !forest.isEmpty() ? forest.removeFirst() : newForest.removeFirst();
-            newForest.add(new Node<>(((T) Character.valueOf('+')), leftChild, rightChild));
+            var value = (T) Character.valueOf('+');
+            newForest.add(new Node<>(value, leftChild, rightChild));
         }
 
         root = newForest.getFirst();
@@ -42,7 +43,7 @@ class Tree<T extends Comparable<T>> {
 
         globalStack.push(root);
 
-        result.append("......................................................\n");
+        result.append(".....................................\n");
 
         // Пока в текущем ряду есть элементы для отображения
         while (!isRowEmpty) {
