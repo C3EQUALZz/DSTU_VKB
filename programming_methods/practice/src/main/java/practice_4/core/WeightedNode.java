@@ -1,4 +1,4 @@
-package practice_4.question_1;
+package practice_4.core;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,14 +6,12 @@ import java.util.*;
 
 @Getter
 @Setter
-class Node<T extends Comparable<T>> {
+public class WeightedNode<T extends Comparable<T>> {
     private T value; // Значение вершины
-    private boolean wasVisited; // Для проверки посещения (если нужно)
-    private Map<Node<T>, Integer> neighbors; // Соседи и веса ребер
+    private Map<WeightedNode<T>, Integer> neighbors; // Соседи и веса ребер
 
-    public Node(T value) {
+    public WeightedNode(T value) {
         this.value = value;
-        this.wasVisited = false;
         this.neighbors = new HashMap<>();
     }
 
@@ -22,7 +20,7 @@ class Node<T extends Comparable<T>> {
      * @param other другая вершина
      * @param weight вес ребра
      */
-    public void connect(Node<T> other, int weight) {
+    public void connect(WeightedNode<T> other, int weight) {
         neighbors.put(other, weight);
     }
 

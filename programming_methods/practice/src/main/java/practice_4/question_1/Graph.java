@@ -1,9 +1,11 @@
 package practice_4.question_1;
 
+import practice_4.core.WeightedNode;
+
 import java.util.*;
 
 class Graph<T extends Comparable<T>> {
-    private final Map<T, Node<T>> nodes; // Словарь для хранения вершин
+    private final Map<T, WeightedNode<T>> nodes; // Словарь для хранения вершин
 
     public Graph() {
         this.nodes = new HashMap<>();
@@ -17,8 +19,8 @@ class Graph<T extends Comparable<T>> {
      * @param weight вес ребра
      */
     public void addEdge(T from, T to, int weight) {
-        nodes.putIfAbsent(from, new Node<>(from));
-        nodes.putIfAbsent(to, new Node<>(to));
+        nodes.putIfAbsent(from, new WeightedNode<>(from));
+        nodes.putIfAbsent(to, new WeightedNode<>(to));
         nodes.get(from).connect(nodes.get(to), weight);
     }
 
@@ -41,7 +43,7 @@ class Graph<T extends Comparable<T>> {
             }
 
             // Установка весов для соседей
-            for (Map.Entry<Node<T>, Integer> neighbor : nodes.get(from).getNeighbors().entrySet()) {
+            for (Map.Entry<WeightedNode<T>, Integer> neighbor : nodes.get(from).getNeighbors().entrySet()) {
                 distances.get(from).put(neighbor.getKey().getValue(), neighbor.getValue());
             }
         }
