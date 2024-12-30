@@ -1,26 +1,28 @@
 package practice_3.question_1;
 
+import practice_3.core.Node;
+
 import java.util.List;
 
 class Main {
     public static void main(String[] args) {
-        Graph<Character> theGraph = new Graph<>();
+        NonOrientedGraph<Character> theNonOrientedGraph = new NonOrientedGraph<>();
 
         // Добавление рёбер
-        theGraph.addEdge('A', 'B');
-        theGraph.addEdge('A', 'D');
-        theGraph.addEdge('B', 'C');
-        theGraph.addEdge('B', 'E');
-        theGraph.addEdge('C', 'F');
-        theGraph.addEdge('D', 'G');
-        theGraph.addEdge('E', 'F');
-        theGraph.addEdge('G', 'H');
-        theGraph.addEdge('H', 'I');
-        theGraph.addEdge('I', 'F');
-        theGraph.addEdge('F', 'D'); // Для цикла
-        theGraph.addEdge('E', 'H'); // Дополнительный путь
+        theNonOrientedGraph.addEdge('A', 'B');
+        theNonOrientedGraph.addEdge('A', 'D');
+        theNonOrientedGraph.addEdge('B', 'C');
+        theNonOrientedGraph.addEdge('B', 'E');
+        theNonOrientedGraph.addEdge('C', 'F');
+        theNonOrientedGraph.addEdge('D', 'G');
+        theNonOrientedGraph.addEdge('E', 'F');
+        theNonOrientedGraph.addEdge('G', 'H');
+        theNonOrientedGraph.addEdge('H', 'I');
+        theNonOrientedGraph.addEdge('I', 'F');
+        theNonOrientedGraph.addEdge('F', 'D'); // Для цикла
+        theNonOrientedGraph.addEdge('E', 'H'); // Дополнительный путь
 
-        List<List<Node<Character>>> bfsResult = theGraph.bfs('A');
+        List<List<Node<Character>>> bfsResult = theNonOrientedGraph.bfs('A');
 
         // Вывод рёбер, полученных после обхода
         System.out.println("Рёбра, построенные BFS:");

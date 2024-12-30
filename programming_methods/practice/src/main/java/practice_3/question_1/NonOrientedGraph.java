@@ -7,13 +7,15 @@
 
 package practice_3.question_1;
 
+import practice_3.core.AbstractUnweightedGraph;
+import practice_3.core.Node;
+
 import java.util.*;
 
-class Graph<T extends Comparable<T>> {
-    private final Map<T, Node<T>> vertices; // Словарь для хранения вершин по их значениям
+class NonOrientedGraph<T extends Comparable<T>> extends AbstractUnweightedGraph<T> {
 
-    public Graph() {
-        this.vertices = new HashMap<>();
+    public NonOrientedGraph() {
+        super();
     }
 
     /**
@@ -26,7 +28,8 @@ class Graph<T extends Comparable<T>> {
         Node<T> startNode = vertices.computeIfAbsent(start, Node::new);
         Node<T> endNode = vertices.computeIfAbsent(end, Node::new);
 
-        startNode.connect(endNode); // Связываем вершины через метод connect
+        startNode.connect(endNode);
+        endNode.connect(startNode);
     }
 
     /**
