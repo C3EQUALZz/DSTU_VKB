@@ -10,13 +10,23 @@ import java.util.Map;
 
 @AllArgsConstructor
 public abstract class AbstractUnweightedGraph<T extends Comparable<T>> {
-    protected final Map<T, Node<T>> vertices; // Словарь для хранения вершин по их значениям
+    protected final Map<T, UnweightedNode<T>> vertices; // Словарь для хранения вершин по их значениям
 
     protected AbstractUnweightedGraph() {
         this.vertices = new HashMap<>();
     }
 
     public abstract void addEdge(T start, T end);
+
+    /**
+     * Получает вершину графа по её значению.
+     *
+     * @param value значение вершины.
+     * @return вершина, соответствующая значению, или {@code null}, если вершина не найдена.
+     */
+    public UnweightedNode<T> getVertex(T value) {
+        return vertices.get(value); // Возвращает вершину, если она существует, или null, если её нет
+    }
 
 
     @Override
@@ -36,7 +46,7 @@ public abstract class AbstractUnweightedGraph<T extends Comparable<T>> {
 
         // Заполняем строки таблицы для каждой вершины
         for (T vertex : verticesList) {
-            Node<T> node = vertices.get(vertex);
+            UnweightedNode<T> node = vertices.get(vertex);
             List<String> row = new ArrayList<>();
 
             // Добавляем вершину в начало строки

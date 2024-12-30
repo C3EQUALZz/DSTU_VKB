@@ -6,14 +6,12 @@ import java.util.*;
 
 @Getter
 @Setter
-public class Node<T extends Comparable<T>> {
+public class UnweightedNode<T extends Comparable<T>> {
     private T value;
-    private boolean wasVisited;
-    private List<Node<T>> neighbors; // Список связей
+    private List<UnweightedNode<T>> neighbors; // Список связей
 
-    public Node(T value) {
+    public UnweightedNode(T value) {
         this.value = value;
-        this.wasVisited = false;
         this.neighbors = new ArrayList<>();
     }
 
@@ -21,7 +19,7 @@ public class Node<T extends Comparable<T>> {
      * Связывает текущую вершину с другой
      * @param other другая вершина, которую хотим связать с текущей.
      */
-    public void connect(Node<T> other) {
+    public void connect(UnweightedNode<T> other) {
         if (!neighbors.contains(other)) {
             neighbors.add(other);
         }
