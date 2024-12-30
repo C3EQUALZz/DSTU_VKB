@@ -5,6 +5,8 @@
 
 package practice_3.question_2;
 
+import core.utils.PrettyTable;
+
 import java.util.*;
 
 class Graph<T extends Comparable<T>> {
@@ -15,19 +17,12 @@ class Graph<T extends Comparable<T>> {
     }
 
     /**
-     * Добавляет вершину, если её ещё нет
-     */
-    public Node<T> addVertex(T label) {
-        return vertices.computeIfAbsent(label, Node::new);
-    }
-
-    /**
      * Добавление ребра между двумя вершинами (без направления)
      */
     public void addEdge(T start, T end) {
-        Node<T> startNode = addVertex(start);
-        Node<T> endNode = addVertex(end);
-        startNode.connect(endNode); // Связываем вершины
+        Node<T> startNode = vertices.computeIfAbsent(start, Node::new);
+        Node<T> endNode = vertices.computeIfAbsent(end, Node::new);
+        startNode.connect(endNode);
     }
 
     /**
@@ -99,7 +94,6 @@ class Graph<T extends Comparable<T>> {
 
         return table.toString();
     }
-
 
 
 }

@@ -17,24 +17,14 @@ class Graph<T extends Comparable<T>> {
     }
 
     /**
-     * Добавляет вершину, если её ещё нет
-     *
-     * @param value значение, которое мы хотим добавить, представив новой вершиной.
-     * @return Node, где хранится значение нашего объекта.
-     */
-    public Node<T> addNode(T value) {
-        return vertices.computeIfAbsent(value, Node::new);
-    }
-
-    /**
      * Добавляет ребро между двумя вершинами (без направления)
      *
      * @param start начальная вершина
      * @param end   конечная вершина
      */
     public void addEdge(T start, T end) {
-        Node<T> startNode = addNode(start);
-        Node<T> endNode = addNode(end);
+        Node<T> startNode = vertices.computeIfAbsent(start, Node::new);
+        Node<T> endNode = vertices.computeIfAbsent(end, Node::new);
 
         startNode.connect(endNode); // Связываем вершины через метод connect
     }

@@ -1,4 +1,4 @@
-package practice_3.question_2;
+package core.utils;
 
 import org.apache.commons.lang3.StringUtils;
 
