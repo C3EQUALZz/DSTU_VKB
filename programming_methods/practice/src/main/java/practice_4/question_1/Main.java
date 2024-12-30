@@ -8,17 +8,17 @@ import java.util.Map;
 
 class Main {
     public static void main(String[] args) {
-        Graph<String> graph = new Graph<>();
-        graph.addEdge("A", "B", 50);
-        graph.addEdge("A", "D", 80);
-        graph.addEdge("B", "C", 60);
-        graph.addEdge("B", "D", 90);
-        graph.addEdge("C", "E", 40);
-        graph.addEdge("D", "C", 20);
-        graph.addEdge("D", "E", 70);
-        graph.addEdge("E", "B", 50);
+        OrientedGraph<String> orientedGraph = new OrientedGraph<>();
+        orientedGraph.addEdge("A", "B", 50);
+        orientedGraph.addEdge("A", "D", 80);
+        orientedGraph.addEdge("B", "C", 60);
+        orientedGraph.addEdge("B", "D", 90);
+        orientedGraph.addEdge("C", "E", 40);
+        orientedGraph.addEdge("D", "C", 20);
+        orientedGraph.addEdge("D", "E", 70);
+        orientedGraph.addEdge("E", "B", 50);
 
-        Map<String, Map<String, Integer>> distances = graph.floydWarshall();
+        Map<String, Map<String, Integer>> distances = orientedGraph.floydWarshall();
 
         var verticesList = new ArrayList<>(distances.keySet());
 

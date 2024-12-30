@@ -1,14 +1,14 @@
 package practice_4.question_1;
 
+import practice_4.core.AbstractWeightedGraph;
 import practice_4.core.WeightedNode;
 
 import java.util.*;
 
-class Graph<T extends Comparable<T>> {
-    private final Map<T, WeightedNode<T>> nodes; // Словарь для хранения вершин
+public class OrientedGraph<T extends Comparable<T>> extends AbstractWeightedGraph<T> {
 
-    public Graph() {
-        this.nodes = new HashMap<>();
+    public OrientedGraph() {
+        super();
     }
 
     /**
@@ -18,6 +18,7 @@ class Graph<T extends Comparable<T>> {
      * @param to     конечная вершина
      * @param weight вес ребра
      */
+    @Override
     public void addEdge(T from, T to, int weight) {
         nodes.putIfAbsent(from, new WeightedNode<>(from));
         nodes.putIfAbsent(to, new WeightedNode<>(to));
