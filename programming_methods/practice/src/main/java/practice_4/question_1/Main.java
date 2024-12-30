@@ -1,6 +1,6 @@
 package practice_4.question_1;
 
-import core.utils.PrettyTable;
+import utils.PrettyTable;
 
 import java.util.ArrayList;
 import java.util.List;

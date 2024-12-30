@@ -5,7 +5,7 @@
 
 package practice_3.question_2;
 
-import core.utils.PrettyTable;
+import utils.PrettyTable;
 
 import java.util.*;
 
