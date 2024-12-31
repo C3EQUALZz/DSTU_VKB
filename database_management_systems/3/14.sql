@@ -1,0 +1,3 @@
+SELECT "AUTO"."INV", COALESCE("MENU"."NAME_REC", 'класс не определён')
+FROM "AUTO"
+LEFT JOIN "MENU" ON "AUTO"."C_CLASS" = ("MENU"."C_MENU"||"MENU"."C_REC")
