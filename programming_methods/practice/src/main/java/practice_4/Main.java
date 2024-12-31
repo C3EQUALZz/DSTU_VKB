@@ -1,5 +1,7 @@
-package practice_4.question_1;
+package practice_4;
 
+import practice_4.question_1.FloydWarshall;
+import practice_4.question_1.OrientedGraph;
 import utils.PrettyTable;
 
 import java.util.ArrayList;
@@ -18,7 +20,7 @@ class Main {
         orientedGraph.addEdge("D", "E", 70);
         orientedGraph.addEdge("E", "B", 50);
 
-        Map<String, Map<String, Integer>> distances = orientedGraph.floydWarshall();
+        Map<String, Map<String, Integer>> distances = FloydWarshall.execute(orientedGraph);
 
         var verticesList = new ArrayList<>(distances.keySet());
 

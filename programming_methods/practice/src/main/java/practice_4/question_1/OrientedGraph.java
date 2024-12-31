@@ -3,8 +3,6 @@ package practice_4.question_1;
 import practice_4.core.AbstractWeightedGraph;
 import practice_4.core.WeightedNode;
 
-import java.util.*;
-
 public class OrientedGraph<T extends Comparable<T>> extends AbstractWeightedGraph<T> {
 
     public OrientedGraph() {
@@ -25,45 +23,5 @@ public class OrientedGraph<T extends Comparable<T>> extends AbstractWeightedGrap
         nodes.get(from).connect(nodes.get(to), weight);
     }
 
-    /**
-     * Метод, который выполняет алгоритм Флойда-Уоршелла.
-     * @return Возвращает матрицу кратчайших расстояний.
-     */
-    public Map<T, Map<T, Integer>> floydWarshall() {
-        Map<T, Map<T, Integer>> distances = new HashMap<>();
-
-        // Инициализация матрицы расстояний
-        for (T from : nodes.keySet()) {
-            distances.putIfAbsent(from, new HashMap<>());
-            for (T to : nodes.keySet()) {
-                if (from.equals(to)) {
-                    distances.get(from).put(to, 0); // Расстояние до самой себя
-                } else {
-                    distances.get(from).put(to, Integer.MAX_VALUE); // Изначально пути нет
-                }
-            }
-
-            // Установка весов для соседей
-            for (Map.Entry<WeightedNode<T>, Integer> neighbor : nodes.get(from).getNeighbors().entrySet()) {
-                distances.get(from).put(neighbor.getKey().getValue(), neighbor.getValue());
-            }
-        }
-
-        // Основной алгоритм
-        for (T k : nodes.keySet()) { // Промежуточная вершина
-            for (T i : nodes.keySet()) { // Начальная вершина
-                for (T j : nodes.keySet()) { // Конечная вершина
-                    if (distances.get(i).get(k) != Integer.MAX_VALUE && distances.get(k).get(j) != Integer.MAX_VALUE) {
-                        var newDist = distances.get(i).get(k) + distances.get(k).get(j);
-                        if (newDist < distances.get(i).get(j)) {
-                            distances.get(i).put(j, newDist);
-                        }
-                    }
-                }
-            }
-        }
-
-        return distances;
-    }
 
 }
