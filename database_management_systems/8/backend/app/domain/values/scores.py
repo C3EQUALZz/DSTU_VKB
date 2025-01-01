@@ -2,7 +2,10 @@ from dataclasses import dataclass
 from typing import override
 from uuid import UUID
 
-from app.domain.exceptions import InvalidOIDException, EmptyScoreException
+from app.domain.exceptions import (
+    EmptyScoreException,
+    InvalidOIDException,
+)
 from app.domain.values.base import BaseValueObject
 
 

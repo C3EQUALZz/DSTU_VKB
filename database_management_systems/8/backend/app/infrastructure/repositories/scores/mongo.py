@@ -1,10 +1,15 @@
-from typing import override, Optional, Any, Mapping, List
-
-from motor.motor_asyncio import AsyncIOMotorCursor
+from typing import (
+    Any,
+    List,
+    Mapping,
+    Optional,
+    override,
+)
 
 from app.domain.entities.score import ScoreEntity
 from app.infrastructure.repositories.common.mongo import MotorAbstractRepository
 from app.infrastructure.repositories.scores.base import ScoresRepository
+from motor.motor_asyncio import AsyncIOMotorCursor
 
 
 class MotorScoresRepository(ScoresRepository, MotorAbstractRepository):

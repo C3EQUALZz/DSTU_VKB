@@ -6,6 +6,7 @@ from app.infrastructure.repositories.scores.mongo import MotorScoresRepository
 from app.infrastructure.uow.common.mongo import MotorAbstractUnitOfWork
 from app.infrastructure.uow.scores.base import ScoresUnitOfWork
 
+
 logger = logging.getLogger(__name__)
 
 

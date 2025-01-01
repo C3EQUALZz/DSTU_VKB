@@ -1,14 +1,15 @@
 from typing import (
+    Any,
     List,
+    Mapping,
     Optional,
-    override, Any, Mapping,
+    override,
 )
-
-from motor.motor_asyncio import AsyncIOMotorCursor
 
 from app.domain.entities.user import UserEntity
 from app.infrastructure.repositories.common.mongo import MotorAbstractRepository
 from app.infrastructure.repositories.users.base import UsersRepository
+from motor.motor_asyncio import AsyncIOMotorCursor
 
 
 class MotorUsersRepository(UsersRepository, MotorAbstractRepository):

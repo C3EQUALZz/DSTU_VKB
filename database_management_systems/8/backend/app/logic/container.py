@@ -11,6 +11,14 @@ from app.core.types.handlers import (
 from app.infrastructure.uow.users.base import UsersUnitOfWork
 from app.infrastructure.uow.users.mongo import MotorUsersUnitOfWork
 from app.logic.commands.auth import VerifyUserCredentialsCommand
+from app.logic.commands.scores import (
+    CreateScoreCommand,
+    DeleteScoreCommand,
+    GetAllScoresCommand,
+    GetAllUserScoresCommand,
+    GetScoreByIdCommand,
+    UpdateScoreCommand,
+)
 from app.logic.commands.users import (
     CreateUserCommand,
     GetAllUsersCommand,
@@ -18,6 +26,14 @@ from app.logic.commands.users import (
     UpdateUserCommand,
 )
 from app.logic.handlers.auth.commands import VerifyUserCredentialsCommandHandler
+from app.logic.handlers.scores.commands import (
+    CreateScoreCommandHandler,
+    DeleteScoreCommandHandler,
+    GetAllScoresCommandHandler,
+    GetAllUserScoresCommandHandler,
+    GetScoreByIdCommandHandler,
+    UpdateScoreCommandHandler,
+)
 from app.logic.handlers.users.commands import (
     CreateUserCommandHandler,
     GetAllUsersCommandHandler,
@@ -70,6 +86,12 @@ class HandlerProvider(Provider):
             GetUserByIdCommand: GetUserByIdCommandHandler,
             UpdateUserCommand: UpdateUserCommandHandler,
             VerifyUserCredentialsCommand: VerifyUserCredentialsCommandHandler,
+            CreateScoreCommand: CreateScoreCommandHandler,
+            GetAllScoresCommand: GetAllScoresCommandHandler,
+            GetScoreByIdCommand: GetScoreByIdCommandHandler,
+            UpdateScoreCommand: UpdateScoreCommandHandler,
+            DeleteScoreCommand: DeleteScoreCommandHandler,
+            GetAllUserScoresCommand: GetAllUserScoresCommandHandler
         })
 
     @provide(scope=Scope.APP)

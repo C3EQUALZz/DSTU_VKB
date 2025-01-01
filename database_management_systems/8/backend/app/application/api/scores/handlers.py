@@ -1,6 +1,8 @@
 from fastapi import APIRouter
-from dishka.integrations.fastapi import DishkaRoute
 from starlette import status
+
+from dishka.integrations.fastapi import DishkaRoute
+
 
 router = APIRouter(
     prefix="/scores",

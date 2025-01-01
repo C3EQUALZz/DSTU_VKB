@@ -1,10 +1,19 @@
 from typing import List
 
 from app.domain.entities.score import ScoreEntity
-from app.infrastructure.exceptions import ScoreNotFoundException
+from app.infrastructure.exceptions import (
+    ScoreNotFoundException,
+    UserNotFoundException,
+)
 from app.infrastructure.services.scores import ScoreService
-from app.logic.commands.scores import CreateScoreCommand, GetAllScoresCommand, GetScoreByIdCommand, UpdateScoreCommand, \
-    DeleteScoreCommand, GetAllUserScoresCommand
+from app.logic.commands.scores import (
+    CreateScoreCommand,
+    DeleteScoreCommand,
+    GetAllScoresCommand,
+    GetAllUserScoresCommand,
+    GetScoreByIdCommand,
+    UpdateScoreCommand,
+)
 from app.logic.handlers.scores.base import ScoreCommandHandler
 
 
@@ -54,4 +63,11 @@ class DeleteScoreCommandHandler(ScoreCommandHandler[DeleteScoreCommand]):
 
 class GetAllUserScoresCommandHandler(ScoreCommandHandler[GetAllUserScoresCommand]):
     async def __call__(self, command: GetAllUserScoresCommand) -> List[ScoreEntity]:
-        ...
+        score_service: ScoreService = ScoreService(uow=self._uow)
+
+        if not score_service.check_existence(user_oid=command.user_oid):
+            raise UserNotFoundException(str(command.user_oid))
+
+        scores: List[ScoreEntity] = await score_service.get_by_user_oid(user_oid=command.user_oid)
+
+        return scores

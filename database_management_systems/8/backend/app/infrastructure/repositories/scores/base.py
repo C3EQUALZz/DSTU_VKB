@@ -1,5 +1,11 @@
-from abc import abstractmethod, ABC
-from typing import Optional, List
+from abc import (
+    ABC,
+    abstractmethod,
+)
+from typing import (
+    List,
+    Optional,
+)
 
 from app.domain.entities.score import ScoreEntity
 from app.infrastructure.repositories.base import AbstractRepository
