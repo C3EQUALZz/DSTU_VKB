@@ -1,8 +1,17 @@
-from fastapi import APIRouter
+from typing import List
+
+from dishka import FromDishka
+from dishka.integrations.fastapi import DishkaRoute
+from fastapi import APIRouter, HTTPException
 from starlette import status
 
-from dishka.integrations.fastapi import DishkaRoute
-
+from app.application.api.scores.schemas import CreateScoreSchemeRequest, ScoreSchemeResponse, GetAllScoreSchemeRequest
+from app.core.types.handlers import EventHandlerMapping, CommandHandlerMapping
+from app.exceptions import ApplicationException
+from app.infrastructure.uow.scores.base import ScoresUnitOfWork
+from app.logic.bootstrap import Bootstrap
+from app.logic.commands.scores import CreateScoreCommand
+from app.logic.message_bus import MessageBus
 
 router = APIRouter(
     prefix="/scores",
@@ -12,15 +21,34 @@ router = APIRouter(
 
 
 @router.post(
-    "/{user_id}/",
+    "/",
     status_code=status.HTTP_201_CREATED,
     responses={
 
     },
     summary="Creates or adds a new score for the player",
 )
-async def create_score(user_id: str):
-    ...
+async def create_score(
+        scheme: CreateScoreSchemeRequest,
+        uow: FromDishka[ScoresUnitOfWork],
+        events: FromDishka[EventHandlerMapping],
+        commands: FromDishka[CommandHandlerMapping]
+) -> ScoreSchemeResponse:
+    try:
+        bootstrap: Bootstrap = Bootstrap(
+            uow=uow,
+            events_handlers_for_injection=events,
+            commands_handlers_for_injection=commands
+        )
+
+        messagebus: MessageBus = await bootstrap.get_messagebus()
+
+        await messagebus.handle(CreateScoreCommand(**scheme.model_dump()))
+
+        return ScoreSchemeResponse.from_entity(messagebus.command_result)
+
+    except ApplicationException as e:
+        raise HTTPException(status_code=e.status, detail=str(e))
 
 
 @router.get(
@@ -29,7 +57,12 @@ async def create_score(user_id: str):
     responses={},
     summary="Gets all scores for each player",
 )
-async def get_all_scores(page_number: int = 1, page_size: int = 10):
+async def get_all_scores(
+        scheme: GetAllScoreSchemeRequest,
+        uow: FromDishka[ScoresUnitOfWork],
+        events: FromDishka[EventHandlerMapping],
+        commands: FromDishka[CommandHandlerMapping]
+) -> List[ScoreSchemeResponse]:
     ...
 
 
