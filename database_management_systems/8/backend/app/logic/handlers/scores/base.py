@@ -20,7 +20,7 @@ class ScoresEventHandler(AbstractEventHandler[ET], ABC):
         self._uow: ScoresUnitOfWork = uow
 
 
-class UsersCommandHandler(AbstractCommandHandler[CT], ABC):
+class ScoreCommandHandler(AbstractCommandHandler[CT], ABC):
     """
     Abstract command handler class, from which every users command handler should be inherited from.
     """

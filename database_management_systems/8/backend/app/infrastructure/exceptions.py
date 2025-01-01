@@ -40,9 +40,11 @@ class ExpiredToken(InfrastructureException):
 
 @dataclass(eq=False)
 class AttributeException(InfrastructureException):
+    value: str
+
     @property
     def message(self) -> str:
-        return "USER_ATTRIBUTE_REQUIRED! User id or email or username is required"
+        return f"ATTRIBUTE_REQUIRED! {self.value} is required"
 
     @property
     def status(self) -> int:

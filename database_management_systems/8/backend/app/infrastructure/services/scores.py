@@ -1,7 +1,7 @@
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from app.domain.entities.score import ScoreEntity
-from app.infrastructure.exceptions import ScoreNotFoundException
+from app.infrastructure.exceptions import ScoreNotFoundException, AttributeException
 from app.infrastructure.uow.scores.base import ScoresUnitOfWork
 
 
@@ -46,10 +46,31 @@ class ScoreService:
             scores: Optional[List[ScoreEntity]] = await uow.scores.get_by_user_oid(user_oid=user_oid)
             if not scores:
                 raise ScoreNotFoundException(f"for user {user_oid}")
-            
+
             return scores
 
     async def delete(self, oid: str) -> None:
         async with self._uow as uow:
             await uow.scores.delete(oid)
             await uow.commit()
+
+    async def check_existence(
+            self,
+            oid: Optional[str] = None,
+            user_oid: Optional[str] = None,
+    ) -> bool:
+        if not (oid or user_oid):
+            raise AttributeException("oid or user_oid")
+        async with self._uow as uow:
+            score: Union[Optional[ScoreEntity], Optional[List[ScoreEntity]]]
+            if oid:
+                score = await uow.scores.get(oid=oid)
+                if score:
+                    return True
+
+            if user_oid:
+                score = await uow.scores.get_by_user_oid(user_oid=user_oid)
+                if score:
+                    return True
+
+        return False

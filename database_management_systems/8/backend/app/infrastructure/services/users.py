@@ -72,7 +72,7 @@ class UsersService:
             name: Optional[str] = None
     ) -> bool:
         if not (oid or email or name):
-            raise AttributeException
+            raise AttributeException("oid or email or name")
 
         async with self._uow as uow:
             user: Optional[UserEntity]
