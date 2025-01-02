@@ -1,6 +1,7 @@
 services:
   postgres:
     image: postgres
+    container_name: postgres-lab-2
     hostname: postgreshost
     env_file:
       - .env
@@ -21,6 +22,7 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
+    container_name: pgadmin-lab-2
     env_file:
       - .env
     environment:
