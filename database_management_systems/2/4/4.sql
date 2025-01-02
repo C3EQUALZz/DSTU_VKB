@@ -1,3 +1,7 @@
-SELECT "STUDENT_ID", MAX("MARK") 
-FROM "EXAM_MARKS" 
+/*
+  Напишите запрос, который для каждого студента выполняет выборку его идентификатора и максимальной из полученных им оценок.
+ */
+
+SELECT "STUDENT_ID", MAX("MARK")
+FROM "EXAM_MARKS"
 GROUP BY "STUDENT_ID";

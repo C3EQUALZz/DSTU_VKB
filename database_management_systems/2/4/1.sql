@@ -1,3 +1,9 @@
-SELECT COUNT(*) 
-FROM "EXAM_MARKS" 
-WHERE "SUBJ_ID" = 12 AND "MARK" IS NOT NULL;
+/*
+ Напишите запрос для подсчета количества студентов,
+ сдавших (поле MARK непустое) экзамен по предмету обучения с идентификатором 12.
+*/
+
+SELECT COUNT(*)
+FROM "EXAM_MARKS"
+WHERE "SUBJ_ID" = 12
+  AND "MARK" IS NOT NULL;

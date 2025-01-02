@@ -1,3 +1,8 @@
-SELECT "EXAM_DATE", COUNT("STUDENT_ID") 
-FROM "EXAM_MARKS" 
+/**
+  Напишите запрос, который для каждого конкретного дня сдачи экзамена выводит
+  данные о количестве студентов, сдававших экзамен в этот день.
+*/
+
+SELECT "EXAM_DATE", COUNT("STUDENT_ID")
+FROM "EXAM_MARKS"
 GROUP BY "EXAM_DATE";
