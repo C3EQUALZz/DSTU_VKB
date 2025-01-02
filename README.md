@@ -44,7 +44,7 @@
 Ещё репозитории с лабораторными работами: 
 - https://github.com/yaromochka/DSTU
 - https://github.com/Din0zaBr/DSTU
-- https://github.com/Kikuzawa/DSTU
+- https://github.com/Kikuzawa/DSTU_VKB
   
 # Статистика репозитория
 
