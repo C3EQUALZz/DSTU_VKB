@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres
@@ -14,6 +12,7 @@ services:
       - ${POSTGRES_PORT}:5432
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./University.sql:/docker-entrypoint-initdb.d/University.sql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 10s
