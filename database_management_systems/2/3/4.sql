@@ -1,2 +1,7 @@
-SELECT "NAME"||' '||"SURNAME"||' '|| 'родился в' ||' '|| TO_CHAR("BIRTHDAY",'YYYY') ||' '||'году'
-FROM "STUDENT"
+/**
+  Составьте запрос для таблицы STUDENT таким образом, чтобы выходная таблица содержала всего один
+  столбец в следующем виде: Борис Кузнецов родился в 1987 году.
+*/
+
+SELECT CONCAT_WS(' ', "NAME", "SURNAME", 'родился в', TO_CHAR("BIRTHDAY", 'YYYY'), 'году') AS student_info
+FROM "STUDENT";

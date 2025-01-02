@@ -1,3 +1,10 @@
-SELECT LOWER(SUBSTR("NAME", 1,1))||'.'||LOWER("SURNAME")||';'||' место жительства'||' -- '||LOWER("CITY")||';'||' родился'||': '||
-TO_CHAR("BIRTHDAY",'DD.Mon.YYYY')
-FROM "STUDENT"
+/*
+ Составьте запрос для таблицы STUDENT таким образом, чтобы выходная таблица содержала всего
+ один столбец в следующем виде: б. кузнецов; место жительства — брянск; родился: 8-дек-1987.
+*/
+
+SELECT
+    LOWER(SUBSTR("NAME", 1, 1)) || '.' || LOWER("SURNAME") || '; ' ||
+    'место жительства — ' || LOWER("CITY") || '; ' ||
+    'родился: ' || TO_CHAR("BIRTHDAY", 'DD-Mon-YYYY')
+FROM "STUDENT";
