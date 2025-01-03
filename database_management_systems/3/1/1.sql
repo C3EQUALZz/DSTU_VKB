@@ -3,13 +3,18 @@
  Цвет задается в виде параметра (например, «белый»). Нулевые не учитывать.
 */
 
--- SELECT *
--- FROM "AUTO"
--- WHERE "C_COLOR" =
---       (SELECT "C_MENU" || "C_REC"
---        FROM "MENU"
---        WHERE "NAME_REC" = 'белый')
+CREATE OR REPLACE FUNCTION get_average_year_by_color(color_param TEXT)
+    RETURNS NUMERIC
+    LANGUAGE plpgsql
+    AS
+'
+    BEGIN
+        RETURN (SELECT AVG("AUTO"."YEAR_A") AS average_year
+                FROM "AUTO"
+                         JOIN "MENU" ON "AUTO"."C_COLOR" = ("MENU"."C_MENU" || "MENU"."C_REC")
+                WHERE "MENU"."NAME_REC" = color_param
+                  AND "AUTO"."YEAR_A" IS NOT NULL);
+    END;
+';
 
-SELECT "C_MENU" || "C_REC"
-       FROM "MENU"
-       WHERE "NAME_REC" = 'белый'
+SELECT get_average_year_by_color('белый');

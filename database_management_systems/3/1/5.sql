@@ -1,8 +1,12 @@
-SELECT "INV", COALESCE("C_GROUP", 'Штатная группа не задана')
-FROM "AUTO" 
-WHERE "C_GROUP" = (
-	SELECT "C_MENU"||"C_REC" 
-	FROM "MENU"
-	WHERE "NAME_REC"='стандартный'
-)
-OR "C_GROUP" IS NULL
+/*
+ Напишите запрос, который выбирает все автомобили заданной штатной группы, а также все автомобили,
+ для которых штатная группа не задана (использовать внешнее объединение) – для них вывести в поле строк
+ «Штатная группа не задана». Штатная группа задается параметром (например, «стандартный»).
+*/
+
+
+SELECT "AUTO"."INV", COALESCE("AUTO"."C_GROUP", 'Штатная группа не задана') AS "Group"
+FROM "AUTO"
+         LEFT JOIN "MENU" ON "AUTO"."C_GROUP" = ("MENU"."C_MENU" || "MENU"."C_REC")
+WHERE "MENU"."NAME_REC" = 'стандартный'
+   OR "AUTO"."C_GROUP" IS NULL;

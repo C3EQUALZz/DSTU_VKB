@@ -1,11 +1,14 @@
-SELECT *
-FROM (
-SELECT COUNT("INV"), "YEA_"
+/*
+ Напишите запрос, который выводит год, в котором было выпущено наибольшее количество автомобилей.
+ Учитываются только года с 1991 по 1993 включительно (используя предикат Between).
+ */
+
+
+SELECT "YEA_"
 FROM "AUTO"
+WHERE "YEA_" BETWEEN 1991 AND 1993
 GROUP BY "YEA_"
-HAVING "YEA_" BETWEEN 1991 AND 1993
 ORDER BY COUNT("INV") DESC
-)
 LIMIT 1
 
 
