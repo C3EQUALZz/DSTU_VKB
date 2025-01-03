@@ -3,3 +3,6 @@
  Класс и цвет вводятся как параметры (например, «средний класс» и «белый»).
 */
 
+SELECT *
+FROM "AUTO" INNER JOIN "MENU" ON "AUTO"."C_CLASS" = ("MENU"."C_MENU" || "MENU"."C_REC")
+WHERE LOWER("MENU"."NAME_REC") IN ('средний класс', 'белый')
