@@ -13,7 +13,6 @@ services:
       - ${POSTGRES_PORT}:5432
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./Dekanat.sql:/docker-entrypoint-initdb.d/University.sql
       - ./LR_3_BD_Avtomobiley.sql:/docker-entrypoint-initdb.d/LR_3_BD_Avtomobiley.sql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
