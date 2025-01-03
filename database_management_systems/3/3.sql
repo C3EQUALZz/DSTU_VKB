@@ -1,8 +1,0 @@
-SELECT *
-FROM "AUTO" 
-WHERE "C_MARK" = (
-	SELECT "C_MENU"||"C_REC" 
-	FROM "MENU"
-	WHERE "NAME_REC"='москвич М-412'
-)
-AND "SIGN" NOT LIKE '%дб'

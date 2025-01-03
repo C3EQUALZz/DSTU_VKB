@@ -1,0 +1,8 @@
+SELECT COUNT("ID")
+FROM "AUTO" 
+WHERE "C_PLANT" = (
+	SELECT "C_MENU"||"C_REC" 
+	FROM "MENU"
+	WHERE "NAME_REC"='АЗЛК, СССР'
+)
+AND "N_PASS" LIKE 'ШП%'

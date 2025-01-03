@@ -1,0 +1,24 @@
+language: python
+dist: bionic   # required for Python >= 3.7
+cache: pip
+
+# Environment changes have to be manually synced with 'tox.ini'.
+# See: https://github.com/travis-ci/travis-ci/issues/3024
+
+python:
+  - "3.8"
+  - "3.9"
+  - "3.10"
+  - "3.11"
+  - "3.12"
+
+install:
+  - pip install -U pip setuptools  # https://github.com/pypa/virtualenv/issues/1630
+  - pip install poetry
+  - poetry install
+
+script:
+  - poetry run pytest tests/
+
+after_success:
+  - poetry run coveralls
