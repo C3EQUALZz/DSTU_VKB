@@ -13,8 +13,6 @@
 """
 
 
-
-
 def evaluate_polynomial(a: int, b: int, c: int, d: int, x: float) -> float:
     """Вычисляет значение кубического уравнения ax^3 + bx^2 + cx + d."""
     return a * x ** 3 + b * x ** 2 + c * x + d
@@ -25,7 +23,7 @@ def evaluate_derivative(a: int, b: int, c: int, x: float) -> float:
     return 3 * a * x ** 2 + 2 * b * x + c
 
 
-def find_root(a: int, b: int, c: int, d: int, initial_guess: float = 0.0, tolerance: float = 1e-5) -> float:
+def find_root_newton(a: int, b: int, c: int, d: int, initial_guess: float = 0.0, tolerance: float = 1e-5) -> float:
     """Находит корень кубического уравнения методом Ньютона."""
     x0 = initial_guess
 
@@ -42,33 +40,20 @@ def find_root(a: int, b: int, c: int, d: int, initial_guess: float = 0.0, tolera
 
         # Обновляем приближение
         x0 = x1
-#
-#
-# def main() -> None:
-#     # Читаем коэффициенты кубического уравнения
-#     a, b, c, d = map(int, input().split())
-#
-#     # Находим корень и выводим его с точностью 10 знаков после запятой
-#     root = find_root(a, b, c, d)
-#     print(root)
-#
-#
-# if __name__ == "__main__":
-#     main()
-
-def f(x, a, b, c, d):
-    return a * x ** 3 + b * x ** 2 + c * x + d
 
 
-def bisection(a, b, c, d, left, right, tol=1e-5):
-    if f(left, a, b, c, d) * f(right, a, b, c, d) >= 0:
-        return find_root(a, b, c, d)
+def bisection(a: int, b: int, c: int, d: int, left: float, right: float, tol: float = 1e-5) -> float:
+    """Находит корень кубического уравнения методом бисекции."""
+    if evaluate_polynomial(a, b, c, d, left) * evaluate_polynomial(a, b, c, d, right) >= 0:
+        return find_root_newton(a, b, c, d)  # Если нет корня, используем метод Ньютона
 
     while (right - left) / 2 > tol:
         midpoint = (left + right) / 2
-        if f(midpoint, a, b, c, d) == 0:
+        f_mid = evaluate_polynomial(a, b, c, d, midpoint)
+
+        if f_mid == 0:
             return midpoint  # Найден точный корень
-        elif f(left, a, b, c, d) * f(midpoint, a, b, c, d) < 0:
+        elif evaluate_polynomial(a, b, c, d, left) * f_mid < 0:
             right = midpoint
         else:
             left = midpoint
@@ -76,9 +61,12 @@ def bisection(a, b, c, d, left, right, tol=1e-5):
     return (left + right) / 2  # Возвращаем приближенный корень
 
 
-# Пример использования
-a, b, c, d = map(int, input().split())
+def main() -> None:
+    """Основная функция для чтения входных данных и вывода корня уравнения."""
+    a, b, c, d = map(int, input().split())
+    root = bisection(a, b, c, d, -1000, 1000)
+    print(root)
 
-# Ищем корень в интервале [-1000, 1000]
-root = bisection(a, b, c, d, -1000, 1000)
-print(root)
+
+if __name__ == "__main__":
+    main()
