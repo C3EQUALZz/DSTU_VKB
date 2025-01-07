@@ -37,10 +37,10 @@ from typing import List, Tuple
 
 @dataclass
 class Road:
-    city1: int
-    city2: int
-    gate1: int
-    gate2: int
+    from_city: int
+    to_city: int
+    from_gate: int
+    to_gate: int
     visited: bool = False
 
 
@@ -52,16 +52,20 @@ class CityGraph:
 
         # Заполняем граф и список дорог
         for gate1, gate2 in roads_data:
-            city1 = (gate1 + 3) // 4
-            city2 = (gate2 + 3) // 4
+            from_city = (gate1 + 3) // 4
+            to_city = (gate2 + 3) // 4
             road_index = len(self.roads)
-            self.graph[city1].append(road_index)
-            self.graph[city2].append(road_index)
-            self.roads.append(Road(city1, city2, gate1, gate2))
+            self.graph[from_city].append(road_index)
+            self.graph[to_city].append(road_index)
+            self.roads.append(Road(from_city, to_city, gate1, gate2))
 
     def mark_road_visited(self, road_index: int) -> None:
         """Помечаем дорогу как посещенную."""
         self.roads[road_index].visited = True
+
+    def __getitem__(self, city: int) -> List[int]:
+        """Возвращает список дорог для данного города."""
+        return self.graph[city]
 
 
 def can_complete_task(n: int, graph: CityGraph) -> List[int]:
@@ -70,33 +74,33 @@ def can_complete_task(n: int, graph: CityGraph) -> List[int]:
     cur_city = 1
 
     while True:
-        if not graph.graph[cur_city]:
+        if not graph[cur_city]:  # Используем graph[cur_city] вместо graph.graph[cur_city]
             if not stack:
                 break
             # Возвращаемся к предыдущему городу
-            gates2 = stack.pop()
-            gates1 = stack.pop()
+            to_gate = stack.pop()
+            from_gate = stack.pop()
             prev_city = stack.pop()
-            ans.append(gates2)
-            ans.append(gates1)
+            ans.append(to_gate)
+            ans.append(from_gate)
             cur_city = prev_city
             continue
 
-        road_index = graph.graph[cur_city][-1]
+        road_index = graph[cur_city][-1]  # Используем graph[cur_city] вместо graph.graph[cur_city]
 
         if graph.roads[road_index].visited:  # Если дорога уже посещена
-            graph.graph[cur_city].pop()
+            graph[cur_city].pop()  # Используем graph[cur_city] вместо graph.graph[cur_city]
             continue
 
         # Обновляем состояние дороги и перемещаемся в соседний город
-        if cur_city == graph.roads[road_index].city1:
-            stack.extend([cur_city, graph.roads[road_index].gate1, graph.roads[road_index].gate2])
+        if cur_city == graph.roads[road_index].from_city:
+            stack.extend([cur_city, graph.roads[road_index].from_gate, graph.roads[road_index].to_gate])
             graph.mark_road_visited(road_index)
-            cur_city = graph.roads[road_index].city2
+            cur_city = graph.roads[road_index].to_city
         else:
-            stack.extend([cur_city, graph.roads[road_index].gate2, graph.roads[road_index].gate1])
+            stack.extend([cur_city, graph.roads[road_index].to_gate, graph.roads[road_index].from_gate])
             graph.mark_road_visited(road_index)
-            cur_city = graph.roads[road_index].city1
+            cur_city = graph.roads[road_index].from_city
 
     # Проверяем, удалось ли пройти через все ворота
     return ans if len(ans) == 4 * n else []
