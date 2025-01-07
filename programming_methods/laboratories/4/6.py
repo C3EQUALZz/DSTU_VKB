@@ -35,54 +35,89 @@
 то первая строка выходного файла должна содержать строку „infinitely kind“.
 """
 import sys
+from dataclasses import dataclass
+from typing import List, Tuple
 
 INF = sys.maxsize // 2
 
-n, m, c = map(int, input().split())
 
-matrix = [[0 if i == j else INF for j in range(n)] for i in range(n)]
+@dataclass(frozen=True)
+class Flight:
+    start: int
+    end: int
+    weight_change: int
+    index: int
 
-parents = [[0 for _ in range(n)] for _ in range(n)]
 
-uu = []
-vv = []
+def find_path_between_concerts(
+        n: int,
+        c: int,
+        flights: List[Flight],
+        concerts: List[int]
+) -> Tuple[int, List[int]]:
+    """
+    Функция для нахождения маршрутов между концертами, минимизируя потерю веса.
+    :param n: Количество городов
+    :param c: Количество концертов
+    :param flights: Список рейсов (класс Flight)
+    :param concerts: Список городов, в которых будут проводиться концерты
+    :return: Количество рейсов и список индексов рейсов
+    """
+    matrix = [[0 if i == j else INF for j in range(n)] for i in range(n)]
+    parents = [[0 for _ in range(n)] for _ in range(n)]
 
-for i in range(m):
-    vertex1, vertex2, w = map(int, input().split())
-    vertex1 -= 1
-    vertex2 -= 1
-    uu.append(vertex1)
-    vv.append(vertex2)
-    matrix[vertex1][vertex2] = -w
-    parents[vertex1][vertex2] = i
+    for flight in flights:
+        matrix[flight.start][flight.end] = -flight.weight_change
+        parents[flight.start][flight.end] = flight.index
 
-for k in range(n):
-    for i in range(n):
-        for j in range(n):
-            if matrix[i][j] > matrix[i][k] + matrix[k][j]:
-                matrix[i][j] = matrix[i][k] + matrix[k][j]
-                parents[i][j] = parents[i][k]
+    # Алгоритм Флойда-Уоршелла для нахождения кратчайших путей
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if matrix[i][j] > matrix[i][k] + matrix[k][j]:
+                    matrix[i][j] = matrix[i][k] + matrix[k][j]
+                    parents[i][j] = parents[i][k]
 
-cities = [i - 1 for i in map(int, input().split())]
+    # Проверка на отрицательные циклы
+    for i in range(c):
+        if matrix[concerts[i]][concerts[i]] < 0:
+            return -1, []
 
-flag = 0
-for i in range(c):
-    if matrix[cities[i]][cities[i]] < 0:
-        flag = 1
-        break
-
-if flag == 0:
+    # Строим маршрут между концертами
     path = []
     for i in range(c - 1):
-        v = cities[i]
-        while v != cities[i + 1]:
-            path.append(parents[v][cities[i + 1]])
-            v = vv[parents[v][cities[i + 1]]]
+        v = concerts[i]
+        while v != concerts[i + 1]:
+            path.append(parents[v][concerts[i + 1]])
+            v = flights[parents[v][concerts[i + 1]]].end
             if len(path) > 10000000:
-                print("infinitely kind")
-                sys.exit()
-    print(len(path))
-    for p in path:
-        print(p + 1, end=" ")
-else:
-    print("infinitely kind")
+                return -1, []
+
+    return len(path), [p + 1 for p in path]
+
+
+def main() -> None:
+    # Ввод данных
+    n, m, c = map(int, input().split())
+    flights = []
+
+    for i in range(m):
+        vertex1, vertex2, w = map(int, input().split())
+        vertex1 -= 1  # Приводим города к индексации с нуля
+        vertex2 -= 1
+        flights.append(Flight(vertex1, vertex2, w, i))
+
+    concerts = [i - 1 for i in map(int, input().split())]
+
+    # Получаем путь между концертами
+    result, path = find_path_between_concerts(n, c, flights, concerts)
+
+    if result == -1:
+        print("infinitely kind")
+    else:
+        print(result)
+        print(" ".join(map(str, path)))
+
+
+if __name__ == "__main__":
+    main()
