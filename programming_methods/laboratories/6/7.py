@@ -1,4 +1,4 @@
-/*
+"""
 Задача №111881. Коллайдер
 
 Физики проводят эксперимент для исследования частиц трёх типов: x, y и z.
@@ -23,55 +23,19 @@
 
 Выведите столько строк, сколько вопросов во входном файле. В строке номер i
 надо записать ответ на вопрос i — название соответствующей частицы x, y или z.
-*/
+"""
 
 
-#include <iostream>
-#include <vector>
-#include <string>
+n, m = map(int, input().split())
+particles = input().strip()
 
-int main() {
-    int n, m;
-    std::cin >> n >> m;
-    std::string particles;
-    std::cin >> particles;
+indexes = list(range(n))
 
-    std::vector<int> indexes(n);
-    for (int i = 0; i < n; ++i) {
-        indexes[i] = i;
-    }
-
-    for (int i = 0; i < m; ++i) {
-        std::string action;
-        std::cin >> action;
-
-        if (action == "a") {
-            int x, y;
-            std::cin >> x >> y;
-            --x; // Приводим к 0-индексации
-            --y; // Приводим к 0-индексации
-
-            // Перемещаем элемент x в позицию y
-            if (x != y) {
-                int temp = indexes[x];
-                if (x < y) {
-                    for (int j = x; j < y; ++j) {
-                        indexes[j] = indexes[j + 1];
-                    }
-                } else {
-                    for (int j = x; j > y; --j) {
-                        indexes[j] = indexes[j - 1];
-                    }
-                }
-                indexes[y] = temp;
-            }
-        } else {
-            int k;
-            std::cin >> k;
-            --k; // Приводим к 0-индексации
-            std::cout << particles[indexes[k]] << std::endl;
-        }
-    }
-
-    return 0;
-}
+for _ in range(m):
+    action = input().split()
+    if action[0] == 'a':
+        i, j = int(action[1]) - 1, int(action[2]) - 1
+        indexes.insert(j, indexes.pop(i))
+    else:
+        k = int(action[1]) - 1
+        print(particles[indexes[k]])
