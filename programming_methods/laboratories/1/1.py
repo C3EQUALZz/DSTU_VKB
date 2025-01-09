@@ -10,33 +10,51 @@
 
 Так как гоблины также широко известны своим непочтительным отношением ко всяческим правилам и законам,
 шаманы попросили вас написать программу, которая бы отслеживала порядок гоблинов в очереди.
-
----
-
-Нельзя все делать с одной очередью, потому что у нас есть момент, когда нужно вставлять в центр (O(n)).
-Если будете хранить две очереди примерно равного размера, вставка в середину будет занимать константу.
-Остальные операции тоже можно доработать так, чтобы они остались константными.
-
 """
 
 import collections
+from typing import List
 
 
-q1 = collections.deque()
-q2 = collections.deque()
+def process_queue(actions: List[List[str]]) -> List[str]:
+    """
+    Почему тут используется несколько очередей?
+    Нельзя все делать с одной очередью, потому что у нас есть момент, когда нужно вставлять в центр,
+    а данная операция (O(n)), так как под капотом здесь связный список.
+    Если будете хранить две очереди примерно равного размера, вставка в середину будет занимать константу.
+    """
 
-for _ in range(int(input())):
+    q1 = collections.deque()
+    q2 = collections.deque()
+    results: List[str] = []
 
-    action = input().split()
+    for action in actions:
+        if action[0] == '+':
+            q2.append(action[1])
+        elif action[0] == '*':
+            q2.appendleft(action[1])
+        else:
+            results.append(q1.popleft())
 
-    if action[0] == '+':
-        q2.append(action[1])
-    elif action[0] == '*':
-        q2.appendleft(action[1])
-    else:
-        print(q1.popleft())
+        if len(q1) < len(q2):
+            q1.append(q2.popleft())
 
-    if len(q1) < len(q2):
-        q1.append(q2.popleft())
+    return results
 
 
+def main() -> None:
+    n: int = int(input())
+    actions: List[List[str]] = []
+
+    for _ in range(n):
+        action: List[str] = input().split()
+        actions.append(action)
+
+    results: List[str] = process_queue(actions)
+
+    for result in results:
+        print(result)
+
+
+if __name__ == "__main__":
+    main()
