@@ -16,12 +16,25 @@
 следует также зафиксировать ошибку.
 От вас требуется либо указать максимальное количество бочек, которые одновременно пребывали на барже либо зафиксировать ошибку.
 """
-
 from collections import deque
 from typing import List, Deque
+from dataclasses import dataclass
 
 
-def process_docks(docks: int, cells: int, max_len: int) -> int:
+@dataclass(frozen=True)
+class Action:
+    """
+    Класс, который описывает действие с текущей строки ввода
+    - operation - "+" для загрузки, "-" для выгрузки
+    - cell_index - Индекс отсека (1-индексированный)
+    - fuel_type - Тип топлива (для выгрузки)
+    """
+    operation: str
+    cell_index: int
+    fuel_type: str
+
+
+def process_docks(cells: int, max_len: int, actions: List[Action]) -> int:
     max_tanks: int = 0
     current_tanks: int = 0
     error: bool = False
@@ -30,13 +43,11 @@ def process_docks(docks: int, cells: int, max_len: int) -> int:
     cell: List[Deque[str]] = [deque() for _ in range(cells)]
 
     # Обработка действий в доках
-    for _ in range(docks):
-        action: List[str] = input().split()
-        if action[0] == "+":
+    for action in actions:
+        if action.operation == "+":
             # Загрузка бочки
-            cell_index: int = int(action[1]) - 1
-            fuel_type: str = action[2]
-            cell[cell_index].append(fuel_type)
+            cell_index: int = action.cell_index - 1
+            cell[cell_index].append(action.fuel_type)
             current_tanks += 1
 
             if current_tanks > max_len:
@@ -45,10 +56,9 @@ def process_docks(docks: int, cells: int, max_len: int) -> int:
             max_tanks = max(max_tanks, current_tanks)
         else:
             # Выгрузка бочки
-            cell_index: int = int(action[1]) - 1
-            fuel_type: str = action[2]
+            cell_index: int = action.cell_index - 1
 
-            if not cell[cell_index] or cell[cell_index].pop() != fuel_type:
+            if not cell[cell_index] or cell[cell_index].pop() != action.fuel_type:
                 error = True
                 break
             current_tanks -= 1
@@ -57,13 +67,18 @@ def process_docks(docks: int, cells: int, max_len: int) -> int:
 
 
 def main() -> None:
-    # Чтение входных данных
     request: List[str] = input().split()
     docks: int = int(request[0])
     cells: int = int(request[1])
     max_len: int = int(request[2])
 
-    result: int = process_docks(docks, cells, max_len)
+    actions: List[Action] = []
+    for _ in range(docks):
+        action_data: List[str] = input().split()
+        action = Action(operation=action_data[0], cell_index=int(action_data[1]), fuel_type=action_data[2])
+        actions.append(action)
+
+    result: int = process_docks(cells, max_len, actions)
 
     print("Error" if result == -1 else result)
 
