@@ -12,7 +12,7 @@
 шаманы попросили вас написать программу, которая бы отслеживала порядок гоблинов в очереди.
 """
 
-import collections
+from collections import deque
 from typing import List
 
 
@@ -24,8 +24,8 @@ def process_queue(actions: List[List[str]]) -> List[str]:
     Если будете хранить две очереди примерно равного размера, вставка в середину будет занимать константу.
     """
 
-    q1 = collections.deque()
-    q2 = collections.deque()
+    q1 = deque()
+    q2 = deque()
     results: List[str] = []
 
     for action in actions:
