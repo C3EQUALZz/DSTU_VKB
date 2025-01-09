@@ -16,16 +16,12 @@
 следует также зафиксировать ошибку.
 От вас требуется либо указать максимальное количество бочек, которые одновременно пребывали на барже либо зафиксировать ошибку.
 """
+
 from collections import deque
 from typing import List, Deque
 
 
-def main() -> None:
-    # Чтение входных данных
-    request: List[str] = input().split()
-    docks: int = int(request[0])
-    cells: int = int(request[1])
-    max_len: int = int(request[2])
+def process_docks(docks: int, cells: int, max_len: int) -> int:
     max_tanks: int = 0
     current_tanks: int = 0
     error: bool = False
@@ -57,8 +53,19 @@ def main() -> None:
                 break
             current_tanks -= 1
 
-    # Проверка на ошибки и вывод результата
-    print("Error" if current_tanks > 0 or error else max_tanks)
+    return -1 if current_tanks > 0 or error else max_tanks
+
+
+def main() -> None:
+    # Чтение входных данных
+    request: List[str] = input().split()
+    docks: int = int(request[0])
+    cells: int = int(request[1])
+    max_len: int = int(request[2])
+
+    result: int = process_docks(docks, cells, max_len)
+
+    print("Error" if result == -1 else result)
 
 
 if __name__ == "__main__":
