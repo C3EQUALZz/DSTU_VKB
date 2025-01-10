@@ -22,36 +22,45 @@
 можно, выведите сообщение YES, если это сделать нельзя, выведите NO.
 """
 
+from collections import deque
 from typing import List
 
 
-def can_sort_train(n: int, wagons: List[int]) -> str:
-    stack: List[int] = []  # Стек для хранения вагонов в тупике
-    output: List[int] = []  # Список для вагонов, выезжающих на путь 2
+def can_sort_train(n: int, wagons: List[int]) -> bool:
+    """
+    Задача заключается на работу со стеком. Здесь я использую два стека. Один для тупика, а второй для вывода (2 путь).
+    Учитывайте, что номера вагонов идут с 1, а не 0.
+
+    :param n: Количество вагонов в поезде.
+    :param wagons: Список с номерами вагонов поездов.
+
+    :returns: True, если можно поставить вагоны в правильном порядке, в ином случае False.
+    """
+    stack_deadlock: deque[int] = deque()
+    stack_output: deque[int] = deque()
 
     for wagon in wagons:
         # Перемещаем вагоны из тупика на путь 2, если это возможно
-        while stack and stack[-1] == len(output) + 1:
-            output.append(stack.pop())
+        while stack_deadlock and stack_deadlock[-1] == len(stack_output) + 1:
+            stack_output.append(stack_deadlock.pop())
 
         # Проверяем, можем ли сразу отправить вагон на путь 2
-        if wagon == len(output) + 1:
-            output.append(wagon)
+        if wagon == len(stack_output) + 1:
+            stack_output.append(wagon)
         else:
-            stack.append(wagon)
+            stack_deadlock.append(wagon)
 
     # Проверяем оставшиеся вагоны в тупике
-    while stack and stack[-1] == len(output) + 1:
-        output.append(stack.pop())
+    while stack_deadlock and stack_deadlock[-1] == len(stack_output) + 1:
+        stack_output.append(stack_deadlock.pop())
 
-    # Если все вагоны выехали в правильном порядке, выводим "YES"
-    return "YES" if len(output) == n else "NO"
+    return len(stack_output) == n
 
 
 def main() -> None:
     n: int = int(input())
     wagons: List[int] = list(map(int, input().split()))
-    print(can_sort_train(n, wagons))
+    print("YES" if can_sort_train(n, wagons) else "NO")
 
 
 if __name__ == "__main__":
