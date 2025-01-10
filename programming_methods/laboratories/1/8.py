@@ -15,12 +15,21 @@
 
 Выведите одну строку – расшифрованное сообщение.
 """
-from typing import List
+from typing import List, AnyStr
 
 
-def decrypt_message(encrypted_message: str) -> str:
-    symbols: List[str] = list(encrypted_message)
-    n = len(encrypted_message) // 2
+def decrypt_message(encrypted_message: AnyStr) -> AnyStr:
+    """
+    :param encrypted_message: сообщение, которое мы хотим расшифровать по условию задания.
+    :returns:
+    Args:
+        encrypted_message:
+
+    Returns:
+
+    """
+    symbols: List[AnyStr] = list(encrypted_message)
+    n: int = len(encrypted_message) // 2
     for i in range(n):
         symbols[2 * i: 2 * i + 2] = encrypted_message[i + n], encrypted_message[i]
 
@@ -32,7 +41,7 @@ def main() -> None:
     encrypted_message = input()
 
     # Получение расшифрованного сообщения
-    decrypted_message = decrypt_message(encrypted_message)
+    decrypted_message: str = decrypt_message(encrypted_message)
 
     # Вывод результата
     print(decrypted_message)

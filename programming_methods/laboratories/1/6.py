@@ -23,10 +23,10 @@
 """
 
 from collections import deque
-from typing import List
+from typing import List, Iterable
 
 
-def can_sort_train(n: int, wagons: List[int]) -> bool:
+def can_sort_train(n: int, wagons: Iterable[int]) -> bool:
     """
     Задача заключается на работу со стеком. Здесь я использую два стека. Один для тупика, а второй для вывода (2 путь).
     Учитывайте, что номера вагонов идут с 1, а не 0.

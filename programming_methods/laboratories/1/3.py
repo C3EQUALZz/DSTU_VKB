@@ -15,10 +15,10 @@
 Между концом первой рекламы и началом следующей должна пройти как минимум К-1 единица времени.
 """
 from itertools import combinations, product
-from typing import List, Set, Iterable, Tuple
+from typing import List, Set, Iterable, Tuple, Sequence
 
 
-def find_best_broadcast(n: int, k: int, times: List[int]) -> int:
+def find_best_broadcast(n: int, k: int, times: Sequence[int]) -> int:
     """
     Нам нужно найти максимальное выгодное время для показа 2 реклам.
     Очевидно, что надо показывать, когда больше всего покупателей.
@@ -84,8 +84,8 @@ def find_best_broadcast(n: int, k: int, times: List[int]) -> int:
 
 def main() -> None:
     n, k = map(int, input().split())
-    times = list(map(int, input().split()))
-    result = find_best_broadcast(n, k, times)
+    times: List[int] = list(map(int, input().split()))
+    result: int = find_best_broadcast(n, k, times)
     print(result)
 
 

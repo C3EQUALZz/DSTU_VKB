@@ -13,10 +13,10 @@
 """
 
 from collections import deque
-from typing import List
+from typing import Sequence, List, Iterable
 
 
-def process_queue(actions: List[List[str]]) -> List[str]:
+def process_queue(actions: Sequence[Sequence[str]]) -> Iterable[str]:
     """
     Почему тут используется несколько очередей?
     Нельзя все делать с одной очередью, потому что у нас есть момент, когда нужно вставлять в центр,
@@ -50,7 +50,7 @@ def main() -> None:
         action: List[str] = input().split()
         actions.append(action)
 
-    results: List[str] = process_queue(actions)
+    results: Iterable[str] = process_queue(actions)
 
     for result in results:
         print(result)

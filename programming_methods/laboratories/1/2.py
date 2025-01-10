@@ -17,7 +17,7 @@
 От вас требуется либо указать максимальное количество бочек, которые одновременно пребывали на барже либо зафиксировать ошибку.
 """
 from collections import deque
-from typing import List, Deque
+from typing import List, Deque, Iterable
 from dataclasses import dataclass
 
 
@@ -34,7 +34,7 @@ class Action:
     fuel_type: str
 
 
-def process_docks(cells: int, max_len: int, actions: List[Action]) -> int:
+def process_docks(cells: int, max_len: int, actions: Iterable[Action]) -> int:
     """
     Здесь у нас динамическое программирование, где каждое следующее явление зависит от прошлого.
     Когда сказали: "Причём извлечь бочку из отсека можно лишь в случае, если все бочки, помещённые в этот отсек после неё,

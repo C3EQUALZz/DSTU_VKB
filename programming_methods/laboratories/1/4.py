@@ -3,10 +3,10 @@
 
 Даны числа n и m. Создайте массив A[n][m] и заполните его, как показано на примере.
 """
-from typing import List
+from typing import List, Sequence
 
 
-def fill_matrix(n: int, m: int) -> List[List[int]]:
+def fill_matrix(n: int, m: int) -> Sequence[Sequence[int]]:
     """
     Заполняет матрицу размером n на m по диагоналям.
 

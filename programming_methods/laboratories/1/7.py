@@ -19,15 +19,30 @@ N строках вводятся времена прихода клиентов
 
 Требуется вывести N пар чисел: времена выхода из парикмахерской 1-го, 2-го, …, N-го клиента (часы и минуты).
 """
-from typing import List, Tuple
+from typing import List, Tuple, cast, Iterable
+from collections import deque
 
 
-def calculate_exit_times(arrival_times: List[Tuple[int, ...]]) -> List[Tuple[int, int]]:
-    workers_time: List[int] = [0, 0, 0]  # Время, когда каждый из трех мастеров свободен
-    exit_times: List[Tuple[int, int]] = []  # Список для хранения времени выхода клиентов
+def calculate_exit_times(arrival_times: Iterable[Iterable[int, int]]) -> Iterable[Iterable[int, int]]:
+    """
+    Из условия задачи известно, что всего суммарно 3 мастера, поэтому был создан список, содержащий три нуля.
+    Каждый клиент у нас стрижется по 30 минут.
+
+    Если у нас есть свободный мастер, то сразу увеличиваем время на 30 минут относительно времени прихода клиента.
+    В ином случае клиенту надо подождать, и мастер сразу начнет стричь его. Поэтому мы к его окончанию добавляем 30 минут.
+
+    Дальше мы просто в дек сохраняем времена для вывода на консоль.
+
+    :param arrival_times: Объект с временами прихода клиентов – по два числа, обозначающие часы и минуты
+    (часы – от 0 до 23, минуты – от 0 до 59). Времена указаны в порядке возрастания (все времена различны).
+
+    :returns: Итерируемый объект, по которому можно пройтись для вывода на консоль.
+    """
+    workers_time: List[int] = [0, 0, 0]
+    exit_times: deque[Tuple[int, int]] = deque()
 
     for hours, minutes in arrival_times:
-        arrival_minutes = hours * 60 + minutes  # Преобразуем время прихода в минуты
+        arrival_minutes = hours * 60 + minutes
         # Находим мастера, который свободен раньше всего
         next_worker_index = workers_time.index(min(workers_time))
 
@@ -46,12 +61,13 @@ def calculate_exit_times(arrival_times: List[Tuple[int, ...]]) -> List[Tuple[int
 
 def main() -> None:
     n: int = int(input())
-    arrival_times: List[Tuple[int, ...]] = [tuple(map(int, input().split())) for _ in range(n)]
+    arrival_times: List[Tuple[int, int]] = cast(
+        List[Tuple[int, int]],
+        [tuple(map(int, input().split())) for _ in range(n)]
+    )
 
-    # Получение времени выхода клиентов
-    exit_times = calculate_exit_times(arrival_times)
+    exit_times: Iterable[Iterable[int, int]] = calculate_exit_times(arrival_times)
 
-    # Вывод результата
     for hours, minutes in exit_times:
         print(hours, minutes)
 
