@@ -23,38 +23,63 @@
 
 Формат входных данных
 
-Сначала вводятся натуральные числа N, R и C — количество человек в классе, количество бригад и количество человек в каждой бригаде (1 ≤ R∙C ≤ N ≤ 100 000). Далее вводятся N целых чисел — рост каждого из N учеников. Рост ученика — натуральное число, не превышающее 1 000 000 000.
+Сначала вводятся натуральные числа N, R и C — количество человек в классе, количество бригад и количество человек в
+каждой бригаде (1 ≤ R∙C ≤ N ≤ 100 000).
+Далее вводятся N целых чисел — рост каждого из N учеников.
+Рост ученика — натуральное число, не превышающее 1 000 000 000.
 
 Формат выходных данных
 
 Выведите одно число — наименьше возможное значение максимального числа неудобства сформированных бригад.
 """
-from typing import List
+from typing import List, Iterable
 
 
-def can_form_branches(max_uncomfort: int, discomforts: List[int], r: int, c: int) -> bool:
+def can_form_branches(
+        max_uncomfortable: int,
+        discomforts: Iterable[int],
+        r: int,
+        c: int
+) -> bool:
     """
     Проверяет, можно ли сформировать r бригад по c человек так, чтобы максимальное число неудобства
-    не превышало max_uncomfort.
+    не превышало max_uncomfortable.
+
+    :param max_uncomfortable: Максимальное неудобство.
+    :param discomforts: Все неудобства.
+    :param r: Количество бригад.
+    :param c: Количество человек в каждой бригаде.
     """
     count = 0  # Количество сформированных бригад
     members_in_current_branch = 0  # Количество членов в текущей бригаде
 
     for discomfort in discomforts:
         members_in_current_branch -= 1  # Уменьшаем количество членов в текущей бригаде
-        if members_in_current_branch < 1 and discomfort <= max_uncomfort:
+        if members_in_current_branch < 1 and discomfort <= max_uncomfortable:
             count += 1  # Завершаем текущую бригаду
             members_in_current_branch = c  # Начинаем новую бригаду
 
     return count >= r  # Проверяем, достаточно ли бригад
 
 
-def find_minimum_max_uncomfort(n: int, r: int, c: int, heights: List[int]) -> int:
+def find_minimum_max_uncomfortable(n: int, r: int, c: int, heights: Iterable[int]) -> int:
     """
     Находит наименьшее возможное значение максимального числа неудобства сформированных бригад.
+
+    Чтобы нам найти всех ближайших людей друг к другу, логичнее все отсортировать.
+    Там каждый друг к другу будет ближе.
+    Известно, что количество человек в бригаде равно c, поэтому нахожу разницы между крайними в бригаде,
+     чтобы неудобства как раз.
+
+    Далее с помощью бинарного поиска будем искать как раз минимальное неудобство.
+
+    :param n: Количество человек в классе.
+    :param r: Количество бригад.
+    :param c: Количество человек в каждой бригаде.
+    :param heights: Высоты всех людей, который передали по условию задачи.
     """
-    heights.sort()  # Сортируем рост учеников
-    discomforts = [heights[i + c - 1] - heights[i] for i in range(n - c + 1)]  # Вычисляем неудобства
+    heights: List[int] = sorted(heights)  # Сортируем рост учеников
+    discomforts: List[int] = [heights[i + c - 1] - heights[i] for i in range(n - c + 1)]  # Вычисляем неудобства
 
     left = -1
     right = heights[-1] - heights[0]
@@ -69,10 +94,10 @@ def find_minimum_max_uncomfort(n: int, r: int, c: int, heights: List[int]) -> in
     return right  # Минимальное максимальное неудобство
 
 
-def main():
+def main() -> None:
     n, r, c = map(int, input().split())
-    heights = [int(input()) for _ in range(n)]
-    result = find_minimum_max_uncomfort(n, r, c, heights)
+    heights: List[int] = [int(input()) for _ in range(n)]
+    result: int = find_minimum_max_uncomfortable(n, r, c, heights)
     print(result)
 
 
