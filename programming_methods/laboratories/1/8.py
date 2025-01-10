@@ -20,30 +20,28 @@ from typing import List, AnyStr
 
 def decrypt_message(encrypted_message: AnyStr) -> AnyStr:
     """
-    :param encrypted_message: сообщение, которое мы хотим расшифровать по условию задания.
-    :returns:
-    Args:
-        encrypted_message:
+    Коля начинает нумерацию не с 0, а с 1!
 
-    Returns:
+    Из условия задачи известно, что сначала в закодированном стоят четные, а потом уже нечетные.
+    Получается сосед текущей буквы будет через половину длины от сообщения.
+    Представьте, что Коля брал буквы и последовательно раскидывал на левую и на правую часть.
+    Для понимания формулы поставьте просто print в коде и все.
 
+    :param encrypted_message: Сообщение, которое мы хотим расшифровать по условию задания.
+    :returns: Расшифрованное сообщение
     """
     symbols: List[AnyStr] = list(encrypted_message)
     n: int = len(encrypted_message) // 2
     for i in range(n):
         symbols[2 * i: 2 * i + 2] = encrypted_message[i + n], encrypted_message[i]
-
     return ''.join(symbols)
 
 
 def main() -> None:
-    # Чтение входных данных
     encrypted_message = input()
 
-    # Получение расшифрованного сообщения
     decrypted_message: str = decrypt_message(encrypted_message)
 
-    # Вывод результата
     print(decrypted_message)
 
 

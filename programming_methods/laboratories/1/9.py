@@ -11,40 +11,39 @@
 Необходимо вывести список школьников по классам: сначала всех учеников 9 класса, затем – 10, затем – 11.
 Внутри одного класса порядок вывода фамилий должен быть таким же, как на входе.
 """
-from typing import Dict, List
+from typing import Dict, List, Iterable
 
 
-def read_students(file_path: str) -> Dict[int, List[str]]:
-    # Словарь для хранения учеников по классам
+def process_students(students: Iterable[str]) -> str:
+    """
+    Из условия задачи известно, что у нас всего 3 класса, поэтому заранее создал словарь с готовыми ключами.
+    Здесь мы принимаем строку, и добавляем по нужному ключу в словарь.
+    :param students: Итерируемый объект, который содержит данные о студентах в виде строк.
+    :returns: Тот же самый вид строки, как было и в условии.
+    """
     classes: Dict[int, List[str]] = {9: [], 10: [], 11: []}
 
-    # Чтение данных из файла
-    with open(file_path, 'r', encoding='KOI8-r') as file:
-        for line in file:
-            # Разделяем строку на номер класса и фамилию
-            class_number, surname = line.strip().split(maxsplit=1)
-            class_number = int(class_number)  # Преобразуем номер класса в целое число
+    for student in students:
+        class_number, surname = student.split()
+        class_number = int(class_number)
+        classes[class_number].append(f"{class_number} {surname}")
 
-            # Добавляем фамилию в соответствующий класс
-            if class_number in classes:
-                classes[class_number].append(f"{class_number} {surname}")
+    result = ""
+    for class_number in classes:
+        result += "\n".join(student for student in classes[class_number]) + "\n"
 
-    return classes
-
-
-def write_students(classes: Dict[int, List[str]], output_path: str) -> None:
-    # Запись учеников в файл
-    with open(output_path, 'w', encoding='KOI8-r') as file:
-        for class_number in range(9, 12):  # Проходим по классам 9, 10, 11
-            for student in classes[class_number]:
-                file.write(student + '\n')
+    return result
 
 
 def main() -> None:
     input_file_path = "input.txt"
     output_file_path = "output.txt"
-    students_by_class = read_students(input_file_path)
-    write_students(students_by_class, output_file_path)
+
+    with open(input_file_path, 'r', encoding='KOI8-r') as file:
+        students_by_class = process_students(map(str.strip, file.readlines()))
+
+    with open(output_file_path, 'w', encoding='KOI8-r') as file:
+        file.write(students_by_class)
 
 
 if __name__ == '__main__':
