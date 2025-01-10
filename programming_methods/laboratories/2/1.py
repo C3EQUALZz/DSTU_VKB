@@ -28,36 +28,41 @@
 
 В последующих k строках выведите все такие номера в произвольном порядке.
 """
+from collections import deque
 from itertools import permutations
-from typing import List, Set, Tuple
+from typing import Set, AnyStr, Sequence
 
 
-def generate_permutations(number: str) -> Tuple[int, List[str]]:
-    # Извлекаем буквы и цифры из номера
-    letters = number[0] + number[4] + number[5]
-    digits = number[1] + number[2] + number[3]
+def generate_permutations(number: AnyStr) -> Sequence[AnyStr]:
+    """
+    Генерирует всевозможные комбинации номера, учитывая корректное размещение для номеров в РФ.
+
+    Буквы и цифры достаются через индексацию, так как общий формат не меняется.
+    :param number: Номер автомобиля, относительно которого мы должны найти все подходящие.
+    :returns: Последовательность всех возможных номеров.
+    """
+    letters: AnyStr = number[0] + number[4] + number[5]
+    digits: AnyStr = number[1] + number[2] + number[3]
 
     # Генерируем уникальные перестановки
-    unique_letter_permutations: Set[str] = {''.join(p) for p in permutations(letters)}
-    unique_digit_permutations: Set[str] = {''.join(p) for p in permutations(digits)}
+    unique_letter_permutations: Set[AnyStr] = {''.join(p) for p in permutations(letters)}
+    unique_digit_permutations: Set[AnyStr] = {''.join(p) for p in permutations(digits)}
 
     # Формируем все возможные номера
-    all_combinations: List[str] = []
+    all_combinations: deque[AnyStr] = deque()
     for letter in unique_letter_permutations:
         for digit in unique_digit_permutations:
             combined_number = f"{letter[0]}{digit[0]}{digit[1]}{digit[2]}{letter[1]}{letter[2]}"
             all_combinations.append(combined_number)
 
-    return len(all_combinations), all_combinations
+    return all_combinations
 
 
 def main() -> None:
-    car_number = input()
-    count, permutations_list = generate_permutations(car_number)
+    car_number: str = input()
+    permutations_list: Sequence[AnyStr] = generate_permutations(car_number)
 
-    print(count)
-    for number in permutations_list:
-        print(number)
+    print(len(permutations_list), *permutations_list, sep='\n')
 
 
 if __name__ == "__main__":
