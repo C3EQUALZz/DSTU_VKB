@@ -14,49 +14,78 @@
 Для каждого момента времени известно количество покупателей, находящихся в магазине в этот момент.
 Между концом первой рекламы и началом следующей должна пройти как минимум К-1 единица времени.
 """
-from itertools import combinations
-from typing import List, Tuple
+from itertools import combinations, product
+from typing import List, Set, Iterable, Tuple
 
 
-def get_max_indices(times: List[int]) -> Tuple[List[int], int]:
-    """Возвращает индексы максимальных значений в списке."""
-    max_value = max(times)
-    return [i for i, value in enumerate(times) if value == max_value], max_value
+def find_best_broadcast(n: int, k: int, times: List[int]) -> int:
+    """
+    Нам нужно найти максимальное выгодное время для показа 2 реклам.
+    Очевидно, что надо показывать, когда больше всего покупателей.
 
+    Первый возможный вариант: два и более пришло максимальное количество людей.
+    Если сопоставить всех их возможные комбинации, проверив, что разница по времени между ними k-1,
+    то мы найдем максимальное количество людей. Напоминаю, что индексы - это время.
 
-def find_best_broadcast(times: List[int], k: int) -> int:
-    """Находит наилучшие моменты для трансляции рекламы."""
-    max_indices, max_1 = get_max_indices(times)
+    Второй возможный вариант: ищем пред максимальное количество людей,
+    проверяя на условие, что разница между максимальным и пред максимальным равно по времени k-1.
+
+    Третий вариант: если не нашли комбинацию с максимумом, то нам нужно отталкиваться от других возможных пар.
+
+    :param n: Количество моментов времени, когда нужно отследить покупателей.
+    :param k: Время совершение покупки одним покупателем.
+    :param times: Количество покупателей в определенные моменты.
+    :returns: Количество просмотревших рекламу покупателей.
+    """
+    maximum_number_of_people: int = max(times)
+    indexes_of_moments_when_maximum_number_of_people: Set[int] = {index for index, value in enumerate(times)
+                                                                  if value == maximum_number_of_people}
 
     # Проверяем, можно ли транслировать два ролика в максимальные моменты
-    for i, j in combinations(max_indices, 2):
+    for i, j in combinations(indexes_of_moments_when_maximum_number_of_people, 2):
         if abs(i - j) > k - 1:
-            return max_1 * 2
+            return maximum_number_of_people * 2
 
-    # Если не удалось, ищем второй максимальный момент
-    max_2 = max((times[i] for ind in max_indices for i in range(len(times))
-                 if i != ind and abs(ind - i) > k - 1), default=0)
+    # Если не удалось, ищем пред максимальный момент
+    all_possible_pairs_with_a_maximum: Iterable[Tuple[int, int]] = product(
+        indexes_of_moments_when_maximum_number_of_people,
+        range(len(times))
+    )
 
-    if max_2 > 0:
-        return max_1 + max_2
+    pre_max_number_of_people: int = max(
+        map(
+            lambda index_pair: times[index_pair[1]],
+            filter(
+                lambda index_pair: index_pair[0] != index_pair[1] and abs(index_pair[0] - index_pair[1]) > k - 1,
+                all_possible_pairs_with_a_maximum
+            )
+        ),
+        default=0
+    )
+
+    if pre_max_number_of_people > 0:
+        return maximum_number_of_people + pre_max_number_of_people
 
     # Если не нашли подходящие моменты, ищем альтернативный вариант
-    max_sum = 0
-    n = len(times)
-    for i in range(n - k):
-        edge = i + k
-        if edge < n:
-            j = max(times[edge:n])
-            s = times[i] + j
-            max_sum = max(max_sum, s)
+    max_viewers_sum: int = 0
 
-    return max_sum
+    # Проходим по всем возможным начальным моментам времени для первой рекламы
+    for start_time in range(n - k):
+        # Вычисляем момент времени, когда может начаться вторая реклама
+        second_ad_start_time: int = start_time + k
+        if second_ad_start_time < n:
+            # Суммируем количество покупателей в момент начала первой рекламы
+            # и максимальное количество покупателей в момент времени после первой рекламы
+            viewers_sum: int = times[start_time] + max(times[second_ad_start_time:n])
+            max_viewers_sum = max(max_viewers_sum, viewers_sum)
+
+    return max_viewers_sum
 
 
 def main() -> None:
     n, k = map(int, input().split())
     times = list(map(int, input().split()))
-    result = find_best_broadcast(times, k)
+    result = find_best_broadcast(n, k, times)
     print(result)
 
 
