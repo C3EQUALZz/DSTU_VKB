@@ -43,7 +43,6 @@ int count_pretty_rectangles(const vector<string>& grid, int n, int m) {
 }
 
 int main() {
-    // Ввод данных
     int n, m;
     cin >> n >> m;
     vector<string> grid(n);
@@ -51,7 +50,6 @@ int main() {
         cin >> grid[i];
     }
 
-    // Вычисление и вывод результата
     int result = count_pretty_rectangles(grid, n, m);
     cout << result << endl;
 
