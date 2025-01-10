@@ -19,11 +19,25 @@
 """
 
 import bisect
-from typing import List, Tuple
+from typing import List, Tuple, Sequence, Union
+from collections import deque
 
 
-def find_first_and_last_occurrences(sorted_list: List[int], search_list: List[int]) -> List[Tuple[int, int]]:
-    results = []
+def find_first_and_last_occurrences(
+        sorted_list: Sequence[int],
+        search_list: Sequence[int]
+) -> deque[Union[Tuple[int, int], Tuple[int]]]:
+    """
+    Находит первое и последнее вхождение каждого числа из search_list в отсортированном списке sorted_list.
+    Здесь задача заключается в том, чтобы
+
+    :param sorted_list: Список целых чисел, отсортированный по неубыванию.
+    :param search_list: Список целых чисел, для которых нужно найти вхождения в sorted_list.
+    :return: Список кортежей, где каждый кортеж содержит индексы первого и последнего вхождения числа из search_list
+     в sorted_list. Если число не найдено, возвращается кортеж (0,).
+    """
+
+    results: deque[Union[Tuple[int, int], Tuple[int]]] = deque()
 
     for number in search_list:
         first_index = bisect.bisect_left(sorted_list, number)
@@ -37,10 +51,10 @@ def find_first_and_last_occurrences(sorted_list: List[int], search_list: List[in
     return results
 
 
-def main():
-    n, m = map(int, input().split())
-    sorted_list = list(map(int, input().split()))
-    search_list = list(map(int, input().split()))
+def main() -> None:
+    _, _ = map(int, input().split())
+    sorted_list: List[int] = list(map(int, input().split()))
+    search_list: List[int] = list(map(int, input().split()))
 
     occurrences = find_first_and_last_occurrences(sorted_list, search_list)
 
