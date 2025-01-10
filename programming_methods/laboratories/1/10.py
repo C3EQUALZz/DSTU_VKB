@@ -27,18 +27,27 @@
 Если на протяжении 106 ходов игра не заканчивается, программа должна вывести слово botva.
 """
 from collections import deque
-from typing import Iterable, Dict, Sequence
+from typing import Tuple, Iterable, Dict
 
 
 def is_first_player_winner(card1: int, card2: int) -> bool:
-    # Определяем победителя по правилам игры
+    """
+    Определяет победителя по следующему правилу: 1 < 2 < 3 < 4 < 5 < 6 < 7 < 8 < 9 < 0.
+    Соответственно, если 1 карта выше дальше от левой части правила, то она побеждает.
+    """
     return (card1 > card2 and (card2, card1) != (0, 9)) or (card1 == 0 and card2 == 9)
 
 
 def play_game(
         first_deck: Iterable[int],
         second_deck: Iterable[int]
-) -> Sequence[int, int]:
+) -> Tuple[int, int]:
+    """
+    Здесь у нас запускается игра 'пьяница'.
+    Суть в том, чтобы в динамике отслеживать изменение состояние колоды.
+    У нас достаточно часто есть добавление в конец, поэтому я воспользовался deque для добавления за O(1).
+    В цикле проверяем, что не вылетело за количество раундов.
+    """
     first_deck: deque[int] = deque(first_deck)
     second_deck: deque[int] = deque(second_deck)
 
@@ -65,7 +74,7 @@ def main() -> None:
     cases: Dict[int, str] = {-1: "botva", 0: "first", 1: "second"}
 
     # Запуск игры
-    result: Sequence[int, int] = play_game(
+    result: Tuple[int, int] = play_game(
         map(int, input().split()),
         map(int, input().split())
     )
