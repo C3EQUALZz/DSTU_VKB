@@ -20,20 +20,53 @@
 Выходной файл должен содержать наименьшее необходимое количество ходов, либо −1, если кони не могут встретиться.
 """
 from collections import deque
-from typing import Tuple, List
+from itertools import product
+from typing import Tuple, Generator, Any, Set
 
 
-def get_moves(x: int, y: int) -> List[Tuple[int, int]]:
-    moves = [
+def get_moves(x: int, y: int) -> Generator[Tuple[int, int], Any, None]:
+    """
+    Генерирует все возможные ходы коня из заданной позиции на шахматной доске.
+
+    :param x: Координата по оси X (столбец) коня.
+    :param y: Координата по оси Y (строка) коня.
+    :returns: Генератор, который выдает допустимые координаты (x, y) для каждого возможного хода коня,
+    находящегося в пределах шахматной доски.
+    """
+    moves: Tuple[Tuple[int, int], ...] = (
         (x + 1, y + 2), (x + 2, y + 1), (x + 2, y - 1), (x + 1, y - 2),
         (x - 1, y - 2), (x - 2, y - 1), (x - 2, y + 1), (x - 1, y + 2)
-    ]
-    return [(mx, my) for mx, my in moves if 0 <= mx <= 7 and 0 <= my <= 7]
+    )
+    yield from ((mx, my) for mx, my in moves if 0 <= mx <= 7 and 0 <= my <= 7)
 
 
 def knights_meet(knight1: Tuple[int, int], knight2: Tuple[int, int]) -> int:
-    visited = set()
-    queue = deque([(knight1, knight2, 0)])
+    """
+    Определяет минимальное количество ходов, необходимых двум коням, чтобы встретиться на одной клетке.
+
+    Здесь используется поиск в ширину (BFS) для нахождения кратчайшего пути, который позволяет
+    двум коням одновременно перемещаться по шахматной доске. Каждый ход коня рассматривается как
+    переход в новую клетку, и функция отслеживает все возможные позиции, которые могут быть
+    достигнуты обоими конями.
+
+    Алгоритм работает следующим образом:
+    1. Инициализируется очередь, содержащая начальные позиции обоих коней и счетчик ходов, равный 0.
+    2. В цикле, пока очередь не пуста:
+        - Извлекаются текущие позиции обоих коней и количество сделанных ходов.
+        - Если позиции коней совпадают, возвращается количество ходов.
+        - Текущие позиции добавляются в множество посещенных.
+        - Генерируются все возможные новые позиции для обоих коней с помощью функции get_moves.
+        - Если новая пара позиций не была посещена, она добавляется в множество посещенных и помещается в очередь
+         с увеличенным счетчиком ходов.
+    3. Если очередь опустела и конь не встретился, возвращается -1.
+
+    :param knight1: Координаты первого коня (x1, y1).
+    :param knight2: Координаты второго коня (x2, y2).
+
+    :returns: Минимальное количество ходов, необходимых для встречи коней, или -1, если они не могут встретиться.
+    """
+    visited: Set[Tuple[Tuple[int, int], Tuple[int, int]]] = set()
+    queue: deque[Tuple[Tuple[int, int], Tuple[int, int], int]] = deque([(knight1, knight2, 0)])
 
     while queue:
         k1, k2, moves = queue.popleft()
@@ -43,24 +76,18 @@ def knights_meet(knight1: Tuple[int, int], knight2: Tuple[int, int]) -> int:
 
         visited.add((k1, k2))
 
-        k1_moves = get_moves(k1[0], k1[1])
-        k2_moves = get_moves(k2[0], k2[1])
-
-        for move1 in k1_moves:
-            for move2 in k2_moves:
-                if (move1, move2) not in visited:
-                    visited.add((move1, move2))  # Добавляем в visited сразу
-                    queue.append((move1, move2, moves + 1))
+        for move1, move2 in product(get_moves(k1[0], k1[1]), get_moves(k2[0], k2[1])):
+            if (move1, move2) not in visited:
+                visited.add((move1, move2))  # Добавляем в visited сразу
+                queue.append((move1, move2, moves + 1))
 
     return -1
 
 
 def main() -> None:
-    knight1, knight2 = input().split()
-    knight1 = (ord(knight1[0]) - ord('a'), int(knight1[1]) - 1)
-    knight2 = (ord(knight2[0]) - ord('a'), int(knight2[1]) - 1)
+    knight1, knight2 = map(lambda k: (ord(k[0]) - ord('a'), int(k[1]) - 1), input().split())
 
-    result = knights_meet(knight1, knight2)
+    result: int = knights_meet(knight1, knight2)
     print(result)
 
 
