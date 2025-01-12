@@ -21,4 +21,51 @@
 Выходные данные
 
 Выведите искомое N без ведущих нулей.
+
+ОДНО ИЗ ВОЗМОЖНЫХ РЕШЕНИЙ, НО НЕ ПРОХОДИТ ПО СКОРОСТЯМ.
 """
+from bisect import bisect_right
+from collections import defaultdict
+
+
+def build_index(x: str) -> defaultdict:
+    """Строит индекс для быстрого доступа к символам в строке."""
+    index = defaultdict(list)
+    for i, c in enumerate(x):
+        index[c].append(i)
+    return index
+
+
+def can_form_number(n: str, index: defaultdict) -> bool:
+    """Проверяет, можно ли построить число n из X с использованием индекса."""
+    current_pos = -1
+    for c in n:
+        if c not in index:
+            return False
+        # Находим первую позицию символа c, которая больше current_pos с помощью bisect
+        positions = index[c]
+        i = bisect_right(positions, current_pos)
+        if i == len(positions):
+            return False
+        current_pos = positions[i]
+    return True
+
+
+def find_missing_account_number(x: str) -> int:
+    """Находит первое число N, которого нельзя получить из цифр X."""
+    index = build_index(x)
+    n = 1
+    while True:
+        if not can_form_number(str(n), index):
+            return n
+        n += 1
+
+
+def main() -> None:
+    x = input().strip()
+    result = find_missing_account_number(x)
+    print(result)
+
+
+if __name__ == "__main__":
+    main()
