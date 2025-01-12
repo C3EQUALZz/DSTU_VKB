@@ -17,43 +17,69 @@
 подпалиндром. Если таких подпалиндромов несколько, то ваша программа должна вывести любой из них.
 """
 
-from typing import Tuple
+from typing import Tuple, List
+from collections import deque
 
 
-def longest_palindromic_subsequence(s: str) -> Tuple[int, str]:
-    n = len(s)
-    # Таблица для хранения длины максимального подпалиндрома
-    dp = [[0] * n for _ in range(n)]
+def fill_table(n: int, s: str, distance_table: List[List[int]]) -> None:
+    """
+    Заполнение таблицы.
 
-    # Все одиночные символы являются палиндромами длины 1
-    for i in range(n):
-        dp[i][i] = 1
+    Эта функция заполняет двумерный массив distance_table, где distance_table[i][j]
+    хранит длину максимального палиндрома, который можно получить из подстроки s[i:j+1].
+    Если символы s[i] и s[j] равны, то длина палиндрома увеличивается на 2 по сравнению
+    с длиной палиндрома в подстроке s[i+1:j]. В противном случае длина берется
+    как максимум между длинами палиндромов в подстроках s[i+1:j+1] и s[i:j].
 
-    # Заполнение таблицы
+    :param n: Длина строки s.
+    :param s: Исходная строка.
+    :param distance_table: Двумерный массив для хранения длины максимального подпалиндрома.
+    """
     for length in range(2, n + 1):  # Длина подстроки
         for i in range(n - length + 1):
             j = i + length - 1
             if s[i] == s[j]:
-                dp[i][j] = dp[i + 1][j - 1] + 2
+                distance_table[i][j] = distance_table[i + 1][j - 1] + 2
             else:
-                dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
+                distance_table[i][j] = max(distance_table[i + 1][j], distance_table[i][j - 1])
+
+
+def longest_palindromic_subsequence(s: str) -> Tuple[int, str]:
+    """
+    Нахождение максимального подпалиндрома в строке.
+
+    Эта функция находит длину и самую длинную подпалиндромную последовательность в строке s.
+    Она использует динамическое программирование для заполнения таблицы расстояний и
+    восстанавливает подпалиндром, проходя по таблице.
+
+    :param s: Исходная строка.
+    :returns: Кортеж, содержащий длину максимального подпалиндрома и сам палиндром.
+    """
+    n = len(s)
+    # Таблица для хранения длины максимального подпалиндрома
+    # Все одиночные символы являются палиндромами длины 1
+    distance_table: List[List[int]] = [[1 if i == j else 0 for j in range(n)] for i in range(n)]
+
+    fill_table(n, s, distance_table)
 
     # Длина максимального подпалиндрома
-    max_length = dp[0][n - 1]
+    max_length: int = distance_table[0][n - 1]
 
     # Восстановление самого подпалиндрома
-    l, r = 0, n - 1
-    subsequence = []
+    left_index: int = 0
+    right_index: int = n - 1
 
-    while l <= r:
-        if s[l] == s[r]:
-            subsequence.append(s[l])
-            l += 1
-            r -= 1
-        elif dp[l + 1][r] >= dp[l][r - 1]:
-            l += 1
+    subsequence: deque[str] = deque()
+
+    while left_index <= right_index:
+        if s[left_index] == s[right_index]:
+            subsequence.append(s[left_index])
+            left_index += 1
+            right_index -= 1
+        elif distance_table[left_index + 1][right_index] >= distance_table[left_index][right_index - 1]:
+            left_index += 1
         else:
-            r -= 1
+            right_index -= 1
 
     # Если длина подпалиндрома четная, то мы добавляем его в обратном порядке
     # Если нечетная, то добавляем последний символ
