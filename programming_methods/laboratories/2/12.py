@@ -30,10 +30,15 @@
 
 
 def count_economically_viable_ways(k: int, operations: str) -> int:
-    """Подсчитывает количество экономически целесообразных способов использования робота."""
-    n = len(operations)
-    viable_ways = 0
-    consecutive_matches = 0
+    """
+    Подсчитывает количество экономически целесообразных способов использования робота.
+    :param k: Количество операций, которые можно записать в память робота.
+    :param operations: Операции для сборки двигателя.
+    :returns: Количество экономически целесообразных способов использования робота.
+    """
+    n: int = len(operations)
+    viable_ways: int = 0
+    consecutive_matches: int = 0
 
     # Проходим по строке операций с конца к началу
     for i in range(n - k - 1, -1, -1):
@@ -48,10 +53,10 @@ def count_economically_viable_ways(k: int, operations: str) -> int:
 
 
 def main() -> None:
-    k = int(input())
-    operations = input()
+    k: int = int(input())
+    operations: str = input()
 
-    result = count_economically_viable_ways(k, operations)
+    result: int = count_economically_viable_ways(k, operations)
     print(result)
 
 
