@@ -15,30 +15,46 @@
 
 Вывести одно число - полученную длину отрезков.
 """
-from typing import List
+from typing import List, Sequence
 
 
-def max_segment_length(segments: List[int], required_segments: int) -> int:
-    left, right = 1, 10_000_001  # Устанавливаем границы для бинарного поиска
+def max_segment_length(segments: Sequence[int], required_segments: int) -> int:
+    """
+    Здесь задача заключается на бинарный поиск.
+    Из условия задачи нам известны ограничения справа и слева.
+
+    В цикле мы считаем количество сегментов.
+    Если их больше, чем требуется, то можем увеличить длину, в ином случае уменьшаем.
+
+    Цикл заканчивается, когда left и right сойдутся.
+    Если они - левая и правая граница - сошлись, то максимальное расстояние - это left - 1 (прошлая иттерация)
+
+    :param segments: Отрезки провода.
+    :param required_segments: Количество отрезков, которые требуются получить из условия задачи.
+
+    :returns: Максимальная длина отрезков.
+    """
+    left: int = 1
+    right: int = 10_000_001
 
     while left < right:
-        mid = (left + right) // 2  # Проверяем среднюю длину
-        total_segments = sum(length // mid for length in segments)  # Считаем, сколько отрезков можно получить
+        mid: int = (left + right) // 2
+        total_segments: int = sum(length // mid for length in segments)
 
-        if total_segments >= required_segments:  # Если можем получить достаточно отрезков
-            left = mid + 1  # Увеличиваем минимальную длину
+        if total_segments >= required_segments:
+            left = mid + 1
         else:
-            right = mid  # Уменьшаем максимальную длину
+            right = mid
 
-    return left - 1  # Возвращаем максимальную длину отрезков
+    return left - 1
 
 
 def main() -> None:
-    n, k = map(int, input().split())  # Читаем количество отрезков и требуемое количество
-    segments = [int(input()) for _ in range(n)]  # Читаем длины отрезков
+    n, k = map(int, input().split())
+    segments: List[int] = [int(input()) for _ in range(n)]
 
-    result = max_segment_length(segments, k)  # Вычисляем максимальную длину отрезков
-    print(result)  # Выводим результат
+    result: int = max_segment_length(segments, k)
+    print(result)
 
 
 if __name__ == "__main__":
