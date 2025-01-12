@@ -25,7 +25,7 @@
 
 Если требуемого результата добиться нельзя, выведите одно число 0.
 
-НЕ ПРОХОДИТ ВСЕ ТЕСТЫ ПО СКОРОСТИ
+НЕ ПРОХОДИТ ВСЕ ТЕСТЫ ПО СКОРОСТИ И КОРРЕКТНСОТИ, ВАРИАНТ 100 БАЛЛОВ НА С++
 """
 from itertools import permutations
 from typing import List, Tuple, Union, cast
@@ -34,15 +34,9 @@ from typing import List, Tuple, Union, cast
 def solve(k: int, rates: List[Tuple[int, int, int, int]]) -> Union[List[int], int]:
     """
     Решает задачу тараканьих бегов.
-
-    Args:
-        k: Количество тараканов.
-        n: Количество болельщиков.
-        rates: Ставки болельщиков, где каждая ставка - это кортеж из четырех чисел (A, B, C, D).
-
-    Returns:
-        Список номеров тараканов в порядке финиша, если решение возможно.
-        Если невозможно, возвращает 0.
+    :param k: Количество тараканов.
+    :param rates: Ставки болельщиков, где каждая ставка - это кортеж из четырех чисел (A, B, C, D).
+    :returns: Список номеров тараканов в порядке финиша, если решение возможно. Если невозможно, возвращает 0.
     """
     cockroaches = list(range(1, k + 1))  # Все возможные тараканы
 
@@ -73,9 +67,6 @@ def solve(k: int, rates: List[Tuple[int, int, int, int]]) -> Union[List[int], in
 
 
 def main() -> None:
-    """
-    Основная функция для обработки ввода и вывода.
-    """
     k, n = map(int, input().split())
     rates: List[Tuple[int, int, int, int]] = cast(List[Tuple[int, int, int, int]],
                                                   [tuple(map(int, input().split())) for _ in range(n)])
