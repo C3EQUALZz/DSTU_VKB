@@ -24,7 +24,7 @@
 которые должен выбрать Глеб из имеющихся для того, чтобы выглядеть наиболее стильно.
 Если ответов несколько, выведите любой.
 """
-import array
+from array import array, ArrayType
 from copy import copy
 from typing import List, Tuple, Sequence
 
@@ -57,15 +57,11 @@ def find_most_stylish_outfit(
     :param shoes: Номера ботинок.
     :returns: Кортеж из индексов массива.
     """
-    # Индексы для каждого типа одежды
-    indices: array.array[int] = array.array('i', [0, 0, 0, 0])
-    # Минимальная разница
+    indices: ArrayType[int] = array('i', [0, 0, 0, 0])
     min_diff: float = float('inf')
-    # Лучшие индексы для каждого типа одежды
-    best_indices: array.array[int] = array.array('i', [0, 0, 0, 0])
+    best_indices: ArrayType[int] = array('i', [0, 0, 0, 0])
 
     while all(indices[i] < len(lst) for i, lst in enumerate((hats, shirts, pants, shoes))):
-        # Находим минимальный и максимальный цвет среди текущих элементов
         current_colors = (hats[indices[0]], shirts[indices[1]], pants[indices[2]], shoes[indices[3]])
         min_color = min(current_colors)
         max_color = max(current_colors)
@@ -86,7 +82,6 @@ def find_most_stylish_outfit(
                 indices[i] += 1
                 break
 
-    # Возвращаем элементы с наилучшими индексами
     return (
         hats[best_indices[0]],
         shirts[best_indices[1]],
@@ -103,7 +98,6 @@ def main() -> None:
         colors = sorted(map(int, input().split()))
         colors_for_clothes.append(colors)
 
-    # Находим и выводим наиболее стильный комплект
     stylish_outfit: Tuple[int, int, int, int] = find_most_stylish_outfit(*colors_for_clothes)
     print(*stylish_outfit)
 
