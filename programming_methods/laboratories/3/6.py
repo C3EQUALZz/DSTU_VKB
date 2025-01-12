@@ -129,8 +129,7 @@ def min_removals_to_valid_parentheses(s: AnyStr) -> AnyStr:
     # Один символ всегда является правильной последовательностью
     distance_table: List[List[int]] = [[1 if i == j else 0 for j in range(n)] for i in
                                        range(n)]  # Таблица для хранения минимального количества удалений
-    table_for_restoring_sequence: List[List[int]] = [[0] * n for _ in
-                                                     range(n)]  # Таблица для восстановления последовательности
+    table_for_restoring_sequence: List[List[int]] = [[0] * n for _ in range(n)]  # Таблица для восстановления последовательности
 
     fill_tables(s, n, distance_table, table_for_restoring_sequence)
 
