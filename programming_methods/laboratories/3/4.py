@@ -14,33 +14,64 @@
 Требуется вывести наибольшую возрастающую подпоследовательность данной последовательности.
 Если таких подпоследовательностей несколько, необходимо вывести одну (любую) из них.
 """
-from typing import List
+from collections import deque
+from typing import List, Iterable, Sequence
 
 
-def longest_increasing_subsequence(sequence: List[int]) -> List[int]:
-    """Находит наибольшую возрастающую подпоследовательность."""
+def longest_increasing_subsequence(sequence: Sequence[int]) -> Iterable[int]:
+    """
+    Находит наибольшую возрастающую подпоследовательность.
+
+    1. Инициализация:
+       - `n`: длина входной последовательности.
+       - `distance_table`: массив, где `distance_table[i]` хранит длину наибольшей возрастающей подпоследовательности
+        (LIS) до элемента `sequence[i]`. Изначально все значения равны 1, так как каждый элемент сам по себе является
+         возрастающей подпоследовательностью длины 1.
+       - `prev_index`: массив, который используется для восстановления последовательности, где `prev_index[i]` хранит
+        индекс предыдущего элемента в LIS для элемента `sequence[i]`. Изначально все значения равны -1.
+
+    2. Заполнение массива `distance_table`:
+       - Для каждого элемента `sequence[i]` (где `i` от 0 до `n-1`):
+         - Для каждого предыдущего элемента `sequence[j]` (где `j` от 0 до `i-1`):
+           - Если `sequence[j] < sequence[i]`, и длина LIS до `j` плюс 1 больше, чем текущая длина LIS до `i`,
+            обновляем `distance_table[i]` и устанавливаем `prev_index[i]` на `j`.
+
+    3. Поиск максимальной длины и индекса последнего элемента LIS:
+       - Находим максимальное значение в `distance_table`, которое представляет длину наибольшей
+        возрастающей подпоследовательности.
+       - Находим индекс этого максимального значения, который указывает на последний элемент LIS.
+
+    4. Восстановление самой последовательности:
+       - Начинаем с `max_index` и, используя `prev_index`,
+        восстанавливаем последовательность, добавляя элементы в `result`.
+       - Переворачиваем `result`, чтобы получить последовательность в правильном порядке.
+
+    5. Возвращаем наибольшую возрастающую подпоследовательность.
+    """
     n = len(sequence)
-    dp = [1] * n  # Массив для хранения длины LIS до каждого элемента
-    prev_index = [-1] * n  # Массив для восстановления последовательности
+    distance_table: List[int] = [1] * n  # Массив для хранения длины LIS до каждого элемента
+    prev_index: List[int] = [-1] * n  # Массив для восстановления последовательности
 
     # Заполняем массив dp
     for i in range(n):
         for j in range(i):
-            if sequence[j] < sequence[i] and dp[j] + 1 > dp[i]:
-                dp[i] = dp[j] + 1
+            if sequence[j] < sequence[i] and distance_table[j] + 1 > distance_table[i]:
+                distance_table[i] = distance_table[j] + 1
                 prev_index[i] = j
 
     # Находим максимальную длину и индекс последнего элемента LCS
-    max_length = max(dp)
-    max_index = dp.index(max_length)
+    max_length: int = max(distance_table)
+    max_index: int = distance_table.index(max_length)
 
     # Восстанавливаем саму последовательность
-    lis = []
+    result = deque()
     while max_index != -1:
-        lis.append(sequence[max_index])
+        result.append(sequence[max_index])
         max_index = prev_index[max_index]
 
-    return lis[::-1]  # Возвращаем в правильном порядке
+    result.reverse()
+
+    return result
 
 
 def main() -> None:
