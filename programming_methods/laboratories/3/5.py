@@ -18,35 +18,69 @@
 
 Выведите номера предметов (числа от 1 до N), которые войдут в рюкзак наибольшей стоимости.
 """
+from itertools import product
+from collections import deque
+from typing import Iterable, Sequence, List
 
+def knapsack(n: int, m: int, weights: Sequence[int], costs: Sequence[int]) -> Iterable[int]:
+    """
+    Решает задачу о рюкзаке и возвращает набор предметов с наибольшей стоимостью.
 
-def knapsack(n: int, m: int, weights: list, costs: list) -> list:
-    """Решает задачу о рюкзаке и возвращает набор предметов с наибольшей стоимостью."""
+    Алгоритм основан на методе динамического программирования и работает следующим образом:
+
+    1. Инициализация:
+       - Создается двумерный массив `distance_table`, где `distance_table[i][j]` хранит максимальную стоимость,
+        которую можно получить, используя первые `i` предметов и не превышая вес `j`.
+       - Размер массива: `(n + 1) x (m + 1)`, где `n` — количество предметов, а `m` — максимальный допустимый вес.
+
+    2. Заполнение таблицы:
+       - Для каждого предмета `i` (от 1 до `n`) и для каждого возможного веса `j` (от 0 до `m`):
+         - Сначала предполагается, что текущий предмет не берется, и стоимость равна стоимости
+          без него: `distance_table[i][j] = distance_table[i - 1][j]`.
+         - Если текущий предмет можно взять (т.е. его вес меньше или равен `j`), и если добавление его стоимости
+          к максимальной стоимости, полученной с оставшимся весом, превышает текущую стоимость, то обновляем значение:
+           `distance_table[i][j] = distance_table[i - 1][j - weights[i]] + costs[i]`.
+
+    3. Восстановление набора предметов:
+       - После заполнения таблицы, начиная с последнего предмета и максимального веса, проверяем, был ли предмет выбран:
+         - Если стоимость с текущим предметом отличается от стоимости без него, значит, предмет был выбран.
+          Добавляем его номер в `selected_items` и уменьшаем оставшийся вес.
+
+    4. Возврат результата:
+       - Возвращается список номеров выбранных предметов в порядке их выбора.
+
+    :param n: Количество предметов.
+    :param m: Максимальный допустимый вес рюкзака.
+    :param weights: Список весов предметов.
+    :param costs: Список стоимостей предметов.
+    :returns: Номера предметов, которые были выбраны для достижения максимальной стоимости.
+    """
     # Инициализация таблицы для динамического программирования
-    dp = [[0] * (m + 1) for _ in range(n + 1)]
+    distance_table: List[List[int]] = [[0] * (m + 1) for _ in range(n + 1)]
 
     # Заполнение таблицы
-    for n in range(1, n + 1):
-        for m in range(m + 1):
-            dp[n][m] = dp[n - 1][m]  # Не берем текущий предмет
-            if m >= weights[n] and dp[n - 1][m - weights[n]] + costs[n] > dp[n][m]:
-                dp[n][m] = dp[n - 1][m - weights[n]] + costs[n]  # Берем текущий предмет
+    for i, j in product(range(1, n + 1), range(m + 1)):
+        distance_table[i][j] = distance_table[i - 1][j]  # Не берем текущий предмет
+        if j >= weights[i] and distance_table[i - 1][j - weights[i]] + costs[i] > distance_table[i][j]:
+            distance_table[i][j] = distance_table[i - 1][j - weights[i]] + costs[i]  # Берем текущий предмет
 
     # Восстановление набора предметов
-    selected_items = []
-    remaining_weight = m
-    for n in range(n, 0, -1):
-        if dp[n][remaining_weight] != dp[n - 1][remaining_weight]:  # Если предмет n был выбран
-            selected_items.append(n)  # Добавляем номер предмета
-            remaining_weight -= weights[n]  # Уменьшаем оставшийся вес
+    selected_items: deque[int] = deque()
+    remaining_weight: int = m
+    for i in range(n, 0, -1):
+        if distance_table[i][remaining_weight] != distance_table[i - 1][remaining_weight]:  # Если предмет n был выбран
+            selected_items.append(i)  # Добавляем номер предмета
+            remaining_weight -= weights[i]  # Уменьшаем оставшийся вес
 
-    return selected_items[::-1]  # Возвращаем в правильном порядке
+    selected_items.reverse()
+
+    return selected_items
 
 
 def main() -> None:
     n, m = map(int, input().split())
-    weights = [0] + list(map(int, input().split()))
-    costs = [0] + list(map(int, input().split()))
+    weights: List[int] = [0] + list(map(int, input().split()))
+    costs: List[int] = [0] + list(map(int, input().split()))
 
     selected_items = knapsack(n, m, weights, costs)
 
