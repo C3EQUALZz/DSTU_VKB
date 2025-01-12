@@ -22,6 +22,7 @@ from itertools import product
 from collections import deque
 from typing import Iterable, Sequence, List
 
+
 def knapsack(n: int, m: int, weights: Sequence[int], costs: Sequence[int]) -> Iterable[int]:
     """
     Решает задачу о рюкзаке и возвращает набор предметов с наибольшей стоимостью.
