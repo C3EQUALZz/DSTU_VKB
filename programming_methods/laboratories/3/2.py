@@ -26,35 +26,61 @@
 
 Требуется вывести одно число – расстояние Левенштейна для данных строк.
 """
+from typing import List, AnyStr
+from itertools import product
 
 
-def levenshtein_distance(a: str, b: str) -> int:
-    """Вычисляет расстояние Левенштейна между двумя строками."""
-    len_a, len_b = len(a), len(b)
+def levenshtein_distance(source: AnyStr, target: AnyStr) -> int:
+    """
+    Вычисляет расстояние Левенштейна между двумя строками.
+
+    Расстояние Левенштейна - это минимальное количество операций (вставка, удаление, замена),
+    необходимых для преобразования одной строки в другую.
+
+    Алгоритм работает следующим образом:
+    1. Создается двумерный массив `distance_table`, где `distance_table[i][j]` хранит
+       расстояние Левенштейна между первыми `i` символами строки `source` и первыми `j` символами строки `target`.
+    2. Инициализируются первая строка и первый столбец массива:
+       - `distance_table[i][0]` равен `i`, что соответствует удалению всех `i` символов из `source`.
+       - `distance_table[0][j]` равен `j`, что соответствует вставке всех `j` символов в `source`.
+    3. Заполняется массив, сравнивая символы строк:
+       - Если символы совпадают, то значение берется из `distance_table[i-1][j-1]`.
+       - Если символы не совпадают, то значение вычисляется как 1 плюс минимальное из трех возможных операций:
+         - Удаление символа из `source` (`distance_table[i-1][j]`).
+         - Вставка символа в `source` (`distance_table[i][j-1]`).
+         - Замена символа в `source` на символ из `target` (`distance_table[i-1][j-1]`).
+    4. Возвращается значение в правом нижнем углу массива, которое представляет расстояние Левенштейна между двумя строками.
+
+    :param source: Исходная строка.
+    :param target: Целевая строка.
+    :return: Расстояние Левенштейна между строками `source` и `target`.
+    """
+    len_source: int = len(source)
+    len_target: int = len(target)
 
     # Создаем таблицу для хранения расстояний
-    dp = [[0] * (len_b + 1) for _ in range(len_a + 1)]
+    distance_table: List[List[int]] = [[0] * (len_target + 1) for _ in range(len_source + 1)]
 
     # Инициализация первой строки и первого столбца
-    for i in range(len_a + 1):
-        dp[i][0] = i  # Расстояние от A до пустой строки
-    for j in range(len_b + 1):
-        dp[0][j] = j  # Расстояние от пустой строки до B
+    for i, j in zip(range(len_source + 1), range(len_target + 1)):
+        distance_table[i][0] = i  # Расстояние от source до пустой строки
+        distance_table[0][j] = j  # Расстояние от пустой строки до target
 
     # Заполняем таблицу
-    for i in range(1, len_a + 1):
-        for j in range(1, len_b + 1):
-            if a[i - 1] == b[j - 1]:
-                dp[i][j] = dp[i - 1][j - 1]  # Символы совпадают
-            else:
-                dp[i][j] = 1 + min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1])  # Удаление, вставка, замена
+    for i, j in product(range(1, len_source + 1), range(1, len_target + 1)):
+        if source[i - 1] == target[j - 1]:
+            distance_table[i][j] = distance_table[i - 1][j - 1]  # Символы совпадают
+        else:
+            distance_table[i][j] = 1 + min(distance_table[i - 1][j],
+                                           distance_table[i][j - 1],
+                                           distance_table[i - 1][j - 1])  # Удаление, вставка, замена
 
-    return dp[len_a][len_b]
+    return distance_table[len_source][len_target]
 
 
 def main() -> None:
-    a = input()
-    b = input()
+    a: str = input()
+    b: str = input()
 
     distance = levenshtein_distance(a, b)
     print(distance)
