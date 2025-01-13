@@ -1,61 +1,186 @@
+"""
+Задача №2784. Максимальный поток - 2
+
+Вам задан ориентированный граф G.
+Каждое ребро имеет некоторую пропускную способность.
+Найдите максимальный поток между вершинами 1 и n.
+
+Входные данные
+
+Первая строка входного файла содержит n и m — число вершин и рёбер в графе (2≤n≤500, 1≤m≤10000).
+Последующие строки описывают рёбра. Каждое ребро задается тремя числами: начальная вершина ребра,
+конечная вершина ребра и пропускная способность ребра. Пропускные способности — целые числа, не превосходящие 109.
+
+Выходные данные
+
+Выведите величину максимального потока между вершинами 1 и n.
+"""
 from collections import defaultdict, deque
+from typing import Iterable, Tuple, List, cast, Dict, Sequence
 
 
-def edmonds_karp(n, edges):
-    # Создаем граф с пропускными способностями
-    capacity = defaultdict(lambda: defaultdict(int))
-    for u, v, c in edges:
-        capacity[u][v] += c  # Учитываем возможность нескольких рёбер между вершинами
+class Graph:
+    def __init__(self, n: int, edges: Iterable[Tuple[int, int]]) -> None:
+        """
+        Инициализация графа.
 
-    # Инициализация переменных
-    source, sink = 1, n
-    flow = 0
+        :param n: Число вершин.
+        :param edges: Список рёбер (u, v, c), где u — начальная вершина,
+                      v — конечная вершина, c — пропускная способность.
+        """
+        self._n = n
+        self._capacity: Dict[int, Dict[int, int]] = defaultdict(lambda: defaultdict(int))
+        for u, v, c in edges:
+            self._capacity[u][v] += c  # Учитываем возможность нескольких рёбер между вершинами
+
+    @property
+    def count_of_vertexes(self) -> int:
+        return self._n
+
+    def get_capacity(self, u: int, v: int) -> int:
+        """Возвращает остаточную пропускную способность ребра (u, v)."""
+        return self._capacity[u][v]
+
+    def set_capacity(self, u: int, v: int, flow: int) -> None:
+        """Обновляет пропускную способность ребра (u, v) и добавляет обратное ребро."""
+        self._capacity[u][v] -= flow
+        self._capacity[v][u] += flow
+
+    def get_neighbors(self, u: int) -> Iterable[int]:
+        """Возвращает список соседей вершины u."""
+        return self._capacity[u].keys()
+
+
+def bfs(graph: Graph, source: int, sink: int) -> Tuple[Sequence[int], int]:
+    """
+    Выполняет поиск увеличивающего пути с помощью BFS.
+
+    Выполняет поиск увеличивающего пути с помощью BFS (поиск в ширину).
+
+    BFS используется для нахождения увеличивающего пути в остаточной сети.
+    Остаточная сеть — это граф, в котором пропускная способность рёбер равна
+    разнице между их изначальной пропускной способностью и текущим потоком.
+
+    Основные шаги:
+    1. Инициализация:
+       - Список `parents` инициализируется значениями `-1` (нет родителей).
+         Он нужен для восстановления пути от стока к источнику.
+       - Пропускная способность пути (`path_flow`) для каждой вершины инициализируется
+         бесконечностью для источника.
+    2. Выполнение BFS:
+       - Вершина-источник добавляется в очередь.
+       - На каждой итерации алгоритм извлекает вершину `current` из очереди
+         и проверяет всех её соседей.
+       - Если соседняя вершина ещё не посещена (`parents[neighbor] == -1`)
+         и остаточная пропускная способность рёбер больше 0, то:
+         - Обновляется родительская вершина `parents[neighbor]`.
+         - Вычисляется минимальная пропускная способность вдоль пути до этой вершины.
+         - Если найден сток (`sink`), алгоритм завершает поиск и возвращает:
+           - Список родителей для восстановления пути.
+           - Пропускную способность пути.
+       - Если сосед не является стоком, он добавляется в очередь.
+    3. Если путь не найден:
+       - Возвращается пустой список родителей и поток, равный 0.
+
+    Сложность:
+    - Временная сложность BFS: O(E), где E — количество рёбер в графе.
+
+    :param graph: Объект класса Graph.
+    :param source: Источник (номер вершины).
+    :param sink: Сток (номер вершины).
+    :return: Кортеж из словаря parent (для восстановления пути) и величины потока по пути.
+             Если путь не найден, возвращается пустой словарь и 0.
+    """
+    parent: List[int] = [-1] * (graph.count_of_vertexes + 1)
+    parent[source] = source
+
+    queue: deque[int] = deque([source])
+
+    path_flow: Dict[int, int] = {source: float('Inf')}
+
+    while queue:
+        current: int = queue.popleft()
+        for next_vertex in graph.get_neighbors(current):
+
+            if parent[next_vertex] == -1 and graph.get_capacity(current, next_vertex) > 0:
+                parent[next_vertex] = current
+                path_flow[next_vertex] = min(path_flow[current], graph.get_capacity(current, next_vertex))
+
+                if next_vertex == sink:
+                    return parent, path_flow[sink]
+
+                queue.append(next_vertex)
+
+    return [], 0
+
+
+def edmonds_karp(graph: Graph, source: int, sink: int) -> int:
+    """
+    Алгоритм Эдмондса-Карпа для нахождения максимального потока в графе.
+
+    Алгоритм Эдмондса-Карпа основан на реализации метода Форда-Фалкерсона с использованием
+    поиска в ширину (BFS) для поиска увеличивающих путей. Его основная задача — итеративно
+    находить пути, по которым можно увеличить поток, и обновлять пропускные способности
+    рёбер графа.
+
+    Основные шаги алгоритма:
+    1. Инициализация:
+       - Максимальный поток (`max_flow`) устанавливается в 0.
+    2. Повторяющиеся шаги:
+       - Выполняется поиск увеличивающего пути с помощью BFS (реализовано в функции `bfs`).
+         BFS возвращает список родителей (`parents`), который позволяет восстановить путь,
+         и значение минимальной пропускной способности вдоль этого пути (`path_flow`).
+       - Если увеличивающий путь не найден, выполнение алгоритма прекращается.
+       - Если путь найден:
+         - Увеличиваем общий поток (`max_flow`) на величину `path_flow`.
+         - Обновляем пропускные способности рёбер графа вдоль найденного пути:
+           - Уменьшаем пропускную способность прямых рёбер.
+           - Увеличиваем пропускную способность обратных рёбер (для учета возможности отмены
+             части потока на следующих итерациях).
+    3. Завершение:
+       - Когда увеличивающие пути больше не находятся, возвращается величина максимального потока.
+
+    Сложность:
+    - Временная сложность: O(V * E^2), где V — количество вершин, E — количество рёбер.
+      BFS выполняется O(E) раз для поиска увеличивающего пути, и таких итераций может быть до O(V * E).
+
+    :param graph: Объект класса Graph.
+    :param source: Источник (номер вершины).
+    :param sink: Сток (номер вершины).
+    :return: Величина максимального потока.
+    """
+    max_flow: int = 0
 
     while True:
-        # BFS для поиска увеличивающего пути
-        parent = [-1] * (n + 1)
-        parent[source] = source
-        queue = deque([source])
-        path_flow = {source: float('Inf')}
-
-        while queue:
-            current = queue.popleft()
-            for next_vertex in capacity[current]:
-                if parent[next_vertex] == -1 and capacity[current][
-                    next_vertex] > 0:  # Остаточная пропускная способность > 0
-                    parent[next_vertex] = current
-                    path_flow[next_vertex] = min(path_flow[current], capacity[current][next_vertex])
-                    if next_vertex == sink:
-                        break
-                    queue.append(next_vertex)
-            else:
-                continue
-            break
+        # Поиск увеличивающего пути
+        parents, path_flow = bfs(graph, source, sink)
 
         # Если увеличивающий путь не найден, выходим из цикла
-        if parent[sink] == -1:
+        if not parents:
             break
 
         # Увеличиваем поток по найденному пути
-        increment = path_flow[sink]
-        flow += increment
-        v = sink
-        while v != source:
-            u = parent[v]
-            capacity[u][v] -= increment
-            capacity[v][u] += increment
-            v = u
+        max_flow += path_flow
+        current_node: int = sink
+        while current_node != source:
+            previous_node: int = parents[current_node]
+            graph.set_capacity(previous_node, current_node, path_flow)
+            current_node: int = previous_node
 
-    return flow
+    return max_flow
 
 
-# Считывание входных данных
-n, m = map(int, input().split())
-edges = []
-for _ in range(m):
-    u, v, c = map(int, input().split())
-    edges.append((u, v, c))
+def main() -> None:
+    n, m = map(int, input().split())
+    edges: List[Tuple[int, int]] = cast(List[Tuple[int, int]], [tuple(map(int, input().split())) for _ in range(m)])
 
-# Вычисление максимального потока
-max_flow = edmonds_karp(n, edges)
-print(max_flow)
+    # Создание графа
+    graph: Graph = Graph(n, edges)
+
+    # Вычисление максимального потока
+    max_flow: int = edmonds_karp(graph, source=1, sink=n)
+    print(max_flow)
+
+
+if __name__ == '__main__':
+    main()
