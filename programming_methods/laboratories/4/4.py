@@ -31,17 +31,29 @@
 Во второй строке требуется вывести через пробел k чисел — номера деталей в том порядке, в котором следует их производить
 для скорейшего производства детали с номером 1.
 """
-from typing import List, Tuple
+from typing import List, Tuple, Sequence
 from collections import deque
 
 
 def produce_part(
         part_id: int,
-        production_times: List[int],
-        dependencies: List[List[int]],
+        production_times: Sequence[int],
+        dependencies: Sequence[Sequence[int]],
         produced: List[bool],
-        production_order: deque
+        production_order: deque[int]
 ) -> int:
+    """
+    Рекурсивно вычисляет общее время, необходимое для производства детали с заданным идентификатором,
+    учитывая её зависимости от других деталей.
+
+    :param part_id: Идентификатор детали, для которой вычисляется время производства.
+    :param production_times: Последовательность, содержащая время производства для каждой детали.
+    :param dependencies: Последовательность, указывающая, была ли деталь уже произведена.
+    :param produced: Список, указывающий, была ли деталь уже произведена.
+    :param production_order: Очередь для хранения порядка производства деталей.
+
+    :returns: Общее время, необходимое для производства детали с идентификатором part_id.
+    """
 
     if produced[part_id]:
         return 0
@@ -58,22 +70,31 @@ def produce_part(
 
 def calculate_minimum_production_time(
         n: int,
-        production_times: List[int],
-        dependencies: List[List[int]]
-) -> Tuple[int, List[int]]:
+        production_times: Sequence[int],
+        dependencies: Sequence[Sequence[int]]
+) -> Tuple[int, Sequence[int]]:
+    """
+    Вычисляет минимальное время, необходимое для производства детали с номером 1,
+    а также порядок производства всех необходимых деталей.
 
-    produced = [False] * (n + 1)
-    production_order = deque()
+    :param n: Общее количество деталей.
+    :param production_times: Последовательность, содержащая время производства для каждой детали.
+    :param dependencies: Последовательность, которая содержит зависимости для каждой детали.
 
-    total_time = produce_part(1, production_times, dependencies, produced, production_order)
+    :returns: Общее время, необходимое для производства детали с номером 1, и порядок производства деталей.
+    """
+    produced: List[bool] = [False] * (n + 1)
+    production_order: deque[int] = deque()
 
-    return total_time, list(production_order)
+    total_time: int = produce_part(1, production_times, dependencies, produced, production_order)
+
+    return total_time, production_order
 
 
 def main() -> None:
-    n = int(input())
-    production_times = [0] + list(map(int, input().split()))
-    dependencies = [list(map(int, input().split()[1:])) for _ in range(n)]
+    n: int = int(input())
+    production_times: List[int] = [0] + list(map(int, input().split()))
+    dependencies: List[List[int]] = [list(map(int, input().split()[1:])) for _ in range(n)]
 
     total_time, order = calculate_minimum_production_time(n, production_times, dependencies)
 
