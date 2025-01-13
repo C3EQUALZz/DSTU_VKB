@@ -97,9 +97,8 @@ def find_path_between_concerts(
 
 
 def main() -> None:
-    # Ввод данных
     n, m, c = map(int, input().split())
-    flights = []
+    flights: List[Flight] = []
 
     for i in range(m):
         vertex1, vertex2, w = map(int, input().split())
