@@ -30,7 +30,7 @@ from heapq import heappop, heappush
 from typing import List, Tuple, Dict, Set, cast
 
 
-@dataclass
+@dataclass(frozen=True)
 @total_ordering
 class State:
     """
