@@ -23,73 +23,105 @@ i-м городе (всё это целые числа из диапазона �
 
 Требуется вывести одно число – суммарную стоимость маршрута или -1, если добраться невозможно.
 """
-import heapq
-from typing import List, Tuple, Dict, Set
 from collections import defaultdict
+from dataclasses import dataclass
+from functools import total_ordering
+from heapq import heappop, heappush
+from typing import List, Tuple, Dict, Set, cast
+
+
+@dataclass
+@total_ordering
+class State:
+    """
+    Класс, представляющий состояние во время поиска минимальной стоимости топлива.
+
+    Атрибуты:
+    cost (int): Общая стоимость топлива, потраченная до текущего состояния.
+    city (int): Номер текущего города.
+    tank (int): Количество топлива в баке (0 или 1).
+    canister (int): Количество топлива в канистре (0 или 1).
+    """
+    cost: int
+    city: int
+    tank: int
+    canister: int
+
+    def __lt__(self, other: 'State') -> bool:
+        return self.cost < other.cost
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, State):
+            return NotImplemented
+        return (self.cost, self.city, self.tank, self.canister) == (other.cost, other.city, other.tank, other.canister)
 
 
 class Graph:
     def __init__(self) -> None:
-        self.adjacency_list: Dict[int, List[int]] = defaultdict(list)
+        """
+        Класс, представляющий ненаправленный граф дорог между городами.
+        """
+        self._adjacency_list: Dict[int, List[int]] = defaultdict(list)
 
     def add_edge(self, u: int, v: int) -> None:
-        self.adjacency_list[u].append(v)
-        self.adjacency_list[v].append(u)
+        """
+        Добавляет ребро между городами u и v.
+        Returns:
+        """
+        self._adjacency_list[u].append(v)
+        self._adjacency_list[v].append(u)
 
     def get_neighbors(self, city: int) -> List[int]:
-        return self.adjacency_list[city]
+        return self._adjacency_list[city]
 
 
 def min_fuel_cost(n: int, fuel_costs: List[int], graph: Graph) -> int:
-    # Состояние: (стоимость, город, топливо в баке, топливо в канистре)
     # Используем очередь с приоритетом
-    pq: List[Tuple[int, int, int, int]] = [(0, 1, 0, 0)]  # начинаем с города 1, пустой бак и канистра
+    pq: List[State] = [State(0, 1, 0, 0)]  # начинаем с города 1, пустой бак и канистра
     visited: Set[Tuple[int, int, int]] = set()
 
     while pq:
-        cost, city, tank, canister = heapq.heappop(pq)
+        state = heappop(pq)
 
         # Если добрались до города N, возвращаем стоимость
-        if city == n:
-            return cost
+        if state.city == n:
+            return state.cost
 
         # Проверка на повторное посещение состояния
-        if (city, tank, canister) in visited:
+        if (state.city, state.tank, state.canister) in visited:
             continue
-        visited.add((city, tank, canister))
+        visited.add((state.city, state.tank, state.canister))
 
         # 1. Заправка только бака
-        if tank == 0:
-            heapq.heappush(pq, (cost + fuel_costs[city - 1], city, 1, canister))
+        if state.tank == 0:
+            heappush(pq, State(state.cost + fuel_costs[state.city - 1], state.city, 1, state.canister))
 
         # 2. Заправка бака и канистры
-        if tank == 0 and canister == 0:
-            heapq.heappush(pq, (cost + 2 * fuel_costs[city - 1], city, 1, 1))
+        if state.tank == 0 and state.canister == 0:
+            heappush(pq, State(state.cost + 2 * fuel_costs[state.city - 1], state.city, 1, 1))
 
         # 3. Переливание бензина из канистры в бак
-        if tank == 0 and canister > 0:
-            heapq.heappush(pq, (cost, city, 1, 0))
+        if state.tank == 0 and state.canister > 0:
+            heappush(pq, State(state.cost, state.city, 1, 0))
 
         # 4. Переход в соседний город (тратим 1 единицу топлива)
-        if tank > 0:
-            for neighbor in graph.get_neighbors(city):
-                heapq.heappush(pq, (cost, neighbor, tank - 1, canister))
+        if state.tank > 0:
+            for neighbor in graph.get_neighbors(state.city):
+                heappush(pq, State(state.cost, neighbor, state.tank - 1, state.canister))
 
     return -1  # Если не удалось добраться до города N
 
 
 def main() -> None:
-    # Ввод данных
-    n = int(input())
-    fuel_costs = list(map(int, input().split()))
-    m = int(input())
-    roads = [tuple(map(int, input().split())) for _ in range(m)]
+    n: int = int(input())
+    fuel_costs: List[int] = list(map(int, input().split()))
+    m: int = int(input())
+    roads: List[Tuple[int, int]] = cast(List[Tuple[int, int]], [tuple(map(int, input().split())) for _ in range(m)])
 
     graph = Graph()
     for u, v in roads:
         graph.add_edge(u, v)
 
-    # Вывод результата
     print(min_fuel_cost(n, fuel_costs, graph))
 
 
