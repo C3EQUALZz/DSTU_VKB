@@ -22,97 +22,85 @@
 РЕШЕНИЕ НЕ ПРОХОДИТ ПО СКОРОСТИ ИЗ-ЗА PYTHON.
 """
 import math
-from array import array
+from array import array, ArrayType
 from collections import deque
 from itertools import product
 from typing import List, Tuple, Sequence, cast
 
 
-def calculate_distance(
-        u: int,
-        v: int,
-        coords: Sequence[Tuple[float, float]]
-) -> float:
-    """Вычисление расстояния между двумя вершинами."""
-    return math.dist(coords[u], coords[v])
+class TravelingSalesmanGraph:
+    def __init__(self, coordinates: Sequence[Tuple[float, float]]) -> None:
+        self.num_vertices = len(coordinates)
+        self.coordinates = coordinates
+        self.distance_matrix: List[ArrayType[float]] = [array('d', [float('inf')] * self.num_vertices) for _ in
+                                                        range(1 << self.num_vertices)]
+        self._initialize_distance_matrix()
 
+    def _initialize_distance_matrix(self) -> None:
+        """Инициализация таблицы расстояний для динамического программирования."""
+        self.distance_matrix[1][0] = 0  # Начальная вершина посещена, длина пути 0
 
-def initialize_dp_table(
-        n: int,
-        coords: Sequence[Tuple[float, float]]
-) -> Sequence[array]:
-    """Инициализация таблицы динамического программирования."""
-    distance_table = [array('d', [float('inf')] * n) for _ in range(1 << n)]
-    distance_table[1][0] = 0  # Начальная вершина посещена, длина пути 0
+        for mask, u in product(range(1 << self.num_vertices), range(self.num_vertices)):
 
-    for mask, u in product(range(1 << n), range(n)):
-        if not (mask & (1 << u)):  # Если вершина u не посещена
-            continue
-        dp_mask_u = distance_table[mask][u]
-        for v in filter(lambda vertex: not mask & (1 << vertex), range(n)):  # Генератор для вершин
-            next_mask = mask | (1 << v)
-            distance_table[next_mask][v] = min(distance_table[next_mask][v], dp_mask_u + calculate_distance(u, v, coords))
+            if not (mask & (1 << u)):  # Если вершина u не посещена
+                continue
+            current_distance: float = self.distance_matrix[mask][u]
 
-    return distance_table
+            for v in filter(lambda vertex: not mask & (1 << vertex), range(self.num_vertices)):  # Генератор для вершин
+                next_mask: int = mask | (1 << v)
+                minimal_distance_matrix: float = self.distance_matrix[next_mask][v]
+                min_distance: float = min(minimal_distance_matrix, current_distance + self._calculate_distance(u, v))
+                self.distance_matrix[next_mask][v] = min_distance
 
+    def _calculate_distance(self, u: int, v: int) -> float:
+        """Вычисление расстояния между двумя вершинами."""
+        return math.dist(self.coordinates[u], self.coordinates[v])
 
-def find_min_path_length(
-        n: int,
-        coords: Sequence[Tuple[float, float]],
-        distance_table: Sequence[array]
-) -> Tuple[float, int]:
-    """Нахождение минимальной длины пути и конечной вершины."""
-    last_mask = (1 << n) - 1
-    return min((distance_table[last_mask][u] + calculate_distance(u, 0, coords), u) for u in range(1, n))
-
-
-def reconstruct_path(
-        n: int,
-        coords: Sequence[Tuple[float, float]],
-        distance_table: Sequence[array],
-        end_vertex: int,
-        last_mask: int
-) -> Sequence[int]:
-    """Восстановление пути из таблицы dp."""
-    path = deque()
-
-    mask, current_vertex = last_mask, end_vertex
-    while current_vertex != 0:
-        path.appendleft(current_vertex)
-        current_distance = distance_table[mask][current_vertex]
-        current_vertex = next(
-            prev_vertex for prev_vertex in range(n)
-            if (mask & (1 << prev_vertex)) and math.isclose(
-                current_distance,
-                distance_table[mask ^ (1 << current_vertex)][prev_vertex] +
-                calculate_distance(prev_vertex, current_vertex, coords)
-            )
+    def find_shortest_path_length(self) -> Tuple[float, int]:
+        """Нахождение минимальной длины пути и конечной вершины."""
+        final_mask: int = (1 << self.num_vertices) - 1
+        return min(
+            (self.distance_matrix[final_mask][u] + self._calculate_distance(u, 0), u)
+            for u in range(1, self.num_vertices)
         )
-        mask ^= (1 << path[0])
 
-    return path
+    def reconstruct_path(self, end_vertex: int, final_mask: int) -> Sequence[int]:
+        """Восстановление пути из таблицы динамического программирования."""
+        path: deque[int] = deque()
+
+        mask, current_vertex = final_mask, end_vertex
+        while current_vertex != 0:
+            path.appendleft(current_vertex)
+            current_distance: float = self.distance_matrix[mask][current_vertex]
+            current_vertex: int = next(
+                prev_vertex for prev_vertex in range(self.num_vertices)
+                if (mask & (1 << prev_vertex)) and math.isclose(
+                    current_distance,
+                    self.distance_matrix[mask ^ (1 << current_vertex)][prev_vertex] +
+                    self._calculate_distance(prev_vertex, current_vertex)
+                )
+            )
+            mask ^= (1 << path[0])
+
+        return path
 
 
-def find_shortest_path(coords: Sequence[Tuple[float, float]]) -> Tuple[float, Sequence[int]]:
+def find_optimal_tour(coordinates: Sequence[Tuple[float, float]]) -> Tuple[float, Sequence[int]]:
     """Основная логика для нахождения кратчайшего пути."""
-    n = len(coords)
+    graph = TravelingSalesmanGraph(coordinates)
 
-    dp = initialize_dp_table(n, coords)
+    shortest_path_length, end_vertex = graph.find_shortest_path_length()
+    path = graph.reconstruct_path(end_vertex, (1 << graph.num_vertices) - 1)
 
-    min_path_length, end_vertex = find_min_path_length(n, coords, dp)
-
-    path = reconstruct_path(n, coords, dp, end_vertex, (1 << n) - 1)
-
-    # Преобразование пути к нужному формату
-    return min_path_length, [x + 1 for x in path]
+    return shortest_path_length, [x + 1 for x in path]
 
 
 def main() -> None:
-    n = int(input())
-    coords = cast(List[Tuple[int, int]], [tuple(map(float, input().split())) for _ in range(n)])
-    min_path_length, min_path = find_shortest_path(coords)
-    print(f"{min_path_length:.14e}")
-    print(' '.join(map(str, min_path)))
+    num_vertices = int(input())
+    coordinates = cast(List[Tuple[int, int]], [tuple(map(float, input().split())) for _ in range(num_vertices)])
+    shortest_path_length, optimal_path = find_optimal_tour(coordinates)
+    print(f"{shortest_path_length:.14e}")
+    print(' '.join(map(str, optimal_path)))
 
 
 if __name__ == "__main__":
