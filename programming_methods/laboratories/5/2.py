@@ -32,11 +32,21 @@
 """
 from collections import deque
 from dataclasses import dataclass
-from typing import List, Tuple
+from typing import List, Tuple, cast
 
 
 @dataclass
 class Road:
+    """
+    Класс для представления дороги между воротами двух городов.
+
+    Атрибуты:
+        from_city (int): Город, откуда идет дорога.
+        to_city (int): Город, в который ведет дорога.
+        from_gate (int): Ворота города, откуда идет дорога.
+        to_gate (int): Ворота города, в который ведет дорога.
+        visited (bool): Флаг, который указывает, была ли дорога уже посещена гонцом.
+    """
     from_city: int
     to_city: int
     from_gate: int
@@ -45,7 +55,13 @@ class Road:
 
 
 class CityGraph:
-    def __init__(self, n: int, roads_data: List[Tuple[int, ...]]) -> None:
+    def __init__(self, n: int, roads_data: List[Tuple[int, int]]) -> None:
+        """
+        Класс для представления графа города, который состоит из множества дорог между воротами.
+
+        :params n: Количество городов.
+        :params roads_data: Список дорог в формате (ворота1, ворота2), которые соединяют города.
+        """
         self.n = n
         self.roads: List[Road] = []
         self.graph: List[List[int]] = [[] for _ in range(n + 1)]
@@ -60,36 +76,71 @@ class CityGraph:
             self.roads.append(Road(from_city, to_city, gate1, gate2))
 
     def mark_road_visited(self, road_index: int) -> None:
-        """Помечаем дорогу как посещенную."""
+        """
+        Помечаем дорогу как посещенную.
+        :param road_index: Индекс дороги в списке roads.
+        """
         self.roads[road_index].visited = True
 
     def __getitem__(self, city: int) -> List[int]:
-        """Возвращает список дорог для данного города."""
+        """
+        Возвращает список дорог для данного города.
+        :param city: Номер города.
+        :returns: Список индексов дорог, которые выходят из города.
+        """
         return self.graph[city]
 
 
 def can_complete_task(n: int, graph: CityGraph) -> List[int]:
+    """
+    Определяет, может ли гонец пройти через все ворота каждого города, следуя правилам задачи.
+
+    Алгоритм работы:
+    1. Инициализируем стек `stack`, который используется для отслеживания путей, и список `ans`, который хранит
+       последовательность ворот, через которые проходит гонец.
+    2. Устанавливаем текущий город `cur_city` в 1 (столица).
+    3. Входим в цикл, который продолжает работать, пока:
+       - У текущего города остались дороги, ведущие из него.
+       - Либо пока есть элементы в стеке, к которым нужно вернуться.
+    4. Если у текущего города нет непосещённых дорог:
+       - Проверяем, есть ли в стеке элементы, к которым можно вернуться.
+       - Если стек пуст, завершаем цикл, так как все ворота обработаны.
+       - Иначе возвращаемся к предыдущему городу, извлекая информацию из стека: предыдущий город, ворота, через
+         которые мы вышли и вошли, добавляем их в список `ans`, и обновляем текущий город.
+    5. Если есть непосещённые дороги, выбираем последнюю дорогу из списка текущего города:
+       - Проверяем, была ли эта дорога уже посещена. Если да, удаляем её из списка дорог города и продолжаем цикл.
+       - Иначе помечаем дорогу как посещённую и определяем, куда перемещаться дальше:
+           - Если текущий город совпадает с отправной точкой дороги, добавляем в стек текущий город и ворота
+             (выходные и входные), переходим в соседний город.
+           - Если текущий город совпадает с конечной точкой дороги, аналогично добавляем информацию в стек,
+             но с учётом обратного порядка ворот, и перемещаемся в другой конец дороги.
+    6. После завершения цикла проверяем, совпадает ли длина списка `ans` с `4 * n` (общее число ворот).
+       - Если да, возвращаем список `ans`, содержащий порядок обхода ворот.
+       - Если нет, задача неразрешима, возвращаем пустой список.
+
+    :param n: Количество городов.
+    :param graph: Граф, представляющий города и дороги между воротами.
+    :returns: Порядок ворот, через которые должен пройти гонец, если задача решаема. Если задача не решаема, возвращает пустой список.
+    """
     stack = deque()  # Используем deque как стек
     ans = []  # Список ворот
     cur_city = 1
 
     while True:
-        if not graph[cur_city]:  # Используем graph[cur_city] вместо graph.graph[cur_city]
+        if not graph[cur_city]:
             if not stack:
                 break
             # Возвращаемся к предыдущему городу
-            to_gate = stack.pop()
-            from_gate = stack.pop()
-            prev_city = stack.pop()
-            ans.append(to_gate)
-            ans.append(from_gate)
+            to_gate, from_gate, prev_city = (stack.pop() for _ in range(3))
+            ans.extend((to_gate, from_gate))
             cur_city = prev_city
             continue
 
-        road_index = graph[cur_city][-1]  # Используем graph[cur_city] вместо graph.graph[cur_city]
+        road_index = graph[cur_city][-1]
 
-        if graph.roads[road_index].visited:  # Если дорога уже посещена
-            graph[cur_city].pop()  # Используем graph[cur_city] вместо graph.graph[cur_city]
+        # Если дорога уже посещена
+        if graph.roads[road_index].visited:
+            graph[cur_city].pop()
             continue
 
         # Обновляем состояние дороги и перемещаемся в соседний город
@@ -107,8 +158,12 @@ def can_complete_task(n: int, graph: CityGraph) -> List[int]:
 
 
 def main() -> None:
-    n = int(input())
-    roads_data = [tuple(map(int, input().split())) for _ in range(2 * n)]
+    n: int = int(input())
+
+    roads_data: List[Tuple[int, int]] = cast(
+        List[Tuple[int, int]],
+        [tuple(map(int, input().split())) for _ in range(2 * n)]
+    )
 
     graph = CityGraph(n, roads_data)
 
