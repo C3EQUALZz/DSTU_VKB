@@ -16,9 +16,10 @@
 
 НЕ ПРОХОДИТ НА 100 БАЛЛОВ ПО ПАМЯТИ!
 """
-from collections import deque, defaultdict
+from array import array, ArrayType
+from collections import deque
 from itertools import chain
-from typing import Final, Sequence
+from typing import Final, Sequence, Dict, List, Tuple
 
 INF: Final[float] = float('inf')
 
@@ -41,17 +42,17 @@ def restore_cycle(path: Sequence[int], start_index: int) -> Sequence[int]:
 
 
 def main() -> None:
-    n = int(input())
+    n: int = int(input())
 
-    graph = defaultdict(list)
-    for i in range(n):
-        for j, w in enumerate(map(int, input().split())):
-            if w < 100000:
-                graph[i].append((j, w))
+    graph: Dict[int, List[Tuple[int, int]]] = {
+        i: [(j, w) for j, w in enumerate(map(int, input().split())) if w < 100000]
+        for i in range(n)
+    }
 
-    distance = [INF] * n
-    path = [-1] * n
-    cycle = -1
+    distance: ArrayType[float] = array("d", [INF] * n)
+    path: ArrayType[int] = array("i", [-1] * n)
+
+    cycle: int = -1
 
     # Алгоритм Беллмана-Форда
     # Тут слишком сильные временные рамки, поэтому если выносить в отдельную функцию, то вместо 20 тестов будет 16 пройдено.
