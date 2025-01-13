@@ -31,30 +31,80 @@
 """
 import heapq
 from collections import defaultdict
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import List, Dict, Tuple
 
 
 @dataclass
 class Flight:
+    """
+    Класс, представляющий рейс между населенными пунктами.
+
+    Атрибуты:
+    src (int): Номер пункта отправления.
+    dep_time (int): Время отправления рейса.
+    dest (int): Номер пункта назначения.
+    arr_time (int): Время прибытия рейса.
+    """
     src: int
     dep_time: int
     dest: int
     arr_time: int
 
 
-@dataclass
 class Graph:
-    adjacency_list: Dict[int, List[Tuple[int, int, int]]] = field(default_factory=lambda: defaultdict(list))
+    def __init__(self) -> None:
+        """
+        Класс, представляющий граф рейсов между населенными пунктами.
+        """
+        # Словарь, где ключ - номер пункта, а значение - список кортежей, представляющих соседние пункты
+        # с временем отправления и прибытия.
+        self._adjacency_list: Dict[int, List[Tuple[int, int, int]]] = defaultdict(list)
 
     def add_flight(self, flight: Flight) -> None:
-        self.adjacency_list[flight.src].append((flight.dest, flight.dep_time, flight.arr_time))
+        """
+        Добавляет рейс в граф.
+        :param flight: Объект класса Flight, представляющий рейс.
+        :returns: Ничего не возвращает, только добавляет в словарь.
+        """
+        self._adjacency_list[flight.src].append((flight.dest, flight.dep_time, flight.arr_time))
 
     def get_neighbors(self, node: int) -> List[Tuple[int, int, int]]:
-        return self.adjacency_list.get(node, [])
+        """
+        Возвращает список соседей для заданного пункта.
+
+        :param node: Номер пункта, для которого нужно получить соседей.
+
+        :returns: Список кортежей, где каждый кортеж содержит номер пункта назначения,
+        время отправления и время прибытия.
+        """
+        return self._adjacency_list.get(node, [])
 
 
 def min_time_to_destination(n: int, a: int, b: int, graph: Graph) -> int:
+    """
+    Вычисляет минимальное время, необходимое для достижения пункта B из пункта A.
+
+    Алгоритм:
+    Используется алгоритм Дейкстры для нахождения кратчайшего пути в графе с неотрицательными весами.
+    1. Инициализируем массив `min_time`, где `min_time[i]` хранит минимальное время достижения пункта i.
+       Все значения инициализируются как бесконечность, кроме начального пункта A, который устанавливается в 0.
+    2. Создаем приоритетную очередь (кучу), в которую помещаем начальный пункт A с временем 0.
+    3. Пока очередь не пуста:
+       - Извлекаем пункт с минимальным временем.
+       - Если извлеченное время больше, чем уже известное минимальное время для этого пункта, продолжаем.
+       - Для каждого соседнего пункта проверяем, можно ли до него добраться из текущего пункта:
+         - Если время отправления рейса больше или равно текущему времени и время прибытия в соседний пункт меньше
+           уже известного минимального времени, обновляем минимальное время для этого пункта.
+         - Добавляем соседний пункт в очередь с обновленным временем.
+    4. Возвращаем минимальное время для достижения пункта B.
+
+    :param n: Общее количество населенных пунктов.
+    :param a: Номер начального пункта.
+    :param b: Номер начального пункта.
+    :param graph: Граф, представляющий рейсы между населенными пунктами.
+    :returns: Минимальное время, когда можно оказаться в пункте B.
+    """
     min_time = [float('inf')] * (n + 1)
     min_time[a] = 0
     heap = [(0, a)]
@@ -72,9 +122,9 @@ def min_time_to_destination(n: int, a: int, b: int, graph: Graph) -> int:
 
 
 def main() -> None:
-    n = int(input())
+    n: int = int(input())
     a, b = map(int, input().split())
-    k = int(input())
+    k: int = int(input())
 
     flights: List[Flight] = [Flight(*map(int, input().split())) for _ in range(k)]
 
