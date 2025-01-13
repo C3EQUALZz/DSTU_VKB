@@ -14,6 +14,8 @@
 Выходные данные
 
 Выведите величину максимального потока между вершинами 1 и n.
+
+КОД НА PYTHON НЕ ПРОХОДИТ ПО СКОРОСТИ. НА 100 БАЛЛОВ ТОЛЬКО C++.
 """
 from collections import defaultdict, deque
 from typing import Iterable, Tuple, List, cast, Dict, Sequence
