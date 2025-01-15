@@ -24,18 +24,60 @@
 Выведите столько строк, сколько вопросов во входном файле. В строке номер i
 надо записать ответ на вопрос i — название соответствующей частицы x, y или z.
 """
+from typing import List, Sequence, Iterable
 
 
-n, m = map(int, input().split())
-particles = input().strip()
+def process_experiment(n: int, particles: str, actions: Sequence[Sequence[str]]) -> Iterable[str]:
+    """
+    Выполняет обработку воздействия на частицы и отвечает на вопросы.
 
-indexes = list(range(n))
+    Алгоритм работы:
+    1. Создаётся список `offsets`, который содержит индексы частиц (от 0 до n-1).
+       Этот список позволяет отслеживать текущие позиции частиц после воздействий.
+    2. Для каждой операции из списка `actions`:
+       - Если операция начинается с `a`, это воздействие:
+         - Удаляем индекс частицы на позиции `i` из списка `offsets` и вставляем его в позицию `j`.
+       - Если операция начинается с `q`, это вопрос:
+         - Определяем индекс частицы на позиции `k` с помощью списка `offsets` и добавляем её символ в результаты.
+    3. Возвращается список символов, соответствующих ответам на вопросы.
 
-for _ in range(m):
-    action = input().split()
-    if action[0] == 'a':
-        i, j = int(action[1]) - 1, int(action[2]) - 1
-        indexes.insert(j, indexes.pop(i))
-    else:
-        k = int(action[1]) - 1
-        print(particles[indexes[k]])
+    :param n: Количество частиц в ряду (1 ≤ n ≤ 1,000,000).
+    :param particles: Строка длиной n, содержащая символы `x`, `y` или `z`, которые обозначают тип частиц.
+    :param actions: Список операций, где каждая операция — это список строк:
+        - Воздействие: `["a", i, j]`, где i и j — начальная и конечная позиции частицы (1 ≤ i, j ≤ n).
+        - Вопрос: `["q", k]`, где k — позиция частицы, которая интересует физиков (1 ≤ k ≤ n).
+
+    :returns: Итератор строк, где каждая строка — результат ответа на вопрос.
+        Символ `x`, `y` или `z` для соответствующей позиции частицы.
+    """
+    offsets: List[int] = list(range(n))
+    results: List[str] = []
+
+    for action in actions:
+        if action[0] == 'a':
+            # Воздействие: перенос частицы
+            i, j = int(action[1]) - 1, int(action[2]) - 1
+            element = offsets.pop(i)
+            offsets.insert(j, element)
+        elif action[0] == 'q':
+            # Вопрос: какая частица на позиции k
+            k = int(action[1]) - 1
+            results.append(particles[offsets[k]])
+
+    return results
+
+
+def main() -> None:
+    n, m = map(int, input().split())
+    particles: str = input().strip()
+    actions: List[List[str]] = [input().split() for _ in range(m)]
+
+    # Обрабатываем эксперименты
+    results = process_experiment(n, particles, actions)
+
+    # Выводим результаты
+    print("\n".join(results))
+
+
+if __name__ == "__main__":
+    main()
