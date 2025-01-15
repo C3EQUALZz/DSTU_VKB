@@ -16,23 +16,46 @@ ei и wi - номера концов ребра и его вес соответ�
 
 Выведите единственное целое число - вес минимального остовного дерева.
 """
+from array import array
 from collections import namedtuple
-from typing import List
+from typing import List, Sequence, TypeVar, Generic
 
 Edge = namedtuple('Edge', ['weight', 'vertex1', 'vertex2'])
 
+T = TypeVar('T')
 
-class DisjointSetUnion:
+
+class DisjointSetUnion(Generic[T]):
     def __init__(self, size: int):
-        self.parent = list(range(size))
-        self.rank = [0] * size
+        """
+        Класс для реализации структуры данных "Система непересекающихся множеств" (DSU).
+        Он позволяет эффективно объединять компоненты графа и находить представителя компоненты для каждой вершины.
+        :param size: Количество вершин в графе.
+        """
+        self.parent = array("i", range(size))
+        self.rank = array("i", [0] * size)
 
-    def find(self, node: int) -> int:
+    def find(self, node: T) -> int:
+        """
+        Находит представителя компоненты, в которой находится вершина node.
+        Сжатием путей уменьшаем глубину дерева, чтобы ускорить поиск в дальнейшем.
+
+        :param node: Номер вершины, для которой ищем представителя.
+        :return: Представитель компоненты для вершины.
+        """
         if node != self.parent[node]:
-            self.parent[node] = self.find(self.parent[node])  # Path compression
+            # Сжатие пути (оптимизация поиска)
+            self.parent[node] = self.find(self.parent[node])
         return self.parent[node]
 
-    def union(self, node1: int, node2: int) -> None:
+    def union(self, node1: T, node2: T) -> None:
+        """
+        Объединяет две компоненты, в которых находятся вершины node1 и node2.
+        Используем стратегию объединения по рангу для оптимизации.
+
+        :param node1: Первая вершина, которую нужно объединить.
+        :param node2: Вторая вершина, которую нужно объединить.
+        """
         root1 = self.find(node1)
         root2 = self.find(node2)
 
@@ -45,12 +68,22 @@ class DisjointSetUnion:
                 self.rank[root1] += 1
 
 
-def kruskal(num_vertices: int, edges: List[Edge]) -> int:
-    dsu = DisjointSetUnion(num_vertices)
-    minimum_spanning_tree_weight = 0
+def kruskal(num_vertices: int, edges: Sequence[Edge]) -> int:
+    """
+    Алгоритм Краскала для нахождения минимального остовного дерева в графе.
+    Сначала сортируем все ребра по весу, а затем поочередно добавляем их в дерево,
+    если они не образуют цикл. Для этого используется структура DSU (Disjoint Set Union).
 
-    # Sort edges by weight
+    :param num_vertices: Количество вершин в графе.
+    :param edges: Список всех рёбер графа.
+    :return: Вес минимального остовного дерева.
+    """
+    dsu: DisjointSetUnion[int] = DisjointSetUnion(num_vertices)
+    minimum_spanning_tree_weight: int = 0
+
+    # Сортируем рёбра по весу в порядке возрастания
     for edge in sorted(edges, key=lambda e: e.weight):
+        # Если вершины ещё не соединены, то объединяем их и добавляем вес ребра в итоговый результат
         if dsu.find(edge.vertex1) != dsu.find(edge.vertex2):
             dsu.union(edge.vertex1, edge.vertex2)
             minimum_spanning_tree_weight += edge.weight
@@ -60,7 +93,7 @@ def kruskal(num_vertices: int, edges: List[Edge]) -> int:
 
 def main() -> None:
     num_vertices, num_edges = map(int, input().split())
-    edges = []
+    edges: List[Edge] = []
 
     for _ in range(num_edges):
         vertex1, vertex2, weight = map(int, input().split())
