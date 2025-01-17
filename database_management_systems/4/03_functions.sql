@@ -19,13 +19,13 @@ AS
 '
     BEGIN
         RETURN QUERY
-            SELECT id,
-                   surname,
-                   name,
-                   patronymic,
-                   number
+            SELECT client.id,
+                   client.surname,
+                   client.name,
+                   client.patronymic,
+                   client.number
             FROM client
-            WHERE id = p_id;
+            WHERE client.id = p_id;
     END;
 ';
 
@@ -72,11 +72,7 @@ CREATE OR REPLACE FUNCTION update_client(
             name       = COALESCE(p_new_name, name),
             patronymic = COALESCE(p_new_patronymic, patronymic),
             number     = COALESCE(p_new_number, number)
-        WHERE id = p_id;
-
-        IF NOT FOUND THEN
-            RAISE NOTICE ''Клиент с ID % не найден.'', p_id;
-        END IF;
+        WHERE client.id = p_id;
     END;
 ';
 
@@ -95,11 +91,7 @@ CREATE OR REPLACE FUNCTION delete_client(
     BEGIN
         DELETE
         FROM client
-        WHERE id = p_id;
-
-        IF NOT FOUND THEN
-            RAISE NOTICE ''Клиент с ID % не найден.'', p_id;
-        END IF;
+        WHERE client.id = p_id;
     END;
 ';
 
@@ -111,22 +103,26 @@ CREATE OR REPLACE FUNCTION delete_client(
 CREATE OR REPLACE FUNCTION get_component(
     p_id INTEGER
 )
-    RETURNS TABLE (
-        id INTEGER,
-        name VARCHAR(30),
-        amount INTEGER,
-        cost_per_unit NUMERIC(10, 2)
-    )
-    LANGUAGE plpgsql AS
-$$
-BEGIN
-    RETURN QUERY
-    SELECT id, name, amount, cost_per_unit
-    FROM component_warehouse
-    WHERE id = p_id;
-END;
-$$;
-
+    RETURNS TABLE
+            (
+                id            INTEGER,
+                name          VARCHAR(30),
+                amount        INTEGER,
+                cost_per_unit NUMERIC(10, 2)
+            )
+    LANGUAGE plpgsql
+AS
+'
+    BEGIN
+        RETURN QUERY
+            SELECT component_warehouse.id,
+                   component_warehouse.name,
+                   component_warehouse.amount,
+                   component_warehouse.cost_per_unit
+            FROM component_warehouse
+            WHERE component_warehouse.id = p_id;
+    END;
+';
 
 /**
   Функция для добавления нового компонента на склад.
@@ -140,12 +136,12 @@ CREATE OR REPLACE FUNCTION add_component(
 )
     RETURNS VOID
     LANGUAGE plpgsql AS
-$$
-BEGIN
-    INSERT INTO component_warehouse (name, amount, cost_per_unit)
-    VALUES (p_name, p_amount, p_cost_per_unit);
-END;
-$$;
+'
+    BEGIN
+        INSERT INTO component_warehouse (name, amount, cost_per_unit)
+        VALUES (p_name, p_amount, p_cost_per_unit);
+    END;
+';
 
 /**
   Функция для обновления данных о компоненте.
@@ -160,15 +156,16 @@ CREATE OR REPLACE FUNCTION update_component(
 )
     RETURNS VOID
     LANGUAGE plpgsql AS
-$$
-BEGIN
-    UPDATE component_warehouse
-    SET name          = COALESCE(p_new_name, name),
-        amount        = COALESCE(p_new_amount, amount),
-        cost_per_unit = COALESCE(p_new_cost_per_unit, cost_per_unit)
-    WHERE id = p_id;
-END;
-$$;
+'
+    BEGIN
+        UPDATE component_warehouse
+        SET name          = COALESCE(p_new_name, name),
+            amount        = COALESCE(p_new_amount, amount),
+            cost_per_unit = COALESCE(p_new_cost_per_unit, cost_per_unit)
+        WHERE component_warehouse.id = p_id;
+    END;
+';
+
 
 /**
   Функция для удаления компонента по его ID.
@@ -180,12 +177,14 @@ CREATE OR REPLACE FUNCTION delete_component(
 )
     RETURNS VOID
     LANGUAGE plpgsql AS
-$$
-BEGIN
-    DELETE FROM component_warehouse
-    WHERE id = p_id;
-END;
-$$;
+'
+    BEGIN
+        DELETE
+        FROM component_warehouse
+        WHERE component_warehouse.id = p_id;
+    END;
+';
+
 
 /**
   Функция для добавления нового мастера в таблицу list_of_masters
@@ -249,11 +248,7 @@ CREATE OR REPLACE FUNCTION update_master(
             address            = COALESCE(p_address, address),
             number             = COALESCE(p_number, number),
             date_of_employment = COALESCE(p_date_of_employment, date_of_employment)
-        WHERE id = p_master_id;
-
-        IF NOT FOUND THEN
-            RAISE NOTICE ''Мастер с ID % не найден.'', p_master_id;
-        END IF;
+        WHERE list_of_masters.id = p_master_id;
     END;
 ';
 
@@ -270,11 +265,7 @@ CREATE OR REPLACE FUNCTION delete_master(
     BEGIN
         DELETE
         FROM list_of_masters
-        WHERE id = p_master_id;
-
-        IF NOT FOUND THEN
-            RAISE NOTICE ''Мастер с ID % не найден.'', p_master_id;
-        END IF;
+        WHERE list_of_masters.id = p_master_id;
     END;
 ';
 
@@ -308,11 +299,7 @@ CREATE OR REPLACE FUNCTION update_position(
     BEGIN
         UPDATE position_of_master
         SET name = COALESCE(p_name, name)
-        WHERE id = p_id;
-
-        IF NOT FOUND THEN
-            RAISE NOTICE ''Статус с ID % не найден.'', p_id;
-        END IF;
+        WHERE position_of_master.id = p_id;
     EXCEPTION
         WHEN unique_violation THEN
             RAISE NOTICE ''Позиция с таким именем уже существует: %'', p_name;
@@ -402,7 +389,7 @@ CREATE OR REPLACE FUNCTION delete_booking_status(
     BEGIN
         DELETE
         FROM status_of_booking
-        WHERE id = p_status_id;
+        WHERE status_of_booking.id = p_status_id;
 
         IF NOT FOUND THEN
             RAISE NOTICE ''Статус с ID % не найден.'', p_status_id;
