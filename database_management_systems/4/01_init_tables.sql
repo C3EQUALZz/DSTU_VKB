@@ -29,7 +29,7 @@ CREATE DOMAIN human_fullname_component AS VARCHAR(30)
 CREATE TABLE position_of_master
 (
     id   INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    name VARCHAR(30) NOT NULL
+    name VARCHAR(30) NOT NULL UNIQUE
 );
 
 -- Выполнение заказа --
@@ -47,7 +47,7 @@ CREATE TABLE order_fulfillment
 CREATE TABLE status_of_booking
 (
     id   INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    name VARCHAR(30) NOT NULL
+    name VARCHAR(30) NOT NULL UNIQUE
 );
 
 -- Оборудование --
