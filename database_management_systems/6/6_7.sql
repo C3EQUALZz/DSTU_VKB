@@ -1,1 +1,0 @@
-create index on my_object (id);
