@@ -41,14 +41,17 @@ export class GameBoardComponent implements AfterViewInit {
   oneBlockSize = 35;
   wallSpaceWidth = this.oneBlockSize / 1.6;
   wallOffset = (this.oneBlockSize - this.wallSpaceWidth) / 2;
+
   wallColor: string = '#473cdd'
   innerColor: string = '#0a0502'
-  mapWidth = map[0].length; // Количество колонок (21)
-  mapHeight = map.length; // Количество строк (23)
+  foodColor: string = '#FEB897'
+
+  mapWidth = map[0].length;
+  mapHeight = map.length;
 
   ngAfterViewInit(): void {
     this.context = this.canvas.nativeElement.getContext('2d');
-    this.drawWalls();
+    this.drawElements();
   }
 
   createRect(x: number, y: number, width: number, height: number, color: string) {
@@ -61,7 +64,7 @@ export class GameBoardComponent implements AfterViewInit {
     );
   }
 
-  drawWalls() {
+  drawElements() {
     for (let i = 0; i < map.length; i++) {
       for (let j = 0; j < map[0].length; j++) {
         if (map[i][j] == 1) {
@@ -111,6 +114,15 @@ export class GameBoardComponent implements AfterViewInit {
               this.innerColor
             );
           }
+        }
+        if (map[i][j] == 2) {
+          this.createRect(
+            j * this.oneBlockSize + this.oneBlockSize / 3,
+            i * this.oneBlockSize + this.oneBlockSize / 3,
+            this.oneBlockSize / 3,
+            this.oneBlockSize / 3,
+            this.foodColor
+          );
         }
       }
     }
