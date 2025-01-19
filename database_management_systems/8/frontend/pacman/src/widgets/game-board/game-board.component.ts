@@ -1,30 +1,9 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {map} from "../../helpers/map";
+import { Pacman } from '../../helpers/pacman';
+import {oneBlockSize, wallOffset, wallSpaceWidth} from "../../helpers/map-constants";
 
-let map: number[][] = [
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
-  [1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1],
-  [1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1],
-  [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
-  [1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1],
-  [1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1],
-  [1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1],
-  [0, 0, 0, 0, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 0, 0, 0, 0],
-  [1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 2, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1],
-  [2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2],
-  [1, 1, 1, 1, 1, 2, 1, 2, 1, 2, 2, 2, 1, 2, 1, 2, 1, 1, 1, 1, 1],
-  [0, 0, 0, 0, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 0, 0, 0, 0],
-  [0, 0, 0, 0, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 0, 0, 0, 0],
-  [1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1],
-  [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
-  [1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1],
-  [1, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 1],
-  [1, 1, 2, 2, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 2, 2, 1, 1],
-  [1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1],
-  [1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1],
-  [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-];
+export let context: CanvasRenderingContext2D = {} as CanvasRenderingContext2D;
 
 @Component({
   selector: 'app-game-board',
@@ -36,11 +15,13 @@ let map: number[][] = [
 export class GameBoardComponent implements AfterViewInit {
   @ViewChild('myCanvas', {static: false}) canvas: ElementRef = {} as ElementRef;
 
-  context: CanvasRenderingContext2D = {} as CanvasRenderingContext2D;
-
-  oneBlockSize = 35;
-  wallSpaceWidth = this.oneBlockSize / 1.6;
-  wallOffset = (this.oneBlockSize - this.wallSpaceWidth) / 2;
+  pacman: Pacman = new Pacman(
+    oneBlockSize,
+    oneBlockSize,
+    oneBlockSize,
+    oneBlockSize,
+    oneBlockSize * 5
+  )
 
   wallColor: string = '#473cdd'
   innerColor: string = '#0a0502'
@@ -50,13 +31,24 @@ export class GameBoardComponent implements AfterViewInit {
   mapHeight = map.length;
 
   ngAfterViewInit(): void {
-    this.context = this.canvas.nativeElement.getContext('2d');
-    this.drawElements();
+    context = this.canvas.nativeElement.getContext('2d');
+    setInterval(() => {
+      this.startGameLoop();
+    }, 1000)
+  }
+
+  startGameLoop() {
+    const loop = () => {
+      this.drawElements(); // Перерисовка карты
+      this.pacman.draw();  // Отрисовка Pacman
+      requestAnimationFrame(loop); // Запрос следующего кадра
+    };
+    loop(); // Запуск цикла
   }
 
   createRect(x: number, y: number, width: number, height: number, color: string) {
-    this.context.fillStyle = color;
-    this.context.fillRect(
+    context.fillStyle = color;
+    context.fillRect(
       x,
       y,
       width,
@@ -69,62 +61,64 @@ export class GameBoardComponent implements AfterViewInit {
       for (let j = 0; j < map[0].length; j++) {
         if (map[i][j] == 1) {
           this.createRect(
-            j * this.oneBlockSize,
-            i * this.oneBlockSize,
-            this.oneBlockSize,
-            this.oneBlockSize,
+            j * oneBlockSize,
+            i * oneBlockSize,
+            oneBlockSize,
+            oneBlockSize,
             this.wallColor,
           )
           if (j > 0 && map[i][j - 1] == 1) {
             this.createRect(
-              j * this.oneBlockSize,
-              i * this.oneBlockSize + this.wallOffset,
-              this.wallSpaceWidth + this.wallOffset,
-              this.wallSpaceWidth,
+              j * oneBlockSize,
+              i * oneBlockSize + wallOffset,
+              wallSpaceWidth + wallOffset,
+              wallSpaceWidth,
               this.innerColor
             );
           }
 
           if (j < map[0].length - 1 && map[i][j + 1] == 1) {
             this.createRect(
-              j * this.oneBlockSize + this.wallOffset,
-              i * this.oneBlockSize + this.wallOffset,
-              this.wallSpaceWidth + this.wallOffset,
-              this.wallSpaceWidth,
+              j * oneBlockSize + wallOffset,
+              i * oneBlockSize + wallOffset,
+              wallSpaceWidth + wallOffset,
+              wallSpaceWidth,
               this.innerColor
             );
           }
 
           if (i < map.length - 1 && map[i + 1][j] == 1) {
             this.createRect(
-              j * this.oneBlockSize + this.wallOffset,
-              i * this.oneBlockSize + this.wallOffset,
-              this.wallSpaceWidth,
-              this.wallSpaceWidth + this.wallOffset,
+              j * oneBlockSize + wallOffset,
+              i * oneBlockSize + wallOffset,
+              wallSpaceWidth,
+              wallSpaceWidth + wallOffset,
               this.innerColor
             );
           }
 
           if (i > 0 && map[i - 1][j] == 1) {
             this.createRect(
-              j * this.oneBlockSize + this.wallOffset,
-              i * this.oneBlockSize,
-              this.wallSpaceWidth,
-              this.wallSpaceWidth + this.wallOffset,
+              j * oneBlockSize + wallOffset,
+              i * oneBlockSize,
+              wallSpaceWidth,
+              wallSpaceWidth + wallOffset,
               this.innerColor
             );
           }
         }
         if (map[i][j] == 2) {
           this.createRect(
-            j * this.oneBlockSize + this.oneBlockSize / 3,
-            i * this.oneBlockSize + this.oneBlockSize / 3,
-            this.oneBlockSize / 3,
-            this.oneBlockSize / 3,
+            j * oneBlockSize + oneBlockSize / 3,
+            i * oneBlockSize + oneBlockSize / 3,
+            oneBlockSize / 3,
+            oneBlockSize / 3,
             this.foodColor
           );
         }
       }
     }
   }
+
+  protected readonly oneBlockSize = oneBlockSize;
 }
