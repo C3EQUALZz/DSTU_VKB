@@ -1,7 +1,7 @@
 import {DIRECTION_LEFT, DIRECTION_RIGHT, DIRECTION_UP, DIRECTION_BOTTOM} from "./directions";
 import {oneBlockSize} from "./map-constants";
 import {map} from "./map";
-import {context} from "../widgets/game-board/game-board.component";
+import {context, getScore, score, setScore} from "../widgets/game-board/game-board.component";
 
 let pacmanFrames = new Image()
 pacmanFrames.src = '/animations/animations.gif'
@@ -46,7 +46,8 @@ export class Pacman {
           this.getMapY() == i
         ) {
           map[i][j] = 0;
-
+          let newScore = getScore() + 1;
+          setScore(newScore);
         }
       }
     }

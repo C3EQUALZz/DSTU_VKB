@@ -7,6 +7,14 @@ import {DIRECTION_BOTTOM, DIRECTION_LEFT, DIRECTION_RIGHT, DIRECTION_UP} from ".
 export let context: CanvasRenderingContext2D = {} as CanvasRenderingContext2D;
 export let score: number = 0;
 
+export function setScore(newScore: number) {
+  score = newScore;
+}
+
+export function getScore(): number {
+  return score;
+}
+
 @Component({
   selector: 'app-game-board',
   standalone: true,
@@ -16,7 +24,7 @@ export let score: number = 0;
 })
 export class GameBoardComponent implements AfterViewInit {
   @ViewChild('myCanvas', {static: false}) canvas: ElementRef = {} as ElementRef;
-
+  score: number = getScore();
   pacman: Pacman = new Pacman(
     oneBlockSize,
     oneBlockSize,
@@ -39,6 +47,7 @@ export class GameBoardComponent implements AfterViewInit {
       this.pacman.draw();
       this.pacman.moveProcess();
       this.pacman.eat();
+      this.score = getScore();
     }, 100)
 
     window.addEventListener('keydown', (event) => {
