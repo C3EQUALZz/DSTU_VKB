@@ -37,7 +37,19 @@ export class Pacman {
       this.moveBackwards()
     }
   }
-  eat() {}
+  eat() {
+    for (let i = 0; i < map.length; i++) {
+      for (let j = 0; j < map[0].length; j++) {
+        if (
+          map[i][j] == 2 &&
+          this.getMapX() == j &&
+          this.getMapY() == i
+        ) {
+          map[i][j] = 0;
+        }
+      }
+    }
+  }
   moveBackwards() {
     switch (this.direction) {
       case DIRECTION_RIGHT: this.x -= this.speed; break;
@@ -59,30 +71,31 @@ export class Pacman {
   checkCollisions(): boolean {
     return map[this.getMapY()][this.getMapX()] == 1
       || map[this.getMapYRightSide()][this.getMapX()] == 1
-      || map[this.getMapX()][this.getMapYRightSide()] == 1
-      || map[this.getMapXRightSide()][this.getMapYRightSide()] == 1;
-
+      || map[this.getMapY()][this.getMapXRightSide()] == 1
+      || map[this.getMapYRightSide()][this.getMapXRightSide()] == 1;
   }
   checkGhostCollisions() {}
   changeDirectionIfPossible() {
-    if (this.direction == this.nextDirection) { return }
-
+    if (this.direction == this.nextDirection) return;
+    let tempDirection = this.direction;
     this.direction = this.nextDirection;
     this.moveForwards();
     if (this.checkCollisions()) {
       this.moveBackwards();
+      this.direction = tempDirection;
+    } else {
+      this.moveBackwards();
     }
   }
   changeAnimation() {
-    this.currentFrame = this.currentFrame == this.countFrame ? 1 : this.currentFrame + 1;
-
+    this.currentFrame = (this.currentFrame + 1) % this.countFrame;
   }
   draw() {
     context.save()
-    context.translate(this.x + oneBlockSize, this.y + oneBlockSize / 2);
+    context.translate(this.x + oneBlockSize / 2, this.y + oneBlockSize / 2);
     context.rotate((this.direction * 90 * Math.PI) / 180);
 
-    context.translate(-this.x + oneBlockSize / 2, -this.y + oneBlockSize / 2);
+    context.translate(-this.x - oneBlockSize / 2, -this.y - oneBlockSize / 2);
 
     context.drawImage(
       pacmanFrames,
@@ -100,18 +113,18 @@ export class Pacman {
   }
 
   getMapX() {
-    return this.x / oneBlockSize;
+    return parseInt(String(this.x / oneBlockSize));
   }
 
   getMapY() {
-    return this.y / oneBlockSize;
+    return parseInt(String(this.y / oneBlockSize));
   }
 
   getMapXRightSide() {
-    return (this.x + 0.9999 * oneBlockSize) / oneBlockSize;
+    return parseInt(String((this.x + 0.99 * oneBlockSize) / oneBlockSize));
   }
 
   getMapYRightSide() {
-    return (this.y + 0.9999 * oneBlockSize) / oneBlockSize;
+    return parseInt(String((this.y + 0.99 * oneBlockSize) / oneBlockSize));
   }
 }

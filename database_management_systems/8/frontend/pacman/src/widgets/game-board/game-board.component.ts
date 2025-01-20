@@ -18,7 +18,7 @@ export class GameBoardComponent implements AfterViewInit {
 
   pacman: Pacman = new Pacman(
     oneBlockSize,
-    0,
+    oneBlockSize,
     oneBlockSize,
     oneBlockSize,
     oneBlockSize / 5
@@ -34,8 +34,10 @@ export class GameBoardComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     context = this.canvas.nativeElement.getContext('2d');
     setInterval(() => {
-      this.startGameLoop();
+      this.drawElements();
+      this.pacman.draw();
       this.pacman.moveProcess();
+      this.pacman.eat();
     }, 100)
 
     window.addEventListener('keydown', (event) => {
@@ -70,6 +72,7 @@ export class GameBoardComponent implements AfterViewInit {
   }
 
   drawElements() {
+    context.clearRect(0, 0, this.mapWidth * oneBlockSize, this.mapHeight * oneBlockSize);
     for (let i = 0; i < map.length; i++) {
       for (let j = 0; j < map[0].length; j++) {
         if (map[i][j] == 1) {
