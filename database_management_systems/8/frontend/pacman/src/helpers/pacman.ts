@@ -7,7 +7,7 @@ let pacmanFrames = new Image()
 pacmanFrames.src = '/animations/animations.gif'
 
 export class Pacman {
-  x: number; y: number; height: number; width: number; speed: number; direction: number; currentFrame: number; countFrame: number
+  x: number; y: number; height: number; width: number; speed: number; direction: number; currentFrame: number; countFrame: number; nextDirection: number;
   constructor(
     x: number,
     y: number,
@@ -21,6 +21,7 @@ export class Pacman {
     this.width = width;
     this.speed = speed;
     this.direction = DIRECTION_RIGHT;
+    this.nextDirection = DIRECTION_RIGHT;
     this.currentFrame = 1;
     this.countFrame = 7
 
@@ -63,14 +64,22 @@ export class Pacman {
 
   }
   checkGhostCollisions() {}
-  changeDirectionIfPossible() {}
+  changeDirectionIfPossible() {
+    if (this.direction == this.nextDirection) { return }
+
+    this.direction = this.nextDirection;
+    this.moveForwards();
+    if (this.checkCollisions()) {
+      this.moveBackwards();
+    }
+  }
   changeAnimation() {
     this.currentFrame = this.currentFrame == this.countFrame ? 1 : this.currentFrame + 1;
 
   }
   draw() {
     context.save()
-    context.translate(this.x + oneBlockSize / 2, this.y + oneBlockSize / 2);
+    context.translate(this.x + oneBlockSize, this.y + oneBlockSize / 2);
     context.rotate((this.direction * 90 * Math.PI) / 180);
 
     context.translate(-this.x + oneBlockSize / 2, -this.y + oneBlockSize / 2);

@@ -2,6 +2,7 @@ import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {map} from "../../helpers/map";
 import { Pacman } from '../../helpers/pacman';
 import {oneBlockSize, wallOffset, wallSpaceWidth} from "../../helpers/map-constants";
+import {DIRECTION_BOTTOM, DIRECTION_LEFT, DIRECTION_RIGHT, DIRECTION_UP} from "../../helpers/directions";
 
 export let context: CanvasRenderingContext2D = {} as CanvasRenderingContext2D;
 
@@ -17,10 +18,10 @@ export class GameBoardComponent implements AfterViewInit {
 
   pacman: Pacman = new Pacman(
     oneBlockSize,
+    0,
     oneBlockSize,
     oneBlockSize,
-    oneBlockSize,
-    oneBlockSize * 5
+    oneBlockSize / 5
   )
 
   wallColor: string = '#473cdd'
@@ -34,7 +35,19 @@ export class GameBoardComponent implements AfterViewInit {
     context = this.canvas.nativeElement.getContext('2d');
     setInterval(() => {
       this.startGameLoop();
-    }, 1000)
+      this.pacman.moveProcess();
+    }, 100)
+
+    window.addEventListener('keydown', (event) => {
+      let k = event.keyCode;
+
+      setTimeout(() => {
+        if (k == 37 || k == 65) { this.pacman.nextDirection = DIRECTION_LEFT } // left
+        else if (k == 38 || k == 87) { this.pacman.nextDirection = DIRECTION_UP } // up
+        else if (k == 39 || k == 68) { this.pacman.nextDirection = DIRECTION_RIGHT } // right
+        else if (k == 40 || k == 83) { this.pacman.nextDirection = DIRECTION_BOTTOM } // bottom
+      }, 1)
+    })
   }
 
   startGameLoop() {
