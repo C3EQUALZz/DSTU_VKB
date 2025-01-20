@@ -1,8 +1,18 @@
 .game__board__container {
-  display: grid;
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100vw;
   height: 100vh;
   background: var(--black-color);
+
+  .score__container {
+    color: white;
+    font-size: 30px;
+    font-family: "BalAstral", sans-serif;
+    font-weight: bold;
+    left: 0;
+  }
 }

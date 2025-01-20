@@ -13,7 +13,7 @@ export class Pacman {
     y: number,
     height: number,
     width: number,
-    speed: number
+    speed: number,
   ) {
     this.x = x;
     this.y = y;
@@ -46,6 +46,7 @@ export class Pacman {
           this.getMapY() == i
         ) {
           map[i][j] = 0;
+
         }
       }
     }

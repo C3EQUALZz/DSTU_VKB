@@ -5,6 +5,7 @@ import {oneBlockSize, wallOffset, wallSpaceWidth} from "../../helpers/map-consta
 import {DIRECTION_BOTTOM, DIRECTION_LEFT, DIRECTION_RIGHT, DIRECTION_UP} from "../../helpers/directions";
 
 export let context: CanvasRenderingContext2D = {} as CanvasRenderingContext2D;
+export let score: number = 0;
 
 @Component({
   selector: 'app-game-board',
@@ -21,7 +22,7 @@ export class GameBoardComponent implements AfterViewInit {
     oneBlockSize,
     oneBlockSize,
     oneBlockSize,
-    oneBlockSize / 5
+    oneBlockSize / 2
   )
 
   wallColor: string = '#473cdd'
@@ -50,15 +51,6 @@ export class GameBoardComponent implements AfterViewInit {
         else if (k == 40 || k == 83) { this.pacman.nextDirection = DIRECTION_BOTTOM } // bottom
       }, 1)
     })
-  }
-
-  startGameLoop() {
-    const loop = () => {
-      this.drawElements(); // Перерисовка карты
-      this.pacman.draw();  // Отрисовка Pacman
-      requestAnimationFrame(loop); // Запрос следующего кадра
-    };
-    loop(); // Запуск цикла
   }
 
   createRect(x: number, y: number, width: number, height: number, color: string) {
