@@ -13,7 +13,7 @@ from typing import (
 )
 from uuid import uuid4
 
-from app.domain.exceptions import CastException
+from app.exceptions.domain import CastException
 
 
 @dataclass(eq=False)

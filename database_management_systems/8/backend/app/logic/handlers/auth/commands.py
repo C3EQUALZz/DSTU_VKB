@@ -1,9 +1,9 @@
 from app.domain.entities.user import UserEntity
-from app.infrastructure.exceptions import UserNotFoundException
+from app.exceptions.infrastructure import UserNotFoundException
+from app.exceptions.logic import InvalidPasswordException
 from app.infrastructure.security.utils.coders import validate_password
 from app.infrastructure.services.users import UsersService
 from app.logic.commands.auth import VerifyUserCredentialsCommand
-from app.logic.exceptions import InvalidPasswordException
 from app.logic.handlers.auth.base import AuthCommandHandler
 
 

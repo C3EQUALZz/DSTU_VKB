@@ -30,6 +30,3 @@ class GetUserByIdCommand(AbstractCommand):
 
 @dataclass(frozen=True)
 class GetAllUsersCommand(AbstractCommand): ...
-
-
-

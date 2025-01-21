@@ -2,7 +2,7 @@ import bcrypt
 
 
 def hash_password(
-        password: str,
+    password: str,
 ) -> bytes:
     salt = bcrypt.gensalt()
     pwd_bytes: bytes = password.encode()
@@ -10,8 +10,8 @@ def hash_password(
 
 
 def validate_password(
-        password: str,
-        hashed_password: bytes,
+    password: str,
+    hashed_password: bytes,
 ) -> bool:
     return bcrypt.checkpw(
         password=password.encode(),

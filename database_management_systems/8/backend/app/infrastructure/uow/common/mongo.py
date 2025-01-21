@@ -37,10 +37,10 @@ class MotorAbstractUnitOfWork(AbstractUnitOfWork):
         return await super().__aenter__()
 
     async def __aexit__(
-            self,
-            exc_type: Optional[Type[BaseException]],
-            exc_value: Optional[BaseException],
-            traceback: Optional[TracebackException]
+        self,
+        exc_type: Optional[Type[BaseException]],
+        exc_value: Optional[BaseException],
+        traceback: Optional[TracebackException],
     ) -> None:
         """
         Commits or aborts the transaction based on whether an exception occurred.

@@ -1,9 +1,11 @@
 import os.path
 from abc import ABC
+from pathlib import Path
 
 from pydantic import (
     Field,
     MongoDsn,
+    RedisDsn,
 )
 from pydantic_settings import (
     BaseSettings,
@@ -18,7 +20,7 @@ class CommonSettings(BaseSettings, ABC):
     """
 
     model_config = SettingsConfigDict(
-        env_file=os.path.expanduser("database_management_systems/8/backend/.env"),
+        env_file=Path(__file__).resolve().parent.parent.parent / ".env",
         env_file_encoding="utf-8",
         extra="allow",
     )
@@ -40,11 +42,18 @@ class MongoSettings(CommonSettings):
     database_name: str = Field(alias="MONGO_DB_DATABASE_NAME")
     url: MongoDsn = Field(alias="MONGO_DB_URL")
 
+
 class RedisSettings(CommonSettings):
     host: str = Field(alias="REDIS_HOST")
     port: int = Field(alias="REDIS_PORT")
+    password: str = Field(alias="REDIS_PASSWORD")
+
+    @property
+    def url(self) -> RedisDsn:
+        return RedisDsn(f"redis://{self.host}:{self.port}/{self.password}")
 
 
 class Settings(CommonSettings):
     auth: AuthSettings = AuthSettings()
     database: MongoSettings = MongoSettings()
+    cache: RedisSettings = RedisSettings()

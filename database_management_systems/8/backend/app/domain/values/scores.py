@@ -2,11 +2,11 @@ from dataclasses import dataclass
 from typing import override
 from uuid import UUID
 
-from app.domain.exceptions import (
+from app.domain.values.base import BaseValueObject
+from app.exceptions.domain import (
     EmptyScoreException,
     InvalidOIDException,
 )
-from app.domain.values.base import BaseValueObject
 
 
 @dataclass(frozen=True)

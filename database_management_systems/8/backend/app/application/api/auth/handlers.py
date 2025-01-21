@@ -22,13 +22,13 @@ from app.core.types.handlers import (
     EventHandlerMapping,
 )
 from app.domain.entities.user import UserEntity
-from app.exceptions import ApplicationException
-from app.infrastructure.exceptions import UserNotFoundException
+from app.exceptions.base import ApplicationException
+from app.exceptions.infrastructure import UserNotFoundException
+from app.exceptions.logic import InvalidPasswordException
 from app.infrastructure.uow.users.base import UsersUnitOfWork
 from app.logic.bootstrap import Bootstrap
 from app.logic.commands.auth import VerifyUserCredentialsCommand
 from app.logic.commands.users import GetUserByIdCommand
-from app.logic.exceptions import InvalidPasswordException
 from app.logic.message_bus import MessageBus
 from authx import (
     AuthX,
@@ -42,11 +42,7 @@ from dishka import FromDishka
 from dishka.integrations.fastapi import DishkaRoute
 
 
-router = APIRouter(
-    prefix="/auth",
-    tags=["auth"],
-    route_class=DishkaRoute
-)
+router = APIRouter(prefix="/auth", tags=["auth"], route_class=DishkaRoute)
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/auth/login/")
 
@@ -59,21 +55,19 @@ logger = logging.getLogger(__name__)
     summary="Endpoint for user logging",
     responses={
         status.HTTP_404_NOT_FOUND: {"model": UserNotFoundException},
-        status.HTTP_401_UNAUTHORIZED: {"model": InvalidPasswordException}
-    }
+        status.HTTP_401_UNAUTHORIZED: {"model": InvalidPasswordException},
+    },
 )
 async def login(
-        form: Annotated[OAuth2PasswordRequestForm, Depends()],
-        security: FromDishka[AuthX],
-        uow: FromDishka[UsersUnitOfWork],
-        events: FromDishka[EventHandlerMapping],
-        commands: FromDishka[CommandHandlerMapping]
+    form: Annotated[OAuth2PasswordRequestForm, Depends()],
+    security: FromDishka[AuthX],
+    uow: FromDishka[UsersUnitOfWork],
+    events: FromDishka[EventHandlerMapping],
+    commands: FromDishka[CommandHandlerMapping],
 ) -> TokenRequest:
     try:
         bootstrap: Bootstrap = Bootstrap(
-            uow=uow,
-            events_handlers_for_injection=events,
-            commands_handlers_for_injection=commands
+            uow=uow, events_handlers_for_injection=events, commands_handlers_for_injection=commands
         )
 
         messagebus: MessageBus = await bootstrap.get_messagebus()
@@ -82,7 +76,7 @@ async def login(
 
         return TokenRequest(
             access_token=security.create_access_token(uid=user.oid),
-            refresh_token=security.create_refresh_token(uid=user.oid)
+            refresh_token=security.create_refresh_token(uid=user.oid),
         )
 
     except ApplicationException as e:
@@ -95,14 +89,10 @@ async def login(
     status_code=status.HTTP_200_OK,
     response_model_exclude_none=True,
     responses={
-        status.HTTP_401_UNAUTHORIZED: {"model": RevokedTokenError},
-    }
-
+        #  status.HTTP_401_UNAUTHORIZED: {"model": RevokedTokenError},
+    },
 )
-async def refresh(
-        security: FromDishka[AuthX],
-        request: Request
-) -> TokenRequest:
+async def refresh(security: FromDishka[AuthX], request: Request) -> TokenRequest:
     try:
         refresh_payload: TokenPayload = await security.refresh_token_required(request)
         return TokenRequest(access_token=security.create_access_token(refresh_payload.sub))
@@ -114,24 +104,19 @@ async def refresh(
         raise HTTPException(status_code=e.status, detail=e.message)
 
 
-@router.get(
-    '/me/',
-    dependencies=[Depends(oauth2_scheme)]
-)
+@router.get("/me/", dependencies=[Depends(oauth2_scheme)])
 async def get_me(
-        security: FromDishka[AuthX],
-        request: Request,
-        uow: FromDishka[UsersUnitOfWork],
-        events: FromDishka[EventHandlerMapping],
-        commands: FromDishka[CommandHandlerMapping]
+    security: FromDishka[AuthX],
+    request: Request,
+    uow: FromDishka[UsersUnitOfWork],
+    events: FromDishka[EventHandlerMapping],
+    commands: FromDishka[CommandHandlerMapping],
 ) -> UserSchemeResponse:
     try:
         access_token: TokenPayload = await security.access_token_required(request)
 
         bootstrap: Bootstrap = Bootstrap(
-            uow=uow,
-            events_handlers_for_injection=events,
-            commands_handlers_for_injection=commands
+            uow=uow, events_handlers_for_injection=events, commands_handlers_for_injection=commands
         )
 
         messagebus: MessageBus = await bootstrap.get_messagebus()
@@ -144,4 +129,3 @@ async def get_me(
     except ApplicationException as e:
         logger.error(e)
         raise HTTPException(status_code=e.status, detail=e.message)
-

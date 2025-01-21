@@ -31,8 +31,8 @@ class Bootstrap:
     def __init__(
         self,
         uow: AbstractUnitOfWork,
-        events_handlers_for_injection: EventHandlerMapping, # type: ignore
-        commands_handlers_for_injection: CommandHandlerMapping, # type: ignore
+        events_handlers_for_injection: EventHandlerMapping,  # type: ignore
+        commands_handlers_for_injection: CommandHandlerMapping,  # type: ignore
         dependencies: Optional[Dict[str, Any]] = None,
     ) -> None:
         self._uow = uow

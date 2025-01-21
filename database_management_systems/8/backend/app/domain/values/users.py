@@ -2,7 +2,8 @@ import re
 from dataclasses import dataclass
 from typing import override
 
-from app.domain.exceptions import (
+from app.domain.values.base import BaseValueObject
+from app.exceptions.domain import (
     EmptyEmailException,
     EmptyPasswordException,
     EmptyUsernameException,
@@ -10,7 +11,6 @@ from app.domain.exceptions import (
     InvalidPasswordLengthException,
     InvalidUsernameLengthException,
 )
-from app.domain.values.base import BaseValueObject
 
 
 @dataclass(frozen=True)

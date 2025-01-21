@@ -1,18 +1,32 @@
 from typing import List
 
-from dishka import FromDishka
-from dishka.integrations.fastapi import DishkaRoute
-from fastapi import APIRouter, HTTPException
+from fastapi import (
+    APIRouter,
+    HTTPException,
+)
 from starlette import status
 
-from app.application.api.scores.schemas import CreateScoreSchemeRequest, ScoreSchemeResponse
-from app.core.types.handlers import EventHandlerMapping, CommandHandlerMapping
-from app.exceptions import ApplicationException
+from app.application.api.scores.schemas import (
+    CreateScoreSchemeRequest,
+    ScoreSchemeResponse,
+)
+from app.core.types.handlers import (
+    CommandHandlerMapping,
+    EventHandlerMapping,
+)
+from app.core.utils.cache import cache
+from app.exceptions.base import ApplicationException
 from app.infrastructure.uow.scores.base import ScoresUnitOfWork
 from app.logic.bootstrap import Bootstrap
-from app.logic.commands.scores import CreateScoreCommand, DeleteScoreCommand
-from app.logic.commands.scores import GetScoreByIdCommand
+from app.logic.commands.scores import (
+    CreateScoreCommand,
+    DeleteScoreCommand,
+    GetScoreByIdCommand,
+)
 from app.logic.message_bus import MessageBus
+from dishka import FromDishka
+from dishka.integrations.fastapi import DishkaRoute
+
 
 router = APIRouter(
     prefix="/scores",
@@ -24,22 +38,18 @@ router = APIRouter(
 @router.post(
     "/",
     status_code=status.HTTP_201_CREATED,
-    responses={
-
-    },
+    responses={},
     summary="Creates or adds a new score for the player",
 )
 async def create_score(
-        scheme: CreateScoreSchemeRequest,
-        uow: FromDishka[ScoresUnitOfWork],
-        events: FromDishka[EventHandlerMapping],
-        commands: FromDishka[CommandHandlerMapping]
+    scheme: CreateScoreSchemeRequest,
+    uow: FromDishka[ScoresUnitOfWork],
+    events: FromDishka[EventHandlerMapping],
+    commands: FromDishka[CommandHandlerMapping],
 ) -> ScoreSchemeResponse:
     try:
         bootstrap: Bootstrap = Bootstrap(
-            uow=uow,
-            events_handlers_for_injection=events,
-            commands_handlers_for_injection=commands
+            uow=uow, events_handlers_for_injection=events, commands_handlers_for_injection=commands
         )
 
         messagebus: MessageBus = await bootstrap.get_messagebus()
@@ -59,12 +69,11 @@ async def create_score(
     summary="Gets all scores for each player",
 )
 async def get_all_scores(
-        user_oid: str,
-        uow: FromDishka[ScoresUnitOfWork],
-        events: FromDishka[EventHandlerMapping],
-        commands: FromDishka[CommandHandlerMapping],
-) -> List[ScoreSchemeResponse]:
-    ...
+    user_oid: str,
+    uow: FromDishka[ScoresUnitOfWork],
+    events: FromDishka[EventHandlerMapping],
+    commands: FromDishka[CommandHandlerMapping],
+) -> List[ScoreSchemeResponse]: ...
 
 
 @router.get(
@@ -73,17 +82,16 @@ async def get_all_scores(
     responses={},
     summary="Gets a score by his id",
 )
+@cache(key_prefix="{score_id}_scores_cache", resource_id_name="score_id", expiration=60)
 async def get_score_by_id(
-        score_id: str,
-        uow: FromDishka[ScoresUnitOfWork],
-        events: FromDishka[EventHandlerMapping],
-        commands: FromDishka[CommandHandlerMapping]
+    score_id: str,
+    uow: FromDishka[ScoresUnitOfWork],
+    events: FromDishka[EventHandlerMapping],
+    commands: FromDishka[CommandHandlerMapping],
 ) -> ScoreSchemeResponse:
     try:
         bootstrap: Bootstrap = Bootstrap(
-            uow=uow,
-            events_handlers_for_injection=events,
-            commands_handlers_for_injection=commands
+            uow=uow, events_handlers_for_injection=events, commands_handlers_for_injection=commands
         )
 
         messagebus: MessageBus = await bootstrap.get_messagebus()
@@ -102,8 +110,8 @@ async def get_score_by_id(
     responses={},
     summary="Updates a score by his id",
 )
-async def update_score(score_id: str):
-    ...
+@cache("{score_id}_scores_cache", resource_id_name="score_id", pattern_to_invalidate_extra=["{score_id}_scores:*"])
+async def update_score(score_id: str): ...
 
 
 @router.delete(
@@ -113,16 +121,14 @@ async def update_score(score_id: str):
     summary="Deletes a score by his id",
 )
 async def delete_score(
-        score_id: str,
-        uow: FromDishka[ScoresUnitOfWork],
-        events: FromDishka[EventHandlerMapping],
-        commands: FromDishka[CommandHandlerMapping]
+    score_id: str,
+    uow: FromDishka[ScoresUnitOfWork],
+    events: FromDishka[EventHandlerMapping],
+    commands: FromDishka[CommandHandlerMapping],
 ) -> None:
     try:
         bootstrap: Bootstrap = Bootstrap(
-            uow=uow,
-            events_handlers_for_injection=events,
-            commands_handlers_for_injection=commands
+            uow=uow, events_handlers_for_injection=events, commands_handlers_for_injection=commands
         )
 
         messagebus: MessageBus = await bootstrap.get_messagebus()
@@ -141,5 +147,4 @@ async def delete_score(
     responses={},
     summary="Gets a user's score by his id",
 )
-async def get_user_score(user_id: str):
-    ...
+async def get_user_score(user_id: str): ...

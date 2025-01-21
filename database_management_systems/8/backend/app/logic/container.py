@@ -8,6 +8,8 @@ from app.core.types.handlers import (
     CommandHandlerMapping,
     EventHandlerMapping,
 )
+from app.infrastructure.uow.scores.base import ScoresUnitOfWork
+from app.infrastructure.uow.scores.mongo import MotorScoresUnitOfWork
 from app.infrastructure.uow.users.base import UsersUnitOfWork
 from app.infrastructure.uow.users.mongo import MotorUsersUnitOfWork
 from app.logic.commands.auth import VerifyUserCredentialsCommand
@@ -53,6 +55,10 @@ from dishka import (
     Scope,
 )
 from motor.motor_asyncio import AsyncIOMotorClient
+from redis.asyncio import (
+    ConnectionPool,
+    Redis,
+)
 
 
 logger = logging.getLogger(__name__)
@@ -64,14 +70,24 @@ class AuthProvider(Provider):
     @provide(scope=Scope.APP)
     async def get_config(self, settings: Settings) -> AuthXConfig:
         return AuthXConfig(
-            JWT_ALGORITHM="RS256",
-            JWT_PRIVATE_KEY=settings.auth.private_key,
-            JWT_PUBLIC_KEY=settings.auth.public_key
+            JWT_ALGORITHM="RS256", JWT_PRIVATE_KEY=settings.auth.private_key, JWT_PUBLIC_KEY=settings.auth.public_key
         )
 
     @provide(scope=Scope.APP)
     async def get_security(self, config: AuthXConfig) -> AuthX:
         return AuthX(config=config)
+
+
+class RedisProvider(Provider):
+    settings = from_context(provides=Settings, scope=Scope.APP)
+
+    @provide(scope=Scope.APP)
+    async def get_connection_pool(self, settings: Settings) -> ConnectionPool:
+        return ConnectionPool.from_url(str(settings.cache.url))
+
+    @provide(scope=Scope.APP)
+    async def get_client(self, pool: ConnectionPool) -> Redis:
+        return Redis.from_pool(pool)
 
 
 class HandlerProvider(Provider):
@@ -80,19 +96,22 @@ class HandlerProvider(Provider):
         """
         Here you have to link commands and command handlers for future inject in Bootstrap
         """
-        return cast(CommandHandlerMapping, {
-            CreateUserCommand: CreateUserCommandHandler,
-            GetAllUsersCommand: GetAllUsersCommandHandler,
-            GetUserByIdCommand: GetUserByIdCommandHandler,
-            UpdateUserCommand: UpdateUserCommandHandler,
-            VerifyUserCredentialsCommand: VerifyUserCredentialsCommandHandler,
-            CreateScoreCommand: CreateScoreCommandHandler,
-            GetAllScoresCommand: GetAllScoresCommandHandler,
-            GetScoreByIdCommand: GetScoreByIdCommandHandler,
-            UpdateScoreCommand: UpdateScoreCommandHandler,
-            DeleteScoreCommand: DeleteScoreCommandHandler,
-            GetAllUserScoresCommand: GetAllUserScoresCommandHandler
-        })
+        return cast(
+            CommandHandlerMapping,
+            {
+                CreateUserCommand: CreateUserCommandHandler,
+                GetAllUsersCommand: GetAllUsersCommandHandler,
+                GetUserByIdCommand: GetUserByIdCommandHandler,
+                UpdateUserCommand: UpdateUserCommandHandler,
+                VerifyUserCredentialsCommand: VerifyUserCredentialsCommandHandler,
+                CreateScoreCommand: CreateScoreCommandHandler,
+                GetAllScoresCommand: GetAllScoresCommandHandler,
+                GetScoreByIdCommand: GetScoreByIdCommandHandler,
+                UpdateScoreCommand: UpdateScoreCommandHandler,
+                DeleteScoreCommand: DeleteScoreCommandHandler,
+                GetAllUserScoresCommand: GetAllUserScoresCommandHandler,
+            },
+        )
 
     @provide(scope=Scope.APP)
     async def get_mapping_event_and_event_handlers(self) -> EventHandlerMapping:
@@ -118,11 +137,16 @@ class AppProvider(Provider):
     async def get_users_motor_uow(self, settings: Settings, client: AsyncIOMotorClient[Any]) -> UsersUnitOfWork:
         return MotorUsersUnitOfWork(client=client, database_name=settings.database.database_name)
 
+    @provide(scope=Scope.APP)
+    async def get_scores_motor_uow(self, settings: Settings, client: AsyncIOMotorClient[Any]) -> ScoresUnitOfWork:
+        return MotorScoresUnitOfWork(client=client, database_name=settings.database.database_name)
+
 
 container = make_async_container(
     AppProvider(),
     HandlerProvider(),
     AuthProvider(),
+    RedisProvider(),
     context={
         Settings: Settings(),
     },

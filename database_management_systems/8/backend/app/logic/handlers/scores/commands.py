@@ -1,7 +1,7 @@
 from typing import List
 
 from app.domain.entities.score import ScoreEntity
-from app.infrastructure.exceptions import (
+from app.exceptions.infrastructure import (
     ScoreNotFoundException,
     UserNotFoundException,
 )

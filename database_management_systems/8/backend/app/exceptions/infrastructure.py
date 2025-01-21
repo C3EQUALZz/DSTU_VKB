@@ -2,7 +2,7 @@ from abc import ABC
 from dataclasses import dataclass
 from http import HTTPStatus
 
-from app.exceptions import ApplicationException
+from app.exceptions.base import ApplicationException
 
 
 @dataclass(eq=False)

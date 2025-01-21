@@ -4,7 +4,7 @@ from typing import (
 )
 
 from app.domain.entities.user import UserEntity
-from app.infrastructure.exceptions import (
+from app.exceptions.infrastructure import (
     AttributeException,
     UserNotFoundException,
 )
@@ -66,10 +66,7 @@ class UsersService:
             await uow.commit()
 
     async def check_existence(
-            self,
-            oid: Optional[str] = None,
-            email: Optional[str] = None,
-            name: Optional[str] = None
+        self, oid: Optional[str] = None, email: Optional[str] = None, name: Optional[str] = None
     ) -> bool:
         if not (oid or email or name):
             raise AttributeException("oid or email or name")

@@ -24,4 +24,3 @@ class UserSchemeResponse(BaseModel):
     @classmethod
     def from_entity(cls, entity: UserEntity) -> Self:
         return cls(name=entity.name.as_generic_type(), email=entity.email.as_generic_type(), oid=entity.oid)
-

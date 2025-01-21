@@ -1,9 +1,8 @@
 from datetime import datetime
 from typing import Self
 
-from pydantic import BaseModel
-
 from app.domain.entities.score import ScoreEntity
+from pydantic import BaseModel
 
 
 class CreateScoreSchemeRequest(BaseModel):
@@ -26,5 +25,5 @@ class ScoreSchemeResponse(BaseModel):
         return cls(
             value=entity.value.as_generic_type(),
             user_oid=entity.user_oid.as_generic_type(),
-            created_at=entity.created_at
+            created_at=entity.created_at,
         )

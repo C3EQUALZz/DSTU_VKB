@@ -5,7 +5,7 @@ from typing import (
 )
 
 from app.domain.entities.score import ScoreEntity
-from app.infrastructure.exceptions import (
+from app.exceptions.infrastructure import (
     AttributeException,
     ScoreNotFoundException,
 )
@@ -62,9 +62,9 @@ class ScoreService:
             await uow.commit()
 
     async def check_existence(
-            self,
-            oid: Optional[str] = None,
-            user_oid: Optional[str] = None,
+        self,
+        oid: Optional[str] = None,
+        user_oid: Optional[str] = None,
     ) -> bool:
         if not (oid or user_oid):
             raise AttributeException("oid or user_oid")

@@ -36,9 +36,4 @@ class ScoreEntity(BaseEntity):
         value: ScoreValue = ScoreValue(document["value"])
         created_at: datetime = document["created_at"]
 
-        return cls(
-            oid=oid,
-            user_oid=user_oid,
-            value=value,
-            created_at=created_at
-        )
+        return cls(oid=oid, user_oid=user_oid, value=value, created_at=created_at)

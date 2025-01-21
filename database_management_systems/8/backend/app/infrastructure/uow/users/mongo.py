@@ -15,12 +15,11 @@ class MotorUsersUnitOfWork(MotorAbstractUnitOfWork, UsersUnitOfWork):
         uow = await super().__aenter__()
 
         if self._database is None:
-            logger.error('Database does not exist')
-            raise RuntimeError('Database does not exist')
+            logger.error("Database does not exist")
+            raise RuntimeError("Database does not exist")
 
         self.users: UsersRepository = MotorUsersRepository(
-            collection=self._database.get_collection("users"),
-            session=self._session
+            collection=self._database.get_collection("users"), session=self._session
         )
 
         return uow

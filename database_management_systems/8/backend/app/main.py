@@ -1,19 +1,29 @@
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 
-from dishka.integrations.fastapi import setup_dishka
 from fastapi import FastAPI
 
 from app.application.api.auth import auth_router
 from app.application.api.scores import score_router
 from app.application.api.users import user_router
+from app.core.utils.cache import cache
 from app.logic.container import container
+from dishka.integrations.fastapi import setup_dishka
+from redis.asyncio import (
+    ConnectionPool,
+    Redis,
+)
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
+    cache.pool = await container.get(ConnectionPool)
+    cache.client = await container.get(Redis)
+
     yield
-    await app.state.dishka_container.close()
+
+    await cache.pool.aclose()
+    await app.state.dishka_container.close()  # type: ignore
 
 
 def create_app() -> FastAPI:
