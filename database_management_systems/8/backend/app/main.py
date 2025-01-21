@@ -1,18 +1,19 @@
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 
+from dishka.integrations.fastapi import setup_dishka
 from fastapi import FastAPI
 
 from app.application.api.auth import auth_router
+from app.application.api.scores import score_router
 from app.application.api.users import user_router
 from app.logic.container import container
-from dishka.integrations.fastapi import setup_dishka
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     yield
-    app.state.dishka_container.close()
+    await app.state.dishka_container.close()
 
 
 def create_app() -> FastAPI:
@@ -28,5 +29,6 @@ def create_app() -> FastAPI:
 
     app.include_router(user_router)
     app.include_router(auth_router)
+    app.include_router(score_router)
 
     return app

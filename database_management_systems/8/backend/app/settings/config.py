@@ -40,6 +40,10 @@ class MongoSettings(CommonSettings):
     database_name: str = Field(alias="MONGO_DB_DATABASE_NAME")
     url: MongoDsn = Field(alias="MONGO_DB_URL")
 
+class RedisSettings(CommonSettings):
+    host: str = Field(alias="REDIS_HOST")
+    port: int = Field(alias="REDIS_PORT")
+
 
 class Settings(CommonSettings):
     auth: AuthSettings = AuthSettings()

@@ -1,0 +1,26 @@
+services:
+  cache:
+    container_name: cache-pacman-backend-app
+    image: redis:6.2-alpine
+    restart: on-failure
+    ports:
+      - '${REDIS_PORT}:6379'
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli ping | grep PONG" ]
+      interval: 1s
+      timeout: 3s
+      retries: 5
+    command: [ "redis-server", "--appendonly yes", "--requirepass", "${REDIS_PASSWORD}" ]
+    volumes:
+      - cache:/data
+    env_file:
+      - ../.env
+    networks:
+      - backend
+
+volumes:
+  cache:
+
+networks:
+  backend:
+    driver: bridge

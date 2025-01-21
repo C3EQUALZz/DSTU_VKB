@@ -5,12 +5,13 @@ from dishka.integrations.fastapi import DishkaRoute
 from fastapi import APIRouter, HTTPException
 from starlette import status
 
-from app.application.api.scores.schemas import CreateScoreSchemeRequest, ScoreSchemeResponse, GetAllScoreSchemeRequest
+from app.application.api.scores.schemas import CreateScoreSchemeRequest, ScoreSchemeResponse
 from app.core.types.handlers import EventHandlerMapping, CommandHandlerMapping
 from app.exceptions import ApplicationException
 from app.infrastructure.uow.scores.base import ScoresUnitOfWork
 from app.logic.bootstrap import Bootstrap
-from app.logic.commands.scores import CreateScoreCommand
+from app.logic.commands.scores import CreateScoreCommand, DeleteScoreCommand
+from app.logic.commands.scores import GetScoreByIdCommand
 from app.logic.message_bus import MessageBus
 
 router = APIRouter(
@@ -48,20 +49,20 @@ async def create_score(
         return ScoreSchemeResponse.from_entity(messagebus.command_result)
 
     except ApplicationException as e:
-        raise HTTPException(status_code=e.status, detail=str(e))
+        raise HTTPException(status_code=e.status, detail=e.message)
 
 
 @router.get(
-    "/",
+    "/{user_oid}/",
     status_code=status.HTTP_200_OK,
     responses={},
     summary="Gets all scores for each player",
 )
 async def get_all_scores(
-        scheme: GetAllScoreSchemeRequest,
+        user_oid: str,
         uow: FromDishka[ScoresUnitOfWork],
         events: FromDishka[EventHandlerMapping],
-        commands: FromDishka[CommandHandlerMapping]
+        commands: FromDishka[CommandHandlerMapping],
 ) -> List[ScoreSchemeResponse]:
     ...
 
@@ -72,8 +73,27 @@ async def get_all_scores(
     responses={},
     summary="Gets a score by his id",
 )
-async def get_score_by_id(score_id: str):
-    ...
+async def get_score_by_id(
+        score_id: str,
+        uow: FromDishka[ScoresUnitOfWork],
+        events: FromDishka[EventHandlerMapping],
+        commands: FromDishka[CommandHandlerMapping]
+) -> ScoreSchemeResponse:
+    try:
+        bootstrap: Bootstrap = Bootstrap(
+            uow=uow,
+            events_handlers_for_injection=events,
+            commands_handlers_for_injection=commands
+        )
+
+        messagebus: MessageBus = await bootstrap.get_messagebus()
+
+        await messagebus.handle(GetScoreByIdCommand(oid=score_id))
+
+        return ScoreSchemeResponse.from_entity(messagebus.command_result)
+
+    except ApplicationException as e:
+        raise HTTPException(status_code=e.status, detail=e.message)
 
 
 @router.patch(
@@ -92,8 +112,27 @@ async def update_score(score_id: str):
     responses={},
     summary="Deletes a score by his id",
 )
-async def delete_score(score_id: str):
-    ...
+async def delete_score(
+        score_id: str,
+        uow: FromDishka[ScoresUnitOfWork],
+        events: FromDishka[EventHandlerMapping],
+        commands: FromDishka[CommandHandlerMapping]
+) -> None:
+    try:
+        bootstrap: Bootstrap = Bootstrap(
+            uow=uow,
+            events_handlers_for_injection=events,
+            commands_handlers_for_injection=commands
+        )
+
+        messagebus: MessageBus = await bootstrap.get_messagebus()
+
+        await messagebus.handle(DeleteScoreCommand(score_oid=score_id))
+
+        return messagebus.command_result
+
+    except ApplicationException as e:
+        raise HTTPException(status_code=e.status, detail=e.message)
 
 
 @router.get(
