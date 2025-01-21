@@ -1,132 +1,72 @@
-import {DIRECTION_LEFT, DIRECTION_RIGHT, DIRECTION_UP, DIRECTION_BOTTOM} from "./directions";
+import {gameMap} from "./gameMap";
+import {context, getScore, setScore} from "../widgets/game-board/game-board.component";
+import {Character} from "./character";
 import {oneBlockSize} from "./map-constants";
-import {map} from "./map";
-import {context, getScore, score, setScore} from "../widgets/game-board/game-board.component";
 
-let pacmanFrames = new Image()
-pacmanFrames.src = '/animations/animations.gif'
+let radius = oneBlockSize / 2;
+let isMouthOpening = true;
+let angle = 0; // Начальный угол для "рта"
 
-export class Pacman {
-  x: number; y: number; height: number; width: number; speed: number; direction: number; currentFrame: number; countFrame: number; nextDirection: number;
-  constructor(
-    x: number,
-    y: number,
-    height: number,
-    width: number,
-    speed: number,
-  ) {
-    this.x = x;
-    this.y = y;
-    this.height = height;
-    this.width = width;
-    this.speed = speed;
-    this.direction = DIRECTION_RIGHT;
-    this.nextDirection = DIRECTION_RIGHT;
-    this.currentFrame = 1;
-    this.countFrame = 7
+export class Pacman extends Character {
+
+  constructor(x: number, y: number, width: number, height: number, speed: number) {
+    super(x, y, width, height, speed);
 
     setInterval(() => {
-      this.changeAnimation();
-    }, 100)
+      this.updatePacman();
+    }, 30)
   }
 
-  moveProcess() {
-    this.changeDirectionIfPossible()
-    this.moveForwards()
-    if (this.checkCollisions()) {
-      this.moveBackwards()
-    }
-  }
   eat() {
-    for (let i = 0; i < map.length; i++) {
-      for (let j = 0; j < map[0].length; j++) {
+    for (let i = 0; i < gameMap.length; i++) {
+      for (let j = 0; j < gameMap[0].length; j++) {
         if (
-          map[i][j] == 2 &&
+          gameMap[i][j] == 2 &&
           this.getMapX() == j &&
           this.getMapY() == i
         ) {
-          map[i][j] = 0;
+          gameMap[i][j] = 0;
           let newScore = getScore() + 1;
           setScore(newScore);
         }
       }
     }
   }
-  moveBackwards() {
-    switch (this.direction) {
-      case DIRECTION_RIGHT: this.x -= this.speed; break;
-      case DIRECTION_UP: this.y += this.speed; break;
-      case DIRECTION_LEFT: this.x += this.speed; break;
-      case DIRECTION_BOTTOM: this.y -= this.speed; break;
-    }
-  }
 
-
-  moveForwards() {
-    switch (this.direction) {
-      case DIRECTION_RIGHT: this.x += this.speed; break;
-      case DIRECTION_UP: this.y -= this.speed; break;
-      case DIRECTION_LEFT: this.x -= this.speed; break;
-      case DIRECTION_BOTTOM: this.y += this.speed; break;
-    }
-  }
-  checkCollisions(): boolean {
-    return map[this.getMapY()][this.getMapX()] == 1
-      || map[this.getMapYRightSide()][this.getMapX()] == 1
-      || map[this.getMapY()][this.getMapXRightSide()] == 1
-      || map[this.getMapYRightSide()][this.getMapXRightSide()] == 1;
-  }
-  checkGhostCollisions() {}
-  changeDirectionIfPossible() {
-    if (this.direction == this.nextDirection) return;
-    let tempDirection = this.direction;
-    this.direction = this.nextDirection;
-    this.moveForwards();
-    if (this.checkCollisions()) {
-      this.moveBackwards();
-      this.direction = tempDirection;
-    } else {
-      this.moveBackwards();
-    }
-  }
-  changeAnimation() {
-    this.currentFrame = (this.currentFrame + 1) % this.countFrame;
-  }
   draw() {
-    context.save()
-    context.translate(this.x + oneBlockSize / 2, this.y + oneBlockSize / 2);
+    context.save();
+    context.translate(
+      this.x + oneBlockSize / 2,
+      this.y + oneBlockSize / 2
+    );
     context.rotate((this.direction * 90 * Math.PI) / 180);
+    context.translate(
+      -this.x - oneBlockSize / 2,
+      -this.y - oneBlockSize / 2
+    );
 
-    context.translate(-this.x - oneBlockSize / 2, -this.y - oneBlockSize / 2);
+    // Рассчитываем начальный и конечный углы дуги для "рта"
+    const startAngle = angle * Math.PI; // Начало рта
+    const endAngle = (2 - angle) * Math.PI; // Конец рта
 
-    context.drawImage(
-      pacmanFrames,
-      (this.currentFrame) * oneBlockSize,
-      0,
-      oneBlockSize,
-      oneBlockSize,
-      this.x,
-      this.y,
-      this.width,
-      this.height,
-    )
-
+    // Рисуем тело Пакмана
+    context.fillStyle = "#fdff00";
+    context.beginPath();
+    context.moveTo(this.x + radius, this.y + radius); // Начальная точка в центре круга
+    context.arc(this.x + radius, this.y + radius, radius, startAngle, endAngle); // Рисуем дугу
+    context.closePath();
+    context.fill();
     context.restore();
   }
 
-  getMapX() {
-    return parseInt(String(this.x / oneBlockSize));
-  }
-
-  getMapY() {
-    return parseInt(String(this.y / oneBlockSize));
-  }
-
-  getMapXRightSide() {
-    return parseInt(String((this.x + 0.99 * oneBlockSize) / oneBlockSize));
-  }
-
-  getMapYRightSide() {
-    return parseInt(String((this.y + 0.99 * oneBlockSize) / oneBlockSize));
+  updatePacman() {
+    // Анимация рта: открывание и закрывание
+    if (isMouthOpening) {
+      angle += 0.02;
+      if (angle >= 0.3) isMouthOpening = false;
+    } else {
+      angle -= 0.02;
+      if (angle <= 0) isMouthOpening = true;
+    }
   }
 }
