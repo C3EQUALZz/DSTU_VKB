@@ -23,6 +23,10 @@ cache:
 all:
 	$(DC) -f $(STORAGES_FILE) -f $(APP_FILE) -f $(CACHE_FILE) $(ENV) up --build -d
 
+.PHONY: all-down
+all-down:
+	$(DC) -f $(STORAGES_FILE) -f $(APP_FILE) -f $(CACHE_FILE) $(ENV) down
+
 .PHONY: app-down
 app-down:
 	$(DC) -f $(APP_FILE) ${ENV} down

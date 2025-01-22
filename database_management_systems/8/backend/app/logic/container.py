@@ -83,7 +83,7 @@ class RedisProvider(Provider):
 
     @provide(scope=Scope.APP)
     async def get_connection_pool(self, settings: Settings) -> ConnectionPool:
-        return ConnectionPool.from_url(str(settings.cache.url))
+        return ConnectionPool.from_url(str(settings.cache.url), encoding="utf8", decode_responses=True)
 
     @provide(scope=Scope.APP)
     async def get_client(self, pool: ConnectionPool) -> Redis:
