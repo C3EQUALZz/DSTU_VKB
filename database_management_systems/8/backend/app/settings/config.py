@@ -1,4 +1,3 @@
-import os.path
 from abc import ABC
 from pathlib import Path
 

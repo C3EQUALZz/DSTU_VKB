@@ -1,0 +1,31 @@
+global:
+  scrape_interval: 15s   # Как часто опрашивать все targets по умолчанию.
+  evaluation_interval: 15s # Как часто выполняются правила.
+  # scrape_timeout по умолчанию совпадает с scrape_interval.
+
+  # Метки, добавляемые ко всем метрикам.
+  external_labels:
+    monitor: 'prometheus-monitor'
+
+scrape_configs:
+
+- job_name: prometheus
+  honor_timestamps: true
+  scrape_interval: 15s
+  scrape_timeout: 10s
+  metrics_path: /metrics
+  scheme: http
+  follow_redirects: true
+  enable_http2: true
+  static_configs:
+  - targets:
+    - localhost:9090
+
+- job_name: 'fastapi'
+  scrape_interval: 10s
+  metrics_path: /metrics
+  static_configs:
+    - targets: ['pacman-app-backend:8000']
+
+storage:
+  retention: 15d
