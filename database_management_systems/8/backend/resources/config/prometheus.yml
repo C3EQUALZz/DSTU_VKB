@@ -26,6 +26,3 @@ scrape_configs:
   metrics_path: /metrics
   static_configs:
     - targets: ['pacman-app-backend:8000']
-
-storage:
-  retention: 15d

@@ -11,7 +11,7 @@ services:
       timeout: 5s
       retries: 3
     volumes:
-      - ../resources/config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ../resources/config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - prometheus_data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'

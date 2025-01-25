@@ -45,7 +45,7 @@ cache-down:
 	$(DC) -f $(CACHE_FILE) ${ENV} down
 
 .PHONY: metrics-down
-metrics:
+metrics-down:
 	$(DC) -f $(METRICS_FILE) $(ENV) down
 
 .PHONY: app-shell
