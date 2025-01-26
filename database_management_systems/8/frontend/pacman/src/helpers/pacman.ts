@@ -1,4 +1,3 @@
-import {gameMap} from "./gameMap";
 import {context, getScore, setScore} from "../widgets/game-board/game-board.component";
 import {Character} from "./character";
 import {oneBlockSize} from "./map-constants";
@@ -8,24 +7,24 @@ let isMouthOpening = true;
 let angle = 0; // Начальный угол для "рта"
 
 export class Pacman extends Character {
-
-  constructor(x: number, y: number, width: number, height: number, speed: number) {
+  boardMap: number[][]
+  constructor(x: number, y: number, width: number, height: number, speed: number, boardMap: number[][]) {
     super(x, y, width, height, speed);
-
+    this.boardMap = boardMap;
     setInterval(() => {
       this.updatePacman();
     }, 30)
   }
 
   eat() {
-    for (let i = 0; i < gameMap.length; i++) {
-      for (let j = 0; j < gameMap[0].length; j++) {
+    for (let i = 0; i < this.boardMap.length; i++) {
+      for (let j = 0; j < this.boardMap[0].length; j++) {
         if (
-          gameMap[i][j] == 2 &&
+          this.boardMap[i][j] == 2 &&
           this.getMapX() == j &&
           this.getMapY() == i
         ) {
-          gameMap[i][j] = 0;
+          this.boardMap[i][j] = 0;
           let newScore = getScore() + 1;
           setScore(newScore);
         }

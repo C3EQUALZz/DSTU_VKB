@@ -1,4 +1,3 @@
-import { Pacman } from "./pacman";
 import { oneBlockSize } from "./map-constants";
 import { gameMap } from "./gameMap";
 import {DIRECTION_BOTTOM, DIRECTION_LEFT, DIRECTION_RIGHT, DIRECTION_UP} from "./directions";

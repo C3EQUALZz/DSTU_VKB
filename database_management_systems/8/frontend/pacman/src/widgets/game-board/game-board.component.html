@@ -4,4 +4,7 @@
           [height]="mapHeight * oneBlockSize">
   </canvas>
   <div class="score__container">SCORE: {{ this.score }}</div>
+  <div id="reset__button">
+    <img src="/reset.svg" alt="reset" (click)="restartGame()"/>
+  </div>
 </section>
