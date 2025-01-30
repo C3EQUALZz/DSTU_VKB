@@ -8,6 +8,11 @@ import {foodColor, FPS, ghostImages, innerColor, pacmanSpeed, wallColor} from ".
 import {NgIf} from "@angular/common";
 
 
+enum gameModes {
+  RESTART = "restart",
+  NEW = "new"
+}
+
 export let context: CanvasRenderingContext2D = {} as CanvasRenderingContext2D;
 export let score: number = 0;
 
@@ -44,6 +49,7 @@ export class GameBoardComponent implements AfterViewInit {
   score: number = getScore();
   pacman: Pacman = new Pacman(oneBlockSize, oneBlockSize, oneBlockSize, oneBlockSize, oneBlockSize / 5, this.boardMap);
 
+  gameInterval: any;
   game: boolean = true;
 
   ghosts: Ghost[] = [];
@@ -53,14 +59,16 @@ export class GameBoardComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     context = this.canvas.nativeElement.getContext('2d');
-    if (this.game) this.startGame();
+    if (this.game) this.startGame(gameModes.NEW);
   }
 
-  startGame() {
-    this.setNewMap();
-    this.createNewPacman();
-    this.createNewGhosts();
-    let gameInterval = setInterval(() => {
+  startGame(mode: string) {
+    if (mode == gameModes.NEW) {
+      this.setNewMap();
+      this.createNewPacman();
+      this.createNewGhosts();
+    }
+    this.gameInterval = setInterval(() => {
       if (this.score < 219) {
         this.drawElements();
         this.pacman.draw();
@@ -73,7 +81,7 @@ export class GameBoardComponent implements AfterViewInit {
           ghost.draw();
         });
       } else {
-        clearInterval(gameInterval);
+        clearInterval(this.gameInterval);
         this.gameWin();
       }
     }, 1000 / FPS)
@@ -225,7 +233,15 @@ export class GameBoardComponent implements AfterViewInit {
     this.score = 0;
     this.boardMap = []
     this.game = true;
-    this.startGame();
+    this.startGame(gameModes.NEW);
+  }
+
+  openSettings() {
+    clearInterval(this.gameInterval);
+  }
+
+  resumeGame() {
+    this.startGame(gameModes.RESTART);
   }
 
   protected readonly oneBlockSize = oneBlockSize;

@@ -8,6 +8,20 @@
   height: 100vh;
   background: var(--black-color);
 
+  .settings__container {
+    cursor: pointer;
+    position: absolute;
+    z-index: 1;
+    top: 1rem;
+    right: 2rem;
+    transition: .2s;
+
+    &:hover {
+      transform: scale(1.2);
+      transition: .2s;
+    }
+  }
+
   .score__container {
     color: white;
     font-size: 20px;
