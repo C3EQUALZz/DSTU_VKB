@@ -3,3 +3,6 @@
  Указать также инвентарный номер автомобиля. Задать класс и дату (например, «средний класс» и 10.01.1989).
 */
 
+SELECT *
+FROM "AUTO" INNER JOIN "MENU" ON "AUTO"."C_CLASS" = "MENU"."C_MENU" || "MENU"."C_REC"
+WHERE "AUTO"."D_PASS" > '1989-01-10' AND "MENU"."NAME_REC" = 'средний класс'
