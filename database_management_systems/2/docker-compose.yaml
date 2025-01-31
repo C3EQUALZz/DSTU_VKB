@@ -2,7 +2,6 @@ services:
   postgres:
     image: postgres
     container_name: postgres-lab-2
-    hostname: postgreshost
     env_file:
       - .env
     environment:
@@ -15,10 +14,12 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./University.sql:/docker-entrypoint-initdb.d/University.sql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
       interval: 10s
       timeout: 5s
       retries: 3
+    networks:
+      - second_laboratory
 
   pgadmin:
     image: dpage/pgadmin4
@@ -28,10 +29,6 @@ services:
     environment:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
-      - POSTGRES_HOST=postgreshost
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
       - PGADMIN_CONFIG_SERVER_MODE=False
       - PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED=False
     ports:
@@ -39,10 +36,12 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    user: root
-    volumes:
-      - ./entrypoint.sh:/entrypoint_custom.sh
-    entrypoint: /entrypoint_custom.sh
+    networks:
+      - second_laboratory
 
 volumes:
   postgres_data:
+
+networks:
+  second_laboratory:
+    driver: bridge
