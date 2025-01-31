@@ -2,7 +2,6 @@ services:
   postgres:
     image: postgres
     container_name: postgres-lab-6
-    hostname: postgreshost
     env_file:
       - .env
     environment:
@@ -16,10 +15,12 @@ services:
       - ./01_init_tables.sql:/docker-entrypoint-initdb.d/01_init_tables.sql
       - ./02_init_data.sql:/docker-entrypoint-initdb.d/02_init_data.sql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
       interval: 10s
       timeout: 5s
       retries: 3
+    networks:
+      - sixth_laboratory
 
   pgadmin:
     image: dpage/pgadmin4
@@ -29,10 +30,6 @@ services:
     environment:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
-      - POSTGRES_HOST=postgreshost
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
       - PGADMIN_CONFIG_SERVER_MODE=False
       - PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED=False
     ports:
@@ -40,10 +37,12 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    user: root
-    volumes:
-      - ./entrypoint.sh:/entrypoint.sh
-    entrypoint: /entrypoint.sh
+    networks:
+      - sixth_laboratory
 
 volumes:
   postgres_data:
+
+networks:
+  sixth_laboratory:
+    driver: bridge
