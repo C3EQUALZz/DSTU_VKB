@@ -4,3 +4,4 @@ matplotlib
 pandas
 pillow
 scikit-learn
+seaborn
