@@ -1,6 +1,7 @@
 [project]
 name = "py7zr"
 requires-python = ">=3.9"
+version = "0.1.0"
 description = "Pure python 7-zip library"
 license = {text = "LGPL-2.1-or-later"}
 authors = [
