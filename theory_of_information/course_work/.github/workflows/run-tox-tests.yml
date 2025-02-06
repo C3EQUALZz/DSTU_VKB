@@ -1,0 +1,183 @@
+name: Run Tox tests
+
+on:
+  push:
+    branches:
+      - master
+      - releases/*
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-22.04, windows-latest]
+        python-version: [
+            "3.9",
+            "3.10",
+            "3.11",
+            "3.12",
+            "3.13",
+            "pypy-3.9",
+        ]
+        include:
+          - os: macos-latest
+            python-version: "3.11"
+        exclude:
+          - os: windows-latest
+            python-version: 'pypy-3.9'
+    name: Test Python ${{ matrix.python-version }} on ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 20
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: x64
+      - name: Install system library(linux)
+        if: runner.os == 'linux'
+        run: |
+          sudo apt-get update -q -y
+          sudo apt-get install -q -y libarchive-dev graphviz
+      - name: Download libarchive(Windows)
+        if: runner.os == 'Windows'
+        uses: carlosperate/download-file-action@v2
+        with:
+          file-url: "https://libarchive.org/downloads/libarchive-v3.5.3-win64.zip"
+          file-name: "libarchive-v3.5.3-win64.zip"
+      - name: Install libarchive(Windows)
+        if: runner.os == 'Windows'
+        run: |
+          $file = "libarchive-v3.5.3-win64.zip"
+          Expand-Archive -LiteralPath $file -DestinationPath $env:GITHUB_WORKSPACE
+          choco install graphviz
+      - name: Install dependencies
+        run: |
+          pip install -U pip tox wheel setuptools setuptools_scm[toml]
+          pip install tox-gh-actions coveralls coverage[toml]
+      - name: Test project with tox
+        if: runner.os != 'Windows'
+        run: |
+          tox
+          coverage xml -o cobertura.xml
+        env:
+          PYTEST_ADDOPTS: "--cov-config=pyproject.toml --cov --cov-append --benchmark-skip"
+      - name: Test project with tox (windows)
+        if: runner.os == 'Windows'
+        run: |
+          echo LIBARCHIVE="${env:LIBARCHIVE}"
+          tox
+          coverage xml -o cobertura.xml
+        env:
+          LIBARCHIVE: "${{ github.workspace }}\\libarchive\\bin\\archive.dll"
+          PYTEST_ADDOPTS: "--cov-config=pyproject.toml --cov --cov-append --benchmark-skip"
+      - name: Send coverage to coveralls
+        run: |
+          coveralls
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COVERALLS_PARALLEL: true
+          COVERALLS_FLAG_NAME: py-${{ matrix.python-version }}-${{ matrix.os }}
+      - uses: actions/setup-java@v4
+        if: runner.os != 'Windows'
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+      - name: Send coverage to codacy
+        if: runner.os != 'Windows'
+        run: |
+          java -jar utils/codacy-coverage-reporter.jar report -l Python -t ${PROJECT_TOKEN} --partial -r cobertura.xml
+        env:
+          PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+
+  test_slow_tests:
+    name: Test slow cases
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 20
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          architecture: x64
+      - name: Install system library(linux)
+        run: |
+          sudo apt-get update -q -y
+          sudo apt-get install -q -y libarchive-dev
+      - name: Install dependencies
+        run: |
+          pip install -U pip setuptools setuptools_scm[toml]
+          pip install tox tox-gh-actions
+      - name: Test project with tox
+        run: tox
+        env:
+          PYTEST_ADDOPTS: "--no-cov --run-slow -k extract_high_compression_rate"
+
+  test_on_aarch64:
+    name: Test on ${{ matrix.arch }}
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        arch: [aarch64]
+        distro: [ubuntu22.04]
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 20
+      - name: Build & run test
+        uses: uraimo/run-on-arch-action@v2
+        with:
+          arch: ${{ matrix.arch }}
+          distro: ${{ matrix.distro }}
+          githubToken: ${{ github.token }}
+          install: |
+            apt-get update -q -y
+            apt-get install -q -y p7zip-full python3 python3-pip python3-cffi build-essential gcc git libffi-dev python3-dev libarchive-dev
+            python3 -m pip install -U pip tox setuptools setuptools_scm[toml] coverage[toml] coveralls
+          run: |
+            git config --global --add safe.directory ${GITHUB_WORKSPACE}
+            python3 -c "import platform;print('Machine type:', platform.machine())"
+            python3 -m tox -e py310
+            coveralls
+          env: |
+            PYTEST_ADDOPTS: "--cov-config=pyproject.toml --cov --cov-append --benchmark-skip"
+            COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            COVERALLS_PARALLEL: true
+            COVERALLS_FLAG_NAME: py-${{ matrix.python-version }}-${{ matrix.os }}
+
+  finish:
+    runs-on: ubuntu-latest
+    name: finish parallel build
+    needs: build
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+      - name: Tell Coveralls that the parallel build is finished
+        run: |
+          curl -k \
+              https://coveralls.io/webhook?repo_token=$COVERALLS_REPO_TOKEN \
+              -d "payload[build_num]=$GITHUB_SHA&payload[status]=done"
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+      - name: Send coverage to codacy
+        run: |
+          java -jar utils/codacy-coverage-reporter.jar final -t ${PROJECT_TOKEN}
+        env:
+          PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
