@@ -10,6 +10,11 @@
 
 package practice_1.question_1;
 
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.Arrays;
+
+@Slf4j
 public class Queue<T> {
     private final int maxSize;
     private final T[] queArray;
@@ -34,9 +39,15 @@ public class Queue<T> {
     public void insert(T j) {
         if (isFull()) {
             front = (front + 1) % maxSize; // Смещаем front вперёд при переполнении
+            log.debug("Queue is full, new front index {}", front);
         }
         rear = (rear + 1) % maxSize; // Циклическое обновление rear
+        log.debug("New rear index {}", rear);
+
         queArray[rear] = j;
+
+        log.debug("New view of array in queue: {}", Arrays.toString(queArray));
+
         if (nItems < maxSize) {
             nItems++; // Увеличиваем только если не переполнено
         }
@@ -48,7 +59,13 @@ public class Queue<T> {
      */
     public T remove() {
         T temp = queArray[front]; // Выборка элемента
+
+        log.debug("Removing element {} from queue: {}", temp, Arrays.toString(queArray));
+
         front = (front + 1) % maxSize; // Циклический перенос front
+
+        log.debug("new front index {}", front);
+
         nItems--; // Уменьшение количества элементов
         return temp;
     }
@@ -61,6 +78,7 @@ public class Queue<T> {
     @SuppressWarnings("unchecked")
     public T[] remove_n(int n) {
         int actualRemove = Math.min(n, nItems); // Удаляем меньшее из n или текущего количества элементов
+
         // Для создания массива типа T используем generic метод
         T[] removedElements = (T[]) new Object[actualRemove];
 
@@ -119,10 +137,15 @@ public class Queue<T> {
         int count = nItems; // Количество элементов в очереди
         int index = front; // Начинаем с позиции front
 
+        log.debug("Current step of building string = {}\nnew_index = {}\ncount = {}\n\n", sb, index, count);
+
         while (count > 0) {
             sb.append(queArray[index]).append(" "); // Добавляем текущий элемент
             index = (index + 1) % maxSize; // Переходим к следующему индексу (с учётом цикличности)
             count--; // Уменьшаем количество оставшихся элементов
+
+            log.debug("Current step of building string = {}\nnew_index = {}\ncount = {}\n\n", sb, index, count);
+
         }
 
         return sb.toString().trim(); // Убираем лишний пробел в конце
