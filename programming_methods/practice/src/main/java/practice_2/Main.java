@@ -12,7 +12,7 @@ class Main {
         System.out.print("Введите цепочку символов для построения дерева (слитно): ");
         var input = System.console().readLine();
 
-        if (input == null || input.isEmpty() || input.isBlank()) {
+        if (input == null || input.isBlank()) {
             System.out.println("Ошибка: пустая строка. Завершение программы.");
             return;
         }

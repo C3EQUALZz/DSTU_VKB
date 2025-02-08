@@ -31,7 +31,7 @@ public abstract class AbstractTree<T extends Comparable<T>> {
 
         globalStack.push(root);
 
-        result.append(".....................................\n");
+        result.append("......................................................\n");
 
         // Пока в текущем ряду есть элементы для отображения
         while (!isRowEmpty) {
