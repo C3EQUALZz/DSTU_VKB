@@ -6,6 +6,11 @@
 
 package practice_1.question_2;
 
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.Arrays;
+
+@Slf4j
 public class Deque<T> {
     private final int maxSize;
     private final T[] dequeArray;
@@ -29,11 +34,18 @@ public class Deque<T> {
         if (isFull()) {
             // Если дек полон, передвигаем front для перезаписи элемента
             front = (front + 1) % maxSize; // Сдвигаем front вперед, чтобы освободить место
+
+            log.debug("Deque is full, new front index = {}", front);
         }
 
         // Вставляем элемент в конец дека
         rear = (rear + 1) % maxSize; // Циклический переход
+
+        log.debug("New rear index with formula (rear + 1) % maxsize = {}", rear);
+
         dequeArray[rear] = value;
+
+        log.debug("Current state of deque = {}\nrear = {}\nvalue = {}", Arrays.toString(dequeArray), rear, value);
 
         if (nItems < maxSize) {
             nItems++; // Увеличиваем количество элементов, если дек не полон
@@ -47,11 +59,17 @@ public class Deque<T> {
         if (isFull()) {
             // Если дек полон, передвигаем rear для перезаписи элемента
             rear = (rear - 1 + maxSize) % maxSize; // Сдвигаем rear назад, чтобы освободить место
+            log.debug("Deque is full, new rear index = {}", rear);
         }
 
         // Вставляем элемент в начало дека
         front = (front - 1 + maxSize) % maxSize; // Циклический переход
+
+        log.debug("New front index with formula (front - 1 + maxSize) & maxSize = {}", front);
+
         dequeArray[front] = value;
+
+        log.debug("Current state of deque = {}\nfront = {}\nvalue = {}", Arrays.toString(dequeArray), front, value);
 
         if (nItems < maxSize) {
             nItems++; // Увеличиваем количество элементов, если дек не полон
@@ -66,8 +84,17 @@ public class Deque<T> {
             throw new IllegalStateException("Дек пустой");
         }
         T temp = dequeArray[rear];
+
+        log.debug("Value for delete = {}, rear = {}, deque = {}", temp, rear, Arrays.toString(dequeArray));
+
         rear = (rear - 1 + maxSize) % maxSize;
+
+        log.debug("New rear index with formula (rear - 1 + maxSize) % maxSize {}", rear);
+
         nItems--;
+
+        log.debug("Count of nItems = {}", nItems);
+
         return temp;
     }
 
@@ -76,10 +103,16 @@ public class Deque<T> {
      */
     public T removeLeft() {
         if (isEmpty()) {
-            throw new IllegalStateException("Дек пустой");
+            throw new IllegalStateException("Deque is empty");
         }
         T temp = dequeArray[front];
+
+        log.debug("Element to delete = {}", temp);
+
         front = (front + 1) % maxSize;
+
+        log.debug("New front index with formula (front + 1) % maxSize {}", front);
+
         nItems--;
         return temp;
     }

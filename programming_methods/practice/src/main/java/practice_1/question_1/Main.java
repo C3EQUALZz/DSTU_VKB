@@ -5,8 +5,6 @@ import java.util.Arrays;
 class Main {
     public static void main(String[] args) {
 
-        System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "info");
-
         Queue<Integer> queue = new Queue<>(5);
 
         int[] elementsToInsert1 = {10, 20, 30, 40, 50, 4};
