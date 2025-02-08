@@ -3,5 +3,14 @@
 Воспользуйтесь командой: 
 
 ```bash
-find /home/student –user root –type f –print0 | xargs –0 tar –czf /tmp/root_files.tar.gz
+find /home/student -user root -type f -print0 | xargs -0 tar -czf /tmp/root_files.tar.gz
+```
+
+> [!IMPORTANT]
+> `tar` не создает пустой архив, до этого создайте какие-нибудь файлы из-под `root`.
+
+В моем случае нет пользователя `student`, поэтому напишу для своего:
+
+```bash
+find /home/c3equalz -user root -type f -print0 | xargs -0 tar -czf /tmp/root_files.tar.gz
 ```
