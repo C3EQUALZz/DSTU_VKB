@@ -3,6 +3,6 @@
 Команда, которая Вам нужна: 
 
 ```bash
-find /usr/share/doc –type f –name “*.html”
+find /usr/share/doc -type f -name “*.html”
 ```
 
