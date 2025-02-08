@@ -3,5 +3,8 @@
 Вводим эту команду в терминал:
 
 ```bash
-grep “root” /etc/group /etc/passwd
+cat /etc/group /etc/passwd | grep “root”
 ```
+
+> [!NOTE]
+> В этом случае команда `cat` объединяет содержимое файлов `/etc/passwd` и `/etc/group`, а затем передает его в `grep`, который ищет строки, содержащие слово `"root"`.
