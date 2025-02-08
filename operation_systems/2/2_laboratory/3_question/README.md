@@ -3,9 +3,16 @@
 Введите команду 
 
 ```bash
-grep “student” /etc/group | grep –v “root” | wc –l
+cat /etc/group | grep “student” | grep –v “root” | wc –l
 ```
 
-> [!MOTE]
-> `wc -l` - подсчёт строк
-> `-v` - означает НЕ
+> [!NOTE]
+> Если не понимаете что такое `cat` и `grep`, то посмотрите на прошлые задания. 
+> - `wc -l` - подсчёт строк
+> - `-v` - означает **НЕ**
+
+В моем случае пользователя `student` нет, поэтому в моем случае будет команда, которая представлена ниже:
+
+```bash
+cat /etc/group | grep "c3equalz" | grep -v "root" | wc -l
+```
