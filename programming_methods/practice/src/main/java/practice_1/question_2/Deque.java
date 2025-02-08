@@ -45,7 +45,7 @@ public class Deque<T> {
 
         dequeArray[rear] = value;
 
-        log.debug("Current state of deque = {}\nrear = {}\nvalue = {}", Arrays.toString(dequeArray), rear, value);
+        log.debug("Current state of deque = {} rear = {} value = {}", Arrays.toString(dequeArray), rear, value);
 
         if (nItems < maxSize) {
             nItems++; // Увеличиваем количество элементов, если дек не полон
@@ -69,7 +69,7 @@ public class Deque<T> {
 
         dequeArray[front] = value;
 
-        log.debug("Current state of deque = {}\nfront = {}\nvalue = {}", Arrays.toString(dequeArray), front, value);
+        log.debug("Current state of deque = {} front = {} value = {}", Arrays.toString(dequeArray), front, value);
 
         if (nItems < maxSize) {
             nItems++; // Увеличиваем количество элементов, если дек не полон
