@@ -78,11 +78,11 @@ class Main {
 
         while (true) {
             try {
-                System.out.print("Какой алгоритм вы хотите посмотреть? (1) - (мот) через bfs, (2) - dfs: ");
+                System.out.print("Какой алгоритм вы хотите посмотреть? (1) - (мод) через bfs, (2) - dfs: ");
                 switch (scanner.nextLine()) {
                     case "1" -> {
                         var result = BreathFirstSearch.execute(startValue, graph);
-                        System.out.println("МОТ с помощью BFS:");
+                        System.out.println("МОД с помощью BFS:");
                         result.forEach(System.out::println);
                     }
                     case "2" -> {

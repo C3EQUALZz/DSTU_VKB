@@ -1,10 +1,12 @@
 package practice_3.question_1;
 
+import lombok.extern.slf4j.Slf4j;
 import practice_3.core.AbstractUnweightedGraph;
 import practice_3.core.UnweightedNode;
 
 import java.util.*;
 
+@Slf4j
 public class BreathFirstSearch {
 
     /**
@@ -22,6 +24,8 @@ public class BreathFirstSearch {
 
         UnweightedNode<T> startNode = graph.getVertex(startValue);
 
+        log.debug("Start node is {}", startNode);
+
         List<List<UnweightedNode<T>>> result = new LinkedList<>(); // Хранение рёбер
         Set<UnweightedNode<T>> visited = new HashSet<>();
         Queue<UnweightedNode<T>> queue = new LinkedList<>();
@@ -32,7 +36,12 @@ public class BreathFirstSearch {
         while (!queue.isEmpty()) {
             UnweightedNode<T> current = queue.poll();
 
+            log.debug("Current node = {}, neighbors = {}", current, current.getNeighbors());
+
             for (UnweightedNode<T> neighbor : current.getNeighbors()) {
+
+                log.debug("Current neighbor = {}", neighbor);
+
                 if (!visited.contains(neighbor)) {
                     visited.add(neighbor);
 
@@ -41,6 +50,8 @@ public class BreathFirstSearch {
 
                     queue.add(neighbor);
                 }
+
+                log.debug("current MST = {}", result);
             }
         }
 
