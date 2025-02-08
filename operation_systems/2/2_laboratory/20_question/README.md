@@ -6,8 +6,15 @@
 gzip /tmp/my_backup.tar.gz
 ```
 
+После прошлого задания получился уже `gzip` архив, ради интереса можно использовать `bzip2`. 
+Сверху наложить `bzip2` можно на `gzip`, чтобы сжать ещё дополнительно. 
+
+```bash
+bzip2 -k /tmp/my_backup.tar.gz
+```
+
 Для просмотра объема содержимого выполните команду ниже: 
 
 ```bash
-ls –lh /tmp/my_backup.tar.gz.gz
+ls –lh /tmp/my_backup.tar.gz.bz2
 ```
