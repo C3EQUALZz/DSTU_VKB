@@ -5,3 +5,12 @@
 ```bash
 find /home/student -type f
 ```
+
+В моем случае нет пользователя `student`, поэтому код, который я использовал: 
+
+```bash
+find /home/c3equalz -type f
+```
+
+> [!NOTE]
+> `-type f` означает, что мы ищем файлы. 
