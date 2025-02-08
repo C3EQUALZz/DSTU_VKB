@@ -2,8 +2,17 @@
 
 Воспользуйтесь командой, которая представлена ниже: 
 
+Вариант 1: 
+
 ```bash
-find /etc –type f –print0 | xargs -0 tar –rf /tmp/my_backup.tar.gz
+find /etc -type f -print0 | xargs -0 tar -rf /tmp/my_backup.tar.gz
+```
+
+Вариант 2:
+
+```bash
+cd /etc
+find . -type f -print0 | xargs -0 tar -rf /tmp/my_backup.tar.gz
 ```
 
 Чтобы узнать размер полученных файлов, воспользуйтесь командой ниже: 
@@ -11,3 +20,6 @@ find /etc –type f –print0 | xargs -0 tar –rf /tmp/my_backup.tar.gz
 ```bash
 ls –lh /tmp/my_backup.tar.gz
 ```
+
+> [!NOTE]
+> `-lh` - позволяет посмотреть объем файлов.
