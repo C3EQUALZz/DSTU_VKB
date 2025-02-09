@@ -3,7 +3,7 @@
 Команда для использования в терминале: 
 
 ```bash
-renice -10 PID
+sudo renice -10 PID
 ```
 
 > [!NOTE]
