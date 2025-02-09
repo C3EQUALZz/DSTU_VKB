@@ -5,20 +5,20 @@
 Вариант 1: 
 
 ```bash
-find /etc -type f -print0 | xargs -0 tar -rf /tmp/my_backup.tar.gz
+find /etc -type f -print0 | xargs -0 tar -rf /tmp/my_backup.tar
 ```
 
 Вариант 2:
 
 ```bash
 cd /etc
-find . -type f -print0 | xargs -0 tar -rf /tmp/my_backup.tar.gz
+find . -type f -print0 | xargs -0 tar -rf /tmp/my_backup.tar
 ```
 
 Чтобы узнать размер полученных файлов, воспользуйтесь командой ниже: 
 
 ```bash
-ls –lh /tmp/my_backup.tar.gz
+ls –lh /tmp/my_backup.tar
 ```
 
 > [!NOTE]
