@@ -55,4 +55,9 @@ component_warehouse_table = Table(
     Column('cost_per_unit', Numeric(10, 2), nullable=False),
 )
 
-
+list_of_masters_table = Table(
+    'list_of_masters',
+    metadata,
+    Column('oid', UUID, primary_key=True),
+    Column('position_oid', UUID, nullable=False),
+)
