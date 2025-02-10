@@ -34,6 +34,7 @@ equipment_table = Table(
     Column('oid', UUID, primary_key=True),
     Column('name', VARCHAR(50), nullable=False, unique=True),
     Column('serial_number', VARCHAR(50), nullable=False, unique=True),
+    CheckConstraint("serial_number ~ '^[A-Za-z0-9]{5,20}$'", name='check_serial_number')
 )
 
 client_table = Table(
@@ -45,3 +46,13 @@ client_table = Table(
     Column('patronymic', String(30), nullable=False),
     Column('number', String(12), nullable=False)
 )
+
+component_warehouse_table = Table(
+    'component_warehouse',
+    metadata,
+    Column('oid', UUID, primary_key=True),
+    Column('name', String(30), nullable=False),
+    Column('cost_per_unit', Numeric(10, 2), nullable=False),
+)
+
+
