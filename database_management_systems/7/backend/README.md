@@ -1,0 +1,1 @@
+https://medium.com/@vbilopav/custom-temporal-tables-in-postgresql-5a0e4045ab30
