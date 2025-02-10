@@ -13,6 +13,9 @@ class OrderFulfillment(BaseEntity):
     cost_of_components: Optional[Money]
     fulfillment_date: date
 
+    __eq__ = BaseEntity.__eq__
+    __hash__ = BaseEntity.__hash__
+
     @property
     def total_cost(self) -> Money:
         return Money(self.cost.value + (self.cost_of_components if self.cost_of_components is not None else 0))

@@ -15,3 +15,6 @@ class EquipmentEntity(BaseEntity):
     name: NameOfEquipment
     serial_number: SerialNumber
     model: ModelOfEquipment
+
+    __eq__ = BaseEntity.__eq__
+    __hash__ = BaseEntity.__hash__

@@ -1,3 +1,5 @@
+create schema if not exists temporal_support;
+
 create function temporal_support.table_after_trigger()
 returns trigger
 security definer
@@ -17,8 +19,6 @@ begin
     return null;
 end;
 $$;
-
-
 
 create function temporal_support.init_temporal_tables(
     variadic _tables text[]

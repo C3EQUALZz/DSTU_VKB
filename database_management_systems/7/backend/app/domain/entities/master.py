@@ -27,3 +27,6 @@ class Master(BaseEntity):
     address: str
     number: PhoneNumber
     date_of_employment: date
+
+    __eq__ = BaseEntity.__eq__
+    __hash__ = BaseEntity.__hash__
