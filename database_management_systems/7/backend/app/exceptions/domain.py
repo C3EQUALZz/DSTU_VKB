@@ -58,3 +58,14 @@ class HumanBadFullNameComponentException(DomainException):
     @property
     def message(self) -> str:
         return f"Bad component of person full name {self.text}, please provide correct"
+
+
+@dataclass(eq=False)
+class MoneyCanNotBeNegativeException(DomainException):
+    text: str
+
+    @property
+    def message(self) -> str:
+        return f"Money can't be negative {self.text}, please provide correct"
+
+

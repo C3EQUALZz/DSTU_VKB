@@ -7,6 +7,35 @@ from app.exceptions.domain import BadSerialNumberException
 
 
 @dataclass(frozen=True)
+class NameOfEquipment(BaseValueObject):
+    value: str
+
+    @override
+    def validate(self) -> None:
+        if not re.match(r"^[a-zA-Z0-9а-яА-Я]+$", self.value):
+            ...
+        if len(self.value) > 50:
+            ...
+
+    @override
+    def as_generic_type(self) -> str:
+        return str(self.value)
+
+
+@dataclass(frozen=True)
+class ModelOfEquipment(BaseValueObject):
+    value: str
+
+    @override
+    def validate(self) -> None:
+        ...
+
+    @override
+    def as_generic_type(self) -> str:
+        return str(self.value)
+
+
+@dataclass(frozen=True)
 class SerialNumber(BaseValueObject):
     value: str
 

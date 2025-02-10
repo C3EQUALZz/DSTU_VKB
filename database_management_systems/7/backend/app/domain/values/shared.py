@@ -1,8 +1,10 @@
 import re
 from dataclasses import dataclass
 from typing import override
+
 from app.domain.values.base import BaseValueObject
-from app.exceptions.domain import BadFormatNumberException, HumanBadFullNameComponentException
+from app.exceptions.domain import BadFormatNumberException, HumanBadFullNameComponentException, \
+    MoneyCanNotBeNegativeException
 
 
 @dataclass(frozen=True)
@@ -31,3 +33,17 @@ class PhoneNumber(BaseValueObject):
     @override
     def as_generic_type(self) -> str:
         return self.value
+
+
+@dataclass(frozen=True)
+class Money(BaseValueObject):
+    value: float
+
+    @override
+    def validate(self) -> None:
+        if self.value < 0:
+            raise MoneyCanNotBeNegativeException(str(self.value))
+
+    @override
+    def as_generic_type(self) -> float:
+        return float(self.value)
