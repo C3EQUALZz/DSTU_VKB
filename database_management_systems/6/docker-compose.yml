@@ -12,8 +12,6 @@ services:
       - ${POSTGRES_PORT}:5432
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./01_init_tables.sql:/docker-entrypoint-initdb.d/01_init_tables.sql
-      - ./02_init_data.sql:/docker-entrypoint-initdb.d/02_init_data.sql
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
       interval: 10s

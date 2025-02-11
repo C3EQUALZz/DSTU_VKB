@@ -22,4 +22,4 @@ CREATE TABLE furniture (
 CREATE TABLE consumables (
     quantity INTEGER NOT NULL,        -- Количество
     unit VARCHAR(20) NOT NULL         -- Единица измерения (шт., пачки и т.д.)
-) INHERITS (inventory_item);
+) INHERITS (my_object);
