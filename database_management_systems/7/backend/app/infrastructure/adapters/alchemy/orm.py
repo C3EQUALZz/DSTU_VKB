@@ -1,6 +1,7 @@
 import uuid
 
 from sqlalchemy import Column, String, Numeric, Table, UUID, VARCHAR, Computed, Date, CheckConstraint, ForeignKey, Index
+from sqlalchemy.dialects.postgresql import TSTZRANGE
 
 from app.infrastructure.adapters.alchemy.metadata import metadata, mapper_registry
 
@@ -9,6 +10,7 @@ position_of_master = Table(
     metadata,
     Column('oid', UUID, primary_key=True, default=uuid.uuid4),
     Column('position', VARCHAR(30), unique=True),
+    Column(TSTZRANGE, nullable=False, default="tsrange(current_timestamp, NULL)")
 )
 
 order_fulfillment_table = Table(
