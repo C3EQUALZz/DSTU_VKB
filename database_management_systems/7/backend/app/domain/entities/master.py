@@ -8,7 +8,7 @@ from app.domain.values.shared import HumanFullNameComponent, PhoneNumber
 
 
 @dataclass(eq=False)
-class Master(BaseEntity):
+class MasterEntity(BaseEntity):
     """
     Domain entity that represents the master.
     It has several attributes:

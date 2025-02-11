@@ -3,7 +3,7 @@ services:
     image: postgres
     container_name: postgres-lab-7
     env_file:
-      - .env
+      - ../.env
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -15,9 +15,10 @@ services:
       - ./01_init_tables.sql:/docker-entrypoint-initdb.d/01_init_tables.sql
       - ./02_init_data.sql:/docker-entrypoint-initdb.d/02_init_data.sql
       - ./03_functions.sql:/docker-entrypoint-initdb.d/03_functions.sql
-      - ./04_triggers.sql:/docker-entrypoint-initdb.d/04_triggers.sql
+      - ./04_versioning_tables.sql:/docker-entrypoint-initdb.d/04_versioning_tables.sql
+      - ./05_triggers.sql:/docker-entrypoint-initdb.d/05_triggers.sql
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'"]
       interval: 10s
       timeout: 5s
       retries: 3
@@ -28,7 +29,7 @@ services:
     image: dpage/pgadmin4
     container_name: pgadmin-lab-7
     env_file:
-      - .env
+      - ../.env
     environment:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}

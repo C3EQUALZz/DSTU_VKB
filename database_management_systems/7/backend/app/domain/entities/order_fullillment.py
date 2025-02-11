@@ -7,7 +7,7 @@ from app.domain.values.shared import Money
 
 
 @dataclass(eq=False)
-class OrderFulfillment(BaseEntity):
+class OrderFulfillmentEntity(BaseEntity):
     type_of_work: str
     cost: Money
     cost_of_components: Optional[Money]

@@ -5,7 +5,7 @@ from app.domain.values.shared import PhoneNumber, HumanFullNameComponent
 
 
 @dataclass(eq=False)
-class Client(BaseEntity):
+class ClientEntity(BaseEntity):
     surname: HumanFullNameComponent
     name: HumanFullNameComponent
     patronymic: HumanFullNameComponent
