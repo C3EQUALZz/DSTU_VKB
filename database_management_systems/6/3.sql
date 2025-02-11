@@ -9,55 +9,51 @@
   момента времени.
  */
 
-CREATE OR REPLACE FUNCTION handle_object_insert()
-RETURNS TRIGGER
-LANGUAGE plpgsql AS
-$$
+CREATE OR REPLACE FUNCTION handle_insert_object()
+RETURNS TRIGGER AS $$
+DECLARE
+    existing_record my_object%ROWTYPE;
 BEGIN
-    -- Проверяем, существует ли запись с таким же id
-    IF EXISTS (
-        SELECT 1
-        FROM ONLY my_object
-        WHERE id = NEW.id
-          AND time_dead IS NULL -- Только "активные" записи
-    ) THEN
-        -- Обновляем время смерти существующей записи
-        UPDATE ONLY my_object
-        SET time_dead = NOW()
-        WHERE id = NEW.id
-          AND time_dead IS NULL;
+    -- Проверка наличия записи с таким же id и без времени смерти
+    SELECT * INTO existing_record
+    FROM my_object
+    WHERE id = NEW.id AND time_dead IS NULL
+    ORDER BY time_create DESC
+    LIMIT 1;
 
-        -- Наследуем значения атрибутов существующей записи (кроме заданных в новой)
-        NEW.time_create = NOW(); -- Устанавливаем время рождения
+    IF FOUND THEN
+        -- Если запись найдена, установить время смерти предка
+        UPDATE my_object
+        SET time_dead = now()
+        WHERE id = existing_record.id AND time_create = existing_record.time_create;
+
+        -- Перенос значений времени и сброс времени смерти
+        NEW.time_create = now();  -- Новое время создания записи
+        NEW.time_dead = NULL;     -- Сбрасываем время смерти
+
     ELSE
-        -- Если записи с таким id не найдено, просто задаем текущее время рождения
-        NEW.time_create = NOW();
+        -- Если запись не найдена, просто устанавливаем время создания
+        NEW.time_create = now();
+        NEW.time_dead = NULL;
     END IF;
-
-    -- Убедиться, что время смерти новой записи остается NULL
-    NEW.time_dead = NULL;
 
     RETURN NEW;
 END;
-$$;
+$$ LANGUAGE plpgsql;
 
--- Триггер для таблицы electronic_equipment
-CREATE TRIGGER before_insert_electronic_equipment
+
+
+CREATE OR REPLACE TRIGGER handle_insert_electronic_equipment
 BEFORE INSERT ON electronic_equipment
-FOR EACH ROW
-EXECUTE FUNCTION handle_object_insert();
+FOR EACH ROW EXECUTE FUNCTION handle_insert_object();
 
--- Триггер для таблицы furniture
-CREATE TRIGGER before_insert_furniture
+CREATE OR REPLACE TRIGGER handle_insert_furniture
 BEFORE INSERT ON furniture
-FOR EACH ROW
-EXECUTE FUNCTION handle_object_insert();
+FOR EACH ROW EXECUTE FUNCTION handle_insert_object();
 
--- Триггер для таблицы consumables
-CREATE TRIGGER before_insert_consumables
+CREATE OR REPLACE TRIGGER handle_insert_consumables
 BEFORE INSERT ON consumables
-FOR EACH ROW
-EXECUTE FUNCTION handle_object_insert();
+FOR EACH ROW EXECUTE FUNCTION handle_insert_object();
 
 -- Вставляем новую запись в таблицу furniture
 INSERT INTO furniture (id, material, dimensions)
