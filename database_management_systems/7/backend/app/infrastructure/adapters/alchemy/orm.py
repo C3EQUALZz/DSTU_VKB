@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Column, String, Numeric, Table, UUID, VARCHAR, Computed, Date, CheckConstraint, ForeignKey, Index
+from sqlalchemy import Column, String, Numeric, Table, UUID, VARCHAR, Computed, Date, CheckConstraint, ForeignKey, Index, INTEGER
 from sqlalchemy.dialects.postgresql import TSTZRANGE
 
 from app.infrastructure.adapters.alchemy.metadata import metadata, mapper_registry
@@ -38,7 +38,10 @@ equipment_table = Table(
     Column('oid', UUID, primary_key=True, default=uuid.uuid4),
     Column('name', VARCHAR(50), nullable=False, unique=True),
     Column('serial_number', VARCHAR(50), nullable=False, unique=True),
-    CheckConstraint("serial_number ~ '^[A-Za-z0-9]{5,20}$'", name='check_serial_number')
+    Column('model', VARCHAR(50), nullable=False, unique=True),
+    Column('count', INTEGER),
+    CheckConstraint("serial_number ~ '^[A-Za-z0-9]{5,20}$'", name='check_serial_number'),
+    CheckConstraint("count > 0", name='name_check_count')
 )
 
 # Клиенты
