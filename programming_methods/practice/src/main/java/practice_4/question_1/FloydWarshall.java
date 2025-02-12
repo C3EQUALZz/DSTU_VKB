@@ -1,11 +1,13 @@
 package practice_4.question_1;
 
+import lombok.extern.slf4j.Slf4j;
 import practice_4.core.AbstractWeightedGraph;
 import practice_4.core.WeightedNode;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class FloydWarshall {
     /**
      * Выполняет алгоритм Флойда-Уоршелла для заданного графа.
@@ -17,6 +19,7 @@ public class FloydWarshall {
     public static <T extends Comparable<T>> Map<T, Map<T, Integer>> execute(AbstractWeightedGraph<T> graph) {
         Map<T, WeightedNode<T>> nodes = graph.getNodes();
         Map<T, Map<T, Integer>> distances = new HashMap<>();
+        log.debug("Nodes: {}, distances: {}", nodes, distances);
 
         // Инициализация матрицы расстояний
         for (T from : nodes.keySet()) {
@@ -27,12 +30,15 @@ public class FloydWarshall {
                 } else {
                     distances.get(from).put(to, Integer.MAX_VALUE); // Изначально пути нет
                 }
+
             }
 
             // Установка весов для соседей
             for (Map.Entry<WeightedNode<T>, Integer> neighbor : nodes.get(from).getNeighbors().entrySet()) {
                 distances.get(from).put(neighbor.getKey().getValue(), neighbor.getValue());
             }
+
+            log.debug("Initial hashmap nodes with distances: {}", distances);
         }
 
         // Основной алгоритм
@@ -45,9 +51,12 @@ public class FloydWarshall {
                             distances.get(i).put(j, newDist);
                         }
                     }
+                    log.debug("k: {}, i: {}, j: {}, distance between i and k: {}, distance between k and j: {}", k, i, j, distances.get(i).get(k), distances.get(k).get(j));
                 }
             }
+            log.debug("Updated hashmap: {}", distances);
         }
+
 
         return distances;
     }
