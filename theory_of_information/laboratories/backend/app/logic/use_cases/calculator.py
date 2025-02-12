@@ -24,7 +24,6 @@ class EvaluateMathExpressionInFieldUseCase(BaseUseCase[EvaluateExpressionInField
         """Преобразует инфиксное выражение в обратную польскую нотацию (RPN)"""
         output: list[str | int] = []
         operators: deque[str] = deque()
-
         expression = command.expression
         mod = command.mod
 
