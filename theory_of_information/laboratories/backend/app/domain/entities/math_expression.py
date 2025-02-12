@@ -3,5 +3,6 @@ from dataclasses import dataclass
 
 
 @dataclass(eq=False)
-class Message(BaseEntity):
+class MathExpression(BaseEntity):
     data: str
+
