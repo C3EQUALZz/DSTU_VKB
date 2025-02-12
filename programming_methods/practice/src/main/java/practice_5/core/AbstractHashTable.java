@@ -1,9 +1,13 @@
 package practice_5.core;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public abstract class AbstractHashTable<K, V> {
+@Slf4j
+public abstract class AbstractHashTable<K extends Comparable<K>, V> {
     protected static final int DEFAULT_CAPACITY = 16;
     protected static final double LOAD_FACTOR_THRESHOLD = 0.75;
 
@@ -16,6 +20,8 @@ public abstract class AbstractHashTable<K, V> {
             table.add(null); // Инициализируем список пустыми элементами
         }
         size = 0;
+
+        log.debug("Initialized array: {}, default capacity: {}", table, DEFAULT_CAPACITY);
     }
 
     public abstract void insert(K key, V value);
@@ -32,18 +38,20 @@ public abstract class AbstractHashTable<K, V> {
      * Resizes the hash table when the load factor exceeds the threshold.
      */
     protected void resize() {
-        List<Entry<K, V>> oldTable = table; // Сохраняем старую таблицу
-        table = new ArrayList<>(oldTable.size() * 2); // Создаем новый ArrayList с удвоенной емкостью
-        for (int i = 0; i < oldTable.size(); i++) {
-            table.add(null); // Инициализируем новый список пустыми элементами
-        }
+        int newCapacity = table.size() * 2;
+        List<Entry<K, V>> newTable = new ArrayList<>(Collections.nCopies(newCapacity, null));
 
-        // Вставляем элементы в новый список
-        for (Entry<K, V> entry : oldTable) {
+        for (Entry<K, V> entry : table) {
             if (entry != null && !entry.isDeleted()) {
-                insert(entry.getKey(), entry.getValue()); // Вставляем элементы в новый список
+                int index = hash(entry.getKey(), newCapacity);
+                while (newTable.get(index) != null) {
+                    index = (index + 1) % newCapacity; // Линейное пробирование
+                }
+                newTable.set(index, entry);
             }
         }
+
+        table = newTable;
     }
 
     /**
@@ -51,6 +59,10 @@ public abstract class AbstractHashTable<K, V> {
      */
     protected int hash(K key) {
         return Math.abs(key.hashCode() % table.size());
+    }
+
+    protected int hash(K key, int size) {
+        return Math.abs(key.hashCode() % size);
     }
 
     /**

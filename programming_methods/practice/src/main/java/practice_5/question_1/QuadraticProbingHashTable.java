@@ -4,24 +4,20 @@
 
 package practice_5.question_1;
 
+import lombok.extern.slf4j.Slf4j;
 import practice_5.core.AbstractHashTable;
 import practice_5.core.Entry;
 
-import java.util.ArrayList;
-
 /**
- * HashTable implementation with quadratic probing.
+ * Хэш таблица с квадратичным пробированием
  */
-public class QuadraticProbingHashTable<K, V> extends AbstractHashTable<K, V> {
+@Slf4j
+public class QuadraticProbingHashTable<K extends Comparable<K>, V> extends AbstractHashTable<K, V> {
     /**
      * Constructor to initialize the hash table.
      */
     public QuadraticProbingHashTable() {
-        table = new ArrayList<>(DEFAULT_CAPACITY);
-        for (int i = 0; i < DEFAULT_CAPACITY; i++) {
-            table.add(null); // Инициализируем список пустыми элементами
-        }
-        size = 0;
+        super();
     }
 
     /**
@@ -29,6 +25,7 @@ public class QuadraticProbingHashTable<K, V> extends AbstractHashTable<K, V> {
      */
     public void insert(K key, V value) {
         if (loadFactor() >= LOAD_FACTOR_THRESHOLD) {
+            log.debug("HashTable is bigger than the load factor, resizing....");
             resize();
         }
 
@@ -40,6 +37,7 @@ public class QuadraticProbingHashTable<K, V> extends AbstractHashTable<K, V> {
             if (table.get(index).getKey().equals(key)) {
                 // Update existing key
                 table.get(index).setValue(value);
+                log.debug("Updated value, current table: {}", table);
                 return;
             }
             index = (hash + step * step) % table.size();
@@ -79,6 +77,7 @@ public class QuadraticProbingHashTable<K, V> extends AbstractHashTable<K, V> {
 
         while (table.get(index) != null) {
             if (!table.get(index).isDeleted() && table.get(index).getKey().equals(key)) {
+                log.debug("Key was founded! Current table: {}, value: {}", table, table.get(index).getValue());
                 return table.get(index).getValue(); // Return the value if key is found
             }
             index = (hash + step * step) % table.size();
@@ -100,6 +99,14 @@ public class QuadraticProbingHashTable<K, V> extends AbstractHashTable<K, V> {
             if (!table.get(index).isDeleted() && table.get(index).getKey().equals(key)) {
                 table.get(index).setDeleted(true);
                 size--;
+
+                log.debug("current state of table: {}", table);
+
+                // Реорганизация таблицы, если слишком много удаленных элементов
+                if (size < table.size() / 4) {
+                    log.debug("resizing hash table cause there is many trash");
+                    resize();
+                }
                 return;
             }
             index = (hash + step * step) % table.size();
