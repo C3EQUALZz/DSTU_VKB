@@ -37,7 +37,7 @@ class SQLAlchemyEquipmentRepository(SQLAlchemyAbstractRepository, EquipmentRepos
     async def get(self, oid: str) -> Optional[EquipmentEntity]:
         result: Result = await self._session.execute(select(EquipmentEntity).filter_by(oid=oid))
 
-        return result.scalar_one()
+        return result.scalar_one_or_none()
 
     @override
     async def update(self, oid: str, model: EquipmentEntity) -> EquipmentEntity:
