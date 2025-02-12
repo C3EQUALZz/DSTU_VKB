@@ -4,6 +4,7 @@ from http import HTTPStatus
 
 from app.exceptions.base import ApplicationException
 
+
 @dataclass(eq=False)
 class DomainException(ApplicationException, ABC):
     @property
@@ -22,3 +23,12 @@ class CastException(DomainException):
     @property
     def message(self) -> str:
         return f"Failed to cast field {self.text}"
+
+
+@dataclass(eq=False)
+class BadOperationException(DomainException):
+    text: str
+
+    @property
+    def message(self) -> str:
+        return f"Bad operation {self.text} has occurred"
