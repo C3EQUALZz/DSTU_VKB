@@ -24,9 +24,13 @@ ls -la /
 После того, как вы используете данную команду, то у вас будет что-то похожее на это: 
 
 > drwxr-xr-x   2 root root     4096 Oct 26 10:00 bin
+> 
 > drwxr-xr-x   3 root root     4096 Oct 26 10:00 boot
+> 
 > drwxr-xr-x  20 root root     3260 Oct 26 10:00 dev
+> 
 > drwxr-xr-x  74 root root     4096 Oct 26 10:00 etc
+> 
 > drwxr-xr-x   3 root root     4096 Oct 26 10:00 home
 
 > [!NOTE]
