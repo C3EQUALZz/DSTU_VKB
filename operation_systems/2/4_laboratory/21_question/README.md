@@ -27,8 +27,8 @@ date > /home/user1/qu4/dec
 Меняем права на прежние: 
 
 ```bash
-chmod 404 /home/user1/qu2
-chmod 505 /home/user1/qu4
+sudo chmod 404 /home/user1/qu2
+sudo chmod 505 /home/user1/qu4
 ```
 
 > [!NOTE]
