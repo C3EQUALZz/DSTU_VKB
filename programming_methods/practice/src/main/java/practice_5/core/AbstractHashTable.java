@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Slf4j
-public abstract class AbstractHashTable<K extends Comparable<K>, V> {
+public abstract class AbstractHashTable<K, V> {
     protected static final int DEFAULT_CAPACITY = 16;
     protected static final double LOAD_FACTOR_THRESHOLD = 0.75;
 

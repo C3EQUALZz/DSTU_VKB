@@ -12,7 +12,7 @@ import practice_5.core.Entry;
  * Хэш таблица с квадратичным пробированием
  */
 @Slf4j
-public class QuadraticProbingHashTable<K extends Comparable<K>, V> extends AbstractHashTable<K, V> {
+public class QuadraticProbingHashTable<K, V> extends AbstractHashTable<K, V> {
     /**
      * Constructor to initialize the hash table.
      */

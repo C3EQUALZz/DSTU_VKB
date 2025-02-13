@@ -8,7 +8,7 @@ import practice_5.core.Entry;
  * Реализация хэш таблица с линейным пробированием
  */
 @Slf4j
-public class LinearProbingHashTable<K extends Comparable<K>, V> extends AbstractHashTable<K, V> {
+public class LinearProbingHashTable<K, V> extends AbstractHashTable<K, V> {
 
     public LinearProbingHashTable() {
         super();
