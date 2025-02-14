@@ -12,14 +12,14 @@
 
 ```bash
 #!/bin/bash
-echo "One-time script executed at $(date)"
+echo "One-time script executed at $(date)" > result.txt
 ```
 
 Для периодической задачи: 
 
 ```bash
 #!/bin/bash
-echo "Periodic script executed at $(date)"
+echo "Periodic script executed at $(date)" > result.txt
 ```
 
 > [!IMPORTANT]
@@ -49,3 +49,8 @@ crontab -e
 
 > [!NOTE]
 > Это путь к скрипту, который нужно вставить.
+
+> [!IMPORTANT]
+> `cron` и `at` на `Astra Linux` 1.8 не работают нормально, они не могут открывать приложения, выводить результат в консоль.
+> Методом проб и ошибок нашли, что они нормально могут только записывать в `txt` файл.
+> Язвинская Н.Н по этому поводу написала в тех. поддержку, что у них есть такой вот баг. 
