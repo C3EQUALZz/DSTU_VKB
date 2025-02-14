@@ -14,7 +14,7 @@ chown user2 /home/user1/qu2/may
 Меняем владельца `aug`, используя команду ниже: 
 
 ```bash
-chown user2 /home/student9/qu3/aug
+chown user2 /home/user1/qu3/aug
 ```
 
 Теперь проверяем выданные права, используя команду, которая представлена ниже: 
