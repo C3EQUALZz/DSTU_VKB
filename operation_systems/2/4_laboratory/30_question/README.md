@@ -7,8 +7,8 @@
 Теперь делаем копии файлов `dec`:
 
 ```bash
-cp home/user1/qu4/dec /home/temp1/dec_copy1
-cp home/user1/qu4/dec /home/temp2/dec_copy2
+cp /home/user1/qu4/dec /home/temp1/dec_copy1
+cp /home/user1/qu4/dec /home/temp2/dec_copy2
 ```
 
 Теперь проверяем оригинальный файл: 
