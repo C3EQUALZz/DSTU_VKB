@@ -42,7 +42,7 @@ END;
 $$;
 
 -- Создание агрегатной функции
-CREATE AGGREGATE concat_with_delimiter(TEXT, TEXT) (
+CREATE OR REPLACE AGGREGATE concat_with_delimiter(TEXT, TEXT) (
     SFUNC = concat_with_delimiter_agg,  -- State transition function
     STYPE = TEXT,                      -- Тип состояния (аккумулятор)
     FINALFUNC = concat_with_delimiter_final -- Final function
