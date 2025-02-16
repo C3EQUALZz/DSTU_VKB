@@ -18,7 +18,7 @@ systemctl status smartd
 После того, как заработал сервис, начнем выполнение задания. Например, я проведу расширенный тест для диска `/dev/sdb`, используя команду, которая представлена ниже: 
 
 ```bash
-sudo smartctl --test=long /dev/sdb
+sudo smartctl -a --test=long /dev/sdb
 ```
 
 > [!NOTE]
