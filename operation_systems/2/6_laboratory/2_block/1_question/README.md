@@ -1,0 +1,1 @@
+## Установите `cryptsetup-luks`
