@@ -18,3 +18,4 @@ auth required pam_unix.so
 > [!IMPORTANT]
 > Спросит пароль, но зайти не получится.
 
+![изображение](https://github.com/user-attachments/assets/9d140da5-20bd-4fbf-b419-c599824928fc)
