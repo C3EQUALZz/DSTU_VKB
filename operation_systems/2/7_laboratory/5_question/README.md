@@ -15,3 +15,32 @@ nano /etc/pam.d/su
 auth requisite pam_wheel.so
 auth required pam_unix.so
 ```
+
+Теперь создадим пользователя, который принадлжит группе `wheel`, для этого используйте команды, которые представлены ниже: 
+
+Создаем пользователя:
+
+```bash
+sudo useradd wheeluser
+```
+
+Ставим пароль:
+
+```bash
+sudo passwd wheeluser
+```
+
+> [!NOTE]
+> Я для удобства поставил пароль `123`
+
+Теперь создаем группу `wheel`:
+
+```bash
+sudo groupadd wheel
+```
+
+Теперь добавляем пользователя в группу, используя команду ниже:
+
+```bash
+sudo usermod -aG wheel wheeluser
+```
