@@ -9,3 +9,5 @@
 - Разрешено `sudo`
 
 Войти под `user` (Уровень_0, Высокий)
+
+![изображение](https://github.com/user-attachments/assets/31a63a36-7fc5-4a51-acb4-fcb9ad7acf25)
