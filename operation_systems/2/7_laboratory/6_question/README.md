@@ -6,16 +6,13 @@
 nano /etc/pam.d/su
 ```
 
-Добавить: 
+В файле должна быть только: 
 
 ```bash
 auth requisite pam_wheel.so 
 auth required pam_permit.so
 ```
 
-В файле должна быть только
-
-вернуть исходный файл на место
-
-rm /etc/pam.d/su
-sudo mv /home/astrastud/su_backup /etc/pam.d/su
+> [!IMPORTANT]
+> У меня из-под консоли, которая открывается через (`CTRL + ALT + F<number>`) не получается перейти в `root`.
+> Скорее всего настройка не актуальна на `Astra 1.8`. 
