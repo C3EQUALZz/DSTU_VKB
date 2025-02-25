@@ -1,0 +1,59 @@
+services:
+  elasticsearch:
+    image: elasticsearch:7.16.1
+    volumes:
+      - ./../configs/elasticsearch/config.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      - ./../docker_volumes/elasticsearch/data:/usr/share/elasticsearch/data
+    environment:
+      ES_JAVA_OPTS: "-Xmx512m -Xms512m"
+      ELASTIC_USERNAME: "elastic"
+      ELASTIC_PASSWORD: "MyPw123"
+      discovery.type: single-node
+    networks:
+      - elk
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+
+  logstash:
+    image: logstash:7.16.2
+    volumes:
+      - ./../configs/logstash/config.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./../configs/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
+      - ./../configs/logstash/pipelines:/usr/share/logstash/config/pipelines:ro
+    environment:
+      LS_JAVA_OPTS: "-Xmx512m -Xms512m"
+    ports:
+      - "5044:5044"
+      - "5000:5000"
+      - "9600:9600"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    image: kibana:7.16.1
+    depends_on:
+      - elasticsearch
+    volumes:
+      - ./../configs/kibana/config.yml:/usr/share/kibana/config/kibana.yml:ro
+    networks:
+      - elk
+    ports:
+      - "5601:5601"
+
+  beats:
+    image: elastic/filebeat:7.16.2
+    command: filebeat -e -strict.perms=false
+    volumes:
+      - ./../configs/filebeat/config.yml:/usr/share/filebeat/filebeat.yml:ro
+      - ./../logs/app.log/:/host_metrics_app.log/:ro
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
+networks:
+  elk:
+    driver: bridge

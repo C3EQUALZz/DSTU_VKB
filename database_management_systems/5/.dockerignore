@@ -1,0 +1,10 @@
+# Ignore everything by default
+*
+
+# Include what we need
+!src
+!gradle
+!*.gradle
+!*.gradle.kts
+!gradle.properties
+!gradlew

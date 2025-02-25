@@ -1,0 +1,52 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: DDD
+      changes:
+        - insert:
+            tableName: posts
+            columns:
+              - column:
+                  name: post_code
+                  value: '4f5f0a19-b7e7-44f8-8b4f-348b418a6b9b'  # Пример UUID
+              - column:
+                  name: post_name
+                  value: 'Post 1'
+        - insert:
+            tableName: posts
+            columns:
+              - column:
+                  name: post_code
+                  value: '9fcb0a19-b7e7-44f8-8b4f-348b418a6b9b'
+              - column:
+                  name: post_name
+                  value: 'Post 2'
+        - insert:
+            tableName: posts
+            columns:
+              - column:
+                  name: post_code
+                  value: '3c5a0a19-b7e7-44f8-8b4f-348b418a6b9b'
+              - column:
+                  name: post_name
+                  value: 'Post 3'
+        - insert:
+            tableName: posts
+            columns:
+              - column:
+                  name: post_code
+                  value: '1f6f0a19-b7e7-44f8-8b4f-348b418a6b9b'
+              - column:
+                  name: post_name
+                  value: 'Post 4'
+        - insert:
+            tableName: posts
+            columns:
+              - column:
+                  name: post_code
+                  value: '7f8e0a19-b7e7-44f8-8b4f-348b418a6b9b'
+              - column:
+                  name: post_name
+                  value: 'Post 5'
+
+

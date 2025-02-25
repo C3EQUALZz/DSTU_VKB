@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      author: c3equalz
+      id: 259
+      changes:
+        - sqlFile:
+            dbms: postgresql
+            encoding: utf8
+            endDelimiter: \n$$
+            path: migrations/v.1.2.0/create-function-for-setting-system-time.sql
+            splitStatements: true
+            stripComments: false
+  - changeSet:
+      author: c3equalz
+      id: 260
+      changes:
+        - sqlFile:
+            dbms: postgresql
+            encoding: utf8
+            endDelimiter: \n$$
+            path: migrations/v.1.2.0/create-function-versioning.sql
+            splitStatements: true
+            stripComments: false

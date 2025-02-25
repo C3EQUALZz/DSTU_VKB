@@ -1,0 +1,121 @@
+services:
+  repair-service-app:
+    image: repair-service-app:latest
+    build:
+      context: ..
+      args:
+        DOCKER_BUILDKIT: 1
+    restart: on-failure
+    ports:
+      - "${APP_PORT}:8080"
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:8080/ || exit 1
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+      retries: 5
+    depends_on:
+      postgres:
+        condition: service_healthy
+      liquibase:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+    networks:
+      - my_network
+    env_file:
+      - ../.env
+
+  postgres:
+    image: postgres:16.3-alpine
+    restart: on-failure
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: repair_service
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d repair_service" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - my_network
+    env_file:
+      - ../.env
+
+  pgadmin:
+    image: dpage/pgadmin4:8.14.0
+    restart: on-failure
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+      - ./pgadmin/servers.json:/pgadmin4/servers.json
+      - ./pgadmin/pgpass:/pgadmin4/pgpass
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PG_ADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:80/misc/ping || exit -1
+      interval: 10s
+      timeout: 5s
+      start_period: 10s
+      retries: 5
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    entrypoint: /bin/sh -c "chmod 600 /pgadmin4/pgpass; /entrypoint.sh;"
+    networks:
+      - my_network
+    env_file:
+      - ../.env
+
+
+  liquibase:
+    container_name: liquibase
+    image: liquibase/liquibase:4.31-alpine
+    command: liquibase update --url=jdbc:postgresql://postgres:5432/${POSTGRES_DB} --username=${POSTGRES_USER} --password=${POSTGRES_PASSWORD} --changelog-file=/migrations/db.changeLog-master.yaml
+    volumes:
+      - ./../src/main/resources/db/changelog/:/liquibase/migrations/
+    networks:
+      - my_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - ../.env
+
+  redis:
+    container_name: redis
+    image: redis:6.2-alpine
+    restart: on-failure
+    ports:
+      - '${REDIS_PORT}:6379'
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli ping | grep PONG" ]
+      interval: 1s
+      timeout: 3s
+      retries: 5
+    command: [ "redis-server", "--appendonly yes", "--requirepass", "${REDIS_PASSWORD}" ]
+    volumes:
+      - redis_data:/data
+    env_file:
+      - ../.env
+    networks:
+      - my_network
+
+
+volumes:
+  postgres_data:
+  pgadmin_data:
+  redis_data:
+
+networks:
+  my_network:

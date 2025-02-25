@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - include:
+      file: migrations/v.1.0.0/create-tables.sql
+  - include:
+      file: migrations/v.1.0.0/init-insert.yaml
+  - include:
+      file: migrations/v.1.0.0/fix-constraint-phone-number.sql
+  - include:
+      file: migrations/v.1.1.0/create-trigger.sql
+  - include:
+      file: migrations/v.1.1.0/init-insert.sql
+  - include:
+      file: migrations/v.1.2.0/create-functions.yaml
+  - include:
+      file: migrations/v.1.3.0/modify-tables-for-versioning.sql
+  - include:
+      file: migrations/v.1.3.0/create-triggers-for-versioning-tables.sql
+  - include:
+      file: migrations/v.1.4.0/add-constraint-to-components_order.sql
+  - include:
+      file: migrations/v.1.4.0/add-cascade.sql

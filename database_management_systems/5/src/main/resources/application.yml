@@ -1,0 +1,34 @@
+spring:
+  config:
+    import: "file:.env[.properties]"
+  application:
+    name: first-rest-app
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    open-in-view: false
+  my-admin:
+    name: ${ADMIN_NAME}
+    surname: ${ADMIN_SURNAME}
+    patronymic: ${ADMIN_PATRONYMIC}
+    phone_number: ${ADMIN_PHONE_NUMBER}
+    email: ${ADMIN_EMAIL}
+    password: ${ADMIN_PASSWORD}
+  secret-Key: ${SECRET_KEY}
+  cache:
+    type: redis
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
+    password: ${REDIS_PASSWORD}
+    redis:
+      time-to-live: 60000
+logging:
+  file:
+    path: ./../../../logs/
+

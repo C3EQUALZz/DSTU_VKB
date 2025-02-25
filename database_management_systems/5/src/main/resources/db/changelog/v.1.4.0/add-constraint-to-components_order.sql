@@ -1,0 +1,1 @@
+ALTER TABLE orders ADD UNIQUE (order_components_code);
