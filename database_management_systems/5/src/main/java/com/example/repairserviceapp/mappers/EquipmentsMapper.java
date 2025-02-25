@@ -1,42 +1,24 @@
 package com.example.repairserviceapp.mappers;
 
 import com.example.repairserviceapp.DTOs.equipment.HistoryEquipmentDTOResponse;
-import com.example.repairserviceapp.DTOs.order.OrderDTOResponse;
+import com.example.repairserviceapp.entities.Equipment;
 import com.example.repairserviceapp.entities.EquipmentHistory;
 import lombok.Setter;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
-import java.util.List;
-import java.util.UUID;
-
 @Mapper(componentModel = "spring")
-public abstract class EquipmentsMapper {
+public abstract class EquipmentsMapper extends BaseMapper {
 
     @Setter(onMethod = @__(@Autowired))
-    private OrderMapper orderMapper;
+    protected OrderMapper orderMapper;
 
-    public HistoryEquipmentDTOResponse toDTO(EquipmentHistory equipmentHistory) {
-        if (equipmentHistory == null) {
-            return null;
-        }
+    @Mapping(target = "orders", expression = "java(equipment.getOrders().stream().map(orderMapper::toDTO).toList())")
+    @Mapping(target = "offsetDateTime", expression = "java(convertTime(equipment.getLocalDateRange()))")
+    public abstract HistoryEquipmentDTOResponse toHistoryDTO(Equipment equipment);
 
-        UUID id;
-        String name;
-        String serialNumber;
-        String model;
-        List<OrderDTOResponse> orders;
-        OffsetDateTime localDateRange;
-
-        id = equipmentHistory.getId();
-        name = equipmentHistory.getName();
-        serialNumber = equipmentHistory.getSerialNumber();
-        model = equipmentHistory.getModel();
-        orders = equipmentHistory.getOrders().stream().map(order -> orderMapper.toDTO(order)).toList();
-        localDateRange = equipmentHistory.getLocalDateRange().lower().toOffsetDateTime().withOffsetSameInstant(ZoneOffset.UTC);
-
-        return new HistoryEquipmentDTOResponse(id, name, serialNumber, model, orders, localDateRange);
-    }
+    @Mapping(target = "orders", ignore = true)
+    @Mapping(target = "offsetDateTime", expression = "java(convertTime(historyEquipment.getLocalDateRange()))")
+    public abstract HistoryEquipmentDTOResponse toHistoryDTO(EquipmentHistory historyEquipment);
 }

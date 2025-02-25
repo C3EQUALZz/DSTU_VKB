@@ -58,7 +58,7 @@ public class EquipmentsService {
 
 
     @Transactional
-    public EquipmentHistory restore(UUID equipment, OffsetDateTime timestamp) {
+    public Equipment restore(UUID equipment, OffsetDateTime timestamp) {
 
         EquipmentHistory equipmentHistory = equipmentsHistoryRepo
                 .findByEquipmentIdAndTimestamp(equipment, timestamp)
@@ -66,6 +66,10 @@ public class EquipmentsService {
                         "There is no client with this id " + equipment + " or timestamp " + timestamp
                 ));
 
-        return equipmentsHistoryRepo.save(equipmentHistory);
+        equipmentsRepo.syncEquipmentsFromHistory(equipmentHistory);
+
+        equipmentsHistoryRepo.delete(equipmentHistory);
+
+        return equipmentsRepo.findById(equipmentHistory.getId()).orElseThrow(() -> new EntityNotFoundException("There is no equipment with this id. Please check the code, there is bug"));
     }
 }

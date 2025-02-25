@@ -11,13 +11,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
-import java.util.UUID;
-
 @Mapper(componentModel = "spring")
-public abstract class OrderMapper {
+public abstract class OrderMapper extends BaseMapper {
 
     @Setter(onMethod = @__(@Autowired))
     protected ClientsService clientsService;
@@ -44,39 +39,19 @@ public abstract class OrderMapper {
     @Mapping(target = "orderOfComponents", expression = "java(orderOfComponentsService.read(orderDTORequest.orderOfComponentsId()))")
     public abstract Order toOrder(OrderDTORequest orderDTORequest);
 
-    public OrderHistoryDTOResponse toDTO(OrderHistory orderHistory) {
-        if (orderHistory == null) {
-            return null;
-        }
+    @Mapping(target = "clientId", expression = "java(order.getClient().getId())")
+    @Mapping(target = "equipmentId", expression = "java(order.getEquipment().getId())")
+    @Mapping(target = "masterId", expression = "java(order.getMaster().getId())")
+    @Mapping(target = "statusId", expression = "java(order.getStatus().getId())")
+    @Mapping(target = "orderOfComponentsId", expression = "java(order.getOrderOfComponents()==null ? null  : order.getOrderOfComponents().getId())")
+    @Mapping(target = "offsetDateTime", expression = "java(convertTime(order.getLocalDateRange()))")
+    public abstract OrderHistoryDTOResponse toHistoryDTO(Order order);
 
-        UUID id;
-        UUID clientId;
-        UUID equipmentId;
-        LocalDate date;
-        UUID masterId;
-        UUID statusId;
-        UUID orderOfComponentsId;
-        OffsetDateTime offsetDateTime;
-
-        id = orderHistory.getId();
-        clientId = orderHistory.getClient().getId();
-        equipmentId = orderHistory.getEquipment().getId();
-        masterId = orderHistory.getMaster().getId();
-        statusId = orderHistory.getStatus().getId();
-        date = orderHistory.getDate();
-        orderOfComponentsId = orderHistory.getOrderOfComponents().getId();
-        offsetDateTime = orderHistory.getLocalDateRange().lower().toOffsetDateTime().withOffsetSameInstant(ZoneOffset.UTC);
-
-        return new OrderHistoryDTOResponse(
-                id,
-                date,
-                clientId,
-                equipmentId,
-                masterId,
-                statusId,
-                orderOfComponentsId,
-                offsetDateTime
-        );
-    }
-
+    @Mapping(target = "clientId", expression = "java(orderHistory.getClientCode())")
+    @Mapping(target = "equipmentId", expression = "java(orderHistory.getEquipmentCode())")
+    @Mapping(target = "masterId", expression = "java(orderHistory.getMasterCode())")
+    @Mapping(target = "statusId", expression = "java(orderHistory.getStatusCode())")
+    @Mapping(target = "orderOfComponentsId", expression = "java(orderHistory.getOrderComponentsCode())")
+    @Mapping(target = "offsetDateTime", expression = "java(convertTime(orderHistory.getLocalDateRange()))")
+    public abstract OrderHistoryDTOResponse toHistoryDTO(OrderHistory orderHistory);
 }

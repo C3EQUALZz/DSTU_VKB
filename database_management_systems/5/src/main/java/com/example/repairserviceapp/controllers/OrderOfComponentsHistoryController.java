@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@Tag(name = "Контроллер для управления заказов компонентов", description = "Здесь реализуется свойство темпоральности")
-@PreAuthorize("hasAuthority('ADMIN')")
+@Tag(name = "Контроллер для управления историей заказов компонентов", description = "Здесь реализуется свойство темпоральности")
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 @RestController
 @RequestMapping("/api/history/order-of-components")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -31,7 +31,7 @@ public class OrderOfComponentsHistoryController extends BaseController {
     )
     @PatchMapping("/{id}")
     public OrderOfComponentsHistoryDTOResponse restore(@PathVariable("id") UUID id, @RequestBody @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime timestamp) {
-        return orderOfComponentsMapper.toDTO(orderOfComponentsService.restore(id, timestamp));
+        return orderOfComponentsMapper.toHistoryDTO(orderOfComponentsService.restore(id, timestamp));
     }
 
     @Operation(
@@ -43,7 +43,7 @@ public class OrderOfComponentsHistoryController extends BaseController {
         return orderOfComponentsService
                 .readAllHistory()
                 .stream()
-                .map(orderOfComponentsMapper::toDTO)
+                .map(orderOfComponentsMapper::toHistoryDTO)
                 .collect(Collectors.toList());
     }
 }

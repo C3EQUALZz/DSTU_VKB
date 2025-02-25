@@ -1,27 +1,18 @@
 package com.example.repairserviceapp.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
-import java.time.LocalDate;
-import java.util.UUID;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name="orders")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@Setter
 @Getter
+@Setter
 @ToString
-public class Order extends BaseEntity {
-
-    @Id
-    @Column(name="order_code")
-    private UUID id;
-
-    @Column(name="order_date")
-    private LocalDate date;
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
+public class Order extends BaseOrder {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="client_code", referencedColumnName = "client_code")

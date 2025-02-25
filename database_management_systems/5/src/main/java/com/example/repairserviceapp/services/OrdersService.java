@@ -57,13 +57,24 @@ public class OrdersService {
     }
 
     @Transactional
-    public OrderHistory restore(UUID orderId, OffsetDateTime timestamp) {
+    public Order restore(UUID orderId, OffsetDateTime timestamp) {
         OrderHistory orderHistory = ordersHistoryRepo
                 .findByOrderIdAndTimestamp(orderId, timestamp)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "There is no order with this id " + orderId + " and timestamp " + timestamp
                 ));
 
-        return ordersHistoryRepo.save(orderHistory);
+        ordersRepo.syncOrderFromHistory(
+                orderHistory,
+                orderHistory.getClientCode(),
+                orderHistory.getEquipmentCode(),
+                orderHistory.getMasterCode(),
+                orderHistory.getStatusCode(),
+                orderHistory.getOrderComponentsCode()
+        );
+
+        ordersHistoryRepo.delete(orderHistory);
+
+        return ordersRepo.findById(orderId).orElseThrow(() -> new EntityNotFoundException("There is no order with this id"));
     }
 }

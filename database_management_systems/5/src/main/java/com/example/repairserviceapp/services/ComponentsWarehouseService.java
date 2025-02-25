@@ -3,9 +3,11 @@ package com.example.repairserviceapp.services;
 import com.example.repairserviceapp.entities.ComponentsWarehouse;
 import com.example.repairserviceapp.entities.ComponentsWarehouseHistory;
 import com.example.repairserviceapp.exceptions.EntityNotFoundException;
+import com.example.repairserviceapp.mappers.ComponentsWarehouseMapper;
 import com.example.repairserviceapp.repos.ComponentsWarehouseHistoryRepo;
 import com.example.repairserviceapp.repos.ComponentsWarehouseRepo;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,7 @@ import java.util.UUID;
 @Service
 @Transactional(readOnly = true)
 @AllArgsConstructor(onConstructor = @__(@Autowired))
+@Slf4j
 public class ComponentsWarehouseService {
 
     private final ComponentsWarehouseRepo componentsWarehouseRepo;
@@ -59,13 +62,25 @@ public class ComponentsWarehouseService {
     }
 
     @Transactional
-    public ComponentsWarehouseHistory restore(UUID clientId, OffsetDateTime timestamp) {
+    public ComponentsWarehouse restore(UUID componentWarehouseId, OffsetDateTime timestamp) {
+
+        log.debug("Restoring component warehouse with id {}", componentWarehouseId);
 
         ComponentsWarehouseHistory component = componentsWarehouseHistoryRepo
-                .findByComponentsWarehouseIdAndTimestamp(clientId, timestamp)
+                .findByComponentsWarehouseIdAndTimestamp(componentWarehouseId, timestamp)
                 .orElseThrow(() -> new EntityNotFoundException("There is no client with this id"));
 
-        return componentsWarehouseRepo.save(component);
+        log.debug("Find old component warehouse in temporal table: {}", component);
+
+        componentsWarehouseRepo.syncComponentWarehouseFromHistory(component);
+
+        log.debug("Synchronized component warehouse");
+
+        componentsWarehouseHistoryRepo.delete(component);
+
+        log.debug("Deleted from temporal table");
+
+        return componentsWarehouseRepo.findById(componentWarehouseId).orElseThrow(() -> new EntityNotFoundException("There is no component with this id, please fix bug with temporal"));
     }
 
 }

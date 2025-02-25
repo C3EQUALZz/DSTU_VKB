@@ -7,6 +7,7 @@ import com.example.repairserviceapp.exceptions.EntityNotFoundException;
 import com.example.repairserviceapp.repos.MastersHistoryRepo;
 import com.example.repairserviceapp.repos.MastersRepo;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import java.util.UUID;
 @Service
 @Transactional(readOnly = true)
 @AllArgsConstructor(onConstructor = @__(@Autowired))
+@Slf4j
 public class MastersService {
 
     private final MastersRepo mastersRepo;
@@ -67,7 +69,9 @@ public class MastersService {
     }
 
     @Transactional
-    public MasterHistory restore(UUID masterId, OffsetDateTime timestamp) {
+    public Master restore(UUID masterId, OffsetDateTime timestamp) {
+
+        log.info("Restoring master with id: {} ", masterId);
 
         MasterHistory historyMaster = mastersHistoryRepo
                 .findByMasterIdAndTimestamp(masterId, timestamp)
@@ -75,6 +79,12 @@ public class MastersService {
                         "There is no master with this id " + masterId + " and this timestamp " + timestamp
                 ));
 
-        return mastersRepo.save(historyMaster);
+        var postCode = historyMaster.getPostCode();
+
+        log.info("Post code: {}", postCode);
+
+        mastersRepo.syncMasterFromHistory(historyMaster, postCode);
+
+        return mastersRepo.findById(masterId).orElseThrow(() -> new EntityNotFoundException("Table with masters wasn't updated, please check the code"));
     }
 }

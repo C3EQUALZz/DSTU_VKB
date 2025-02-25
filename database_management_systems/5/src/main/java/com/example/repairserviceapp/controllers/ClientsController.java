@@ -35,7 +35,7 @@ public class ClientsController extends BaseController {
             description = "Позволяет просмотреть всех пользователей."
     )
     @GetMapping("")
-    @PreAuthorize("hasAnyAuthority('ROLE_USER')")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     public List<ClientDTOResponse> readAll() {
         return clientsService
                 .readAll()
@@ -49,7 +49,7 @@ public class ClientsController extends BaseController {
             description = "Позволяет посмотреть данные об одном пользователе, зная его уникальный идентификатор. "
     )
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('ROLE_USER')")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     public ClientDTOResponse read(
             @PathVariable("id") @Parameter(description = "Уникальный идентификатор клиента", required = true) UUID id
     ) {

@@ -6,7 +6,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Table(name = "orders_statuses")
@@ -14,14 +13,7 @@ import java.util.UUID;
 @Setter
 @Getter
 @ToString
-public class Status extends BaseEntity {
-
-    @Id
-    @Column(name = "status_code")
-    private UUID id;
-
-    @Column(name = "status_name")
-    private String name;
+public class Status extends BaseStatus {
 
     @OneToMany(mappedBy = "status")
     @ToString.Exclude

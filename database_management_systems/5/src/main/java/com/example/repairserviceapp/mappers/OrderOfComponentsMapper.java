@@ -12,12 +12,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
-import java.util.UUID;
-
 @Mapper(componentModel = "spring")
-public abstract class OrderOfComponentsMapper {
+public abstract class OrderOfComponentsMapper extends BaseMapper {
 
     @Setter(onMethod = @__(@Autowired))
     protected ComponentsWarehouseService componentsWarehouseService;
@@ -34,26 +30,13 @@ public abstract class OrderOfComponentsMapper {
     @Mapping(target = "executionOfOrderId", expression = "java(orderOfComponents.getExecutionOfOrder().getId())")
     public abstract OrderOfComponentsDTOResponse toDTO(OrderOfComponents orderOfComponents);
 
-    public OrderOfComponentsHistoryDTOResponse toDTO(OrderOfComponentsHistory orderOfComponentsHistory) {
-        if (orderOfComponentsHistory == null) {
-            return null;
-        }
+    @Mapping(target = "componentsWarehouseId", expression = "java(orderOfComponents.getComponentsWarehouse().getId())")
+    @Mapping(target = "executionOfOrderId", expression = "java(orderOfComponents.getExecutionOfOrder().getId())")
+    @Mapping(target = "offsetDateTime", expression = "java(convertTime(orderOfComponents.getLocalDateRange()))")
+    public abstract OrderOfComponentsHistoryDTOResponse toHistoryDTO(OrderOfComponents orderOfComponents);
 
-        UUID id;
-        UUID componentsWarehouseId;
-        UUID executionOfOrderId;
-        OffsetDateTime offsetDateTime;
-
-        id = orderOfComponentsHistory.getId();
-        componentsWarehouseId = orderOfComponentsHistory.getComponentsWarehouse().getId();
-        executionOfOrderId = orderOfComponentsHistory.getExecutionOfOrder().getId();
-        offsetDateTime = orderOfComponentsHistory.getLocalDateRange().lower().toOffsetDateTime().withOffsetSameInstant(ZoneOffset.UTC);
-
-        return new OrderOfComponentsHistoryDTOResponse(
-                id,
-                componentsWarehouseId,
-                executionOfOrderId,
-                offsetDateTime
-        );
-    }
+    @Mapping(target = "componentsWarehouseId", expression = "java(orderOfComponentsHistory.getComponentCode())")
+    @Mapping(target = "executionOfOrderId", expression = "java(orderOfComponentsHistory.getExecutionCode())")
+    @Mapping(target = "offsetDateTime", expression = "java(convertTime(orderOfComponentsHistory.getLocalDateRange()))")
+    public abstract OrderOfComponentsHistoryDTOResponse toHistoryDTO(OrderOfComponentsHistory orderOfComponentsHistory);
 }

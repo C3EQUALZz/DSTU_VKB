@@ -18,7 +18,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Tag(name = "Контроллер для управления историей заказов клиента", description = "Здесь реализуется свойство темпоральности")
-@PreAuthorize("hasAuthority('ADMIN')")
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 @RestController
 @RequestMapping("api/history/order")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -32,7 +32,7 @@ public class OrdersHistoryController extends BaseController {
     )
     @PatchMapping("/{id}")
     public OrderHistoryDTOResponse restore(@PathVariable("id") UUID id, @RequestBody @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime timestamp) {
-        return orderMapper.toDTO(ordersService.restore(id, timestamp));
+        return orderMapper.toHistoryDTO(ordersService.restore(id, timestamp));
     }
 
     @Operation(
@@ -44,7 +44,7 @@ public class OrdersHistoryController extends BaseController {
         return ordersService
                 .readAllHistory()
                 .stream()
-                .map(orderMapper::toDTO)
+                .map(orderMapper::toHistoryDTO)
                 .collect(Collectors.toList());
     }
 }

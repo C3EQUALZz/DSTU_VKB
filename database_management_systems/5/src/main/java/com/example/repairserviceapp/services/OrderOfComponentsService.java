@@ -58,7 +58,7 @@ public class OrderOfComponentsService {
     }
 
     @Transactional
-    public OrderOfComponentsHistory restore(UUID orderOfComponentId, OffsetDateTime timestamp) {
+    public OrderOfComponents restore(UUID orderOfComponentId, OffsetDateTime timestamp) {
 
         OrderOfComponentsHistory historyOrder = orderOfComponentsHistoryRepo
                 .findByOrderOfComponentsIdAndTimestamp(orderOfComponentId, timestamp)
@@ -66,6 +66,14 @@ public class OrderOfComponentsService {
                         "There is no order with this id " + orderOfComponentId + " and this timestamp " + timestamp
                 ));
 
-        return orderOfComponentsHistoryRepo.save(historyOrder);
+        orderOfComponentsRepo.syncOrderOfComponentsFromHistory(
+                historyOrder,
+                historyOrder.getComponentCode(),
+                historyOrder.getExecutionCode()
+        );
+
+        orderOfComponentsHistoryRepo.delete(historyOrder);
+
+        return orderOfComponentsRepo.findById(historyOrder.getId()).orElseThrow(() -> new EntityNotFoundException("Entity wasn't found, check repo method"));
     }
 }

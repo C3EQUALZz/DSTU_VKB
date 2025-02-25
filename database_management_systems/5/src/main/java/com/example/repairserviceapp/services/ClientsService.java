@@ -80,7 +80,9 @@ public class ClientsService {
     }
 
     @Transactional
-    public ClientHistory restore(UUID clientId, OffsetDateTime timestamp) {
+    public Client restore(UUID clientId, OffsetDateTime timestamp) {
+
+        log.debug("Restoring client with id {}", clientId);
 
         ClientHistory historyClient = clientsHistoryRepo
                 .findByClientIdAndTimestamp(clientId, timestamp)
@@ -88,6 +90,16 @@ public class ClientsService {
                         "There is no client with this id " + clientId + " and this timestamp " + timestamp
                 ));
 
-        return clientsRepo.save(historyClient);
+        log.debug("Founded history client: {}", historyClient);
+
+        clientsRepo.syncClientsFromHistory(historyClient);
+
+        log.debug("Synchronized history client");
+
+        clientsHistoryRepo.delete(historyClient);
+
+        log.debug("deleted client");
+
+        return clientsRepo.findById(historyClient.getId()).orElseThrow(() -> new EntityNotFoundException("There is no client with this id. " + clientId));
     }
 }
