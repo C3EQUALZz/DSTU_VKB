@@ -56,8 +56,8 @@ sudo pdpl-file 3:0:Отдел_2:ccnr /home/work/otdel2
 
 ```bash
 sudo mkdir /home/work/upr
-chmod 770 /home/work/upr
-pdpl-file 3:0:Управление:ccnr /home/work/upr
+sudo chmod 770 /home/work/upr
+sudo pdpl-file 3:0:Управление:ccnr /home/work/upr
 ```
 
 Теперь нам нужно создать каталоги и установить необходимые уровни: 
