@@ -12,7 +12,7 @@ sudo mkdir /home/work
 Теперь поставим владельцев на данную директорию, используя команду, которая представлена ниже:
 
 ```bash
-chown user1:office1 /home/work
+sudo chown user1:office1 /home/work
 ```
 
 > [!NOTE]
@@ -21,7 +21,7 @@ chown user1:office1 /home/work
 Теперь изменим права, как сказано в задании:
 
 ```bash
-chmod 750 /home/work
+sudo chmod 750 /home/work
 ```
 
 > [!NOTE]
