@@ -67,10 +67,10 @@ sudo pdpl-file 3:0:Управление:ccnr /home/work/upr
 ```bash
 sudo mkdir /home/work/otdel1/У{1,2,3}
 sudo chown rukoffice1:office1 /home/work/otdel1/У{1,2,3}
-chmod 770 /home/work/otdel1/У{1,2,3}
-pdpl-file 1:0:Управление:0 /home/work/otdel1/У1
-pdpl-file 1:0:Управление:0 /home/work/otdel1/У2
-pdpl-file 1:0:Управление:0 /home/work/otdel1/У3
+sudo chmod 770 /home/work/otdel1/У{1,2,3}
+sudo pdpl-file 1:0:Управление:0 /home/work/otdel1/У1
+sudo pdpl-file 1:0:Управление:0 /home/work/otdel1/У2
+sudo pdpl-file 1:0:Управление:0 /home/work/otdel1/У3
 ```
 
 Для отдела 2:
@@ -78,10 +78,10 @@ pdpl-file 1:0:Управление:0 /home/work/otdel1/У3
 ```bash
 sudo mkdir /home/work/otdel2/У{1,2,3}
 sudo chown rukoffice1:office1 /home/work/otdel2/У{1,2,3}
-chmod 770 /home/work/otdel2/У{1,2,3}
-pdpl-file 1:0:Управление:0 /home/work/otdel2/У1
-pdpl-file 1:0:Управление:0 /home/work/otdel2/У2
-pdpl-file 1:0:Управление:0 /home/work/otdel3/У3
+sudo chmod 770 /home/work/otdel2/У{1,2,3}
+sudo pdpl-file 1:0:Управление:0 /home/work/otdel2/У1
+sudo pdpl-file 1:0:Управление:0 /home/work/otdel2/У2
+sudo pdpl-file 1:0:Управление:0 /home/work/otdel3/У3
 ```
 
 Для отдела "Управление":
@@ -89,8 +89,8 @@ pdpl-file 1:0:Управление:0 /home/work/otdel3/У3
 ```bash
 sudo mkdir /home/work/upr/У{1,2,3}
 sudo chown rukoffice1:office1 /home/work/upr/У{1,2,3}
-chmod 770 /home/work/upr/У{1,2,3}
-pdpl-file 1:0:Управление:0 /home/work/upr/У1
-pdpl-file 2:0:Управление:0 /home/work/upr/У2
-pdpl-file 3:0:Управление:0 /home/work/upr/У3
+sudo chmod 770 /home/work/upr/У{1,2,3}
+sudo pdpl-file 1:0:Управление:0 /home/work/upr/У1
+sudo pdpl-file 2:0:Управление:0 /home/work/upr/У2
+sudo pdpl-file 3:0:Управление:0 /home/work/upr/У3
 ```
