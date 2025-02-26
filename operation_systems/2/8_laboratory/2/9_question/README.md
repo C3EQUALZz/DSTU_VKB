@@ -81,7 +81,7 @@ sudo chown rukoffice1:office1 /home/work/otdel2/У{1,2,3}
 sudo chmod 770 /home/work/otdel2/У{1,2,3}
 sudo pdpl-file 1:0:Отдел_2:0 /home/work/otdel2/У1
 sudo pdpl-file 1:0:Отдел_2:0 /home/work/otdel2/У2
-sudo pdpl-file 1:0:Отдел_2:0 /home/work/otdel3/У3
+sudo pdpl-file 1:0:Отдел_2:0 /home/work/otdel2/У3
 ```
 
 Для отдела "Управление":
