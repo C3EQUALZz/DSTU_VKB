@@ -30,7 +30,7 @@ sudo chmod 750 /home/work
 Теперь выполните команду, которая представлена ниже:
 
 ```bash
-pdpl-file 3:0:Отдел_1,Отдел_2,Управление:ccnr /home/work
+sudo pdpl-file 3:0:Отдел_1,Отдел_2,Управление:ccnr /home/work
 ```
 
 > [!NOTE]
