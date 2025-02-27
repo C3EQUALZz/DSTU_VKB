@@ -11,7 +11,7 @@
 Уровень доступа 1:
 
 ```bash
-touch /home/work/otdel1/У1/21.txt
+touch /home/work/otdel2/У1/21.txt
 chown user2:office1 /home/work/otdel2/У1/2*.txt
 chmod 660 /home/work/otdel2/У1/2*.txt
 ```
@@ -19,7 +19,7 @@ chmod 660 /home/work/otdel2/У1/2*.txt
 Уровень доступа 2:
 
 ```bash
-touch /home/work/otdel1/У2/22.txt
+touch /home/work/otdel2/У2/22.txt
 chown user2:office1 /home/work/otdel2/У2/2*.txt
 chmod 660 /home/work/otdel2/У2/2*.txt
 ```
@@ -27,7 +27,7 @@ chmod 660 /home/work/otdel2/У2/2*.txt
 Уровень доступа 3:
 
 ```
-touch /home/work/otdel1/У3/23.txt
+touch /home/work/otdel2/У3/23.txt
 chown user2:office1 /home/work/otdel2/У3/2*.txt
 chmod 660 /home/work/otdel2/У3/2*.txt
 ```
