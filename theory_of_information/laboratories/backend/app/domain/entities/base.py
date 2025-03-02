@@ -9,7 +9,7 @@ from typing import (
     Dict,
     get_type_hints,
     Optional,
-    Set,
+    Set, get_origin,
 )
 from uuid import uuid4
 
@@ -30,7 +30,10 @@ class BaseEntity(ABC):
                 continue
 
             value = getattr(self, field_name, None)
-            if not isinstance(value, field_type):
+
+            raw_type = get_origin(field_type) or field_type
+
+            if not isinstance(value, raw_type):
                 try:
                     setattr(self, field_name, field_type(value))
                 except (ValueError, TypeError):
