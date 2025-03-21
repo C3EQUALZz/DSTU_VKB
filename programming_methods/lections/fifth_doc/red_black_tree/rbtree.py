@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Optional, List, Self
+from typing import Optional, List, Self, Generic, TypeVar
+
+T = TypeVar('T')
 
 
 class NodeColor(Enum):
@@ -9,21 +11,21 @@ class NodeColor(Enum):
 
 
 @dataclass
-class RBNode:
-    key: Optional[Any] = None
+class RBNode(Generic[T]):
+    key: Optional[T] = None
     color: NodeColor = NodeColor.RED
     left: Optional[Self] = None
     right: Optional[Self] = None
     parent: Optional[Self] = None
 
 
-class RBTree:
+class RBTree(Generic[T]):
     def __init__(self) -> None:
-        self.sentinel = RBNode(key=None, color=NodeColor.BLACK)
-        self.root = self.sentinel
+        self.sentinel: RBNode[T] = RBNode(key=None, color=NodeColor.BLACK)
+        self.root: RBNode[T] = self.sentinel
 
-    def insert(self, key: Any) -> None:
-        new_node = RBNode(key=key, left=self.sentinel, right=self.sentinel)
+    def insert(self, key: T) -> None:
+        new_node: RBNode[T] = RBNode(key=key, left=self.sentinel, right=self.sentinel)
         parent = None
         current = self.root
 
@@ -46,7 +48,7 @@ class RBTree:
 
         self._fix_insertion(new_node)
 
-    def _left_rotate(self, node: RBNode) -> None:
+    def _left_rotate(self, node: RBNode[T]) -> None:
         right_child = node.right
         node.right = right_child.left
 
@@ -65,7 +67,7 @@ class RBTree:
         right_child.left = node
         node.parent = right_child
 
-    def _right_rotate(self, node: RBNode) -> None:
+    def _right_rotate(self, node: RBNode[T]) -> None:
         left_child = node.left
         node.left = left_child.right
 
@@ -84,7 +86,7 @@ class RBTree:
         left_child.right = node
         node.parent = left_child
 
-    def _fix_insertion(self, node: RBNode) -> None:
+    def _fix_insertion(self, node: RBNode[T]) -> None:
         while node.parent and node.parent.color == NodeColor.RED:
             if node.parent == node.parent.parent.left:
                 uncle = node.parent.parent.right
@@ -117,7 +119,7 @@ class RBTree:
 
         self.root.color = NodeColor.BLACK
 
-    def delete(self, key: Any) -> None:
+    def delete(self, key: T) -> None:
         if (node_to_delete := self.search(key)) is None:
             return
 
@@ -147,7 +149,7 @@ class RBTree:
         if original_color == NodeColor.BLACK:
             self._fix_deletion(x)
 
-    def _replace_node(self, old_node: RBNode, new_node: RBNode) -> None:
+    def _replace_node(self, old_node: RBNode[T], new_node: RBNode[T]) -> None:
         if old_node.parent is None:
             self.root = new_node
         elif old_node == old_node.parent.left:
@@ -156,7 +158,7 @@ class RBTree:
             old_node.parent.right = new_node
         new_node.parent = old_node.parent
 
-    def _fix_deletion(self, node: RBNode) -> None:
+    def _fix_deletion(self, node: RBNode[T]) -> None:
         while node != self.root and node.color == NodeColor.BLACK:
             if node == node.parent.left:
                 sibling = node.parent.right
@@ -207,22 +209,40 @@ class RBTree:
 
         node.color = NodeColor.BLACK
 
-    def search(self, key: Any) -> Optional[RBNode]:
+    def search(self, key: T) -> Optional[RBNode[T]]:
         current = self.root
         while current != self.sentinel and current.key != key:
             current = current.left if key < current.key else current.right
         return current if current != self.sentinel else None
 
-    def _find_min(self, node: RBNode) -> RBNode:
+    def _find_min(self, node: RBNode[T]) -> RBNode[T]:
         while node.left != self.sentinel:
             node = node.left
         return node
 
-    def preorder_traversal(self, node: RBNode) -> List[str]:
+    def preorder_traversal(self, node: RBNode[T]) -> List[str]:
         if node == self.sentinel:
             return []
         return [
             f"{node.key}({node.color.value})",
             *self.preorder_traversal(node.left),
             *self.preorder_traversal(node.right)
+        ]
+
+    def inorder_traversal(self, node: RBNode[T]) -> List[str]:
+        if node == self.sentinel:
+            return []
+        return [
+            *self.inorder_traversal(node.left),
+            f"{node.key}({node.color.value})",
+            *self.inorder_traversal(node.right)
+        ]
+
+    def postorder_traversal(self, node: RBNode[T]) -> List[str]:
+        if node == self.sentinel:
+            return []
+        return [
+            *self.postorder_traversal(node.left),
+            *self.postorder_traversal(node.right),
+            f"{node.key}({node.color.value})"
         ]

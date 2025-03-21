@@ -6,7 +6,7 @@ from rbtree import RBTree, RBNode, NodeColor  # Предполагается, ч
 
 class RBApp:
     def __init__(self, root: tk.Tk) -> None:
-        self.tree = RBTree()
+        self.tree: RBTree[int] = RBTree()
         self.root = root
         self.root.title("Red-Black Tree Visualization")
 
@@ -25,6 +25,8 @@ class RBApp:
             ("Delete", self._delete_key),
             ("Search", self._search_key),
             ("Preorder", self._show_preorder),
+            ("Inorder", self._show_inorder),
+            ("Postorder", self._show_postorder),
         ]
 
         for col, (text, command) in enumerate(buttons, start=1):
@@ -74,10 +76,20 @@ class RBApp:
 
     def _show_preorder(self) -> None:
         traversal = self.tree.preorder_traversal(self.tree.root)
-        messagebox.showinfo(
-            "Preorder Traversal",
-            f"Preorder: {' '.join(traversal)}" if traversal else "Tree is empty"
-        )
+        self._show_traversal("Preorder", traversal)
+
+    def _show_inorder(self) -> None:
+        traversal = self.tree.inorder_traversal(self.tree.root)
+        self._show_traversal("Inorder", traversal)
+
+    def _show_postorder(self) -> None:
+        traversal = self.tree.postorder_traversal(self.tree.root)
+        self._show_traversal("Postorder", traversal)
+
+    @staticmethod
+    def _show_traversal(name: str, traversal: list[str]) -> None:
+        message = f"{name}: {' '.join(traversal)}" if traversal else "Tree is empty"
+        messagebox.showinfo(f"{name} Traversal", message)
 
     def _refresh_ui(self, message: str) -> None:
         self.entry.delete(0, tk.END)
@@ -159,7 +171,7 @@ class RBApp:
 
 def main() -> None:
     root = tk.Tk()
-    app = RBApp(root)
+    RBApp(root)
     root.mainloop()
 
 
