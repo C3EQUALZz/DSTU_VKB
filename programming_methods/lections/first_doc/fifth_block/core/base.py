@@ -83,3 +83,9 @@ class BaseWeightedGraph(BaseGraph[T], ABC):
 
     def get_weight(self, u: T, v: T) -> float:
         return self._weights[u].get(v, float('inf'))
+
+    def __len__(self) -> int:
+        return len(self._weights)
+
+    def __iter__(self) -> Iterator[T]:
+        return iter(self._weights)
