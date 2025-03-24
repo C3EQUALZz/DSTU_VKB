@@ -1,4 +1,0 @@
-node: 7aa9af85cea41b53a97a3192466588e4c007d42c
-node-date: 2024-12-23T14:48:25+09:00
-describe-name: v1.0.0rc2-1-g7aa9af85
-ref-names: HEAD -> master
