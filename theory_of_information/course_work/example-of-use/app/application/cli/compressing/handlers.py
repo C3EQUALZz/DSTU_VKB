@@ -27,7 +27,7 @@ def cli(context: click.Context):
 )
 @click.option(
     "-t", "--type_of_compression",
-    type=click.Choice(["gzip"]),
+    type=click.Choice(["gzip", "pigz"]),
     default="gzip",
     help="Compression type",
 )
