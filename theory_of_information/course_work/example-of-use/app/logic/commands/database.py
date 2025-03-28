@@ -7,3 +7,6 @@ class ListAllDatabasesCommand(AbstractCommand):
     ...
 
 
+@dataclass(frozen=True)
+class CreateDatabaseBackupCommand(AbstractCommand):
+    database_name: str

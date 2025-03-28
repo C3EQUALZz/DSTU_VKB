@@ -4,7 +4,7 @@ from dishka.integrations.click import setup_dishka
 
 from app.infrastructure.uow.compression import CompressionUnitOfWork
 from app.logic.bootstrap import Bootstrap
-from app.logic.commands.database import ListAllDatabasesCommand
+from app.logic.commands.database import ListAllDatabasesCommand, CreateDatabaseBackupCommand
 from app.logic.container import container
 from app.logic.message_bus import MessageBus
 
@@ -19,11 +19,32 @@ def cli(context: click.Context):
 def list_all_databases(bootstrap: FromDishka[Bootstrap[CompressionUnitOfWork]]) -> None:
     """
     Command to list all databases.
-    :return:
+    :return: nothing
     """
     message_bus: MessageBus = bootstrap.get_messagebus()
     message_bus.handle(ListAllDatabasesCommand())
     click.echo("Successfully listed all databases")
+
+
+@cli.command("backup")
+@click.argument(
+    'database_name',
+    type=click.STRING,
+    required=True
+)
+def backup_database(
+        database_name: str,
+        bootstrap: FromDishka[Bootstrap[CompressionUnitOfWork]]
+) -> None:
+    """
+    Command to back up a database.
+    :param database_name: name of the existing database
+    :param bootstrap: bootstrap instance
+    :return: nothing
+    """
+    message_bus: MessageBus = bootstrap.get_messagebus()
+    message_bus.handle(CreateDatabaseBackupCommand(database_name=database_name))
+    click.echo("Successfully backup the database {}".format(database_name))
 
 
 if __name__ == '__main__':
