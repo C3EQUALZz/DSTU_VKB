@@ -5,6 +5,7 @@ from typing import Final
 
 from typing_extensions import override
 
+from app.application.cli.const import BACKUP_DIRECTORY_PATH
 from app.domain.entities.file_objects import FileObject, CompressedFileObject
 from app.domain.values.backup import CompressionType
 from app.infrastructure.compressors.base import Compressor
@@ -13,13 +14,10 @@ logger = logging.getLogger(__name__)
 
 CHUNK_SIZE: Final[int] = 64 * 1024  # 64KB
 
-BACKUP_DIRECTORY_PATH = Path(__file__).resolve().parent.parent.parent.parent / "tmp"
-BACKUP_DIRECTORY_PATH.mkdir(exist_ok=True)
-
 
 class GunZipCompressor(Compressor):
     @override
-    def compress(self, backup: FileObject, tmp_directory: Path = BACKUP_DIRECTORY_PATH) -> CompressedFileObject:
+    def compress(self, backup: FileObject) -> CompressedFileObject:
         source_path: Path = backup.file_path
         dest_path: Path = BACKUP_DIRECTORY_PATH / (source_path.name + '.gz')
 

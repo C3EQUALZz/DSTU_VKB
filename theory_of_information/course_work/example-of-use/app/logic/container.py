@@ -11,9 +11,9 @@ from app.infrastructure.database.postgres import PostgresCLIService, PostgresCon
 from app.infrastructure.uow.compression import CompressionUnitOfWork
 from app.logic.bootstrap import Bootstrap
 from app.logic.commands.compression import CompressFileCommand, DecompressFileCommand
-from app.logic.commands.database import ListAllDatabasesCommand
+from app.logic.commands.database import ListAllDatabasesCommand, CreateDatabaseBackupCommand
 from app.logic.handlers.compression.commands import CompressFileCommandHandler, DecompressFileCommandHandler
-from app.logic.handlers.database.commands import ListAllDatabasesCommandHandler
+from app.logic.handlers.database.commands import ListAllDatabasesCommandHandler, CreateDatabaseBackupCommandHandler
 from app.logic.types.handlers import EventHandlerMapping, CommandHandlerMapping, UT
 from app.settings.config import Settings, get_settings
 from typing import cast
@@ -31,6 +31,7 @@ class HandlerProvider(Provider):
                 CompressFileCommand: CompressFileCommandHandler,
                 DecompressFileCommand: DecompressFileCommandHandler,
                 ListAllDatabasesCommand: ListAllDatabasesCommandHandler,
+                CreateDatabaseBackupCommand: CreateDatabaseBackupCommandHandler
             },
         )
 

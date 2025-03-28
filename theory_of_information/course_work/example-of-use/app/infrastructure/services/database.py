@@ -8,3 +8,5 @@ class DatabaseService:
     def list_all_databases(self) -> None:
         self._cli_service.list_all_databases()
 
+    def create_backup(self) -> None:
+        self._cli_service.create_backup()

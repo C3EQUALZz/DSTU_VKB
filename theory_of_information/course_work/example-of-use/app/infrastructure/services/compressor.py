@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from app.domain.entities.file_objects import CompressedFileObject, FileObject
 from app.infrastructure.compressors.base import Compressor
 

@@ -2,6 +2,7 @@ import click
 from dishka import FromDishka
 from dishka.integrations.click import setup_dishka
 
+from app.application.cli.const import BACKUP_DIRECTORY_PATH
 from app.infrastructure.uow.compression import CompressionUnitOfWork
 from app.logic.bootstrap import Bootstrap
 from app.logic.commands.database import ListAllDatabasesCommand, CreateDatabaseBackupCommand
@@ -12,6 +13,7 @@ from app.logic.message_bus import MessageBus
 @click.group()
 @click.pass_context
 def cli(context: click.Context):
+    BACKUP_DIRECTORY_PATH.mkdir(exist_ok=True)
     setup_dishka(container=container, context=context, auto_inject=True)
 
 
