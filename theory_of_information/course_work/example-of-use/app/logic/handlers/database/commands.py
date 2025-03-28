@@ -1,5 +1,8 @@
 from app.infrastructure.services.database import DatabaseService
-from app.logic.commands.database import ListAllDatabasesCommand, CreateDatabaseBackupCommand
+from app.logic.commands.database import (
+    CreateDatabaseBackupCommand,
+    ListAllDatabasesCommand,
+)
 from app.logic.handlers.database.base import DatabaseCLICommandHandler
 
 

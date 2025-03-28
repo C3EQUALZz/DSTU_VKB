@@ -1,13 +1,15 @@
 import click
-from dishka import FromDishka
-from dishka.integrations.click import setup_dishka
-
 from app.application.cli.const import BACKUP_DIRECTORY_PATH
 from app.infrastructure.uow.compression import CompressionUnitOfWork
 from app.logic.bootstrap import Bootstrap
-from app.logic.commands.database import ListAllDatabasesCommand, CreateDatabaseBackupCommand
+from app.logic.commands.database import (
+    CreateDatabaseBackupCommand,
+    ListAllDatabasesCommand,
+)
 from app.logic.container import container
 from app.logic.message_bus import MessageBus
+from dishka import FromDishka
+from dishka.integrations.click import setup_dishka
 
 
 @click.group()
@@ -29,15 +31,8 @@ def list_all_databases(bootstrap: FromDishka[Bootstrap[CompressionUnitOfWork]]) 
 
 
 @cli.command("backup")
-@click.argument(
-    'database_name',
-    type=click.STRING,
-    required=True
-)
-def backup_database(
-        database_name: str,
-        bootstrap: FromDishka[Bootstrap[CompressionUnitOfWork]]
-) -> None:
+@click.argument("database_name", type=click.STRING, required=True)
+def backup_database(database_name: str, bootstrap: FromDishka[Bootstrap[CompressionUnitOfWork]]) -> None:
     """
     Command to back up a database.
     :param database_name: name of the existing database
@@ -49,5 +44,5 @@ def backup_database(
     click.echo("Successfully backup the database {}".format(database_name))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     cli()

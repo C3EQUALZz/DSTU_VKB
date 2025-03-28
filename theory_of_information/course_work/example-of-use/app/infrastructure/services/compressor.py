@@ -1,7 +1,8 @@
-from app.domain.entities.file_objects import CompressedFileObject, FileObject
+from app.domain.entities.file_objects import (
+    CompressedFileObject,
+    FileObject,
+)
 from app.infrastructure.compressors.base import Compressor
-
-
 
 
 class CompressorService:

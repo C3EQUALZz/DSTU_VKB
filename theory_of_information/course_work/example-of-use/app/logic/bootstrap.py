@@ -3,12 +3,12 @@ from types import MappingProxyType
 from typing import (
     Any,
     Dict,
+    Generic,
     List,
     Optional,
     Type,
     Union,
 )
-from typing import Generic
 
 from app.logic.commands.base import AbstractCommand
 from app.logic.events.base import AbstractEvent
@@ -20,7 +20,7 @@ from app.logic.message_bus import MessageBus
 from app.logic.types.handlers import (
     CommandHandlerMapping,
     EventHandlerMapping,
-    UT
+    UT,
 )
 
 
@@ -30,11 +30,11 @@ class Bootstrap(Generic[UT]):
     """
 
     def __init__(
-            self,
-            uow: UT,
-            events_handlers_for_injection: EventHandlerMapping,  # type: ignore
-            commands_handlers_for_injection: CommandHandlerMapping,  # type: ignore
-            dependencies: Optional[Dict[str, Any]] = None,
+        self,
+        uow: UT,
+        events_handlers_for_injection: EventHandlerMapping,  # type: ignore
+        commands_handlers_for_injection: CommandHandlerMapping,  # type: ignore
+        dependencies: Optional[Dict[str, Any]] = None,
     ) -> None:
         self._uow = uow
         self._dependencies: Dict[str, Any] = {"uow": self._uow}
@@ -67,8 +67,7 @@ class Bootstrap(Generic[UT]):
         )
 
     def _inject_dependencies(
-            self,
-            handler: Union[Type[AbstractEventHandler], Type[AbstractCommandHandler]]
+        self, handler: Union[Type[AbstractEventHandler], Type[AbstractCommandHandler]]
     ) -> Union[AbstractEventHandler, AbstractCommandHandler]:
         """
         Inspecting handler to know its signature and init params, after which only necessary dependencies will be

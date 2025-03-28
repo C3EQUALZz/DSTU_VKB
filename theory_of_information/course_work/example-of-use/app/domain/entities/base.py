@@ -3,7 +3,10 @@ from dataclasses import (
     dataclass,
     field,
 )
-from datetime import datetime, UTC
+from datetime import (
+    datetime,
+    UTC,
+)
 from typing import (
     Any,
     Dict,
@@ -24,9 +27,7 @@ class BaseEntity(ABC):
     updated_at: datetime = field(default_factory=lambda: datetime.now(UTC), kw_only=True)
 
     async def to_dict(
-            self,
-            exclude: Optional[Set[str]] = None,
-            include: Optional[Dict[str, Any]] = None
+        self, exclude: Optional[Set[str]] = None, include: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """
         Create a dictionary representation of the entity.

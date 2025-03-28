@@ -2,6 +2,7 @@
 Functions and classes to speed up compression of files by utilizing
 multiple cores on a system.
 """
+
 import gzip
 import logging
 import os
@@ -11,13 +12,20 @@ import zlib
 from multiprocessing.dummy import Pool
 from pathlib import Path
 from queue import PriorityQueue
-from threading import Lock, Thread
-from typing_extensions import override
+from threading import (
+    Lock,
+    Thread,
+)
 
-from app.domain.entities.file_objects import FileObject, CompressedFileObject
+from app.domain.entities.file_objects import (
+    CompressedFileObject,
+    FileObject,
+)
 from app.domain.values.backup import CompressionType
 from app.infrastructure.compressors.base import Compressor
 from app.infrastructure.compressors.gunzip import CHUNK_SIZE
+from typing_extensions import override
+
 
 CPU_COUNT = os.cpu_count()
 DEFAULT_BLOCK_SIZE_KB = 128
@@ -37,14 +45,14 @@ FCOMMENT = 0x10
 
 
 class PigzFile:  # pylint: disable=too-many-instance-attributes
-    """ Class to implement Pigz functionality in Python """
+    """Class to implement Pigz functionality in Python"""
 
     def __init__(
-            self,
-            compression_target,
-            compresslevel=_COMPRESS_LEVEL_BEST,
-            blocksize=DEFAULT_BLOCK_SIZE_KB,
-            workers=CPU_COUNT,
+        self,
+        compression_target,
+        compresslevel=_COMPRESS_LEVEL_BEST,
+        blocksize=DEFAULT_BLOCK_SIZE_KB,
+        workers=CPU_COUNT,
     ):
         """
         Take in a file or directory and gzip using multiple system cores.
@@ -138,25 +146,25 @@ class PigzFile:  # pylint: disable=too-many-instance-attributes
         self.output_file.write((0x8B).to_bytes(1, sys.byteorder))
 
     def _write_header_cm(self):
-        """ Write the CM (compression method) to file header """
+        """Write the CM (compression method) to file header"""
         self.output_file.write((8).to_bytes(1, sys.byteorder))
 
     def _write_header_flg(self, flags):
-        """ Write FLG (FLaGs) """
+        """Write FLG (FLaGs)"""
         self.output_file.write((flags).to_bytes(1, sys.byteorder))
 
     def _write_header_mtime(self):
-        """ Write MTIME (Modification time) """
+        """Write MTIME (Modification time)"""
         mtime = self._determine_mtime()
         self.output_file.write((mtime).to_bytes(4, sys.byteorder))
 
     def _write_header_xfl(self):
-        """ Write XFL (eXtra FLags) """
+        """Write XFL (eXtra FLags)"""
         extra_flags = self._determine_extra_flags(self.compression_level)
         self.output_file.write((extra_flags).to_bytes(1, sys.byteorder))
 
     def _write_header_os(self):
-        """ Write OS """
+        """Write OS"""
         os_number = self._determine_operating_system()
         self.output_file.write((os_number).to_bytes(1, sys.byteorder))
 
@@ -347,9 +355,7 @@ class PigzFile:  # pylint: disable=too-many-instance-attributes
         self.output_file.write((self.checksum).to_bytes(4, sys.byteorder))
         # Write ISIZE (Input SIZE)
         # This contains the size of the original (uncompressed) input data modulo 2^32.
-        self.output_file.write(
-            (self.input_size & 0xFFFFFFFF).to_bytes(4, sys.byteorder)
-        )
+        self.output_file.write((self.input_size & 0xFFFFFFFF).to_bytes(4, sys.byteorder))
 
     def _close_workers(self):
         """
@@ -360,12 +366,12 @@ class PigzFile:  # pylint: disable=too-many-instance-attributes
 
 
 def compress_file(
-        source_file,
-        compresslevel=_COMPRESS_LEVEL_BEST,
-        blocksize=DEFAULT_BLOCK_SIZE_KB,
-        workers=CPU_COUNT,
+    source_file,
+    compresslevel=_COMPRESS_LEVEL_BEST,
+    blocksize=DEFAULT_BLOCK_SIZE_KB,
+    workers=CPU_COUNT,
 ):
-    """ Helper function to call underlying class and compression method """
+    """Helper function to call underlying class and compression method"""
     pigz_file = PigzFile(source_file, compresslevel, blocksize, workers)
     pigz_file.process_compression_target()
 
@@ -385,10 +391,10 @@ class PigzCompressor(Compressor):
     @override
     def decompress(self, backup: CompressedFileObject) -> FileObject:
         source_path: Path = backup.file_path
-        dest_path: Path = source_path.with_suffix('')
+        dest_path: Path = source_path.with_suffix("")
 
-        with gzip.open(source_path, 'rb') as f_in:
-            with open(dest_path, 'wb') as f_out:
+        with gzip.open(source_path, "rb") as f_in:
+            with open(dest_path, "wb") as f_out:
                 while chunk := f_in.read(CHUNK_SIZE):
                     f_out.write(chunk)
 

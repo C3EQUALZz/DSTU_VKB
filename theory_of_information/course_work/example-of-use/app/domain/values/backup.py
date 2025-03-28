@@ -1,6 +1,7 @@
-from typing_extensions import override
 from dataclasses import dataclass
+
 from app.domain.values.base import BaseValueObject
+from typing_extensions import override
 
 
 @dataclass

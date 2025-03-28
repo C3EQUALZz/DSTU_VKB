@@ -1,15 +1,17 @@
 from pathlib import Path
 
 import click
-from dishka import FromDishka
-from dishka.integrations.click import setup_dishka
-
 from app.application.cli.const import BACKUP_DIRECTORY_PATH
 from app.infrastructure.uow.compression import CompressionUnitOfWork
 from app.logic.bootstrap import Bootstrap
-from app.logic.commands.compression import CompressFileCommand, DecompressFileCommand
+from app.logic.commands.compression import (
+    CompressFileCommand,
+    DecompressFileCommand,
+)
 from app.logic.container import container
 from app.logic.message_bus import MessageBus
+from dishka import FromDishka
+from dishka.integrations.click import setup_dishka
 
 
 @click.group()
@@ -20,21 +22,16 @@ def cli(context: click.Context):
 
 
 @cli.command("compress")
-@click.argument(
-    'src_file_path',
-    type=click.Path(exists=True, dir_okay=False, path_type=Path),
-    required=True
-)
+@click.argument("src_file_path", type=click.Path(exists=True, dir_okay=False, path_type=Path), required=True)
 @click.option(
-    "-t", "--type_of_compression",
+    "-t",
+    "--type_of_compression",
     type=click.Choice(["gzip", "pigz"]),
     default="gzip",
     help="Compression type",
 )
 def compress(
-        src_file_path: Path,
-        type_of_compression: str,
-        bootstrap: FromDishka[Bootstrap[CompressionUnitOfWork]]
+    src_file_path: Path, type_of_compression: str, bootstrap: FromDishka[Bootstrap[CompressionUnitOfWork]]
 ) -> None:
     """
     Compress any file that user gives
@@ -49,21 +46,16 @@ def compress(
 
 
 @cli.command("decompress")
-@click.argument(
-    'src_file_path',
-    type=click.Path(exists=True, dir_okay=False, path_type=Path),
-    required=True
-)
+@click.argument("src_file_path", type=click.Path(exists=True, dir_okay=False, path_type=Path), required=True)
 @click.option(
-    "-t", "--type_of_compression",
+    "-t",
+    "--type_of_compression",
     type=click.Choice(["gzip"]),
     default="gzip",
     help="Compression type",
 )
 def decompress(
-        src_file_path: Path,
-        type_of_compression: str,
-        bootstrap: FromDishka[Bootstrap[CompressionUnitOfWork]]
+    src_file_path: Path, type_of_compression: str, bootstrap: FromDishka[Bootstrap[CompressionUnitOfWork]]
 ) -> None:
     """
     Decompress any file that user gives

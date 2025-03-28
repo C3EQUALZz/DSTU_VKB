@@ -2,7 +2,8 @@ from typing import (
     Dict,
     List,
     Type,
-    TypeVar, )
+    TypeVar,
+)
 
 from app.infrastructure.uow.base import AbstractUnitOfWork
 from app.logic.commands.base import AbstractCommand
@@ -11,6 +12,7 @@ from app.logic.handlers.base import (
     AbstractCommandHandler,
     AbstractEventHandler,
 )
+
 
 ET = TypeVar("ET", bound=AbstractEvent)
 CT = TypeVar("CT", bound=AbstractCommand)

@@ -4,9 +4,7 @@ from abc import (
 )
 from collections.abc import Generator
 from traceback import TracebackException
-from typing import (
-    Self,
-)
+from typing import Self
 
 from app.logic.events.base import AbstractEvent
 
@@ -23,10 +21,10 @@ class AbstractUnitOfWork(ABC):
         return self
 
     def __exit__(
-            self,
-            exc_type: type[BaseException] | None,
-            exc_value: BaseException | None,
-            traceback: TracebackException | None,
+        self,
+        exc_type: type[BaseException] | None,
+        exc_value: BaseException | None,
+        traceback: TracebackException | None,
     ) -> None:
         self.rollback()
 
