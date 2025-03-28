@@ -1,0 +1,23 @@
+[project]
+name = "course-work"
+version = "0.1.0"
+description = "Database compression using gzip"
+authors = [
+    {name = "matebookWindows",email = "dan.kovalev2013@gmail.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "psycopg2 (>=2.9.10,<3.0.0)",
+    "boto3 (>=1.37.21,<2.0.0)",
+    "pydantic-settings (>=2.8.1,<3.0.0)",
+    "dishka (>=1.5.0,<2.0.0)",
+    "click (>=8.1.8,<9.0.0)",
+    "orjson (>=3.10.16,<4.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -1,18 +1,19 @@
 package com.example.repairserviceapp.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
 @Entity
 @Table(name = "orders_statuses")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@SuperBuilder
 @Setter
 @Getter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Status extends BaseStatus {
 
     @OneToMany(mappedBy = "status")

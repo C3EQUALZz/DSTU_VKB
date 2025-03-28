@@ -36,6 +36,6 @@ public abstract class BaseExecutionOfOrder extends BaseEntity {
     @Column(name = "ex_date")
     protected LocalDate executionDate;
 
-    @Column(name = "total_cost")
+    @Column(name = "total_cost", insertable = false, updatable = false)
     protected BigDecimal totalCost;
 }
