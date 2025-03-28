@@ -51,10 +51,10 @@ class MinIOSettings(CommonSettings):
     bucket_name: str = "dump-database"
     bucket_backup_path: str = "postgres/"
 
-    user: str = "your_username"
-    port: int = 9000
+    user: str = Field(alias="MINIO_ROOT_USER")
+    port: int = Field(alias="MINIO_PORT")
     host: str = "localhost"
-    password: str = "your_password"
+    password: str = Field(alias="MINIO_ROOT_PASSWORD")
 
     @property
     def url(self) -> str:

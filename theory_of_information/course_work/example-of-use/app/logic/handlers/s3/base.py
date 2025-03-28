@@ -1,6 +1,6 @@
 from abc import ABC
 
-from app.infrastructure.database.base import BaseDatabaseCLIService
+from app.infrastructure.repositories.database.base import DatabaseDumpRepository
 from app.infrastructure.uow.compression import CompressionUnitOfWork
 from app.logic.handlers.base import (
     AbstractCommandHandler,
@@ -12,7 +12,7 @@ from app.logic.types.handlers import (
 )
 
 
-class DatabaseCLIEventHandler(AbstractEventHandler[ET], ABC):
+class S3EventHandler(AbstractEventHandler[ET], ABC):
     """
     Abstract event handler class, from which every users event handler should be inherited from.
     """
@@ -21,11 +21,11 @@ class DatabaseCLIEventHandler(AbstractEventHandler[ET], ABC):
         self._uow: CompressionUnitOfWork = uow
 
 
-class DatabaseCLICommandHandler(AbstractCommandHandler[CT], ABC):
+class S3CommandHandler(AbstractCommandHandler[CT], ABC):
     """
     Abstract command handler class, from which every users command handler should be inherited from.
     """
 
-    def __init__(self, uow: CompressionUnitOfWork, database_cli_service: BaseDatabaseCLIService) -> None:
+    def __init__(self, uow: CompressionUnitOfWork, s3_dump_repository: DatabaseDumpRepository) -> None:
         self._uow: CompressionUnitOfWork = uow
-        self._cli_service: BaseDatabaseCLIService = database_cli_service
+        self._repository = s3_dump_repository
