@@ -312,9 +312,58 @@ class Settings(BaseSettings):
     database: MongoSettings = MongoSettings()
 ```
 
-## Работа с проектом
+## Установка проекта и настройка проекта
+
+> [!NOTE]
+> Предполагается, что в Вашей системе уже установлены `git`, `Python 3.11` (и позднее).
+
+Теперь создаем `venv`, гайд [тык](https://timeweb.cloud/tutorials/python/kak-sozdat-virtualnoe-okruzhenie)
+
+Если у Вас глобально в системе не установлен `poetry`, то проделайте следующие действия: 
+
+```bash
+git clone https://github.com/C3EQUALZz/DSTU_VKB.git
+pip install poetry
+poetry install
+```
+
+В ином случае:
+
+```bash
+git clone https://github.com/C3EQUALZz/DSTU_VKB.git
+poetry install
+```
 
 > [!IMPORTANT]
 > Если вы пользователь `Windows`, то запустите `Docker Desktop` перед использованием приложения.
 
-Находясь в проекте 
+Находясь в директории `course_work`, создайте файл `.env`, скопировав значения из `.env.example`, после этого вы можете сами запустить в терминале с помощью команды `docker compose up -f docker/storages.yml`. 
+Более простой вариант, если у вас установлена система [`make`](https://habr.com/ru/articles/211751/), то просто используйте команду в терминале `make storages`. 
+
+## Работа с проектом
+
+Теперь вы можете использовать различные команды для приложения, приведу примеры, как рабоать в случае системы `Windows`. 
+
+#### Создание бэкапа базы данных
+
+```bash
+poetry run python app/application/cli/database/handlers.py backup
+```
+
+#### Сжатие дампа в `gzip` в многопоточном режиме (`pigz`)
+
+```bash
+poetry run python app/application/cli/compressing/handlers.py compress "D:\PycharmProjects\DSTU_VKB\theory_of_information\course_work\example-of-use\tmp\backup-2025-03-28.dump" -t pigz
+```
+
+#### Отправка сжатого дампа в `MinIO`
+
+```bash
+poetry run python app/application/cli/s3/handlers.py upload "D:\PycharmProjects\DSTU_VKB\theory_of_information\course_work\example-of-use\tmp\backup-2025-03-28.dump.gz"
+```
+
+#### Получить документацию о том, что умеет группа задач, связанных с работой со сжатием:
+
+```bash
+poetry run python app/application/cli/compressing/handlers.py --help
+```
