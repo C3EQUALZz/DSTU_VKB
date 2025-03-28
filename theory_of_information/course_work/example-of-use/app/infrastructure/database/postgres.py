@@ -1,0 +1,64 @@
+import logging
+import subprocess
+import sys
+from pathlib import Path
+from dataclasses import dataclass
+from subprocess import Popen
+
+from typing_extensions import override
+
+from app.infrastructure.database.base import BaseDatabaseCLIService
+
+logger = logging.getLogger(__name__)
+
+
+@dataclass(frozen=True)
+class PostgresConfig:
+    user: str
+    password: str
+    host: str
+    port: int
+    database_name: str
+
+
+class PostgresCLIService(BaseDatabaseCLIService):
+    def __init__(
+            self,
+            psql_bin_path: Path,
+            postgres_config: PostgresConfig,
+    ) -> None:
+        self._psql_bin_path = psql_bin_path
+        self._config = postgres_config
+
+    @override
+    def list_all_databases(self) -> None:
+
+        if sys.platform == "win32":
+            psql_path: Path = self._psql_bin_path / "psql.exe"
+        else:
+            psql_path = self._psql_bin_path / "psql"
+
+        process: Popen[bytes] = subprocess.Popen(
+            [
+                str(psql_path),
+                '--dbname=postgresql://{}:{}@{}:{}/{}'.format(
+                    self._config.user,
+                    self._config.password,
+                    self._config.host,
+                    self._config.port,
+                    self._config.database_name
+                ),
+                '--list',
+            ],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+
+        output: bytes = process.communicate()[0]
+
+        if int(process.returncode) != 0:
+            logger.error('Command failed. Return code : %s', process.returncode)
+            return
+
+        for line in output.splitlines():
+            print(line.decode())

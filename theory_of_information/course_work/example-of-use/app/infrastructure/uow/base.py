@@ -19,26 +19,26 @@ class AbstractUnitOfWork(ABC):
     def __init__(self) -> None:
         self._events: list[AbstractEvent] = []
 
-    async def __aenter__(self) -> Self:
+    def __enter__(self) -> Self:
         return self
 
-    async def __aexit__(
+    def __exit__(
             self,
             exc_type: type[BaseException] | None,
             exc_value: BaseException | None,
             traceback: TracebackException | None,
     ) -> None:
-        await self.rollback()
+        self.rollback()
 
     @abstractmethod
-    async def commit(self) -> None:
+    def commit(self) -> None:
         raise NotImplementedError
 
     @abstractmethod
-    async def rollback(self) -> None:
+    def rollback(self) -> None:
         raise NotImplementedError
 
-    async def add_event(self, event: AbstractEvent) -> None:
+    def add_event(self, event: AbstractEvent) -> None:
         self._events.append(event)
 
     def get_events(self) -> Generator[AbstractEvent, None, None]:

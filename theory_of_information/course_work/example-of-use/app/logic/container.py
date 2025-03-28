@@ -1,13 +1,19 @@
+from pathlib import Path
+
 import boto3
 from botocore.client import BaseClient
 from botocore.config import Config
 from dishka import Provider, provide, Scope, from_context, make_container
 
 from app.infrastructure.compressors.factory import CompressorFactory
+from app.infrastructure.database.base import BaseDatabaseCLIService
+from app.infrastructure.database.postgres import PostgresCLIService, PostgresConfig
 from app.infrastructure.uow.compression import CompressionUnitOfWork
 from app.logic.bootstrap import Bootstrap
 from app.logic.commands.compression import CompressFileCommand, DecompressFileCommand
+from app.logic.commands.database import ListAllDatabasesCommand
 from app.logic.handlers.compression.commands import CompressFileCommandHandler, DecompressFileCommandHandler
+from app.logic.handlers.database.commands import ListAllDatabasesCommandHandler
 from app.logic.types.handlers import EventHandlerMapping, CommandHandlerMapping, UT
 from app.settings.config import Settings, get_settings
 from typing import cast
@@ -24,6 +30,7 @@ class HandlerProvider(Provider):
             {
                 CompressFileCommand: CompressFileCommandHandler,
                 DecompressFileCommand: DecompressFileCommandHandler,
+                ListAllDatabasesCommand: ListAllDatabasesCommandHandler,
             },
         )
 
@@ -63,17 +70,31 @@ class AppProvider(Provider):
         return CompressionUnitOfWork()
 
     @provide(scope=Scope.APP)
+    def get_database_cli_service(self, settings: Settings) -> BaseDatabaseCLIService:
+        return PostgresCLIService(
+            psql_bin_path=settings.database.psql_bin_path,
+            postgres_config=PostgresConfig(
+                user=settings.database.user,
+                password=settings.database.password,
+                host=settings.database.host,
+                port=settings.database.port,
+                database_name=settings.database.name
+            )
+        )
+
+    @provide(scope=Scope.APP)
     def get_bootstrap(
             self,
             events: EventHandlerMapping,
             commands: CommandHandlerMapping,
+            database_cli_service: BaseDatabaseCLIService,
             uow: UT
     ) -> Bootstrap[UT]:
         return Bootstrap(
             uow=uow,
             events_handlers_for_injection=events,
             commands_handlers_for_injection=commands,
-            dependencies={"factory": CompressorFactory}
+            dependencies={"factory": CompressorFactory(), "database_cli_service": database_cli_service}
         )
 
 

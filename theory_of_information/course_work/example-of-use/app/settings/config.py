@@ -36,6 +36,8 @@ class DatabaseSettings(CommonSettings):
     dialect: str = Field(alias="DATABASE_DIALECT")
     driver: str = Field(alias="DATABASE_DRIVER")
 
+    psql_bin_path: Path = Path(r"C:\Program Files\PostgreSQL\17\bin")
+
     @property
     def url(self) -> str:
         if self.dialect == "sqlite":
