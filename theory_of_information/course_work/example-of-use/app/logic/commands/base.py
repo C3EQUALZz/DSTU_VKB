@@ -19,7 +19,7 @@ class AbstractCommand(ABC):
     """
 
     async def to_dict(
-            self, exclude: Optional[Set[str]] = None, include: Optional[Dict[str, Any]] = None
+        self, exclude: Optional[Set[str]] = None, include: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """
         Create a dictionary representation of the model.

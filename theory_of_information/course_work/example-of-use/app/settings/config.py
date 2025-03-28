@@ -47,7 +47,7 @@ class DatabaseSettings(CommonSettings):
 
 
 class MinIOSettings(CommonSettings):
-    storage_engine: str = 'S3'
+    storage_engine: str = "S3"
     bucket_name: str = "dump-database"
     bucket_backup_path: str = "postgres/"
 
