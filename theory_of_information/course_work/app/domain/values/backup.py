@@ -12,7 +12,6 @@ class CompressionType(BaseValueObject[str]):
 
     @override
     def validate(self) -> None:
-        print(self.value)
         if not self.value.endswith(("gzip", "bzip2", "gz")):
             raise UnsupportedFileObjectExtensionException
 
