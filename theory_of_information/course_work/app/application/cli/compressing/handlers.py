@@ -13,10 +13,13 @@ from app.logic.message_bus import MessageBus
 from dishka import FromDishka
 from dishka.integrations.click import setup_dishka
 
+from app.settings.logger.config import setup_logging
+
 
 @click.group()
 @click.pass_context
 def cli(context: click.Context):
+    setup_logging()
     BACKUP_DIRECTORY_PATH.mkdir(exist_ok=True)
     setup_dishka(container=container, context=context, auto_inject=True)
 

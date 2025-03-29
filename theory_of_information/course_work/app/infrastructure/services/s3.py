@@ -27,4 +27,5 @@ class S3Service:
 
     def list(self, start: int | None = None, end: int | None = None) -> None:
         files_from_s3: list[CompressedFileObject] = self._repository.list(start, end)
+        print("\n".join(map(lambda file: str(file.file_path), files_from_s3)))
         logger.info("Files on s3: %s", len(files_from_s3))

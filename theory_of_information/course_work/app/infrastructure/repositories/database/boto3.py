@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional, List
 
 from botocore.exceptions import ClientError
 from typing_extensions import override
@@ -82,30 +82,35 @@ class DatabaseDumpBoto3Repository(DatabaseDumpRepository, S3AbstractRepository):
         raise NotImplementedError
 
     @override
-    def list(self, start: int | None = None, limit: int | None = None) -> list[CompressedFileObject]:
+    def list(
+            self,
+            start: Optional[int] = None,
+            limit: Optional[int] = None
+    ) -> List[CompressedFileObject]:
         result: list[CompressedFileObject] = []
         paginator = self._client.get_paginator('list_objects_v2')
 
-        params = {
+        config = {
             'Bucket': self._bucket_name,
-            'Prefix': self._bucket_path
+            'Prefix': self._bucket_path,
+            'MaxKeys': limit or 1000
         }
 
-        if start is not None and limit is not None:
-            params['PaginationConfig'] = {
-                'StartingToken': str(start),
-                'PageSize': limit
-            }
+        if start:
+            config['ContinuationToken'] = str(start)
 
         try:
-            for page in paginator.paginate(**params):
+            for page in paginator.paginate(**config):
                 for obj in page.get('Contents', []):
+                    # Получаем полные метаданные для каждого объекта
+                    metadata = self._get_object_metadata(obj['Key'])
                     result.append(
                         CompressedFileObject(
                             file_path=Path(obj['Key']),
-                            compression_type=obj['Metadata']['compression']
+                            compression_type=metadata.get('compression')
                         )
                     )
+
                     if limit and len(result) >= limit:
                         return result
             return result
@@ -113,6 +118,19 @@ class DatabaseDumpBoto3Repository(DatabaseDumpRepository, S3AbstractRepository):
         except ClientError as e:
             logger.error(f"Listing failed: {e}")
             raise
+
+    def _get_object_metadata(self, key: str) -> dict:
+        """Получение метаданных объекта через head_object"""
+        try:
+            response = self._client.head_object(
+                Bucket=self._bucket_name,
+                Key=key
+            )
+            return response.get('Metadata', {})
+
+        except ClientError as e:
+            logger.warning(f"Metadata fetch failed for {key}: {e}")
+            return {}
 
     @override
     def delete(self, oid: str) -> None:

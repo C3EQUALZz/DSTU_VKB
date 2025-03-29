@@ -29,7 +29,7 @@ from app.logic.commands.database import (
     CreateDatabaseBackupCommand,
     ListAllDatabasesCommand,
 )
-from app.logic.commands.s3 import CreateFileInS3Command
+from app.logic.commands.s3 import CreateFileInS3Command, ListFilesInS3Command
 from app.logic.handlers.compression.commands import (
     CompressFileCommandHandler,
     DecompressFileCommandHandler,
@@ -38,7 +38,7 @@ from app.logic.handlers.database.commands import (
     CreateDatabaseBackupCommandHandler,
     ListAllDatabasesCommandHandler,
 )
-from app.logic.handlers.s3.commands import CreateFileInS3CommandHandler
+from app.logic.handlers.s3.commands import CreateFileInS3CommandHandler, ListFilesInS3CommandHandler
 from app.logic.types.handlers import (
     CommandHandlerMapping,
     EventHandlerMapping,
@@ -63,7 +63,8 @@ class HandlerProvider(Provider):
                 DecompressFileCommand: DecompressFileCommandHandler,
                 ListAllDatabasesCommand: ListAllDatabasesCommandHandler,
                 CreateDatabaseBackupCommand: CreateDatabaseBackupCommandHandler,
-                CreateFileInS3Command: CreateFileInS3CommandHandler
+                CreateFileInS3Command: CreateFileInS3CommandHandler,
+                ListFilesInS3Command: ListFilesInS3CommandHandler
             },
         )
 
