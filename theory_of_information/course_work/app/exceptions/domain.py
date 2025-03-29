@@ -19,11 +19,23 @@ class DomainException(BaseAppException, ABC):
     def headers(self) -> dict[str, str] | None:
         return None
 
+
 @dataclass(eq=False)
 class UnsupportedFileObjectExtensionException(DomainException):
     @property
     def message(self) -> str:
         return "Unsupported file object extension"
+
+    @property
+    def status(self) -> int:
+        return HTTPStatus.UNPROCESSABLE_ENTITY.value
+
+
+@dataclass(eq=False)
+class UnSupportedTypeOfFileException(DomainException):
+    @property
+    def message(self) -> str:
+        return "Unsupported type of file object. It can be only file or directory."
 
     @property
     def status(self) -> int:
