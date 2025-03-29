@@ -37,19 +37,5 @@ def get_file_stats(
     message_bus.handle(GetFileFullStatsCommand(file_path=src_file_path))
     click.echo("File stats complete.")
 
-
-from datetime import datetime
-from pathlib import Path
-
-path = Path(r"D:\PycharmProjects\DSTU_VKB\theory_of_information\course_work\tmp\Графы 1.docx")
-stat = path.stat()
-
-print({
-    "Name": path.name,
-    "Size": f"{round(stat.st_size / 1024, 2)} KB",
-    "Type": "Directory" if path.is_dir() else "File",
-    "Extension": path.suffix,
-    "Modified": datetime.fromtimestamp(stat.st_mtime).strftime("%Y-%m-%d %H:%M:%S"),
-    "Created": datetime.fromtimestamp(stat.st_ctime).strftime("%Y-%m-%d %H:%M:%S"),
-    "Permissions": oct(stat.st_mode)[-3:]
-})
+if __name__ == "__main__":
+    cli()

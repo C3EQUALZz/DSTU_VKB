@@ -45,17 +45,17 @@ class SizeOfFile(BaseValueObject[str]):
 
 
 @dataclass
-class PermissionsOfFile(BaseValueObject[int]):
-    value: int
+class PermissionsOfFile(BaseValueObject[str]):
+    value: str
 
     @override
     def validate(self) -> None:
-        if len(str(self.value)) != 3:
+        if len(self.value) != 3:
             ...
 
-        if self.value > 666:
+        if int(self.value) > 666:
             ...
 
     @override
-    def as_generic_type(self) -> int:
+    def as_generic_type(self) -> str:
         return self.value
