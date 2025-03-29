@@ -340,6 +340,10 @@ poetry install
 Находясь в директории `course_work`, создайте файл `.env`, скопировав значения из `.env.example`, после этого вы можете сами запустить в терминале с помощью команды `docker compose up -f docker/storages.yml`. 
 Более простой вариант, если у вас установлена система [`make`](https://habr.com/ru/articles/211751/), то просто используйте команду в терминале `make storages`. 
 
+> [!IMPORTANT]
+> Если у вас выдает ошибку импорта модулей, то вам нужно добавить путь к текущему проекту. Например, на `Windows` в моем случае это выглядит вот так:
+> `$env:PYTHONPATH = "$env:PYTHONPATH;D:\PycharmProjects\DSTU_VKB\theory_of_information\course_work\example-of-use" ` 
+
 ## Работа с проектом
 
 Теперь вы можете использовать различные команды для приложения, приведу примеры, как рабоать в случае системы `Windows`. 
