@@ -4,15 +4,10 @@ from dataclasses import (
     field,
 )
 from datetime import (
-    datetime,
     UTC,
+    datetime,
 )
-from typing import (
-    Any,
-    Dict,
-    Optional,
-    Set,
-)
+from typing import Any
 from uuid import uuid4
 
 
@@ -27,8 +22,8 @@ class BaseEntity(ABC):
     updated_at: datetime = field(default_factory=lambda: datetime.now(UTC), kw_only=True)
 
     async def to_dict(
-        self, exclude: Optional[Set[str]] = None, include: Optional[Dict[str, Any]] = None
-    ) -> Dict[str, Any]:
+        self, exclude: set[str] | None = None, include: dict[str, Any] | None = None
+    ) -> dict[str, Any]:
         """
         Create a dictionary representation of the entity.
 
@@ -36,7 +31,7 @@ class BaseEntity(ABC):
         include: set of model fields, which should be included into dictionary representation.
         """
 
-        data: Dict[str, Any] = vars(self)
+        data: dict[str, Any] = vars(self)
 
         # For sqlalchemy
         data.pop("_sa_instance_state", None)

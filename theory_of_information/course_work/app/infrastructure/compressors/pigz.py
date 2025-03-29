@@ -17,6 +17,8 @@ from threading import (
     Thread,
 )
 
+from typing_extensions import override
+
 from app.domain.entities.file_objects import (
     CompressedFileObject,
     FileObject,
@@ -24,8 +26,6 @@ from app.domain.entities.file_objects import (
 from app.domain.values.backup import CompressionType
 from app.infrastructure.compressors.base import Compressor
 from app.infrastructure.compressors.gunzip import CHUNK_SIZE
-from typing_extensions import override
-
 
 CPU_COUNT = os.cpu_count()
 DEFAULT_BLOCK_SIZE_KB = 128
@@ -174,7 +174,7 @@ class PigzFile:  # pylint: disable=too-many-instance-attributes
         """
         self._set_output_filename()
         full_path = Path(self.compression_target.parent, self.output_filename)
-        self.output_file = open(full_path, "wb")
+        self.output_file = Path.open(full_path, "wb")
         self._write_output_header()
 
     def _determine_mtime(self):
@@ -186,7 +186,7 @@ class PigzFile:  # pylint: disable=too-many-instance-attributes
         MTIME = 0 means no time stamp is available.
         """
         try:
-            return int(os.stat(self.compression_target).st_mtime)
+            return int(Path.stat(self.compression_target).st_mtime)
         except Exception:  # pylint: disable=broad-except
             return int(time.time())
 
@@ -220,7 +220,7 @@ class PigzFile:  # pylint: disable=too-many-instance-attributes
         """
         if sys.platform.startswith(("freebsd", "linux", "aix", "darwin")):
             return 3
-        if sys.platform.startswith(("win32")):
+        if sys.platform.startswith("win32"):
             return 0
 
         return 255
@@ -252,7 +252,7 @@ class PigzFile:  # pylint: disable=too-many-instance-attributes
         """
         # Initialize this to 0 so our increment sets first chunk to 1
         chunk_num = 0
-        with open(self.compression_target, "rb") as input_file:
+        with Path.open(self.compression_target, "rb") as input_file:
             while True:
                 chunk = input_file.read(self.blocksize)
                 # Break out of the loop if we didn't read anything
@@ -393,10 +393,9 @@ class PigzCompressor(Compressor):
         source_path: Path = backup.file_path
         dest_path: Path = source_path.with_suffix("")
 
-        with gzip.open(source_path, "rb") as f_in:
-            with open(dest_path, "wb") as f_out:
-                while chunk := f_in.read(CHUNK_SIZE):
-                    f_out.write(chunk)
+        with gzip.open(source_path, "rb") as f_in, Path.open(dest_path, "wb") as f_out:
+            while chunk := f_in.read(CHUNK_SIZE):
+                f_out.write(chunk)
 
         logger.debug(f"Decompressed {source_path} to {dest_path}")
 

@@ -1,6 +1,10 @@
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import click
+from dishka import FromDishka
+from dishka.integrations.click import setup_dishka
+
 from app.application.cli.const import BACKUP_DIRECTORY_PATH
 from app.infrastructure.uow.compression import CompressionUnitOfWork
 from app.logic.bootstrap import Bootstrap
@@ -9,11 +13,10 @@ from app.logic.commands.compression import (
     DecompressFileCommand,
 )
 from app.logic.container import container
-from app.logic.message_bus import MessageBus
-from dishka import FromDishka
-from dishka.integrations.click import setup_dishka
-
 from app.settings.logger.config import setup_logging
+
+if TYPE_CHECKING:
+    from app.logic.message_bus import MessageBus
 
 
 @click.group()

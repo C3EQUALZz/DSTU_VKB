@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
-from app.domain.values.base import BaseValueObject
 from typing_extensions import override
 
+from app.domain.values.base import BaseValueObject
 from app.exceptions.domain import UnsupportedFileObjectExtensionException
 
 

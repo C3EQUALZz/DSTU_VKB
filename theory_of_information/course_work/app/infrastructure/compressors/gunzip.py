@@ -1,7 +1,11 @@
 import gzip
 import logging
 from pathlib import Path
-from typing import Final
+from typing import (
+    Final,
+)
+
+from typing_extensions import override
 
 from app.application.cli.const import BACKUP_DIRECTORY_PATH
 from app.domain.entities.file_objects import (
@@ -10,8 +14,6 @@ from app.domain.entities.file_objects import (
 )
 from app.domain.values.backup import CompressionType
 from app.infrastructure.compressors.base import Compressor
-from typing_extensions import override
-
 
 logger = logging.getLogger(__name__)
 
@@ -24,10 +26,9 @@ class GunZipCompressor(Compressor):
         source_path: Path = backup.file_path
         dest_path: Path = BACKUP_DIRECTORY_PATH / (source_path.name + ".gz")
 
-        with open(source_path, "rb") as f_in:
-            with gzip.open(dest_path, "wb") as f_out:
-                while chunk := f_in.read(CHUNK_SIZE):
-                    f_out.write(chunk)
+        with Path.open(source_path, "rb") as f_in, gzip.open(dest_path, "wb") as f_out:
+            while chunk := f_in.read(CHUNK_SIZE):
+                f_out.write(chunk)
 
         logger.debug(f"Compressed {source_path} to {dest_path}")
 
@@ -38,10 +39,9 @@ class GunZipCompressor(Compressor):
         source_path: Path = backup.file_path
         dest_path: Path = source_path.with_suffix("")
 
-        with gzip.open(source_path, "rb") as f_in:
-            with open(dest_path, "wb") as f_out:
-                while chunk := f_in.read(CHUNK_SIZE):
-                    f_out.write(chunk)
+        with gzip.open(source_path, "rb") as f_in, Path.open(dest_path, "wb") as f_out:
+            while chunk := f_in.read(CHUNK_SIZE):
+                f_out.write(chunk)
 
         logger.debug(f"Decompressed {source_path} to {dest_path}")
 

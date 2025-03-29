@@ -1,7 +1,7 @@
+from dataclasses import dataclass
 from pathlib import Path
 
 from app.logic.commands.base import AbstractCommand
-from dataclasses import dataclass
 
 
 @dataclass(frozen=True)

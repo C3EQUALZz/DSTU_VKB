@@ -1,27 +1,26 @@
 import inspect
-from types import MappingProxyType
 from typing import (
+    TYPE_CHECKING,
     Any,
-    Dict,
     Generic,
-    List,
-    Optional,
-    Type,
-    Union,
 )
 
-from app.logic.commands.base import AbstractCommand
-from app.logic.events.base import AbstractEvent
 from app.logic.handlers.base import (
     AbstractCommandHandler,
     AbstractEventHandler,
 )
 from app.logic.message_bus import MessageBus
 from app.logic.types.handlers import (
+    UT,
     CommandHandlerMapping,
     EventHandlerMapping,
-    UT,
 )
+
+if TYPE_CHECKING:
+    from types import MappingProxyType
+
+    from app.logic.commands.base import AbstractCommand
+    from app.logic.events.base import AbstractEvent
 
 
 class Bootstrap(Generic[UT]):
@@ -34,10 +33,10 @@ class Bootstrap(Generic[UT]):
         uow: UT,
         events_handlers_for_injection: EventHandlerMapping,  # type: ignore
         commands_handlers_for_injection: CommandHandlerMapping,  # type: ignore
-        dependencies: Optional[Dict[str, Any]] = None,
+        dependencies: dict[str, Any] | None = None,
     ) -> None:
         self._uow = uow
-        self._dependencies: Dict[str, Any] = {"uow": self._uow}
+        self._dependencies: dict[str, Any] = {"uow": self._uow}
         self._events_handlers_for_injection = events_handlers_for_injection
         self._commands_handlers_for_injection = commands_handlers_for_injection
 
@@ -50,12 +49,12 @@ class Bootstrap(Generic[UT]):
         after which returns messagebus instance.
         """
 
-        injected_event_handlers: Dict[Type[AbstractEvent], List[AbstractEventHandler[AbstractEvent]]] = {
+        injected_event_handlers: dict[type[AbstractEvent], list[AbstractEventHandler[AbstractEvent]]] = {
             event_type: [self._inject_dependencies(handler=handler) for handler in event_handlers]
             for event_type, event_handlers in self._events_handlers_for_injection.items()
         }
 
-        injected_command_handlers: Dict[Type[AbstractCommand], AbstractCommandHandler[AbstractCommand]] = {
+        injected_command_handlers: dict[type[AbstractCommand], AbstractCommandHandler[AbstractCommand]] = {
             command_type: self._inject_dependencies(handler=handler)
             for command_type, handler in self._commands_handlers_for_injection.items()
         }
@@ -67,15 +66,15 @@ class Bootstrap(Generic[UT]):
         )
 
     def _inject_dependencies(
-        self, handler: Union[Type[AbstractEventHandler], Type[AbstractCommandHandler]]
-    ) -> Union[AbstractEventHandler, AbstractCommandHandler]:
+        self, handler: type[AbstractEventHandler] | type[AbstractCommandHandler]
+    ) -> AbstractEventHandler | AbstractCommandHandler:
         """
         Inspecting handler to know its signature and init params, after which only necessary dependencies will be
         injected to the handler.
         """
 
         params: MappingProxyType[str, inspect.Parameter] = inspect.signature(handler).parameters
-        handler_dependencies: Dict[str, Any] = {
+        handler_dependencies: dict[str, Any] = {
             name: dependency for name, dependency in self._dependencies.items() if name in params
         }
         return handler(**handler_dependencies)

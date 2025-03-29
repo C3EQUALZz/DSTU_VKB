@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-from typing import Any, Optional, List
+from typing import Any
 
 from botocore.exceptions import ClientError
 from typing_extensions import override
@@ -53,9 +53,9 @@ class DatabaseDumpBoto3Repository(DatabaseDumpRepository, S3AbstractRepository):
             )
 
             # Извлекаем тип сжатия из метаданных
-            metadata: dict[str, str] = head_response.get('Metadata', {})
-            compression_type_str: str = metadata.get('compression', 'unknown')
-            name = metadata.get('original_filename', "unknown")
+            metadata: dict[str, str] = head_response.get("Metadata", {})
+            compression_type_str: str = metadata.get("compression", "unknown")
+            name = metadata.get("original_filename", "unknown")
 
             local_path = BACKUP_DIRECTORY_PATH / name
 
@@ -71,7 +71,7 @@ class DatabaseDumpBoto3Repository(DatabaseDumpRepository, S3AbstractRepository):
             )
 
         except ClientError as e:
-            if e.response['Error']['Code'] == "404":
+            if e.response["Error"]["Code"] == "404":
                 logger.warning(f"Object {oid} not found")
                 return None
             logger.error(f"Download failed: {e}")
@@ -84,30 +84,30 @@ class DatabaseDumpBoto3Repository(DatabaseDumpRepository, S3AbstractRepository):
     @override
     def list(
             self,
-            start: Optional[int] = None,
-            limit: Optional[int] = None
-    ) -> List[CompressedFileObject]:
+            start: int | None = None,
+            limit: int | None = None
+    ) -> list[CompressedFileObject]:
         result: list[CompressedFileObject] = []
-        paginator = self._client.get_paginator('list_objects_v2')
+        paginator = self._client.get_paginator("list_objects_v2")
 
         config = {
-            'Bucket': self._bucket_name,
-            'Prefix': self._bucket_path,
-            'MaxKeys': limit or 1000
+            "Bucket": self._bucket_name,
+            "Prefix": self._bucket_path,
+            "MaxKeys": limit or 1000
         }
 
         if start:
-            config['ContinuationToken'] = str(start)
+            config["ContinuationToken"] = str(start)
 
         try:
             for page in paginator.paginate(**config):
-                for obj in page.get('Contents', []):
+                for obj in page.get("Contents", []):
                     # Получаем полные метаданные для каждого объекта
-                    metadata = self._get_object_metadata(obj['Key'])
+                    metadata = self._get_object_metadata(obj["Key"])
                     result.append(
                         CompressedFileObject(
-                            file_path=Path(obj['Key']),
-                            compression_type=metadata.get('compression')
+                            file_path=Path(obj["Key"]),
+                            compression_type=metadata.get("compression")
                         )
                     )
 
@@ -126,7 +126,7 @@ class DatabaseDumpBoto3Repository(DatabaseDumpRepository, S3AbstractRepository):
                 Bucket=self._bucket_name,
                 Key=key
             )
-            return response.get('Metadata', {})
+            return response.get("Metadata", {})
 
         except ClientError as e:
             logger.warning(f"Metadata fetch failed for {key}: {e}")
@@ -142,7 +142,7 @@ class DatabaseDumpBoto3Repository(DatabaseDumpRepository, S3AbstractRepository):
             logger.info(f"Deleted object {oid}")
 
         except ClientError as e:
-            if e.response['Error']['Code'] == "404":
+            if e.response["Error"]["Code"] == "404":
                 logger.warning(f"Object {oid} not found")
                 return
             logger.error(f"Delete failed: {e}")

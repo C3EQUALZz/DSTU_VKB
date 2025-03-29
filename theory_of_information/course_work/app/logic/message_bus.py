@@ -1,11 +1,5 @@
 from queue import Queue
-from typing import (
-    Any,
-    Dict,
-    List,
-    Type,
-    Union,
-)
+from typing import Any
 
 from app.exceptions.logic import MessageBusMessageException
 from app.infrastructure.uow.base import AbstractUnitOfWork
@@ -21,16 +15,16 @@ class MessageBus:
     def __init__(
         self,
         uow: AbstractUnitOfWork,
-        event_handlers: Dict[Type[AbstractEvent], List[AbstractEventHandler[AbstractEvent]]],
-        command_handlers: Dict[Type[AbstractCommand], AbstractCommandHandler[AbstractCommand]],
+        event_handlers: dict[type[AbstractEvent], list[AbstractEventHandler[AbstractEvent]]],
+        command_handlers: dict[type[AbstractCommand], AbstractCommandHandler[AbstractCommand]],
     ) -> None:
         self._uow = uow
         self._event_handlers = event_handlers
         self._command_handlers = command_handlers
-        self._queue: Queue[Union[AbstractEvent, AbstractCommand]] = Queue()
+        self._queue: Queue[AbstractEvent | AbstractCommand] = Queue()
         self._command_result: Any = None
 
-    def handle(self, message: Union[AbstractEvent, AbstractCommand]) -> None:
+    def handle(self, message: AbstractEvent | AbstractCommand) -> None:
         self._queue.put(message)
         while not self._queue.empty():
             message = self._queue.get()

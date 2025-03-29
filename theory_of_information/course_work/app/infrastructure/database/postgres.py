@@ -3,16 +3,16 @@ import subprocess
 import sys
 from dataclasses import dataclass
 from datetime import (
-    datetime,
     UTC,
+    datetime,
 )
 from pathlib import Path
 from subprocess import Popen
 
-from app.application.cli.const import BACKUP_DIRECTORY_PATH
-from app.infrastructure.database.base import BaseDatabaseCLIService
 from typing_extensions import override
 
+from app.application.cli.const import BACKUP_DIRECTORY_PATH
+from app.infrastructure.database.base import BaseDatabaseCLIService
 
 logger = logging.getLogger(__name__)
 
@@ -45,13 +45,7 @@ class PostgresCLIService(BaseDatabaseCLIService):
         process: Popen[bytes] = subprocess.Popen(
             [
                 str(psql_path),
-                "--dbname=postgresql://{}:{}@{}:{}/{}".format(
-                    self._config.user,
-                    self._config.password,
-                    self._config.host,
-                    self._config.port,
-                    self._config.database_name,
-                ),
+                f"--dbname=postgresql://{self._config.user}:{self._config.password}@{self._config.host}:{self._config.port}/{self._config.database_name}",
                 "--list",
             ],
             stdout=subprocess.PIPE,
@@ -64,8 +58,8 @@ class PostgresCLIService(BaseDatabaseCLIService):
             logger.error("Command failed. Return code : %s", process.returncode)
             return
 
-        for line in output.splitlines():
-            print(line.decode())
+        for _line in output.splitlines():
+            pass
 
     @override
     def create_backup(self) -> None:
@@ -79,13 +73,7 @@ class PostgresCLIService(BaseDatabaseCLIService):
         process: Popen[bytes] = subprocess.Popen(
             [
                 str(psql_path),
-                "--dbname=postgresql://{}:{}@{}:{}/{}".format(
-                    self._config.user,
-                    self._config.password,
-                    self._config.host,
-                    self._config.port,
-                    self._config.database_name,
-                ),
+                f"--dbname=postgresql://{self._config.user}:{self._config.password}@{self._config.host}:{self._config.port}/{self._config.database_name}",
                 "-Fc",
                 "-f",
                 dest_file,
@@ -98,9 +86,9 @@ class PostgresCLIService(BaseDatabaseCLIService):
         output, error = process.communicate()
 
         if int(process.returncode) != 0:
-            logger.error("Command failed. Return code : {}".format(process.returncode))
+            logger.error(f"Command failed. Return code : {process.returncode}")
             logger.error("Error output:", error.decode("utf-8"))
             return
 
-        for line in output.splitlines():
-            print(line.decode())
+        for _line in output.splitlines():
+            pass

@@ -1,14 +1,10 @@
-from abc import ABC
 from abc import (
+    ABC,
     abstractmethod,
 )
 from typing import (
     Generic,
-    List,
-    TypeVar
-)
-from typing import (
-    Optional,
+    TypeVar,
 )
 
 from botocore.client import BaseClient
@@ -31,7 +27,7 @@ class AbstractRepository(ABC, Generic[BaseEntityType]):
         raise NotImplementedError
 
     @abstractmethod
-    async def get(self, oid: str) -> Optional[BaseEntityType]:
+    async def get(self, oid: str) -> BaseEntityType | None:
         raise NotImplementedError
 
     @abstractmethod
@@ -43,7 +39,7 @@ class AbstractRepository(ABC, Generic[BaseEntityType]):
         raise NotImplementedError
 
     @abstractmethod
-    async def list(self, start: int | None = None, limit: int | None = None) -> List[BaseEntityType]:
+    async def list(self, start: int | None = None, limit: int | None = None) -> list[BaseEntityType]:
         raise NotImplementedError
 
 

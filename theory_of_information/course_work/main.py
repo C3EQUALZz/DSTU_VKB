@@ -81,7 +81,7 @@ def list_postgres_databases(host, database_name, port, user, password):
         process = subprocess.Popen(
             [
                 str(psql_path),
-                "--dbname=postgresql://{}:{}@{}:{}/{}".format(user, password, host, port, database_name),
+                f"--dbname=postgresql://{user}:{password}@{host}:{port}/{database_name}",
                 "--list",
             ],
             stdout=subprocess.PIPE,
@@ -89,7 +89,7 @@ def list_postgres_databases(host, database_name, port, user, password):
         )
         output = process.communicate()[0]
         if int(process.returncode) != 0:
-            print("Command failed. Return code : {}".format(process.returncode))
+            print(f"Command failed. Return code : {process.returncode}")
             exit(1)
         return output
     except Exception as e:
@@ -109,7 +109,7 @@ def backup_postgres_db(host, database_name, port, user, password, dest_file, ver
             process = subprocess.Popen(
                 [
                     str(pg_dump_path),
-                    "--dbname=postgresql://{}:{}@{}:{}/{}".format(user, password, host, port, database_name),
+                    f"--dbname=postgresql://{user}:{password}@{host}:{port}/{database_name}",
                     "-Fc",
                     "-f",
                     dest_file,
@@ -125,7 +125,7 @@ def backup_postgres_db(host, database_name, port, user, password, dest_file, ver
             output, error = process.communicate()
 
             if int(process.returncode) != 0:
-                print("Command failed. Return code : {}".format(process.returncode))
+                print(f"Command failed. Return code : {process.returncode}")
                 print("Error output:", error.decode("utf-8"))
                 exit(1)
             return output
@@ -137,7 +137,7 @@ def backup_postgres_db(host, database_name, port, user, password, dest_file, ver
             process = subprocess.Popen(
                 [
                     "pg_dump",
-                    "--dbname=postgresql://{}:{}@{}:{}/{}".format(user, password, host, port, database_name),
+                    f"--dbname=postgresql://{user}:{password}@{host}:{port}/{database_name}",
                     "-f",
                     dest_file,
                 ],
@@ -145,7 +145,7 @@ def backup_postgres_db(host, database_name, port, user, password, dest_file, ver
             )
             output = process.communicate()[0]
             if process.returncode != 0:
-                print("Command failed. Return code : {}".format(process.returncode))
+                print(f"Command failed. Return code : {process.returncode}")
                 exit(1)
             return output
         except Exception as e:
@@ -154,7 +154,7 @@ def backup_postgres_db(host, database_name, port, user, password, dest_file, ver
 
 
 def compress_file(src_file):
-    compressed_file = "{}.gz".format(str(src_file))
+    compressed_file = f"{src_file!s}.gz"
     with open(src_file, "rb") as f_in:
         with gzip.open(compressed_file, "wb") as f_out:
             for line in f_in:
@@ -181,7 +181,7 @@ def remove_faulty_statement_from_dump(src_file):
             output = subprocess.check_output(("grep", "-v", '"EXTENSION - plpgsql"'), stdin=process.stdout)
             process.wait()
             if int(process.returncode) != 0:
-                print("Command failed. Return code : {}".format(process.returncode))
+                print(f"Command failed. Return code : {process.returncode}")
                 exit(1)
 
             os.remove(src_file)
@@ -189,7 +189,7 @@ def remove_faulty_statement_from_dump(src_file):
                 subprocess.call(["pg_restore", "-L"], stdin=output, stdout=cleaned_dump)
 
     except Exception as e:
-        print("Issue when modifying dump : {}".format(e))
+        print(f"Issue when modifying dump : {e}")
 
 
 def change_user_from_dump(source_dump_path, old_user, new_user):
@@ -216,7 +216,7 @@ def restore_postgres_db(db_host, db, port, user, password, backup_file, verbose)
                 [
                     "pg_restore",
                     "--no-owner",
-                    "--dbname=postgresql://{}:{}@{}:{}/{}".format(user, password, db_host, port, db),
+                    f"--dbname=postgresql://{user}:{password}@{db_host}:{port}/{db}",
                     "-v",
                     backup_file,
                 ],
@@ -224,29 +224,29 @@ def restore_postgres_db(db_host, db, port, user, password, backup_file, verbose)
             )
             output = process.communicate()[0]
             if int(process.returncode) != 0:
-                print("Command failed. Return code : {}".format(process.returncode))
+                print(f"Command failed. Return code : {process.returncode}")
 
             return output
         except Exception as e:
-            print("Issue with the db restore : {}".format(e))
+            print(f"Issue with the db restore : {e}")
     else:
         try:
             process = subprocess.Popen(
                 [
                     "pg_restore",
                     "--no-owner",
-                    "--dbname=postgresql://{}:{}@{}:{}/{}".format(user, password, db_host, port, db),
+                    f"--dbname=postgresql://{user}:{password}@{db_host}:{port}/{db}",
                     backup_file,
                 ],
                 stdout=subprocess.PIPE,
             )
             output = process.communicate()[0]
             if int(process.returncode) != 0:
-                print("Command failed. Return code : {}".format(process.returncode))
+                print(f"Command failed. Return code : {process.returncode}")
 
             return output
         except Exception as e:
-            print("Issue with the db restore : {}".format(e))
+            print(f"Issue with the db restore : {e}")
 
 
 def create_db(db_host, database, db_port, user_name, user_password):
@@ -260,11 +260,11 @@ def create_db(db_host, database, db_port, user_name, user_password):
     con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
     cur = con.cursor()
     try:
-        cur.execute("DROP DATABASE {} ;".format(database))
-    except Exception as e:
+        cur.execute(f"DROP DATABASE {database} ;")
+    except Exception:
         print("DB does not exist, nothing to drop")
-    cur.execute("CREATE DATABASE {} ;".format(database))
-    cur.execute("GRANT ALL PRIVILEGES ON DATABASE {} TO {} ;".format(database, user_name))
+    cur.execute(f"CREATE DATABASE {database} ;")
+    cur.execute(f"GRANT ALL PRIVILEGES ON DATABASE {database} TO {user_name} ;")
     return database
 
 
@@ -277,10 +277,10 @@ def swap_restore_active(db_host, restore_database, active_database, db_port, use
             "SELECT pg_terminate_backend( pid ) "
             "FROM pg_stat_activity "
             "WHERE pid <> pg_backend_pid( ) "
-            "AND datname = '{}'".format(active_database)
+            f"AND datname = '{active_database}'"
         )
-        cur.execute("DROP DATABASE {}".format(active_database))
-        cur.execute('ALTER DATABASE "{}" RENAME TO "{}";'.format(restore_database, active_database))
+        cur.execute(f"DROP DATABASE {active_database}")
+        cur.execute(f'ALTER DATABASE "{restore_database}" RENAME TO "{active_database}";')
     except Exception as e:
         print(e)
         exit(1)
@@ -291,7 +291,7 @@ def swap_restore_new(db_host, restore_database, new_database, db_port, user_name
         con = psycopg2.connect(dbname="postgres", port=db_port, user=user_name, host=db_host, password=user_password)
         con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
         cur = con.cursor()
-        cur.execute('ALTER DATABASE "{}" RENAME TO "{}";'.format(restore_database, new_database))
+        cur.execute(f'ALTER DATABASE "{restore_database}" RENAME TO "{new_database}";')
     except Exception as e:
         print(e)
         exit(1)
@@ -319,22 +319,22 @@ def main():
     postgres_host = settings.database.host
     postgres_port = settings.database.port
     postgres_db = settings.database.name
-    postgres_restore = "{}_restore".format(postgres_db)
+    postgres_restore = f"{postgres_db}_restore"
     postgres_user = settings.database.user
     postgres_password = settings.database.password
     timestr = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-    filename = "backup-{}-{}.dump".format(timestr, postgres_db)
-    filename_compressed = "{}.gz".format(filename)
+    filename = f"backup-{timestr}-{postgres_db}.dump"
+    filename_compressed = f"{filename}.gz"
     restore_filename = "/tmp/restore.dump.gz"
     restore_uncompressed = "/tmp/restore.dump"
-    local_file_path = "{}{}".format(BACKUP_PATH, filename)
+    local_file_path = f"{BACKUP_PATH}{filename}"
 
     # list task
     if args.action == "list":
-        logger.info("Listing S3 bucket s3://{}/{} content :".format(AWS_BUCKET_NAME, AWS_BUCKET_PATH))
+        logger.info(f"Listing S3 bucket s3://{AWS_BUCKET_NAME}/{AWS_BUCKET_PATH} content :")
         s3_backup_objects = list_available_backup()
         for key in s3_backup_objects:
-            logger.info("Key : {}".format(key))
+            logger.info(f"Key : {key}")
     # list databases task
     elif args.action == "list_dbs":
         result = list_postgres_databases(postgres_host, postgres_db, postgres_port, postgres_user, postgres_password)
@@ -342,7 +342,7 @@ def main():
             logger.info(line)
     # backup task
     elif args.action == "backup":
-        logger.info("Backing up {} database to {}".format(postgres_db, local_file_path))
+        logger.info(f"Backing up {postgres_db} database to {local_file_path}")
         result = backup_postgres_db(
             postgres_host, postgres_db, postgres_port, postgres_user, postgres_password, local_file_path, args.verbose
         )
@@ -350,11 +350,11 @@ def main():
             logger.info(line)
 
         logger.info("Backup complete")
-        logger.info("Compressing {}".format(local_file_path))
+        logger.info(f"Compressing {local_file_path}")
         comp_file = compress_file(local_file_path)
-        logger.info("Uploading {} to Amazon S3...".format(comp_file))
+        logger.info(f"Uploading {comp_file} to Amazon S3...")
         upload_to_s3(comp_file, filename_compressed)
-        logger.info("Uploaded to {}".format(filename_compressed))
+        logger.info(f"Uploaded to {filename_compressed}")
     # restore task
     elif args.action == "restore":
         if not args.date:
@@ -369,22 +369,22 @@ def main():
             all_backup_keys = list_available_backup()
             backup_match = [s for s in all_backup_keys if args.date in s]
             if backup_match:
-                logger.info("Found the following backup : {}".format(backup_match))
+                logger.info(f"Found the following backup : {backup_match}")
             else:
-                logger.error("No match found for backups with date : {}".format(args.date))
-                logger.info("Available keys : {}".format([s for s in all_backup_keys]))
+                logger.error(f"No match found for backups with date : {args.date}")
+                logger.info(f"Available keys : {[s for s in all_backup_keys]}")
                 exit(1)
 
-            logger.info("Downloading {} from S3 into : {}".format(backup_match[0], restore_filename))
+            logger.info(f"Downloading {backup_match[0]} from S3 into : {restore_filename}")
             download_from_s3(backup_match[0], restore_filename)
             logger.info("Download complete")
-            logger.info("Extracting {}".format(restore_filename))
+            logger.info(f"Extracting {restore_filename}")
             ext_file = extract_file(restore_filename)
             # cleaned_ext_file = remove_faulty_statement_from_dump(ext_file)
-            logger.info("Extracted to : {}".format(ext_file))
-            logger.info("Creating temp database for restore : {}".format(postgres_restore))
+            logger.info(f"Extracted to : {ext_file}")
+            logger.info(f"Creating temp database for restore : {postgres_restore}")
             tmp_database = create_db(postgres_host, postgres_restore, postgres_port, postgres_user, postgres_password)
-            logger.info("Created temp database for restore : {}".format(tmp_database))
+            logger.info(f"Created temp database for restore : {tmp_database}")
             logger.info("Restore starting")
             result = restore_postgres_db(
                 postgres_host,
@@ -401,7 +401,7 @@ def main():
             if args.dest_db is not None:
                 restored_db_name = args.dest_db
                 logger.info(
-                    "Switching restored database with new one : {} > {}".format(postgres_restore, restored_db_name)
+                    f"Switching restored database with new one : {postgres_restore} > {restored_db_name}"
                 )
                 swap_restore_new(
                     postgres_host, postgres_restore, restored_db_name, postgres_port, postgres_user, postgres_password
@@ -409,7 +409,7 @@ def main():
             else:
                 restored_db_name = postgres_db
                 logger.info(
-                    "Switching restored database with active one : {} > {}".format(postgres_restore, restored_db_name)
+                    f"Switching restored database with active one : {postgres_restore} > {restored_db_name}"
                 )
                 swap_restore_active(
                     postgres_host, postgres_restore, restored_db_name, postgres_port, postgres_user, postgres_password

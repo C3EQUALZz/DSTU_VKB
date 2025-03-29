@@ -3,16 +3,16 @@ import json
 import logging
 import logging.config
 import logging.handlers
-import os
-from typing import Final
 import pathlib
+from pathlib import Path
+from typing import Final
 
 PROJECT_DIR: Final[pathlib.Path] = pathlib.Path(__file__).parent.parent.parent.parent
 
 
 logger = logging.getLogger(__name__)
 
-PATH_TO_LOGGER_CONFIG: Final[os.PathLike[str]] = PROJECT_DIR / "resources" / "config" / "logger-config.json"
+PATH_TO_LOGGER_CONFIG: Final[Path] = PROJECT_DIR / "resources" / "config" / "logger-config.json"
 
 
 def setup_logging() -> None:
@@ -21,7 +21,7 @@ def setup_logging() -> None:
     Configuration taken from here: https://www.youtube.com/watch?v=9L77QExPmI0
     """
     config_file = PATH_TO_LOGGER_CONFIG
-    with open(config_file) as f_in:
+    with Path.open(config_file) as f_in:
         config = json.load(f_in)
 
     log_dir = PROJECT_DIR / "resources" / "logs"

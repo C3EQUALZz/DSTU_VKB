@@ -3,7 +3,10 @@ from pathlib import Path
 from app.domain.entities.file_objects import CompressedFileObject
 from app.domain.values.backup import CompressionType
 from app.infrastructure.services.s3 import S3Service
-from app.logic.commands.s3 import CreateFileInS3Command, ListFilesInS3Command
+from app.logic.commands.s3 import (
+    CreateFileInS3Command,
+    ListFilesInS3Command,
+)
 from app.logic.handlers.s3.base import S3CommandHandler
 
 

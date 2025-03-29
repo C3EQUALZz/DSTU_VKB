@@ -4,11 +4,11 @@ import boto3
 from botocore.client import BaseClient
 from botocore.config import Config
 from dishka import (
+    Provider,
+    Scope,
     from_context,
     make_container,
     provide,
-    Provider,
-    Scope,
 )
 
 from app.infrastructure.compressors.factory import CompressorFactory
@@ -29,7 +29,10 @@ from app.logic.commands.database import (
     CreateDatabaseBackupCommand,
     ListAllDatabasesCommand,
 )
-from app.logic.commands.s3 import CreateFileInS3Command, ListFilesInS3Command
+from app.logic.commands.s3 import (
+    CreateFileInS3Command,
+    ListFilesInS3Command,
+)
 from app.logic.commands.stats import GetFileFullStatsCommand
 from app.logic.handlers.compression.commands import (
     CompressFileCommandHandler,
@@ -39,16 +42,19 @@ from app.logic.handlers.database.commands import (
     CreateDatabaseBackupCommandHandler,
     ListAllDatabasesCommandHandler,
 )
-from app.logic.handlers.s3.commands import CreateFileInS3CommandHandler, ListFilesInS3CommandHandler
+from app.logic.handlers.s3.commands import (
+    CreateFileInS3CommandHandler,
+    ListFilesInS3CommandHandler,
+)
 from app.logic.handlers.stats.commands import GetFileFullStatsCommandHandler
 from app.logic.types.handlers import (
+    UT,
     CommandHandlerMapping,
     EventHandlerMapping,
-    UT,
 )
 from app.settings.config import (
-    get_settings,
     Settings,
+    get_settings,
 )
 
 
@@ -59,7 +65,7 @@ class HandlerProvider(Provider):
         Here you have to link commands and command handlers for future inject in Bootstrap
         """
         return cast(
-            CommandHandlerMapping,
+            "CommandHandlerMapping",
             {
                 CompressFileCommand: CompressFileCommandHandler,
                 DecompressFileCommand: DecompressFileCommandHandler,
@@ -76,7 +82,7 @@ class HandlerProvider(Provider):
         """
         Here you have to link events and event handlers for future inject in Bootstrap
         """
-        return cast(EventHandlerMapping, {})
+        return cast("EventHandlerMapping", {})
 
 
 class S3Provider(Provider):

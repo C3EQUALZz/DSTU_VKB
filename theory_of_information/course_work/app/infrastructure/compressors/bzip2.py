@@ -1,12 +1,17 @@
 import bz2
 import logging
 from pathlib import Path
-from typing import Final
+from typing import (
+    Final,
+)
 
 from typing_extensions import override
 
 from app.application.cli.const import BACKUP_DIRECTORY_PATH
-from app.domain.entities.file_objects import FileObject, CompressedFileObject
+from app.domain.entities.file_objects import (
+    CompressedFileObject,
+    FileObject,
+)
 from app.domain.values.backup import CompressionType
 from app.infrastructure.compressors.base import Compressor
 
@@ -21,10 +26,9 @@ class Bzip2Compressor(Compressor):
         source_path: Path = backup.file_path
         dest_path: Path = BACKUP_DIRECTORY_PATH / (source_path.name + ".bz2")
 
-        with open(source_path, "rb") as f_in:
-            with bz2.open(dest_path, 'wb') as f_out:
-                while chunk := f_in.read(CHUNK_SIZE):
-                    f_out.write(chunk)
+        with Path.open(source_path, "rb") as f_in, bz2.open(dest_path, "wb") as f_out:
+            while chunk := f_in.read(CHUNK_SIZE):
+                f_out.write(chunk)
 
         logger.info(f"Compressed {source_path} to {dest_path}")
 
@@ -38,10 +42,9 @@ class Bzip2Compressor(Compressor):
         source_path: Path = backup.file_path
         dest_path: Path = source_path.with_suffix("")
 
-        with bz2.open(source_path, "rb") as f_in:
-            with open(dest_path, "wb") as f_out:
-                while chunk := f_in.read(CHUNK_SIZE):
-                    f_out.write(chunk)
+        with bz2.open(source_path, "rb") as f_in, Path.open(dest_path, "wb") as f_out:
+            while chunk := f_in.read(CHUNK_SIZE):
+                f_out.write(chunk)
 
         logger.debug(f"Decompressed {source_path} to {dest_path}")
 

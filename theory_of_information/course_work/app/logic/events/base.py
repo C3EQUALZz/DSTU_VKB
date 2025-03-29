@@ -1,3 +1,4 @@
+import contextlib
 from abc import ABC
 from dataclasses import (
     asdict,
@@ -30,10 +31,8 @@ class AbstractEvent(ABC):
         data: dict[str, Any] = asdict(self)
         if exclude:
             for key in exclude:
-                try:
+                with contextlib.suppress(KeyError):
                     del data[key]
-                except KeyError:
-                    pass
 
         if include:
             data.update(include)

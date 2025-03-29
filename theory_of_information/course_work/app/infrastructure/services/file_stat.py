@@ -2,7 +2,11 @@ from datetime import datetime
 from pathlib import Path
 
 from app.domain.entities.file_objects import FileStatistic
-from app.domain.values.file_objects import TypeOfFile, SizeOfFile, PermissionsOfFile
+from app.domain.values.file_objects import (
+    PermissionsOfFile,
+    SizeOfFile,
+    TypeOfFile,
+)
 
 
 class FileStatService:

@@ -1,11 +1,8 @@
 from abc import ABC
 
 from app.infrastructure.uow.compression import CompressionUnitOfWork
-from app.logic.handlers.base import (
-    AbstractCommandHandler,
-)
-
-from app.logic.types.handlers import (CT)
+from app.logic.handlers.base import AbstractCommandHandler
+from app.logic.types.handlers import CT
 
 
 class FileStatsCommandHandler(AbstractCommandHandler[CT], ABC):

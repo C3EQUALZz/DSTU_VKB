@@ -3,7 +3,11 @@ from pathlib import Path
 
 from app.domain.entities.base import BaseEntity
 from app.domain.values.backup import CompressionType
-from app.domain.values.file_objects import TypeOfFile, SizeOfFile, PermissionsOfFile
+from app.domain.values.file_objects import (
+    PermissionsOfFile,
+    SizeOfFile,
+    TypeOfFile,
+)
 
 
 @dataclass(eq=False)

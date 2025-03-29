@@ -1,9 +1,14 @@
-from app.domain.entities.file_objects import FileStatistic
+from typing import TYPE_CHECKING
+
+from rich.console import Console
+from rich.table import Table
+
 from app.infrastructure.services.file_stat import FileStatService
 from app.logic.commands.stats import GetFileFullStatsCommand
 from app.logic.handlers.stats.base import FileStatsCommandHandler
-from rich.console import Console
-from rich.table import Table
+
+if TYPE_CHECKING:
+    from app.domain.entities.file_objects import FileStatistic
 
 
 class GetFileFullStatsCommandHandler(FileStatsCommandHandler[GetFileFullStatsCommand]):

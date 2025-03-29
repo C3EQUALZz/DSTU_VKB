@@ -1,5 +1,6 @@
 import logging
-import os
+from pathlib import Path
+
 from app.domain.entities.file_objects import CompressedFileObject
 from app.infrastructure.repositories.database.base import DatabaseDumpRepository
 
@@ -14,7 +15,7 @@ class S3Service:
         self._repository.add(model)
         logger.info(f"Added {model}")
         if delete:
-            os.remove(model.file_path)
+            Path.unlink(model.file_path)
             logger.info(f"Deleted {model.file_path}")
 
     def delete(self, oid: str) -> None:
@@ -27,5 +28,4 @@ class S3Service:
 
     def list(self, start: int | None = None, end: int | None = None) -> None:
         files_from_s3: list[CompressedFileObject] = self._repository.list(start, end)
-        print("\n".join(map(lambda file: str(file.file_path), files_from_s3)))
         logger.info("Files on s3: %s", len(files_from_s3))
