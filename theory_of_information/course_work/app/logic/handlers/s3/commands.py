@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from app.domain.entities.file_objects import CompressedFileObject
+from app.domain.entities.file_objects import CompressedFileObjectEntity
 from app.domain.values.backup import CompressionType
 from app.infrastructure.services.s3 import S3Service
 from app.logic.commands.s3 import (
@@ -16,7 +16,7 @@ class CreateFileInS3CommandHandler(S3CommandHandler[CreateFileInS3Command]):
 
         file_path: Path = Path(command.file_path)
 
-        file_obj: CompressedFileObject = CompressedFileObject(
+        file_obj: CompressedFileObjectEntity = CompressedFileObjectEntity(
             file_path=file_path,
             compression_type=CompressionType(file_path.suffix)
         )

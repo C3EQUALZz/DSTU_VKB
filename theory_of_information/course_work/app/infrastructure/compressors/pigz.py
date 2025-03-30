@@ -20,8 +20,8 @@ from threading import (
 from typing_extensions import override
 
 from app.domain.entities.file_objects import (
-    CompressedFileObject,
-    FileObject,
+    CompressedFileObjectEntity,
+    FileObjectEntity,
 )
 from app.domain.values.backup import CompressionType
 from app.infrastructure.compressors.base import Compressor
@@ -378,18 +378,18 @@ def compress_file(
 
 class PigzCompressor(Compressor):
     @override
-    def compress(self, backup: FileObject) -> CompressedFileObject:
+    def compress(self, backup: FileObjectEntity) -> CompressedFileObjectEntity:
         compress_file(backup.file_path)
 
         logger.debug(f"Compressed to {backup.file_path}")
 
-        return CompressedFileObject(
+        return CompressedFileObjectEntity(
             backup.file_path,
             compression_type=CompressionType("gzip"),
         )
 
     @override
-    def decompress(self, backup: CompressedFileObject) -> FileObject:
+    def decompress(self, backup: CompressedFileObjectEntity) -> FileObjectEntity:
         source_path: Path = backup.file_path
         dest_path: Path = source_path.with_suffix("")
 
@@ -399,4 +399,4 @@ class PigzCompressor(Compressor):
 
         logger.debug(f"Decompressed {source_path} to {dest_path}")
 
-        return FileObject(file_path=dest_path)
+        return FileObjectEntity(file_path=dest_path)

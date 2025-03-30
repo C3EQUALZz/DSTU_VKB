@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
 from app.domain.entities.file_objects import (
-    CompressedFileObject,
-    FileObject,
+    CompressedFileObjectEntity,
+    FileObjectEntity,
 )
 from app.domain.values.backup import CompressionType
 from app.infrastructure.services.compressor import CompressorService
@@ -17,20 +17,20 @@ if TYPE_CHECKING:
 
 
 class CompressFileCommandHandler(CompressionCommandHandler[CompressFileCommand]):
-    def __call__(self, command: CompressFileCommand) -> CompressedFileObject:
+    def __call__(self, command: CompressFileCommand) -> CompressedFileObjectEntity:
         compressor: Compressor = self._factory.create(command.compress_type)
 
         compressor_service: CompressorService = CompressorService(compressor)
-        file_object = FileObject(command.src_file_path)
+        file_object = FileObjectEntity(command.src_file_path)
         return compressor_service.compress(file_object)
 
 
 class DecompressFileCommandHandler(CompressionCommandHandler[DecompressFileCommand]):
-    def __call__(self, command: DecompressFileCommand) -> FileObject:
+    def __call__(self, command: DecompressFileCommand) -> FileObjectEntity:
         compressor: Compressor = self._factory.create(command.compress_type)
         compressor_service: CompressorService = CompressorService(compressor)
 
-        file_object: CompressedFileObject = CompressedFileObject(
+        file_object: CompressedFileObjectEntity = CompressedFileObjectEntity(
             command.src_file_path,
             CompressionType(command.compress_type),
         )

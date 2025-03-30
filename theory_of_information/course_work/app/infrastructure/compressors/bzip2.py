@@ -9,8 +9,8 @@ from typing_extensions import override
 
 from app.application.cli.const import BACKUP_DIRECTORY_PATH
 from app.domain.entities.file_objects import (
-    CompressedFileObject,
-    FileObject,
+    CompressedFileObjectEntity,
+    FileObjectEntity,
 )
 
 from app.domain.values.backup import CompressionType
@@ -23,7 +23,7 @@ CHUNK_SIZE: Final[int] = 1024 * 1024  # 1MB chunks
 
 class Bzip2Compressor(Compressor):
     @override
-    def compress(self, backup: FileObject) -> CompressedFileObject:
+    def compress(self, backup: FileObjectEntity) -> CompressedFileObjectEntity:
         source_path: Path = backup.file_path
         dest_path: Path = BACKUP_DIRECTORY_PATH / (source_path.name + ".bz2")
 
@@ -33,13 +33,13 @@ class Bzip2Compressor(Compressor):
 
         logger.info(f"Compressed {source_path} to {dest_path}")
 
-        return CompressedFileObject(
+        return CompressedFileObjectEntity(
             file_path=dest_path,
             compression_type=CompressionType("bzip2")
         )
 
     @override
-    def decompress(self, backup: CompressedFileObject) -> FileObject:
+    def decompress(self, backup: CompressedFileObjectEntity) -> FileObjectEntity:
         source_path: Path = backup.file_path
         dest_path: Path = source_path.with_suffix("")
 
@@ -49,4 +49,4 @@ class Bzip2Compressor(Compressor):
 
         logger.debug(f"Decompressed {source_path} to {dest_path}")
 
-        return FileObject(file_path=dest_path)
+        return FileObjectEntity(file_path=dest_path)

@@ -4,16 +4,16 @@ from abc import (
 )
 
 from app.domain.entities.file_objects import (
-    CompressedFileObject,
-    FileObject,
+    CompressedFileObjectEntity,
+    FileObjectEntity,
 )
 
 
 class Compressor(ABC):
     @abstractmethod
-    def compress(self, backup: FileObject) -> CompressedFileObject:
+    def compress(self, backup: FileObjectEntity) -> CompressedFileObjectEntity:
         raise NotImplementedError
 
     @abstractmethod
-    def decompress(self, compressed_backup: CompressedFileObject) -> FileObject:
+    def decompress(self, compressed_backup: CompressedFileObjectEntity) -> FileObjectEntity:
         raise NotImplementedError

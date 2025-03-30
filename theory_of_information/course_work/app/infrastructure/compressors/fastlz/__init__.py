@@ -2,7 +2,7 @@ import logging
 from pathlib import Path
 from typing_extensions import override
 from app.application.cli.const import BACKUP_DIRECTORY_PATH
-from app.domain.entities.file_objects import FileObject, CompressedFileObject
+from app.domain.entities.file_objects import FileObjectEntity, CompressedFileObjectEntity
 from app.domain.values.backup import CompressionType
 from app.infrastructure.compressors.base import Compressor
 from app.infrastructure.compressors.fastlz.interface import FastLzInterface
@@ -15,7 +15,7 @@ class FastLZCompressor(Compressor):
         self._compressor = FastLzInterface()
 
     @override
-    def compress(self, backup: FileObject) -> CompressedFileObject:
+    def compress(self, backup: FileObjectEntity) -> CompressedFileObjectEntity:
         source_path: Path = backup.file_path
         dest_path: Path = BACKUP_DIRECTORY_PATH / (source_path.name + ".fastlz")
 
@@ -25,13 +25,13 @@ class FastLZCompressor(Compressor):
 
         logger.info(f"Compressed {source_path} to {dest_path}")
 
-        return CompressedFileObject(
+        return CompressedFileObjectEntity(
             dest_path,
             compression_type=CompressionType("fastlz")
         )
 
     @override
-    def decompress(self, backup: CompressedFileObject) -> FileObject:
+    def decompress(self, backup: CompressedFileObjectEntity) -> FileObjectEntity:
         source_path: Path = backup.file_path
         dest_path: Path = source_path.with_suffix("")
 
@@ -41,4 +41,4 @@ class FastLZCompressor(Compressor):
 
         logger.debug(f"Decompressed {source_path} to {dest_path}")
 
-        return FileObject(file_path=dest_path)
+        return FileObjectEntity(file_path=dest_path)

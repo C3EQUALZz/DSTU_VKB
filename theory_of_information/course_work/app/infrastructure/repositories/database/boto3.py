@@ -6,7 +6,7 @@ from botocore.exceptions import ClientError
 from typing_extensions import override
 
 from app.application.cli.const import BACKUP_DIRECTORY_PATH
-from app.domain.entities.file_objects import CompressedFileObject
+from app.domain.entities.file_objects import CompressedFileObjectEntity
 from app.domain.values.backup import CompressionType
 from app.infrastructure.repositories.base import S3AbstractRepository
 from app.infrastructure.repositories.database.base import DatabaseDumpRepository
@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 class DatabaseDumpBoto3Repository(DatabaseDumpRepository, S3AbstractRepository):
     @override
-    def add(self, model: CompressedFileObject) -> CompressedFileObject:
+    def add(self, model: CompressedFileObjectEntity) -> CompressedFileObjectEntity:
         object_key = self._generate_object_key(model.file_path.name)
 
         try:
@@ -34,7 +34,7 @@ class DatabaseDumpBoto3Repository(DatabaseDumpRepository, S3AbstractRepository):
             )
             logger.info(f"Uploaded {object_key} to {self._bucket_name}")
 
-            return CompressedFileObject(
+            return CompressedFileObjectEntity(
                 file_path=Path(object_key),
                 compression_type=model.compression_type
             )
@@ -44,7 +44,7 @@ class DatabaseDumpBoto3Repository(DatabaseDumpRepository, S3AbstractRepository):
             raise
 
     @override
-    def get(self, oid: str) -> CompressedFileObject | None:
+    def get(self, oid: str) -> CompressedFileObjectEntity | None:
         try:
 
             head_response: dict[str, Any] = self._client.head_object(
@@ -65,7 +65,7 @@ class DatabaseDumpBoto3Repository(DatabaseDumpRepository, S3AbstractRepository):
                 Filename=str(local_path)
             )
 
-            return CompressedFileObject(
+            return CompressedFileObjectEntity(
                 file_path=local_path,
                 compression_type=CompressionType(compression_type_str)  # Определите тип из метаданных
             )
@@ -78,7 +78,7 @@ class DatabaseDumpBoto3Repository(DatabaseDumpRepository, S3AbstractRepository):
             raise
 
     @override
-    def update(self, oid: str, model: CompressedFileObject) -> CompressedFileObject:
+    def update(self, oid: str, model: CompressedFileObjectEntity) -> CompressedFileObjectEntity:
         raise NotImplementedError
 
     @override
@@ -86,8 +86,8 @@ class DatabaseDumpBoto3Repository(DatabaseDumpRepository, S3AbstractRepository):
             self,
             start: int | None = None,
             limit: int | None = None
-    ) -> list[CompressedFileObject]:
-        result: list[CompressedFileObject] = []
+    ) -> list[CompressedFileObjectEntity]:
+        result: list[CompressedFileObjectEntity] = []
         paginator = self._client.get_paginator("list_objects_v2")
 
         config = {
@@ -105,7 +105,7 @@ class DatabaseDumpBoto3Repository(DatabaseDumpRepository, S3AbstractRepository):
                     # Получаем полные метаданные для каждого объекта
                     metadata = self._get_object_metadata(obj["Key"])
                     result.append(
-                        CompressedFileObject(
+                        CompressedFileObjectEntity(
                             file_path=Path(obj["Key"]),
                             compression_type=metadata.get("compression")
                         )

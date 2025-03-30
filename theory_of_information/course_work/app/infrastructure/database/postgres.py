@@ -19,6 +19,9 @@ logger = logging.getLogger(__name__)
 
 @dataclass(frozen=True)
 class PostgresConfig:
+    """
+    DTO class for getting postgres config.
+    """
     user: str
     password: str
     host: str
@@ -27,20 +30,31 @@ class PostgresConfig:
 
 
 class PostgresCLIService(BaseDatabaseCLIService):
+    """
+    CLI service for communication with Postgres.
+    This service requires PostgreSQL to be installed on PC or server.
+    """
     def __init__(
         self,
         psql_bin_path: Path,
         postgres_config: PostgresConfig,
     ) -> None:
+        """
+        :param psql_bin_path: Path to the psql binary.
+        :param postgres_config: Postgres configuration, please see the DTO (PostgresConfig).
+        """
         self._psql_bin_path = psql_bin_path
         self._config = postgres_config
 
     @override
     def list_all_databases(self) -> None:
+        """
+        This method prints all databases that are available by the config that user provides.
+        """
         if sys.platform == "win32":
             psql_path: Path = self._psql_bin_path / "psql.exe"
         else:
-            psql_path = self._psql_bin_path / "psql"
+            psql_path: Path = self._psql_bin_path / "psql"
 
         process: Popen[bytes] = subprocess.Popen(
             [
@@ -52,17 +66,22 @@ class PostgresCLIService(BaseDatabaseCLIService):
             stderr=subprocess.PIPE,
         )
 
-        output: bytes = process.communicate()[0]
+        output, error = process.communicate()
 
         if int(process.returncode) != 0:
             logger.error("Command failed. Return code : %s", process.returncode)
+            logger.error("Error output:", error.decode("utf-8"))
             return
 
-        for _line in output.splitlines():
-            pass
+        for line in output.splitlines():
+            print(line.decode("utf-8"))
 
     @override
     def create_backup(self) -> None:
+        """
+        This method creates a backup of the current database.
+        Backup will be created at tmp directory. At the root of this project.
+        """
         if sys.platform == "win32":
             psql_path: Path = self._psql_bin_path / "pg_dump.exe"
         else:
@@ -90,5 +109,5 @@ class PostgresCLIService(BaseDatabaseCLIService):
             logger.error("Error output:", error.decode("utf-8"))
             return
 
-        for _line in output.splitlines():
-            pass
+        for line in output.splitlines():
+            print(line.decode("utf-8"))
