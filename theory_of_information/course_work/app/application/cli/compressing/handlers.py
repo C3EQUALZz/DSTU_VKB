@@ -32,12 +32,12 @@ def cli(context: click.Context):
 @click.option(
     "-t",
     "--type_of_compression",
-    type=click.Choice(["gzip", "pigz", "bzip2"]),
+    type=click.Choice(["gzip", "pigz", "bzip2", "fastlz", "lzf", "lzjb", "lzss"]),
     default="gzip",
     help="Compression type",
 )
 def compress(
-    src_file_path: Path, type_of_compression: str, bootstrap: FromDishka[Bootstrap[CompressionUnitOfWork]]
+        src_file_path: Path, type_of_compression: str, bootstrap: FromDishka[Bootstrap[CompressionUnitOfWork]]
 ) -> None:
     """
     Compress any file that user gives
@@ -56,12 +56,12 @@ def compress(
 @click.option(
     "-t",
     "--type_of_compression",
-    type=click.Choice(["gzip"]),
+    type=click.Choice(["gzip", "pigz", "bzip2", "fastlz", "lzf", "lzjb", "lzss"]),
     default="gzip",
     help="Compression type",
 )
 def decompress(
-    src_file_path: Path, type_of_compression: str, bootstrap: FromDishka[Bootstrap[CompressionUnitOfWork]]
+        src_file_path: Path, type_of_compression: str, bootstrap: FromDishka[Bootstrap[CompressionUnitOfWork]]
 ) -> None:
     """
     Decompress any file that user gives

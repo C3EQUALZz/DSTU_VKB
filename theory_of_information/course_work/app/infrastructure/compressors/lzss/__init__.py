@@ -1,41 +1,35 @@
-import bz2
 import logging
 from pathlib import Path
-from typing import (
-    Final,
-)
 
 from typing_extensions import override
 
 from app.application.cli.const import BACKUP_DIRECTORY_PATH
-from app.domain.entities.file_objects import (
-    CompressedFileObject,
-    FileObject,
-)
-
+from app.domain.entities.file_objects import FileObject, CompressedFileObject
 from app.domain.values.backup import CompressionType
 from app.infrastructure.compressors.base import Compressor
+from app.infrastructure.compressors.lzss.interface import LzssInterface
 
 logger = logging.getLogger(__name__)
 
-CHUNK_SIZE: Final[int] = 1024 * 1024  # 1MB chunks
 
+class LZSSCompressor(Compressor):
+    def __init__(self) -> None:
+        self._compressor = LzssInterface()
 
-class Bzip2Compressor(Compressor):
     @override
     def compress(self, backup: FileObject) -> CompressedFileObject:
         source_path: Path = backup.file_path
-        dest_path: Path = BACKUP_DIRECTORY_PATH / (source_path.name + ".bz2")
+        dest_path: Path = BACKUP_DIRECTORY_PATH / (source_path.name + ".lzss")
 
-        with Path.open(source_path, "rb") as f_in, bz2.open(dest_path, "wb") as f_out:
-            while chunk := f_in.read(CHUNK_SIZE):
-                f_out.write(chunk)
+        with Path.open(source_path, "rb") as f_in, open(dest_path, "wb") as f_out:
+            data: bytearray = bytearray(f_in.read())
+            f_out.write(bytes(self._compressor.compress(data)))
 
         logger.info(f"Compressed {source_path} to {dest_path}")
 
         return CompressedFileObject(
-            file_path=dest_path,
-            compression_type=CompressionType("bzip2")
+            dest_path,
+            compression_type=CompressionType("lzss")
         )
 
     @override
@@ -43,9 +37,9 @@ class Bzip2Compressor(Compressor):
         source_path: Path = backup.file_path
         dest_path: Path = source_path.with_suffix("")
 
-        with bz2.open(source_path, "rb") as f_in, Path.open(dest_path, "wb") as f_out:
-            while chunk := f_in.read(CHUNK_SIZE):
-                f_out.write(chunk)
+        with Path.open(source_path, "rb") as f_in, Path.open(dest_path, "wb") as f_out:
+            data: bytearray = bytearray(f_in.read())
+            f_out.write(bytes(self._compressor.decompress(data)))
 
         logger.debug(f"Decompressed {source_path} to {dest_path}")
 

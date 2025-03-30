@@ -37,7 +37,7 @@ class SizeOfFile(BaseValueObject[str]):
     def as_generic_type(self) -> str:
         units: tuple[str, str, str, str] = ("KB", "MB", "GB", "TB")
         size_list: list[str] = [f"{int(self.value):,} B"] + [
-            f"{int(self.value) / 1024 ** (i + 1):,.1f*} {u}" for i, u in
+            f"{int(self.value) / 1024 ** (i + 1):,.1f} {u}" for i, u in
             enumerate(units)
         ]
         return [size for size in size_list if not size.startswith("0.")][-1]
