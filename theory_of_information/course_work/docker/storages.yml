@@ -52,8 +52,8 @@ services:
     container_name: minio-course-work
     image: docker.io/bitnami/minio:2025
     ports:
-      - '9000:9000'
-      - '9001:9001'
+      - ${MINIO_PORT}:9000
+      - ${MINIO_UI_PORT}:9001
     volumes:
       - 'minio_data:/data'
     environment:
