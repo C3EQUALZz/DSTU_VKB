@@ -1,13 +1,7 @@
 from app.infrastructure.compressors.base import Compressor
-from app.infrastructure.compressors.bzip2 import Bzip2Compressor
 from app.infrastructure.compressors.fastlz import FastLZCompressor
 from app.infrastructure.compressors.gunzip import GunZipCompressor
-from app.infrastructure.compressors.lzf import LzfCompressor
-from app.infrastructure.compressors.lzjb import LZJBCompressor
-from app.infrastructure.compressors.lzss import LZSSCompressor
 from app.infrastructure.compressors.pigz import PigzCompressor
-from app.infrastructure.compressors.xz import XzCompressor
-
 
 class CompressorFactory:
     @staticmethod

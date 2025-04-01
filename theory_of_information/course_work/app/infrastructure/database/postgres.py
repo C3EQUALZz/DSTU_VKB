@@ -43,8 +43,8 @@ class PostgresCLIService(BaseDatabaseCLIService):
         :param psql_bin_path: Path to the psql binary.
         :param postgres_config: Postgres configuration, please see the DTO (PostgresConfig).
         """
-        self._psql_bin_path = psql_bin_path
-        self._config = postgres_config
+        self._psql_bin_path: Path = psql_bin_path
+        self._config: PostgresConfig = postgres_config
 
     @override
     def list_all_databases(self) -> None:
