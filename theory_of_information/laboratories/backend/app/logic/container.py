@@ -7,9 +7,11 @@ from dishka import (
 )
 from redis.asyncio import ConnectionPool, Redis
 
+from app.infrastructure.services.block_codes import BlockCodesService
 from app.infrastructure.services.field_calculator import FieldCalculatorService
 from app.infrastructure.services.convolutional_codes import ConvolutionalCodesService
 from app.logic.use_cases.calculator import EvaluateMathExpressionInFieldUseCase
+from app.logic.use_cases.cascade_codes import EncodeCascadeCodeUseCase, DecodeCascadeCodeUseCase
 from app.logic.use_cases.convolutional_codes import EncodeConvolutionalCodeUseCase, DecodeConvolutionalCodeUseCase
 from app.settings.config import Settings
 
@@ -42,10 +44,25 @@ class ConvolutionalCodeUseCasesProvider(Provider):
         return DecodeConvolutionalCodeUseCase(ConvolutionalCodesService())
 
 
+class CascadeCodeUseCasesProvider(Provider):
+    @provide(scope=Scope.APP)
+    async def get_encode_expression_use_case(self) -> EncodeCascadeCodeUseCase:
+        return EncodeCascadeCodeUseCase(
+            block_code=BlockCodesService()
+        )
+
+    @provide(scope=Scope.APP)
+    async def get_decode_expression_use_case(self) -> DecodeCascadeCodeUseCase:
+        return DecodeCascadeCodeUseCase(
+            block_code=BlockCodesService()
+        )
+
+
 container = make_async_container(
     RedisProvider(),
     FieldCalculatorUseCasesProvider(),
     ConvolutionalCodeUseCasesProvider(),
+    CascadeCodeUseCasesProvider(),
     context={
         Settings: Settings(),
     }

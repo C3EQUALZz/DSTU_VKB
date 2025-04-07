@@ -7,14 +7,16 @@ authors = [
 ]
 license = {text = "MIT"}
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 dependencies = [
     "fastapi (>=0.115.8,<0.116.0)",
     "redis (>=5.2.1,<6.0.0)",
     "numpy (>=2.2.2,<3.0.0)",
     "dishka (>=1.4.2,<2.0.0)",
     "pydantic-settings (>=2.7.1,<3.0.0)",
-    "uvicorn (>=0.34.0,<0.35.0)"
+    "uvicorn (>=0.34.0,<0.35.0)",
+    "python-multipart (>=0.0.20,<0.0.21)",
+    "pillow (>=11.1.0,<12.0.0)"
 ]
 
 
