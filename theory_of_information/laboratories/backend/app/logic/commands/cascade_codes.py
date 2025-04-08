@@ -12,6 +12,7 @@ class EncodeCascadeCodeCommand(AbstractCommand):
     matrix_for_block_code: list[list[int]]
     type_of_matrix: Literal["G", "H"]
     indexes: list[list[int]]
+    add_errors: bool
 
 
 @dataclass(frozen=True)

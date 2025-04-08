@@ -1,4 +1,5 @@
 from itertools import product
+from random import randint
 from typing import cast
 
 import numpy as np
@@ -6,7 +7,7 @@ import numpy as np
 from app.infrastructure.services.block_codes import BlockCodesService
 from app.infrastructure.services.convolutional_codes import ConvolutionalCodesService
 from app.infrastructure.services.interleaver import InterleaveService
-from app.logic.commands.block_codes import EncodeCascadeCodeCommand, DecodeCascadeCodeCommand
+from app.logic.commands.cascade_codes import EncodeCascadeCodeCommand, DecodeCascadeCodeCommand
 from app.logic.use_cases.base import BaseUseCase
 from app.logic.use_cases.convolutional_codes import SEQUENCE
 
@@ -22,7 +23,7 @@ class EncodeCascadeCodeUseCase(BaseUseCase[EncodeCascadeCodeCommand]):
         self._interleave_service: InterleaveService = interleave_service
         self._convolutional_service: ConvolutionalCodesService = convolutional_service
 
-    async def __call__(self, command: EncodeCascadeCodeCommand):
+    async def __call__(self, command: EncodeCascadeCodeCommand) -> str:
         block_encoded: np.ndarray[np.ndarray[str]] = self._block_code_service.encode(
             data=command.data,
             matrix=command.matrix_for_block_code,
@@ -41,10 +42,27 @@ class EncodeCascadeCodeUseCase(BaseUseCase[EncodeCascadeCodeCommand]):
         filtered_pols: filter = filter(lambda pol: pol.count("1") > 2, non_filtered_pols)
         pols: str = ','.join(filtered_pols)
 
-        return self._convolutional_service.encode(
+        encoded_data: str = self._convolutional_service.encode(
             data=data,
             pols=pols,
         )
+
+        if command.add_errors:
+            result = []
+            bits_per_pixel: int = 24
+
+            for i in range(0, len(encoded_data), bits_per_pixel):
+                pixel_bits = list(encoded_data[i:i + bits_per_pixel])
+
+                # Инвертируем случайный бит в пикселе
+                error_pos = randint(0, bits_per_pixel - 1)
+                pixel_bits[error_pos] = '1' if pixel_bits[error_pos] == '0' else '0'
+
+                result.append(''.join(pixel_bits))
+
+            return ''.join(result)
+
+        return encoded_data
 
 
 class DecodeCascadeCodeUseCase(BaseUseCase[DecodeCascadeCodeCommand]):

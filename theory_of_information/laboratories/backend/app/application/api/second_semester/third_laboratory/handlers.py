@@ -12,7 +12,7 @@ from app.application.api.second_semester.third_laboratory.dependecies import con
 from app.application.api.second_semester.third_laboratory.schemas import EncodeCascadeCodeRequestSchema, \
     DecodeCascadeCodeRequestSchema
 from app.exceptions.base import ApplicationException
-from app.logic.commands.block_codes import EncodeCascadeCodeCommand, DecodeCascadeCodeCommand
+from app.logic.commands.cascade_codes import EncodeCascadeCodeCommand, DecodeCascadeCodeCommand
 from app.logic.use_cases.cascade_codes import EncodeCascadeCodeUseCase, DecodeCascadeCodeUseCase
 
 router = APIRouter(
@@ -40,6 +40,7 @@ async def encode_cascade_code(
             matrix_for_block_code=schemas.matrix,
             type_of_matrix=schemas.type_matrix,
             indexes=schemas.indexes,
+            add_errors=True
         ))
     except ApplicationException as e:
         logger.error(e)
