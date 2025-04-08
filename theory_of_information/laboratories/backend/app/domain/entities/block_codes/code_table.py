@@ -23,7 +23,7 @@ class CodeTable:
         for key, value in data.items():
             data[key] = value.tolist()
 
-        logger.info(f"Таблица информационных и кодовых слов {self.__class__.__name__}", data)
+        logger.info(f"Таблица информационных и кодовых слов {self.__class__.__name__} %s", data)
 
     def __iter__(self):
         return zip(self.information_words_column, self.code_words_column, self.hamming_weights_column)
