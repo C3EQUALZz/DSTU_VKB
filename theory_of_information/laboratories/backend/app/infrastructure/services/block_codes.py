@@ -20,7 +20,7 @@ class BlockCodesService:
             data: np.ndarray[tuple[str, str, str]],
             matrix: list[list[int]],
             type_matrix: Literal["G", "H"]
-    ) -> str:
+    ) -> np.ndarray[np.ndarray[str]]:
         """
         Здесь происходит вся логика кодирования сообщения (ТОЛЬКО КОДИРОВАНИЕ, БЕЗ КАНАЛА).
 
@@ -30,7 +30,7 @@ class BlockCodesService:
         :returns: Закодированную строку.
         """
 
-        code_table, generation_sys_matrix = self.__get_info_for_encoding(matrix, type_matrix)
+        code_table, generation_sys_matrix = self.get_info_for_encoding(matrix, type_matrix)
         binary_word = ''.join("".join(x) for x in data)
 
         count_of_rows = len(generation_sys_matrix)
@@ -42,10 +42,10 @@ class BlockCodesService:
             # Находим индекс блока в столбце информационных слов
             index = np.where((code_table.information_words_column == block).all(axis=1))[0][0]
             # Получаем соответствующее значение из столбца кодовых слов
-            encoded_block = code_table.code_words_column[index]
-            encoded_word.extend(encoded_block)
+            encoded_block: np.ndarray[int] = code_table.code_words_column[index]
+            encoded_word.append(encoded_block)
 
-        return "".join(map(str, encoded_word))
+        return cast(np.ndarray[np.ndarray[str]], np.array(encoded_word, dtype=StringDType()))
 
     def decode(
             self,
@@ -60,7 +60,7 @@ class BlockCodesService:
         :param type_matrix: Тип матрицы, который ввел пользователь (G или H).
         :returns: Декодированное слово в utf-8. Задумано получить то же самое, что ввел пользователь.
         """
-        code_table, generation_sys_matrix = self.__get_info_for_encoding(
+        code_table, generation_sys_matrix = self.get_info_for_encoding(
             matrix,
             type_matrix
         )
@@ -104,7 +104,7 @@ class BlockCodesService:
         return result
 
     @staticmethod
-    def __get_info_for_encoding(matrix: list[list[int]], type_matrix: Literal["G", "H"]):
+    def get_info_for_encoding(matrix: list[list[int]], type_matrix: Literal["G", "H"]):
         """
         Не совсем корректно делаю, что возвращаю в кортеже подобное. Неправильно построил архитектуру...
         В данной функции в начале создается с помощью фабрики матрица с нужным типом.

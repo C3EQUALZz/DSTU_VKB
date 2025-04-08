@@ -50,6 +50,16 @@ class EncodeCascadeCodeRequestSchema(JsonStringModel):
         validate_default=True
     )
 
+    indexes: list[list[int]] = Field(
+        default=[
+            [0, 2, 3],
+            [1, 2],
+            [0, 3]
+        ],
+        description="Индексы для сумматоров",
+        validate_default=True
+    )
+
 
 class DecodeCascadeCodeRequestSchema(BaseModel):
     matrix: List[List[int]] = Field(
@@ -70,3 +80,16 @@ class DecodeCascadeCodeRequestSchema(BaseModel):
     )
 
     data: str
+
+    indexes: list[list[int]] = Field(
+        default=[
+            [0, 2, 3],
+            [1, 2],
+            [0, 3]
+        ],
+        description="Индексы для сумматоров",
+        validate_default=True
+    )
+
+    image_width: int = Field(default=20, description="Ширина изображения")
+    image_height: int = Field(default=29, description="Высота изображения")

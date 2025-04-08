@@ -5,8 +5,10 @@ from dishka import FromDishka
 from dishka.integrations.fastapi import DishkaRoute
 from fastapi import APIRouter, Depends, Form, HTTPException
 from starlette import status
+from starlette.responses import StreamingResponse
 
-from app.application.api.second_semester.third_laboratory.dependecies import convert_image_to_binary_matrix
+from app.application.api.second_semester.third_laboratory.dependecies import convert_image_to_binary_matrix, \
+    convert_matrix_to_image
 from app.application.api.second_semester.third_laboratory.schemas import EncodeCascadeCodeRequestSchema, \
     DecodeCascadeCodeRequestSchema
 from app.exceptions.base import ApplicationException
@@ -31,12 +33,13 @@ async def encode_cascade_code(
         use_case: FromDishka[EncodeCascadeCodeUseCase],
         schemas: EncodeCascadeCodeRequestSchema = Form(...),
         pixels: np.ndarray[tuple[str, str, str]] = Depends(convert_image_to_binary_matrix),
-):
+) -> str:
     try:
         return await use_case(EncodeCascadeCodeCommand(
             data=pixels,
             matrix_for_block_code=schemas.matrix,
             type_of_matrix=schemas.type_matrix,
+            indexes=schemas.indexes,
         ))
     except ApplicationException as e:
         logger.error(e)
@@ -51,13 +54,24 @@ async def encode_cascade_code(
 async def decode_cascade_code(
         use_case: FromDishka[DecodeCascadeCodeUseCase],
         schemas: DecodeCascadeCodeRequestSchema,
-):
+) -> StreamingResponse:
     try:
-        return await use_case(DecodeCascadeCodeCommand(
+
+        result = await use_case(DecodeCascadeCodeCommand(
             data=schemas.data,
             matrix_for_block_code=schemas.matrix,
             type_of_matrix=schemas.type_matrix,
+            indexes=schemas.indexes,
         ))
+
+        return StreamingResponse(
+            content=await convert_matrix_to_image(
+                binary_array=result,
+                width=schemas.image_width,
+                height=schemas.image_height
+            ),
+            media_type="image/png"
+        )
 
     except ApplicationException as e:
         logger.error(e)
