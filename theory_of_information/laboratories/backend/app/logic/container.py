@@ -12,7 +12,7 @@ from app.infrastructure.services.field_calculator import FieldCalculatorService
 from app.infrastructure.services.convolutional_codes import ConvolutionalCodesService
 from app.infrastructure.services.interleaver import InterleaveService
 from app.logic.use_cases.calculator import EvaluateMathExpressionInFieldUseCase
-from app.logic.use_cases.cascade_codes import EncodeCascadeCodeUseCase, DecodeCascadeCodeUseCase
+from app.logic.use_cases.cascade_codes import EncodeCascadeCodeUseCase, DecodeCascadeCodeUseCase, ShowNoisyImageUseCase
 from app.logic.use_cases.convolutional_codes import EncodeConvolutionalCodeUseCase, DecodeConvolutionalCodeUseCase
 from app.settings.config import Settings
 
@@ -61,6 +61,10 @@ class CascadeCodeUseCasesProvider(Provider):
             interleave_service=InterleaveService(),
             convolutional_service=ConvolutionalCodesService()
         )
+
+    @provide(scope=Scope.APP)
+    async def get_noisy_image_use_case(self) -> ShowNoisyImageUseCase:
+        return ShowNoisyImageUseCase()
 
 
 container = make_async_container(

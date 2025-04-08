@@ -1,5 +1,4 @@
 from itertools import product
-from random import randint
 from typing import cast
 
 import numpy as np
@@ -7,7 +6,7 @@ import numpy as np
 from app.infrastructure.services.block_codes import BlockCodesService
 from app.infrastructure.services.convolutional_codes import ConvolutionalCodesService
 from app.infrastructure.services.interleaver import InterleaveService
-from app.logic.commands.cascade_codes import EncodeCascadeCodeCommand, DecodeCascadeCodeCommand
+from app.logic.commands.cascade_codes import EncodeCascadeCodeCommand, DecodeCascadeCodeCommand, ShowNoisyImageCommand
 from app.logic.use_cases.base import BaseUseCase
 from app.logic.use_cases.convolutional_codes import SEQUENCE
 
@@ -48,14 +47,14 @@ class EncodeCascadeCodeUseCase(BaseUseCase[EncodeCascadeCodeCommand]):
         )
 
         if command.add_errors:
-            result = []
+            result: list[str] = []
             bits_per_pixel: int = 24
 
             for i in range(0, len(encoded_data), bits_per_pixel):
-                pixel_bits = list(encoded_data[i:i + bits_per_pixel])
+                pixel_bits: list[str] = list(encoded_data[i:i + bits_per_pixel])
 
                 # Инвертируем случайный бит в пикселе
-                error_pos = randint(0, bits_per_pixel - 1)
+                error_pos: int = 3
                 pixel_bits[error_pos] = '1' if pixel_bits[error_pos] == '0' else '0'
 
                 result.append(''.join(pixel_bits))
@@ -105,3 +104,23 @@ class DecodeCascadeCodeUseCase(BaseUseCase[DecodeCascadeCodeCommand]):
             matrix=command.matrix_for_block_code,
             type_matrix=command.type_of_matrix
         )
+
+
+class ShowNoisyImageUseCase(BaseUseCase[ShowNoisyImageCommand]):
+    async def __call__(self, command: ShowNoisyImageCommand) -> np.ndarray[np.ndarray[[str]]]:
+        data = command.data
+        error_pos = 3
+
+        # Инвертируем бит в каждом канале каждого пикселя
+        for y in range(data.shape[0]):
+            for x in range(data.shape[1]):
+                data[y, x] = self.invert_bit(data[y, x], error_pos)
+
+        return data
+
+    @staticmethod
+    def invert_bit(binary_str: str, pos: int) -> str:
+        """Инвертирует бит в позиции `pos` (считая с 0)"""
+        if pos < 0 or pos >= 8:
+            raise ValueError("Позиция должна быть между 0 и 7")
+        return binary_str[:pos] + ('1' if binary_str[pos] == '0' else '0') + binary_str[pos + 1:]

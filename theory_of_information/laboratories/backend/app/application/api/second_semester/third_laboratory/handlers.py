@@ -10,10 +10,10 @@ from starlette.responses import StreamingResponse
 from app.application.api.second_semester.third_laboratory.dependecies import convert_image_to_binary_matrix, \
     convert_matrix_to_image
 from app.application.api.second_semester.third_laboratory.schemas import EncodeCascadeCodeRequestSchema, \
-    DecodeCascadeCodeRequestSchema
+    DecodeCascadeCodeRequestSchema, ShowNoisyImageSchemaRequest
 from app.exceptions.base import ApplicationException
-from app.logic.commands.cascade_codes import EncodeCascadeCodeCommand, DecodeCascadeCodeCommand
-from app.logic.use_cases.cascade_codes import EncodeCascadeCodeUseCase, DecodeCascadeCodeUseCase
+from app.logic.commands.cascade_codes import EncodeCascadeCodeCommand, DecodeCascadeCodeCommand, ShowNoisyImageCommand
+from app.logic.use_cases.cascade_codes import EncodeCascadeCodeUseCase, DecodeCascadeCodeUseCase, ShowNoisyImageUseCase
 
 router = APIRouter(
     prefix="/second_semester/third_laboratory",
@@ -70,6 +70,35 @@ async def decode_cascade_code(
                 binary_array=result,
                 width=schemas.image_width,
                 height=schemas.image_height
+            ),
+            media_type="image/png"
+        )
+
+    except ApplicationException as e:
+        logger.error(e)
+        raise HTTPException(status_code=e.status, detail=str(e))
+
+
+@router.post(
+    "/show-noisy",
+    status_code=status.HTTP_200_OK,
+    description="This handler is using for show noisy image using cascade code"
+)
+async def show_noisy_image(
+        use_case: FromDishka[ShowNoisyImageUseCase],
+        schema: ShowNoisyImageSchemaRequest = Form(...),
+        pixels: np.ndarray[tuple[str, str, str]] = Depends(convert_image_to_binary_matrix),
+) -> StreamingResponse:
+    try:
+        result = await use_case(ShowNoisyImageCommand(
+            data=pixels,
+        ))
+
+        return StreamingResponse(
+            content=await convert_matrix_to_image(
+                binary_array=result,
+                width=schema.image_width,
+                height=schema.image_height,
             ),
             media_type="image/png"
         )

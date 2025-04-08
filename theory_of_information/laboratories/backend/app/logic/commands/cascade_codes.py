@@ -21,3 +21,8 @@ class DecodeCascadeCodeCommand(AbstractCommand):
     matrix_for_block_code: list[list[int]]
     type_of_matrix: Literal["G", "H"]
     indexes: list[list[int]]
+
+
+@dataclass(frozen=True)
+class ShowNoisyImageCommand(AbstractCommand):
+    data: np.ndarray[tuple[str, str, str]]

@@ -93,3 +93,8 @@ class DecodeCascadeCodeRequestSchema(BaseModel):
 
     image_width: int = Field(default=20, description="Ширина изображения")
     image_height: int = Field(default=29, description="Высота изображения")
+
+
+class ShowNoisyImageSchemaRequest(JsonStringModel):
+    image_width: int = Field(default=20, description="Ширина изображения")
+    image_height: int = Field(default=29, description="Высота изображения")
