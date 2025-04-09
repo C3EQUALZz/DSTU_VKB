@@ -86,7 +86,7 @@ async def decode_cascade_code(
 )
 async def show_noisy_image(
         use_case: FromDishka[ShowNoisyImageUseCase],
-        schema: ShowNoisyImageSchemaRequest = Form(...),
+        schemas: ShowNoisyImageSchemaRequest = Form(...),
         pixels: np.ndarray[tuple[str, str, str]] = Depends(convert_image_to_binary_matrix),
 ) -> StreamingResponse:
     try:
@@ -97,8 +97,8 @@ async def show_noisy_image(
         return StreamingResponse(
             content=await convert_matrix_to_image(
                 binary_array=result,
-                width=schema.image_width,
-                height=schema.image_height,
+                width=schemas.image_width,
+                height=schemas.image_height,
             ),
             media_type="image/png"
         )
