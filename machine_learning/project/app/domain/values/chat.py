@@ -2,8 +2,7 @@ from dataclasses import dataclass
 from typing import override
 
 from app.domain.values.base import BaseValueObject
-from app.exceptions.domain import (BadChatTypeError, EmptyTextError,
-                                   TitleTooLongError)
+from app.exceptions.domain import BadChatTypeError, EmptyTextError, TitleTooLongError
 
 
 @dataclass
