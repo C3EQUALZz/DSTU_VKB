@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "telegram-bot-ai"
+version = "0.1.0"
+description = "Telegram bot which interacts with user using different ai methods"
+authors = ["c3equalz <dan.kovalev2013@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
