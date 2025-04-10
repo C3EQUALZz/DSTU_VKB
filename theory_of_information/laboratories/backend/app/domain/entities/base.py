@@ -1,16 +1,6 @@
 from abc import ABC
-from dataclasses import (
-    asdict,
-    dataclass,
-    field,
-)
-from typing import (
-    Any,
-    Dict,
-    get_type_hints,
-    Optional,
-    Set, get_origin,
-)
+from dataclasses import asdict, dataclass, field
+from typing import Any, Dict, Optional, Set, get_origin, get_type_hints
 from uuid import uuid4
 
 from app.exceptions.domain import CastException
@@ -37,9 +27,15 @@ class BaseEntity(ABC):
                 try:
                     setattr(self, field_name, field_type(value))
                 except (ValueError, TypeError):
-                    raise CastException(f"'{field_name}' with value '{value}' to {field_type}")
+                    raise CastException(
+                        f"'{field_name}' with value '{value}' to {field_type}"
+                    )
 
-    def to_dict(self, exclude: Optional[Set[str]] = None, include: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    def to_dict(
+        self,
+        exclude: Optional[Set[str]] = None,
+        include: Optional[Dict[str, Any]] = None,
+    ) -> Dict[str, Any]:
         """
         Create a dictionary representation of the entity.
 

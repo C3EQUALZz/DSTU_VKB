@@ -18,12 +18,15 @@
 
 Выведите номера предметов (числа от 1 до N), которые войдут в рюкзак наибольшей стоимости.
 """
-from itertools import product
+
 from collections import deque
-from typing import Iterable, Sequence, List
+from itertools import product
+from typing import Iterable, List, Sequence
 
 
-def knapsack(n: int, m: int, weights: Sequence[int], costs: Sequence[int]) -> Iterable[int]:
+def knapsack(
+    n: int, m: int, weights: Sequence[int], costs: Sequence[int]
+) -> Iterable[int]:
     """
     Решает задачу о рюкзаке и возвращает набор предметов с наибольшей стоимостью.
 
@@ -62,14 +65,22 @@ def knapsack(n: int, m: int, weights: Sequence[int], costs: Sequence[int]) -> It
     # Заполнение таблицы
     for i, j in product(range(1, n + 1), range(m + 1)):
         distance_table[i][j] = distance_table[i - 1][j]  # Не берем текущий предмет
-        if j >= weights[i] and distance_table[i - 1][j - weights[i]] + costs[i] > distance_table[i][j]:
-            distance_table[i][j] = distance_table[i - 1][j - weights[i]] + costs[i]  # Берем текущий предмет
+        if (
+            j >= weights[i]
+            and distance_table[i - 1][j - weights[i]] + costs[i] > distance_table[i][j]
+        ):
+            distance_table[i][j] = (
+                distance_table[i - 1][j - weights[i]] + costs[i]
+            )  # Берем текущий предмет
 
     # Восстановление набора предметов
     selected_items: deque[int] = deque()
     remaining_weight: int = m
     for i in range(n, 0, -1):
-        if distance_table[i][remaining_weight] != distance_table[i - 1][remaining_weight]:  # Если предмет n был выбран
+        if (
+            distance_table[i][remaining_weight]
+            != distance_table[i - 1][remaining_weight]
+        ):  # Если предмет n был выбран
             selected_items.append(i)  # Добавляем номер предмета
             remaining_weight -= weights[i]  # Уменьшаем оставшийся вес
 
@@ -86,7 +97,7 @@ def main() -> None:
     selected_items = knapsack(n, m, weights, costs)
 
     # Выводим результат
-    print(' '.join(map(str, selected_items)))
+    print(" ".join(map(str, selected_items)))
 
 
 if __name__ == "__main__":

@@ -4,6 +4,7 @@ from http import HTTPStatus
 
 from app.exceptions.base import ApplicationException
 
+
 @dataclass(eq=False)
 class InfrastructureException(ApplicationException, ABC):
     @property

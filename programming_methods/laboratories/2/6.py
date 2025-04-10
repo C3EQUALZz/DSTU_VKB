@@ -16,8 +16,9 @@
 
 ВАЖНО!!!!!! ЗДЕСЬ УПИРАЕТСЯ В СКОРОСТЬ PYTHON. АНАЛОГИЧНЫЙ КОД НА JAVA ПРОХОДИТ
 """
+
 from collections import Counter
-from typing import List, Generator
+from typing import Generator, List
 
 
 def count_partitions(numbers: List[int]) -> Generator[int, None, None]:
@@ -25,7 +26,9 @@ def count_partitions(numbers: List[int]) -> Generator[int, None, None]:
 
     for number in numbers:
         count = sum(
-            count_map[x] * (count_map[x] - 1) // 2 if x == (number - x) else count_map[x] * count_map.get(number - x, 0)
+            count_map[x] * (count_map[x] - 1) // 2
+            if x == (number - x)
+            else count_map[x] * count_map.get(number - x, 0)
             for x in count_map
             if x <= number // 2  # Условие для x, чтобы избежать дублирования
         )

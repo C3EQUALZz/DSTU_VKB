@@ -1,41 +1,22 @@
 from typing import List
 
-from fastapi import (
-    APIRouter,
-    HTTPException,
-)
-from starlette import status
-
-from app.application.api.users.schemas import (
-    CreateUserSchemaRequest,
-    ErrorMessageScheme,
-    UpdateUserSchemaRequest,
-    UserSchemeResponse,
-)
-from app.core.types.handlers import (
-    CommandHandlerMapping,
-    EventHandlerMapping,
-)
+from app.application.api.users.schemas import (CreateUserSchemaRequest,
+                                               ErrorMessageScheme,
+                                               UpdateUserSchemaRequest,
+                                               UserSchemeResponse)
+from app.core.types.handlers import CommandHandlerMapping, EventHandlerMapping
 from app.exceptions.base import ApplicationException
-from app.exceptions.logic import (
-    UserAlreadyExistsException,
-    UserNotFoundException,
-)
+from app.exceptions.logic import (UserAlreadyExistsException,
+                                  UserNotFoundException)
 from app.infrastructure.uow.users.base import UsersUnitOfWork
 from app.logic.bootstrap import Bootstrap
-from app.logic.commands.users import (
-    CreateUserCommand,
-    DeleteUserCommand,
-    GetAllUsersCommand,
-    GetUserByIdCommand,
-    UpdateUserCommand,
-)
+from app.logic.commands.users import (CreateUserCommand, DeleteUserCommand,
+                                      GetAllUsersCommand, GetUserByIdCommand,
+                                      UpdateUserCommand)
 from app.logic.message_bus import MessageBus
-from dishka.integrations.fastapi import (
-    DishkaRoute,
-    FromDishka,
-)
-
+from dishka.integrations.fastapi import DishkaRoute, FromDishka
+from fastapi import APIRouter, HTTPException
+from starlette import status
 
 router = APIRouter(prefix="/users", tags=["users"], route_class=DishkaRoute)
 

@@ -1,9 +1,10 @@
 # Реализовать cтек с помощью очереди
 
 from collections import deque
-from typing import TypeVar, Generic
+from typing import Generic, TypeVar
 
-T = TypeVar('T')
+T = TypeVar("T")
+
 
 class Stack(Generic[T]):
     def __init__(self) -> None:

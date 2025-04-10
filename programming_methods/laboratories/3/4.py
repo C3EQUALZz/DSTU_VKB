@@ -14,8 +14,9 @@
 Требуется вывести наибольшую возрастающую подпоследовательность данной последовательности.
 Если таких подпоследовательностей несколько, необходимо вывести одну (любую) из них.
 """
+
 from collections import deque
-from typing import List, Iterable, Sequence
+from typing import Iterable, List, Sequence
 
 
 def longest_increasing_subsequence(sequence: Sequence[int]) -> Iterable[int]:
@@ -49,7 +50,9 @@ def longest_increasing_subsequence(sequence: Sequence[int]) -> Iterable[int]:
     5. Возвращаем наибольшую возрастающую подпоследовательность.
     """
     n = len(sequence)
-    distance_table: List[int] = [1] * n  # Массив для хранения длины LIS до каждого элемента
+    distance_table: List[int] = [
+        1
+    ] * n  # Массив для хранения длины LIS до каждого элемента
     prev_index: List[int] = [-1] * n  # Массив для восстановления последовательности
 
     # Заполняем массив dp
@@ -81,7 +84,7 @@ def main() -> None:
     lis = longest_increasing_subsequence(sequence)
 
     # Выводим результат
-    print(' '.join(map(str, lis)))
+    print(" ".join(map(str, lis)))
 
 
 if __name__ == "__main__":

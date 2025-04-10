@@ -16,13 +16,14 @@ ei и wi - номера концов ребра и его вес соответ�
 
 Выведите единственное целое число - вес минимального остовного дерева.
 """
+
 from array import array
 from collections import namedtuple
-from typing import List, Sequence, TypeVar, Generic
+from typing import Generic, List, Sequence, TypeVar
 
-Edge = namedtuple('Edge', ['weight', 'vertex1', 'vertex2'])
+Edge = namedtuple("Edge", ["weight", "vertex1", "vertex2"])
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 class DisjointSetUnion(Generic[T]):

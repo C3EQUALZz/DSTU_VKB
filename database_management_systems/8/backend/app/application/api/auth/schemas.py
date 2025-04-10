@@ -1,13 +1,7 @@
-from typing import (
-    Optional,
-    Self,
-)
+from typing import Optional, Self
 
 from app.domain.entities.user import UserEntity
-from pydantic import (
-    BaseModel,
-    EmailStr,
-)
+from pydantic import BaseModel, EmailStr
 
 
 class TokenRequest(BaseModel):

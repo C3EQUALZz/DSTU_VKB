@@ -26,8 +26,9 @@
 
 Требуется вывести одно число – расстояние Левенштейна для данных строк.
 """
-from typing import List, AnyStr
+
 from itertools import product
+from typing import AnyStr, List
 
 
 def levenshtein_distance(source: AnyStr, target: AnyStr) -> int:
@@ -59,7 +60,9 @@ def levenshtein_distance(source: AnyStr, target: AnyStr) -> int:
     len_target: int = len(target)
 
     # Создаем таблицу для хранения расстояний
-    distance_table: List[List[int]] = [[0] * (len_target + 1) for _ in range(len_source + 1)]
+    distance_table: List[List[int]] = [
+        [0] * (len_target + 1) for _ in range(len_source + 1)
+    ]
 
     # Инициализация первой строки и первого столбца
     for i, j in zip(range(len_source + 1), range(len_target + 1)):
@@ -71,9 +74,11 @@ def levenshtein_distance(source: AnyStr, target: AnyStr) -> int:
         if source[i - 1] == target[j - 1]:
             distance_table[i][j] = distance_table[i - 1][j - 1]  # Символы совпадают
         else:
-            distance_table[i][j] = 1 + min(distance_table[i - 1][j],
-                                           distance_table[i][j - 1],
-                                           distance_table[i - 1][j - 1])  # Удаление, вставка, замена
+            distance_table[i][j] = 1 + min(
+                distance_table[i - 1][j],
+                distance_table[i][j - 1],
+                distance_table[i - 1][j - 1],
+            )  # Удаление, вставка, замена
 
     return distance_table[len_source][len_target]
 

@@ -1,6 +1,8 @@
-from python_language.theory_of_information.models.second_laboratory import TokenLZ77, TokenLZ78
-from prettytable import PrettyTable
 from typing import Final, overload
+
+from prettytable import PrettyTable
+from python_language.theory_of_information.models.second_laboratory import (
+    TokenLZ77, TokenLZ78)
 
 SEARCH_BUFFER_SIZE: Final = 9
 LOOK_AHEAD_SIZE: Final = 7
@@ -20,7 +22,9 @@ def create_table(tokens: list[TokenLZ77], text: str) -> PrettyTable:
     table.field_names = ["Словарь", "Буфер", "Код"]
 
     for token in tokens:
-        search_buffer, lookahead_buffer, decoded_string, text = update_buffers(token, decoded_string, text)
+        search_buffer, lookahead_buffer, decoded_string, text = update_buffers(
+            token, decoded_string, text
+        )
         search_str = "".join(search_buffer).ljust(SEARCH_BUFFER_SIZE)
         lookahead_str = "".join(lookahead_buffer).ljust(LOOK_AHEAD_SIZE)
         code_str = f"<{token.offset},{token.length},{token.indicator}>"
@@ -30,9 +34,7 @@ def create_table(tokens: list[TokenLZ77], text: str) -> PrettyTable:
 
 
 def update_buffers(
-        token: TokenLZ77,
-        decoded_string: str,
-        text: str
+    token: TokenLZ77, decoded_string: str, text: str
 ) -> tuple[list[str], list[str], str, str]:
     """
     Обновляем буфер поиска и предварительного просмотра после обработки токена.
@@ -43,10 +45,10 @@ def update_buffers(
     :return: Обновления.
     """
     start = max(0, len(decoded_string) - token.offset)
-    sequence = decoded_string[start:start + token.length] + token.indicator
+    sequence = decoded_string[start : start + token.length] + token.indicator
     decoded_string += sequence
     search_buffer = list(decoded_string[-SEARCH_BUFFER_SIZE:])
-    remaining_text = text[len(sequence):]
+    remaining_text = text[len(sequence) :]
     lookahead_buffer = list(remaining_text[:LOOK_AHEAD_SIZE])
     return search_buffer, lookahead_buffer, decoded_string, remaining_text
 

@@ -2,8 +2,9 @@
 Здесь описывается стартовое меню, которое появляется при запуске программы
 """
 
-from PyQt6 import QtWidgets, QtCore, QtGui
-from python_language.programming_languages_python.gui_interface_for_labs.main_part_application.custom_widgets.custom_button import Button
+from PyQt6 import QtCore, QtGui, QtWidgets
+from python_language.programming_languages_python.gui_interface_for_labs.main_part_application.custom_widgets.custom_button import \
+    Button
 
 
 class StartScreen(QtWidgets.QWidget):
@@ -16,7 +17,9 @@ class StartScreen(QtWidgets.QWidget):
         # создание основного layout, где мы будем помещать остальные виджеты
         self.layout = QtWidgets.QVBoxLayout(self)
         # добавили выравнивание для каждого элемента
-        self.layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter | QtCore.Qt.AlignmentFlag.AlignVCenter)
+        self.layout.setAlignment(
+            QtCore.Qt.AlignmentFlag.AlignHCenter | QtCore.Qt.AlignmentFlag.AlignVCenter
+        )
         # родительский класс
         self.parent = parent
 
@@ -43,7 +46,9 @@ class StartScreen(QtWidgets.QWidget):
         Метод, который добавляет гиф анимацию в виде кота на главном меню
         """
         label = QtWidgets.QLabel()
-        label.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter | QtCore.Qt.AlignmentFlag.AlignVCenter)
+        label.setAlignment(
+            QtCore.Qt.AlignmentFlag.AlignHCenter | QtCore.Qt.AlignmentFlag.AlignVCenter
+        )
         label.setMinimumSize(QtCore.QSize(200, 200))
 
         movie = QtGui.QMovie("icons/feature-open-source@2x.gif")

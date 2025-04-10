@@ -17,8 +17,8 @@
 """
 
 from bisect import bisect_left
-from typing import List, Sequence, Iterable
 from collections import deque
+from typing import Iterable, List, Sequence
 
 
 def longest_increasing_subsequence(sequence: Sequence[int]) -> Iterable[int]:

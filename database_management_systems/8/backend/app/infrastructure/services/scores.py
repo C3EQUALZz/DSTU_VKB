@@ -1,14 +1,8 @@
-from typing import (
-    List,
-    Optional,
-    Union,
-)
+from typing import List, Optional, Union
 
 from app.domain.entities.score import ScoreEntity
-from app.exceptions.infrastructure import (
-    AttributeException,
-    ScoreNotFoundException,
-)
+from app.exceptions.infrastructure import (AttributeException,
+                                           ScoreNotFoundException)
 from app.infrastructure.uow.scores.base import ScoresUnitOfWork
 
 

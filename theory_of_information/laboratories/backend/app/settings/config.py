@@ -1,14 +1,8 @@
 from abc import ABC
 from pathlib import Path
 
-from pydantic import (
-    Field,
-    RedisDsn,
-)
-from pydantic_settings import (
-    BaseSettings,
-    SettingsConfigDict,
-)
+from pydantic import Field, RedisDsn
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class CommonSettings(BaseSettings, ABC):

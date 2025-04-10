@@ -1,7 +1,7 @@
 import datetime as dt
 import json
 import logging
-from typing import override, Optional, Union
+from typing import Optional, Union, override
 
 LOG_RECORD_BUILTIN_ATTRS = {
     "args",
@@ -32,9 +32,9 @@ LOG_RECORD_BUILTIN_ATTRS = {
 
 class MyJSONFormatter(logging.Formatter):
     def __init__(
-            self,
-            *,
-            fmt_keys: Optional[dict[str, str]] = None,
+        self,
+        *,
+        fmt_keys: Optional[dict[str, str]] = None,
     ):
         super().__init__()
         self.fmt_keys = fmt_keys if fmt_keys is not None else {}

@@ -9,7 +9,7 @@ Version: 1.0.0
 
 import sys
 
-from PyQt6 import QtWidgets, QtGui, QtCore
+from PyQt6 import QtCore, QtGui, QtWidgets
 
 from .side_panels import LeftSidePanel, RightSidePanel
 
@@ -86,7 +86,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self,
             "Выход",
             "Вы точно уверены, что хотите выйти?",
-            QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No
+            QtWidgets.QMessageBox.StandardButton.Yes
+            | QtWidgets.QMessageBox.StandardButton.No,
         )
         try:
             if res == QtWidgets.QMessageBox.StandardButton.No:

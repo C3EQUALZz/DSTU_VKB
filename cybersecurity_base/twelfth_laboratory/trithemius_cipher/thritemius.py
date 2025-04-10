@@ -1,8 +1,10 @@
 """
 Здесь реализован класс, который обрабатывает шифр Триземуса
 """
+
 import re
 from functools import reduce
+
 from cybersecurity_base.twelfth_laboratory.abstract_class_cyphers import Cypher
 
 
@@ -10,6 +12,7 @@ class TrisemusCipher(Cypher):
     """
     Класс, где описана реализация шифра Триземуса
     """
+
     def __init__(self, key: str, table_sizes: str):
         # ключ шифрования
         self.key = key
@@ -25,11 +28,15 @@ class TrisemusCipher(Cypher):
         :return: Зашифрованная строка
         """
         # Создаем нашу строку-ключ, которая является началом таблицы
-        key = ''.join(sorted(set(self.key), key=self.key.index))
+        key = "".join(sorted(set(self.key), key=self.key.index))
         # Создаем нашу таблицу перевода
-        table = (key + ''.join(x for x in self._get_language(string) if x not in key))[:self.size]
+        table = (key + "".join(x for x in self._get_language(string) if x not in key))[
+            : self.size
+        ]
         # Склеивание строки, которую мы перевели
-        return ''.join(self._encode_symbol(x, table) if x.isalpha() else x for x in string)
+        return "".join(
+            self._encode_symbol(x, table) if x.isalpha() else x for x in string
+        )
 
     def decrypt(self, string: str) -> str:
         """
@@ -37,9 +44,13 @@ class TrisemusCipher(Cypher):
         :param string: Строка, которую пользователь хочет расшифровать.
         :return: Расшифрованная строка.
         """
-        key = ''.join(sorted(set(self.key), key=self.key.index))
-        table = (key + ''.join(x for x in self._get_language(string) if x not in key))[:self.size]
-        return ''.join(self._decode_symbol(x, table) if x.isalpha() else x for x in string)
+        key = "".join(sorted(set(self.key), key=self.key.index))
+        table = (key + "".join(x for x in self._get_language(string) if x not in key))[
+            : self.size
+        ]
+        return "".join(
+            self._decode_symbol(x, table) if x.isalpha() else x for x in string
+        )
 
     def _encode_symbol(self, char: str, table: str) -> str:
         """

@@ -1,14 +1,9 @@
 from abc import ABC
 
-from app.core.types.handlers import (
-    CT,
-    ET,
-)
+from app.core.types.handlers import CT, ET
 from app.infrastructure.uow.scores.base import ScoresUnitOfWork
-from app.logic.handlers.base import (
-    AbstractCommandHandler,
-    AbstractEventHandler,
-)
+from app.logic.handlers.base import (AbstractCommandHandler,
+                                     AbstractEventHandler)
 
 
 class ScoresEventHandler(AbstractEventHandler[ET], ABC):

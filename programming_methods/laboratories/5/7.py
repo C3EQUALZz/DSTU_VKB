@@ -28,12 +28,14 @@
 """
 
 import math
-from itertools import combinations
-from typing import List, Tuple, Iterable, Sequence, cast, Dict
 from collections import deque
+from itertools import combinations
+from typing import Dict, Iterable, List, Sequence, Tuple, cast
 
 
-def reconstruct_path(memoization_table, bits: int, parent: int, n: int) -> Iterable[int]:
+def reconstruct_path(
+    memoization_table, bits: int, parent: int, n: int
+) -> Iterable[int]:
     """
     Реконструирует оптимальный путь для задачи о путешествующем продавце (TSP)
     используя результаты, хранящиеся в таблице мемоизации.
@@ -68,7 +70,9 @@ def reconstruct_path(memoization_table, bits: int, parent: int, n: int) -> Itera
     return path
 
 
-def tsp_dynamic_programming(points: Sequence[Tuple[float, float]]) -> Tuple[float, Iterable[int]]:
+def tsp_dynamic_programming(
+    points: Sequence[Tuple[float, float]],
+) -> Tuple[float, Iterable[int]]:
     """
     Решает задачу о путешествующем продавце (TSP) с помощью динамического программирования с битовой маской.
 
@@ -87,12 +91,15 @@ def tsp_dynamic_programming(points: Sequence[Tuple[float, float]]) -> Tuple[floa
     :returns: Минимальная длина тура и оптимальный путь в виде последовательности индексов вершин, исключая начальную вершину.
     """
     n: int = len(points)
-    dist_matrix: List[List[float]] = [[math.dist(points[i], points[j]) for j in range(n)] for i in range(n)]
+    dist_matrix: List[List[float]] = [
+        [math.dist(points[i], points[j]) for j in range(n)] for i in range(n)
+    ]
 
     # Таблица мемоизации, где ключами являются пары (набор посещенных вершин, текущая вершина)
     # Устанавливаем начальные значения, когда первая вершина уже посещена
-    memoization_table: Dict[Tuple[int, int], Tuple[float, int]] = {(1 << k, k): (dist_matrix[0][k], 0) for k in
-                                                                   range(1, n)}
+    memoization_table: Dict[Tuple[int, int], Tuple[float, int]] = {
+        (1 << k, k): (dist_matrix[0][k], 0) for k in range(1, n)
+    }
 
     # Проходимся по вершинам
     for subset_size in range(2, n):
@@ -105,12 +112,15 @@ def tsp_dynamic_programming(points: Sequence[Tuple[float, float]]) -> Tuple[floa
                 prev: int = bits & ~(1 << k)
                 memoization_table[(bits, k)] = min(
                     (memoization_table[(prev, m)][0] + dist_matrix[m][k], m)
-                    for m in subset if m != 0 and m != k
+                    for m in subset
+                    if m != 0 and m != k
                 )
 
     # Мы возвращаемся к первой вершине, завершаем тур
-    bits: int = (2 ** n - 1) - 1
-    opt, parent = min((memoization_table[(bits, k)][0] + dist_matrix[k][0], k) for k in range(1, n))
+    bits: int = (2**n - 1) - 1
+    opt, parent = min(
+        (memoization_table[(bits, k)][0] + dist_matrix[k][0], k) for k in range(1, n)
+    )
 
     path = reconstruct_path(memoization_table, bits, parent, n)
 
@@ -119,11 +129,13 @@ def tsp_dynamic_programming(points: Sequence[Tuple[float, float]]) -> Tuple[floa
 
 def main() -> None:
     n: int = int(input())
-    points: List[Tuple[int, int]] = cast(List[Tuple[int, int]], [tuple(map(float, input().split())) for _ in range(n)])
+    points: List[Tuple[int, int]] = cast(
+        List[Tuple[int, int]], [tuple(map(float, input().split())) for _ in range(n)]
+    )
     min_length, min_path = tsp_dynamic_programming(points)
-    print('{:.15E}'.format(min_length))
-    print(' '.join(map(lambda x: str(x + 1), min_path)))
+    print("{:.15E}".format(min_length))
+    print(" ".join(map(lambda x: str(x + 1), min_path)))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

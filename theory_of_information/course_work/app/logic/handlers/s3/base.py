@@ -1,15 +1,11 @@
 from abc import ABC
 
-from app.infrastructure.repositories.database.base import DatabaseDumpRepository
+from app.infrastructure.repositories.database.base import \
+    DatabaseDumpRepository
 from app.infrastructure.uow.compression import CompressionUnitOfWork
-from app.logic.handlers.base import (
-    AbstractCommandHandler,
-    AbstractEventHandler,
-)
-from app.logic.types.handlers import (
-    CT,
-    ET,
-)
+from app.logic.handlers.base import (AbstractCommandHandler,
+                                     AbstractEventHandler)
+from app.logic.types.handlers import CT, ET
 
 
 class S3EventHandler(AbstractEventHandler[ET], ABC):

@@ -1,15 +1,15 @@
 """
 В данном модуле формируется словарь из заданий, где условие берется из docstring функции
 """
+
 __all__ = ["TaskChooser", "info_cur_dir_modules"]
 
 import importlib
 import pkgutil
 from typing import Callable
 
-from number_parser import parse_ordinal
-
 import python_language.programming_languages_python as lang_module
+from number_parser import parse_ordinal
 
 
 def clear_text_from_tabs(text: str) -> str:
@@ -26,7 +26,11 @@ def create_description(function: Callable) -> str:
     :param function: функция, у которой есть docstring.
     :returns: Возвращает форматированную строку с docstring.
     """
-    return clear_text_from_tabs(function.__doc__) if function.__doc__ else "Не добавил условия"
+    return (
+        clear_text_from_tabs(function.__doc__)
+        if function.__doc__
+        else "Не добавил условия"
+    )
 
 
 def key_generation(module, counter: int):
@@ -44,10 +48,15 @@ def info_cur_dir_modules() -> list:
     Функция, благодаря которой мы можем узнать информацию о находящихся рядом папок.
     """
     package_path = lang_module.__path__[0]
-    list_modules = [importlib.import_module(f"programming_languages_python.{name}") for _, name, _
-                    in pkgutil.walk_packages([package_path]) if name.endswith("lang")]
+    list_modules = [
+        importlib.import_module(f"programming_languages_python.{name}")
+        for _, name, _ in pkgutil.walk_packages([package_path])
+        if name.endswith("lang")
+    ]
 
-    list_modules.sort(key=lambda module: parse_ordinal(module.__name__.split(".")[-1].split("_")[0]))
+    list_modules.sort(
+        key=lambda module: parse_ordinal(module.__name__.split(".")[-1].split("_")[0])
+    )
     return list_modules
 
 
@@ -60,7 +69,10 @@ def fill_dictionary() -> dict:
         counter = 1
         for name, func in module.__dict__.items():
             if callable(func):
-                dictionary[key_generation(module, counter)] = (create_description(func), func)
+                dictionary[key_generation(module, counter)] = (
+                    create_description(func),
+                    func,
+                )
                 counter += 1
 
     return dictionary
@@ -76,10 +88,14 @@ class TaskChooser:
 
     @property
     def condition(self) -> str:
-        return self.__dictionary.get(f"Лабораторная работа {self.number_laboratory} Подзадача {self.number_question}",
-                                     ("Не выполнял ещё", " "))[0]
+        return self.__dictionary.get(
+            f"Лабораторная работа {self.number_laboratory} Подзадача {self.number_question}",
+            ("Не выполнял ещё", " "),
+        )[0]
 
     @property
     def function(self):
-        return self.__dictionary.get(f"Лабораторная работа {self.number_laboratory} Подзадача {self.number_question}",
-                                     (" ", None))[1]
+        return self.__dictionary.get(
+            f"Лабораторная работа {self.number_laboratory} Подзадача {self.number_question}",
+            (" ", None),
+        )[1]

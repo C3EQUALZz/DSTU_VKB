@@ -1,13 +1,14 @@
 """
 AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
+
 import csv
 import os
 from pprint import pprint
 
 from mimesis import Person
-
-from python_language.programming_languages_python.fifth_laba_lang.main import create_csv_file
+from python_language.programming_languages_python.fifth_laba_lang.main import \
+    create_csv_file
 
 FILE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "students.csv")
 
@@ -18,11 +19,13 @@ def first_question(k=None) -> int:
     Ничего вводить не надо
     """
     person = Person()
-    d = {"age": person.age(),
-         "name": person.name(),
-         "academic_degree": person.academic_degree(),
-         "height": person.height(),
-         "gender": person.gender()}
+    d = {
+        "age": person.age(),
+        "name": person.name(),
+        "academic_degree": person.academic_degree(),
+        "height": person.height(),
+        "gender": person.gender(),
+    }
     return len(d)
 
 

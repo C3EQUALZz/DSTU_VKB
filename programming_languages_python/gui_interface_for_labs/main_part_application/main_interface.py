@@ -2,10 +2,11 @@
 Главный интерфейс приложения.
 Здесь описаны интерфейсы взаимодействия, сигналы и т.п.
 """
+
 import random
 
-from PyQt6 import QtWidgets
 from prettytable import PrettyTable
+from PyQt6 import QtWidgets
 
 from .custom_widgets.left_side_menu import TabWidget
 from .page_logic import Page
@@ -13,7 +14,6 @@ from .tasks import TaskChooser, info_cur_dir_modules
 
 
 class DlgMain(QtWidgets.QMainWindow):
-
     def __init__(self, parent):
         """
         Инициализация главного окна приложения.
@@ -96,10 +96,19 @@ class DlgMain(QtWidgets.QMainWindow):
         widget.combobox.blockSignals(True)  # Блокировка сигналов
         widget.combobox.clear()  # Полная очистка
 
-        functions_count = len([func for func in self.__all_questions[current_laboratory - 1].__dict__.values()
-                               if callable(func)])
+        functions_count = len(
+            [
+                func
+                for func in self.__all_questions[
+                    current_laboratory - 1
+                ].__dict__.values()
+                if callable(func)
+            ]
+        )
 
-        widget.combobox.addItems([f"Задание {x}" for x in range(1, functions_count + 1)])
+        widget.combobox.addItems(
+            [f"Задание {x}" for x in range(1, functions_count + 1)]
+        )
 
         widget.combobox.setCurrentIndex(current_index)
         widget.combobox.blockSignals(False)  # Разблокировка сигналов
@@ -109,8 +118,10 @@ class DlgMain(QtWidgets.QMainWindow):
         """
         Костыль для 1 задания 2 лабораторной, чтобы был бесконечный ввод
         """
-        return (f"Ваше число меньше, чем {my_number}", "Ваше число больше или равно загаданного")[
-            int(widget.input_data.text()) >= my_number]
+        return (
+            f"Ваше число меньше, чем {my_number}",
+            "Ваше число больше или равно загаданного",
+        )[int(widget.input_data.text()) >= my_number]
 
     @staticmethod
     def pretty_print_table(pretty_table: PrettyTable):

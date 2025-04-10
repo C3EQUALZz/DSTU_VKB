@@ -1,15 +1,17 @@
 """
 Удаление ненужных вершин в ДКА
 """
+
 import os
 from copy import deepcopy
 from dataclasses import dataclass
-from typing import MutableMapping, Self, AnyStr, Set, Final
+from typing import AnyStr, Final, MutableMapping, Self, Set
 
 from automata.fa.nfa import NFA
-
-from formal_languages.fifth_sixth_laboratory.det_final_automat_class import DeterministicFiniteAutomaton
 from graph_class import Graph
+
+from formal_languages.fifth_sixth_laboratory.det_final_automat_class import \
+    DeterministicFiniteAutomaton
 
 PATH_TO_DIAGRAM: Final = os.path.join(os.path.curdir, "test_dfa_removed.png")
 
@@ -32,7 +34,7 @@ class RemovedUselessSymbolsDFA:
             set_of_input_alphabet_characters=dfa.set_of_input_alphabet_characters,
             start_state=dfa.start_state,
             transition_function=dfa.transition_function,
-            final_states=dfa.final_states
+            final_states=dfa.final_states,
         )
 
     def __eliminate_unreachable_states(self) -> None:
@@ -47,14 +49,19 @@ class RemovedUselessSymbolsDFA:
         """
         Удаление правил перехода, где используются недостижимые вершины
         """
-        self.transition_function = {key: value for key, value in deepcopy(transition_function).items() if
-                                    key in self.set_of_states}
+        self.transition_function = {
+            key: value
+            for key, value in deepcopy(transition_function).items()
+            if key in self.set_of_states
+        }
 
     def _correct_final_states(self, final_state) -> None:
         """
         Удаление финальных состояний, если там были недостижимые вершины
         """
-        self.final_states = {state for state in final_state if state in self.set_of_states}
+        self.final_states = {
+            state for state in final_state if state in self.set_of_states
+        }
 
     def show_diagram(self) -> None:
         """

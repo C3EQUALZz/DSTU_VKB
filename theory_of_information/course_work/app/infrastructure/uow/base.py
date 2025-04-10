@@ -1,7 +1,4 @@
-from abc import (
-    ABC,
-    abstractmethod,
-)
+from abc import ABC, abstractmethod
 from collections.abc import Generator
 from traceback import TracebackException
 from typing import Self

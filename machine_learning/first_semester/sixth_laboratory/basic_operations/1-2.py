@@ -3,10 +3,12 @@
 
 2. Измените программу для уменьшения / увеличения изображения в 2 раза.
 """
-import cv2
+
 import zipfile
-import numpy as np
 from typing import Optional
+
+import cv2
+import numpy as np
 
 
 def read_image_from_zip(zip_file_path: str, image_name: str) -> Optional[np.ndarray]:
@@ -19,7 +21,7 @@ def read_image_from_zip(zip_file_path: str, image_name: str) -> Optional[np.ndar
     Returns:
         Optional[np.ndarray]: Декодированное изображение или None, если не удалось загрузить.
     """
-    with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+    with zipfile.ZipFile(zip_file_path, "r") as zip_ref:
         with zip_ref.open(image_name) as file:
             image_data = file.read()
             image_array = np.frombuffer(image_data, np.uint8)
@@ -41,13 +43,13 @@ def process_image(image: np.ndarray) -> None:
 
 
 def main() -> None:
-    zip_file_path = '../images_to_notebook.zip'
-    image_name = 'testfile.jpeg'
+    zip_file_path = "../images_to_notebook.zip"
+    image_name = "testfile.jpeg"
 
     image = read_image_from_zip(zip_file_path, image_name)
 
     process_image(image)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

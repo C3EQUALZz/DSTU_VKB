@@ -13,14 +13,14 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-import time
 import functools
+import time
 import typing
 
 import rsa
 
 if typing.TYPE_CHECKING:
-    from rsa import PublicKey, PrivateKey
+    from rsa import PrivateKey, PublicKey
 
 pool_size = 8
 accurate = True
@@ -30,6 +30,7 @@ def timeit(func: typing.Callable) -> typing.Callable:
     """
     decorator for measuring the working time
     """
+
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         start_time = time.perf_counter()
@@ -37,6 +38,7 @@ def timeit(func: typing.Callable) -> typing.Callable:
         end_time = time.perf_counter()
         elapsed_time = end_time - start_time
         return result, elapsed_time
+
     return wrapper
 
 
@@ -60,7 +62,9 @@ def run_speed_test(bit_size: int) -> None:
 
     dur_per_call = total_time / iterations
 
-    print(f'{bit_size:5} bit: {dur_per_call:9.3f} sec. ({iterations} iterations over {total_time:.1f} seconds)')
+    print(
+        f"{bit_size:5} bit: {dur_per_call:9.3f} sec. ({iterations} iterations over {total_time:.1f} seconds)"
+    )
 
 
 def start_speed_test() -> None:
@@ -68,5 +72,5 @@ def start_speed_test() -> None:
         run_speed_test(bit_size)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     start_speed_test()

@@ -2,17 +2,13 @@ import logging
 import subprocess
 import sys
 from dataclasses import dataclass
-from datetime import (
-    UTC,
-    datetime,
-)
+from datetime import UTC, datetime
 from pathlib import Path
 from subprocess import Popen
 
-from typing_extensions import override
-
 from app.application.cli.const import BACKUP_DIRECTORY_PATH
 from app.infrastructure.database.base import BaseDatabaseCLIService
+from typing_extensions import override
 
 logger = logging.getLogger(__name__)
 
@@ -22,6 +18,7 @@ class PostgresConfig:
     """
     DTO class for getting postgres config.
     """
+
     user: str
     password: str
     host: str
@@ -34,6 +31,7 @@ class PostgresCLIService(BaseDatabaseCLIService):
     CLI service for communication with Postgres.
     This service requires PostgreSQL to be installed on PC or server.
     """
+
     def __init__(
         self,
         psql_bin_path: Path,

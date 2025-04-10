@@ -17,15 +17,18 @@
 Если способ рассадить ОВП существует, то выведите YES в первой строке и номера ОВП, которых необходимо посадить за
 первый стол, во второй строке. В противном случае в первой и единственной строке выведите NO.
 """
+
 from collections import deque
-from typing import List, cast, Tuple
+from typing import List, Tuple, cast
 
 
 class Graph:
     def __init__(self, n: int) -> None:
         """Инициализируем граф с n вершинами."""
         self._n = n
-        self._adj_list: List[List[int]] = [[] for _ in range(n)]  # Список смежности для графа
+        self._adj_list: List[List[int]] = [
+            [] for _ in range(n)
+        ]  # Список смежности для графа
         self._color: List[int] = []
 
     def add_edge(self, u: int, v: int) -> None:
@@ -83,7 +86,9 @@ class Graph:
 
 def main() -> None:
     n, m = map(int, input().split())
-    pairs = cast(List[Tuple[int, int]], [tuple(map(int, input().split())) for _ in range(m)])
+    pairs = cast(
+        List[Tuple[int, int]], [tuple(map(int, input().split())) for _ in range(m)]
+    )
 
     # Создаем граф и добавляем ребра
     graph = Graph(n)

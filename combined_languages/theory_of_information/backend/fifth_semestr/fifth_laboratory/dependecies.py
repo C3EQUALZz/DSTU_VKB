@@ -1,6 +1,6 @@
 from collections.abc import Mapping
 from copy import copy
-from typing import Literal, List, Optional, Tuple, Final
+from typing import Final, List, Literal, Optional, Tuple
 
 import numpy as np
 
@@ -22,16 +22,18 @@ from combined_languages.theory_of_information.backend.fifth_semestr.fourth_labor
     SystematicMatrixFactory
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.helpers import \
     get_info_for_encoding
-from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.registry import Registry
+from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.registry import \
+    Registry
 
 algorithms: Final = {
     "shortening": (short_the_code, "G"),
     "extension": (extend_the_code, "H"),
     "perforation": (punch_the_code, "H"),
-    "completion": (refill_code, "G")
+    "completion": (refill_code, "G"),
 }
 
 results = {}
+
 
 def replace_numpy_with_list(data):
     if isinstance(data, dict):
@@ -50,10 +52,10 @@ def get_info_about_matrix(matrix, type_matrix):
 
 
 def execute(
-        algorithm: Literal["shortening", "extension", "perforation", "completion"],
-        matrix: List[List[int]],
-        type_matrix: Literal["G", "H"],
-        indexes: Optional[Tuple[Tuple[int, int], ...]] = None,
+    algorithm: Literal["shortening", "extension", "perforation", "completion"],
+    matrix: List[List[int]],
+    type_matrix: Literal["G", "H"],
+    indexes: Optional[Tuple[Tuple[int, int], ...]] = None,
 ):
     Registry.clear()
 
@@ -94,13 +96,6 @@ if __name__ == "__main__":
         [1, 0, 0, 0, 1, 1, 0, 1],
         [0, 1, 0, 0, 1, 0, 1, 1],
         [0, 0, 1, 0, 1, 0, 0, 1],
-        [0, 0, 0, 1, 0, 1, 1, 1]
+        [0, 0, 0, 1, 0, 1, 1, 1],
     ]
-    print(
-        execute(
-            "shortening",
-            matrix=m,
-            type_matrix="G",
-            indexes=((1, 1),)
-        )
-    )
+    print(execute("shortening", matrix=m, type_matrix="G", indexes=((1, 1),)))

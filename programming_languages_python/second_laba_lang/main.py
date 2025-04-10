@@ -1,9 +1,12 @@
 """
 AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
+
 from random import sample
 from string import ascii_uppercase
-from python_language.programming_languages_python.first_laba_lang.tutor import safe_eval
+
+from python_language.programming_languages_python.first_laba_lang.tutor import \
+    safe_eval
 
 
 def first_question(my_number: int):
@@ -22,7 +25,9 @@ def second_question(my_list: str):
     Вариант 1. Выведите построчно все строки размером от 5 до 10 символов.
     Пример ввода: ["abaaadj", "jadfuauf", "ok", "fuf"]
     """
-    return '\n'.join(str(x) for x in filter(lambda x: 5 <= len(str(x)) <= 10, safe_eval(my_list)))
+    return "\n".join(
+        str(x) for x in filter(lambda x: 5 <= len(str(x)) <= 10, safe_eval(my_list))
+    )
 
 
 def third_question(s=None):
@@ -31,7 +36,7 @@ def third_question(s=None):
     Вариант 1. Случайную строку, состоящую из 5 символов, содержащую только заглавные буквы русского алфавита.
     Ничего вводить не надо
     """
-    return ''.join(sample(ascii_uppercase, 5))
+    return "".join(sample(ascii_uppercase, 5))
 
 
 def fourth_question(string: str):
@@ -52,7 +57,11 @@ def main():
         case "3":
             print(third_question())
         case "4":
-            print(fourth_question(input("Введите вашу строку, состоящую из цифр и чисел ")))
+            print(
+                fourth_question(
+                    input("Введите вашу строку, состоящую из цифр и чисел ")
+                )
+            )
         case _:
             print("Вы выбрали неверный номер ")
 

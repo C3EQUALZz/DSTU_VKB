@@ -14,11 +14,11 @@
 
 """Common functionality shared by several modules."""
 
+import logging
 import math
 import typing
-import logging
-import rsa.helpers.decorators as decorators
 
+import rsa.helpers.decorators as decorators
 import sympy
 
 logger = logging.getLogger(__name__)
@@ -50,7 +50,9 @@ def bit_size(num: int) -> int:
     try:
         return num.bit_length()
     except AttributeError as ex:
-        raise TypeError("bit_size(num) only supports integers, not %r" % type(num)) from ex
+        raise TypeError(
+            "bit_size(num) only supports integers, not %r" % type(num)
+        ) from ex
 
 
 @decorators.log_decorator(logger)
@@ -90,7 +92,9 @@ def inverse(x: int, n: int) -> int:
 
 
 @decorators.log_decorator(logger)
-def chinese_remainder_theorem(remainders: typing.Iterable[int], moduli: typing.Iterable[int]) -> int:
+def chinese_remainder_theorem(
+    remainders: typing.Iterable[int], moduli: typing.Iterable[int]
+) -> int:
     """Chinese Remainder Theorem.
 
     Calculates x such that x = remainders[i] (mod moduli[i]) for each i.
@@ -117,7 +121,9 @@ def chinese_remainder_theorem(remainders: typing.Iterable[int], moduli: typing.I
         partial_modulus = total_modulus // modulus
         inverse_partial = inverse(partial_modulus, modulus)
 
-        solution = (solution + remainder * partial_modulus * inverse_partial) % total_modulus
+        solution = (
+            solution + remainder * partial_modulus * inverse_partial
+        ) % total_modulus
 
     return solution
 

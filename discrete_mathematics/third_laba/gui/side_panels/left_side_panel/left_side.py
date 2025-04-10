@@ -2,7 +2,9 @@
 В данном модуле реализована логика левого frame приложения.
 Решил описать в отдельном классе для соблюдения модульности и расширяемости
 """
-from PyQt6 import QtWidgets, QtCore
+
+from PyQt6 import QtCore, QtWidgets
+
 from .buttons import ButtonPanel
 
 
@@ -10,6 +12,7 @@ class LeftSidePanel(QtWidgets.QWidget):
     """
     Класс, который отвечает за левое окно приложения (выбор фото, кнопки)
     """
+
     def __init__(self, parent=None):
         super().__init__(parent)
         # Создаем frame, на который будем располагать все свои виджеты
@@ -36,7 +39,9 @@ class LeftSidePanel(QtWidgets.QWidget):
         # Добавляю окно, где высвечивается наше фото, второй аргумент - толщина линии
         layout.addWidget(self._create_photo_label(), stretch=1)
         # Здесь добавляю свою группу кнопок
-        layout.addWidget(ButtonPanel(self), alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
+        layout.addWidget(
+            ButtonPanel(self), alignment=QtCore.Qt.AlignmentFlag.AlignBottom
+        )
 
     def _create_photo_label(self) -> QtWidgets.QLabel:
         """

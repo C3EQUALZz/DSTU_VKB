@@ -13,7 +13,7 @@
 #  limitations under the License.
 
 import pytest
-from rsa.helpers.transform import int2bytes, bytes2int
+from rsa.helpers.transform import bytes2int, int2bytes
 
 
 def test_int2bytes_accuracy():

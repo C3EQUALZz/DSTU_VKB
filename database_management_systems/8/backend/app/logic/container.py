@@ -1,65 +1,35 @@
 import logging
-from typing import (
-    Any,
-    cast,
-)
+from typing import Any, cast
 
-from app.core.types.handlers import (
-    CommandHandlerMapping,
-    EventHandlerMapping,
-)
+from app.core.types.handlers import CommandHandlerMapping, EventHandlerMapping
 from app.infrastructure.uow.scores.base import ScoresUnitOfWork
 from app.infrastructure.uow.scores.mongo import MotorScoresUnitOfWork
 from app.infrastructure.uow.users.base import UsersUnitOfWork
 from app.infrastructure.uow.users.mongo import MotorUsersUnitOfWork
 from app.logic.commands.auth import VerifyUserCredentialsCommand
-from app.logic.commands.scores import (
-    CreateScoreCommand,
-    DeleteScoreCommand,
-    GetAllScoresCommand,
-    GetAllUserScoresCommand,
-    GetScoreByIdCommand,
-    UpdateScoreCommand,
-)
-from app.logic.commands.users import (
-    CreateUserCommand,
-    GetAllUsersCommand,
-    GetUserByIdCommand,
-    UpdateUserCommand,
-)
-from app.logic.handlers.auth.commands import VerifyUserCredentialsCommandHandler
-from app.logic.handlers.scores.commands import (
-    CreateScoreCommandHandler,
-    DeleteScoreCommandHandler,
-    GetAllScoresCommandHandler,
-    GetAllUserScoresCommandHandler,
-    GetScoreByIdCommandHandler,
-    UpdateScoreCommandHandler,
-)
-from app.logic.handlers.users.commands import (
-    CreateUserCommandHandler,
-    GetAllUsersCommandHandler,
-    GetUserByIdCommandHandler,
-    UpdateUserCommandHandler,
-)
+from app.logic.commands.scores import (CreateScoreCommand, DeleteScoreCommand,
+                                       GetAllScoresCommand,
+                                       GetAllUserScoresCommand,
+                                       GetScoreByIdCommand, UpdateScoreCommand)
+from app.logic.commands.users import (CreateUserCommand, GetAllUsersCommand,
+                                      GetUserByIdCommand, UpdateUserCommand)
+from app.logic.handlers.auth.commands import \
+    VerifyUserCredentialsCommandHandler
+from app.logic.handlers.scores.commands import (CreateScoreCommandHandler,
+                                                DeleteScoreCommandHandler,
+                                                GetAllScoresCommandHandler,
+                                                GetAllUserScoresCommandHandler,
+                                                GetScoreByIdCommandHandler,
+                                                UpdateScoreCommandHandler)
+from app.logic.handlers.users.commands import (CreateUserCommandHandler,
+                                               GetAllUsersCommandHandler,
+                                               GetUserByIdCommandHandler,
+                                               UpdateUserCommandHandler)
 from app.settings.config import Settings
-from authx import (
-    AuthX,
-    AuthXConfig,
-)
-from dishka import (
-    from_context,
-    make_async_container,
-    provide,
-    Provider,
-    Scope,
-)
+from authx import AuthX, AuthXConfig
+from dishka import Provider, Scope, from_context, make_async_container, provide
 from motor.motor_asyncio import AsyncIOMotorClient
-from redis.asyncio import (
-    ConnectionPool,
-    Redis,
-)
-
+from redis.asyncio import ConnectionPool, Redis
 
 logger = logging.getLogger(__name__)
 

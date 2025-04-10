@@ -1,13 +1,8 @@
-from typing import (
-    List,
-    Optional,
-)
+from typing import List, Optional
 
 from app.domain.entities.user import UserEntity
-from app.exceptions.infrastructure import (
-    AttributeException,
-    UserNotFoundException,
-)
+from app.exceptions.infrastructure import (AttributeException,
+                                           UserNotFoundException)
 from app.infrastructure.uow.users.base import UsersUnitOfWork
 
 

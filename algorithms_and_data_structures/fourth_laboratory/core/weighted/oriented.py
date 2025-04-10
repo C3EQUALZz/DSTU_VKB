@@ -1,10 +1,11 @@
-from typing import TypeVar, List
+from typing import List, TypeVar
 
 from prettytable import PrettyTable
 
-from algorithms_and_data_structures.fourth_laboratory.core.base import BaseWeightedGraph
+from algorithms_and_data_structures.fourth_laboratory.core.base import \
+    BaseWeightedGraph
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 class OrientedGraph(BaseWeightedGraph[T]):
@@ -29,7 +30,7 @@ class OrientedGraph(BaseWeightedGraph[T]):
 
         # Создаем таблицу
         table = PrettyTable()
-        table.field_names = [' '] + vertices  # Заголовки столбцов
+        table.field_names = [" "] + vertices  # Заголовки столбцов
 
         for index, row in enumerate(matrix):
             table.add_row([vertices[index]] + row)  # Добавляем строки с весами

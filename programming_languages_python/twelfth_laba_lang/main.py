@@ -7,21 +7,21 @@ __all__ = ["first_question", "second_question", "third_question"]
 import os
 from pprint import pprint
 
+########################################################################################################################
+from python_language.programming_languages_python.twelfth_laba_lang.db_creation import \
+    create_database
+from python_language.programming_languages_python.twelfth_laba_lang.db_creation.tables import *
 from sqlalchemy import text
 ########################################################################################################################
 from sqlalchemy.engine import create_engine
 from sqlalchemy.orm import sessionmaker
-
-########################################################################################################################
-from python_language.programming_languages_python.twelfth_laba_lang.db_creation import create_database
-from python_language.programming_languages_python.twelfth_laba_lang.db_creation.tables import *
 
 file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "database.db")
 
 if not os.path.exists(file_path):
     create_database(file_path)
 
-SESSION = sessionmaker(bind=create_engine(f'sqlite:///{file_path}', echo=False))()
+SESSION = sessionmaker(bind=create_engine(f"sqlite:///{file_path}", echo=False))()
 
 
 def first_question(k=None) -> list:
@@ -30,7 +30,10 @@ def first_question(k=None) -> list:
     Заполните БД. Выведите все страны, чье название начинается на букву А.
     Ничего не надо вводить
     """
-    return [country.name for country in SESSION.query(Country).filter(Country.name.like('A%')).all()]
+    return [
+        country.name
+        for country in SESSION.query(Country).filter(Country.name.like("A%")).all()
+    ]
 
 
 def second_question(k=None) -> str:
@@ -45,7 +48,7 @@ def second_question(k=None) -> str:
     GROUP BY main.streets.city_id
     HAVING COUNT(main.streets.city_id) > 5
     """)
-    return '\n'.join(row[0] for row in SESSION.execute(query))
+    return "\n".join(row[0] for row in SESSION.execute(query))
 
 
 def third_question(k=None):
@@ -53,7 +56,7 @@ def third_question(k=None):
     Для БД из задания 6 выведите все улицы, для страны РФ.
     Ничего не надо вводить
     """
-    country_name = 'РФ'  # Замените на фактическое название страны
+    country_name = "РФ"  # Замените на фактическое название страны
 
     # Находим страну по названию
     country = SESSION.query(Country).filter_by(name=country_name).first()
@@ -67,7 +70,7 @@ def third_question(k=None):
             .filter(Country.name == country_name)
             .all()
         )
-        return '\n'.join(street.name for street in streets)
+        return "\n".join(street.name for street in streets)
 
 
 def main() -> None:

@@ -1,6 +1,6 @@
 __all__ = ["Page"]
 
-from PyQt6 import QtWidgets, QtCore
+from PyQt6 import QtCore, QtWidgets
 
 
 class Page(QtWidgets.QWidget):
@@ -19,8 +19,11 @@ class Page(QtWidgets.QWidget):
         # Создаем метку для названия лабораторной работы
 
         self.layout = QtWidgets.QVBoxLayout(self)
-        self.layout.addWidget(QtWidgets.QLabel(f"Лабораторная работа {num_lab}"),
-                              alignment=QtCore.Qt.AlignmentFlag.AlignHCenter | QtCore.Qt.AlignmentFlag.AlignTop)
+        self.layout.addWidget(
+            QtWidgets.QLabel(f"Лабораторная работа {num_lab}"),
+            alignment=QtCore.Qt.AlignmentFlag.AlignHCenter
+            | QtCore.Qt.AlignmentFlag.AlignTop,
+        )
         # Создаем выпадающий список (combobox) для выбора задания
         self._create_combobox()
 
@@ -60,23 +63,26 @@ class Page(QtWidgets.QWidget):
         self.label = QtWidgets.QLabel(
             "Напишите программу для решения примера. Есть переменные: a,b,c,k: Предусмотрите деление на 0.\n"
             "Все необходимые переменные вводите ниже.\n"
-            "Пример ввода: 1 2 3 4")
+            "Пример ввода: 1 2 3 4"
+        )
         # Позволяет переносить текст на следующую строку, если не помещается
         self.label.setWordWrap(True)
-        self.layout.addWidget(self.label, 2,
-                              alignment=QtCore.Qt.AlignmentFlag.AlignVCenter)
+        self.layout.addWidget(
+            self.label, 2, alignment=QtCore.Qt.AlignmentFlag.AlignVCenter
+        )
 
     def _create_combobox(self):
         """
         Создает выпадающий список (combobox) для выбора задания.
         """
         self.combobox = QtWidgets.QComboBox()
-        self.combobox.addItems([
-            "Задание 1", "Задание 2",
-            "Задание 3", "Задание 4"
-        ])
-        self.layout.addWidget(self.combobox, 0,
-                              alignment=QtCore.Qt.AlignmentFlag.AlignRight | QtCore.Qt.AlignmentFlag.AlignTop)
+        self.combobox.addItems(["Задание 1", "Задание 2", "Задание 3", "Задание 4"])
+        self.layout.addWidget(
+            self.combobox,
+            0,
+            alignment=QtCore.Qt.AlignmentFlag.AlignRight
+            | QtCore.Qt.AlignmentFlag.AlignTop,
+        )
 
     def _create_button(self):
         """
@@ -85,6 +91,8 @@ class Page(QtWidgets.QWidget):
         buttons = QtWidgets.QDialogButtonBox()
 
         self.ok_button = buttons.addButton(QtWidgets.QDialogButtonBox.StandardButton.Ok)
-        self.cancel_button = buttons.addButton(QtWidgets.QDialogButtonBox.StandardButton.Cancel)
+        self.cancel_button = buttons.addButton(
+            QtWidgets.QDialogButtonBox.StandardButton.Cancel
+        )
 
         self.layout.addWidget(buttons)

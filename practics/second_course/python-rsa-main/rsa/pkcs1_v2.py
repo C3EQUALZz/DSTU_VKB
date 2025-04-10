@@ -18,15 +18,13 @@ This module implements certain functionality from PKCS#1 version 2. Main
 documentation is RFC 2437: https://tools.ietf.org/html/rfc2437
 """
 
-import math
-import rsa
 import logging
+import math
 
-from rsa import (
-    pkcs1,
-)
-from rsa.helpers import transform
+import rsa
 import rsa.helpers.decorators as decorators
+from rsa import pkcs1
+from rsa.helpers import transform
 
 logger = logging.getLogger(__name__)
 
@@ -63,7 +61,7 @@ def mgf1(seed: bytes, length: int, hasher: str = "SHA-1") -> bytes:
         ) from ex
 
     # If l > 2^32(hLen), output "mask too long" and stop.
-    if length > (2 ** 32 * hash_length):
+    if length > (2**32 * hash_length):
         raise OverflowError(
             f"Desired length should be at most 2**32 times the hasher's output "
             f"length ({hash_length} for {hasher} function)"

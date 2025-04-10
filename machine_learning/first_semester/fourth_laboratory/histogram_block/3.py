@@ -1,10 +1,12 @@
 """
 3. Как аннотировать столбцы в Barplot с помощью Matplotlib на Python?
 """
-import matplotlib.pyplot as plt
-from dataclasses import dataclass, field
-from random import randint, choice
+
 import string
+from dataclasses import dataclass, field
+from random import choice, randint
+
+import matplotlib.pyplot as plt
 
 
 @dataclass
@@ -23,7 +25,8 @@ def draw_bar_plot_and_annotate_each_column(*args: Column) -> None:
         plt.annotate(
             str(bar.get_width()),
             (bar.get_width(), bar.get_y() + bar.get_height() / 2),
-            va='center', ha='left'
+            va="center",
+            ha="left",
         )
 
     plt.show()
@@ -38,5 +41,5 @@ def main() -> None:
     )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

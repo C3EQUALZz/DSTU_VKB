@@ -1,11 +1,13 @@
 """
 7. Как заполнить между несколькими строками в Matplotlib?
 """
+
 from dataclasses import dataclass
+from enum import IntEnum
+from typing import Sequence, cast
+
 import matplotlib.pyplot as plt
 import numpy as np
-from typing import Sequence, cast
-from enum import IntEnum
 
 
 class Position(IntEnum):
@@ -36,8 +38,8 @@ def draw_graphs_and_fill_the_space_between_them(*args: Function) -> None:
             first_function.y,
             second_function.y,
             where=cast(Sequence[bool], (first_function.y > second_function.y)),
-            color='lightblue',
-            label=f'Область между {first_function.label} и {second_function.label}'
+            color="lightblue",
+            label=f"Область между {first_function.label} и {second_function.label}",
         )
 
         plt.fill_between(
@@ -45,7 +47,7 @@ def draw_graphs_and_fill_the_space_between_them(*args: Function) -> None:
             first_function.y,
             second_function.y,
             where=cast(Sequence[bool], (first_function.y < second_function.y)),
-            color='lightgreen',
+            color="lightgreen",
         )
 
     plt.legend(loc=Position.LowerLeft)
@@ -54,10 +56,10 @@ def draw_graphs_and_fill_the_space_between_them(*args: Function) -> None:
 
 def main() -> None:
     x = np.linspace(0, 10, 100)
-    sinusoid = Function(x=x, y=np.sin(x), label='sin(x)')
-    cosine = Function(x=x, y=np.cos(x), label='cos(x)')
+    sinusoid = Function(x=x, y=np.sin(x), label="sin(x)")
+    cosine = Function(x=x, y=np.cos(x), label="cos(x)")
     draw_graphs_and_fill_the_space_between_them(sinusoid, cosine)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

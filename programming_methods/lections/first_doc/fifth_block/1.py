@@ -1,19 +1,20 @@
 # Реализовать поиск по ширине и глубине
 
-from queue import Queue
-from typing import TypeVar, List, Optional, Set, Dict
 import sys
 from itertools import combinations
-from programming_methods.lections.first_doc.fifth_block.core.base import BaseUnWeightedGraph
-from programming_methods.lections.first_doc.fifth_block.core.unweighted.nonoriented import NonOrientedGraph
+from queue import Queue
+from typing import Dict, List, Optional, Set, TypeVar
 
-T = TypeVar('T')
+from programming_methods.lections.first_doc.fifth_block.core.base import \
+    BaseUnWeightedGraph
+from programming_methods.lections.first_doc.fifth_block.core.unweighted.nonoriented import \
+    NonOrientedGraph
+
+T = TypeVar("T")
 
 
 def bfs(
-        graph: BaseUnWeightedGraph[T],
-        start_node: T,
-        target_node: T
+    graph: BaseUnWeightedGraph[T], start_node: T, target_node: T
 ) -> Optional[List[T]]:
     """
     Выполняет поиск в ширину (BFS).
@@ -63,11 +64,11 @@ def bfs(
 
 
 def dfs(
-        graph: BaseUnWeightedGraph[T],
-        start: T,
-        target: T,
-        path: Optional[List[T]] = None,
-        visited: Optional[Set[T]] = None
+    graph: BaseUnWeightedGraph[T],
+    start: T,
+    target: T,
+    path: Optional[List[T]] = None,
+    visited: Optional[Set[T]] = None,
 ) -> Optional[List[T]]:
     """
     Выполняет поиск в глубину (DFS) в графе.
@@ -112,9 +113,9 @@ def create_graph_from_user_input(n: int) -> NonOrientedGraph:
     edges = combinations(range(1, n + 1), 2)
 
     for vertex1, vertex2 in edges:
-        s = f'Есть ли связь между вершинами {chr(64 + vertex1)} и {chr(64 + vertex2)}? (да/нет) '
+        s = f"Есть ли связь между вершинами {chr(64 + vertex1)} и {chr(64 + vertex2)}? (да/нет) "
         response = input(s).strip().lower()
-        if response in ('да', 'yes'):
+        if response in ("да", "yes"):
             graph.add_edge(chr(vertex1 + 64), chr(64 + vertex2))
 
     return graph
@@ -127,12 +128,14 @@ def main() -> None:
             "2": dfs,
         }
 
-        user_input = input("Что вы хотите сделать? Поиск в ширину (1) или поиск в глубину (2)? ")
+        user_input = input(
+            "Что вы хотите сделать? Поиск в ширину (1) или поиск в глубину (2)? "
+        )
 
         if user_input not in questions:
             continue
 
-        n: int = int(input('Введите количество вершин: '))
+        n: int = int(input("Введите количество вершин: "))
 
         graph = create_graph_from_user_input(n)
         print(graph)
@@ -140,17 +143,23 @@ def main() -> None:
         start_vertex = input("Введите начальную вершину: ")
 
         if start_vertex not in graph:
-            print(f"{start_vertex} нет в графе. Запускаю заново полностью алгоритм. ", file=sys.stderr)
+            print(
+                f"{start_vertex} нет в графе. Запускаю заново полностью алгоритм. ",
+                file=sys.stderr,
+            )
             continue
 
         end_vertex = input("Введите конечную вершину: ")
 
         if end_vertex not in graph:
-            print(f"{end_vertex} нет в графе. Запускаю заново полностью алгоритм. ", file=sys.stderr)
+            print(
+                f"{end_vertex} нет в графе. Запускаю заново полностью алгоритм. ",
+                file=sys.stderr,
+            )
             continue
 
         print(questions[user_input](graph, start_vertex, end_vertex))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

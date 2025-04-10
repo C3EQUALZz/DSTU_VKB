@@ -1,12 +1,12 @@
 # Реализовать очередь с помощью стека
 
 
-from typing import TypeVar, Generic
+from typing import Generic, TypeVar
 
 T = TypeVar("T")
 
-class Queue(Generic[T]):
 
+class Queue(Generic[T]):
     def __init__(self) -> None:
         self.current: T = []
         self.tmp: T = []
@@ -16,7 +16,6 @@ class Queue(Generic[T]):
 
     def pop(self) -> T:
         if len(self.tmp) == 0:
-
             while len(self.current) != 0:
                 self.tmp.append(self.current.pop())
 

@@ -1,10 +1,12 @@
 """
 2. Как отобразить значение каждого столбца на гистограмме с помощью Matplotlib?
 """
-import matplotlib.pyplot as plt
-from dataclasses import dataclass, field
-from random import randint, choice
+
 import string
+from dataclasses import dataclass, field
+from random import choice, randint
+
+import matplotlib.pyplot as plt
 
 
 @dataclass
@@ -24,20 +26,16 @@ def draw_histogram_and_show_value_of_each_column(*args: Column) -> None:
             bar.get_width(),
             bar.get_y() + bar.get_height() / 2,
             str(bar.get_width()),
-            va='center', ha='left'
+            va="center",
+            ha="left",
         )
 
     plt.show()
 
 
 def main() -> None:
-    draw_histogram_and_show_value_of_each_column(
-        Column(),
-        Column(),
-        Column(),
-        Column()
-    )
+    draw_histogram_and_show_value_of_each_column(Column(), Column(), Column(), Column())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -19,13 +19,12 @@
 """
 
 import bisect
-from typing import List, Tuple, Sequence, Union
 from collections import deque
+from typing import List, Sequence, Tuple, Union
 
 
 def find_first_and_last_occurrences(
-        sorted_list: Sequence[int],
-        search_list: Sequence[int]
+    sorted_list: Sequence[int], search_list: Sequence[int]
 ) -> deque[Union[Tuple[int, int], Tuple[int]]]:
     """
     Находит первое и последнее вхождение каждого числа из search_list в отсортированном списке sorted_list.
@@ -46,7 +45,9 @@ def find_first_and_last_occurrences(
             results.append((0,))
         else:
             last_index = bisect.bisect_right(sorted_list, number) - 1
-            results.append((first_index + 1, last_index + 1))  # +1 для единичной нумерации
+            results.append(
+                (first_index + 1, last_index + 1)
+            )  # +1 для единичной нумерации
 
     return results
 

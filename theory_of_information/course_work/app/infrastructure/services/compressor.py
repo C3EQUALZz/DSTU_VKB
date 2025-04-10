@@ -1,7 +1,5 @@
-from app.domain.entities.file_objects import (
-    CompressedFileObjectEntity,
-    FileObjectEntity,
-)
+from app.domain.entities.file_objects import (CompressedFileObjectEntity,
+                                              FileObjectEntity)
 from app.infrastructure.compressors.base import Compressor
 
 

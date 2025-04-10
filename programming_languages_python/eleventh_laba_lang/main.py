@@ -1,28 +1,30 @@
 """
 AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
+
 import os
 import re
 from pprint import pprint
 from typing import Callable
 
+from python_language.programming_languages_python.eleventh_laba_lang.csv_interaction import (
+    csv_to_db, db_to_csv)
+########################################################################################################################
+from python_language.programming_languages_python.eleventh_laba_lang.db_creation import \
+    create_database
+from python_language.programming_languages_python.eleventh_laba_lang.db_creation.tables import (
+    Department, Position, Teacher)
+from python_language.programming_languages_python.eleventh_laba_lang.db_interface import *
 ########################################################################################################################
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
-
-from python_language.programming_languages_python.eleventh_laba_lang.csv_interaction import db_to_csv, csv_to_db
-########################################################################################################################
-from python_language.programming_languages_python.eleventh_laba_lang.db_creation import create_database
-from python_language.programming_languages_python.eleventh_laba_lang.db_creation.tables import (Position, Department,
-                                                                                                Teacher)
-from python_language.programming_languages_python.eleventh_laba_lang.db_interface import *
 
 file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "database.db")
 
 if not os.path.exists(file_path):
     create_database(file_path)
 
-SESSION = sessionmaker(bind=create_engine(f'sqlite:///{file_path}', echo=False))()
+SESSION = sessionmaker(bind=create_engine(f"sqlite:///{file_path}", echo=False))()
 
 
 def first_question(k=None):
@@ -31,15 +33,24 @@ def first_question(k=None):
     """
     # SQL-запрос для извлечения данных из нескольких таблиц
     # Join объединяет наши данные, чтобы они были вместе
-    query_result = SESSION.query(Teacher, Position, Department).join(Position).join(Department).all()
+    query_result = (
+        SESSION.query(Teacher, Position, Department)
+        .join(Position)
+        .join(Department)
+        .all()
+    )
 
     data_dict = {}
     for teacher, position, department in query_result:
         data_dict[teacher.id] = {
-            'name': teacher.name,
-            'age': teacher.age,
-            'position': {'id': position.id, 'title': position.title},
-            'department': {'id': department.id, 'title': department.title, 'institute': department.institute}
+            "name": teacher.name,
+            "age": teacher.age,
+            "position": {"id": position.id, "title": position.title},
+            "department": {
+                "id": department.id,
+                "title": department.title,
+                "institute": department.institute,
+            },
         }
 
     return data_dict
@@ -52,20 +63,48 @@ def second_question(string: str) -> str:
     должны изменять данные во всех связанных структурах.
     """
     pattern_and_functions: list[tuple[re.Pattern, Callable]] = [
-        (re.compile(r'^Удалить (преподавателя|препода)? (.+)$', re.I | re.U), remove_by_name),
-        (re.compile(r"^Удалить всех с кафедры (.+)$", re.I | re.U), remove_by_department),
-        (re.compile(r"^Удалить всех,? кто имеет звание -(.+)$", re.I | re.U), remove_by_position),
+        (
+            re.compile(r"^Удалить (преподавателя|препода)? (.+)$", re.I | re.U),
+            remove_by_name,
+        ),
+        (
+            re.compile(r"^Удалить всех с кафедры (.+)$", re.I | re.U),
+            remove_by_department,
+        ),
+        (
+            re.compile(r"^Удалить всех,? кто имеет звание -(.+)$", re.I | re.U),
+            remove_by_position,
+        ),
         (re.compile(r"^Добавить новое звание - (.+)$", re.I | re.U), add_new_position),
-        (re.compile(r"^Добавить новую кафедру[:\-]? (.+) в университет (.+)$", re.I | re.U), add_new_department),
-        (re.compile(r"^Добавить нового преподавателя (.+) с возрастом (\d+) на кафедру (.+) в университет (.+)"
-                    r" на должность (.+)$", re.I | re.U), add_new_teacher),
-        (re.compile(r"^Изменить имя преподавателя с (.+) на (.+)$", re.I | re.U), change_teacher_name),
-        (re.compile(r"^Изменить название кафедры с (.+) на (.+)$", re.I | re.U), change_department)
+        (
+            re.compile(
+                r"^Добавить новую кафедру[:\-]? (.+) в университет (.+)$", re.I | re.U
+            ),
+            add_new_department,
+        ),
+        (
+            re.compile(
+                r"^Добавить нового преподавателя (.+) с возрастом (\d+) на кафедру (.+) в университет (.+)"
+                r" на должность (.+)$",
+                re.I | re.U,
+            ),
+            add_new_teacher,
+        ),
+        (
+            re.compile(r"^Изменить имя преподавателя с (.+) на (.+)$", re.I | re.U),
+            change_teacher_name,
+        ),
+        (
+            re.compile(r"^Изменить название кафедры с (.+) на (.+)$", re.I | re.U),
+            change_department,
+        ),
     ]
 
     for pattern, func in pattern_and_functions:
         if res := pattern.fullmatch(string.strip()):
-            return f"'{string}' - выполнено! " if func(res.groups()) else "Не выполнено!"
+            return (
+                f"'{string}' - выполнено! " if func(res.groups()) else "Не выполнено!"
+            )
     return f"Неправильный ввод данных"
 
 
@@ -111,7 +150,9 @@ def fourth_question(k=None):
 
     result = SESSION.execute(query)
 
-    return '\n'.join(f"Кафедра: {row[0]}, Количество преподавателей: {row[1]}" for row in result)
+    return "\n".join(
+        f"Кафедра: {row[0]}, Количество преподавателей: {row[1]}" for row in result
+    )
 
 
 def fifth_question(decree: str) -> str | dict:
@@ -141,7 +182,11 @@ def main() -> None:
         case "4":
             print(fourth_question())
         case "5":
-            pprint(fifth_question(input("Введите что вы сделать: записать или считать данные ")))
+            pprint(
+                fifth_question(
+                    input("Введите что вы сделать: записать или считать данные ")
+                )
+            )
         case _:
             print("Вы выбрали неверное задание ")
 

@@ -2,15 +2,16 @@ import gzip
 import logging
 from pathlib import Path
 
-from typing_extensions import override
-
-from app.domain.entities.file_objects import CompressedFileObjectEntity, FileObjectEntity
+from app.domain.entities.file_objects import (CompressedFileObjectEntity,
+                                              FileObjectEntity)
 from app.domain.values.backup import CompressionType
 from app.infrastructure.compressors.base import Compressor
 from app.infrastructure.compressors.gunzip import CHUNK_SIZE
 from app.infrastructure.compressors.pigz.interface import compress_file
+from typing_extensions import override
 
 logger = logging.getLogger(__name__)
+
 
 class PigzCompressor(Compressor):
     @override

@@ -3,19 +3,15 @@ from typing import TYPE_CHECKING
 from uuid import UUID
 
 import click
-from dishka import FromDishka
-from dishka.integrations.click import setup_dishka
-
 from app.application.cli.const import BACKUP_DIRECTORY_PATH
 from app.infrastructure.uow.compression import CompressionUnitOfWork
 from app.logic.bootstrap import Bootstrap
-from app.logic.commands.s3 import (
-    CreateFileInS3Command,
-    GetFileFromS3Command,
-    ListFilesInS3Command,
-)
+from app.logic.commands.s3 import (CreateFileInS3Command, GetFileFromS3Command,
+                                   ListFilesInS3Command)
 from app.logic.container import container
 from app.settings.logger.config import setup_logging
+from dishka import FromDishka
+from dishka.integrations.click import setup_dishka
 
 if TYPE_CHECKING:
     from app.logic.message_bus import MessageBus
@@ -30,19 +26,14 @@ def cli(context: click.Context):
 
 
 @cli.command("upload")
-@click.argument(
-    "src_file_path",
-    type=click.Path(exists=True, dir_okay=False, path_type=Path),
-    required=True
-)
+@click.argument("src_file_path", type=click.Path(exists=True, dir_okay=False, path_type=Path), required=True)
 @click.option(
-    "-d", "--delete",
+    "-d",
+    "--delete",
     is_flag=True,
 )
 def upload_file_to_s3(
-        src_file_path: Path,
-        delete: bool,
-        bootstrap: FromDishka[Bootstrap[CompressionUnitOfWork]]
+    src_file_path: Path, delete: bool, bootstrap: FromDishka[Bootstrap[CompressionUnitOfWork]]
 ) -> None:
     """
     Upload file to s3. Please compress file before uploading.
@@ -57,15 +48,8 @@ def upload_file_to_s3(
 
 
 @cli.command("download")
-@click.argument(
-    "oid",
-    type=click.UUID,
-    required=True
-)
-def download_file_from_s3(
-        oid: UUID,
-        bootstrap: FromDishka[Bootstrap[CompressionUnitOfWork]]
-) -> None:
+@click.argument("oid", type=click.UUID, required=True)
+def download_file_from_s3(oid: UUID, bootstrap: FromDishka[Bootstrap[CompressionUnitOfWork]]) -> None:
     """
     Download file from s3.
     :param oid: the unique identifier to get file from S3
@@ -78,23 +62,9 @@ def download_file_from_s3(
 
 
 @cli.command("list")
-@click.option(
-    "-s", "--start",
-    type=int,
-    default=0,
-    help="Start index from which file will be downloaded."
-)
-@click.option(
-    "-e", "--end",
-    type=int,
-    default=10,
-    help="End index from which file will be downloaded."
-)
-def list_all_file_in_bucket(
-        start: int,
-        end: int,
-        bootstrap: FromDishka[Bootstrap[CompressionUnitOfWork]]
-) -> None:
+@click.option("-s", "--start", type=int, default=0, help="Start index from which file will be downloaded.")
+@click.option("-e", "--end", type=int, default=10, help="End index from which file will be downloaded.")
+def list_all_file_in_bucket(start: int, end: int, bootstrap: FromDishka[Bootstrap[CompressionUnitOfWork]]) -> None:
     """
     List all files in s3 bucket.
     :return: nothing

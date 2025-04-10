@@ -23,9 +23,10 @@
 
 НЕ ПРОХОДИТ ПО СКОРОСТИ НА PYTHON. 100 БАЛЛОВ НА C++
 """
-from typing import List, Final, Sequence
-from collections import deque
+
 from array import array
+from collections import deque
+from typing import Final, List, Sequence
 
 
 class MirrorCubeHash:
@@ -45,9 +46,15 @@ class MirrorCubeHash:
 
         # Вычисляем хеши для прямых и зеркальных префиксов
         for i in range(1, len(cubes) + 1):
-            self.forward_hash[i] = (self.forward_hash[i - 1] * self.HASH_BASE + cubes[i - 1]) % self.MODULUS
-            self.reverse_hash[i] = (self.reverse_hash[i - 1] * self.HASH_BASE + cubes[len(cubes) - i]) % self.MODULUS
-            self.powers_of_hash_base[i] = (self.powers_of_hash_base[i - 1] * self.HASH_BASE) % self.MODULUS
+            self.forward_hash[i] = (
+                self.forward_hash[i - 1] * self.HASH_BASE + cubes[i - 1]
+            ) % self.MODULUS
+            self.reverse_hash[i] = (
+                self.reverse_hash[i - 1] * self.HASH_BASE + cubes[len(cubes) - i]
+            ) % self.MODULUS
+            self.powers_of_hash_base[i] = (
+                self.powers_of_hash_base[i - 1] * self.HASH_BASE
+            ) % self.MODULUS
 
     def is_mirrored_equal(self, length: int, start1: int, start2: int) -> bool:
         """
@@ -88,7 +95,9 @@ class MirrorCubeHash:
         # Индекс для степени основания хеш-функции
         power_index = length
 
-        reverse_contrib = self.reverse_hash[reverse_index] * self.powers_of_hash_base[power_index]
+        reverse_contrib = (
+            self.reverse_hash[reverse_index] * self.powers_of_hash_base[power_index]
+        )
 
         result = (forward_hash_part + reverse_contrib) % self.MODULUS
 
@@ -109,7 +118,9 @@ class MirrorCubeHash:
         forward_hash_part = self.forward_hash[start1]
         power_of_hash_base_part = self.powers_of_hash_base[length]
 
-        result = (reverse_hash_part + forward_hash_part * power_of_hash_base_part) % self.MODULUS
+        result = (
+            reverse_hash_part + forward_hash_part * power_of_hash_base_part
+        ) % self.MODULUS
         return result
 
 

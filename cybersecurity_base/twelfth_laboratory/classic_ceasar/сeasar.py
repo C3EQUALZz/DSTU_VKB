@@ -2,10 +2,13 @@
 Здесь логика обычного шифра Цезаря
 
 """
-from cybersecurity_base.twelfth_laboratory.enums import Letters
-from .exceptions import NoSupport
-from cybersecurity_base.twelfth_laboratory.abstract_class_cyphers import Cypher
+
 import re
+
+from cybersecurity_base.twelfth_laboratory.abstract_class_cyphers import Cypher
+from cybersecurity_base.twelfth_laboratory.enums import Letters
+
+from .exceptions import NoSupport
 
 
 class CaesarCipher(Cypher):
@@ -14,6 +17,7 @@ class CaesarCipher(Cypher):
     Args:
         key[int] = число сдвига
     """
+
     def __init__(self, key: int):
         self._key: int = key
 
@@ -30,20 +34,26 @@ class CaesarCipher(Cypher):
         if re.search(r"[а-яА-Я]+", text):
             # Здесь изначально берется полностью словарь с русскими буквами и срезом мы формируем второй.
             # Второй словарь с учетом нашего сдвига. {a: d, b: e, c: f} (key = 3)
-            abc = str.maketrans(Letters.RUSSIAN_SYMBOLS_LOWER.value,
-                                Letters.RUSSIAN_SYMBOLS_LOWER.value[self._key:] +
-                                Letters.RUSSIAN_SYMBOLS_LOWER.value[:self._key]) \
-                  | str.maketrans(Letters.RUSSIAN_SYMBOLS_UPPER.value,
-                                  Letters.RUSSIAN_SYMBOLS_UPPER.value[self._key:] +
-                                  Letters.RUSSIAN_SYMBOLS_UPPER.value[:self._key])
+            abc = str.maketrans(
+                Letters.RUSSIAN_SYMBOLS_LOWER.value,
+                Letters.RUSSIAN_SYMBOLS_LOWER.value[self._key :]
+                + Letters.RUSSIAN_SYMBOLS_LOWER.value[: self._key],
+            ) | str.maketrans(
+                Letters.RUSSIAN_SYMBOLS_UPPER.value,
+                Letters.RUSSIAN_SYMBOLS_UPPER.value[self._key :]
+                + Letters.RUSSIAN_SYMBOLS_UPPER.value[: self._key],
+            )
 
         elif re.search(r"[a-zA-Z]", text):
-            abc = str.maketrans(Letters.ENGLISH_SYMBOLS_LOWER.value,
-                                Letters.ENGLISH_SYMBOLS_LOWER.value[self._key:] +
-                                Letters.ENGLISH_SYMBOLS_LOWER.value[:self._key]) \
-                  | str.maketrans(Letters.ENGLISH_SYMBOLS_UPPER.value,
-                                  Letters.ENGLISH_SYMBOLS_UPPER.value[self._key:] +
-                                  Letters.ENGLISH_SYMBOLS_UPPER.value[:self._key])
+            abc = str.maketrans(
+                Letters.ENGLISH_SYMBOLS_LOWER.value,
+                Letters.ENGLISH_SYMBOLS_LOWER.value[self._key :]
+                + Letters.ENGLISH_SYMBOLS_LOWER.value[: self._key],
+            ) | str.maketrans(
+                Letters.ENGLISH_SYMBOLS_UPPER.value,
+                Letters.ENGLISH_SYMBOLS_UPPER.value[self._key :]
+                + Letters.ENGLISH_SYMBOLS_UPPER.value[: self._key],
+            )
 
         if abc is None:
             raise NoSupport("Не добавлена поддержка данного языка")
@@ -64,4 +74,6 @@ class CaesarCipher(Cypher):
         Args:
             string[str] = строка, которую ввел полтьзователь на ввод.
         """
-        return str.translate(string, {v: k for k, v in self._encode_abc(string).items()})
+        return str.translate(
+            string, {v: k for k, v in self._encode_abc(string).items()}
+        )

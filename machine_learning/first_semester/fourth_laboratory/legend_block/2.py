@@ -1,14 +1,16 @@
 """
 2. Как изменить размер шрифта легенды в Matplotlib?
 """
-import numpy as np
+
 import matplotlib.pyplot as plt
+import numpy as np
 
 np.random.seed(1)
 
+
 def draw_and_change_font_size(x: np.ndarray[int], y: np.ndarray[int]) -> None:
     plt.plot(x, y, label="График")
-    plt.legend(fontsize='22')
+    plt.legend(fontsize="22")
     plt.show()
 
 
@@ -18,5 +20,5 @@ def main() -> None:
     draw_and_change_font_size(x, y)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

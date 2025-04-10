@@ -20,6 +20,7 @@ WARNING: this implementation does not use compression of the cleartext input to
 prevent repetitions, or other common security improvements. Use with care.
 
 """
+
 import atexit
 import json
 import logging
@@ -28,22 +29,13 @@ import logging.handlers
 import pathlib
 import queue
 
-from rsa.key import new_keys, PrivateKey, PublicKey
-from rsa.pkcs1 import (
-    encrypt,
-    decrypt,
-    sign,
-    verify,
-    find_signature_hash,
-    sign_hash,
-    compute_hash,
-)
+from rsa.key import PrivateKey, PublicKey, new_keys
+from rsa.pkcs1 import (compute_hash, decrypt, encrypt, find_signature_hash,
+                       sign, sign_hash, verify)
 
 __author__ = "Sybren Stuvel, Barry Mead and Yesudeep Mangalapilly"
 __date__ = "2023-04-23"
 __version__ = "4.10-dev0"
-
-
 
 
 # Do doctest if we're run directly

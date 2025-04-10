@@ -1,17 +1,23 @@
 """
 Данный модуль разработан, чтобы описывать логику декораторов.
 """
+
 __all__ = ["progress_bar", "pprint_matrix", "retry_on_value_error"]
 
-from terminaltables import DoubleTable
 from time import sleep
-from tqdm import tqdm
-from colorama import Style, Fore
 
-comments = Style.BRIGHT + Fore.GREEN + f"\N{snake} Работу выполнил: Ковалев Данил ВКБ12 \N{snake}\nПриветствую " \
-                                       f"пользователя ^_^\nДанный скрипт направлен на реализацию алгоритма " \
-                                       f"Флойда.\nЕсли хотите посмотреть реализацию в реальных задачах, то перейдите " \
-                                       f"в другую папки 'Примеры Флойда', в ином случае:\nначинайте с этого файла."
+from colorama import Fore, Style
+from terminaltables import DoubleTable
+from tqdm import tqdm
+
+comments = (
+    Style.BRIGHT
+    + Fore.GREEN
+    + f"\N{SNAKE} Работу выполнил: Ковалев Данил ВКБ12 \N{SNAKE}\nПриветствую "
+    f"пользователя ^_^\nДанный скрипт направлен на реализацию алгоритма "
+    f"Флойда.\nЕсли хотите посмотреть реализацию в реальных задачах, то перейдите "
+    f"в другую папки 'Примеры Флойда', в ином случае:\nначинайте с этого файла."
+)
 
 
 def progress_bar(func):
@@ -65,9 +71,11 @@ def pprint_matrix(func):
         else:
             matrix = result
         table_data = [[" "] + [chr(x + 65) for x in range(len(matrix))]]
-        table_data.extend([(chr(number + 65), *raw) for number, raw in enumerate(matrix)])
+        table_data.extend(
+            [(chr(number + 65), *raw) for number, raw in enumerate(matrix)]
+        )
         table_instance = DoubleTable(table_data, "Матрица=смежности")
-        print("\n" + table_instance.table, "\n", sep='')
+        print("\n" + table_instance.table, "\n", sep="")
         return result
 
     return inner

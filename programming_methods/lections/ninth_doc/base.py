@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
-from typing import Generic, TypeVar, Optional, List, Tuple, Any
+from typing import Any, Generic, List, Optional, Tuple, TypeVar
 
-K = TypeVar('K')
-V = TypeVar('V')
+K = TypeVar("K")
+V = TypeVar("V")
 
 
 class BaseDict(ABC, Generic[K, V]):

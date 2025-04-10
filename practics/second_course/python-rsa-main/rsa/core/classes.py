@@ -17,7 +17,7 @@
 Not all ASN.1-handling code use these definitions, but when it does, they should be here.
 """
 
-from pyasn1.type import univ, namedtype, tag
+from pyasn1.type import namedtype, tag, univ
 
 
 class PubKeyHeader(univ.Sequence):
@@ -33,7 +33,9 @@ class OpenSSLPubKey(univ.Sequence):
         # This little hack (the implicit tag) allows us to get a Bit String as Octet String
         namedtype.NamedType(
             "key",
-            univ.OctetString().subtype(implicitTag=tag.Tag(tagClass=0, tagFormat=0, tagId=3)),
+            univ.OctetString().subtype(
+                implicitTag=tag.Tag(tagClass=0, tagFormat=0, tagId=3)
+            ),
         ),
     )
 

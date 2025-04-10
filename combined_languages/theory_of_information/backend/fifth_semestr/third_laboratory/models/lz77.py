@@ -17,10 +17,13 @@ LZ77 управляет словарем, который использует т
 - https://youtu.be/zev2A2uWYsM?si=mwMDVEYJmonx9lBR
 """
 
-from dataclasses import dataclass, astuple
+from dataclasses import astuple, dataclass
 from typing import Self
-from combined_languages.theory_of_information.backend.core.decorators import loggable
-from combined_languages.theory_of_information.backend.core.abstract_classes import Compressor
+
+from combined_languages.theory_of_information.backend.core.abstract_classes import \
+    Compressor
+from combined_languages.theory_of_information.backend.core.decorators import \
+    loggable
 
 
 @dataclass
@@ -45,10 +48,18 @@ class Token:
         Магический метод, который просто проверяет на равенство, нужен больше для тестов
         """
         if isinstance(other, Token):
-            return (self.offset, self.length, self.indicator) == (other.offset, other.length, other.indicator)
+            return (self.offset, self.length, self.indicator) == (
+                other.offset,
+                other.length,
+                other.indicator,
+            )
 
         if isinstance(other, (list, tuple)):
-            return (self.offset, self.length, self.indicator) == (other[0], other[1], other[2])
+            return (self.offset, self.length, self.indicator) == (
+                other[0],
+                other[1],
+                other[2],
+            )
 
         return False
 
@@ -62,12 +73,7 @@ class LZ77(Compressor):
     """
 
     @loggable
-    def __init__(
-            self,
-            window_size: int = 13,
-            lookahead_buffer_size: int = 6
-    ) -> None:
-
+    def __init__(self, window_size: int = 13, lookahead_buffer_size: int = 6) -> None:
         self.window_size = window_size
         self.lookahead_buffer_size = lookahead_buffer_size
         self.search_buffer_size = self.window_size - self.lookahead_buffer_size
@@ -96,12 +102,12 @@ class LZ77(Compressor):
             # - добавляем в него новые символы из текста
             # - проверьте, не превышает ли его размер максимальный размер буфера поиска, если да, удалите
             # самые старые элементы
-            search_buffer += text[:token.length + 1]
+            search_buffer += text[: token.length + 1]
             if len(search_buffer) > self.search_buffer_size:
-                search_buffer = search_buffer[-self.search_buffer_size:]
+                search_buffer = search_buffer[-self.search_buffer_size :]
 
             # обновляем текст
-            text = text[token.length + 1:]
+            text = text[token.length + 1 :]
 
             # добавляем токен в конец
             output.append(token)
@@ -155,11 +161,7 @@ class LZ77(Compressor):
 
     @loggable
     def _match_length_from_index(
-            self,
-            text: str,
-            window: str,
-            text_index: int,
-            window_index: int
+        self, text: str, window: str, text_index: int, window_index: int
     ) -> int:
         """Вычисляем максимально возможное совпадение символов text и window из
         значений text_index в text и window_index в window.
@@ -174,8 +176,5 @@ class LZ77(Compressor):
         if not text or text[text_index] != window[window_index]:
             return 0
         return 1 + self._match_length_from_index(
-            text,
-            window + text[text_index],
-            text_index + 1,
-            window_index + 1
+            text, window + text[text_index], text_index + 1, window_index + 1
         )

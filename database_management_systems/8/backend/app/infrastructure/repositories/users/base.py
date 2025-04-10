@@ -1,11 +1,5 @@
-from abc import (
-    ABC,
-    abstractmethod,
-)
-from typing import (
-    List,
-    Optional,
-)
+from abc import ABC, abstractmethod
+from typing import List, Optional
 
 from app.domain.entities.user import UserEntity
 from app.infrastructure.repositories.base import AbstractRepository

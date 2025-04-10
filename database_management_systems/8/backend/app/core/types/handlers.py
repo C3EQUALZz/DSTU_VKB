@@ -1,18 +1,9 @@
-from typing import (
-    Dict,
-    List,
-    Type,
-    TypeVar,
-)
+from typing import Dict, List, Type, TypeVar
 
 from app.logic.commands.base import AbstractCommand
 from app.logic.events.base import AbstractEvent
-from app.logic.handlers.base import (
-    AbstractCommandHandler,
-    AbstractEventHandler,
-    AbstractHandler,
-)
-
+from app.logic.handlers.base import (AbstractCommandHandler,
+                                     AbstractEventHandler, AbstractHandler)
 
 ET = TypeVar("ET", bound=AbstractEvent)
 CT = TypeVar("CT", bound=AbstractCommand)

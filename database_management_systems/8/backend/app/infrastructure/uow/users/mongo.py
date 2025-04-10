@@ -6,7 +6,6 @@ from app.infrastructure.repositories.users.mongo import MotorUsersRepository
 from app.infrastructure.uow.common.mongo import MotorAbstractUnitOfWork
 from app.infrastructure.uow.users.base import UsersUnitOfWork
 
-
 logger = logging.getLogger(__name__)
 
 

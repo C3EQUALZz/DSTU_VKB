@@ -1,11 +1,13 @@
 import logging
 from pathlib import Path
-from typing_extensions import override
+
 from app.application.cli.const import BACKUP_DIRECTORY_PATH
-from app.domain.entities.file_objects import FileObjectEntity, CompressedFileObjectEntity
+from app.domain.entities.file_objects import (CompressedFileObjectEntity,
+                                              FileObjectEntity)
 from app.domain.values.backup import CompressionType
 from app.infrastructure.compressors.base import Compressor
 from app.infrastructure.compressors.fastlz.interface import FastLzInterface
+from typing_extensions import override
 
 logger = logging.getLogger(__name__)
 
@@ -25,10 +27,7 @@ class FastLZCompressor(Compressor):
 
         logger.info(f"Compressed {source_path} to {dest_path}")
 
-        return CompressedFileObjectEntity(
-            dest_path,
-            compression_type=CompressionType("fastlz")
-        )
+        return CompressedFileObjectEntity(dest_path, compression_type=CompressionType("fastlz"))
 
     @override
     def decompress(self, backup: CompressedFileObjectEntity) -> FileObjectEntity:

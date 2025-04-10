@@ -1,8 +1,10 @@
-from typing import TypeVar, Set, Tuple
 import heapq
-from programming_methods.lections.first_doc.fifth_block.core.weighted.nonoriented import NonOrientedGraph
+from typing import Set, Tuple, TypeVar
 
-T = TypeVar('T')
+from programming_methods.lections.first_doc.fifth_block.core.weighted.nonoriented import \
+    NonOrientedGraph
+
+T = TypeVar("T")
 
 
 def prim_mst(graph: NonOrientedGraph[T]) -> NonOrientedGraph[T]:
@@ -53,20 +55,20 @@ def main() -> None:
     graph = NonOrientedGraph[str]()
 
     # Добавляем рёбра (граф неориентированный, так что достаточно одного add_edge на пару вершин)
-    graph.add_edge('A', 'B', 4)
-    graph.add_edge('A', 'H', 8)
-    graph.add_edge('B', 'H', 11)
-    graph.add_edge('B', 'C', 8)
-    graph.add_edge('C', 'I', 2)
-    graph.add_edge('C', 'F', 4)
-    graph.add_edge('C', 'D', 7)
-    graph.add_edge('D', 'F', 14)
-    graph.add_edge('D', 'E', 9)
-    graph.add_edge('E', 'F', 10)
-    graph.add_edge('F', 'G', 2)
-    graph.add_edge('G', 'I', 6)
-    graph.add_edge('G', 'H', 1)
-    graph.add_edge('H', 'I', 7)
+    graph.add_edge("A", "B", 4)
+    graph.add_edge("A", "H", 8)
+    graph.add_edge("B", "H", 11)
+    graph.add_edge("B", "C", 8)
+    graph.add_edge("C", "I", 2)
+    graph.add_edge("C", "F", 4)
+    graph.add_edge("C", "D", 7)
+    graph.add_edge("D", "F", 14)
+    graph.add_edge("D", "E", 9)
+    graph.add_edge("E", "F", 10)
+    graph.add_edge("F", "G", 2)
+    graph.add_edge("G", "I", 6)
+    graph.add_edge("G", "H", 1)
+    graph.add_edge("H", "I", 7)
 
     print("Исходный граф:")
     print(graph)
@@ -78,5 +80,5 @@ def main() -> None:
     print(mst)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

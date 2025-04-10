@@ -12,34 +12,39 @@
 "ПЛАТА" удовлетворяют условию, так как будучи переведёнными в нижний регистр содержат подстроку "плата".
 """
 
+import zipfile
+
 import numpy as np
 import pandas as pd
-import zipfile
 
 np.random.seed(242)
 
 
 def read_data(zip_filepath: str, csv_filename: str) -> pd.DataFrame:
-    with zipfile.ZipFile(zip_filepath, 'r') as zip_ref:
-        with zip_ref.open(csv_filename, 'r') as f:
-            return pd.read_csv(f, sep=';')
+    with zipfile.ZipFile(zip_filepath, "r") as zip_ref:
+        with zip_ref.open(csv_filename, "r") as f:
+            return pd.read_csv(f, sep=";")
 
 
-def sample_and_calculate_ratio(df: pd.DataFrame, sample_size: int, substring: str) -> float:
+def sample_and_calculate_ratio(
+    df: pd.DataFrame, sample_size: int, substring: str
+) -> float:
     sampled_df = df.sample(sample_size)
-    count_with_substring = sampled_df.loc[sampled_df.tr_description.str.lower().str.contains(substring)].shape[0]
+    count_with_substring = sampled_df.loc[
+        sampled_df.tr_description.str.lower().str.contains(substring)
+    ].shape[0]
     ratio = count_with_substring / sample_size
     return round(ratio, 2)
 
 
 def main() -> None:
-    zip_filepath = 'data.zip'
-    csv_filename = 'data/tr_types.csv'
+    zip_filepath = "data.zip"
+    csv_filename = "data/tr_types.csv"
     sample_size = 100
-    substring = 'плата'
+    substring = "плата"
 
     df = read_data(zip_filepath, csv_filename)
-    print("Датафрейм: ", df, sep='\n')
+    print("Датафрейм: ", df, sep="\n")
     ratio = sample_and_calculate_ratio(df, sample_size, substring)
     print(f"Доля наблюдений слова {substring} равна {ratio:.2f}")
 

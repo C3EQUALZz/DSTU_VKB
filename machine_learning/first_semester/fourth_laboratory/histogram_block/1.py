@@ -1,10 +1,12 @@
 """
 1. Нарисуйте горизонтальную гистограмму с помощью Matplotlib
 """
-import matplotlib.pyplot as plt
-from dataclasses import dataclass, field
-from random import randint, choice
+
 import string
+from dataclasses import dataclass, field
+from random import choice, randint
+
+import matplotlib.pyplot as plt
 
 
 @dataclass
@@ -23,5 +25,5 @@ def main() -> None:
     draw_horizontal_histograms(Column(), Column(), Column(), Column())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

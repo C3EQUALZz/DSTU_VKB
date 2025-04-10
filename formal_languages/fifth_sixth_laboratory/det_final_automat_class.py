@@ -21,15 +21,16 @@ F′(D, x) ={s | s∈F(t, x) для некоторого t∈D}.
 
 Ввод из примера лежит в main, через консоль можете сделать сами
 """
+
 import os
 from collections import defaultdict, deque
 from dataclasses import dataclass
-from typing import Final, Self, AnyStr, Set, MutableMapping, List
+from typing import AnyStr, Final, List, MutableMapping, Self, Set
 
 from automata.fa.nfa import NFA
 
-from formal_languages.fifth_sixth_laboratory.non_det_final_automat_class import (
-    NonDeterministicFiniteAutomaton)
+from formal_languages.fifth_sixth_laboratory.non_det_final_automat_class import \
+    NonDeterministicFiniteAutomaton
 
 PATH_TO_DIAGRAM: Final = os.path.join(os.path.curdir, "test_dfa.png")
 
@@ -58,7 +59,7 @@ class DeterministicFiniteAutomaton:
             set_of_input_alphabet_characters=nfa.set_of_input_alphabet_characters,
             set_of_states=nfa.set_of_states,
             transition_function=nfa.transition_function,
-            final_states=nfa.final_states
+            final_states=nfa.final_states,
         )
 
     def __construct_dfa(self) -> None:
@@ -74,19 +75,34 @@ class DeterministicFiniteAutomaton:
             marked_states.append(current_state_set)
 
             self.__add_final_state(current_state_set)
-            self.__fill_dfa_transition(current_state_set, marked_states, unmarked_states, dfa_transitions)
+            self.__fill_dfa_transition(
+                current_state_set, marked_states, unmarked_states, dfa_transitions
+            )
 
         self.transition_function = dfa_transitions
-        self.set_of_states = {self._states_to_string(state) for state in marked_states if state}
-        self.final_states = {state for state in self.set_of_states if state in self.final_states}
-        self.start_state = next(iter([state for state in self.transition_function if self.start_state in state]))
+        self.set_of_states = {
+            self._states_to_string(state) for state in marked_states if state
+        }
+        self.final_states = {
+            state for state in self.set_of_states if state in self.final_states
+        }
+        self.start_state = next(
+            iter(
+                [
+                    state
+                    for state in self.transition_function
+                    if self.start_state in state
+                ]
+            )
+        )
 
-    def __fill_dfa_transition(self,
-                              current_state_set: Set[AnyStr],
-                              marked_states: List[Set[AnyStr]],
-                              unmarked_states: deque[Set[AnyStr]],
-                              dfa_transitions: MutableMapping[AnyStr, MutableMapping[AnyStr, Set[AnyStr]]]
-                              ) -> MutableMapping[AnyStr, MutableMapping[AnyStr, Set[AnyStr]]]:
+    def __fill_dfa_transition(
+        self,
+        current_state_set: Set[AnyStr],
+        marked_states: List[Set[AnyStr]],
+        unmarked_states: deque[Set[AnyStr]],
+        dfa_transitions: MutableMapping[AnyStr, MutableMapping[AnyStr, Set[AnyStr]]],
+    ) -> MutableMapping[AnyStr, MutableMapping[AnyStr, Set[AnyStr]]]:
         """
         Метод, который заполняет таблицу переходов для ДКА
         Args:
@@ -96,15 +112,21 @@ class DeterministicFiniteAutomaton:
             dfa_transitions: таблица переходов
         """
         for symbol in self.set_of_input_alphabet_characters:
-            next_state_set = self.__epsilon_closure(self.__transition(current_state_set, symbol))
+            next_state_set = self.__epsilon_closure(
+                self.__transition(current_state_set, symbol)
+            )
 
             if next_state_set not in marked_states:
                 unmarked_states.append(next_state_set)
 
             if current_state_set:
                 dfa_transitions[self._states_to_string(current_state_set)].update(
-                    {symbol: {self._states_to_string(next_state_set)} if self._states_to_string(
-                        next_state_set) else {}})
+                    {
+                        symbol: {self._states_to_string(next_state_set)}
+                        if self._states_to_string(next_state_set)
+                        else {}
+                    }
+                )
 
         return dfa_transitions
 
@@ -116,7 +138,9 @@ class DeterministicFiniteAutomaton:
         if any(state in self.final_states for state in current_state_set):
             self.final_states.add(self._states_to_string(current_state_set))
 
-    def __transition(self, state_set: Set[AnyStr], symbol: AnyStr) -> Set[AnyStr] | Set[Set[AnyStr]]:
+    def __transition(
+        self, state_set: Set[AnyStr], symbol: AnyStr
+    ) -> Set[AnyStr] | Set[Set[AnyStr]]:
         """
         Данный метод используется для получения множества состояний,
         в которые можно перейти из заданного множества состояний по заданному символу.
@@ -127,7 +151,10 @@ class DeterministicFiniteAutomaton:
         next_state_set = set()
 
         for state in state_set:
-            if state in self.transition_function and symbol in self.transition_function[state]:
+            if (
+                state in self.transition_function
+                and symbol in self.transition_function[state]
+            ):
                 next_state_set.update(self.transition_function[state][symbol])
 
         return next_state_set
@@ -141,7 +168,7 @@ class DeterministicFiniteAutomaton:
 
         while stack:
             state = stack.pop()
-            epsilon_states = self.transition_function.get(state, {}).get('', set())
+            epsilon_states = self.transition_function.get(state, {}).get("", set())
 
             closure.update(epsilon_states)
             stack.extend(epsilon_states - closure)
@@ -152,11 +179,13 @@ class DeterministicFiniteAutomaton:
         """
         Магический метод, который нужен для перевода в строку. В моем случае использование для print
         """
-        return (f"M` = ({self.set_of_states},"
-                f" {self.set_of_input_alphabet_characters},"
-                f" {self.transition_function},"
-                f" {self.start_state},"
-                f" {self.final_states})")
+        return (
+            f"M` = ({self.set_of_states},"
+            f" {self.set_of_input_alphabet_characters},"
+            f" {self.transition_function},"
+            f" {self.start_state},"
+            f" {self.final_states})"
+        )
 
     def get_library_dfa(self) -> NFA:
         """
@@ -181,7 +210,7 @@ class DeterministicFiniteAutomaton:
         """
         Вспомогательный метод для перевода множества состояний в строку для библиотеки
         """
-        return ''.join(sorted(state_set))
+        return "".join(sorted(state_set))
 
 
 if __name__ == "__main__":
@@ -191,16 +220,18 @@ if __name__ == "__main__":
         "q0": {"": {"q1"}},
         "q1": {"a": {"q1"}, "b": {"q2"}},
         "q2": {"": {"q3"}},
-        "q3": {"b": {"q1"}}
+        "q3": {"b": {"q1"}},
     }
     final_state = {"q3"}
     set_of_states = {"q1", "q2", "q3"}
 
-    d = DeterministicFiniteAutomaton(start_state=start_state,
-                                     set_of_input_alphabet_characters=set_of_input,
-                                     transition_function=transition_function,
-                                     final_states=final_state,
-                                     set_of_states=set_of_states)
+    d = DeterministicFiniteAutomaton(
+        start_state=start_state,
+        set_of_input_alphabet_characters=set_of_input,
+        transition_function=transition_function,
+        final_states=final_state,
+        set_of_states=set_of_states,
+    )
 
     print(d)
     d.show_diagram()

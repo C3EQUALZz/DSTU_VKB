@@ -1,15 +1,4 @@
-from .exceptions import (
-    CryptoError,
-    DecryptionError,
-    VerificationError,
-    NotRelativePrimeError
-)
-
-from .classes import (
-    OpenSSLPubKey,
-    AsnPubKey
-)
-
-from .validations import (
-    assert_int
-)
+from .classes import AsnPubKey, OpenSSLPubKey
+from .exceptions import (CryptoError, DecryptionError, NotRelativePrimeError,
+                         VerificationError)
+from .validations import assert_int

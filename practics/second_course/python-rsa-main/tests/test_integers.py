@@ -15,6 +15,7 @@
 """Tests integer operations."""
 
 from typing import Tuple
+
 import pytest
 import rsa
 import rsa.logic
@@ -25,7 +26,9 @@ def rsa_keys() -> Tuple[rsa.PublicKey, rsa.PrivateKey]:
     return rsa.new_keys(64)
 
 
-def encrypt_decrypt_test_case(message: int, public: rsa.PublicKey, private: rsa.PrivateKey) -> int:
+def encrypt_decrypt_test_case(
+    message: int, public: rsa.PublicKey, private: rsa.PrivateKey
+) -> int:
     encrypted = rsa.logic.encrypt_int(message, public.e, public.n)
     decrypted = rsa.logic.decrypt_int(encrypted, private.d, public.n)
     return decrypted
@@ -39,7 +42,9 @@ def test_encrypt_decrypt(rsa_keys: Tuple[rsa.PublicKey, rsa.PrivateKey]) -> None
     assert message == decrypted_message
 
 
-def sign_verify_test_case(message: int, public_key: rsa.PublicKey, private_key: rsa.PrivateKey) -> int:
+def sign_verify_test_case(
+    message: int, public_key: rsa.PublicKey, private_key: rsa.PrivateKey
+) -> int:
     signed = rsa.logic.encrypt_int(message, private_key.d, public_key.n)
     verified = rsa.logic.decrypt_int(signed, public_key.e, public_key.n)
     return verified
@@ -54,7 +59,9 @@ def test_sign_verify(rsa_keys: Tuple[rsa.PublicKey, rsa.PrivateKey]) -> None:
 
 
 @pytest.mark.parametrize("message", [-1, 0, 1])
-def test_extreme_values(rsa_keys: Tuple[rsa.PublicKey, rsa.PrivateKey], message: int) -> None:
+def test_extreme_values(
+    rsa_keys: Tuple[rsa.PublicKey, rsa.PrivateKey], message: int
+) -> None:
     public_key, private_key = rsa_keys
 
     if message < 0:

@@ -13,7 +13,7 @@
 """
 
 from collections import deque
-from typing import Sequence, List, Iterable
+from typing import Iterable, List, Sequence
 
 
 def process_queue(actions: Sequence[Sequence[str]]) -> Iterable[str]:
@@ -29,9 +29,9 @@ def process_queue(actions: Sequence[Sequence[str]]) -> Iterable[str]:
     results: List[str] = []
 
     for action in actions:
-        if action[0] == '+':
+        if action[0] == "+":
             q2.append(action[1])
-        elif action[0] == '*':
+        elif action[0] == "*":
             q2.appendleft(action[1])
         else:
             results.append(q1.popleft())

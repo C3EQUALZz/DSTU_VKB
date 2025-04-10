@@ -1,9 +1,11 @@
 """
 2. Как соединить точки диаграммы рассеяния с линией в Matplotlib?
 """
+
 from dataclasses import dataclass, field
-import matplotlib.pyplot as plt
 from random import randint
+
+import matplotlib.pyplot as plt
 
 
 @dataclass
@@ -16,9 +18,9 @@ def draw_scatters_and_connect_them(*args: Dot) -> None:
     x_values = [dot.x for dot in args]
     y_values = [dot.y for dot in args]
 
-    plt.scatter(x_values, y_values, label='Точки', color='blue')
+    plt.scatter(x_values, y_values, label="Точки", color="blue")
 
-    plt.plot(x_values, y_values, label='Линия', color='red')
+    plt.plot(x_values, y_values, label="Линия", color="red")
 
     plt.legend()
     plt.show()
@@ -28,5 +30,5 @@ def main() -> None:
     draw_scatters_and_connect_them(Dot(), Dot(), Dot(), Dot(), Dot())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

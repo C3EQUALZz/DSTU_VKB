@@ -1,18 +1,15 @@
 from typing import TYPE_CHECKING
 
 import click
-from dishka import FromDishka
-from dishka.integrations.click import setup_dishka
-
 from app.application.cli.const import BACKUP_DIRECTORY_PATH
 from app.infrastructure.uow.compression import CompressionUnitOfWork
 from app.logic.bootstrap import Bootstrap
-from app.logic.commands.database import (
-    CreateDatabaseBackupCommand,
-    ListAllDatabasesCommand,
-)
+from app.logic.commands.database import (CreateDatabaseBackupCommand,
+                                         ListAllDatabasesCommand)
 from app.logic.container import container
 from app.settings.logger.config import setup_logging
+from dishka import FromDishka
+from dishka.integrations.click import setup_dishka
 
 if TYPE_CHECKING:
     from app.logic.message_bus import MessageBus

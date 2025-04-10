@@ -1,9 +1,9 @@
-from typing import TypeVar, Optional, Tuple, List, override
+from typing import List, Optional, Tuple, TypeVar, override
 
 from programming_methods.lections.ninth_doc.base import BaseDict
 
-K = TypeVar('K')
-V = TypeVar('V')
+K = TypeVar("K")
+V = TypeVar("V")
 
 
 class OpenAddrDict(BaseDict[K, V]):

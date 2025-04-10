@@ -3,11 +3,8 @@ from pathlib import Path
 
 from app.domain.entities.base import BaseEntity
 from app.domain.values.backup import CompressionType
-from app.domain.values.file_objects import (
-    PermissionsOfFile,
-    SizeOfFile,
-    TypeOfFile,
-)
+from app.domain.values.file_objects import (PermissionsOfFile, SizeOfFile,
+                                            TypeOfFile)
 
 
 @dataclass(eq=False)
@@ -16,6 +13,7 @@ class FileObjectEntity(BaseEntity):
     Entity that describes a file object.
     This entity has only one field: file_path.
     """
+
     file_path: Path
 
 
@@ -27,6 +25,7 @@ class CompressedFileObjectEntity(BaseEntity):
     - file_path: path to file.
     - compression_type: type of compressed file.
     """
+
     file_path: Path
     compression_type: CompressionType
 
@@ -42,6 +41,7 @@ class FileStatistic(BaseEntity):
     - extension: Extension of file. If it is directory or usual file.
     - permissions: Permissions of file.
     """
+
     name: str
     size: SizeOfFile
     type_of_file: TypeOfFile

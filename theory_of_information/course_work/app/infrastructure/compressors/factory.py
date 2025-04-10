@@ -3,6 +3,7 @@ from app.infrastructure.compressors.fastlz import FastLZCompressor
 from app.infrastructure.compressors.gunzip import GunZipCompressor
 from app.infrastructure.compressors.pigz import PigzCompressor
 
+
 class CompressorFactory:
     @staticmethod
     def create(type_of_compressor: str) -> Compressor:

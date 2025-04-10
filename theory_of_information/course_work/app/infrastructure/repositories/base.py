@@ -1,15 +1,8 @@
-from abc import (
-    ABC,
-    abstractmethod,
-)
-from typing import (
-    Generic,
-    TypeVar,
-)
-
-from botocore.client import BaseClient
+from abc import ABC, abstractmethod
+from typing import Generic, TypeVar
 
 from app.domain.entities.base import BaseEntity
+from botocore.client import BaseClient
 
 BaseEntityType = TypeVar("BaseEntityType", bound=BaseEntity)
 
@@ -45,10 +38,10 @@ class AbstractRepository(ABC, Generic[BaseEntityType]):
 
 class S3AbstractRepository(AbstractRepository, ABC):
     def __init__(
-            self,
-            client: BaseClient,
-            bucket_path: str,
-            bucket_name: str,
+        self,
+        client: BaseClient,
+        bucket_path: str,
+        bucket_name: str,
     ) -> None:
         self._client = client
         self._bucket_path = bucket_path

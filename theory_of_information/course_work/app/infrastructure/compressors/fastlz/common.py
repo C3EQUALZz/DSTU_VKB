@@ -2,9 +2,12 @@
 Common utility methods for the FastLZ algorithm.
 """
 
-from app.infrastructure.compressors.fastlz.configuration import FastLzLevel, Constants
-from app.infrastructure.compressors.fastlz.level1 import Decompressor as DecompressorLevel1
-from app.infrastructure.compressors.fastlz.level2 import Decompressor as DecompressorLevel2
+from app.infrastructure.compressors.fastlz.configuration import (Constants,
+                                                                 FastLzLevel)
+from app.infrastructure.compressors.fastlz.level1 import \
+    Decompressor as DecompressorLevel1
+from app.infrastructure.compressors.fastlz.level2 import \
+    Decompressor as DecompressorLevel2
 
 
 def determine_level_from_buffer(buffer):
@@ -284,9 +287,7 @@ def compare_buffer_content_until_mismatch(buffer, start1, start2, end2):
     return length
 
 
-def emit_literal_instructions(
-    source, destination, source_start_position, length, configuration
-):
+def emit_literal_instructions(source, destination, source_start_position, length, configuration):
     """
     Emit the given number of literal bytes. Each group of `LITERAL_MAX` bytes is
     preceded by the literal command itself (`000` followed by the length value using 5

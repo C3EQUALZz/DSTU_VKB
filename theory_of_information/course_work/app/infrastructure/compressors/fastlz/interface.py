@@ -6,9 +6,12 @@ This should be the correct entry point for most applications.
 
 from app.infrastructure.compressors.fastlz import common
 from app.infrastructure.compressors.fastlz.configuration import FastLzLevel
-from app.infrastructure.compressors.fastlz.files import FileCompressor, FileDecompressor
-from app.infrastructure.compressors.fastlz.level1 import Compressor as CompressorLevel1
-from app.infrastructure.compressors.fastlz.level2 import Compressor as CompressorLevel2
+from app.infrastructure.compressors.fastlz.files import (FileCompressor,
+                                                         FileDecompressor)
+from app.infrastructure.compressors.fastlz.level1 import \
+    Compressor as CompressorLevel1
+from app.infrastructure.compressors.fastlz.level2 import \
+    Compressor as CompressorLevel2
 
 
 class FastLzInterface:
@@ -72,14 +75,10 @@ class FastLzInterface:
             compressed = FileCompressor().compress(decompressed, input_file, level)
         elif len(decompressed) < 65536:
             # For short blocks, choose level 1.
-            compressed = FileCompressor().compress(
-                decompressed, input_file, FastLzLevel.LEVEL1
-            )
+            compressed = FileCompressor().compress(decompressed, input_file, FastLzLevel.LEVEL1)
         else:
             # Use level 2.
-            compressed = FileCompressor().compress(
-                decompressed, input_file, FastLzLevel.LEVEL2
-            )
+            compressed = FileCompressor().compress(decompressed, input_file, FastLzLevel.LEVEL2)
 
         if output_file:
             with open(output_file, mode="wb") as outfile:

@@ -18,14 +18,14 @@ These scripts are called by the executables defined in setup.py.
 """
 
 import abc
+import optparse
 import sys
 import typing
-import optparse
 
 import rsa
+import rsa.core as core_namespace
 import rsa.key
 import rsa.pkcs1
-import rsa.core as core_namespace
 
 HASH_METHODS = sorted(rsa.pkcs1.HASH_METHODS.keys())
 Indexable = typing.Union[typing.Tuple, typing.List[str]]
@@ -107,7 +107,7 @@ class CryptoOperation(metaclass=abc.ABCMeta):
     operation = "decrypt"
     operation_past = "decrypted"
     operation_progressive = "decrypting"
-    input_help = "Name of the file to %(operation)s. Reads from stdin if " "not specified."
+    input_help = "Name of the file to %(operation)s. Reads from stdin if not specified."
     output_help = (
         "Name of the file to write the %(operation_past)s file "
         "to. Written to stdout if this option is not present."
@@ -215,7 +215,8 @@ class EncryptOperation(CryptoOperation):
 
     keyname = "public"
     description = (
-        "Encrypts a file. The file must be shorter than the key " "length in order to be encrypted."
+        "Encrypts a file. The file must be shorter than the key "
+        "length in order to be encrypted."
     )
     operation = "encrypt"
     operation_past = "encrypted"
@@ -278,7 +279,9 @@ class SignOperation(CryptoOperation):
 
         hash_method = cli_args[1]
         if hash_method not in HASH_METHODS:
-            raise SystemExit("Invalid hash method, choose one of %s" % ", ".join(HASH_METHODS))
+            raise SystemExit(
+                "Invalid hash method, choose one of %s" % ", ".join(HASH_METHODS)
+            )
 
         return rsa.sign(indata, private_key, hash_method)
 

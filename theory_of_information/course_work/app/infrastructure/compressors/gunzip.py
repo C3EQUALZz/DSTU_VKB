@@ -1,19 +1,14 @@
 import gzip
 import logging
 from pathlib import Path
-from typing import (
-    Final,
-)
-
-from typing_extensions import override
+from typing import Final
 
 from app.application.cli.const import BACKUP_DIRECTORY_PATH
-from app.domain.entities.file_objects import (
-    CompressedFileObjectEntity,
-    FileObjectEntity,
-)
+from app.domain.entities.file_objects import (CompressedFileObjectEntity,
+                                              FileObjectEntity)
 from app.domain.values.backup import CompressionType
 from app.infrastructure.compressors.base import Compressor
+from typing_extensions import override
 
 logger = logging.getLogger(__name__)
 

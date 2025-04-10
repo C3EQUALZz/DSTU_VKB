@@ -18,8 +18,9 @@
 
 Если подходящих деревьев несколько, выведите любое.
 """
+
 from dataclasses import dataclass
-from typing import List, Optional, Tuple, Sequence, cast
+from typing import List, Optional, Sequence, Tuple, cast
 
 
 @dataclass
@@ -35,12 +36,13 @@ class Vertex:
         left (Optional[Vertex]): Левая дочерняя вершина.
         right (Optional[Vertex]): Правая дочерняя вершина.
     """
+
     x: int
     y: int
     label: int
-    parent: Optional['Vertex'] = None
-    left: Optional['Vertex'] = None
-    right: Optional['Vertex'] = None
+    parent: Optional["Vertex"] = None
+    left: Optional["Vertex"] = None
+    right: Optional["Vertex"] = None
 
 
 class DecTree:
@@ -49,7 +51,9 @@ class DecTree:
         Класс для представления декартова дерева.
         :param pairs: Список пар (x, y), где x — ключ, а y — приоритет.
         """
-        self.__vertices = [Vertex(x=a, y=b, label=i + 1) for i, (a, b) in enumerate(pairs)]
+        self.__vertices = [
+            Vertex(x=a, y=b, label=i + 1) for i, (a, b) in enumerate(pairs)
+        ]
         self.ordered = sorted(self.vertices, key=lambda v: v.x)
         self.root: Optional[Vertex] = None
 
@@ -124,18 +128,20 @@ class DecTree:
             for v in self.vertices
         ]
 
-        return '\n'.join(' '.join(map(str, collection)) for collection in result)
+        return "\n".join(" ".join(map(str, collection)) for collection in result)
 
 
 def main() -> None:
     n: int = int(input())
-    pairs: List[Tuple[int, int]] = cast(List[Tuple[int, int]], [tuple(map(int, input().split())) for _ in range(n)])
+    pairs: List[Tuple[int, int]] = cast(
+        List[Tuple[int, int]], [tuple(map(int, input().split())) for _ in range(n)]
+    )
     tree: DecTree = DecTree(pairs)
 
     if tree.is_empty():
         print("NO")
     else:
-        print("YES", tree, sep='\n')
+        print("YES", tree, sep="\n")
 
 
 if __name__ == "__main__":

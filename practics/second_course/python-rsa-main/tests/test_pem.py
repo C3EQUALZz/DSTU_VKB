@@ -17,7 +17,6 @@ import pytest
 import rsa.key
 from rsa.pem import _markers
 
-
 # 512-bit key. Too small for practical purposes, but good enough for testing with.
 public_key_pem = """
 -----BEGIN PUBLIC KEY-----
@@ -44,22 +43,23 @@ prime2 = 88103681619592083641803383393198542599284510949756076218404908654323473
 
 
 def test_markers():
-    assert _markers("RSA PRIVATE KEY") == (b"-----BEGIN RSA PRIVATE KEY-----", b"-----END RSA PRIVATE KEY-----")
+    assert _markers("RSA PRIVATE KEY") == (
+        b"-----BEGIN RSA PRIVATE KEY-----",
+        b"-----END RSA PRIVATE KEY-----",
+    )
 
 
-@pytest.mark.parametrize("pem_data", [
-    public_key_pem.encode(),
-    public_key_pem.encode("ascii")
-])
+@pytest.mark.parametrize(
+    "pem_data", [public_key_pem.encode(), public_key_pem.encode("ascii")]
+)
 def test_public_key_loading(pem_data):
     key = rsa.key.PublicKey.load_pkcs1_openssl_pem(pem_data)
     assert key.n == prime1 * prime2
 
 
-@pytest.mark.parametrize("pem_data", [
-    private_key_pem.encode(),
-    private_key_pem.encode("ascii")
-])
+@pytest.mark.parametrize(
+    "pem_data", [private_key_pem.encode(), private_key_pem.encode("ascii")]
+)
 def test_private_key_loading(pem_data):
     key = rsa.key.PrivateKey.load_pkcs1(pem_data)
     assert key.p == prime1

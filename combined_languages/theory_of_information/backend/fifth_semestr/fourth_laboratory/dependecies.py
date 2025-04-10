@@ -32,7 +32,8 @@ execute(
     "H"
 )
 """
-from typing import AnyStr, Literal, List, Mapping, Union
+
+from typing import AnyStr, List, Literal, Mapping, Union
 
 import numpy as np
 
@@ -40,15 +41,13 @@ from combined_languages.theory_of_information.backend.fifth_semestr.fourth_labor
     find_errors
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.models.table_of_error_vectors_and_syndromes import \
     create_table_of_error_vectors_and_syndromes
-from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.helpers import \
-    get_info_for_encoding, get_verification_systematic_transposed_matrix
-from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.registry import Registry
+from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.helpers import (
+    get_info_for_encoding, get_verification_systematic_transposed_matrix)
+from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.registry import \
+    Registry
 
 
-def generate_errors(
-        word: AnyStr,
-        n: int
-) -> AnyStr:
+def generate_errors(word: AnyStr, n: int) -> AnyStr:
     """
     Здесь происходит имитация канала передачи информации.
 
@@ -66,9 +65,7 @@ def generate_errors(
 
 
 def encode(
-        word: AnyStr,
-        matrix: List[List[int]],
-        type_matrix: Literal["G", "H"]
+    word: AnyStr, matrix: List[List[int]], type_matrix: Literal["G", "H"]
 ) -> AnyStr:
     """
     Здесь происходит вся логика кодирования сообщения (ТОЛЬКО КОДИРОВАНИЕ, БЕЗ КАНАЛА).
@@ -84,16 +81,20 @@ def encode(
         word += " "
 
     code_table, generation_sys_matrix = get_info_for_encoding(matrix, type_matrix)
-    binary_word = ''.join(format(x, '08b') for x in bytearray(word, 'utf-8'))
+    binary_word = "".join(format(x, "08b") for x in bytearray(word, "utf-8"))
     count_of_rows = len(generation_sys_matrix)
-    blocks = [list(map(int, binary_word[i:i + count_of_rows])) for i in
-              range(0, len(binary_word), count_of_rows)]
+    blocks = [
+        list(map(int, binary_word[i : i + count_of_rows]))
+        for i in range(0, len(binary_word), count_of_rows)
+    ]
 
     encoded_word = []
 
     for block in blocks:
         # Находим индекс блока в столбце информационных слов
-        index = np.where((code_table.information_words_column == block).all(axis=1))[0][0]
+        index = np.where((code_table.information_words_column == block).all(axis=1))[0][
+            0
+        ]
         # Получаем соответствующее значение из столбца кодовых слов
         encoded_block = code_table.code_words_column[index]
         encoded_word.extend(encoded_block)
@@ -102,9 +103,7 @@ def encode(
 
 
 def decode(
-        encoded_with_errors: AnyStr,
-        matrix: List[List[int]],
-        type_matrix: Literal["G", "H"]
+    encoded_with_errors: AnyStr, matrix: List[List[int]], type_matrix: Literal["G", "H"]
 ) -> AnyStr:
     """
     Функция для декодирования потока байтов после добавок ошибок из канала.
@@ -114,15 +113,18 @@ def decode(
     :returns: Декодированное слово в utf-8. Задумано получить то же самое, что ввел пользователь.
     """
     code_table, generation_sys_matrix = get_info_for_encoding(matrix, type_matrix)
-    verification_systematic_matrix_transposed = get_verification_systematic_transposed_matrix(matrix, type_matrix)
+    verification_systematic_matrix_transposed = (
+        get_verification_systematic_transposed_matrix(matrix, type_matrix)
+    )
     table = create_table_of_error_vectors_and_syndromes(
-        verification_systematic_matrix_transposed,
-        find_errors(code_table)
+        verification_systematic_matrix_transposed, find_errors(code_table)
     )
     count_columns = len(generation_sys_matrix[0])
     # Здесь создаем блоки v, как в методичке с размером k, где k - количество колонок.
-    blocks = [list(map(int, encoded_with_errors[i:i + count_columns]))
-              for i in range(0, len(encoded_with_errors), count_columns)]
+    blocks = [
+        list(map(int, encoded_with_errors[i : i + count_columns]))
+        for i in range(0, len(encoded_with_errors), count_columns)
+    ]
 
     decoded_binary_word = []
 
@@ -132,23 +134,23 @@ def decode(
         errors_block = table.errors[index]
         code_word = (errors_block + block) % 2
 
-        index_of_code_word = np.where((code_table.code_words_column == code_word).all(axis=1))[0][0]
+        index_of_code_word = np.where(
+            (code_table.code_words_column == code_word).all(axis=1)
+        )[0][0]
         decoded_block = code_table.information_words_column[index_of_code_word]
         decoded_binary_word.extend(decoded_block)
 
     binary_word = "".join(map(str, decoded_binary_word))
 
-    byte_chunks = [binary_word[i:i + 8] for i in range(0, len(binary_word), 8)]
+    byte_chunks = [binary_word[i : i + 8] for i in range(0, len(binary_word), 8)]
 
     byte_array = bytearray(int(byte, 2) for byte in byte_chunks)
 
-    return ''.join(char for char in byte_array.decode('utf-8') if char.isprintable())
+    return "".join(char for char in byte_array.decode("utf-8") if char.isprintable())
 
 
 def execute(
-        word: AnyStr,
-        matrix: List[List[int]],
-        type_matrix: Literal["G", "H"]
+    word: AnyStr, matrix: List[List[int]], type_matrix: Literal["G", "H"]
 ) -> Mapping[AnyStr, Union[List[List[int]], int]]:
     """
     Запуск всех шагов по выполнению лабораторной работы.
@@ -175,11 +177,7 @@ if __name__ == "__main__":
         [1, 0, 0, 1, 0, 0, 1],
         [0, 1, 1, 0, 0, 0, 1],
         [0, 1, 0, 1, 1, 0, 0],
-        [0, 1, 0, 1, 0, 1, 1]
+        [0, 1, 0, 1, 0, 1, 1],
     ]
 
-    print(execute(
-        "Огромное сообщение",
-        matrix,
-        'G'
-    ))
+    print(execute("Огромное сообщение", matrix, "G"))

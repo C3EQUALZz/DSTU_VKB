@@ -3,10 +3,7 @@ from typing import override
 from uuid import UUID
 
 from app.domain.values.base import BaseValueObject
-from app.exceptions.domain import (
-    EmptyScoreException,
-    InvalidOIDException,
-)
+from app.exceptions.domain import EmptyScoreException, InvalidOIDException
 
 
 @dataclass(frozen=True)

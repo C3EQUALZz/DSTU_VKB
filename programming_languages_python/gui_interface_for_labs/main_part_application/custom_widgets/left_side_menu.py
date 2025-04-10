@@ -2,15 +2,15 @@
 Здесь описана логика создания бокового меню
 Ответ, с которого получилась реализация: https://inlnk.ru/QwLLpD
 """
+
 __all__ = ["TabWidget"]
 
-from PyQt6 import QtGui, QtWidgets, QtCore
+from PyQt6 import QtCore, QtGui, QtWidgets
 
 from ..page_logic import Page
 
 
 class TabBar(QtWidgets.QTabBar):
-
     def tabSizeHint(self, index):
         """
         Перегруженный метод, который позволяет настроить размер закладки по индексу
@@ -67,8 +67,12 @@ class TabWidget(QtWidgets.QTabWidget):
         self.parent = parent  # Сохраняем ссылку на родительский объект
         self.setTabBar(TabBar(self))  # Устанавливаем кастомный виджет для закладок
 
-        self.setTabPosition(QtWidgets.QTabWidget.TabPosition.West)  # Устанавливаем положение закладок слева
-        self.layout = QtWidgets.QVBoxLayout(self)  # Создаем вертикальный макет для данного виджета
+        self.setTabPosition(
+            QtWidgets.QTabWidget.TabPosition.West
+        )  # Устанавливаем положение закладок слева
+        self.layout = QtWidgets.QVBoxLayout(
+            self
+        )  # Создаем вертикальный макет для данного виджета
 
     def create_tabs(self, count):
         # Инициализируем список list_widget в родительском объекте
@@ -82,6 +86,8 @@ class TabWidget(QtWidgets.QTabWidget):
             widget.ok_button.clicked.connect(self.parent.on_ok_button_clicked)
             widget.cancel_button.clicked.connect(self.parent.on_cancel_button_clicked)
             # Добавляем созданный виджет с лабораторной работой как закладку в TabWidget (не отображается почему-то...)
-            self.addTab(widget, QtGui.QIcon("icons/chemistry.png"), f"Лабораторная работа {i}")
+            self.addTab(
+                widget, QtGui.QIcon("icons/chemistry.png"), f"Лабораторная работа {i}"
+            )
             # Добавляем объект Page в список list_widget
             self.parent.list_widget.append(widget)

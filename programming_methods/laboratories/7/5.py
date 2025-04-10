@@ -29,9 +29,10 @@
 
 Выведите минимальное число групп, на которое можно разбить лампочки.
 """
+
 from collections import defaultdict
-from typing import List, Sequence
 from itertools import product
+from typing import List, Sequence
 
 
 def find_minimum_groups(k: int, n: int, m: int, hieroglyphs: Sequence[str]) -> int:
@@ -66,7 +67,7 @@ def find_minimum_groups(k: int, n: int, m: int, hieroglyphs: Sequence[str]) -> i
 
     for row, col in product(range(n), range(m)):
         # Формируем ключ для группы лампочек на основе текущего столбца и всех иероглифов
-        lamp_key = ''.join(hieroglyphs[glyph * n + row][col] for glyph in range(k))
+        lamp_key = "".join(hieroglyphs[glyph * n + row][col] for glyph in range(k))
         lamp_groups[lamp_key] += 1
 
     # Количество уникальных групп лампочек
@@ -80,5 +81,5 @@ def main() -> None:
     print(find_minimum_groups(k, n, m, hieroglyphs))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

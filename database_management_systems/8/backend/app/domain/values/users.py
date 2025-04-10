@@ -3,14 +3,11 @@ from dataclasses import dataclass
 from typing import override
 
 from app.domain.values.base import BaseValueObject
-from app.exceptions.domain import (
-    EmptyEmailException,
-    EmptyPasswordException,
-    EmptyUsernameException,
-    InvalidEmailException,
-    InvalidPasswordLengthException,
-    InvalidUsernameLengthException,
-)
+from app.exceptions.domain import (EmptyEmailException, EmptyPasswordException,
+                                   EmptyUsernameException,
+                                   InvalidEmailException,
+                                   InvalidPasswordLengthException,
+                                   InvalidUsernameLengthException)
 
 
 @dataclass(frozen=True)

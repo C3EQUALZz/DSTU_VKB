@@ -2,18 +2,15 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 import click
-from dishka import FromDishka
-from dishka.integrations.click import setup_dishka
-
 from app.application.cli.const import BACKUP_DIRECTORY_PATH
 from app.infrastructure.uow.compression import CompressionUnitOfWork
 from app.logic.bootstrap import Bootstrap
-from app.logic.commands.compression import (
-    CompressFileCommand,
-    DecompressFileCommand,
-)
+from app.logic.commands.compression import (CompressFileCommand,
+                                            DecompressFileCommand)
 from app.logic.container import container
 from app.settings.logger.config import setup_logging
+from dishka import FromDishka
+from dishka.integrations.click import setup_dishka
 
 if TYPE_CHECKING:
     from app.logic.message_bus import MessageBus
@@ -37,7 +34,7 @@ def cli(context: click.Context):
     help="Compression type",
 )
 def compress(
-        src_file_path: Path, type_of_compression: str, bootstrap: FromDishka[Bootstrap[CompressionUnitOfWork]]
+    src_file_path: Path, type_of_compression: str, bootstrap: FromDishka[Bootstrap[CompressionUnitOfWork]]
 ) -> None:
     """
     Compress any file that user gives
@@ -61,7 +58,7 @@ def compress(
     help="Compression type",
 )
 def decompress(
-        src_file_path: Path, type_of_compression: str, bootstrap: FromDishka[Bootstrap[CompressionUnitOfWork]]
+    src_file_path: Path, type_of_compression: str, bootstrap: FromDishka[Bootstrap[CompressionUnitOfWork]]
 ) -> None:
     """
     Decompress any file that user gives

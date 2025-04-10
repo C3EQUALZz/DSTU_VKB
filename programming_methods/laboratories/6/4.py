@@ -28,9 +28,9 @@ next(i) — вывести минимальный элемент множест�
 
 import bisect
 import math
-from typing import List, TypeVar, Generic, Union
+from typing import Generic, List, TypeVar, Union
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 class SortedList(Generic[T]):

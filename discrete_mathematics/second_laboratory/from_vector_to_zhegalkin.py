@@ -1,12 +1,11 @@
 from functools import wraps
-from itertools import pairwise, product, compress, islice
+from itertools import compress, islice, pairwise, product
 from math import log2
-from typing import Iterable
-from typing import TypeAlias, Generator
+from string import ascii_lowercase
+from typing import Generator, Iterable, TypeAlias
 
 import numpy as np
 from prettytable import PrettyTable
-from string import ascii_lowercase
 
 Vector: TypeAlias = list[int, ...]
 
@@ -43,8 +42,10 @@ class Polynom:
         """
         self.vector: Vector = vector
         # Таблица вывода всех перестановок x, y, z. Ну там, где первая строчка "000", потом "001" и т.д
-        self.table: np.ndarray = np.array([np.array(x) for x in product([0, 1], repeat=int(log2(len(vector))))])
-        self.name_columns = tuple(ascii_lowercase[-int(log2(len(vector))):])
+        self.table: np.ndarray = np.array(
+            [np.array(x) for x in product([0, 1], repeat=int(log2(len(vector))))]
+        )
+        self.name_columns = tuple(ascii_lowercase[-int(log2(len(vector))) :])
 
     @property
     def vector(self) -> Vector:
@@ -63,10 +64,13 @@ class Polynom:
         # Длина вектора может быть только в виде 2**i
         if len(vec) % 2 != 0 or len(vec) % 6 == 0:
             raise ValueError(
-                "Некорректная длина вектора функции, должно соблюдаться правило 2**n, где 0 <= n < float('inf')")
+                "Некорректная длина вектора функции, должно соблюдаться правило 2**n, где 0 <= n < float('inf')"
+            )
         # Значения могут быть только 0 или 1 в векторах
         if not all(x == 0 or x == 1 for x in vec):
-            raise ValueError("Вектор функции может только содержать целые значения (0, 1)")
+            raise ValueError(
+                "Вектор функции может только содержать целые значения (0, 1)"
+            )
         self._boolean_vector: Vector = vec
 
     @counter
@@ -77,7 +81,8 @@ class Polynom:
         # Вывод строки, здесь подсчет строки идет с помощью декоратора, каждый вызов увеличивает.
         # Во второй половине мы склеиваем наш вектор в строку и центрируем относительно 20 пустых ячеек (пробелов)
         print(
-            f"{self.__xor_elements.count} строка треугольника -  {' '.join(map(str, vector)):^{len(self.vector) * 2}}")
+            f"{self.__xor_elements.count} строка треугольника -  {' '.join(map(str, vector)):^{len(self.vector) * 2}}"
+        )
         # Пусть есть список [1,2,3], тогда pairwise([1,2,3]) -> iter((1,2), (2,3)).
         # Pairwise нужен, так как в треугольнике каждый соседний элемент надо xor-ить
         return [x ^ y for x, y in pairwise(vector)]
@@ -106,8 +111,11 @@ class Polynom:
         """
         # В начале проверяется с единицами. Потом мы просто сравниваем с переменными оставшимся.
         res: str = " ⊕ ".join(
-            "1" * np.array_equal(raw, np.zeros(len(self.name_columns))) + ''.join(compress(self.name_columns, raw))
-            for value, raw in zip(argue, self.table) if value == 1)
+            "1" * np.array_equal(raw, np.zeros(len(self.name_columns)))
+            + "".join(compress(self.name_columns, raw))
+            for value, raw in zip(argue, self.table)
+            if value == 1
+        )
         print(f"Результат полинома Жегалкина - {res}")
 
     def __print_table(self) -> None:
@@ -117,10 +125,9 @@ class Polynom:
         table: PrettyTable = PrettyTable()
         table.field_names = self.name_columns + ("f",)
         table.add_rows(
-            np.insert(self.table, len(self.table[0]), np.array(self.vector),
-                      axis=1)
+            np.insert(self.table, len(self.table[0]), np.array(self.vector), axis=1)
         )
-        print("Все булевы строки матрицы: ", table, sep='\n')
+        print("Все булевы строки матрицы: ", table, sep="\n")
 
     def print_res(self) -> None:
         """
@@ -130,7 +137,9 @@ class Polynom:
         self.__print_table()
         self.__print_iter_res(self.get_polynom_triangle())
         res = self.make_fft_polynom()
-        print(f"Матрица, которая была создана для преобразования Фурье \n {np.array(res)}")
+        print(
+            f"Матрица, которая была создана для преобразования Фурье \n {np.array(res)}"
+        )
         self.__print_iter_res(res[-1])
 
     def make_fft_polynom(self) -> list[list[int, ...]]:
@@ -146,14 +155,17 @@ class Polynom:
             # Временные контейнер данных и индекс
             result, counter_index = [], 0
             # Разбиваем, как на картинке в красные овалы
-            for list_slice in self.chunked(matrix[count_row - 1], 2 ** count_row):
+            for list_slice in self.chunked(matrix[count_row - 1], 2**count_row):
                 # Проходимся поэлементно в нашем блоке красном
                 for index, value in enumerate(list_slice):
                     # Если до половины красного блока, то добавляем.
                     # В ином случае элемент первой подгруппы (половина красного) с второй
-                    result.append(value if index < len(list_slice) // 2 else
-                                  matrix[count_row - 1][counter_index] ^ matrix[count_row - 1][
-                                      counter_index - len(list_slice) // 2])
+                    result.append(
+                        value
+                        if index < len(list_slice) // 2
+                        else matrix[count_row - 1][counter_index]
+                        ^ matrix[count_row - 1][counter_index - len(list_slice) // 2]
+                    )
                     counter_index += 1
             matrix.append(result)
         return matrix

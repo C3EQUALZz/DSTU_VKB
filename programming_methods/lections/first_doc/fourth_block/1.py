@@ -4,9 +4,10 @@
 # Удаление дубликатов из связанного списка
 
 from dataclasses import dataclass
-from typing import Optional, Sequence, Union, Self, TypeVar, Generic, List, overload, Callable
+from typing import (Callable, Generic, List, Optional, Self, Sequence, TypeVar,
+                    Union, overload)
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 @dataclass(slots=True)
@@ -14,6 +15,7 @@ class _DoubleNode(Generic[T]):
     """
     Узел двух связного списка.
     """
+
     item: T
     prev: Optional[Self] = None
     next: Optional[Self] = None
@@ -28,22 +30,20 @@ class DoublyLinkedList(Generic[T]):
     """
 
     @overload
-    def __init__(self) -> None:
-        ...
+    def __init__(self) -> None: ...
 
     @overload
-    def __init__(self, items: Sequence[T]) -> None:
-        ...
+    def __init__(self, items: Sequence[T]) -> None: ...
 
     @overload
-    def __init__(self, first: _DoubleNode[T], last: _DoubleNode[T]) -> None:
-        ...
+    def __init__(self, first: _DoubleNode[T], last: _DoubleNode[T]) -> None: ...
 
-    def __init__(self,
-                 items: Optional[Sequence[T]] = None,
-                 first: Optional[_DoubleNode[T]] = None,
-                 last: Optional[_DoubleNode[T]] = None) -> None:
-
+    def __init__(
+        self,
+        items: Optional[Sequence[T]] = None,
+        first: Optional[_DoubleNode[T]] = None,
+        last: Optional[_DoubleNode[T]] = None,
+    ) -> None:
         self._first: Optional[_DoubleNode[T]]
         self._last: Optional[_DoubleNode[T]]
         self._length: int
@@ -74,7 +74,9 @@ class DoublyLinkedList(Generic[T]):
                 curr = new_node
         self._last = curr
 
-    def __initialize_from_nodes(self, first: _DoubleNode[T], last: _DoubleNode[T]) -> None:
+    def __initialize_from_nodes(
+        self, first: _DoubleNode[T], last: _DoubleNode[T]
+    ) -> None:
         """Инициализация списка из указателей на первый и последний узлы."""
         self._first = first
         self._last = last
@@ -243,7 +245,9 @@ class DoublyLinkedList(Generic[T]):
             i = len(self) + i
 
         if i > len(self):
-            raise IndexError("Index out of range. It's bigger than the length of the linked list.")
+            raise IndexError(
+                "Index out of range. It's bigger than the length of the linked list."
+            )
 
         elif i <= len(self) / 2:
             curr: _DoubleNode[T] = self._first
@@ -295,7 +299,9 @@ class DoublyLinkedList(Generic[T]):
             i = len(self) + i
 
         if i >= len(self):
-            raise IndexError("Index out of range. It's bigger than the length of the linked list.")
+            raise IndexError(
+                "Index out of range. It's bigger than the length of the linked list."
+            )
 
         elif i <= len(self) / 2:
             curr: _DoubleNode[T] = self._first
@@ -386,7 +392,9 @@ class DoublyLinkedList(Generic[T]):
                 curr = curr.prev
                 current_index -= 1
         else:
-            raise IndexError("Index is out of range. It must be less than the length of the linked list.")
+            raise IndexError(
+                "Index is out of range. It must be less than the length of the linked list."
+            )
 
     def index(self, item: T) -> int:
         """
@@ -409,13 +417,13 @@ class DoublyLinkedList(Generic[T]):
         """
         Возвращает отображение связного списка в виде строки.
         """
-        return '[' + ' <--> '.join([str(element) for element in self]) + ']'
+        return "[" + " <--> ".join([str(element) for element in self]) + "]"
 
     def __repr__(self) -> str:
         """
         Возвращает отображение связного списка в виде строки для интерпретатора.
         """
-        return f'DoubleLinkedList({self.__str__()})'
+        return f"DoubleLinkedList({self.__str__()})"
 
     def count(self, item: T) -> int:
         """
@@ -621,7 +629,9 @@ class DoublyLinkedList(Generic[T]):
 
 
 def checking_for_reverse() -> None:
-    linked_list: DoublyLinkedList[int] = DoublyLinkedList([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    linked_list: DoublyLinkedList[int] = DoublyLinkedList(
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    )
     print(f"Изначальный связанный список: {linked_list=}")
     linked_list.reverse()
     print(f"После разворота связанный список: {linked_list=}")
@@ -631,7 +641,9 @@ def checking_for_cycle() -> None:
     linked_list: DoublyLinkedList[int] = DoublyLinkedList([1, 2, 3, 4, 5])
 
     # Пример искусственного создания цикла
-    linked_list._last.next = linked_list._first.next  # Последний указывает на второй узел -> цикл
+    linked_list._last.next = (
+        linked_list._first.next
+    )  # Последний указывает на второй узел -> цикл
 
     print(linked_list.has_cycle())  # True
 
@@ -648,6 +660,7 @@ def checking_for_deleting_duplicates() -> None:
     linked_list.distinct()
     print(f"Связанный список после удаления дубликатов: {linked_list=}")
 
+
 def main() -> None:
     functions_for_test: dict[str, Callable[[], None]] = {
         "1": checking_for_reverse,
@@ -657,7 +670,9 @@ def main() -> None:
     }
 
     while True:
-        choice_from_user: str = input("Выберите 1 из 4 варианта для теста связанного списка: ")
+        choice_from_user: str = input(
+            "Выберите 1 из 4 варианта для теста связанного списка: "
+        )
 
         if choice_from_user in functions_for_test:
             functions_for_test[choice_from_user]()

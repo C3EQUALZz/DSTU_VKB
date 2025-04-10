@@ -14,3 +14,9 @@ class MessageEntity(BaseEntity):
 class ImageMessageEntity(BaseEntity):
     chat_oid: str
     photo: bytes
+
+
+@dataclass(eq=False)
+class VoiceMessageEntity(BaseEntity):
+    chat_oid: str
+    voice: bytes

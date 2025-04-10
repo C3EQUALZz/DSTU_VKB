@@ -1,8 +1,10 @@
 """
 4. Как аннотировать столбцы в сгруппированном столбчатом графике на Python?
 """
+
 from dataclasses import dataclass, field
 from random import randint
+
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -10,7 +12,9 @@ import numpy as np
 @dataclass
 class Column:
     name: str
-    values: list[int] = field(default_factory=lambda: [randint(0, 100) for _ in range(2)])
+    values: list[int] = field(
+        default_factory=lambda: [randint(0, 100) for _ in range(2)]
+    )
 
 
 @dataclass
@@ -44,7 +48,8 @@ def draw_grouped_histogram_and_annotate_each_column(*args: GroupedColumns) -> No
                 xy=(bar.get_x() + bar.get_width() / 2, height),
                 xytext=(0, 3),  # смещение аннотации
                 textcoords="offset points",
-                ha='center', va='bottom'
+                ha="center",
+                va="bottom",
             )
 
     ax.set_xticks(index + bar_width * (len(args) - 1) / 2)
@@ -61,19 +66,19 @@ def main() -> None:
             columns=[
                 Column(name="Category A"),
                 Column(name="Category B"),
-                Column(name="Category C")
-            ]
+                Column(name="Category C"),
+            ],
         ),
         GroupedColumns(
             group_name="Group 2",
             columns=[
                 Column(name="Category A"),
                 Column(name="Category B"),
-                Column(name="Category C")
-            ]
-        )
+                Column(name="Category C"),
+            ],
+        ),
     )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

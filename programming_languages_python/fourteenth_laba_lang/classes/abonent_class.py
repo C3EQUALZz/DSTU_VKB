@@ -1,7 +1,9 @@
 """
 Модуль, который описывает абонента
 """
+
 from dataclasses import dataclass
+
 from arrow import Arrow
 
 
@@ -26,13 +28,15 @@ class Subscriber:
         """
         Магический метод для красивого вывода абонента в виде строки.
         """
-        return (f"Идентификационный номер: {self.identification_number}\n"
-                f"Фамилия: {self.surname}\n"
-                f"Имя: {self.first_name}\n"
-                f"Отчество: {self.patronymic}\n"
-                f"Адрес: {self.address}\n"
-                f"Номер кредитной карточки: {self.credit_card_number}\n"
-                f"Дебет: {self.debit}\n"
-                f"Кредит: {self.credit}\n"
-                f"Время междугородных переговоров: {self.intercity_call_time}\n"
-                f"Время городских переговоров: {self.local_call_time}")
+        return (
+            f"Идентификационный номер: {self.identification_number}\n"
+            f"Фамилия: {self.surname}\n"
+            f"Имя: {self.first_name}\n"
+            f"Отчество: {self.patronymic}\n"
+            f"Адрес: {self.address}\n"
+            f"Номер кредитной карточки: {self.credit_card_number}\n"
+            f"Дебет: {self.debit}\n"
+            f"Кредит: {self.credit}\n"
+            f"Время междугородных переговоров: {self.intercity_call_time}\n"
+            f"Время городских переговоров: {self.local_call_time}"
+        )

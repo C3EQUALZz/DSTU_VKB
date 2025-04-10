@@ -1,4 +1,4 @@
-from typing import Mapping, AnyStr, Any
+from typing import Any, AnyStr, Mapping
 
 
 class Singleton:

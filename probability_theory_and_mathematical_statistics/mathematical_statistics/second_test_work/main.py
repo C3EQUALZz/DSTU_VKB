@@ -10,18 +10,24 @@
 
 - https://www.kaggle.com/datasets/subhajournal/wine-quality-data-combined
 """
-import seaborn as sns
 
-from matplotlib.axes import Axes
-from matplotlib import pyplot as plt
 from collections import Counter
+
+import seaborn as sns
+from matplotlib import pyplot as plt
+from matplotlib.axes import Axes
 
 
 class DataInteraction:
-    def __init__(self, data: list[float], indices: slice, comment: str,
-                 *, chart_histogram: bool = True, chart_frequency_range: bool = True,
-                 ) -> None:
-
+    def __init__(
+        self,
+        data: list[float],
+        indices: slice,
+        comment: str,
+        *,
+        chart_histogram: bool = True,
+        chart_frequency_range: bool = True,
+    ) -> None:
         self.data = data[indices]
         self.comment = comment
         self.chart_histogram = chart_histogram
@@ -74,7 +80,9 @@ class DataInteraction:
         if not self.chart_histogram and not self.chart_frequency_range:
             return
 
-        fig, axes = plt.subplots(1, self.chart_frequency_range + self.chart_histogram, figsize=(12, 6))
+        fig, axes = plt.subplots(
+            1, self.chart_frequency_range + self.chart_histogram, figsize=(12, 6)
+        )
 
         if isinstance(axes, Axes):
             axes = [axes]
@@ -85,8 +93,8 @@ class DataInteraction:
         if self.chart_histogram:
             sns.histplot(self.data, bins=25, ax=axes[i])
             titles.append(f"Гистограмма '{self.comment}'")
-            axes[i].set_xlabel('Значения выборки')
-            axes[i].set_ylabel('Высота')
+            axes[i].set_xlabel("Значения выборки")
+            axes[i].set_ylabel("Высота")
             i += 1
 
         if self.chart_frequency_range:
@@ -110,8 +118,10 @@ class DataInteraction:
         """
         Статический метод для красивого вывода списка на экран
         """
-        sub_lists = (data[i:i + 10] for i in range(0, len(data), 10))
-        aligned_sublist = (" ".join(f"{item:<5}" for item in sub_list) for sub_list in sub_lists)
+        sub_lists = (data[i : i + 10] for i in range(0, len(data), 10))
+        aligned_sublist = (
+            " ".join(f"{item:<5}" for item in sub_list) for sub_list in sub_lists
+        )
         return "\n".join(aligned_sublist)
 
     def __str__(self) -> str:
@@ -140,17 +150,34 @@ def main() -> None:
         data: list[float] = list(map(float, file.readlines()))
 
         questions = (
-            DataInteraction(data, slice(0, len(data)), "Генеральная совокупность",
-                            chart_histogram=True, chart_frequency_range=True),
-
-            DataInteraction(data, slice(0, len(data), 2), "Выборка из ГС через 1 элемент",
-                            chart_histogram=True, chart_frequency_range=False),
-
-            DataInteraction(data, slice(1, len(data), 4), "Выборка из ГС через 3 элемента, начиная с 1",
-                            chart_histogram=False, chart_frequency_range=True),
-
-            DataInteraction(data, slice(3, len(data), 2), "Аудиторная часть", chart_histogram=True,
-                            chart_frequency_range=True),
+            DataInteraction(
+                data,
+                slice(0, len(data)),
+                "Генеральная совокупность",
+                chart_histogram=True,
+                chart_frequency_range=True,
+            ),
+            DataInteraction(
+                data,
+                slice(0, len(data), 2),
+                "Выборка из ГС через 1 элемент",
+                chart_histogram=True,
+                chart_frequency_range=False,
+            ),
+            DataInteraction(
+                data,
+                slice(1, len(data), 4),
+                "Выборка из ГС через 3 элемента, начиная с 1",
+                chart_histogram=False,
+                chart_frequency_range=True,
+            ),
+            DataInteraction(
+                data,
+                slice(3, len(data), 2),
+                "Аудиторная часть",
+                chart_histogram=True,
+                chart_frequency_range=True,
+            ),
         )
 
         for number, question in enumerate(filter(None, questions), start=1):

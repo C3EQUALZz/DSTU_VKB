@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from collections import defaultdict
-from typing import TypeVar, Generic, List, Dict, Iterator
+from typing import Dict, Generic, Iterator, List, TypeVar
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 class BaseGraph(ABC, Generic[T]):
@@ -82,7 +82,7 @@ class BaseWeightedGraph(BaseGraph[T], ABC):
         ...
 
     def get_weight(self, u: T, v: T) -> float:
-        return self._weights[u].get(v, float('inf'))
+        return self._weights[u].get(v, float("inf"))
 
     def __len__(self) -> int:
         return len(self._weights)

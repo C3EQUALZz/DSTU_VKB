@@ -15,7 +15,8 @@
 
 Выведите одну строку – расшифрованное сообщение.
 """
-from typing import List, AnyStr
+
+from typing import AnyStr, List
 
 
 def decrypt_message(encrypted_message: AnyStr) -> AnyStr:
@@ -33,8 +34,8 @@ def decrypt_message(encrypted_message: AnyStr) -> AnyStr:
     symbols: List[AnyStr] = list(encrypted_message)
     n: int = len(encrypted_message) // 2
     for i in range(n):
-        symbols[2 * i: 2 * i + 2] = encrypted_message[i + n], encrypted_message[i]
-    return ''.join(symbols)
+        symbols[2 * i : 2 * i + 2] = encrypted_message[i + n], encrypted_message[i]
+    return "".join(symbols)
 
 
 def main() -> None:
@@ -45,5 +46,5 @@ def main() -> None:
     print(decrypted_message)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

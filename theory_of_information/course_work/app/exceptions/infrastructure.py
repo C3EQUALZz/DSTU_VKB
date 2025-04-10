@@ -1,7 +1,8 @@
-from dataclasses import dataclass
-from app.exceptions.base import BaseAppException
 from abc import ABC
+from dataclasses import dataclass
 from http import HTTPStatus
+
+from app.exceptions.base import BaseAppException
 
 
 @dataclass(eq=False)

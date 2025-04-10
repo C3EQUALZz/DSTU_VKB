@@ -15,7 +15,6 @@
 """Tests string operations."""
 
 import pytest
-
 import rsa
 
 unicode_string = "Euro=\u20ac ABCDEFGHIJKLMNOPQRSTUVWXYZ"

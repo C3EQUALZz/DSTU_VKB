@@ -1,30 +1,26 @@
 from abc import ABC
 from dataclasses import asdict, dataclass, field
 from datetime import UTC, datetime
-from typing import Any, Dict, Optional, Set
+from typing import Any, Optional
 from uuid import uuid4
 
 
 @dataclass(eq=False)
-class BaseEntity(ABC):
+class BaseEntity(ABC):  # noqa
     """
     Base entity, from which any domain model should be inherited.
     """
 
     oid: str = field(default_factory=lambda: str(uuid4()), kw_only=True)
-    created_at: datetime = field(
-        default_factory=lambda: datetime.now(UTC), kw_only=True
-    )
-    updated_at: datetime = field(
-        default_factory=lambda: datetime.now(UTC), kw_only=True
-    )
+    created_at: datetime = field(default_factory=lambda: datetime.now(UTC), kw_only=True)
+    updated_at: datetime = field(default_factory=lambda: datetime.now(UTC), kw_only=True)
 
     async def to_dict(
         self,
-        exclude: Optional[Set[str]] = None,
-        include: Optional[Dict[str, Any]] = None,
+        exclude: Optional[set[str]] = None,
+        include: Optional[dict[str, Any]] = None,
         save_classes_value_objects: bool = False,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """
         Create a dictionary representation of the entity.
 
@@ -33,9 +29,9 @@ class BaseEntity(ABC):
         """
 
         if save_classes_value_objects:
-            data: Dict[str, Any] = vars(self)
+            data: dict[str, Any] = vars(self)
         else:
-            data: Dict[str, Any] = asdict(self)
+            data: dict[str, Any] = asdict(self)
 
             for key, value in data.items():
                 if isinstance(value, dict) and "value" in value:

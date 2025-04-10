@@ -1,9 +1,10 @@
 """
 В данном модуле реализованы отдельно сигналы, которые используются для обработки нажатия кнопок.
 """
+
 import os
 
-from PyQt6 import QtWidgets, QtGui, QtCore
+from PyQt6 import QtCore, QtGui, QtWidgets
 
 from .threads_signals import CipherThread
 
@@ -12,8 +13,13 @@ class Signals(QtCore.QObject):
     """
     Класс, который осуществляет за реализацию нажатия кнопок.
     """
-    encryption_finished = QtCore.pyqtSignal(str)  # Сигнал для завершения операции шифрования
-    decryption_finished = QtCore.pyqtSignal(str)  # Сигнал для завершения операции дешифрования
+
+    encryption_finished = QtCore.pyqtSignal(
+        str
+    )  # Сигнал для завершения операции шифрования
+    decryption_finished = QtCore.pyqtSignal(
+        str
+    )  # Сигнал для завершения операции дешифрования
 
     def __init__(self, parent, right_panel):
         super().__init__(parent)
@@ -32,14 +38,20 @@ class Signals(QtCore.QObject):
         # Данные параметры взял с Интернета, пояснить не могу
         options = dialog.options()
         options |= QtWidgets.QFileDialog.Option.ReadOnly
-        self.file_name, _ = QtWidgets.QFileDialog.getOpenFileName(self.parent, "Выберите фото", "",
-                                                                  "Images (*.png *.xpm *.jpg *.bmp);;All Files (*)",
-                                                                  options=options)
+        self.file_name, _ = QtWidgets.QFileDialog.getOpenFileName(
+            self.parent,
+            "Выберите фото",
+            "",
+            "Images (*.png *.xpm *.jpg *.bmp);;All Files (*)",
+            options=options,
+        )
         # Если все-таки нашел файл, то будет запущена обработка по сжатию фото
         if self.file_name:
             # Создание объекта Pixmap, который умеет сжимать фотографии (более подробно в doc PyQt6)
             pixmap = QtGui.QPixmap(self.file_name)
-            scaled_pixmap = pixmap.scaled(photo_label.size(), QtCore.Qt.AspectRatioMode.KeepAspectRatio)
+            scaled_pixmap = pixmap.scaled(
+                photo_label.size(), QtCore.Qt.AspectRatioMode.KeepAspectRatio
+            )
             photo_label.setPixmap(scaled_pixmap)
             photo_label.show()
 
@@ -86,7 +98,9 @@ class Signals(QtCore.QObject):
 
     # Добавляем метод обработки сигнала завершения операции
     def handle_finished(self, is_encryption: bool) -> None:
-        image_path = self.save_path(self.file_name, self.__get_path(), encrypted=is_encryption)
+        image_path = self.save_path(
+            self.file_name, self.__get_path(), encrypted=is_encryption
+        )
         print(image_path)
         self.right_panel.set_image(image_path)
 

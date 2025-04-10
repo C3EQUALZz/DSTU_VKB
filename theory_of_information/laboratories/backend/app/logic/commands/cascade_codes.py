@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from typing import Literal
 
 import numpy as np
-
 from app.logic.commands.base import AbstractCommand
 
 

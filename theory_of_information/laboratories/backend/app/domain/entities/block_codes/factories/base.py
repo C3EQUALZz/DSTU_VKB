@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from importlib import import_module
-from typing import Any, Final, Literal, List
+from typing import Any, Final, List, Literal
 
 PATH_TO_MODELS: Final[str] = "app.domain.entities.block_codes."
 
@@ -31,6 +31,6 @@ class RegistryFactory(Factory, ABC):
         :param matrix_type: Тип матрицы для динамического импорта.
         :param matrix_class_name: Класс матрицы (путь относительно папки models) для импорта
         """
-        module_name, class_name = (PATH_TO_MODELS + matrix_class_name).rsplit('.', 1)
+        module_name, class_name = (PATH_TO_MODELS + matrix_class_name).rsplit(".", 1)
         matrix_class = getattr(import_module(module_name), class_name)
         cls._registry[matrix_type] = matrix_class

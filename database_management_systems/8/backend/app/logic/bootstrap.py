@@ -1,25 +1,14 @@
 import inspect
 from types import MappingProxyType
-from typing import (
-    Any,
-    Dict,
-    List,
-    Optional,
-    Type,
-)
+from typing import Any, Dict, List, Optional, Type
 
-from app.core.types.handlers import (
-    CommandHandlerMapping,
-    EventHandlerMapping,
-    HT,
-)
+from app.core.types.handlers import (HT, CommandHandlerMapping,
+                                     EventHandlerMapping)
 from app.infrastructure.uow.base import AbstractUnitOfWork
 from app.logic.commands.base import AbstractCommand
 from app.logic.events.base import AbstractEvent
-from app.logic.handlers.base import (
-    AbstractCommandHandler,
-    AbstractEventHandler,
-)
+from app.logic.handlers.base import (AbstractCommandHandler,
+                                     AbstractEventHandler)
 from app.logic.message_bus import MessageBus
 
 

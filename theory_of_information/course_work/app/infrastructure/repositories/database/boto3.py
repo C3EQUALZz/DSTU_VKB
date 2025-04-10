@@ -2,14 +2,14 @@ import logging
 from pathlib import Path
 from typing import Any
 
-from botocore.exceptions import ClientError
-from typing_extensions import override
-
 from app.application.cli.const import BACKUP_DIRECTORY_PATH
 from app.domain.entities.file_objects import CompressedFileObjectEntity
 from app.domain.values.backup import CompressionType
 from app.infrastructure.repositories.base import S3AbstractRepository
-from app.infrastructure.repositories.database.base import DatabaseDumpRepository
+from app.infrastructure.repositories.database.base import \
+    DatabaseDumpRepository
+from botocore.exceptions import ClientError
+from typing_extensions import override
 
 logger = logging.getLogger(__name__)
 
@@ -30,14 +30,11 @@ class DatabaseDumpBoto3Repository(DatabaseDumpRepository, S3AbstractRepository):
                         "original_filename": model.file_path.name,
                         "oid": model.oid,
                     }
-                }
+                },
             )
             logger.info(f"Uploaded {object_key} to {self._bucket_name}")
 
-            return CompressedFileObjectEntity(
-                file_path=Path(object_key),
-                compression_type=model.compression_type
-            )
+            return CompressedFileObjectEntity(file_path=Path(object_key), compression_type=model.compression_type)
 
         except ClientError as e:
             logger.error(f"Upload failed: {e}")
@@ -46,11 +43,7 @@ class DatabaseDumpBoto3Repository(DatabaseDumpRepository, S3AbstractRepository):
     @override
     def get(self, oid: str) -> CompressedFileObjectEntity | None:
         try:
-
-            head_response: dict[str, Any] = self._client.head_object(
-                Bucket=self._bucket_name,
-                Key=oid
-            )
+            head_response: dict[str, Any] = self._client.head_object(Bucket=self._bucket_name, Key=oid)
 
             # Извлекаем тип сжатия из метаданных
             metadata: dict[str, str] = head_response.get("Metadata", {})
@@ -59,15 +52,11 @@ class DatabaseDumpBoto3Repository(DatabaseDumpRepository, S3AbstractRepository):
 
             local_path = BACKUP_DIRECTORY_PATH / name
 
-            self._client.download_file(
-                Bucket=self._bucket_name,
-                Key=oid,
-                Filename=str(local_path)
-            )
+            self._client.download_file(Bucket=self._bucket_name, Key=oid, Filename=str(local_path))
 
             return CompressedFileObjectEntity(
                 file_path=local_path,
-                compression_type=CompressionType(compression_type_str)  # Определите тип из метаданных
+                compression_type=CompressionType(compression_type_str),  # Определите тип из метаданных
             )
 
         except ClientError as e:
@@ -82,19 +71,11 @@ class DatabaseDumpBoto3Repository(DatabaseDumpRepository, S3AbstractRepository):
         raise NotImplementedError
 
     @override
-    def list(
-            self,
-            start: int | None = None,
-            limit: int | None = None
-    ) -> list[CompressedFileObjectEntity]:
+    def list(self, start: int | None = None, limit: int | None = None) -> list[CompressedFileObjectEntity]:
         result: list[CompressedFileObjectEntity] = []
         paginator = self._client.get_paginator("list_objects_v2")
 
-        config = {
-            "Bucket": self._bucket_name,
-            "Prefix": self._bucket_path,
-            "MaxKeys": limit or 1000
-        }
+        config = {"Bucket": self._bucket_name, "Prefix": self._bucket_path, "MaxKeys": limit or 1000}
 
         if start:
             config["ContinuationToken"] = str(start)
@@ -106,8 +87,7 @@ class DatabaseDumpBoto3Repository(DatabaseDumpRepository, S3AbstractRepository):
                     metadata = self._get_object_metadata(obj["Key"])
                     result.append(
                         CompressedFileObjectEntity(
-                            file_path=Path(obj["Key"]),
-                            compression_type=metadata.get("compression")
+                            file_path=Path(obj["Key"]), compression_type=metadata.get("compression")
                         )
                     )
 
@@ -122,10 +102,7 @@ class DatabaseDumpBoto3Repository(DatabaseDumpRepository, S3AbstractRepository):
     def _get_object_metadata(self, key: str) -> dict:
         """Получение метаданных объекта через head_object"""
         try:
-            response = self._client.head_object(
-                Bucket=self._bucket_name,
-                Key=key
-            )
+            response = self._client.head_object(Bucket=self._bucket_name, Key=key)
             return response.get("Metadata", {})
 
         except ClientError as e:
@@ -135,10 +112,7 @@ class DatabaseDumpBoto3Repository(DatabaseDumpRepository, S3AbstractRepository):
     @override
     def delete(self, oid: str) -> None:
         try:
-            self._client.delete_object(
-                Bucket=self._bucket_name,
-                Key=oid
-            )
+            self._client.delete_object(Bucket=self._bucket_name, Key=oid)
             logger.info(f"Deleted object {oid}")
 
         except ClientError as e:

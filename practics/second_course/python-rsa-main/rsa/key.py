@@ -133,7 +133,7 @@ class AbstractKey(metaclass=abc.ABCMeta):
 
     @staticmethod
     def _assert_format_exists(
-            file_format: str, methods: typing.Mapping[str, typing.Callable]
+        file_format: str, methods: typing.Mapping[str, typing.Callable]
     ) -> typing.Callable:
         """Checks whether the given file format exists in 'methods'."""
 
@@ -212,7 +212,9 @@ class AbstractKey(metaclass=abc.ABCMeta):
             if self.blind_factor < 0:
                 # Compute initial blinding factor, which is rather slow to do.
                 self.blind_factor = self._initial_blinding_factor()
-                self.blind_factor_inverse = rsa.helpers.common.inverse(self.blind_factor, self.n)
+                self.blind_factor_inverse = rsa.helpers.common.inverse(
+                    self.blind_factor, self.n
+                )
             else:
                 # Reuse previous blinding factor.
                 self.blind_factor = pow(self.blind_factor, 2, self.n)
@@ -374,9 +376,9 @@ class PublicKey(AbstractKey):
         :return: a PublicKey object
         """
 
-        from rsa.core.classes import OpenSSLPubKey
         from pyasn1.codec.der import decoder
         from pyasn1.type import univ
+        from rsa.core.classes import OpenSSLPubKey
 
         keyinfo, _ = decoder.decode(keyfile, asn1Spec=OpenSSLPubKey())
 
@@ -415,13 +417,13 @@ class PrivateKey(AbstractKey):
     __slots__ = ("d", "p", "q", "exp1", "exp2", "coef", "rs", "ds", "ts")
 
     def __init__(
-            self,
-            n: int,
-            e: int,
-            d: int,
-            p: int,
-            q: int,
-            rs: typing.Optional[typing.List[int]] = None,
+        self,
+        n: int,
+        e: int,
+        d: int,
+        p: int,
+        q: int,
+        rs: typing.Optional[typing.List[int]] = None,
     ) -> None:
         rs = [] if rs is None else rs
 
@@ -466,7 +468,16 @@ class PrivateKey(AbstractKey):
                 self.ts,
             )
         else:
-            return self.n, self.e, self.d, self.p, self.q, self.exp1, self.exp2, self.coef
+            return (
+                self.n,
+                self.e,
+                self.d,
+                self.p,
+                self.q,
+                self.exp1,
+                self.exp2,
+                self.coef,
+            )
 
     def __setstate__(self, state: typing.Tuple) -> None:
         """Sets the key from tuple."""
@@ -485,7 +496,9 @@ class PrivateKey(AbstractKey):
                 self.ts,
             ) = state
         else:
-            self.n, self.e, self.d, self.p, self.q, self.exp1, self.exp2, self.coef = state
+            self.n, self.e, self.d, self.p, self.q, self.exp1, self.exp2, self.coef = (
+                state
+            )
             self.rs = self.ds = self.ts = []
         AbstractKey.__init__(self, self.n, self.e)
 
@@ -503,21 +516,34 @@ class PrivateKey(AbstractKey):
 
     def __hash__(self) -> int:
         if self.rs:
-            return hash((
-                self.n,
-                self.e,
-                self.d,
-                self.p,
-                self.q,
-                self.exp1,
-                self.exp2,
-                self.coef,
-                *self.rs,
-                *self.ds,
-                *self.ts
-            ))
+            return hash(
+                (
+                    self.n,
+                    self.e,
+                    self.d,
+                    self.p,
+                    self.q,
+                    self.exp1,
+                    self.exp2,
+                    self.coef,
+                    *self.rs,
+                    *self.ds,
+                    *self.ts,
+                )
+            )
         else:
-            return hash((self.n, self.e, self.d, self.p, self.q, self.exp1, self.exp2, self.coef))
+            return hash(
+                (
+                    self.n,
+                    self.e,
+                    self.d,
+                    self.p,
+                    self.q,
+                    self.exp1,
+                    self.exp2,
+                    self.coef,
+                )
+            )
 
     def blinded_decrypt(self, encrypted: int) -> int:
         """Decrypts the message using blinding to prevent side-channel attacks.
@@ -591,7 +617,14 @@ class PrivateKey(AbstractKey):
 
         key = cls(n, e, d, p, q, rs)
 
-        if (key.exp1, key.exp2, key.coef, key.rs, key.ds, key.ts) != (exp1, exp2, coef, rs, ds, ts):
+        if (key.exp1, key.exp2, key.coef, key.rs, key.ds, key.ts) != (
+            exp1,
+            exp2,
+            coef,
+            rs,
+            ds,
+            ts,
+        ):
             warnings.warn(
                 "You have provided a malformed keyfile. Either the exponents "
                 "or the coefficient are incorrect. Using the correct values "
@@ -608,8 +641,8 @@ class PrivateKey(AbstractKey):
         :rtype: bytes
         """
 
-        from pyasn1.type import univ, namedtype
         from pyasn1.codec.der import encoder
+        from pyasn1.type import namedtype, univ
 
         component_names = [
             "version",
@@ -620,7 +653,7 @@ class PrivateKey(AbstractKey):
             "prime2",
             "exponent1",
             "exponent2",
-            "coefficient"
+            "coefficient",
         ]
 
         other_fields = [
@@ -628,13 +661,17 @@ class PrivateKey(AbstractKey):
                 namedtype.NamedType("prime%d" % (i + 3), univ.Integer()),
                 namedtype.NamedType("exponent%d" % (i + 3), univ.Integer()),
                 namedtype.NamedType("coefficient%d" % (i + 3), univ.Integer()),
-            ) for i in range(len(self.rs))
+            )
+            for i in range(len(self.rs))
         ]
 
         class AsnPrivateKey(univ.Sequence):
             componentType = namedtype.NamedTypes(
-                *[namedtype.NamedType(name, univ.Integer()) for name in component_names],
-                *list(itertools.chain(*other_fields))
+                *[
+                    namedtype.NamedType(name, univ.Integer())
+                    for name in component_names
+                ],
+                *list(itertools.chain(*other_fields)),
             )
 
         # Create the ASN object
@@ -651,7 +688,7 @@ class PrivateKey(AbstractKey):
             "coefficient": self.coef,
             **{"prime%d" % i: r for i, r in enumerate(self.rs, start=3)},
             **{"exponent%d" % i: d for i, d in enumerate(self.ds, start=3)},
-            **{"coefficient%d" % i: t for i, t in enumerate(self.ts, start=3)}
+            **{"coefficient%d" % i: t for i, t in enumerate(self.ts, start=3)},
         }
 
         for name, value in components.items():
@@ -687,10 +724,10 @@ class PrivateKey(AbstractKey):
 
 
 def find_primes(
-        nbits: int,
-        get_prime_func: typing.Callable[[int], int] = utils_namespace.get_prime,
-        accurate: bool = True,
-        n_primes: int = 2,
+    nbits: int,
+    get_prime_func: typing.Callable[[int], int] = utils_namespace.get_prime,
+    accurate: bool = True,
+    n_primes: int = 2,
 ) -> typing.List[int]:
     """Returns a list of different primes with nbits divided evenly among them.
 
@@ -716,9 +753,9 @@ def find_primes(
 
 
 def find_p_q(
-        nbits: int,
-        get_prime_func: typing.Callable[[int], int] = utils_namespace.get_prime,
-        accurate: bool = True,
+    nbits: int,
+    get_prime_func: typing.Callable[[int], int] = utils_namespace.get_prime,
+    accurate: bool = True,
 ) -> typing.Tuple[int, int]:
     """Returns a tuple of two different primes of nbits bits each.
 
@@ -795,10 +832,10 @@ def find_p_q(
 
 
 def calculate_keys_custom_exponent(
-        p: int,
-        q: int,
-        exponent: int,
-        rs: typing.Optional[typing.List[int]] = None,
+    p: int,
+    q: int,
+    exponent: int,
+    rs: typing.Optional[typing.List[int]] = None,
 ) -> typing.Tuple[int, int]:
     """Calculates an encryption and a decryption key given p, q and an exponent,
     and returns them as a tuple (e, d)
@@ -823,12 +860,12 @@ def calculate_keys_custom_exponent(
             phi_n,
             ex.d,
             msg="e (%d) and phi_n (%d) are not relatively prime (divider=%i)"
-                % (exponent, phi_n, ex.d),
+            % (exponent, phi_n, ex.d),
         ) from ex
 
     if (exponent * d) % phi_n != 1:
         raise ValueError(
-            f"e ({exponent}) and d ({d}) are not mult. inv. modulo " f"phi_n ({phi_n})"
+            f"e ({exponent}) and d ({d}) are not mult. inv. modulo phi_n ({phi_n})"
         )
 
     return exponent, d
@@ -848,11 +885,11 @@ def calculate_keys(p: int, q: int) -> typing.Tuple[int, int]:
 
 
 def gen_keys(
-        n_bits: int,
-        get_prime_func: typing.Callable[[int], int],
-        accurate: bool = True,
-        exponent: int = DEFAULT_EXPONENT,
-        n_primes: int = 2,
+    n_bits: int,
+    get_prime_func: typing.Callable[[int], int],
+    accurate: bool = True,
+    exponent: int = DEFAULT_EXPONENT,
+    n_primes: int = 2,
 ) -> typing.Tuple:
     """Generate RSA keys of nbits bits. Returns (p, q, e, d) or (p, q, e, d, rs).
 
@@ -888,11 +925,11 @@ def gen_keys(
 
 
 def new_keys(
-        number_of_bits: int,
-        accurate: bool = True,
-        pool_size: int = 1,
-        exponent: int = DEFAULT_EXPONENT,
-        n_primes: int = 2,
+    number_of_bits: int,
+    accurate: bool = True,
+    pool_size: int = 1,
+    exponent: int = DEFAULT_EXPONENT,
+    n_primes: int = 2,
 ) -> typing.Tuple[PublicKey, PrivateKey]:
     """Generates public and private keys, and returns them as (pub, priv).
 
@@ -935,7 +972,7 @@ def new_keys(
         lambda n_bits: utils_namespace.get_prime(n_bits, pool_size=pool_size),
         accurate=accurate,
         exponent=exponent,
-        n_primes=n_primes
+        n_primes=n_primes,
     )
 
     if len(result) == 4:

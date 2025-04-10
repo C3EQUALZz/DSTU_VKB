@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional, List, Self, Generic, TypeVar
+from typing import Generic, List, Optional, Self, TypeVar
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 class NodeColor(Enum):
@@ -168,7 +168,10 @@ class RBTree(Generic[T]):
                     self._left_rotate(node.parent)
                     sibling = node.parent.right
 
-                if sibling.left.color == NodeColor.BLACK and sibling.right.color == NodeColor.BLACK:
+                if (
+                    sibling.left.color == NodeColor.BLACK
+                    and sibling.right.color == NodeColor.BLACK
+                ):
                     sibling.color = NodeColor.RED
                     node = node.parent
                 else:
@@ -191,7 +194,10 @@ class RBTree(Generic[T]):
                     self._right_rotate(node.parent)
                     sibling = node.parent.left
 
-                if sibling.left.color == NodeColor.BLACK and sibling.right.color == NodeColor.BLACK:
+                if (
+                    sibling.left.color == NodeColor.BLACK
+                    and sibling.right.color == NodeColor.BLACK
+                ):
                     sibling.color = NodeColor.RED
                     node = node.parent
                 else:
@@ -226,7 +232,7 @@ class RBTree(Generic[T]):
         return [
             f"{node.key}({node.color.value})",
             *self.preorder_traversal(node.left),
-            *self.preorder_traversal(node.right)
+            *self.preorder_traversal(node.right),
         ]
 
     def inorder_traversal(self, node: RBNode[T]) -> List[str]:
@@ -235,7 +241,7 @@ class RBTree(Generic[T]):
         return [
             *self.inorder_traversal(node.left),
             f"{node.key}({node.color.value})",
-            *self.inorder_traversal(node.right)
+            *self.inorder_traversal(node.right),
         ]
 
     def postorder_traversal(self, node: RBNode[T]) -> List[str]:
@@ -244,5 +250,5 @@ class RBTree(Generic[T]):
         return [
             *self.postorder_traversal(node.left),
             *self.postorder_traversal(node.right),
-            f"{node.key}({node.color.value})"
+            f"{node.key}({node.color.value})",
         ]

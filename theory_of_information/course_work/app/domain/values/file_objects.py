@@ -1,10 +1,9 @@
 import contextlib
 from dataclasses import dataclass
 
-from typing_extensions import override
-
 from app.domain.values.base import BaseValueObject
 from app.exceptions.domain import UnSupportedTypeOfFileException
+from typing_extensions import override
 
 
 @dataclass
@@ -37,8 +36,7 @@ class SizeOfFile(BaseValueObject[str]):
     def as_generic_type(self) -> str:
         units: tuple[str, str, str, str] = ("KB", "MB", "GB", "TB")
         size_list: list[str] = [f"{int(self.value):,} B"] + [
-            f"{int(self.value) / 1024 ** (i + 1):,.1f} {u}" for i, u in
-            enumerate(units)
+            f"{int(self.value) / 1024 ** (i + 1):,.1f} {u}" for i, u in enumerate(units)
         ]
         return [size for size in size_list if not size.startswith("0.")][-1]
 

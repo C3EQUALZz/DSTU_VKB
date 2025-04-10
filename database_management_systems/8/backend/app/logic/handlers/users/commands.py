@@ -2,19 +2,13 @@ from typing import List
 
 from app.domain.entities.user import UserEntity
 from app.domain.values.users import Password
-from app.exceptions.logic import (
-    UserAlreadyExistsException,
-    UserNotFoundException,
-)
+from app.exceptions.logic import (UserAlreadyExistsException,
+                                  UserNotFoundException)
 from app.infrastructure.security.utils.coders import hash_password
 from app.infrastructure.services.users import UsersService
-from app.logic.commands.users import (
-    CreateUserCommand,
-    DeleteUserCommand,
-    GetAllUsersCommand,
-    GetUserByIdCommand,
-    UpdateUserCommand,
-)
+from app.logic.commands.users import (CreateUserCommand, DeleteUserCommand,
+                                      GetAllUsersCommand, GetUserByIdCommand,
+                                      UpdateUserCommand)
 from app.logic.handlers.users.base import UsersCommandHandler
 
 

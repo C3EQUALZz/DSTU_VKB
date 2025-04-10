@@ -3,16 +3,18 @@
 import sys
 from itertools import combinations
 from queue import PriorityQueue
-from typing import TypeVar, List
+from typing import List, TypeVar
 
-from programming_methods.lections.first_doc.fifth_block.core.base import BaseWeightedGraph
-from programming_methods.lections.first_doc.fifth_block.core.weighted.nonoriented import NonOrientedGraph
+from programming_methods.lections.first_doc.fifth_block.core.base import \
+    BaseWeightedGraph
+from programming_methods.lections.first_doc.fifth_block.core.weighted.nonoriented import \
+    NonOrientedGraph
 
 T = TypeVar("T")
 
 
 def dijkstra(graph: BaseWeightedGraph[T], start_vertex: T, end_vertex: T) -> List[T]:
-    distances = {v: float('inf') for v in graph}
+    distances = {v: float("inf") for v in graph}
     distances[start_vertex] = 0
 
     # Словарь для отслеживания предшественников
@@ -54,13 +56,15 @@ def create_graph_from_user_input(n: int) -> NonOrientedGraph:
     edges = combinations(range(1, n + 1), 2)
 
     for vertex1, vertex2 in edges:
-        s = f'Есть ли связь между вершинами {chr(64 + vertex1)} и {chr(64 + vertex2)}? (да/нет) '
+        s = f"Есть ли связь между вершинами {chr(64 + vertex1)} и {chr(64 + vertex2)}? (да/нет) "
         response = input(s).strip().lower()
-        if response in ('да', 'yes'):
+        if response in ("да", "yes"):
             if (weight := input("Введите вес дуги (целое число): ")).isdigit():
                 graph.add_edge(chr(vertex1 + 64), chr(64 + vertex2), int(weight))
             else:
-                print("Вы ввели не целое число. Перезапускаю программу", file=sys.stderr)
+                print(
+                    "Вы ввели не целое число. Перезапускаю программу", file=sys.stderr
+                )
                 continue
 
     return graph
@@ -76,17 +80,23 @@ def main() -> None:
         start_vertex = input("Введите начальную вершину: ")
 
         if start_vertex not in graph:
-            print(f"{start_vertex} нет в графе. Запускаю заново полностью алгоритм. ", file=sys.stderr)
+            print(
+                f"{start_vertex} нет в графе. Запускаю заново полностью алгоритм. ",
+                file=sys.stderr,
+            )
             continue
 
         end_vertex = input("Введите конечную вершину: ")
 
         if end_vertex not in graph:
-            print(f"{end_vertex} нет в графе. Запускаю заново полностью алгоритм. ", file=sys.stderr)
+            print(
+                f"{end_vertex} нет в графе. Запускаю заново полностью алгоритм. ",
+                file=sys.stderr,
+            )
             continue
 
         print(dijkstra(graph, start_vertex, end_vertex))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -2,19 +2,29 @@
 Удаление недостижимых символов
 """
 
-from typing import Generator, Any
+from typing import Any, Generator
+
 from formal_languages.useful_functions import get_rules_from_console
 
 
-def _processing_terminal_values(grammar_inner: dict[str, list[str]], symbol: str) -> Generator[str, Any, None]:
+def _processing_terminal_values(
+    grammar_inner: dict[str, list[str]], symbol: str
+) -> Generator[str, Any, None]:
     """
     Обработка терминальных значений перед добавлением в стек
     """
     if symbol in grammar_inner:
-        yield from (char for production in grammar_inner[symbol] for char in production if char.isupper())
+        yield from (
+            char
+            for production in grammar_inner[symbol]
+            for char in production
+            if char.isupper()
+        )
 
 
-def _find_reachable_symbols(grammar_inner: dict[str, list[str]], start_symbol: str) -> set[str | None]:
+def _find_reachable_symbols(
+    grammar_inner: dict[str, list[str]], start_symbol: str
+) -> set[str | None]:
     """
     Ищем динамически, проходя все символы в стеке
     """
@@ -28,13 +38,17 @@ def _find_reachable_symbols(grammar_inner: dict[str, list[str]], start_symbol: s
         if symbol not in reachable:
             reachable.add(symbol)
             # Обработка терминальных значений перед добавлением в стек
-            if terminal_values := _processing_terminal_values(grammar_inner=grammar_inner, symbol=symbol):
+            if terminal_values := _processing_terminal_values(
+                grammar_inner=grammar_inner, symbol=symbol
+            ):
                 stack.extend(terminal_values)
 
     return reachable
 
 
-def _create_new_grammar(grammar_inner: dict[str, list[str]], reachable_symbols: set[str | None]) -> dict[str, list[str]]:
+def _create_new_grammar(
+    grammar_inner: dict[str, list[str]], reachable_symbols: set[str | None]
+) -> dict[str, list[str]]:
     """
     Создаем новую грамматику, изменять grammar_inner не хочется, да эффективно, но я спать хочу
     """
@@ -44,7 +58,10 @@ def _create_new_grammar(grammar_inner: dict[str, list[str]], reachable_symbols: 
             new_productions: list[str] = []
             for production in productions:
                 # Включаем только те продукции, которые содержат достижимые символы
-                if all(char in reachable_symbols or not char.isupper() for char in production):
+                if all(
+                    char in reachable_symbols or not char.isupper()
+                    for char in production
+                ):
                     new_productions.append(production)
             if new_productions:
                 new_grammar[symbol] = new_productions
@@ -52,7 +69,9 @@ def _create_new_grammar(grammar_inner: dict[str, list[str]], reachable_symbols: 
     return new_grammar
 
 
-def remove_unreachable_symbols(grammar_inner: dict[str, list[str]]) -> dict[str, list[str]]:
+def remove_unreachable_symbols(
+    grammar_inner: dict[str, list[str]],
+) -> dict[str, list[str]]:
     """
     Реализация пункта а) по удалению ненужных символов
     """
@@ -61,13 +80,17 @@ def remove_unreachable_symbols(grammar_inner: dict[str, list[str]]) -> dict[str,
     reachable_symbols = _find_reachable_symbols(grammar_inner, start_symbol)
 
     # Создание нового словаря грамматики с достижимыми символами
-    return _create_new_grammar(grammar_inner=grammar_inner, reachable_symbols=reachable_symbols)
+    return _create_new_grammar(
+        grammar_inner=grammar_inner, reachable_symbols=reachable_symbols
+    )
 
 
 def main() -> None:
     new_grammar = remove_unreachable_symbols(get_rules_from_console())
     print("Новая грамматика без недостижимых символов:")
-    print("\n".join(f"{key} -> {'|'.join(value)}" for key, value in new_grammar.items()))
+    print(
+        "\n".join(f"{key} -> {'|'.join(value)}" for key, value in new_grammar.items())
+    )
 
 
 if __name__ == "__main__":

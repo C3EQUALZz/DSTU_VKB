@@ -1,10 +1,11 @@
-from fastapi import APIRouter, HTTPException, UploadFile, File, Depends, status
 from typing import Tuple
-from docx import Document
 
 import PyPDF2
+from docx import Document
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
 
-from combined_languages.theory_of_information.backend.fifth_semestr.second_laboratory.model import Model
+from combined_languages.theory_of_information.backend.fifth_semestr.second_laboratory.model import \
+    Model
 
 router = APIRouter(
     prefix="/fifth_semester/second_laboratory",
@@ -39,17 +40,21 @@ def process_docx(file: UploadFile) -> str:
     """
     return "\n".join(paragraph.text for paragraph in Document(file.file).paragraphs)
 
+
 def process_pdf(file: UploadFile) -> str:
     """
     Обрабатывает файл формата pdf и возвращает текст.
     """
     pdf_reader = PyPDF2.PdfReader(file.file)
-    return "".join(pdf_reader.pages[page_num].extract_text() for page_num in range(len(pdf_reader.pages)))
+    return "".join(
+        pdf_reader.pages[page_num].extract_text()
+        for page_num in range(len(pdf_reader.pages))
+    )
 
 
 @router.post("/histogram")
 async def create_histogram_and_get_entropy(
-    file_data: Tuple[bytes, str, str] = Depends(process_file)
+    file_data: Tuple[bytes, str, str] = Depends(process_file),
 ):
     try:
         binary_content, decoded_content, file_extension = file_data
@@ -70,7 +75,7 @@ async def create_histogram_and_get_entropy(
 
 @router.post("/entropy")
 async def calculate_entropy(
-    file_data: Tuple[bytes, str, str] = Depends(process_file)
+    file_data: Tuple[bytes, str, str] = Depends(process_file),
 ) -> dict[str, float]:
     try:
         binary_content, decoded_content, file_extension = file_data

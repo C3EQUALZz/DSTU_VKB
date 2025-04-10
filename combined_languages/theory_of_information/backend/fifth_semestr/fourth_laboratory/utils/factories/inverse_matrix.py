@@ -2,10 +2,12 @@ from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 
-from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.models.base import Matrix
+from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.models.base import \
+    Matrix
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.factories.base import \
     RegistryFactory
-from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.registry import Registry
+from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.registry import \
+    Registry
 
 if TYPE_CHECKING:
     from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.models.base import \
@@ -13,9 +15,10 @@ if TYPE_CHECKING:
 
 
 class InverseMatrixFactory(RegistryFactory):
-
     @classmethod
-    def create(cls, matrix: Matrix, matrix_type: Literal["G", "H"]) -> "SystematicMatrix":
+    def create(
+        cls, matrix: Matrix, matrix_type: Literal["G", "H"]
+    ) -> "SystematicMatrix":
         matrix_cls = cls._registry.get(matrix_type)
 
         n = matrix.shape[1]
@@ -24,14 +27,14 @@ class InverseMatrixFactory(RegistryFactory):
         if matrix_type == "G":
             Registry.log("Параметр k GSystematicMatrix", len(matrix[0]))
             Registry.log("Параметр n GSystematicMatrix", len(matrix))
-            required_columns = matrix[:, -(n - k):].transpose().matrix
+            required_columns = matrix[:, -(n - k) :].transpose().matrix
             eye_matrix = np.eye(n - k, dtype=required_columns.dtype)
             new_matrix = np.hstack((required_columns, eye_matrix)).tolist()
 
         elif matrix_type == "H":
             Registry.log("Параметр k HSystematicMatrix", len(matrix[0]))
             Registry.log("Параметр n HSystematicMatrix", len(matrix))
-            required_columns = matrix[:, :(n - k)].transpose().matrix
+            required_columns = matrix[:, : (n - k)].transpose().matrix
             eye_matrix = np.eye(n - k, dtype=required_columns.dtype)
             new_matrix = np.hstack((eye_matrix, required_columns)).tolist()
 

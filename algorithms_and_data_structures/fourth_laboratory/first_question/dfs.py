@@ -1,15 +1,17 @@
 from typing import List, Optional, Set, TypeVar
 
-from algorithms_and_data_structures.fourth_laboratory.core.base import BaseUnWeightedGraph
+from algorithms_and_data_structures.fourth_laboratory.core.base import \
+    BaseUnWeightedGraph
 
 T = TypeVar("T")
 
+
 def dfs(
-        graph: BaseUnWeightedGraph[T],
-        start: T,
-        target: T,
-        path: Optional[List[T]] = None,
-        visited: Optional[Set[T]] = None
+    graph: BaseUnWeightedGraph[T],
+    start: T,
+    target: T,
+    path: Optional[List[T]] = None,
+    visited: Optional[Set[T]] = None,
 ) -> Optional[List[T]]:
     """
     Выполняет поиск в глубину (DFS) в графе.

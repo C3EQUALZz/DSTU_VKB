@@ -1,24 +1,10 @@
 from collections.abc import Mapping
-from dataclasses import (
-    dataclass,
-    field,
-)
-from datetime import (
-    datetime,
-    UTC,
-)
-from typing import (
-    Any,
-    Self,
-    Type,
-)
+from dataclasses import dataclass, field
+from datetime import UTC, datetime
+from typing import Any, Self, Type
 
 from app.domain.entities.base import BaseEntity
-from app.domain.values.users import (
-    Email,
-    Password,
-    Username,
-)
+from app.domain.values.users import Email, Password, Username
 
 
 @dataclass(eq=False)

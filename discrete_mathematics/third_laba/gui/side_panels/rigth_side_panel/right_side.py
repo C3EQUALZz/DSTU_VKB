@@ -2,7 +2,8 @@
 В данном модуле реализовано правое окно приложения, где выводятся фотографии после обработки.
 Здесь не получилось наследоваться от LeftSidePanel, так как у меня выходят циклы импорта.
 """
-from PyQt6 import QtWidgets, QtCore, QtGui
+
+from PyQt6 import QtCore, QtGui, QtWidgets
 
 
 class RightSidePanel(QtWidgets.QWidget):
@@ -33,7 +34,11 @@ class RightSidePanel(QtWidgets.QWidget):
         Метод, который добавляет layout для нашего frame
         """
         layout = QtWidgets.QVBoxLayout(self)
-        layout.addWidget(self._create_photo_label(), stretch=1, alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+        layout.addWidget(
+            self._create_photo_label(),
+            stretch=1,
+            alignment=QtCore.Qt.AlignmentFlag.AlignTop,
+        )
 
     def _create_photo_label(self):
         """
@@ -52,6 +57,8 @@ class RightSidePanel(QtWidgets.QWidget):
         Метод, который добавляет фото на наш QLabel
         """
         pixmap = QtGui.QPixmap(file_name)
-        scaled_pixmap = pixmap.scaled(self.photo_label.size(), QtCore.Qt.AspectRatioMode.KeepAspectRatio)
+        scaled_pixmap = pixmap.scaled(
+            self.photo_label.size(), QtCore.Qt.AspectRatioMode.KeepAspectRatio
+        )
         self.photo_label.setPixmap(scaled_pixmap)
         self.photo_label.show()

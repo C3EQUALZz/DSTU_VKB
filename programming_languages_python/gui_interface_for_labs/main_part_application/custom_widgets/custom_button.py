@@ -4,8 +4,8 @@ __all__ = ["Button"]
 Оригинал: https://gist.github.com/ahmed4end/33183727317afd840f52385df66b4403
 """
 
-from PyQt6 import QtWidgets, QtCore, QtGui
 from colour import Color
+from PyQt6 import QtCore, QtGui, QtWidgets
 
 
 class Button(QtWidgets.QPushButton):
@@ -14,7 +14,7 @@ class Button(QtWidgets.QPushButton):
         self._shadow = QtWidgets.QGraphicsDropShadowEffect()
         self._tm = QtCore.QBasicTimer()
 
-        self._mouse = ''
+        self._mouse = ""
 
         self._expand = 0
         self._max_expand = 4
@@ -34,7 +34,7 @@ class Button(QtWidgets.QPushButton):
         Метод, который вызывается, когда курсор мыши входит в область кнопки.
         Это начинает анимацию изменения цвета и тени.
         """
-        self._mouse = 'on'
+        self._mouse = "on"
         self.setGraphicsEffect(self._shadow)
         self._tm.start(15, self)
 
@@ -43,7 +43,7 @@ class Button(QtWidgets.QPushButton):
         Метод, который вызывается, когда курсор мыши покидает область кнопки.
         Это завершает анимацию изменения цвета и тени.
         """
-        self._mouse = 'off'
+        self._mouse = "off"
 
     def timerEvent(self, e: QtGui.QEnterEvent) -> None:
         """
@@ -51,13 +51,17 @@ class Button(QtWidgets.QPushButton):
         В этом методе выполняется анимация изменения цвета и тени в зависимости от положения мыши.
         """
 
-        if self._mouse == 'on' and self._expand < self._max_expand:
+        if self._mouse == "on" and self._expand < self._max_expand:
             self._expand += 1
-            self.setGeometry(self.x() - 1, int(self.y() - 1), self.width() + 2, self.height() + 2)
+            self.setGeometry(
+                self.x() - 1, int(self.y() - 1), self.width() + 2, self.height() + 2
+            )
 
-        if self._mouse == 'off' and self._expand > 0:
+        if self._mouse == "off" and self._expand > 0:
             self._expand -= 1
-            self.setGeometry(self.x() + 1, int(self.y() + 1), self.width() - 2, self.height() - 2)
+            self.setGeometry(
+                self.x() + 1, int(self.y() + 1), self.width() - 2, self.height() - 2
+            )
 
     @staticmethod
     def grade_color(c1, c2, steps) -> list:

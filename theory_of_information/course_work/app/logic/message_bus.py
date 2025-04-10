@@ -5,10 +5,8 @@ from app.exceptions.logic import MessageBusMessageException
 from app.infrastructure.uow.base import AbstractUnitOfWork
 from app.logic.commands.base import AbstractCommand
 from app.logic.events.base import AbstractEvent
-from app.logic.handlers.base import (
-    AbstractCommandHandler,
-    AbstractEventHandler,
-)
+from app.logic.handlers.base import (AbstractCommandHandler,
+                                     AbstractEventHandler)
 
 
 class MessageBus:

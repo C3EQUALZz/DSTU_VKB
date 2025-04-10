@@ -1,7 +1,7 @@
+from collections import deque
 from dataclasses import dataclass
 from itertools import accumulate
 from operator import xor
-from collections import deque
 from typing import Sequence
 
 from app.domain.entities.base import BaseEntity
@@ -39,8 +39,8 @@ class PolsCalculator(BaseEntity):
         return ",".join(pols)
 
 
-if __name__ == '__main__':
-   i = "1101"
-   indexes = [[0, 1, 2], [0, 2]]
-   calc = PolsCalculator(i, indexes)
-   print(calc.apply())
+if __name__ == "__main__":
+    i = "1101"
+    indexes = [[0, 1, 2], [0, 2]]
+    calc = PolsCalculator(i, indexes)
+    print(calc.apply())

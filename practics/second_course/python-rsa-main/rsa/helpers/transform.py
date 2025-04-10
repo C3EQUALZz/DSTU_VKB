@@ -17,8 +17,9 @@
 From bytes to a number, number to bytes, etc.
 """
 
-import math
 import logging
+import math
+
 import rsa.helpers.decorators as decorators
 
 logger = logging.getLogger(__name__)

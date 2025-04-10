@@ -16,12 +16,13 @@
 
 НЕ ПРОХОДИТ НА 100 БАЛЛОВ ПО ПАМЯТИ!
 """
-from array import array, ArrayType
+
+from array import ArrayType, array
 from collections import deque
 from itertools import chain
-from typing import Final, Sequence, Dict, List, Tuple
+from typing import Dict, Final, List, Sequence, Tuple
 
-INF: Final[float] = float('inf')
+INF: Final[float] = float("inf")
 
 
 def restore_cycle(path: Sequence[int], start_index: int) -> Sequence[int]:
@@ -61,7 +62,9 @@ def main() -> None:
         for _ in range(n):
             cycle = -1
 
-            for u, (v, weight) in chain.from_iterable(((u, edge) for edge in edges) for u, edges in graph.items()):
+            for u, (v, weight) in chain.from_iterable(
+                ((u, edge) for edge in edges) for u, edges in graph.items()
+            ):
                 if distance[u] < INF and distance[v] > distance[u] + weight:
                     distance[v] = distance[u] + weight
                     path[v] = u
@@ -75,5 +78,5 @@ def main() -> None:
         print("NO")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

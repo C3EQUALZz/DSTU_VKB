@@ -2,7 +2,8 @@ import logging
 from pathlib import Path
 
 from app.domain.entities.file_objects import CompressedFileObjectEntity
-from app.infrastructure.repositories.database.base import DatabaseDumpRepository
+from app.infrastructure.repositories.database.base import \
+    DatabaseDumpRepository
 
 logger = logging.getLogger(__name__)
 

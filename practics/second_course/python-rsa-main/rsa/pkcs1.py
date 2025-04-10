@@ -33,19 +33,20 @@ __all__ = [
     "verify",
     "find_signature_hash",
     "sign_hash",
-    "compute_hash"
+    "compute_hash",
 ]
 
 import hashlib
+import logging
 import os
 import typing
-import logging
 from hmac import compare_digest
+
 import rsa.core as core_namespace
 import rsa.helpers as helpers_namespace
-import rsa.logic
-import rsa.helpers.transform
 import rsa.helpers.decorators as decorators
+import rsa.helpers.transform
+import rsa.logic
 
 if typing.TYPE_CHECKING:
     HashType = hashlib._Hash
@@ -270,11 +271,13 @@ def decrypt(crypto: bytes, private_key: "key.PrivateKey") -> bytes:
     if anything_bad:
         raise core_namespace.DecryptionError("Decryption failed")
 
-    return cleartext[sep_idx + 1:]
+    return cleartext[sep_idx + 1 :]
 
 
 @decorators.log_decorator(logger)
-def sign_hash(hash_value: bytes, private_key: "key.PrivateKey", hash_method: str) -> bytes:
+def sign_hash(
+    hash_value: bytes, private_key: "key.PrivateKey", hash_method: str
+) -> bytes:
     """Signs a precomputed hash with the private key.
 
     Signs the hash with the given key. This is known as a "detached signature",
@@ -389,7 +392,9 @@ def find_signature_hash(signature: bytes, pub_key: "key.PublicKey") -> str:
 
 
 @decorators.log_decorator(logger)
-def yield_fixed_blocks(infile: typing.BinaryIO, block_size: int) -> typing.Iterator[bytes]:
+def yield_fixed_blocks(
+    infile: typing.BinaryIO, block_size: int
+) -> typing.Iterator[bytes]:
     """Generator, yields each block of ``block_size`` bytes in the input file.
 
     :param infile: file to read and separate in blocks.
@@ -411,7 +416,9 @@ def yield_fixed_blocks(infile: typing.BinaryIO, block_size: int) -> typing.Itera
 
 
 @decorators.log_decorator(logger)
-def compute_hash(message: typing.Union[bytes, typing.BinaryIO], method_name: str) -> bytes:
+def compute_hash(
+    message: typing.Union[bytes, typing.BinaryIO], method_name: str
+) -> bytes:
     """Returns the message digest.
 
     :param message: the signed message. Can be an 8-bit string or a file-like
@@ -448,7 +455,7 @@ def _find_method_hash(clear_sig: bytes) -> str:
     :raise VerificationFailed: when the hash method cannot be found
     """
 
-    for (hash_name, asn1code) in HASH_ASN1.items():
+    for hash_name, asn1code in HASH_ASN1.items():
         if asn1code in clear_sig:
             return hash_name
 

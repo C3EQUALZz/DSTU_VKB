@@ -14,21 +14,18 @@
 Выведите строку максимальной длины, являющуюся правильной скобочной последовательностью,
 которую можно получить из исходной строки удалением некоторых символов.Если возможных ответов несколько, выведите любой из них.
 """
-from typing import Final, Dict, List, Sequence, AnyStr
 
-BRACKET_PAIRS: Final[Dict[str, str]] = {
-    '(': ')',
-    '[': ']',
-    '{': '}'
-}
+from typing import AnyStr, Dict, Final, List, Sequence
+
+BRACKET_PAIRS: Final[Dict[str, str]] = {"(": ")", "[": "]", "{": "}"}
 
 
 def reconstruct(
-        s: AnyStr,
-        distance_table: Sequence[Sequence[int]],
-        table_for_restoring_sequence: Sequence[Sequence[int]],
-        l: int,
-        r: int
+    s: AnyStr,
+    distance_table: Sequence[Sequence[int]],
+    table_for_restoring_sequence: Sequence[Sequence[int]],
+    l: int,
+    r: int,
 ) -> AnyStr:
     """
     Восстанавливает правильную последовательность из таблиц.
@@ -53,22 +50,39 @@ def reconstruct(
     :param l: Левый индекс текущей подстроки.
     :param r: Правый индекс текущей подстроки.
     """
-    if distance_table[l][r] == r - l + 1:  # Все символы уже в правильной последовательности
+    if (
+        distance_table[l][r] == r - l + 1
+    ):  # Все символы уже в правильной последовательности
         return ""
     if distance_table[l][r] == 0:  # Неправильная последовательность
-        return s[l:r + 1]
+        return s[l : r + 1]
     if table_for_restoring_sequence[l][r] == -1:  # Если нет разделения
-        return s[l] + reconstruct(s, distance_table, table_for_restoring_sequence, l + 1, r - 1) + s[r]
+        return (
+            s[l]
+            + reconstruct(s, distance_table, table_for_restoring_sequence, l + 1, r - 1)
+            + s[r]
+        )
 
-    return (reconstruct(s, distance_table, table_for_restoring_sequence, l, table_for_restoring_sequence[l][r]) +
-            reconstruct(s, distance_table, table_for_restoring_sequence, table_for_restoring_sequence[l][r] + 1, r))
+    return reconstruct(
+        s,
+        distance_table,
+        table_for_restoring_sequence,
+        l,
+        table_for_restoring_sequence[l][r],
+    ) + reconstruct(
+        s,
+        distance_table,
+        table_for_restoring_sequence,
+        table_for_restoring_sequence[l][r] + 1,
+        r,
+    )
 
 
 def fill_tables(
-        s: AnyStr,
-        n: int,
-        distance_table: List[List[int]],
-        table_for_restoring_sequence: List[List[int]]
+    s: AnyStr,
+    n: int,
+    distance_table: List[List[int]],
+    table_for_restoring_sequence: List[List[int]],
 ) -> None:
     """
     Заполняет таблицы для минимального количества удалений и восстановления последовательности.
@@ -98,7 +112,7 @@ def fill_tables(
             if left == right:
                 distance_table[left][right] = 1
             else:
-                min_removals = float('inf')
+                min_removals = float("inf")
                 split_index = -1
 
                 # Проверка на соответствие скобок
@@ -107,7 +121,9 @@ def fill_tables(
 
                 # Разделение на подзадачи
                 for k in range(left, right):
-                    current_removals = distance_table[left][k] + distance_table[k + 1][right]
+                    current_removals = (
+                        distance_table[left][k] + distance_table[k + 1][right]
+                    )
                     if min_removals > current_removals:
                         min_removals = current_removals
                         split_index = k
@@ -128,7 +144,9 @@ def min_removals_to_valid_parentheses(s: AnyStr) -> AnyStr:
     n: int = len(s)
     # Таблица для хранения минимального количества удалений
     # Один символ всегда является правильной последовательностью
-    distance_table: List[List[int]] = [[1 if i == j else 0 for j in range(n)] for i in range(n)]
+    distance_table: List[List[int]] = [
+        [1 if i == j else 0 for j in range(n)] for i in range(n)
+    ]
     # Таблица для восстановления последовательности
     table_for_restoring_sequence: List[List[int]] = [[0] * n for _ in range(n)]
 

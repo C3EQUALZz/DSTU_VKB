@@ -1,13 +1,14 @@
 import os
 from unittest import TestCase
+
 ########################################################################################################################
 from PIL import Image
+
 ########################################################################################################################
 from ..backend_сipher import Cypher
 
 
 class TestCipher(TestCase):
-
     def test_crypt(self):
         image = Image.open("third_laba/test/baz.jpg")
         cypher = Cypher(image)

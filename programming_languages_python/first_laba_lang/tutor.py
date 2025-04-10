@@ -1,8 +1,9 @@
 """
 AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
-from math import fabs
+
 import ast
+from math import fabs
 
 
 def safe_eval(expression: str):
@@ -23,7 +24,11 @@ def first_question(string: str) -> float | str:
     """
     a, b, c, k = map(int, string.split())
     try:
-        return fabs((a ** 2 / b ** 2 + c ** 2 * a ** 2) / (a + b + c * (k - a / b ** 3)) + c + (k / b - k / a) * c)
+        return fabs(
+            (a**2 / b**2 + c**2 * a**2) / (a + b + c * (k - a / b**3))
+            + c
+            + (k / b - k / a) * c
+        )
     except ZeroDivisionError:
         return "Деление на ноль"
 
@@ -35,7 +40,11 @@ def second_question(custom_string: str) -> str:
     Пример ввода: ["a", "b", 3, 5, 7, "aba"]
     """
     lst = safe_eval(custom_string)
-    return '\n'.join(str(x) for x in lst[1::2]) if isinstance(lst, list) else "Вы ввели не список"
+    return (
+        "\n".join(str(x) for x in lst[1::2])
+        if isinstance(lst, list)
+        else "Вы ввели не список"
+    )
 
 
 def third_question(custom_string: str) -> int:

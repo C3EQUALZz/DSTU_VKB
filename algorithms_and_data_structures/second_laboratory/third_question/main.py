@@ -3,9 +3,11 @@
 в обратном случае вывести сообщение «элемент в массиве не найден».
 Для поиска элемента использовать алгоритм «бинарного поиска»
 """
+
 import sys
 
-from algorithms_and_data_structures.second_laboratory.third_question.binary import binary_search
+from algorithms_and_data_structures.second_laboratory.third_question.binary import \
+    binary_search
 
 
 def main() -> None:
@@ -31,5 +33,5 @@ def main() -> None:
         print(f"Элемент: {element}, индекс: {index_of_element}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

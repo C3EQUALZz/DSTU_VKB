@@ -6,9 +6,9 @@ import math
 import re
 from typing import NoReturn
 
-from .exceptions import NotValidNumbers, NoSupport
-
 from cybersecurity_base.twelfth_laboratory.abstract_class_cyphers import Cypher
+
+from .exceptions import NoSupport, NotValidNumbers
 
 
 class Affine(Cypher):
@@ -18,6 +18,7 @@ class Affine(Cypher):
     Args:
         key: tuple[int, int] - содержит числовые значения коэффициентов a и b
     """
+
     __slots__ = ("_key", "m")
 
     def __init__(self, key: tuple[int, ...]):
@@ -59,16 +60,20 @@ class Affine(Cypher):
         Returns:
             int | NoSupport: Длина алфавита или исключение, если язык не поддерживается
         """
-        if not(math.gcd(self.key[0], 26) == 1 or math.gcd(self.key[0], 33) == 1):
+        if not (math.gcd(self.key[0], 26) == 1 or math.gcd(self.key[0], 33) == 1):
             raise ValueError("Не взаимно простые числа a и количество букв в алфавите ")
 
-        words = re.findall(r'\w+', sentence, re.UNICODE)
-        if (all(re.fullmatch(r"^[a-z]+$", word, re.I) for word in words)
-                and math.gcd(self.key[0], 26) == 1):
+        words = re.findall(r"\w+", sentence, re.UNICODE)
+        if (
+            all(re.fullmatch(r"^[a-z]+$", word, re.I) for word in words)
+            and math.gcd(self.key[0], 26) == 1
+        ):
             return 26
 
-        if (all(re.fullmatch(r"^[а-яё]+$", word, re.I) for word in words)
-                and math.gcd(self.key[0], 33) == 1):
+        if (
+            all(re.fullmatch(r"^[а-яё]+$", word, re.I) for word in words)
+            and math.gcd(self.key[0], 33) == 1
+        ):
             return 33
         raise NoSupport("Используется неподдерживаемый язык")
 
@@ -91,7 +96,9 @@ class Affine(Cypher):
         # return chr(alphabet_start + encrypted_char)
 
         a, b = self.key
-        return Affine._get_language(t)[((a * Affine._get_language(t).find(t) + b) % self.m)]
+        return Affine._get_language(t)[
+            ((a * Affine._get_language(t).find(t) + b) % self.m)
+        ]
 
     def encrypt(self, string: str):
         """
@@ -120,7 +127,11 @@ class Affine(Cypher):
             return t
 
         a, b = self.key
-        return Affine._get_language(t)[self._find_modular_inverse(a) * (Affine._get_language(t).find(t) - b) % self.m]
+        return Affine._get_language(t)[
+            self._find_modular_inverse(a)
+            * (Affine._get_language(t).find(t) - b)
+            % self.m
+        ]
 
     def decrypt(self, string):
         """

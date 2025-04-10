@@ -1,22 +1,17 @@
-from fastapi import APIRouter, UploadFile, File, HTTPException
-from pathlib import Path
-import redis.asyncio as redis
 import io
-import pickle
-import logging
 import json
+import logging
+import pickle
+from pathlib import Path
+
+import redis.asyncio as redis
+from fastapi import APIRouter, File, HTTPException, UploadFile
 from fastapi.responses import StreamingResponse
 
 from combined_languages.theory_of_information.backend.fifth_semestr.third_laboratory.commands import (
-    HuffmanEncodeCommand,
-    HuffmanDecodeCommand,
-    LZ77EncodeCommand,
-    LZ77DecodeCommand,
-    LZ78EncodeCommand,
-    LZ78DecodeCommand,
-    LZWEncodeCommand,
-    LZWDecodeCommand,
-)
+    HuffmanDecodeCommand, HuffmanEncodeCommand, LZ77DecodeCommand,
+    LZ77EncodeCommand, LZ78DecodeCommand, LZ78EncodeCommand, LZWDecodeCommand,
+    LZWEncodeCommand)
 
 router = APIRouter(
     prefix="/fifth_semester/third_laboratory",
@@ -26,6 +21,7 @@ router = APIRouter(
 logger = logging.getLogger("uvicorn")
 
 r = redis.Redis()
+
 
 # Общая функция для обработки кодирования
 async def process_encode(file_input: UploadFile, command_class):
@@ -37,8 +33,9 @@ async def process_encode(file_input: UploadFile, command_class):
 
     return {
         "metadata": metadata,
-        "download_link": f"/api/fifth_semester/third_laboratory/download/{filename}"
+        "download_link": f"/api/fifth_semester/third_laboratory/download/{filename}",
     }
+
 
 # Общая функция для обработки декодирования
 async def process_decode(file_input: UploadFile, command_class):
@@ -50,40 +47,49 @@ async def process_decode(file_input: UploadFile, command_class):
 
     return {
         "metadata": metadata,
-        "download_link": f"/api/fifth_semester/third_laboratory/download/{filename}"
+        "download_link": f"/api/fifth_semester/third_laboratory/download/{filename}",
     }
+
 
 @router.post("/encode-huffman")
 async def encode_huffman(file_input: UploadFile = File(...)):
     return await process_encode(file_input, HuffmanEncodeCommand)
 
+
 @router.post("/decode-huffman")
 async def decode_huffman(file_input: UploadFile = File(...)):
     return await process_decode(file_input, HuffmanDecodeCommand)
+
 
 @router.post("/encode-lz77")
 async def encode_lz77(file_input: UploadFile = File(...)):
     return await process_encode(file_input, LZ77EncodeCommand)
 
+
 @router.post("/decode-lz77")
 async def decode_lz77(file_input: UploadFile = File(...)):
     return await process_decode(file_input, LZ77DecodeCommand)
+
 
 @router.post("/encode-lz78")
 async def encode_lz78(file_input: UploadFile = File(...)):
     return await process_encode(file_input, LZ78EncodeCommand)
 
+
 @router.post("/decode-lz78")
 async def decode_lz78(file_input: UploadFile = File(...)):
     return await process_decode(file_input, LZ78DecodeCommand)
+
 
 @router.post("/encode-lzw")
 async def encode_lzw(file_input: UploadFile = File(...)):
     return await process_encode(file_input, LZWEncodeCommand)
 
+
 @router.post("/decode-lzw")
 async def decode_lzw(file_input: UploadFile = File(...)):
     return await process_decode(file_input, LZWDecodeCommand)
+
 
 @router.get("/download/{filename}")
 async def download_file(filename: str):
@@ -97,8 +103,9 @@ async def download_file(filename: str):
     return StreamingResponse(
         memory_file,
         media_type="application/octet-stream",
-        headers={"Content-Disposition": f"attachment; filename={filename}"}
+        headers={"Content-Disposition": f"attachment; filename={filename}"},
     )
+
 
 @router.get("/download_txt/{filename}")
 async def download_txt_file(filename: str):
@@ -112,11 +119,13 @@ async def download_txt_file(filename: str):
     json_data = json.dumps(data)
 
     byte_stream = io.BytesIO()
-    byte_stream.write(json_data.encode('utf-8'))
+    byte_stream.write(json_data.encode("utf-8"))
     byte_stream.seek(0)
 
     return StreamingResponse(
         byte_stream,
         media_type="application/octet-stream",
-        headers={"Content-Disposition": f"attachment; filename={filename.replace('pkl', 'txt')}"}
+        headers={
+            "Content-Disposition": f"attachment; filename={filename.replace('pkl', 'txt')}"
+        },
     )

@@ -1,13 +1,16 @@
 """
 Здесь описан класс графа, который мне нужен для поиска в ширину
 """
+
 from collections import defaultdict, deque
 from copy import deepcopy
-from typing import Set, MutableMapping, AnyStr
+from typing import AnyStr, MutableMapping, Set
 
 
 class Graph:
-    def __init__(self, transitions: MutableMapping[AnyStr, MutableMapping[AnyStr, Set[AnyStr]]]) -> None:
+    def __init__(
+        self, transitions: MutableMapping[AnyStr, MutableMapping[AnyStr, Set[AnyStr]]]
+    ) -> None:
         self.transitions = deepcopy(transitions)
         self._graph = defaultdict(set)
         self._convert_to_graph()

@@ -23,11 +23,12 @@ i-м городе (всё это целые числа из диапазона �
 
 Требуется вывести одно число – суммарную стоимость маршрута или -1, если добраться невозможно.
 """
+
 from collections import defaultdict
 from dataclasses import dataclass
 from functools import total_ordering
 from heapq import heappop, heappush
-from typing import List, Tuple, Dict, Set, cast
+from typing import Dict, List, Set, Tuple, cast
 
 
 @dataclass(frozen=True)
@@ -42,18 +43,24 @@ class State:
     tank (int): Количество топлива в баке (0 или 1).
     canister (int): Количество топлива в канистре (0 или 1).
     """
+
     cost: int
     city: int
     tank: int
     canister: int
 
-    def __lt__(self, other: 'State') -> bool:
+    def __lt__(self, other: "State") -> bool:
         return self.cost < other.cost
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, State):
             return NotImplemented
-        return (self.cost, self.city, self.tank, self.canister) == (other.cost, other.city, other.tank, other.canister)
+        return (self.cost, self.city, self.tank, self.canister) == (
+            other.cost,
+            other.city,
+            other.tank,
+            other.canister,
+        )
 
 
 class Graph:
@@ -94,11 +101,21 @@ def min_fuel_cost(n: int, fuel_costs: List[int], graph: Graph) -> int:
 
         # 1. Заправка только бака
         if state.tank == 0:
-            heappush(pq, State(state.cost + fuel_costs[state.city - 1], state.city, 1, state.canister))
+            heappush(
+                pq,
+                State(
+                    state.cost + fuel_costs[state.city - 1],
+                    state.city,
+                    1,
+                    state.canister,
+                ),
+            )
 
         # 2. Заправка бака и канистры
         if state.tank == 0 and state.canister == 0:
-            heappush(pq, State(state.cost + 2 * fuel_costs[state.city - 1], state.city, 1, 1))
+            heappush(
+                pq, State(state.cost + 2 * fuel_costs[state.city - 1], state.city, 1, 1)
+            )
 
         # 3. Переливание бензина из канистры в бак
         if state.tank == 0 and state.canister > 0:
@@ -107,7 +124,9 @@ def min_fuel_cost(n: int, fuel_costs: List[int], graph: Graph) -> int:
         # 4. Переход в соседний город (тратим 1 единицу топлива)
         if state.tank > 0:
             for neighbor in graph.get_neighbors(state.city):
-                heappush(pq, State(state.cost, neighbor, state.tank - 1, state.canister))
+                heappush(
+                    pq, State(state.cost, neighbor, state.tank - 1, state.canister)
+                )
 
     return -1  # Если не удалось добраться до города N
 
@@ -116,7 +135,9 @@ def main() -> None:
     n: int = int(input())
     fuel_costs: List[int] = list(map(int, input().split()))
     m: int = int(input())
-    roads: List[Tuple[int, int]] = cast(List[Tuple[int, int]], [tuple(map(int, input().split())) for _ in range(m)])
+    roads: List[Tuple[int, int]] = cast(
+        List[Tuple[int, int]], [tuple(map(int, input().split())) for _ in range(m)]
+    )
 
     graph = Graph()
     for u, v in roads:
@@ -125,5 +146,5 @@ def main() -> None:
     print(min_fuel_cost(n, fuel_costs, graph))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

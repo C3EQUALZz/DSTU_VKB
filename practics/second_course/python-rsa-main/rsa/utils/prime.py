@@ -22,14 +22,14 @@ Introduced in Python-RSA 3.1.
 
 """
 
+import logging
+import math
 import multiprocessing as mp
 from multiprocessing.connection import Connection
 
-import sympy
-import math
-import rsa.utils.randnum
 import rsa.helpers.decorators as decorators
-import logging
+import rsa.utils.randnum
+import sympy
 
 __all__ = ["get_prime", "are_relatively_prime"]
 
@@ -75,23 +75,26 @@ def _find_prime(nbits: int, pipe: Connection) -> None:
 def _get_prime_multi_thread(nbits: int, pool_size: int) -> int:
     """Returns a prime number that can be stored in 'nbits' bits.
 
-        Works in multiple threads at the same time.
+    Works in multiple threads at the same time.
 
-        >>> import sympy
-        >>> p = get_prime(128, 3)
-        >>> sympy.isprime(p-1)
-        False
-        >>> sympy.isprime(p)
-        True
-        >>> sympy.isprime(p+1)
-        False
+    >>> import sympy
+    >>> p = get_prime(128, 3)
+    >>> sympy.isprime(p-1)
+    False
+    >>> sympy.isprime(p)
+    True
+    >>> sympy.isprime(p+1)
+    False
 
-        >>> from rsa.helpers import common
-        >>> common.bit_size(p) == 128
-        True
-        """
+    >>> from rsa.helpers import common
+    >>> common.bit_size(p) == 128
+    True
+    """
     pipe_recv, pipe_send = mp.Pipe(duplex=False)
-    procs = [mp.Process(target=_find_prime, args=(nbits, pipe_send)) for _ in range(pool_size)]
+    procs = [
+        mp.Process(target=_find_prime, args=(nbits, pipe_send))
+        for _ in range(pool_size)
+    ]
 
     try:
         for p in procs:

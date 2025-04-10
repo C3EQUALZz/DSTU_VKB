@@ -1,12 +1,6 @@
 from abc import ABC
-from dataclasses import (
-    dataclass,
-    field,
-)
-from datetime import (
-    UTC,
-    datetime,
-)
+from dataclasses import dataclass, field
+from datetime import UTC, datetime
 from typing import Any
 from uuid import uuid4
 
@@ -21,9 +15,7 @@ class BaseEntity(ABC):
     created_at: datetime = field(default_factory=lambda: datetime.now(UTC), kw_only=True)
     updated_at: datetime = field(default_factory=lambda: datetime.now(UTC), kw_only=True)
 
-    async def to_dict(
-        self, exclude: set[str] | None = None, include: dict[str, Any] | None = None
-    ) -> dict[str, Any]:
+    async def to_dict(self, exclude: set[str] | None = None, include: dict[str, Any] | None = None) -> dict[str, Any]:
         """
         Create a dictionary representation of the entity.
 

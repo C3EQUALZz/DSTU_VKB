@@ -17,9 +17,11 @@
 This is the actual core RSA implementation, which is only defined
 mathematically on integers.
 """
+
 import itertools
-import typing
 import logging
+import typing
+
 import rsa.core as core_namespace
 import rsa.helpers.decorators as decorators
 
@@ -56,10 +58,10 @@ def decrypt_int(cypher_text: int, decryption_key: int, n: int) -> int:
 
 @decorators.log_decorator(logger)
 def decrypt_int_fast(
-        cypher_text: int,
-        rs: typing.List[int],
-        ds: typing.List[int],
-        ts: typing.List[int],
+    cypher_text: int,
+    rs: typing.List[int],
+    ds: typing.List[int],
+    ts: typing.List[int],
 ) -> int:
     """Decrypts a cypher text more quickly using the Chinese Remainder Theorem."""
 

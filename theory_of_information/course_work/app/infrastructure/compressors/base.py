@@ -1,12 +1,7 @@
-from abc import (
-    ABC,
-    abstractmethod,
-)
+from abc import ABC, abstractmethod
 
-from app.domain.entities.file_objects import (
-    CompressedFileObjectEntity,
-    FileObjectEntity,
-)
+from app.domain.entities.file_objects import (CompressedFileObjectEntity,
+                                              FileObjectEntity)
 
 
 class Compressor(ABC):

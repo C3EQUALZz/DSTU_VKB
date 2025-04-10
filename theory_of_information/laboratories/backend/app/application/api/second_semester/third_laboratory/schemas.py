@@ -1,4 +1,4 @@
-from typing import List, Literal, Any
+from typing import Any, List, Literal
 
 from pydantic import BaseModel, Field, model_validator
 from pydantic_core import from_json
@@ -38,26 +38,20 @@ class EncodeCascadeCodeRequestSchema(JsonStringModel):
             [1, 0, 0, 1, 0, 0, 1],
             [0, 1, 1, 0, 0, 0, 1],
             [0, 1, 0, 1, 1, 0, 0],
-            [0, 1, 0, 1, 0, 1, 1]
+            [0, 1, 0, 1, 0, 1, 1],
         ],
         description="Матрица для блочного кода",
-        validate_default=True
+        validate_default=True,
     )
 
     type_matrix: Literal["G", "H"] = Field(
-        default="G",
-        description="Тип матрицы для блочного кода",
-        validate_default=True
+        default="G", description="Тип матрицы для блочного кода", validate_default=True
     )
 
     indexes: list[list[int]] = Field(
-        default=[
-            [0, 2, 3],
-            [1, 2],
-            [0, 3]
-        ],
+        default=[[0, 2, 3], [1, 2], [0, 3]],
         description="Индексы для сумматоров",
-        validate_default=True
+        validate_default=True,
     )
 
 
@@ -67,28 +61,22 @@ class DecodeCascadeCodeRequestSchema(BaseModel):
             [1, 0, 0, 1, 0, 0, 1],
             [0, 1, 1, 0, 0, 0, 1],
             [0, 1, 0, 1, 1, 0, 0],
-            [0, 1, 0, 1, 0, 1, 1]
+            [0, 1, 0, 1, 0, 1, 1],
         ],
         description="Матрица для блочного кода",
-        validate_default=True
+        validate_default=True,
     )
 
     type_matrix: Literal["G", "H"] = Field(
-        default="G",
-        description="Тип матрицы для блочного кода",
-        validate_default=True
+        default="G", description="Тип матрицы для блочного кода", validate_default=True
     )
 
     data: str
 
     indexes: list[list[int]] = Field(
-        default=[
-            [0, 2, 3],
-            [1, 2],
-            [0, 3]
-        ],
+        default=[[0, 2, 3], [1, 2], [0, 3]],
         description="Индексы для сумматоров",
-        validate_default=True
+        validate_default=True,
     )
 
     image_width: int = Field(default=20, description="Ширина изображения")

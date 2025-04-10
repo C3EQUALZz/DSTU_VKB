@@ -6,9 +6,13 @@ import os
 
 from app.exceptions.infrastructure import BadDataException
 from app.infrastructure.compressors.fastlz import common
-from app.infrastructure.compressors.fastlz.configuration import Configuration, FastLzLevel, Constants
-from app.infrastructure.compressors.fastlz.level1 import Compressor as CompressorLevel1
-from app.infrastructure.compressors.fastlz.level2 import Compressor as CompressorLevel2
+from app.infrastructure.compressors.fastlz.configuration import (Configuration,
+                                                                 Constants,
+                                                                 FastLzLevel)
+from app.infrastructure.compressors.fastlz.level1 import \
+    Compressor as CompressorLevel1
+from app.infrastructure.compressors.fastlz.level2 import \
+    Compressor as CompressorLevel2
 
 
 class FileCompressor:
@@ -121,9 +125,7 @@ class FileCompressor:
             compression_method = 1
 
             # Retrieve the current block from the input.
-            buffer = source[
-                source_position : source_position + Constants.BLOCK_SIZE_COMPRESSION
-            ]
+            buffer = source[source_position : source_position + Constants.BLOCK_SIZE_COMPRESSION]
             bytes_read = len(buffer)
             source_position += bytes_read
 
@@ -308,10 +310,7 @@ class FileDecompressor:
 
             # Handle the different chunk types.
 
-            if (
-                header.chunk_id == 1
-                and 10 < header.chunk_size < Constants.BLOCK_SIZE_DECOMPRESSION
-            ):
+            if header.chunk_id == 1 and 10 < header.chunk_size < Constants.BLOCK_SIZE_DECOMPRESSION:
                 # This is the first chunk in the file.
                 # It cannot be smaller than 11 bytes, as it contains the original file
                 # size (using 8 bytes), the number of bytes for the original filename
@@ -332,9 +331,7 @@ class FileDecompressor:
                 # Make sure that the checksums match.
                 if checksum != header.chunk_checksum:
                     raise BadDataException(
-                        "Checksum mismatch: Expected {}, got {}".format(
-                            hex(header.chunk_checksum), hex(checksum)
-                        )
+                        "Checksum mismatch: Expected {}, got {}".format(hex(header.chunk_checksum), hex(checksum))
                     )
 
                 # Get the uncompressed size (the original file size) by reading 4 bytes
@@ -376,15 +373,11 @@ class FileDecompressor:
                             raise BadDataException("Reached end while copying data.")
 
                         # Determine the size of the current block.
-                        bytes_in_block = min(
-                            remaining, Constants.BLOCK_SIZE_DECOMPRESSION
-                        )
+                        bytes_in_block = min(remaining, Constants.BLOCK_SIZE_DECOMPRESSION)
 
                         # Read the current block from the source buffer and make sure
                         # that it actually has the desired length.
-                        buffer = source[
-                            source_position : source_position + bytes_in_block
-                        ]
+                        buffer = source[source_position : source_position + bytes_in_block]
                         assert len(buffer) == bytes_in_block
                         source_position += bytes_in_block
 
@@ -402,18 +395,14 @@ class FileDecompressor:
                     # comparing the checksum.
                     if checksum != header.chunk_checksum:
                         raise BadDataException(
-                            "Checksum mismatch: Expected {}, got {}".format(
-                                hex(header.chunk_checksum), hex(checksum)
-                            )
+                            "Checksum mismatch: Expected {}, got {}".format(hex(header.chunk_checksum), hex(checksum))
                         )
 
                 elif header.chunk_options == 1:
                     # This has been compressed using FastLZ.
 
                     # Read the current chunk from the input.
-                    compressed_buffer = source[
-                        source_position : source_position + header.chunk_size
-                    ]
+                    compressed_buffer = source[source_position : source_position + header.chunk_size]
                     source_position += header.chunk_size
 
                     # Update the checksum.
@@ -422,15 +411,11 @@ class FileDecompressor:
                     # Make sure that everything has been read correctly.
                     if checksum != header.chunk_checksum:
                         raise BadDataException(
-                            "Checksum mismatch: Expected {}, got {}".format(
-                                hex(header.chunk_checksum), hex(checksum)
-                            )
+                            "Checksum mismatch: Expected {}, got {}".format(hex(header.chunk_checksum), hex(checksum))
                         )
 
                     # Decompress the given data.
-                    decompressed_buffer = common.call_decompressor_for_buffer_level(
-                        compressed_buffer
-                    )
+                    decompressed_buffer = common.call_decompressor_for_buffer_level(compressed_buffer)
                     decompressed_size = len(decompressed_buffer)
 
                     # Make sure that we did not lose/added some data.
@@ -446,9 +431,7 @@ class FileDecompressor:
 
                 else:
                     # This is using a compression method not (yet) known.
-                    raise BadDataException(
-                        "Unknown compression method {}.".format(header.chunk_options)
-                    )
+                    raise BadDataException("Unknown compression method {}.".format(header.chunk_options))
 
         # Return the destination buffer.
         return destination
@@ -473,24 +456,16 @@ class FileDecompressor:
         header.chunk_id = common.read_unsigned_integer_16_bit(buffer, start_position)
 
         # Get the chunk options, taking the next 2 bytes.
-        header.chunk_options = common.read_unsigned_integer_16_bit(
-            buffer, start_position + 2
-        )
+        header.chunk_options = common.read_unsigned_integer_16_bit(buffer, start_position + 2)
 
         # Get the size, taking the next 4 bytes.
-        header.chunk_size = common.read_unsigned_integer_32_bit(
-            buffer, start_position + 4
-        )
+        header.chunk_size = common.read_unsigned_integer_32_bit(buffer, start_position + 4)
 
         # Get the checksum, taking the next 4 bytes.
-        header.chunk_checksum = common.read_unsigned_integer_32_bit(
-            buffer, start_position + 8
-        )
+        header.chunk_checksum = common.read_unsigned_integer_32_bit(buffer, start_position + 8)
 
         # Get the extra data, taking the next 4 bytes.
-        header.chunk_extra = common.read_unsigned_integer_32_bit(
-            buffer, start_position + 12
-        )
+        header.chunk_extra = common.read_unsigned_integer_32_bit(buffer, start_position + 12)
 
         # Return the header data.
         return header

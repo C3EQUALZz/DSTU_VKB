@@ -1,15 +1,11 @@
 from typing import TYPE_CHECKING
 
-from app.domain.entities.file_objects import (
-    CompressedFileObjectEntity,
-    FileObjectEntity,
-)
+from app.domain.entities.file_objects import (CompressedFileObjectEntity,
+                                              FileObjectEntity)
 from app.domain.values.backup import CompressionType
 from app.infrastructure.services.compressor import CompressorService
-from app.logic.commands.compression import (
-    CompressFileCommand,
-    DecompressFileCommand,
-)
+from app.logic.commands.compression import (CompressFileCommand,
+                                            DecompressFileCommand)
 from app.logic.handlers.compression.base import CompressionCommandHandler
 
 if TYPE_CHECKING:

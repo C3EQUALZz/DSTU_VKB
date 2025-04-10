@@ -2,7 +2,8 @@ import numpy as np
 
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.models.verification_systematic_matrix import \
     HSystematicMatrix
-from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.registry import Registry
+from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.registry import \
+    Registry
 
 
 def extend_the_code(h_sys: HSystematicMatrix) -> HSystematicMatrix:
@@ -30,12 +31,12 @@ def extend_the_code(h_sys: HSystematicMatrix) -> HSystematicMatrix:
     return HSystematicMatrix(extended_matrix.tolist())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     h = [
         [1, 1, 0, 1, 1, 0, 0, 0],
         [1, 0, 1, 1, 0, 1, 0, 0],
         [1, 0, 0, 1, 0, 0, 1, 0],
-        [0, 1, 1, 1, 0, 0, 0, 1]
+        [0, 1, 1, 1, 0, 0, 0, 1],
     ]
 
     matrix = HSystematicMatrix(h)

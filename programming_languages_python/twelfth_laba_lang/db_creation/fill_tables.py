@@ -1,8 +1,8 @@
 from mimesis import Address
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.orm import Session, sessionmaker
 
-from .tables import Base, Country, City, Street
+from .tables import Base, City, Country, Street
 
 
 class DatabaseManager:
@@ -22,9 +22,14 @@ class DatabaseManager:
 
 def fill_random_data(session: Session) -> None:
     generic = Address()
-    countries = [Country(name=generic.country()) for _ in range(3)] + [Country(name="Albania"), Country(name="РФ")]
+    countries = [Country(name=generic.country()) for _ in range(3)] + [
+        Country(name="Albania"),
+        Country(name="РФ"),
+    ]
     cities = [City(name=generic.city(), country=countries[i % 5]) for i in range(5)]
-    streets = [Street(name=generic.street_name(), city=cities[i % 5]) for i in range(57)]
+    streets = [
+        Street(name=generic.street_name(), city=cities[i % 5]) for i in range(57)
+    ]
 
     session.add_all(countries + cities + streets)
 

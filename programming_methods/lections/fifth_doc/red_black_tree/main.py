@@ -1,7 +1,9 @@
 import tkinter as tk
 from tkinter import messagebox
 from typing import Optional
-from rbtree import RBTree, RBNode, NodeColor  # Предполагается, что обновленный код в rbtree.py
+
+from rbtree import (  # Предполагается, что обновленный код в rbtree.py
+    NodeColor, RBNode, RBTree)
 
 
 class RBApp:
@@ -31,20 +33,12 @@ class RBApp:
 
         for col, (text, command) in enumerate(buttons, start=1):
             btn = tk.Button(
-                control_frame,
-                text=text,
-                command=command,
-                font=("Arial", 10),
-                width=12
+                control_frame, text=text, command=command, font=("Arial", 10), width=12
             )
             btn.grid(row=0, column=col, padx=2)
 
         self.canvas = tk.Canvas(
-            self.root,
-            width=1000,
-            height=600,
-            bg="white",
-            highlightthickness=0
+            self.root, width=1000, height=600, bg="white", highlightthickness=0
         )
         self.canvas.pack(pady=10, expand=True, fill=tk.BOTH)
 
@@ -100,20 +94,16 @@ class RBApp:
         self.canvas.delete("all")
         if self.tree.root != self.tree.sentinel:
             self._draw_subtree(
-                self.tree.root,
-                x=500,
-                y=30,
-                x_offset=300,
-                highlight_node=highlight_node
+                self.tree.root, x=500, y=30, x_offset=300, highlight_node=highlight_node
             )
 
     def _draw_subtree(
-            self,
-            node: RBNode,
-            x: int,
-            y: int,
-            x_offset: int,
-            highlight_node: Optional[RBNode] = None
+        self,
+        node: RBNode,
+        x: int,
+        y: int,
+        x_offset: int,
+        highlight_node: Optional[RBNode] = None,
     ) -> None:
         if node == self.tree.sentinel:
             return
@@ -124,48 +114,38 @@ class RBApp:
 
         # Draw node
         self.canvas.create_oval(
-            x - 20, y - 20, x + 20, y + 20,
+            x - 20,
+            y - 20,
+            x + 20,
+            y + 20,
             fill=fill_color,
             outline=outline_color,
-            width=2
+            width=2,
         )
         self.canvas.create_text(
-            x, y,
+            x,
+            y,
             text=str(node.key),
             fill="white" if fill_color == "black" else "black",
-            font=("Arial", 10, "bold")
+            font=("Arial", 10, "bold"),
         )
 
         # Draw connections to children
         new_offset = int(x_offset * 0.5)
         if node.left != self.tree.sentinel:
             self.canvas.create_line(
-                x, y + 20,
-                   x - x_offset, y + 80,
-                fill="gray40",
-                width=1
+                x, y + 20, x - x_offset, y + 80, fill="gray40", width=1
             )
             self._draw_subtree(
-                node.left,
-                x - x_offset,
-                y + 80,
-                new_offset,
-                highlight_node
+                node.left, x - x_offset, y + 80, new_offset, highlight_node
             )
 
         if node.right != self.tree.sentinel:
             self.canvas.create_line(
-                x, y + 20,
-                   x + x_offset, y + 80,
-                fill="gray40",
-                width=1
+                x, y + 20, x + x_offset, y + 80, fill="gray40", width=1
             )
             self._draw_subtree(
-                node.right,
-                x + x_offset,
-                y + 80,
-                new_offset,
-                highlight_node
+                node.right, x + x_offset, y + 80, new_offset, highlight_node
             )
 
 

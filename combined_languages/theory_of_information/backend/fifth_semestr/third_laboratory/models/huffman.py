@@ -2,7 +2,9 @@ import heapq
 from collections import Counter
 from dataclasses import dataclass
 
-from combined_languages.theory_of_information.backend.core.decorators import loggable
+from combined_languages.theory_of_information.backend.core.decorators import \
+    loggable
+
 
 @dataclass
 class Leaf:
@@ -10,11 +12,13 @@ class Leaf:
     Класс, который описывает символ для нужного узла.
     В зависимости от вероятностей нам выдается 0 или 1.
     """
+
     char: str
 
     @loggable
     def walk(self, code: dict[str, str], acc: str) -> None:
         code[self.char] = acc or "0"
+
 
 @dataclass
 class Node:
@@ -23,6 +27,7 @@ class Node:
     Вот, например, у нас символы a и d, вот здесь стоит выбор.
     Я придумал назвать - узел
     """
+
     left: Leaf
     right: Leaf
 
@@ -35,11 +40,13 @@ class Node:
         self.left.walk(code, acc + "0")
         self.right.walk(code, acc + "1")
 
+
 @dataclass
 class Tree:
     """
     Класс, который строит дерево Хаффмана на основе частот символов.
     """
+
     dictionary_with_freq: dict[str, float]
 
     def build(self) -> dict[str, str]:
@@ -59,7 +66,10 @@ class Tree:
         while len(queue_with_priority) > 1:
             minimal_frequency, _, left = heapq.heappop(queue_with_priority)
             _, pre_minimal_freq, right = heapq.heappop(queue_with_priority)
-            heapq.heappush(queue_with_priority, (minimal_frequency + pre_minimal_freq, count, Node(left, right)))
+            heapq.heappush(
+                queue_with_priority,
+                (minimal_frequency + pre_minimal_freq, count, Node(left, right)),
+            )
             count += 1
 
         if queue_with_priority:

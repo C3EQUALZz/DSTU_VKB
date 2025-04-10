@@ -1,7 +1,4 @@
-from abc import (
-    ABC,
-    abstractmethod,
-)
+from abc import ABC, abstractmethod
 
 from app.domain.entities.file_objects import CompressedFileObjectEntity
 from app.infrastructure.repositories.base import AbstractRepository

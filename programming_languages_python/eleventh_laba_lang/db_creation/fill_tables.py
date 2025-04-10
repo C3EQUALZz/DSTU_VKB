@@ -2,11 +2,11 @@ from typing import Callable
 
 ########################################################################################################################
 from mimesis import Generic, Locale
-from sqlalchemy import create_engine, Engine
-from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy import Engine, create_engine
+from sqlalchemy.orm import Session, sessionmaker
 
 ########################################################################################################################
-from .tables import Base, Teacher, Position, Department
+from .tables import Base, Department, Position, Teacher
 
 __all__ = ["create_database"]
 
@@ -42,9 +42,16 @@ class DatabaseManager:
         """
         Метод, который добавляет должности преподавателей
         """
-        positions_data: tuple[str, ...] = ('Декан', 'Заместитель декана',
-                                           'Заведующий кафедрой', 'Старший преподаватель',
-                                           'Ассистент', 'Лаборант', 'Доцент', 'Профессор')
+        positions_data: tuple[str, ...] = (
+            "Декан",
+            "Заместитель декана",
+            "Заведующий кафедрой",
+            "Старший преподаватель",
+            "Ассистент",
+            "Лаборант",
+            "Доцент",
+            "Профессор",
+        )
         for title in positions_data:
             position = Position(title=title)
             session.add(position)
@@ -55,15 +62,18 @@ class DatabaseManager:
         Метод, который добавляет кафедры и вуз
         """
         departments_data: tuple[dict[str, str], ...] = (
-            {'title': 'Высшая математика', 'institute': 'DSTU'},
-            {'title': 'Прикладная математика', 'institute': 'DSTU'},
-            {'title': 'ПОВТиАС', 'institute': 'DSTU'},
-            {'title': 'КБИС', 'institute': 'DSTU'},
-            {'title': 'Информатика и математика', 'institute': 'DSTU'},
-            {'title': 'ВСиИБ', 'institute': 'DSTU'},
-            {'title': 'Алгебра и дискретная математика', 'institute': 'SFEDU'},
-            {'title': 'Вычислительная математика и математическая физика', 'institute': 'SFEDU'},
-            {'title': 'Информатика и вычислительный эксперимент', 'institute': 'SFEDU'}
+            {"title": "Высшая математика", "institute": "DSTU"},
+            {"title": "Прикладная математика", "institute": "DSTU"},
+            {"title": "ПОВТиАС", "institute": "DSTU"},
+            {"title": "КБИС", "institute": "DSTU"},
+            {"title": "Информатика и математика", "institute": "DSTU"},
+            {"title": "ВСиИБ", "institute": "DSTU"},
+            {"title": "Алгебра и дискретная математика", "institute": "SFEDU"},
+            {
+                "title": "Вычислительная математика и математическая физика",
+                "institute": "SFEDU",
+            },
+            {"title": "Информатика и вычислительный эксперимент", "institute": "SFEDU"},
         )
         for department_data in departments_data:
             department = Department(**department_data)
@@ -99,5 +109,3 @@ def create_database(path) -> None:
     db_manager.populate_data(DatabaseManager.fill_positions)
     db_manager.populate_data(DatabaseManager.fill_departments)
     db_manager.populate_data(DatabaseManager.fill_teachers)
-
-

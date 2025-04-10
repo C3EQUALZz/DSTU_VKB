@@ -1,13 +1,14 @@
 from queue import PriorityQueue
-from typing import TypeVar, List
+from typing import List, TypeVar
 
-from algorithms_and_data_structures.fourth_laboratory.core.base import BaseWeightedGraph
+from algorithms_and_data_structures.fourth_laboratory.core.base import \
+    BaseWeightedGraph
 
 T = TypeVar("T")
 
 
 def dijkstra(graph: BaseWeightedGraph[T], start_vertex: T, end_vertex: T) -> List[T]:
-    distances = {v: float('inf') for v in graph}
+    distances = {v: float("inf") for v in graph}
     distances[start_vertex] = 0
 
     # Словарь для отслеживания предшественников

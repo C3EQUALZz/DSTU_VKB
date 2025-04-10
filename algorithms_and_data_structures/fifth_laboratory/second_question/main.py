@@ -1,5 +1,5 @@
 import sys
-from typing import Final, Dict
+from typing import Dict, Final
 
 from algorithms_and_data_structures.fifth_laboratory.first_question.main import \
     main as fifth_laboratory_first_question_main
@@ -38,11 +38,9 @@ CHOICES: Final[Dict] = {
     },
     "4": {
         "1": fourth_laboratory_first_question_main,
-        "2": fourth_laboratory_second_question_main
+        "2": fourth_laboratory_second_question_main,
     },
-    "5": {
-        "1": fifth_laboratory_first_question_main
-    }
+    "5": {"1": fifth_laboratory_first_question_main},
 }
 
 
@@ -62,5 +60,5 @@ def main() -> None:
         CHOICES[number_of_laboratory][number_of_question]()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

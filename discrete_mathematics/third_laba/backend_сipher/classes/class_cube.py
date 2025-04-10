@@ -3,9 +3,12 @@
 Считайте, что матрица из нашего изображения - это и есть кубик
 При считывании изображения у нас получается матрица, которое ещё содержит 3 матрицы
 """
+
 from functools import cache
+
 # Внешние библиотеки
 import numpy as np
+
 # Мои заготовки
 from .class_keys_creation import KeyManager
 
@@ -39,7 +42,9 @@ class Cube:
             # Вычисление количества позиций, на которое нужно сдвинуть элементы в строке
             # sign как раз задает направление сдвига
             roll_amount = direction * sign * self.key_manager.key_rows[i]
-            self.rgb_array[i, :, :] = np.roll(self.rgb_array[i, :, :], roll_amount, axis=0)
+            self.rgb_array[i, :, :] = np.roll(
+                self.rgb_array[i, :, :], roll_amount, axis=0
+            )
 
     @cache
     def roll_column(self, encryption: bool = True) -> None:
@@ -49,20 +54,26 @@ class Cube:
         :return: Ничего не возвращает, изменяет только нашу матрицу с цветами
         """
         # Если 1, то повороты идут в правую сторону, в ином случае налево.
-        # Так задумано при шифровании с использованием данного метода. 
+        # Так задумано при шифровании с использованием данного метода.
         direction: int = 1 if encryption else -1
         # Здесь уже идут повороты кубика
         for i in np.arange(self.rgb_array.shape[1]):
             # Здесь появляется массив numpy, в котором содержится 3 числа со знаками для значения key_columns.
             # Знаки key_columns определяются вообще для этого, опять-таки так шифровал dannyi96 (GitHub).
             # key_columns у автора - KC.
-            sign: np.ndarray[int] = np.where(np.sum(self.rgb_array[:, i, :], axis=1) % 2 == 0, -1, 1)
+            sign: np.ndarray[int] = np.where(
+                np.sum(self.rgb_array[:, i, :], axis=1) % 2 == 0, -1, 1
+            )
             # Здесь такая логика: направление вращения кубика (-1 или 1) * массив sign (содержит значения для
             # key_column). Массивы numpy поддерживают умножения на список (поэлементно умножаются значения),
             # не как в математике
-            roll_amount: np.ndarray[int] = direction * self.key_manager.key_columns[i] * sign
+            roll_amount: np.ndarray[int] = (
+                direction * self.key_manager.key_columns[i] * sign
+            )
             # происходит поворот
-            self.rgb_array[:, i, :] = np.roll(self.rgb_array[:, i, :], roll_amount, axis=0)
+            self.rgb_array[:, i, :] = np.roll(
+                self.rgb_array[:, i, :], roll_amount, axis=0
+            )
 
     @cache
     def xor_pixels(self) -> None:
@@ -74,6 +85,14 @@ class Cube:
         for i in np.arange(self.rgb_array.shape[0]):
             for j in np.arange(self.rgb_array.shape[1]):
                 # если строка четная, то будет разворот на 180 градусов
-                xor_1 = self.key_manager.key_columns[j] if i % 2 == 1 else np.flip(self.key_manager.key_columns[j])
-                xor_2 = self.key_manager.key_rows[i] if j % 2 == 0 else np.flip(self.key_manager.key_rows[i])
+                xor_1 = (
+                    self.key_manager.key_columns[j]
+                    if i % 2 == 1
+                    else np.flip(self.key_manager.key_columns[j])
+                )
+                xor_2 = (
+                    self.key_manager.key_rows[i]
+                    if j % 2 == 0
+                    else np.flip(self.key_manager.key_rows[i])
+                )
                 self.rgb_array[i, j, :] = self.rgb_array[i, j, :] ^ xor_1 ^ xor_2

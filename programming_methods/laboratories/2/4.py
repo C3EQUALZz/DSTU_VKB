@@ -25,10 +25,13 @@
 Гарантируется, что входные данные соответствуют реальному турниру, то есть хотя бы одна таблица,
 соответствующая входным данным, может быть построена. Если таких таблиц несколько, выведите любую из них.
 """
-from typing import List, Iterable
+
+from typing import Iterable, List
 
 
-def restore_tournament_table(num_teams: int, points: List[int]) -> Iterable[Iterable[int]]:
+def restore_tournament_table(
+    num_teams: int, points: List[int]
+) -> Iterable[Iterable[int]]:
     """
     Здесь работает принцип динамического программирования.
     У нас изначально, есть очки команд. Мы их сортируем, привязывая к индексам.
@@ -77,7 +80,9 @@ def main() -> None:
     num_teams: int = int(input())
     points: List[int] = list(map(int, input().split()))
 
-    tournament_table: Iterable[Iterable[int]] = restore_tournament_table(num_teams, points)
+    tournament_table: Iterable[Iterable[int]] = restore_tournament_table(
+        num_teams, points
+    )
 
     for row in tournament_table:
         print(*row)

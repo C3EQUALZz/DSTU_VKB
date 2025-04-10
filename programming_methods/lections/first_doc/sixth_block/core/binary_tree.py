@@ -1,6 +1,7 @@
 from collections import deque
 
-from programming_methods.lections.first_doc.sixth_block.core.base import BaseTree, T, _BaseNode
+from programming_methods.lections.first_doc.sixth_block.core.base import (
+    BaseTree, T, _BaseNode)
 
 
 class BinaryTree(BaseTree[T]):
@@ -22,7 +23,6 @@ class BinaryTree(BaseTree[T]):
     def _insert_level_order(node: _BaseNode[T], new_node: _BaseNode[T]) -> None:
         queue = deque([node])
         while queue:
-
             current = queue.popleft()
 
             if current.left is None:

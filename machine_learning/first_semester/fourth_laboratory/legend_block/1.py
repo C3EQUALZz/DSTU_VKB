@@ -1,9 +1,11 @@
 """
 1. Измените положение легенды в Matplotlib
 """
+
+from enum import IntEnum
+
 import matplotlib.pyplot as plt
 import numpy as np
-from enum import IntEnum
 
 np.random.seed(1)
 
@@ -28,5 +30,5 @@ def main() -> None:
     draw_and_legend_position(x, y)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

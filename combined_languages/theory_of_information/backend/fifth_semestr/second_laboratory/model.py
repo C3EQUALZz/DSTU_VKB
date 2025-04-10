@@ -1,9 +1,9 @@
 import math
-
 from collections import Counter
-from typing import Mapping, AnyStr, TypeVar, Generic, Union
+from typing import AnyStr, Generic, Mapping, TypeVar, Union
 
-T = TypeVar('T', bound=Union[str, bytes])
+T = TypeVar("T", bound=Union[str, bytes])
+
 
 class Model(Generic[T]):
     def __init__(self, text: T) -> None:
@@ -22,7 +22,6 @@ class Model(Generic[T]):
             raise ValueError("Ожидается строка в качестве входных данных")
         self.__text = user_text
 
-
     def create_histogram(self) -> dict[str, list[int | float] | AnyStr]:
         """
         Создаем и возвращаем JSON с гистограммой вероятностей символов.
@@ -32,11 +31,7 @@ class Model(Generic[T]):
         characters = list(probabilities.keys())
         values = list(probabilities.values())
 
-        return {
-            "x": characters,
-            "y": values,
-            "type": "bar"
-        }
+        return {"x": characters, "y": values, "type": "bar"}
 
     def calculate_character_probabilities(self) -> Mapping[int, float]:
         """
@@ -55,4 +50,8 @@ class Model(Generic[T]):
         Получаем энтропию на основе вероятностей символов.
         """
         probabilities = self.calculate_character_probabilities().values()
-        return -1 * sum(probability * math.log2(probability) for probability in probabilities if probability > 0)
+        return -1 * sum(
+            probability * math.log2(probability)
+            for probability in probabilities
+            if probability > 0
+        )

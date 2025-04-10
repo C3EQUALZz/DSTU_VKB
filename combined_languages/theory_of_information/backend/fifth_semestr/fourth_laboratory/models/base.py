@@ -1,5 +1,6 @@
-from typing import List, Tuple, AnyStr
 from abc import ABC, abstractmethod
+from typing import AnyStr, List, Tuple
+
 import numpy as np
 
 

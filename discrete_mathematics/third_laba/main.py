@@ -1,11 +1,11 @@
 """
 Точка входа лабораторной работы
 """
+
 import sys
 
-from PyQt6 import QtWidgets
-
 from gui import MainWindow
+from PyQt6 import QtWidgets
 
 
 def read_styles(filename: str) -> str:

@@ -1,6 +1,7 @@
-from fastapi import APIRouter, HTTPException, UploadFile, File, status, Form
+from fastapi import APIRouter, File, Form, HTTPException, UploadFile, status
 
-from combined_languages.theory_of_information.backend.fifth_semestr.first_laboratory.model import Model
+from combined_languages.theory_of_information.backend.fifth_semestr.first_laboratory.model import \
+    Model
 
 router = APIRouter(
     prefix="/fifth_semester/first_laboratory",
@@ -10,13 +11,12 @@ router = APIRouter(
 
 @router.post("/histogram")
 async def create_histogram_and_get_entropy(
-        file: UploadFile = File(...),
-        ignore_pattern: str = Form(...)
+    file: UploadFile = File(...), ignore_pattern: str = Form(...)
 ):
     try:
         file_content = await file.read()
 
-        model = Model(file_content.decode('utf-8'), ignore_pattern)
+        model = Model(file_content.decode("utf-8"), ignore_pattern)
         histogram = model.create_histogram()
         return {"histogram": histogram}
 
@@ -26,13 +26,12 @@ async def create_histogram_and_get_entropy(
 
 @router.post("/entropy")
 async def calculate_entropy(
-        file: UploadFile = File(...),
-        ignore_pattern: str = Form(...)
+    file: UploadFile = File(...), ignore_pattern: str = Form(...)
 ) -> dict[str, float]:
     try:
         file_content = await file.read()
 
-        model = Model(file_content.decode('utf-8'), ignore_pattern)
+        model = Model(file_content.decode("utf-8"), ignore_pattern)
         entropy = model.calculate_entropy()
         return {"entropy": entropy}
 

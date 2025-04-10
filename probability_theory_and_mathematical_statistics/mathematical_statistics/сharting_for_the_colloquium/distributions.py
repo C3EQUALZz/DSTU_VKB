@@ -2,10 +2,11 @@
 Здесь описана логика создания графиков Хи-квадрат распределения и распределения Стьюдента
 """
 
-import numpy as np
+from typing import Any, Final
+
 import matplotlib.pyplot as plt
+import numpy as np
 from scipy.stats import chi2, t
-from typing import Final, Any
 
 # Константы, которые описывают конечные значения осей
 X_RANGE_CHI_SQUARE: Final = (0, 20)
@@ -22,7 +23,7 @@ def chi_square_distribution(graphic) -> None:
     x = np.linspace(*X_RANGE_CHI_SQUARE, 150)
 
     for df in [1, 2, 3, 5, 10]:
-        graphic.plot(x, chi2.pdf(x, df), label=f'Хи-квадрат распределение с k = {df}')
+        graphic.plot(x, chi2.pdf(x, df), label=f"Хи-квадрат распределение с k = {df}")
 
     graphic.set_xlim(X_RANGE_CHI_SQUARE)
     graphic.set_ylim(Y_LIMITS_CHI_SQUARE)
@@ -36,7 +37,7 @@ def t_distribution(graphic) -> None:
     x = np.linspace(*X_RANGE_T_DISTRIBUTION, 1000)
 
     for df in [1, 3, 5, 9, 20, 25]:
-        graphic.plot(x, t.pdf(x, df=df), label=f'Распределение Стьюдента с k = {df}')
+        graphic.plot(x, t.pdf(x, df=df), label=f"Распределение Стьюдента с k = {df}")
 
     graphic.set_xlim(X_RANGE_T_DISTRIBUTION)
     graphic.set_ylim(Y_LIMITS_T_DISTRIBUTION)
@@ -58,23 +59,25 @@ def main() -> None:
     zipped_arguments: tuple[Any, callable, str] = zip(
         axs,
         (chi_square_distribution, t_distribution),
-        ("Хи-квадрат распределение", "Распределение Стьюдента")
+        ("Хи-квадрат распределение", "Распределение Стьюдента"),
     )
 
     # Устанавливаем подписи для осей, включаем сетку, устанавливаем имена для графиков
     for graphic, function, name in zipped_arguments:
-        graphic.set_xlabel('x')
-        graphic.set_ylabel('p(x)')
+        graphic.set_xlabel("x")
+        graphic.set_ylabel("p(x)")
         graphic.grid(True)
         graphic.set_title(name)
         function(graphic)
-        graphic.legend(loc='upper right', fontsize='x-small', frameon=True)
+        graphic.legend(loc="upper right", fontsize="x-small", frameon=True)
 
     # Отображение графика с отступами
-    plt.subplots_adjust(top=0.87, bottom=0.1, left=0.13, right=0.9, hspace=0.5, wspace=0.3)
+    plt.subplots_adjust(
+        top=0.87, bottom=0.1, left=0.13, right=0.9, hspace=0.5, wspace=0.3
+    )
     # Сохранение графика в формате PDF
-    plt.savefig('distributions_a4.pdf', format='pdf')
+    plt.savefig("distributions_a4.pdf", format="pdf")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

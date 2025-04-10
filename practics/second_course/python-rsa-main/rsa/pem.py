@@ -15,8 +15,9 @@
 """Functions that load and write PEM-encoded files."""
 
 import base64
-import typing
 import logging
+import typing
+
 import rsa.helpers.decorators as decorators
 
 # Should either be ASCII strings or bytes.
@@ -41,14 +42,15 @@ def _markers(pem_marker: FlexiText) -> typing.Tuple[bytes, bytes]:
 
 
 @decorators.log_decorator(logger)
-def _pem_lines(contents: bytes, pem_start: bytes, pem_end: bytes) -> typing.Iterator[bytes]:
+def _pem_lines(
+    contents: bytes, pem_start: bytes, pem_end: bytes
+) -> typing.Iterator[bytes]:
     """Generator over PEM lines between pem_start and pem_end."""
 
     in_pem_part = False
     seen_pem_start = False
 
     for line in filter(None, map(bytes.strip, contents.splitlines())):
-
         # Handle start marker
         if line == pem_start:
             if in_pem_part:
@@ -125,6 +127,8 @@ def save_pem(contents: bytes, pem_marker: FlexiText) -> bytes:
     pem_start, pem_end = _markers(pem_marker)
 
     b64 = base64.standard_b64encode(contents).replace(b"\n", b"")
-    pem_lines = [pem_start] + [b64[i:i + 64] for i in range(0, len(b64), 64)] + [pem_end, b""]
+    pem_lines = (
+        [pem_start] + [b64[i : i + 64] for i in range(0, len(b64), 64)] + [pem_end, b""]
+    )
 
     return b"\n".join(pem_lines)

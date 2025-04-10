@@ -2,14 +2,15 @@
 Здесь происходит точка запуска между классами, значения взяты из примера в методичке
 """
 
-from formal_languages.seventh_eighth_laboratory.remove_unreachable_states_dfa_class import (
-    RemovedUselessSymbolsDFA)
-from formal_languages.seventh_eighth_laboratory.minimize_dfa_class import DFAMinimizer
+import os
 
 from automata.fa.dfa import DFA
 from automata.fa.nfa import NFA
 
-import os
+from formal_languages.seventh_eighth_laboratory.minimize_dfa_class import \
+    DFAMinimizer
+from formal_languages.seventh_eighth_laboratory.remove_unreachable_states_dfa_class import \
+    RemovedUselessSymbolsDFA
 
 
 def main() -> None:
@@ -106,13 +107,17 @@ def main() -> None:
     # n = DFAMinimizer.from_removed_symbols_dfa(d)
     # print(n)
 
-    DFA.from_nfa(NFA(
-        states=states,
-        input_symbols=alphabet,
-        initial_state=start,
-        transitions=transitions,
-        final_states=final_states
-    ), retain_names=True, minify=False).show_diagram(path=os.path.join(os.path.curdir, "test_dfa_min.png"))
+    DFA.from_nfa(
+        NFA(
+            states=states,
+            input_symbols=alphabet,
+            initial_state=start,
+            transitions=transitions,
+            final_states=final_states,
+        ),
+        retain_names=True,
+        minify=False,
+    ).show_diagram(path=os.path.join(os.path.curdir, "test_dfa_min.png"))
 
     # DFA.from_nfa(NFA(
     #     states=states,

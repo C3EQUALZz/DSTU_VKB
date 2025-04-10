@@ -1,8 +1,10 @@
 """
 AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
-from prettytable import PrettyTable
+
 from typing import Generator
+
+from prettytable import PrettyTable
 
 
 def first_question(string: str) -> str:
@@ -12,7 +14,7 @@ def first_question(string: str) -> str:
     Разделитель слов в строке - пробел.
     Пример ввода: Привет, дружище! Как дела?
     """
-    return ' '.join(filter(lambda x: len(x.strip(",.!:;")) > 5, string.split()))
+    return " ".join(filter(lambda x: len(x.strip(",.!:;")) > 5, string.split()))
 
 
 def temporary_info(string: list[str]) -> Generator:
@@ -24,7 +26,7 @@ def temporary_info(string: list[str]) -> Generator:
         else:
             temporary_storage[index_list].append(information)
     for index, data in enumerate(temporary_storage):
-        data[0:3] = [' '.join(data[0:3])]
+        data[0:3] = [" ".join(data[0:3])]
         temporary_storage[index].sort(key=len, reverse=True)
     yield from temporary_storage
 
@@ -36,9 +38,11 @@ def second_question(k=None) -> PrettyTable:
     Ничего вводить не надо
     """
     my_table = PrettyTable()
-    my_string = ("Ф;И;О;Возраст;Категория;_Иванов;Иван;Иванович;23 года;Студент 3 курса;_Петров;Семен;Игоревич;22 "
-                 "года;Студент 2 курса").split(";")
-    my_string[0:3] = [''.join(my_string[0:3])]
+    my_string = (
+        "Ф;И;О;Возраст;Категория;_Иванов;Иван;Иванович;23 года;Студент 3 курса;_Петров;Семен;Игоревич;22 "
+        "года;Студент 2 курса"
+    ).split(";")
+    my_string[0:3] = ["".join(my_string[0:3])]
 
     my_table.field_names = my_string[0], my_string[2], my_string[1]
 
@@ -52,12 +56,18 @@ def third_question(k=None) -> str:
     Вариант 1. Вывести построчно информацию о студентах, чья фамилия - "Петров".
     Ничего вводить не надо
     """
-    my_string = ("ФИО;Возраст;Категория;_Иванов Иван Иванович;23 года;Студент 3 курса;_Петров Семен Игоревич;22 "
-                 "года;Студент 2 курса;_Акибов Ярослав Наумович;23 года;Студент 3 курса;_Борков Станислав Максимович;"
-                 "21 год;Студент 1 курса;_Петров Семен Семенович;21 год;Студент 1 курса;_Романов Станислав Андреевич;"
-                 "23 года;Студент 3 курса;_Петров Всеволод Борисович;21 год;Студент 2 курса").split(";")
-    return '\n'.join(
-        map(lambda human: human[0], filter(lambda x: x[0].startswith("Петров"), temporary_info(my_string))))
+    my_string = (
+        "ФИО;Возраст;Категория;_Иванов Иван Иванович;23 года;Студент 3 курса;_Петров Семен Игоревич;22 "
+        "года;Студент 2 курса;_Акибов Ярослав Наумович;23 года;Студент 3 курса;_Борков Станислав Максимович;"
+        "21 год;Студент 1 курса;_Петров Семен Семенович;21 год;Студент 1 курса;_Романов Станислав Андреевич;"
+        "23 года;Студент 3 курса;_Петров Всеволод Борисович;21 год;Студент 2 курса"
+    ).split(";")
+    return "\n".join(
+        map(
+            lambda human: human[0],
+            filter(lambda x: x[0].startswith("Петров"), temporary_info(my_string)),
+        )
+    )
 
 
 def fourth_question(string: str) -> str:
@@ -71,7 +81,13 @@ def fourth_question(string: str) -> str:
 def main():
     match input("Введите номер задания "):
         case "1":
-            print(first_question(input("Введите строку, состоящую из слов, пробелов и знаков препинания. ")))
+            print(
+                first_question(
+                    input(
+                        "Введите строку, состоящую из слов, пробелов и знаков препинания. "
+                    )
+                )
+            )
         case "2":
             print(second_question())
         case "3":

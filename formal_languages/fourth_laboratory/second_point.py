@@ -12,8 +12,10 @@ B -> bde
 B -> bef
 exit
 """
-from formal_languages.useful_functions import get_rules_from_console
+
 from collections import defaultdict
+
+from formal_languages.useful_functions import get_rules_from_console
 
 
 def left_factorize(grammar: dict[str, list[str]]) -> dict[str, list[str]]:
@@ -30,13 +32,14 @@ def left_factorize(grammar: dict[str, list[str]]) -> dict[str, list[str]]:
     for non_terminal, productions in grammar.items():
         # Найти общий префикс среди производств текущего не терминала
         if common_prefix := _find_common_prefix(productions):
-
             # Если существует общий префикс, создаем для него новый нетерминальный символ
             new_non_terminal = non_terminal + "`"
 
             # Обновляем грамматику, чтобы отразить лево-факторные правила
             new_grammar[non_terminal].append(common_prefix + new_non_terminal)
-            new_grammar[new_non_terminal].extend([production[len(common_prefix):] for production in productions])
+            new_grammar[new_non_terminal].extend(
+                [production[len(common_prefix) :] for production in productions]
+            )
 
         else:
             # Костыль, так как могут быть пустые символы
@@ -67,14 +70,19 @@ def _find_common_prefix(productions: list[str]) -> str:
         else:
             break
 
-    return ''.join(common_prefix)
+    return "".join(common_prefix)
 
 
 def main() -> None:
     grammar = get_rules_from_console("don't_remove")
     new_grammar = left_factorize(grammar)
     print("Новая грамматика c факторизацией правил:")
-    print("\n".join(f"{key} -> {'|'.join(value)}".rstrip("|") for key, value in new_grammar.items()))
+    print(
+        "\n".join(
+            f"{key} -> {'|'.join(value)}".rstrip("|")
+            for key, value in new_grammar.items()
+        )
+    )
 
 
 if __name__ == "__main__":

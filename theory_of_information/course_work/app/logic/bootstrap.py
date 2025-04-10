@@ -1,20 +1,11 @@
 import inspect
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Generic,
-)
+from typing import TYPE_CHECKING, Any, Generic
 
-from app.logic.handlers.base import (
-    AbstractCommandHandler,
-    AbstractEventHandler,
-)
+from app.logic.handlers.base import (AbstractCommandHandler,
+                                     AbstractEventHandler)
 from app.logic.message_bus import MessageBus
-from app.logic.types.handlers import (
-    UT,
-    CommandHandlerMapping,
-    EventHandlerMapping,
-)
+from app.logic.types.handlers import (UT, CommandHandlerMapping,
+                                      EventHandlerMapping)
 
 if TYPE_CHECKING:
     from types import MappingProxyType

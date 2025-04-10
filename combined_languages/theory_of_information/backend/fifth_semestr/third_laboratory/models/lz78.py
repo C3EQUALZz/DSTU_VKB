@@ -1,7 +1,10 @@
-from combined_languages.theory_of_information.backend.core.abstract_classes import Compressor
-from typing import Self, Iterator
-from dataclasses import dataclass, astuple
-from combined_languages.theory_of_information.backend.core.decorators import loggable
+from dataclasses import astuple, dataclass
+from typing import Iterator, Self
+
+from combined_languages.theory_of_information.backend.core.abstract_classes import \
+    Compressor
+from combined_languages.theory_of_information.backend.core.decorators import \
+    loggable
 
 
 @dataclass
@@ -29,7 +32,6 @@ class Token:
 
 
 class LZ78(Compressor):
-
     @loggable
     def compress(self, text: str) -> list[Token]:
         """

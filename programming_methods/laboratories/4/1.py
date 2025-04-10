@@ -19,9 +19,10 @@
 
 Выходной файл должен содержать наименьшее необходимое количество ходов, либо −1, если кони не могут встретиться.
 """
+
 from collections import deque
 from itertools import product
-from typing import Tuple, Generator, Any, Set
+from typing import Any, Generator, Set, Tuple
 
 
 def get_moves(x: int, y: int) -> Generator[Tuple[int, int], Any, None]:
@@ -34,8 +35,14 @@ def get_moves(x: int, y: int) -> Generator[Tuple[int, int], Any, None]:
     находящегося в пределах шахматной доски.
     """
     moves: Tuple[Tuple[int, int], ...] = (
-        (x + 1, y + 2), (x + 2, y + 1), (x + 2, y - 1), (x + 1, y - 2),
-        (x - 1, y - 2), (x - 2, y - 1), (x - 2, y + 1), (x - 1, y + 2)
+        (x + 1, y + 2),
+        (x + 2, y + 1),
+        (x + 2, y - 1),
+        (x + 1, y - 2),
+        (x - 1, y - 2),
+        (x - 2, y - 1),
+        (x - 2, y + 1),
+        (x - 1, y + 2),
     )
     yield from ((mx, my) for mx, my in moves if 0 <= mx <= 7 and 0 <= my <= 7)
 
@@ -66,7 +73,9 @@ def knights_meet(knight1: Tuple[int, int], knight2: Tuple[int, int]) -> int:
     :returns: Минимальное количество ходов, необходимых для встречи коней, или -1, если они не могут встретиться.
     """
     visited: Set[Tuple[Tuple[int, int], Tuple[int, int]]] = set()
-    queue: deque[Tuple[Tuple[int, int], Tuple[int, int], int]] = deque([(knight1, knight2, 0)])
+    queue: deque[Tuple[Tuple[int, int], Tuple[int, int], int]] = deque(
+        [(knight1, knight2, 0)]
+    )
 
     while queue:
         k1, k2, moves = queue.popleft()
@@ -85,7 +94,9 @@ def knights_meet(knight1: Tuple[int, int], knight2: Tuple[int, int]) -> int:
 
 
 def main() -> None:
-    knight1, knight2 = map(lambda k: (ord(k[0]) - ord('a'), int(k[1]) - 1), input().split())
+    knight1, knight2 = map(
+        lambda k: (ord(k[0]) - ord("a"), int(k[1]) - 1), input().split()
+    )
 
     result: int = knights_meet(knight1, knight2)
     print(result)

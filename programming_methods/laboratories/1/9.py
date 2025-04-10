@@ -11,7 +11,8 @@
 Необходимо вывести список школьников по классам: сначала всех учеников 9 класса, затем – 10, затем – 11.
 Внутри одного класса порядок вывода фамилий должен быть таким же, как на входе.
 """
-from typing import Dict, List, Iterable
+
+from typing import Dict, Iterable, List
 
 
 def process_students(students: Iterable[str]) -> str:
@@ -39,12 +40,12 @@ def main() -> None:
     input_file_path = "input.txt"
     output_file_path = "output.txt"
 
-    with open(input_file_path, 'r', encoding='KOI8-r') as file:
+    with open(input_file_path, "r", encoding="KOI8-r") as file:
         students_by_class = process_students(map(str.strip, file.readlines()))
 
-    with open(output_file_path, 'w', encoding='KOI8-r') as file:
+    with open(output_file_path, "w", encoding="KOI8-r") as file:
         file.write(students_by_class)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -32,14 +32,17 @@ F -> a
 a + * ( )
 """
 
-from typing import Mapping, Set, List, AnyStr
+from typing import AnyStr, List, Mapping, Set
 
 from formal_languages.first_laboratory import is_context_free
 from formal_languages.useful_functions import get_rules_from_console
 
 
-def check_grammar_exist(grammar: Mapping[AnyStr, List[AnyStr]], set_of_non_terminals: Set[AnyStr],
-                        key="exist") -> bool | set[str]:
+def check_grammar_exist(
+    grammar: Mapping[AnyStr, List[AnyStr]],
+    set_of_non_terminals: Set[AnyStr],
+    key="exist",
+) -> bool | set[str]:
     """
     Проверка КС грамматики с помощью алгоритма, который описан в методичке
     Args:
@@ -58,8 +61,9 @@ def check_grammar_exist(grammar: Mapping[AnyStr, List[AnyStr]], set_of_non_termi
         set_with_non_terminals = set()
         temporary_non_terminal = non_terminal
         for symbol, rules in reversed(grammar.items()):
-
-            if any(temporary_non_terminal in rule for rule in rules) or any(non_terminal in rule for rule in rules):
+            if any(temporary_non_terminal in rule for rule in rules) or any(
+                non_terminal in rule for rule in rules
+            ):
                 set_with_non_terminals.add(symbol)
             else:
                 continue
@@ -76,14 +80,22 @@ def check_grammar_exist(grammar: Mapping[AnyStr, List[AnyStr]], set_of_non_termi
 
 def main() -> AnyStr:
     dictionary = get_rules_from_console("don't_remove")
-    set_of_terminals = set(input("Введите множество терминалов через пробел: ").strip().split())
-    set_of_non_terminals = set(input("Введите множество не терминалов через пробел: ").strip().split())
+    set_of_terminals = set(
+        input("Введите множество терминалов через пробел: ").strip().split()
+    )
+    set_of_non_terminals = set(
+        input("Введите множество не терминалов через пробел: ").strip().split()
+    )
 
-    if is_context_free(set_of_terminals=set_of_terminals,
-                       set_of_non_terminals=set_of_non_terminals,
-                       grammar=dictionary):
-        return (f"1)Введена КС - грамматика\n2)"
-                f"{'Язык существует' if check_grammar_exist(dictionary, set_of_non_terminals) else 'Язык не существует'}")
+    if is_context_free(
+        set_of_terminals=set_of_terminals,
+        set_of_non_terminals=set_of_non_terminals,
+        grammar=dictionary,
+    ):
+        return (
+            f"1)Введена КС - грамматика\n2)"
+            f"{'Язык существует' if check_grammar_exist(dictionary, set_of_non_terminals) else 'Язык не существует'}"
+        )
     return "Введенная грамматика не является КС-грамматикой "
 
 

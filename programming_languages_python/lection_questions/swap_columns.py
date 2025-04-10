@@ -1,8 +1,10 @@
 """
 Дан двумерный массив и два числа: i и j. Поменяйте в массиве столбцы с номерами i и j.
 """
-import numpy as np
+
 from pprint import pprint
+
+import numpy as np
 
 
 def solution():

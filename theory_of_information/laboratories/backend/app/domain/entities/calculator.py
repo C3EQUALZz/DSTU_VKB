@@ -1,5 +1,5 @@
-from typing import Callable
 from dataclasses import dataclass
+from typing import Callable
 
 from app.domain.entities.base import BaseEntity
 from app.exceptions.domain import BadOperationException
@@ -18,13 +18,7 @@ class FieldCalculator(BaseEntity):
             "^": lambda a, b, mod: pow(a, b, mod),
         }
 
-    def apply_operation(
-            self,
-            a: int,
-            b: int,
-            op: str,
-            mod: int
-    ) -> int:
+    def apply_operation(self, a: int, b: int, op: str, mod: int) -> int:
         """Применяет арифметическую операцию в поле Z/modZ"""
         if op not in self.operations:
             raise BadOperationException(op)

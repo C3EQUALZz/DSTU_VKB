@@ -1,26 +1,8 @@
 import logging
 from typing import Annotated
 
-from fastapi import (
-    APIRouter,
-    Depends,
-    HTTPException,
-)
-from fastapi.security import (
-    OAuth2PasswordBearer,
-    OAuth2PasswordRequestForm,
-)
-from starlette import status
-from starlette.requests import Request
-
-from app.application.api.auth.schemas import (
-    TokenRequest,
-    UserSchemeResponse,
-)
-from app.core.types.handlers import (
-    CommandHandlerMapping,
-    EventHandlerMapping,
-)
+from app.application.api.auth.schemas import TokenRequest, UserSchemeResponse
+from app.core.types.handlers import CommandHandlerMapping, EventHandlerMapping
 from app.domain.entities.user import UserEntity
 from app.exceptions.base import ApplicationException
 from app.exceptions.infrastructure import UserNotFoundException
@@ -30,17 +12,14 @@ from app.logic.bootstrap import Bootstrap
 from app.logic.commands.auth import VerifyUserCredentialsCommand
 from app.logic.commands.users import GetUserByIdCommand
 from app.logic.message_bus import MessageBus
-from authx import (
-    AuthX,
-    TokenPayload,
-)
-from authx.exceptions import (
-    AuthXException,
-    RevokedTokenError,
-)
+from authx import AuthX, TokenPayload
+from authx.exceptions import AuthXException, RevokedTokenError
 from dishka import FromDishka
 from dishka.integrations.fastapi import DishkaRoute
-
+from fastapi import APIRouter, Depends, HTTPException
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from starlette import status
+from starlette.requests import Request
 
 router = APIRouter(prefix="/auth", tags=["auth"], route_class=DishkaRoute)
 

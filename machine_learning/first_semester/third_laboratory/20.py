@@ -5,13 +5,17 @@
 Реальное изображение не считываем, заполняем трехмерный массив случайными значениями.
 Преобразуйте цветное изображение в оттенки серого, использовав коэффициенты np.array([0.299, 0.587, 0.114]).
 """
-import numpy as np
+
 from typing import Final
+
+import numpy as np
 
 HEIGHT: Final[int] = 100
 WIDTH: Final[int] = 100
 NUMBER_OF_CHANNELS: Final[int] = 3
-ARRAY_WITH_COEFFICIENTS: Final[np.ndarray] = np.array([0.299, 0.587, 0.114], dtype=np.float64)
+ARRAY_WITH_COEFFICIENTS: Final[np.ndarray] = np.array(
+    [0.299, 0.587, 0.114], dtype=np.float64
+)
 
 
 def main() -> None:
@@ -21,5 +25,5 @@ def main() -> None:
     print(grayscale_image.shape)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

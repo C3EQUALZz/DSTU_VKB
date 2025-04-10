@@ -1,11 +1,15 @@
 """
 Задание 1. Реализовать сортировку «пузырьком». Сортировку выбором и сортировку вставкой.
 """
+
 import sys
 
-from algorithms_and_data_structures.first_laboratory.first_question.bubble import bubble_sort
-from algorithms_and_data_structures.first_laboratory.first_question.insertion import insertion_sort
-from algorithms_and_data_structures.first_laboratory.first_question.selection import selection_sort
+from algorithms_and_data_structures.first_laboratory.first_question.bubble import \
+    bubble_sort
+from algorithms_and_data_structures.first_laboratory.first_question.insertion import \
+    insertion_sort
+from algorithms_and_data_structures.first_laboratory.first_question.selection import \
+    selection_sort
 
 questions = {
     "1": bubble_sort,
@@ -16,7 +20,9 @@ questions = {
 
 def main() -> None:
     while True:
-        question = input("Выберите какую сортировку вы хотите?\n(1) - пузырек\n(2) - выбор\n(3) - вставка\n")
+        question = input(
+            "Выберите какую сортировку вы хотите?\n(1) - пузырек\n(2) - выбор\n(3) - вставка\n"
+        )
 
         if question not in questions:
             print("Вы выбрали неправильный вариант", file=sys.stderr)
@@ -27,5 +33,5 @@ def main() -> None:
         print(questions[question](data))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

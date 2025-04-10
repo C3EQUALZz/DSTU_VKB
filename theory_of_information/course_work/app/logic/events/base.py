@@ -1,10 +1,6 @@
 import contextlib
 from abc import ABC
-from dataclasses import (
-    asdict,
-    dataclass,
-    field,
-)
+from dataclasses import asdict, dataclass, field
 from typing import Any
 from uuid import uuid4
 

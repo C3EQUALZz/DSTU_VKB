@@ -14,8 +14,9 @@
 Для каждого момента времени известно количество покупателей, находящихся в магазине в этот момент.
 Между концом первой рекламы и началом следующей должна пройти как минимум К-1 единица времени.
 """
+
 from itertools import combinations, product
-from typing import List, Set, Iterable, Tuple, Sequence
+from typing import Iterable, List, Sequence, Set, Tuple
 
 
 def find_best_broadcast(n: int, k: int, times: Sequence[int]) -> int:
@@ -38,8 +39,9 @@ def find_best_broadcast(n: int, k: int, times: Sequence[int]) -> int:
     :returns: Количество просмотревших рекламу покупателей.
     """
     maximum_number_of_people: int = max(times)
-    indexes_of_moments_when_maximum_number_of_people: Set[int] = {index for index, value in enumerate(times)
-                                                                  if value == maximum_number_of_people}
+    indexes_of_moments_when_maximum_number_of_people: Set[int] = {
+        index for index, value in enumerate(times) if value == maximum_number_of_people
+    }
 
     # Проверяем, можно ли транслировать два ролика в максимальные моменты
     for i, j in combinations(indexes_of_moments_when_maximum_number_of_people, 2):
@@ -48,19 +50,19 @@ def find_best_broadcast(n: int, k: int, times: Sequence[int]) -> int:
 
     # Если не удалось, ищем пред максимальный момент
     all_possible_pairs_with_a_maximum: Iterable[Tuple[int, int]] = product(
-        indexes_of_moments_when_maximum_number_of_people,
-        range(len(times))
+        indexes_of_moments_when_maximum_number_of_people, range(len(times))
     )
 
     pre_max_number_of_people: int = max(
         map(
             lambda index_pair: times[index_pair[1]],
             filter(
-                lambda index_pair: index_pair[0] != index_pair[1] and abs(index_pair[0] - index_pair[1]) > k - 1,
-                all_possible_pairs_with_a_maximum
-            )
+                lambda index_pair: index_pair[0] != index_pair[1]
+                and abs(index_pair[0] - index_pair[1]) > k - 1,
+                all_possible_pairs_with_a_maximum,
+            ),
         ),
-        default=0
+        default=0,
     )
 
     if pre_max_number_of_people > 0:

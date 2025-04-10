@@ -1,9 +1,11 @@
 """
 Задание 2. Найти теоретический материал, разобрать, составить блок-схему и реализовать сортировку слиянием на одномерном массиве.
 """
+
 import sys
 
-from algorithms_and_data_structures.second_laboratory.second_question.merge import merge_sort
+from algorithms_and_data_structures.second_laboratory.second_question.merge import \
+    merge_sort
 
 
 def main() -> None:
@@ -17,5 +19,5 @@ def main() -> None:
         print(merge_sort([int(x) for x in data]))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

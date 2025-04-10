@@ -1,7 +1,8 @@
 import re
 
-from .exceptions import BadStep, BadWord
 from cybersecurity_base.twelfth_laboratory.abstract_class_cyphers import Cypher
+
+from .exceptions import BadStep, BadWord
 
 
 class CaesarWithWord(Cypher):
@@ -10,6 +11,7 @@ class CaesarWithWord(Cypher):
     :param key: Ключевое слово
     :param step: Старт, с которого начнется заполнение таблицы
     """
+
     def __init__(self, key: str, step: int):
         self._step = step
         self.key = key
@@ -32,7 +34,7 @@ class CaesarWithWord(Cypher):
             raise BadStep("Неправильное значение шага. В английском алфавите 26 букв.")
         if any(map(lambda x: x.isspace(), value.strip())):
             raise BadWord("Ключ может состоять только из одного слова")
-        self._key = ''.join(set(value))
+        self._key = "".join(set(value))
 
     def encrypt(self, string: str) -> str:
         """
@@ -43,9 +45,11 @@ class CaesarWithWord(Cypher):
         # Наш словарь - строка, в котором мы будем хранить буквы для шифрования.
         # Мы его заполняем от самого начала, поэтому есть проверка, что надо добавлять буквы, которых
         # нет в ключе
-        tmp: str = ''.join(word for word in self._get_language(string) if word not in self.key)
+        tmp: str = "".join(
+            word for word in self._get_language(string) if word not in self.key
+        )
         # Беру с конца словарь букв, как в примере, потом добавляю слово, а потом уже оставшиеся буквы
-        alpha_new: str = tmp[-self._step:] + self.key + tmp[:-self._step]
+        alpha_new: str = tmp[-self._step :] + self.key + tmp[: -self._step]
         return string.translate(str.maketrans(self._get_language(string), alpha_new))
 
     def decrypt(self, string: str) -> str:
@@ -57,7 +61,9 @@ class CaesarWithWord(Cypher):
         # Наш словарь - строка, в котором мы будем хранить буквы для шифрования.
         # Мы его заполняем от самого начала, поэтому есть проверка, что надо добавлять буквы, которых
         # нет в ключе
-        tmp: str = ''.join(word for word in self._get_language(string) if word not in self.key)
+        tmp: str = "".join(
+            word for word in self._get_language(string) if word not in self.key
+        )
         # Беру с конца словарь букв, как в примере, потом добавляю слово, а потом уже оставшиеся буквы
-        alpha_new: str = tmp[-self._step:] + self.key + tmp[:-self._step]
+        alpha_new: str = tmp[-self._step :] + self.key + tmp[: -self._step]
         return string.translate(str.maketrans(alpha_new, self._get_language(string)))

@@ -1,15 +1,14 @@
 from queue import Queue
-from typing import TypeVar, List, Optional, Set, Dict
+from typing import Dict, List, Optional, Set, TypeVar
 
-from algorithms_and_data_structures.fourth_laboratory.core.base import BaseUnWeightedGraph
+from algorithms_and_data_structures.fourth_laboratory.core.base import \
+    BaseUnWeightedGraph
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 def bfs(
-        graph: BaseUnWeightedGraph[T],
-        start_node: T,
-        target_node: T
+    graph: BaseUnWeightedGraph[T], start_node: T, target_node: T
 ) -> Optional[List[T]]:
     """
     Выполняет поиск в ширину (BFS).

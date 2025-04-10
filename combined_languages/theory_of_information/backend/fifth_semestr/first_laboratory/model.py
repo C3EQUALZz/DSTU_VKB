@@ -1,10 +1,10 @@
 import math
 import re
-
 from collections import Counter
-from typing import Mapping, AnyStr, Final
+from typing import AnyStr, Final, Mapping
 
-IGNORE_PATTERN: Final[AnyStr] = r'[^а-яА-Яa-zA-Z0-9 ,.]'
+IGNORE_PATTERN: Final[AnyStr] = r"[^а-яА-Яa-zA-Z0-9 ,.]"
+
 
 class Model:
     def __init__(self, text: str, ignore_pattern: AnyStr = None) -> None:
@@ -46,11 +46,7 @@ class Model:
         characters = list(probabilities.keys())
         values = list(probabilities.values())
 
-        return {
-            "x": characters,
-            "y": values,
-            "type": "bar"
-        }
+        return {"x": characters, "y": values, "type": "bar"}
 
     def calculate_character_probabilities(self) -> Mapping[AnyStr, float]:
         """
@@ -60,9 +56,11 @@ class Model:
         total_chars = 0
 
         # Тут двойная фильтрация, чтобы пользователь мог свою вводить по приколу
-        filtered_text = self.ignore_pattern.sub('', string=self.text)
+        filtered_text = self.ignore_pattern.sub("", string=self.text)
 
-        translation_table = dict.fromkeys(map(ord, '@#$^&*{}[]<><=>=/|=+-"\'«»—…`()№'), None)
+        translation_table = dict.fromkeys(
+            map(ord, "@#$^&*{}[]<><=>=/|=+-\"'«»—…`()№"), None
+        )
 
         filtered_text = filtered_text.translate(translation_table)
 
@@ -79,4 +77,8 @@ class Model:
         Получаем энтропию на основе вероятностей символов.
         """
         probabilities = self.calculate_character_probabilities().values()
-        return -1 * sum(probability * math.log2(probability) for probability in probabilities if probability > 0)
+        return -1 * sum(
+            probability * math.log2(probability)
+            for probability in probabilities
+            if probability > 0
+        )

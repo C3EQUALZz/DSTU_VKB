@@ -7,9 +7,13 @@
 
 Важный момент: алгоритм LZW не обеспечивает сжатие полноценно, в результате может выйти файл, который больше по размеру
 """
-from combined_languages.theory_of_information.backend.core.decorators import loggable
-from combined_languages.theory_of_information.backend.core.abstract_classes import Compressor
+
 import struct
+
+from combined_languages.theory_of_information.backend.core.abstract_classes import \
+    Compressor
+from combined_languages.theory_of_information.backend.core.decorators import \
+    loggable
 
 
 class LZW(Compressor):
@@ -51,7 +55,7 @@ class LZW(Compressor):
         if string in dictionary:
             compressed_data.append(dictionary[string])
 
-        return b"".join(struct.pack('>H', data) for data in compressed_data)
+        return b"".join(struct.pack(">H", data) for data in compressed_data)
 
     @loggable
     def decompress(self, compressed_data: bytes) -> str:
@@ -59,7 +63,10 @@ class LZW(Compressor):
         dictionary = {x: chr(x) for x in range(self.DICTIONARY_SIZE)}
 
         # Reading the compressed data.
-        compressed_data = [int.from_bytes(compressed_data[i:i + 2], 'big') for i in range(0, len(compressed_data), 2)]
+        compressed_data = [
+            int.from_bytes(compressed_data[i : i + 2], "big")
+            for i in range(0, len(compressed_data), 2)
+        ]
 
         # LZW Decompression algorithm
         next_code = self.DICTIONARY_SIZE

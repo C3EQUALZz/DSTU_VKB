@@ -11,10 +11,9 @@ TODO:
 
 import sys
 
-from PyQt6 import QtWidgets, QtGui
-
 from main_part_application.main_interface import DlgMain
 from other_part_application.start_menu import StartScreen
+from PyQt6 import QtGui, QtWidgets
 
 
 class MainWindow(QtWidgets.QWidget):
@@ -91,7 +90,8 @@ class MainWindow(QtWidgets.QWidget):
             self,
             "Выход",
             "Вы точно уверены, что хотите выйти?",
-            QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No
+            QtWidgets.QMessageBox.StandardButton.Yes
+            | QtWidgets.QMessageBox.StandardButton.No,
         )
         try:
             if res == QtWidgets.QMessageBox.StandardButton.No:

@@ -19,9 +19,9 @@ import unittest
 from typing import Union
 
 import rsa
-from rsa import pkcs1
 import rsa.core as core_namespace
 import rsa.helpers as helpers_namespace
+from rsa import pkcs1
 
 
 class BinaryTest(unittest.TestCase):
@@ -51,7 +51,9 @@ class BinaryTest(unittest.TestCase):
         altered_a = (a + 1) % 256
         encrypted = encrypted[:5] + bytes([altered_a]) + encrypted[6:]
 
-        self.assertRaises(core_namespace.DecryptionError, pkcs1.decrypt, encrypted, self.private)
+        self.assertRaises(
+            core_namespace.DecryptionError, pkcs1.decrypt, encrypted, self.private
+        )
 
     def test_randomness(self):
         """Encrypting the same message twice should result in different
@@ -140,7 +142,11 @@ class SignatureTest(unittest.TestCase):
 
         signature = pkcs1.sign(b"je moeder", self.priv, "SHA-256")
         self.assertRaises(
-            core_namespace.VerificationError, pkcs1.verify, b"mijn moeder", signature, self.pub
+            core_namespace.VerificationError,
+            pkcs1.verify,
+            b"mijn moeder",
+            signature,
+            self.pub,
         )
 
     def test_sign_different_key(self):
@@ -150,7 +156,13 @@ class SignatureTest(unittest.TestCase):
 
         message = b"je moeder"
         signature = pkcs1.sign(message, self.priv, "SHA-256")
-        self.assertRaises((core_namespace.VerificationError, OverflowError), pkcs1.verify, message, signature, otherpub)
+        self.assertRaises(
+            (core_namespace.VerificationError, OverflowError),
+            pkcs1.verify,
+            message,
+            signature,
+            otherpub,
+        )
 
     def test_multiple_signings(self):
         """Signing the same message twice should return the same signatures."""
@@ -242,7 +254,9 @@ CdCiWmOJxVfRAgwBQM+e1JJwMKmxSF0CCmya6CFxO8Evdn8CDACMM3AlVC4FhlN8
         padded = b"\x00\x02padding\x00" + message
 
         payload = helpers_namespace.transform.bytes2int(padded)
-        encrypted_value = rsa.logic.encrypt_int(payload, self.public_key.e, self.public_key.n)
+        encrypted_value = rsa.logic.encrypt_int(
+            payload, self.public_key.e, self.public_key.n
+        )
         cyphertext = helpers_namespace.transform.int2bytes(encrypted_value, keylength)
 
         return cyphertext

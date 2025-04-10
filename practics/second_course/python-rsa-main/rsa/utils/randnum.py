@@ -16,11 +16,11 @@
 
 # Source inspired by code by Yesudeep Mangalapilly <yesudeep@gmail.com>
 
+import logging
 import os
 import struct
-import logging
-import rsa.helpers.decorators as decorators
 
+import rsa.helpers.decorators as decorators
 from rsa.helpers import common, transform
 
 logger = logging.getLogger(__name__)

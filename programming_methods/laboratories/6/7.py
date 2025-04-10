@@ -24,10 +24,13 @@
 Выведите столько строк, сколько вопросов во входном файле. В строке номер i
 надо записать ответ на вопрос i — название соответствующей частицы x, y или z.
 """
-from typing import List, Sequence, Iterable
+
+from typing import Iterable, List, Sequence
 
 
-def process_experiment(n: int, particles: str, actions: Sequence[Sequence[str]]) -> Iterable[str]:
+def process_experiment(
+    n: int, particles: str, actions: Sequence[Sequence[str]]
+) -> Iterable[str]:
     """
     Выполняет обработку воздействия на частицы и отвечает на вопросы.
 
@@ -54,12 +57,12 @@ def process_experiment(n: int, particles: str, actions: Sequence[Sequence[str]])
     results: List[str] = []
 
     for action in actions:
-        if action[0] == 'a':
+        if action[0] == "a":
             # Воздействие: перенос частицы
             i, j = int(action[1]) - 1, int(action[2]) - 1
             element = offsets.pop(i)
             offsets.insert(j, element)
-        elif action[0] == 'q':
+        elif action[0] == "q":
             # Вопрос: какая частица на позиции k
             k = int(action[1]) - 1
             results.append(particles[offsets[k]])

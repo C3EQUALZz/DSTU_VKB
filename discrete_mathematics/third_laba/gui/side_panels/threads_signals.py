@@ -2,18 +2,20 @@
 Здесь модуль направлен для реализации потоков.
 Сама обработка фото занимает достаточно много процессорного времени на один поток.
 """
+
 import os
 
 from PIL import Image
 from PyQt6.QtCore import QThread, pyqtSignal
-
-from python_language.discrete_mathematics.third_laba.backend_сipher import Cypher
+from python_language.discrete_mathematics.third_laba.backend_сipher import \
+    Cypher
 
 
 class CipherThread(QThread):
     """
     Отдельный поток, где мы взаимодействуем с шифрованием для нашего приложения
     """
+
     encryption_finished = pyqtSignal(str)  # Сигнал для завершения операции шифрования
     decryption_finished = pyqtSignal(str)  # Сигнал для завершения операции дешифрования
 
@@ -37,18 +39,26 @@ class CipherThread(QThread):
 
         if self.encrypt:
             # Шифруем изображение наше
-            encrypted_image: Image = cypher.encrypt(key_filename=f"{self.target_directory}/trash_for_data/key_test.txt")
+            encrypted_image: Image = cypher.encrypt(
+                key_filename=f"{self.target_directory}/trash_for_data/key_test.txt"
+            )
             # Создаем путь к нашему изображению
-            encrypted_image_path: str = self.__save_path(self.file_name, self.target_directory, encrypted=True)
+            encrypted_image_path: str = self.__save_path(
+                self.file_name, self.target_directory, encrypted=True
+            )
             # Сохраняем фото после обработок
             encrypted_image.save(encrypted_image_path)
             # Передаем сигнал, что работа закончилась
             self.encryption_finished.emit(encrypted_image_path)
         else:
             # Расшифровываем наше изображение
-            decrypted_image: Image = cypher.decrypt(key_filename=f"{self.target_directory}/trash_for_data/key_test.txt")
+            decrypted_image: Image = cypher.decrypt(
+                key_filename=f"{self.target_directory}/trash_for_data/key_test.txt"
+            )
             # Создаем путь к нашему изображению
-            decrypted_image_path: str = self.__save_path(self.file_name, self.target_directory, encrypted=False)
+            decrypted_image_path: str = self.__save_path(
+                self.file_name, self.target_directory, encrypted=False
+            )
             # Сохраняем фото после обработок
             decrypted_image.save(decrypted_image_path)
             # Передаем сигнал, что работа закончилась

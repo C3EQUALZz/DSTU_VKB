@@ -16,9 +16,10 @@
 следует также зафиксировать ошибку.
 От вас требуется либо указать максимальное количество бочек, которые одновременно пребывали на барже либо зафиксировать ошибку.
 """
+
 from collections import deque
-from typing import List, Deque, Iterable
 from dataclasses import dataclass
+from typing import Deque, Iterable, List
 
 
 @dataclass(frozen=True)
@@ -29,6 +30,7 @@ class Action:
     - cell_index - Индекс отсека (по задаче начинается с 1)
     - fuel_type - Тип топлива (для выгрузки)
     """
+
     operation: str
     cell_index: int
     fuel_type: str
@@ -87,7 +89,11 @@ def main() -> None:
     actions: List[Action] = []
     for _ in range(docks):
         action_data: List[str] = input().split()
-        action = Action(operation=action_data[0], cell_index=int(action_data[1]), fuel_type=action_data[2])
+        action = Action(
+            operation=action_data[0],
+            cell_index=int(action_data[1]),
+            fuel_type=action_data[2],
+        )
         actions.append(action)
 
     result: int = process_docks(cells, max_len, actions)

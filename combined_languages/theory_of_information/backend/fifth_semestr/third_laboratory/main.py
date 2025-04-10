@@ -14,11 +14,15 @@
 Допустимо буквы приводить к одному регистру.
 Для получения 91 балла и выше – ещё реализуете интерфейс.
 """
-import time
+
 import logging
+import time
+
 import combined_languages.theory_of_information.backend.core as core_namespace
-from combined_languages.theory_of_information.backend.fifth_semestr.third_laboratory import LZ77, TokenLZ77, LZ78, TokenLZ78
-from combined_languages.theory_of_information.backend.fifth_semestr.third_laboratory.utils import create_table
+from combined_languages.theory_of_information.backend.fifth_semestr.third_laboratory import (
+    LZ77, LZ78, TokenLZ77, TokenLZ78)
+from combined_languages.theory_of_information.backend.fifth_semestr.third_laboratory.utils import \
+    create_table
 
 logger = logging.getLogger(__name__)
 
@@ -54,7 +58,9 @@ def main() -> None:
     }
 
     while True:
-        algo_choice = input("Какой из 2 алгоритмов вы хотите использовать? LZ77(1) или LZ78(2)? ")
+        algo_choice = input(
+            "Какой из 2 алгоритмов вы хотите использовать? LZ77(1) или LZ78(2)? "
+        )
         if algo_choice not in algorithms:
             logger.warning("Неверный выбор, попробуйте снова.")
             continue
@@ -70,8 +76,10 @@ def main() -> None:
             result = algorithm["encode"](data)
             logger.info(f"Результат кодирования {algorithm['name']}: {result}")
         else:
-            data = input("Введите набор кортежей"
-                         " (пример: [(0, 0, 'a'), (0, 0, 'b'), (2, 2, 'c'), (4, 3, 'a'), (2, 2, 'a')]): ")
+            data = input(
+                "Введите набор кортежей"
+                " (пример: [(0, 0, 'a'), (0, 0, 'b'), (2, 2, 'c'), (4, 3, 'a'), (2, 2, 'a')]): "
+            )
             result = algorithm["decode"](data)
             logger.info(f"Результат декодирования {algorithm['name']}: {result}")
 

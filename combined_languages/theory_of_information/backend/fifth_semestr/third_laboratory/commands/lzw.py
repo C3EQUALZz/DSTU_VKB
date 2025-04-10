@@ -1,13 +1,15 @@
 import io
 import pickle
 
-from combined_languages.theory_of_information.backend.core.abstract_classes import Command
-from combined_languages.theory_of_information.backend.fifth_semestr.third_laboratory.models import LZW
+from combined_languages.theory_of_information.backend.core.abstract_classes import \
+    Command
+from combined_languages.theory_of_information.backend.fifth_semestr.third_laboratory.models import \
+    LZW
 
 
 class EncodeCommand(Command):
     def __init__(self, data: bytes) -> None:
-        self.data = data.decode('utf-8')
+        self.data = data.decode("utf-8")
         self.coder = LZW()
 
     def execute(self) -> tuple[bytes, bytes]:

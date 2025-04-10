@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
-from typing import Generic, TypeVar, Optional
 from dataclasses import dataclass
+from typing import Generic, Optional, TypeVar
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 @dataclass
@@ -10,9 +10,10 @@ class _BaseNode(Generic[T]):
     """
     Узел дерева.
     """
+
     value: T
-    left: Optional['_BaseNode[T]'] = None
-    right: Optional['_BaseNode[T]'] = None
+    left: Optional["_BaseNode[T]"] = None
+    right: Optional["_BaseNode[T]"] = None
 
     def __str__(self) -> str:
         return str({self.value})
@@ -47,7 +48,9 @@ class BaseTree(ABC, Generic[T]):
         if node is None:
             return 0
 
-        return 1 + max(self._calculate_height(node.left), self._calculate_height(node.right))
+        return 1 + max(
+            self._calculate_height(node.left), self._calculate_height(node.right)
+        )
 
     def is_empty(self) -> bool:
         """
@@ -71,12 +74,12 @@ class BaseTree(ABC, Generic[T]):
         Строит матрицу символов для графического отображения структуры дерева
         """
         tree_height = self.height
-        matrix_width = (2 ** tree_height) * 2
+        matrix_width = (2**tree_height) * 2
         matrix_height = tree_height * 2
 
         # Инициализируем матрицу пробелами
-        matrix: list[list[str]] = [[' '] * matrix_width for _ in range(matrix_height)]
-        root_column = 2 ** tree_height  # Стартовая позиция корня
+        matrix: list[list[str]] = [[" "] * matrix_width for _ in range(matrix_height)]
+        root_column = 2**tree_height  # Стартовая позиция корня
 
         # Очередь для хранения узлов и их позиций на каждом уровне
         levels: list[list[tuple[_BaseNode[T], int]]] = [[(self.root, root_column)]]
@@ -91,20 +94,22 @@ class BaseTree(ABC, Generic[T]):
 
                 # Обрабатываем соединения с потомками
                 if node.left or node.right:
-                    self._add_children_connections(matrix, level, column, node, tree_height, next_level)
+                    self._add_children_connections(
+                        matrix, level, column, node, tree_height, next_level
+                    )
 
             levels.append(next_level)
 
         return matrix
 
     def _add_children_connections(
-            self,
-            matrix: list[list[str]],
-            level: int,
-            parent_col: int,
-            node: _BaseNode[T],
-            tree_height: int,
-            next_level: list[tuple[_BaseNode[T], int]]
+        self,
+        matrix: list[list[str]],
+        level: int,
+        parent_col: int,
+        node: _BaseNode[T],
+        tree_height: int,
+        next_level: list[tuple[_BaseNode[T], int]],
     ) -> None:
         """
         Добавляет символы соединений для левого и правого потомков
@@ -118,7 +123,9 @@ class BaseTree(ABC, Generic[T]):
             next_level.append((node.left, left_child_col))
             connector_row[left_child_col] = "┌"
             connector_row[parent_col] = "┴" if node.right else "┘"
-            self._fill_horizontal_line(connector_row, left_child_col + 1, parent_col - 1)
+            self._fill_horizontal_line(
+                connector_row, left_child_col + 1, parent_col - 1
+            )
 
         # Правый потомок
         if node.right:
@@ -126,7 +133,9 @@ class BaseTree(ABC, Generic[T]):
             next_level.append((node.right, right_child_col))
             connector_row[right_child_col] = "┐"
             connector_row[parent_col] = "┴" if node.left else "└"
-            self._fill_horizontal_line(connector_row, parent_col + 1, right_child_col - 1)
+            self._fill_horizontal_line(
+                connector_row, parent_col + 1, right_child_col - 1
+            )
 
     @staticmethod
     def _fill_horizontal_line(row: list[str], start: int, end: int) -> None:
@@ -145,7 +154,7 @@ class BaseTree(ABC, Generic[T]):
         # Ищем полностью пустые колонки
         empty_columns: list[int] = []
         for col_idx in range(len(matrix[0])):
-            if all(row[col_idx] == ' ' for row in matrix):
+            if all(row[col_idx] == " " for row in matrix):
                 empty_columns.append(col_idx)
 
         # Удаляем найденные пустые колонки

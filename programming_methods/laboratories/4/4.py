@@ -31,16 +31,17 @@
 Во второй строке требуется вывести через пробел k чисел — номера деталей в том порядке, в котором следует их производить
 для скорейшего производства детали с номером 1.
 """
-from typing import List, Tuple, Sequence
+
 from collections import deque
+from typing import List, Sequence, Tuple
 
 
 def produce_part(
-        part_id: int,
-        production_times: Sequence[int],
-        dependencies: Sequence[Sequence[int]],
-        produced: List[bool],
-        production_order: deque[int]
+    part_id: int,
+    production_times: Sequence[int],
+    dependencies: Sequence[Sequence[int]],
+    produced: List[bool],
+    production_order: deque[int],
 ) -> int:
     """
     Рекурсивно вычисляет общее время, необходимое для производства детали с заданным идентификатором,
@@ -62,16 +63,16 @@ def produce_part(
     total_time = production_times[part_id]  # Время на изготовление текущей детали
 
     for dependency in dependencies[part_id - 1]:  # Индексация зависит от 0
-        total_time += produce_part(dependency, production_times, dependencies, produced, production_order)
+        total_time += produce_part(
+            dependency, production_times, dependencies, produced, production_order
+        )
 
     production_order.append(part_id)
     return total_time
 
 
 def calculate_minimum_production_time(
-        n: int,
-        production_times: Sequence[int],
-        dependencies: Sequence[Sequence[int]]
+    n: int, production_times: Sequence[int], dependencies: Sequence[Sequence[int]]
 ) -> Tuple[int, Sequence[int]]:
     """
     Вычисляет минимальное время, необходимое для производства детали с номером 1,
@@ -86,7 +87,9 @@ def calculate_minimum_production_time(
     produced: List[bool] = [False] * (n + 1)
     production_order: deque[int] = deque()
 
-    total_time: int = produce_part(1, production_times, dependencies, produced, production_order)
+    total_time: int = produce_part(
+        1, production_times, dependencies, produced, production_order
+    )
 
     return total_time, production_order
 
@@ -94,9 +97,13 @@ def calculate_minimum_production_time(
 def main() -> None:
     n: int = int(input())
     production_times: List[int] = [0] + list(map(int, input().split()))
-    dependencies: List[List[int]] = [list(map(int, input().split()[1:])) for _ in range(n)]
+    dependencies: List[List[int]] = [
+        list(map(int, input().split()[1:])) for _ in range(n)
+    ]
 
-    total_time, order = calculate_minimum_production_time(n, production_times, dependencies)
+    total_time, order = calculate_minimum_production_time(
+        n, production_times, dependencies
+    )
 
     print(total_time, len(order))
     print(*order)

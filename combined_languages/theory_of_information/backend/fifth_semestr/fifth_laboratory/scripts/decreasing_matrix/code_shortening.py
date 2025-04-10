@@ -4,10 +4,13 @@ from combined_languages.theory_of_information.backend.fifth_semestr.fifth_labora
     decrease_matrix
 from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.models.generator_systematic_matrix import \
     GSystematicMatrix
-from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.registry import Registry
+from combined_languages.theory_of_information.backend.fifth_semestr.fourth_laboratory.utils.registry import \
+    Registry
 
 
-def short_the_code(g_sys: GSystematicMatrix, indexes_to_delete: Tuple[Tuple[int, int], ...]) -> GSystematicMatrix:
+def short_the_code(
+    g_sys: GSystematicMatrix, indexes_to_delete: Tuple[Tuple[int, int], ...]
+) -> GSystematicMatrix:
     """
     Укорочение матрицы, здесь пользователь сам определяет на сколько надо уменьшить.
     Удаление происходит по принципу пересечения.
@@ -27,7 +30,7 @@ def main() -> None:
         [1, 0, 0, 0, 1, 1, 0, 1],
         [0, 1, 0, 0, 1, 0, 1, 1],
         [0, 0, 1, 0, 1, 0, 0, 1],
-        [0, 0, 0, 1, 0, 1, 1, 1]
+        [0, 0, 0, 1, 0, 1, 1, 1],
     ]
 
     indexes_to_delete = ((1, 1),)
@@ -37,5 +40,5 @@ def main() -> None:
     print(new_matrix)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

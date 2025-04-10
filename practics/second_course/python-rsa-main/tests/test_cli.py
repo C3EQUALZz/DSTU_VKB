@@ -2,18 +2,17 @@
 Unit tests for CLI entry points.
 """
 
-
 import functools
 import io
 import os
 import sys
 import typing
 import unittest
-from contextlib import contextmanager, redirect_stdout, redirect_stderr
+from contextlib import contextmanager, redirect_stderr, redirect_stdout
 
-import rsa
 import cli.option_parser
 import cli.util
+import rsa
 import rsa.core as core_namespace
 
 
@@ -227,7 +226,9 @@ class EncryptDecryptTest(AbstractCliTest):
 
         with cli_args("-i", "encrypted.txt", self.priv_fname):
             with captured_output() as (out, err):
-                self.assertRaises(core_namespace.DecryptionError, cli.option_parser.decrypt)
+                self.assertRaises(
+                    core_namespace.DecryptionError, cli.option_parser.decrypt
+                )
 
 
 class SignVerifyTest(AbstractCliTest):
@@ -244,7 +245,9 @@ class SignVerifyTest(AbstractCliTest):
         with open("cleartext.txt", "wb") as outfile:
             outfile.write(b"Hello RSA users!")
 
-        with cli_args("-i", "cleartext.txt", "--out=signature.txt", self.priv_fname, "SHA-256"):
+        with cli_args(
+            "-i", "cleartext.txt", "--out=signature.txt", self.priv_fname, "SHA-256"
+        ):
             with captured_output():
                 cli.option_parser.sign()
 
@@ -259,7 +262,9 @@ class SignVerifyTest(AbstractCliTest):
         with open("cleartext.txt", "wb") as outfile:
             outfile.write(b"Hello RSA users!")
 
-        with cli_args("-i", "cleartext.txt", "--out=signature.txt", self.priv_fname, "SHA-256"):
+        with cli_args(
+            "-i", "cleartext.txt", "--out=signature.txt", self.priv_fname, "SHA-256"
+        ):
             with captured_output():
                 cli.option_parser.sign()
 
@@ -278,7 +283,6 @@ class PrivatePublicTest(AbstractCliTest):
 
     @cleanup_files("test_private_to_public.pem")
     def test_private_to_public(self):
-
         with cli_args("-i", self.priv_fname, "-o", "test_private_to_public.pem"):
             with captured_output():
                 cli.util.private_to_public()

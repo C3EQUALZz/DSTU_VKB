@@ -1,5 +1,6 @@
 import pathlib
 import sys
+
 import mypy.api
 import pytest
 
@@ -13,7 +14,7 @@ def test_run_mypy(module):
         "--incremental",
         "--ignore-missing-imports",
         f"--python-version={sys.version_info.major}.{sys.version_info.minor}",
-        str(proj_root / module)
+        str(proj_root / module),
     ]
 
     result = mypy.api.run(args)

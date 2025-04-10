@@ -1,7 +1,8 @@
 from typing import List
 
 from app.domain.entities.block_codes.base import SystematicMatrix
-from app.domain.entities.block_codes.factories.inverse_matrix import InverseMatrixFactory
+from app.domain.entities.block_codes.factories.inverse_matrix import \
+    InverseMatrixFactory
 
 
 class GSystematicMatrix(SystematicMatrix):

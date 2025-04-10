@@ -5,22 +5,21 @@
 На данный момент не продумана работоспособность на Windows.
 """
 
-__version__ = '0.1'
-__author__ = 'Данил Ковалев ВКБ12 c3equalz'
+__version__ = "0.1"
+__author__ = "Данил Ковалев ВКБ12 c3equalz"
 
-from itertools import permutations, combinations
+from itertools import combinations, permutations
 from math import inf
 from string import ascii_letters
 from time import sleep
 from typing import Callable
 
-from colorama import Fore
-
 import algorithm_console as alg
-from decorators import progress_bar, retry_on_value_error, pprint_matrix
+from colorama import Fore
+from decorators import pprint_matrix, progress_bar, retry_on_value_error
 from visual import graph
 
-approval = ('да', 'y', 'yes', 'ofc')
+approval = ("да", "y", "yes", "ofc")
 
 
 @progress_bar
@@ -29,8 +28,11 @@ def questionary() -> tuple[tuple[list[list], list[list]], tuple]:
     """
     Функция, которая задает начальные данные для остальных функций
     """
-    start_node = input(Fore.LIGHTWHITE_EX + '\nВведите начальную вершину по лексикограф. порядку (буква англ.) ')
-    end_node = input('Введите конечную вершину по лексикограф порядку (буква англ.) ')
+    start_node = input(
+        Fore.LIGHTWHITE_EX
+        + "\nВведите начальную вершину по лексикограф. порядку (буква англ.) "
+    )
+    end_node = input("Введите конечную вершину по лексикограф порядку (буква англ.) ")
     start_node, end_node = sorted((start_node, end_node))
 
     find_start = input("Введите начало (c какой вершины поиск): ")
@@ -55,13 +57,21 @@ def create_matrix(n: int) -> list[list[int]]:
     :return: матрицу для алгоритма Флойда
     """
     comment = "Введите какой граф вы изначально хотите (oriented, undirected)? По умолчанию undirected. "
-    generate_iter = permutations if input(comment).lower() == 'oriented' else combinations
+    generate_iter = (
+        permutations if input(comment).lower() == "oriented" else combinations
+    )
     matrix = [[inf if i != j else 0 for i in range(n)] for j in range(n)]
     for start, end in generate_iter(range(n), 2):
-        query = input(f"Есть ли направленное ребро между {chr(65 + start)} и {chr(65 + end)}? ")
+        query = input(
+            f"Есть ли направленное ребро между {chr(65 + start)} и {chr(65 + end)}? "
+        )
         if query.lower() in approval:
-            matrix[start][end] = int(input('Введите вес '))
-            matrix[end][start] = matrix[start][end] if generate_iter is combinations else matrix[end][start]
+            matrix[start][end] = int(input("Введите вес "))
+            matrix[end][start] = (
+                matrix[start][end]
+                if generate_iter is combinations
+                else matrix[end][start]
+            )
     graph(matrix)
     return matrix
 

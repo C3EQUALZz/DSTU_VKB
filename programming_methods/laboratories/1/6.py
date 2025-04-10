@@ -23,7 +23,7 @@
 """
 
 from collections import deque
-from typing import List, Iterable
+from typing import Iterable, List
 
 
 def can_sort_train(n: int, wagons: Iterable[int]) -> bool:

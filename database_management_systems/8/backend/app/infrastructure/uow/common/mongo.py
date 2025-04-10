@@ -1,17 +1,9 @@
 from traceback import TracebackException
-from typing import (
-    Any,
-    Optional,
-    Self,
-    Type,
-)
+from typing import Any, Optional, Self, Type
 
 from app.infrastructure.uow.base import AbstractUnitOfWork
-from motor.motor_asyncio import (
-    AsyncIOMotorClient,
-    AsyncIOMotorClientSession,
-    AsyncIOMotorDatabase,
-)
+from motor.motor_asyncio import (AsyncIOMotorClient, AsyncIOMotorClientSession,
+                                 AsyncIOMotorDatabase)
 
 
 class MotorAbstractUnitOfWork(AbstractUnitOfWork):

@@ -1,32 +1,19 @@
 from typing import List
 
-from fastapi import (
-    APIRouter,
-    HTTPException,
-)
-from starlette import status
-
-from app.application.api.scores.schemas import (
-    CreateScoreSchemeRequest,
-    ScoreSchemeResponse,
-)
-from app.core.types.handlers import (
-    CommandHandlerMapping,
-    EventHandlerMapping,
-)
+from app.application.api.scores.schemas import (CreateScoreSchemeRequest,
+                                                ScoreSchemeResponse)
+from app.core.types.handlers import CommandHandlerMapping, EventHandlerMapping
 from app.core.utils.cache import cache
 from app.exceptions.base import ApplicationException
 from app.infrastructure.uow.scores.base import ScoresUnitOfWork
 from app.logic.bootstrap import Bootstrap
-from app.logic.commands.scores import (
-    CreateScoreCommand,
-    DeleteScoreCommand,
-    GetScoreByIdCommand,
-)
+from app.logic.commands.scores import (CreateScoreCommand, DeleteScoreCommand,
+                                       GetScoreByIdCommand)
 from app.logic.message_bus import MessageBus
 from dishka import FromDishka
 from dishka.integrations.fastapi import DishkaRoute
-
+from fastapi import APIRouter, HTTPException
+from starlette import status
 
 router = APIRouter(
     prefix="/scores",

@@ -9,15 +9,23 @@
 
 Полученный массив выведите на экран. Числа в строке разделяйте одним пробелом.
 """
-import numpy as np
+
 from pprint import pprint
+
+import numpy as np
 
 
 def solution():
     sizes = tuple(map(int, input().split()))
     matrix = np.array(
-        [[2 if j > sizes[0] - i - 1 else 1 if j == sizes[0] - i - 1 else 0 for i in range(sizes[0])] for j in
-         range(sizes[1])])
+        [
+            [
+                2 if j > sizes[0] - i - 1 else 1 if j == sizes[0] - i - 1 else 0
+                for i in range(sizes[0])
+            ]
+            for j in range(sizes[1])
+        ]
+    )
     pprint(matrix)
 
 

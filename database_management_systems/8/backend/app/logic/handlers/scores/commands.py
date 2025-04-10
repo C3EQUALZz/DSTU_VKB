@@ -1,19 +1,13 @@
 from typing import List
 
 from app.domain.entities.score import ScoreEntity
-from app.exceptions.infrastructure import (
-    ScoreNotFoundException,
-    UserNotFoundException,
-)
+from app.exceptions.infrastructure import (ScoreNotFoundException,
+                                           UserNotFoundException)
 from app.infrastructure.services.scores import ScoreService
-from app.logic.commands.scores import (
-    CreateScoreCommand,
-    DeleteScoreCommand,
-    GetAllScoresCommand,
-    GetAllUserScoresCommand,
-    GetScoreByIdCommand,
-    UpdateScoreCommand,
-)
+from app.logic.commands.scores import (CreateScoreCommand, DeleteScoreCommand,
+                                       GetAllScoresCommand,
+                                       GetAllUserScoresCommand,
+                                       GetScoreByIdCommand, UpdateScoreCommand)
 from app.logic.handlers.scores.base import ScoreCommandHandler
 
 

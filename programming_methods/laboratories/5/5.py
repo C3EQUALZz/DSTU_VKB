@@ -17,8 +17,9 @@
 
 КОД НА PYTHON НЕ ПРОХОДИТ ПО СКОРОСТИ. НА 100 БАЛЛОВ ТОЛЬКО C++.
 """
+
 from collections import defaultdict, deque
-from typing import Iterable, Tuple, List, cast, Dict, Sequence
+from typing import Dict, Iterable, List, Sequence, Tuple, cast
 
 
 class Graph:
@@ -31,9 +32,13 @@ class Graph:
                       v — конечная вершина, c — пропускная способность.
         """
         self._n = n
-        self._capacity: Dict[int, Dict[int, int]] = defaultdict(lambda: defaultdict(int))
+        self._capacity: Dict[int, Dict[int, int]] = defaultdict(
+            lambda: defaultdict(int)
+        )
         for u, v, c in edges:
-            self._capacity[u][v] += c  # Учитываем возможность нескольких рёбер между вершинами
+            self._capacity[u][v] += (
+                c  # Учитываем возможность нескольких рёбер между вершинами
+            )
 
     @property
     def count_of_vertexes(self) -> int:
@@ -98,15 +103,19 @@ def bfs(graph: Graph, source: int, sink: int) -> Tuple[Sequence[int], int]:
 
     queue: deque[int] = deque([source])
 
-    path_flow: Dict[int, int] = {source: float('Inf')}
+    path_flow: Dict[int, int] = {source: float("Inf")}
 
     while queue:
         current: int = queue.popleft()
         for next_vertex in graph.get_neighbors(current):
-
-            if parent[next_vertex] == -1 and graph.get_capacity(current, next_vertex) > 0:
+            if (
+                parent[next_vertex] == -1
+                and graph.get_capacity(current, next_vertex) > 0
+            ):
                 parent[next_vertex] = current
-                path_flow[next_vertex] = min(path_flow[current], graph.get_capacity(current, next_vertex))
+                path_flow[next_vertex] = min(
+                    path_flow[current], graph.get_capacity(current, next_vertex)
+                )
 
                 if next_vertex == sink:
                     return parent, path_flow[sink]
@@ -174,7 +183,9 @@ def edmonds_karp(graph: Graph, source: int, sink: int) -> int:
 
 def main() -> None:
     n, m = map(int, input().split())
-    edges: List[Tuple[int, int]] = cast(List[Tuple[int, int]], [tuple(map(int, input().split())) for _ in range(m)])
+    edges: List[Tuple[int, int]] = cast(
+        List[Tuple[int, int]], [tuple(map(int, input().split())) for _ in range(m)]
+    )
 
     # Создание графа
     graph: Graph = Graph(n, edges)
@@ -184,5 +195,5 @@ def main() -> None:
     print(max_flow)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

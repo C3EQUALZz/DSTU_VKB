@@ -32,14 +32,12 @@
 
 Выведите одно число — наименьше возможное значение максимального числа неудобства сформированных бригад.
 """
-from typing import List, Iterable
+
+from typing import Iterable, List
 
 
 def can_form_branches(
-        max_uncomfortable: int,
-        discomforts: Iterable[int],
-        r: int,
-        c: int
+    max_uncomfortable: int, discomforts: Iterable[int], r: int, c: int
 ) -> bool:
     """
     Проверяет, можно ли сформировать r бригад по c человек так, чтобы максимальное число неудобства
@@ -62,7 +60,9 @@ def can_form_branches(
     return count >= r  # Проверяем, достаточно ли бригад
 
 
-def find_minimum_max_uncomfortable(n: int, r: int, c: int, heights: Iterable[int]) -> int:
+def find_minimum_max_uncomfortable(
+    n: int, r: int, c: int, heights: Iterable[int]
+) -> int:
     """
     Находит наименьшее возможное значение максимального числа неудобства сформированных бригад.
 
@@ -79,7 +79,9 @@ def find_minimum_max_uncomfortable(n: int, r: int, c: int, heights: Iterable[int
     :param heights: Высоты всех людей, который передали по условию задачи.
     """
     heights: List[int] = sorted(heights)  # Сортируем рост учеников
-    discomforts: List[int] = [heights[i + c - 1] - heights[i] for i in range(n - c + 1)]  # Вычисляем неудобства
+    discomforts: List[int] = [
+        heights[i + c - 1] - heights[i] for i in range(n - c + 1)
+    ]  # Вычисляем неудобства
 
     left = -1
     right = heights[-1] - heights[0]

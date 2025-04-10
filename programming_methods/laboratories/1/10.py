@@ -26,8 +26,9 @@
 после чего вывести количество ходов, сделанных до выигрыша.
 Если на протяжении 106 ходов игра не заканчивается, программа должна вывести слово botva.
 """
+
 from collections import deque
-from typing import Tuple, Iterable, Dict
+from typing import Dict, Iterable, Tuple
 
 
 def is_first_player_winner(card1: int, card2: int) -> bool:
@@ -38,10 +39,7 @@ def is_first_player_winner(card1: int, card2: int) -> bool:
     return (card1 > card2 and (card2, card1) != (0, 9)) or (card1 == 0 and card2 == 9)
 
 
-def play_game(
-        first_deck: Iterable[int],
-        second_deck: Iterable[int]
-) -> Tuple[int, int]:
+def play_game(first_deck: Iterable[int], second_deck: Iterable[int]) -> Tuple[int, int]:
     """
     Здесь у нас запускается игра 'пьяница'.
     Суть в том, чтобы в динамике отслеживать изменение состояние колоды.
@@ -75,12 +73,11 @@ def main() -> None:
 
     # Запуск игры
     result: Tuple[int, int] = play_game(
-        map(int, input().split()),
-        map(int, input().split())
+        map(int, input().split()), map(int, input().split())
     )
 
     print(cases[result[0]], result[1] if result[1] != -1 else "")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

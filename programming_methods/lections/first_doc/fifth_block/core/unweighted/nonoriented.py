@@ -1,10 +1,11 @@
-from typing import TypeVar, List
+from typing import List, TypeVar
 
 from prettytable import PrettyTable
 
-from programming_methods.lections.first_doc.fifth_block.core.base import BaseUnWeightedGraph
+from programming_methods.lections.first_doc.fifth_block.core.base import \
+    BaseUnWeightedGraph
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 class NonOrientedGraph(BaseUnWeightedGraph[T]):
@@ -41,7 +42,7 @@ class NonOrientedGraph(BaseUnWeightedGraph[T]):
 
         # Создаем таблицу
         table = PrettyTable()
-        table.field_names = [' '] + [chr(x + 65) for x in range(n)]
+        table.field_names = [" "] + [chr(x + 65) for x in range(n)]
 
         for index, row in enumerate(matrix):
             table.add_row([chr(index + 65)] + row)

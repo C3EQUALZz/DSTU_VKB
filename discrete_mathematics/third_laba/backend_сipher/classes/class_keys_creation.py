@@ -3,9 +3,10 @@
 У нас есть два вектора значений key_rows, key_columns.
 Они используются для создания ключа шифрования
 """
-from random import randint
-import json
+
 import base64
+import json
+from random import randint
 
 __all__ = ["KeyManager"]
 
@@ -15,6 +16,7 @@ class KeyManager:
     Данный класс делает так, чтобы ключи изначальные сохранялись файл, который мы можем воспользоваться потом
     Пользователь напросто может забыть входные параметры изображения
     """
+
     __slots__ = ("_rows", "_columns", "__key_rows_list", "__key_column_list")
 
     def __init__(self, rows: int, columns: int):
@@ -43,7 +45,9 @@ class KeyManager:
         Данный список чисел будет использоваться для формирования ключа шифрования.
         """
         if self.__key_column_list is None:
-            self.__key_column_list = [randint(0, 10000000) for _ in range(self._columns)]
+            self.__key_column_list = [
+                randint(0, 10000000) for _ in range(self._columns)
+            ]
         return self.__key_column_list
 
     def __create_cipher_key(self) -> bytes:
@@ -52,10 +56,7 @@ class KeyManager:
         Он использует два списка и формирует из него ключ шифрования.
         Для реализации будет использоваться json и base64, потому что так нашел в Интернете
         """
-        key_dict = {
-            "key_rows": self.key_rows,
-            "key_columns": self.key_columns
-        }
+        key_dict = {"key_rows": self.key_rows, "key_columns": self.key_columns}
 
         serialized_key_dict = json.dumps(key_dict)
         return base64.b64encode(serialized_key_dict.encode())

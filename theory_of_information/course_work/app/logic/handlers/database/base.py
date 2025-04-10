@@ -2,14 +2,9 @@ from abc import ABC
 
 from app.infrastructure.database.base import BaseDatabaseCLIService
 from app.infrastructure.uow.compression import CompressionUnitOfWork
-from app.logic.handlers.base import (
-    AbstractCommandHandler,
-    AbstractEventHandler,
-)
-from app.logic.types.handlers import (
-    CT,
-    ET,
-)
+from app.logic.handlers.base import (AbstractCommandHandler,
+                                     AbstractEventHandler)
+from app.logic.types.handlers import CT, ET
 
 
 class DatabaseCLIEventHandler(AbstractEventHandler[ET], ABC):

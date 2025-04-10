@@ -1,9 +1,6 @@
 import contextlib
 from abc import ABC
-from dataclasses import (
-    asdict,
-    dataclass,
-)
+from dataclasses import asdict, dataclass
 from typing import Any
 
 
@@ -14,9 +11,7 @@ class AbstractCommand(ABC):
     Commands represents external operations, which must be executed.
     """
 
-    async def to_dict(
-        self, exclude: set[str] | None = None, include: dict[str, Any] | None = None
-    ) -> dict[str, Any]:
+    async def to_dict(self, exclude: set[str] | None = None, include: dict[str, Any] | None = None) -> dict[str, Any]:
         """
         Create a dictionary representation of the model.
 

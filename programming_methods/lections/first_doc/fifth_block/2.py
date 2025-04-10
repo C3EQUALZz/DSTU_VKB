@@ -2,10 +2,12 @@
 
 from typing import TypeVar
 
-from programming_methods.lections.first_doc.fifth_block.core.base import BaseUnWeightedGraph
-from programming_methods.lections.first_doc.fifth_block.core.unweighted.nonoriented import NonOrientedGraph
+from programming_methods.lections.first_doc.fifth_block.core.base import \
+    BaseUnWeightedGraph
+from programming_methods.lections.first_doc.fifth_block.core.unweighted.nonoriented import \
+    NonOrientedGraph
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 def is_tree(graph: BaseUnWeightedGraph[T]) -> bool:
@@ -49,27 +51,27 @@ def is_tree(graph: BaseUnWeightedGraph[T]) -> bool:
 
 def main() -> None:
     tree_graph = NonOrientedGraph[str]()
-    tree_graph.add_edge('A', 'B')
-    tree_graph.add_edge('A', 'C')
-    tree_graph.add_edge('B', 'D')
-    tree_graph.add_edge('B', 'E')
+    tree_graph.add_edge("A", "B")
+    tree_graph.add_edge("A", "C")
+    tree_graph.add_edge("B", "D")
+    tree_graph.add_edge("B", "E")
 
     # Пример графа с циклом (не дерево)
     cyclic_graph = NonOrientedGraph[str]()
-    cyclic_graph.add_edge('A', 'B')
-    cyclic_graph.add_edge('B', 'C')
-    cyclic_graph.add_edge('C', 'A')
+    cyclic_graph.add_edge("A", "B")
+    cyclic_graph.add_edge("B", "C")
+    cyclic_graph.add_edge("C", "A")
 
     # Пример несвязного графа (не дерево)
     disconnected_graph = NonOrientedGraph[str]()
-    disconnected_graph.add_edge('A', 'B')
-    disconnected_graph.add_edge('C', 'D')
+    disconnected_graph.add_edge("A", "B")
+    disconnected_graph.add_edge("C", "D")
 
     # Проверка деревьев
-    print("Tree Graph is tree:", is_tree(tree_graph))            # True
-    print("Cyclic Graph is tree:", is_tree(cyclic_graph))        # False
+    print("Tree Graph is tree:", is_tree(tree_graph))  # True
+    print("Cyclic Graph is tree:", is_tree(cyclic_graph))  # False
     print("Disconnected Graph is tree:", is_tree(disconnected_graph))  # False
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

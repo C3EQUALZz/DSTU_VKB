@@ -1,8 +1,8 @@
 # Посчитать количество ребер в графе
 from typing import TypeVar
 
-from programming_methods.lections.first_doc.fifth_block.core.base import BaseGraph
-
+from programming_methods.lections.first_doc.fifth_block.core.base import \
+    BaseGraph
 from programming_methods.lections.first_doc.fifth_block.core.unweighted.nonoriented import \
     NonOrientedGraph as UnWeightedNonOrientedGraph
 from programming_methods.lections.first_doc.fifth_block.core.unweighted.oriented import \
@@ -12,7 +12,7 @@ from programming_methods.lections.first_doc.fifth_block.core.weighted.nonoriente
 from programming_methods.lections.first_doc.fifth_block.core.weighted.oriented import \
     OrientedGraph as WeightedOrientedGraph
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 def count_graph_edges(graph: BaseGraph[T]) -> int:
@@ -32,20 +32,20 @@ def count_graph_edges(graph: BaseGraph[T]) -> int:
 def main() -> None:
     # Неориентированный граф
     non_oriented_graph = UnWeightedNonOrientedGraph[str]()
-    non_oriented_graph.add_edge('A', 'B')
-    non_oriented_graph.add_edge('A', 'C')
-    non_oriented_graph.add_edge('B', 'D')
+    non_oriented_graph.add_edge("A", "B")
+    non_oriented_graph.add_edge("A", "C")
+    non_oriented_graph.add_edge("B", "D")
 
     print("NonOrientedGraph edges:", count_graph_edges(non_oriented_graph))
     # Должно быть 3 (A-B, A-C, B-D)
 
     # Ориентированный граф
     oriented_graph = UnWeightedOrientedGraph[str]()
-    oriented_graph.add_edge('A', 'B')
-    oriented_graph.add_edge('B', 'C')
-    oriented_graph.add_edge('C', 'A')
-    oriented_graph.add_edge('A', 'D')
-    oriented_graph.add_edge('D', 'A')
+    oriented_graph.add_edge("A", "B")
+    oriented_graph.add_edge("B", "C")
+    oriented_graph.add_edge("C", "A")
+    oriented_graph.add_edge("A", "D")
+    oriented_graph.add_edge("D", "A")
 
     print("OrientedGraph edges:", count_graph_edges(oriented_graph))
     # Должно быть 5

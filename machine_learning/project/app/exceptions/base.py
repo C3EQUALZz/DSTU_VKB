@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 
 @dataclass(eq=False)
-class BaseAppException(Exception, ABC):
+class BaseAppError(Exception, ABC):
     message: str
 
     @property

@@ -29,10 +29,11 @@
 
 Выведите минимальное время, когда вы сможете оказаться в пункте B.
 """
+
 import heapq
 from collections import defaultdict
 from dataclasses import dataclass
-from typing import List, Dict, Tuple
+from typing import Dict, List, Tuple
 
 
 @dataclass
@@ -46,6 +47,7 @@ class Flight:
     dest (int): Номер пункта назначения.
     arr_time (int): Время прибытия рейса.
     """
+
     src: int
     dep_time: int
     dest: int
@@ -67,7 +69,9 @@ class Graph:
         :param flight: Объект класса Flight, представляющий рейс.
         :returns: Ничего не возвращает, только добавляет в словарь.
         """
-        self._adjacency_list[flight.src].append((flight.dest, flight.dep_time, flight.arr_time))
+        self._adjacency_list[flight.src].append(
+            (flight.dest, flight.dep_time, flight.arr_time)
+        )
 
     def get_neighbors(self, node: int) -> List[Tuple[int, int, int]]:
         """
@@ -105,7 +109,7 @@ def min_time_to_destination(n: int, a: int, b: int, graph: Graph) -> int:
     :param graph: Граф, представляющий рейсы между населенными пунктами.
     :returns: Минимальное время, когда можно оказаться в пункте B.
     """
-    min_time = [float('inf')] * (n + 1)
+    min_time = [float("inf")] * (n + 1)
     min_time[a] = 0
     heap = [(0, a)]
 

@@ -1,14 +1,8 @@
 from abc import ABC
-from typing import (
-    Any,
-    Dict,
-    Optional,
-)
+from typing import Any, Dict, Optional
 
-from motor.motor_asyncio import (
-    AsyncIOMotorClientSession,
-    AsyncIOMotorCollection,
-)
+from motor.motor_asyncio import (AsyncIOMotorClientSession,
+                                 AsyncIOMotorCollection)
 
 
 class MotorAbstractRepository(ABC):

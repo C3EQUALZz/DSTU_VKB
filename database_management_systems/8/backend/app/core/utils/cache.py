@@ -4,22 +4,11 @@ import re
 from collections.abc import Callable
 from typing import Any
 
-from fastapi import (
-    Request,
-    Response,
-)
+from app.exceptions.core import (CacheIdentificationInferenceError,
+                                 InvalidRequestError, MissingClientError)
+from fastapi import Request, Response
 from fastapi.encoders import jsonable_encoder
-
-from app.exceptions.core import (
-    CacheIdentificationInferenceError,
-    InvalidRequestError,
-    MissingClientError,
-)
-from redis.asyncio import (
-    ConnectionPool,
-    Redis,
-)
-
+from redis.asyncio import ConnectionPool, Redis
 
 pool: ConnectionPool | None = None
 client: Redis | None = None

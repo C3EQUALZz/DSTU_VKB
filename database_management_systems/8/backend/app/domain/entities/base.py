@@ -1,16 +1,6 @@
 from abc import ABC
-from dataclasses import (
-    asdict,
-    dataclass,
-    field,
-)
-from typing import (
-    Any,
-    Dict,
-    get_type_hints,
-    Optional,
-    Set,
-)
+from dataclasses import asdict, dataclass, field
+from typing import Any, Dict, Optional, Set, get_type_hints
 from uuid import uuid4
 
 from app.exceptions.domain import CastException

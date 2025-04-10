@@ -1,8 +1,10 @@
 """
 4. Как увеличить размер точек разброса в Matplotlib?
 """
+
 from dataclasses import dataclass, field
-from random import randint, choice
+from random import choice, randint
+
 import matplotlib.pyplot as plt
 
 
@@ -18,19 +20,14 @@ def draw_scatter_and_change_size_of_dot(*args: Dot) -> None:
     y_values = [dot.y for dot in args]
     sizes = [dot.size for dot in args]
 
-    plt.scatter(x_values, y_values, s=sizes, label=f'Точки')
+    plt.scatter(x_values, y_values, s=sizes, label=f"Точки")
     plt.legend()
     plt.show()
 
 
 def main() -> None:
-    draw_scatter_and_change_size_of_dot(
-        Dot(),
-        Dot(),
-        Dot(),
-        Dot()
-    )
+    draw_scatter_and_change_size_of_dot(Dot(), Dot(), Dot(), Dot())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

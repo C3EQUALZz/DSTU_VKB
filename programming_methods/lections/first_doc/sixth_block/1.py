@@ -1,5 +1,6 @@
 # Найти высоту бинарного дерева
-from programming_methods.lections.first_doc.sixth_block.core.binary_tree import BinaryTree
+from programming_methods.lections.first_doc.sixth_block.core.binary_tree import \
+    BinaryTree
 
 
 def main() -> None:

@@ -1,11 +1,13 @@
 """
 AUTHOR: 1 вариант Ковалев Данил ВКБ22
 """
-from itertools import chain
+
 import re
-from python_language.programming_languages_python.first_laba_lang.tutor import safe_eval
+from itertools import chain
 
 import numpy as np
+from python_language.programming_languages_python.first_laba_lang.tutor import \
+    safe_eval
 
 
 def first_question(n: str):
@@ -17,8 +19,13 @@ def first_question(n: str):
     matrix = np.random.randint(1000, size=(int(n), int(n)))
 
     # linear = lambda data: [data] if isinstance(data, np.int64) else sum(map(linear, data), [])
-    return '\n'.join((f"Наша матрица:\n {np.matrix(matrix)}", f"Cумма: {matrix.sum()}",
-                      f"Представление данной матрицы в виде строки: {list(chain.from_iterable(matrix))}"))
+    return "\n".join(
+        (
+            f"Наша матрица:\n {np.matrix(matrix)}",
+            f"Cумма: {matrix.sum()}",
+            f"Представление данной матрицы в виде строки: {list(chain.from_iterable(matrix))}",
+        )
+    )
 
 
 def second_question(raw_string: str):
@@ -44,11 +51,15 @@ def third_question(k=None) -> str:
         ["БО-331101", ["Акулова Алена", "Бабушкина Ксения"]],
         ["БОВ-421102", ["Карпов Роман", "Лёза Алексей"]],
         ["БО-331103", ["Крячков Игнат", "Ибрагим Гусейнов"]],
-        ["ВПМК-41", ["Егор Гришков", "Анисимов Ярослав"]]
+        ["ВПМК-41", ["Егор Гришков", "Анисимов Ярослав"]],
     ]
-    res_str = ''
+    res_str = ""
     for group, humans in my_len:
-        res_str += f"{group: ^{len(max(humans, key=len))}}\n" + '\n'.join(f"{human}" for human in humans) + "\n\n"
+        res_str += (
+            f"{group: ^{len(max(humans, key=len))}}\n"
+            + "\n".join(f"{human}" for human in humans)
+            + "\n\n"
+        )
     return res_str
 
 
@@ -62,13 +73,16 @@ def fourth_question(k=None):
         ["БО-331101", ["Акулова Алена", "Бабушкина Ксения"]],
         ["БОВ-421102", ["Карпов Роман", "Лёза Алексей"]],
         ["БО-331103", ["Крячков Игнат", "Гусейнов Ибрагим"]],
-        ["ВПМК-41", ["Гришков Егор", "Анисимов Ярослав"]]
+        ["ВПМК-41", ["Гришков Егор", "Анисимов Ярослав"]],
     ]
-    res_str = ''
+    res_str = ""
     for group, humans in my_len:
         if temporary_storage := [human for human in humans if human.startswith("А")]:
-            res_str += f"{group: ^{len(max(temporary_storage, key=len))}}\n" + '\n'.join(
-                f"{human}" for human in temporary_storage) + "\n\n"
+            res_str += (
+                f"{group: ^{len(max(temporary_storage, key=len))}}\n"
+                + "\n".join(f"{human}" for human in temporary_storage)
+                + "\n\n"
+            )
     return res_str
 
 
@@ -77,7 +91,13 @@ def main():
         case "1":
             print(first_question(input("Введите размерность матрицы. ")))
         case "2":
-            print(second_question(input("Введите список, состоящий из 10 элементов и через пробел второй, как в repr ")))
+            print(
+                second_question(
+                    input(
+                        "Введите список, состоящий из 10 элементов и через пробел второй, как в repr "
+                    )
+                )
+            )
         case "3":
             print(third_question())
         case "4":

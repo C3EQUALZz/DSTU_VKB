@@ -1,23 +1,9 @@
-from dataclasses import (
-    dataclass,
-    field,
-)
-from datetime import (
-    datetime,
-    UTC,
-)
-from typing import (
-    Any,
-    Mapping,
-    Self,
-    Type,
-)
+from dataclasses import dataclass, field
+from datetime import UTC, datetime
+from typing import Any, Mapping, Self, Type
 
 from app.domain.entities.base import BaseEntity
-from app.domain.values.scores import (
-    ScoreValue,
-    UserOID,
-)
+from app.domain.values.scores import ScoreValue, UserOID
 
 
 @dataclass(eq=False)

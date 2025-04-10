@@ -22,24 +22,18 @@ K – количество мест в электричке (1 ≤ K ≤ 1000) �
 
 НЕ ПРОХОДИТ ПО СКОРОСТИ ИЗ-ЗА PYTHON.
 """
+
 from collections import deque
-from typing import cast, Tuple, List, Iterable, Sequence
+from typing import Iterable, List, Sequence, Tuple, cast
 
 
-def is_available(
-        segments: Sequence[int],
-        start: int,
-        end: int,
-        k: int
-) -> bool:
+def is_available(segments: Sequence[int], start: int, end: int, k: int) -> bool:
     """Проверяет, есть ли хотя бы одно свободное место на участке [x, y)."""
     return all(segments[i] < k for i in range(start, end))
 
 
 def process_requests(
-        count_of_stations: int,
-        count_of_seats: int,
-        requests: Iterable[Tuple[int, int]]
+    count_of_stations: int, count_of_seats: int, requests: Iterable[Tuple[int, int]]
 ) -> Iterable[int]:
     """Обрабатывает все запросы на продажу билетов."""
     segments: List[int] = [0] * (count_of_stations + 1)  # Инициализируем массив мест
@@ -59,10 +53,12 @@ def process_requests(
 
 def main() -> None:
     n, k, m = map(int, input().split())
-    requests: List[Tuple[int, int]] = cast(List[Tuple[int, int]], [tuple(map(int, input().split())) for _ in range(m)])
+    requests: List[Tuple[int, int]] = cast(
+        List[Tuple[int, int]], [tuple(map(int, input().split())) for _ in range(m)]
+    )
 
     results = process_requests(n, k, requests)
-    print(*results, sep='\n')
+    print(*results, sep="\n")
 
 
 if __name__ == "__main__":

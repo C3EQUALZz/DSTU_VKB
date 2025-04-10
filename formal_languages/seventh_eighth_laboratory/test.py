@@ -1,7 +1,8 @@
 import pytest
-from python_language.formal_languages.seventh_eighth_laboratory.remove_unreachable_states_dfa_class import (
-    RemovedUselessSymbolsDFA)
-from python_language.formal_languages.seventh_eighth_laboratory.minimize_dfa_class import DFAMinimizer
+from python_language.formal_languages.seventh_eighth_laboratory.minimize_dfa_class import \
+    DFAMinimizer
+from python_language.formal_languages.seventh_eighth_laboratory.remove_unreachable_states_dfa_class import \
+    RemovedUselessSymbolsDFA
 
 
 def test_twelfth_variant():
@@ -25,13 +26,13 @@ def test_twelfth_variant():
     d = RemovedUselessSymbolsDFA(states, alphabet, start, transitions, final_states)
     n = DFAMinimizer.from_removed_symbols_dfa(d)
 
-    assert n.set_of_states == {'q0', 'q1q4', 'q2q5', 'q3q6'}
-    assert n.set_of_input_alphabet_characters == {'a', 'b'}
+    assert n.set_of_states == {"q0", "q1q4", "q2q5", "q3q6"}
+    assert n.set_of_input_alphabet_characters == {"a", "b"}
     assert n.transition_function == {
-        'q0': {'a': {'q1q4'}, 'b': {'q1q4'}},
-        'q1q4': {'a': {'q2q5'}, 'b': {'q1q4'}},
-        'q2q5': {'a': {'q3q6'}, 'b': {'q3q6'}},
-        'q3q6': {'a': {'q3q6'}, 'b': {'q3q6'}},
+        "q0": {"a": {"q1q4"}, "b": {"q1q4"}},
+        "q1q4": {"a": {"q2q5"}, "b": {"q1q4"}},
+        "q2q5": {"a": {"q3q6"}, "b": {"q3q6"}},
+        "q3q6": {"a": {"q3q6"}, "b": {"q3q6"}},
     }
     assert n.final_states == {"q3q6"}
 
@@ -58,16 +59,16 @@ def test_fourth_variant():
     d = RemovedUselessSymbolsDFA(states, alphabet, start, transitions, final_states)
     n = DFAMinimizer.from_removed_symbols_dfa(d)
 
-    assert n.set_of_states == {'q0', 'q2', 'q3q5', 'q1q4'}
+    assert n.set_of_states == {"q0", "q2", "q3q5", "q1q4"}
     assert n.set_of_input_alphabet_characters == {"0", "1"}
     assert n.transition_function == {
-        'q0': {'1': {'q1q4'}, '0': {'q1q4'}},
-        'q2': {'1': {'q3q5'}, '0': {'q3q5'}},
-        'q3q5': {'1': {'q3q5'}, '0': {'q3q5'}},
-        'q1q4': {'1': {'q2'}, '0': {'q1q4'}}
+        "q0": {"1": {"q1q4"}, "0": {"q1q4"}},
+        "q2": {"1": {"q3q5"}, "0": {"q3q5"}},
+        "q3q5": {"1": {"q3q5"}, "0": {"q3q5"}},
+        "q1q4": {"1": {"q2"}, "0": {"q1q4"}},
     }
     assert n.start_state == "q0"
-    assert n.final_states == {'q3q5'}
+    assert n.final_states == {"q3q5"}
 
 
 def test_fourteenth_variant():
@@ -92,16 +93,16 @@ def test_fourteenth_variant():
     d = RemovedUselessSymbolsDFA(states, alphabet, start, transitions, final_states)
     n = DFAMinimizer.from_removed_symbols_dfa(d)
 
-    assert n.set_of_states == {'q1q4', 'q0', 'q3q5', 'q2'}
+    assert n.set_of_states == {"q1q4", "q0", "q3q5", "q2"}
     assert n.set_of_input_alphabet_characters == {"a", "b"}
     assert n.transition_function == {
-        'q1q4': {'a': {'q1q4'}, 'b': {'q2'}},
-        'q0': {'a': {'q1q4'}, 'b': {'q1q4'}},
-        'q3q5': {'a': {'q3q5'}, 'b': {'q3q5'}},
-        'q2': {'a': {'q3q5'}, 'b': {'q3q5'}}
+        "q1q4": {"a": {"q1q4"}, "b": {"q2"}},
+        "q0": {"a": {"q1q4"}, "b": {"q1q4"}},
+        "q3q5": {"a": {"q3q5"}, "b": {"q3q5"}},
+        "q2": {"a": {"q3q5"}, "b": {"q3q5"}},
     }
     assert n.start_state == "q0"
-    assert n.final_states == {'q3q5'}
+    assert n.final_states == {"q3q5"}
 
 
 if __name__ == "__main__":
