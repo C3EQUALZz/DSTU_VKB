@@ -8,6 +8,10 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
+aiogram = "^3.19.0"
+pydantic-settings = "^2.8.1"
+dishka = "^1.5.2"
+concurrent-log-handler = "^0.9.25"
 
 
 [tool.poetry.group.dev.dependencies]
