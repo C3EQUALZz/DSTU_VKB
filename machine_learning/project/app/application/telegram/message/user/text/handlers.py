@@ -25,7 +25,7 @@ router = Router(name="chatbot-router")
 
 
 @router.message(Command("text"))
-async def start_chat_mode(message: Message, state: FSMContext):
+async def start_chat_mode(message: Message, state: FSMContext) -> None:
     await state.set_state(TextStateMachine.wait_for_message)
     await message.answer(
         "📝 Режим чат-бота активирован!\n"
@@ -42,7 +42,10 @@ async def stop_flood(message: Message) -> None:
     await message.answer("⏳ Ваш предыдущий запрос еще обрабатывается...")
 
 
-@router.message(F.text & ~F.text.startswith("/") & ~F.text.startswith("@"))
+@router.message(
+    TextStateMachine.wait_for_message,
+    F.text & ~F.text.startswith("/") & ~F.text.startswith("@")
+)
 async def cmd_generate_text_message_for_chatbot(
         message: Message, state: FSMContext, bootstrap: FromDishka[Bootstrap[UsersUnitOfWork]]
 ) -> None:
@@ -52,7 +55,7 @@ async def cmd_generate_text_message_for_chatbot(
     :param state: Current state of FSM, using to avoiding flood.
     :param bootstrap: Bootstrap class taken from IoC.
     """
-    await state.set_state(TextStateMachine.wait_for_message)
+    await state.set_state(TextStateMachine.processing)
 
     message_bus: MessageBus = await bootstrap.get_messagebus()
     await message_bus.handle(SendTextMessageToChatBot(content=message.text))
@@ -63,4 +66,4 @@ async def cmd_generate_text_message_for_chatbot(
         parse_mode=ParseMode.HTML
     )
 
-    await state.clear()
+    await state.set_state(TextStateMachine.wait_for_message)
