@@ -5,7 +5,7 @@ from app.domain.values.message import Text
 
 
 @dataclass(eq=False)
-class MessageEntity(BaseEntity):
+class TextMessageEntity(BaseEntity):
     content: Text
     role: str
 

@@ -1,12 +1,22 @@
 import asyncio
+import contextlib
+from typing import TYPE_CHECKING
 
-from aiogram import Bot, Dispatcher
-from dishka import AsyncContainer
+from aiogram import (
+    Bot,
+    Dispatcher,
+)
 from dishka.integrations.aiogram import setup_dishka
 
 from app.logic.container import get_container
-from app.settings.config import Settings, get_settings
+from app.settings.config import (
+    Settings,
+    get_settings,
+)
 from app.settings.logger.config import setup_logging
+
+if TYPE_CHECKING:
+    from dishka import AsyncContainer
 
 
 async def on_start(dispatcher: Dispatcher) -> None:
@@ -34,7 +44,5 @@ async def main() -> None:
 
 
 if __name__ == "__main__":
-    try:
+    with contextlib.suppress(KeyboardInterrupt):
         asyncio.run(main())
-    except KeyboardInterrupt:
-        pass

@@ -1,16 +1,19 @@
-from abc import ABC, abstractmethod
+from abc import (
+    ABC,
+    abstractmethod,
+)
 
-from app.domain.entities.message import MessageEntity
+from app.domain.entities.message import TextMessageEntity
 from app.infrastructure.integrations.llm.dto.base import AbstractDTO
 
 
 class BaseLLMProvider(ABC):
-    """Абстрактный класс для LLM провайдеров, с асинхронными вызовами API."""
+    """Abstract class to provide working with large learning model"""
 
     @abstractmethod
-    async def send_message(self, dto: AbstractDTO) -> MessageEntity:
+    async def send_message(self, dto: AbstractDTO) -> TextMessageEntity:
         """
-        Отправляет запрос на создание ответа по диалогу.
+        Sends message to llm and
         :param dto: Список сообщений (например, [{'role': 'user', 'content': 'Hello'}])
         :return: Ответ API в виде словаря.
         """

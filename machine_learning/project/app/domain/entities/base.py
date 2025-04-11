@@ -1,7 +1,17 @@
 from abc import ABC
-from dataclasses import asdict, dataclass, field
-from datetime import UTC, datetime
-from typing import Any, Optional
+from dataclasses import (
+    asdict,
+    dataclass,
+    field,
+)
+from datetime import (
+    UTC,
+    datetime,
+)
+from typing import (
+    Any,
+    Optional,
+)
 from uuid import uuid4
 
 

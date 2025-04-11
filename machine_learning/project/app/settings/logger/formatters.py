@@ -1,7 +1,10 @@
 import datetime as dt
 import json
 import logging
-from typing import Final, override
+from typing import (
+    Final,
+    override,
+)
 
 LOG_RECORD_BUILTIN_ATTRS: Final[set[str]] = {
     "args",
@@ -69,8 +72,10 @@ class JSONFormatter(logging.Formatter):
 
         message.update(always_fields)
 
-        for key, val in record.__dict__.items():
-            if key not in LOG_RECORD_BUILTIN_ATTRS:
-                message[key] = val
+        message.update({
+            key: val
+            for key, val in record.__dict__.items()
+            if key not in LOG_RECORD_BUILTIN_ATTRS
+        })
 
         return message

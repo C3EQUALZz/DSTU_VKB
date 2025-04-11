@@ -4,12 +4,24 @@ from dataclasses import (
     asdict,
     dataclass,
 )
-from typing import Any
+from typing import (
+    Any,
+    Optional,
+)
 
 
 @dataclass(frozen=True)
-class AbstractDTO(ABC): # noqa
-    async def to_dict(self, exclude: set[str] | None = None, include: dict[str, Any] | None = None) -> dict[str, Any]:
+class AbstractCommand(ABC): # noqa
+    """
+    Base command, from which any domain command should be inherited.
+    Commands represents external operations, which must be executed.
+    """
+
+    async def to_dict(
+        self,
+        exclude: Optional[set[str]] = None,
+        include: Optional[dict[str, Any]] = None,
+    ) -> dict[str, Any]:
         """
         Create a dictionary representation of the model.
 

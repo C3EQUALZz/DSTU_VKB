@@ -3,13 +3,26 @@ from abc import ABC
 from dataclasses import (
     asdict,
     dataclass,
+    field,
 )
 from typing import Any
+from uuid import uuid4
+
+import orjson
 
 
 @dataclass(frozen=True)
-class AbstractDTO(ABC): # noqa
-    async def to_dict(self, exclude: set[str] | None = None, include: dict[str, Any] | None = None) -> dict[str, Any]:
+class AbstractEvent(ABC): # noqa
+    """
+    Base event, from which any domain event should be inherited.
+    Events represents internal operations, which may be executed.
+    """
+
+    oid: str = field(default_factory=lambda: str(uuid4()), kw_only=True)
+
+    async def to_dict(
+        self, exclude: set[str] | None = None, include: dict[str, Any] | None = None
+    ) -> dict[str, Any]:
         """
         Create a dictionary representation of the model.
 
@@ -27,3 +40,8 @@ class AbstractDTO(ABC): # noqa
             data.update(include)
 
         return data
+
+    async def to_broker_message(
+        self, exclude: set[str] | None = None, include: dict[str, Any] | None = None
+    ) -> bytes:
+        return orjson.dumps(await self.to_dict(exclude=exclude, include=include))
