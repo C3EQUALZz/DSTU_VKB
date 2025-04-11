@@ -1,11 +1,11 @@
 import asyncio
 
-from aiogram import Dispatcher, Bot
+from aiogram import Bot, Dispatcher
 from dishka import AsyncContainer
 from dishka.integrations.aiogram import setup_dishka
 
 from app.logic.container import get_container
-from app.settings.config import get_settings, Settings
+from app.settings.config import Settings, get_settings
 from app.settings.logger.config import setup_logging
 
 

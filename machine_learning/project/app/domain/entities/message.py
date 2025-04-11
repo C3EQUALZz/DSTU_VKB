@@ -6,8 +6,8 @@ from app.domain.values.message import Text
 
 @dataclass(eq=False)
 class MessageEntity(BaseEntity):
-    chat_oid: str
-    text: Text
+    content: Text
+    role: str
 
 
 @dataclass(eq=False)

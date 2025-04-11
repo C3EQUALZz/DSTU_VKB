@@ -1,7 +1,7 @@
 import datetime as dt
 import json
 import logging
-from typing import override, Final
+from typing import Final, override
 
 LOG_RECORD_BUILTIN_ATTRS: Final[set[str]] = {
     "args",

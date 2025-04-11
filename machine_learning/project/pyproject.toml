@@ -12,6 +12,7 @@ aiogram = "^3.19.0"
 pydantic-settings = "^2.8.1"
 dishka = "^1.5.2"
 concurrent-log-handler = "^0.9.25"
+openai = "^1.72.0"
 
 
 [tool.poetry.group.dev.dependencies]

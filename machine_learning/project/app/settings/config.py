@@ -8,8 +8,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class CommonSettings(BaseSettings, ABC):
     """
-    Класс, от которого каждая настройка должна наследоваться.
-    Написано с той целью, чтобы не было дублирования кода по настройке model_config.
+    Base class for each setting. If you add new technologies, please add new class and inherit from BaseSettings.
     """
 
     model_config = SettingsConfigDict(
@@ -21,8 +20,8 @@ class CommonSettings(BaseSettings, ABC):
 
 class DatabaseSettings(CommonSettings):
     """
-    Настройки для подключения к базе данных.
-    Здесь есть параметры Optional с той целью, потому что может использоваться sqlite.
+    Here you provide settings from .env to connect to database.
+    Some params are optional because database such as sqlite doesn't need them.
     """
 
     host: str | None = Field(alias="DATABASE_HOST", default=None)
@@ -43,7 +42,8 @@ class DatabaseSettings(CommonSettings):
 
 class SQLAlchemySettings(CommonSettings):
     """
-    Настройки SQLAlchemy, полученные из env.
+    SQLAlchemy settings.
+    For more info about this settings see the documentation of sqlalchemy.
     """
 
     pool_pre_ping: bool = Field(alias="DATABASE_POOL_PRE_PING")
@@ -54,12 +54,16 @@ class SQLAlchemySettings(CommonSettings):
 
 
 class TelegramSettings(CommonSettings):
+    """
+    Telegram settings. Here you provide settings from .env to connect to telegram.
+    """
     token: str = Field(alias="TELEGRAM_TOKEN")
 
 
 class Settings(CommonSettings):
     """
-    Класс настроек, которым в дальнейшем будет оперировать приложение.
+    Settings class which encapsulates logic of settings from other classes.
+    In application, you must use this class.
     """
 
     database: DatabaseSettings = DatabaseSettings()
