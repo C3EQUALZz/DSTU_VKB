@@ -14,6 +14,8 @@ dishka = "^1.5.2"
 concurrent-log-handler = "^0.9.25"
 openai = "^1.72.0"
 orjson = "^3.10.16"
+sqlalchemy = "^2.0.40"
+asyncpg = "^0.30.0"
 
 
 [tool.poetry.group.dev.dependencies]

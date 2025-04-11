@@ -10,28 +10,28 @@ from openai import AsyncOpenAI
 
 from app.domain.entities.message import TextMessageEntity
 from app.domain.values.message import Text
-from app.infrastructure.integrations.llm.dto.message import TextMessageDTO
-from app.infrastructure.integrations.llm.message.base import BaseLLMProvider
+from app.infrastructure.integrations.llm.message.text.base import LLMTextMessageProvider
 
 if TYPE_CHECKING:
     from openai.types.chat import ChatCompletion
 
 T = TypeVar(
     "T",
-    "o3-mini", # noqa
-    "o1", # noqa
-    "o1-preview", # noqa
-    "o1-mini", # noqa
-    "gpt-4o", # noqa
-    "chatgpt-4o-latest", # noqa
-    "gpt-4o-mini", # noqa
-    "gpt-4-turbo", # noqa
-    "gpt-4", # noqa
-    "gpt-3.5-turbo" # noqa
+    "o3-mini",  # noqa
+    "o1",  # noqa
+    "o1-preview",  # noqa
+    "o1-mini",  # noqa
+    "gpt-4o",  # noqa
+    "chatgpt-4o-latest",  # noqa
+    "gpt-4o-mini",  # noqa
+    "gpt-4-turbo",  # noqa
+    "gpt-4",  # noqa
+    "gpt-3.5-turbo",  # noqa
+    "deepseek/deepseek-chat"  # noqa
 )
 
 
-class OpenAITextProvider(BaseLLMProvider, Generic[T]):
+class OpenAITextMessageProvider(LLMTextMessageProvider, Generic[T]):
     def __init__(
             self,
             client: AsyncOpenAI,
@@ -41,11 +41,13 @@ class OpenAITextProvider(BaseLLMProvider, Generic[T]):
         self._model: T = model
 
     @override
-    async def send_message(self, dto: TextMessageDTO) -> TextMessageEntity | None:
-
-        message: list[dict[str, Any]] = [await dto.message.to_dict(exclude={"oid"})]
-        temperature: float = dto.temperature
-        max_tokens: int = dto.max_tokens
+    async def send_message(
+            self,
+            message: TextMessageEntity,
+            temperature: float = 0.7,
+            max_tokens: int = 150
+    ) -> TextMessageEntity | None:
+        message: list[dict[str, Any]] = [await message.to_dict(exclude={"oid"})]
 
         response: ChatCompletion = await self._client.chat.completions.create(
             model=self._model,
