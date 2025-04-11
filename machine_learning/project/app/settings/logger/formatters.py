@@ -6,6 +6,7 @@ from typing import (
     override,
 )
 
+
 LOG_RECORD_BUILTIN_ATTRS: Final[set[str]] = {
     "args",
     "asctime",

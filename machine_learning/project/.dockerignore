@@ -11,3 +11,4 @@ Dockerfile
 ./vscode
 /vscode
 notebooks
+/notebooks

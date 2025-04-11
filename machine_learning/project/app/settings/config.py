@@ -60,7 +60,14 @@ class TelegramSettings(CommonSettings):
     """
     Telegram settings. Here you provide settings from .env to connect to telegram.
     """
+
     token: str = Field(alias="TELEGRAM_TOKEN")
+
+
+class OpenAISettings(CommonSettings):
+    base_url: str = Field(alias="OPENAI_BASE_URL")
+    api_key: str = Field(alias="OPENAI_API_KEY")
+    default_model: str = Field(alias="OPENAI_DEFAULT_MODEL", default="deepseek/deepseek-chat")
 
 
 class Settings(CommonSettings):
@@ -72,6 +79,7 @@ class Settings(CommonSettings):
     database: DatabaseSettings = DatabaseSettings()
     alchemy_settings: SQLAlchemySettings = SQLAlchemySettings()
     telegram: TelegramSettings = TelegramSettings()
+    openai: OpenAISettings = OpenAISettings()
 
 
 @lru_cache(1)

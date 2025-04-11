@@ -5,8 +5,8 @@ from dataclasses import (
     field,
 )
 from datetime import (
-    UTC,
     datetime,
+    UTC,
 )
 from typing import (
     Any,

@@ -5,6 +5,9 @@ import logging.config
 from pathlib import Path
 from typing import Final
 
+import concurrent_log_handler  # noqa
+
+
 PROJECT_DIR: Final[Path] = Path(__file__).parent.parent.parent.parent
 
 

@@ -1,9 +1,17 @@
-from abc import ABC, abstractmethod
-from typing import Any, Generic, TypeVar
+from abc import (
+    ABC,
+    abstractmethod,
+)
+from typing import (
+    Any,
+    Generic,
+    TypeVar,
+)
 
 from app.infrastructure.uow.base import AbstractUnitOfWork
 from app.logic.commands.base import AbstractCommand
 from app.logic.events.base import AbstractEvent
+
 
 ET = TypeVar("ET", bound=AbstractEvent)
 CT = TypeVar("CT", bound=AbstractCommand)

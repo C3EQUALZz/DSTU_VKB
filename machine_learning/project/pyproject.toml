@@ -16,6 +16,7 @@ openai = "^1.72.0"
 orjson = "^3.10.16"
 sqlalchemy = "^2.0.40"
 asyncpg = "^0.30.0"
+chatgpt-md-converter = "^0.3.4"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -65,7 +66,7 @@ sections=[
 [tool.ruff]
 line-length = 120
 fix = true
-extend-exclude = ["tests", "notebooks"]
+extend-exclude = ["tests", "notebooks", "logger"]
 
 [tool.ruff.lint]
 select = [

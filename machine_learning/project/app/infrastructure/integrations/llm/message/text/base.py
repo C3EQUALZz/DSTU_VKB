@@ -11,10 +11,7 @@ class LLMTextMessageProvider(ABC):
 
     @abstractmethod
     async def send_message(
-            self,
-            message: TextMessageEntity,
-            temperature: float = 0.7,
-            max_tokens: int = 150
+        self, message: TextMessageEntity, temperature: float = 0.7, max_tokens: int = 150
     ) -> TextMessageEntity:
         """
         Sends message to llm and

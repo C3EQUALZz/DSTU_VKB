@@ -11,7 +11,7 @@ from typing import (
 
 
 @dataclass(frozen=True)
-class AbstractCommand(ABC): # noqa
+class AbstractCommand(ABC):  # noqa
     """
     Base command, from which any domain command should be inherited.
     Commands represents external operations, which must be executed.

@@ -12,7 +12,7 @@ import orjson
 
 
 @dataclass(frozen=True)
-class AbstractEvent(ABC): # noqa
+class AbstractEvent(ABC):  # noqa
     """
     Base event, from which any domain event should be inherited.
     Events represents internal operations, which may be executed.
@@ -20,9 +20,7 @@ class AbstractEvent(ABC): # noqa
 
     oid: str = field(default_factory=lambda: str(uuid4()), kw_only=True)
 
-    async def to_dict(
-        self, exclude: set[str] | None = None, include: dict[str, Any] | None = None
-    ) -> dict[str, Any]:
+    async def to_dict(self, exclude: set[str] | None = None, include: dict[str, Any] | None = None) -> dict[str, Any]:
         """
         Create a dictionary representation of the model.
 
@@ -41,7 +39,5 @@ class AbstractEvent(ABC): # noqa
 
         return data
 
-    async def to_broker_message(
-        self, exclude: set[str] | None = None, include: dict[str, Any] | None = None
-    ) -> bytes:
+    async def to_broker_message(self, exclude: set[str] | None = None, include: dict[str, Any] | None = None) -> bytes:
         return orjson.dumps(await self.to_dict(exclude=exclude, include=include))

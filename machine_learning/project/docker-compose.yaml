@@ -4,13 +4,11 @@ services:
     container_name: telegram-service-app
     image: telegram-service-app
     build:
-      context: ..
+      context: .
       dockerfile: Dockerfile
-    command: "gunicorn --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000 --workers 4 --timeout 120 --log-level info app.main:create_app"
-    ports:
-      - "${API_PORT}:8000"
+    command: "python -m app.main"
     env_file:
-      - ../.env
+      - .env
     depends_on:
       postgres-app-telegram:
         condition: service_healthy
@@ -37,10 +35,10 @@ services:
     networks:
       - telegram-service
     env_file:
-      - ../.env
+      - .env
 
 volumes:
- postgres-app-telegram-volume:
+  postgres-app-telegram-volume:
 
 networks:
   telegram-service:
