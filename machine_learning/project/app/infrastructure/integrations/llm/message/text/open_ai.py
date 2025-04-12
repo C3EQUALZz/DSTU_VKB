@@ -1,9 +1,9 @@
 from typing import (
+    TYPE_CHECKING,
     Any,
     Generic,
-    override,
-    TYPE_CHECKING,
     TypeVar,
+    override,
 )
 
 from openai import AsyncOpenAI
@@ -11,7 +11,6 @@ from openai import AsyncOpenAI
 from app.domain.entities.message import TextMessageEntity
 from app.domain.values.message import Text
 from app.infrastructure.integrations.llm.message.text.base import LLMTextMessageProvider
-
 
 if TYPE_CHECKING:
     from openai.types.chat import ChatCompletion

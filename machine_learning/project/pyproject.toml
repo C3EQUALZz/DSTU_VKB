@@ -8,7 +8,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-aiogram = "^3.19.0"
+aiogram = {extras = ["i18n"], version = "^3.19.0"}
 pydantic-settings = "^2.8.1"
 dishka = "^1.5.2"
 concurrent-log-handler = "^0.9.25"
@@ -17,6 +17,10 @@ orjson = "^3.10.16"
 sqlalchemy = "^2.0.40"
 asyncpg = "^0.30.0"
 chatgpt-md-converter = "^0.3.4"
+numpy = ">=1.26,<2.2"
+aiogram-i18n = "^1.4"
+fluent-runtime = "^0.4.0"
+tensorflow = "2.19.0"
 
 
 [tool.poetry.group.dev.dependencies]

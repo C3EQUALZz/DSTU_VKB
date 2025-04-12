@@ -8,7 +8,6 @@ from app.logic.handlers.base import (
     AbstractEventHandler,
 )
 
-
 ET = TypeVar("ET", bound=AbstractEvent)
 CT = TypeVar("CT", bound=AbstractCommand)
 UT = TypeVar("UT", bound=AbstractUnitOfWork)

@@ -7,8 +7,8 @@ from traceback import TracebackException
 from typing import Self
 
 from sqlalchemy.ext.asyncio import (
-    async_sessionmaker,
     AsyncSession,
+    async_sessionmaker,
 )
 
 from app.logic.events.base import AbstractEvent

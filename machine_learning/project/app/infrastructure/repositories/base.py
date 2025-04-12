@@ -12,7 +12,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.domain.entities.base import BaseEntity
 
-
 BaseEntityType = TypeVar("BaseEntityType", bound=BaseEntity)
 
 

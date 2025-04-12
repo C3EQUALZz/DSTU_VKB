@@ -1,18 +1,17 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Final
 
 from aiogram import (
     F,
     Router,
 )
-
 from aiogram.enums import ParseMode
-from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
+from aiogram_i18n import I18nContext
 from chatgpt_md_converter import telegram_format
 from dishka import FromDishka
 
-from app.application.telegram.message.user.text.fsm import TextStateMachine
+from app.application.telegram.fsms.text import TextStateMachine
 from app.infrastructure.uow.users.base import UsersUnitOfWork
 from app.logic.bootstrap import Bootstrap
 from app.logic.commands.messages import SendTextMessageToChatBot
@@ -21,25 +20,15 @@ if TYPE_CHECKING:
     from app.domain.entities.message import TextMessageEntity
     from app.logic.message_bus import MessageBus
 
-router = Router(name="chatbot-router")
-
-
-@router.message(Command("text"))
-async def start_chat_mode(message: Message, state: FSMContext) -> None:
-    await state.set_state(TextStateMachine.wait_for_message)
-    await message.answer(
-        "📝 Режим чат-бота активирован!\n"
-        "Теперь все ваши сообщения будут обрабатываться ИИ\n"
-        "Для выхода используйте /cancel"
-    )
+router: Final[Router] = Router(name=__name__)
 
 
 @router.message(TextStateMachine.processing)
-async def stop_flood(message: Message) -> None:
+async def stop_flood(message: Message, i18n: I18nContext) -> None:
     """
     A stub in case the user has previously written
     """
-    await message.answer("⏳ Ваш предыдущий запрос еще обрабатывается...")
+    await message.answer(i18n.get("stop-flood"))
 
 
 @router.message(

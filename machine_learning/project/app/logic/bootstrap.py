@@ -1,9 +1,9 @@
 import inspect
 from typing import (
+    TYPE_CHECKING,
     Any,
     Generic,
     Optional,
-    TYPE_CHECKING,
     Union,
 )
 
@@ -13,11 +13,10 @@ from app.logic.handlers.base import (
 )
 from app.logic.message_bus import MessageBus
 from app.logic.types.handlers import (
+    UT,
     CommandHandlerMapping,
     EventHandlerMapping,
-    UT,
 )
-
 
 if TYPE_CHECKING:
     from types import MappingProxyType

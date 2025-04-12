@@ -4,17 +4,17 @@ from typing import cast
 
 from dishka import (
     AsyncContainer,
+    Provider,
+    Scope,
     from_context,
     make_async_container,
     provide,
-    Provider,
-    Scope,
 )
 from openai import AsyncOpenAI
 from sqlalchemy.ext.asyncio import (
-    async_sessionmaker,
     AsyncEngine,
     AsyncSession,
+    async_sessionmaker,
     create_async_engine,
 )
 
@@ -26,15 +26,14 @@ from app.logic.bootstrap import Bootstrap
 from app.logic.commands.messages import SendTextMessageToChatBot
 from app.logic.handlers.messages.commands import SendTextMessageCommandHandler
 from app.logic.types.handlers import (
+    UT,
     CommandHandlerMapping,
     EventHandlerMapping,
-    UT,
 )
 from app.settings.config import (
-    get_settings,
     Settings,
+    get_settings,
 )
-
 
 logger = logging.getLogger(__name__)
 
