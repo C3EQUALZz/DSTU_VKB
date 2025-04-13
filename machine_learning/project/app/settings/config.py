@@ -2,7 +2,7 @@ from abc import ABC
 from functools import lru_cache
 from pathlib import Path
 
-from pydantic import Field
+from pydantic import Field, RedisDsn
 from pydantic_settings import (
     BaseSettings,
     SettingsConfigDict,
@@ -70,6 +70,16 @@ class OpenAISettings(CommonSettings):
     default_model: str = Field(alias="OPENAI_DEFAULT_MODEL", default="deepseek/deepseek-chat")
 
 
+class RedisSettings(CommonSettings):
+    host: str = Field(alias="REDIS_HOST")
+    port: int = Field(alias="REDIS_PORT_NETWORK")
+    password: str = Field(alias="REDIS_PASSWORD")
+
+    @property
+    def url(self) -> RedisDsn:
+        return RedisDsn(f"redis://:{self.password}@{self.host}:{self.port}")
+
+
 class Settings(CommonSettings):
     """
     Settings class which encapsulates logic of settings from other classes.
@@ -80,6 +90,7 @@ class Settings(CommonSettings):
     alchemy_settings: SQLAlchemySettings = SQLAlchemySettings()
     telegram: TelegramSettings = TelegramSettings()
     openai: OpenAISettings = OpenAISettings()
+    cache: RedisSettings = RedisSettings()
 
 
 @lru_cache(1)

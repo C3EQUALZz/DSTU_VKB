@@ -12,8 +12,8 @@ class TextMessageEntity(BaseEntity):
 
 @dataclass(eq=False)
 class ImageMessageEntity(BaseEntity):
-    chat_oid: str
     photo: bytes
+    chat_id: int
 
 
 @dataclass(eq=False)

@@ -1,13 +1,11 @@
 from app.domain.entities.message import ImageMessageEntity
-from app.infrastructure.integrations.llm.image.gray_to_color.base import BaseImageColorizationModel
+from app.infrastructure.integrations.llm.image.gray_to_color.base import LLMImageMessageColorizationModel
 
 
 class ImageService:
-    def __init__(
-            self,
-            colorization_model: BaseImageColorizationModel
-    ) -> None:
-        self._colorization_model = colorization_model
+    def __init__(self, colorize_image_model: LLMImageMessageColorizationModel) -> None:
+        self._colorize_image_model = colorize_image_model
 
-    async def convert_gray_image_to_color(self, image: ImageMessageEntity) -> ImageMessageEntity:
-        self._colorization_model.
+    async def colorize_image(self, image: ImageMessageEntity) -> ImageMessageEntity:
+        data: bytes = self._colorize_image_model.process(input_data=image.photo)
+        return ImageMessageEntity(photo=data, chat_id=image.chat_id)

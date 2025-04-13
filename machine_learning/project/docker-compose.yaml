@@ -37,8 +37,28 @@ services:
     env_file:
       - .env
 
+  redis:
+    container_name: redis-app-telegram
+    image: redis:6.2-alpine
+    restart: unless-stopped
+    ports:
+      - '${REDIS_PORT}:6379'
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli", "ping" ]
+      interval: 1s
+      timeout: 3s
+      retries: 5
+    command: [ "redis-server", "--appendonly yes", "--requirepass", "${REDIS_PASSWORD}" ]
+    volumes:
+      - redis_data:/data
+    networks:
+      - telegram-service
+    env_file:
+      - ../.env
+
 volumes:
   postgres-app-telegram-volume:
+  redis_data:
 
 networks:
   telegram-service:

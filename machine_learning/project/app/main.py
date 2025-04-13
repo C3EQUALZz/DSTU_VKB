@@ -1,5 +1,6 @@
 import asyncio
 import contextlib
+import logging
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -11,12 +12,12 @@ from aiogram_i18n import I18nMiddleware
 from aiogram_i18n.cores import FluentRuntimeCore
 from dishka.integrations.aiogram import setup_dishka
 
+from app.application.jobs import broker
+from app.application.telegram.handlers.common import router as menu_router
 from app.application.telegram.handlers.image import router as image_router
-from app.application.telegram.handlers.menu import router as menu_router
 from app.application.telegram.handlers.text import router as text_router
 from app.logic.container import get_container
 from app.settings.config import (
-    Settings,
     get_settings,
 )
 from app.settings.logger.config import setup_logging
@@ -24,22 +25,32 @@ from app.settings.logger.config import setup_logging
 if TYPE_CHECKING:
     from dishka import AsyncContainer
 
+logger = logging.getLogger(__name__)
+
+bot: Bot = Bot(token=get_settings().telegram.token)
+dp: Dispatcher = Dispatcher()
+
 
 async def on_start(dispatcher: Dispatcher) -> None:
     setup_logging()
+
+    if not broker.is_worker_process:
+        logger.info("Setting up taskiq")
+        await broker.startup()
 
 
 async def on_shutdown(dispatcher: Dispatcher) -> None:
     container: AsyncContainer = get_container()
     dispatcher.shutdown.register(container.close)
 
+    if not broker.is_worker_process:
+        logger.info("Shutting down taskiq")
+        await broker.shutdown()
+
 
 async def main() -> None:
-    settings: Settings = get_settings()
     container: AsyncContainer = get_container()
-    bot: Bot = Bot(token=settings.telegram.token)
 
-    dp: Dispatcher = Dispatcher()
     dp.startup.register(on_start)
     dp.shutdown.register(on_shutdown)
 

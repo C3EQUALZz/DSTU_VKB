@@ -10,7 +10,7 @@ from openai import AsyncOpenAI
 
 from app.domain.entities.message import TextMessageEntity
 from app.domain.values.message import Text
-from app.infrastructure.integrations.llm.message.text.base import LLMTextMessageProvider
+from app.infrastructure.integrations.llm.message.text.base import LLMTextMessageModel
 
 if TYPE_CHECKING:
     from openai.types.chat import ChatCompletion
@@ -31,7 +31,7 @@ T = TypeVar(
 )
 
 
-class OpenAITextMessageProvider(LLMTextMessageProvider, Generic[T]):
+class OpenAITextMessageModek(LLMTextMessageModel, Generic[T]):
     def __init__(self, client: AsyncOpenAI, model: T) -> None:
         self._client: AsyncOpenAI = client
         self._model: T = model

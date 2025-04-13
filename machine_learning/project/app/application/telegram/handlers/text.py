@@ -5,16 +5,17 @@ from aiogram import (
     Router,
 )
 from aiogram.enums import ParseMode
+from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 from aiogram_i18n import I18nContext
 from chatgpt_md_converter import telegram_format
 from dishka import FromDishka
 
-from app.application.telegram.fsms.text import TextStateMachine
+from app.application.telegram.fsms.app import AppState
 from app.infrastructure.uow.users.base import UsersUnitOfWork
 from app.logic.bootstrap import Bootstrap
-from app.logic.commands.messages import SendTextMessageToChatBot
+from app.logic.commands.texts import SendTextMessageToChatBotCommand
 
 if TYPE_CHECKING:
     from app.domain.entities.message import TextMessageEntity
@@ -22,17 +23,14 @@ if TYPE_CHECKING:
 
 router: Final[Router] = Router(name=__name__)
 
-
-@router.message(TextStateMachine.processing)
-async def stop_flood(message: Message, i18n: I18nContext) -> None:
-    """
-    A stub in case the user has previously written
-    """
-    await message.answer(i18n.get("stop-flood"))
+@router.message(Command("text"))
+async def cmd_start_chat_mode(message: Message, state: FSMContext, i18n: I18nContext) -> None:
+    await state.set_state(AppState.TEXT.ACTIVATE)
+    await message.answer(i18n.get("chat-bot-mode"))
 
 
 @router.message(
-    TextStateMachine.wait_for_message,
+    AppState.TEXT.ACTIVATE,
     F.text & ~F.text.startswith("/") & ~F.text.startswith("@")
 )
 async def cmd_generate_text_message_for_chatbot(
@@ -44,10 +42,10 @@ async def cmd_generate_text_message_for_chatbot(
     :param state: Current state of FSM, using to avoiding flood.
     :param bootstrap: Bootstrap class taken from IoC.
     """
-    await state.set_state(TextStateMachine.processing)
+    await state.set_state(AppState.PROCESSING)
 
     message_bus: MessageBus = await bootstrap.get_messagebus()
-    await message_bus.handle(SendTextMessageToChatBot(content=message.text))
+    await message_bus.handle(SendTextMessageToChatBotCommand(content=message.text))
     reply_from_bot: TextMessageEntity = message_bus.command_result
 
     await message.answer(
@@ -55,4 +53,4 @@ async def cmd_generate_text_message_for_chatbot(
         parse_mode=ParseMode.HTML
     )
 
-    await state.set_state(TextStateMachine.wait_for_message)
+    await state.set_state(AppState.TEXT.ACTIVATE)

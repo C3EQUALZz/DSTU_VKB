@@ -6,7 +6,7 @@ from abc import (
 from app.domain.entities.message import TextMessageEntity
 
 
-class LLMTextMessageProvider(ABC):
+class LLMTextMessageModel(ABC):
     """Abstract class to provide working with large learning model"""
 
     @abstractmethod

@@ -18,13 +18,15 @@ from sqlalchemy.ext.asyncio import (
     create_async_engine,
 )
 
-from app.infrastructure.integrations.llm.message.text.base import LLMTextMessageProvider
-from app.infrastructure.integrations.llm.message.text.open_ai import OpenAITextMessageProvider
+from app.infrastructure.integrations.llm.message.text.base import LLMTextMessageModel
+from app.infrastructure.integrations.llm.message.text.open_ai import OpenAITextMessageModek
 from app.infrastructure.uow.users.alchemy import SQLAlchemyUsersUnitOfWork
 from app.infrastructure.uow.users.base import UsersUnitOfWork
 from app.logic.bootstrap import Bootstrap
-from app.logic.commands.messages import SendTextMessageToChatBot
-from app.logic.handlers.messages.commands import SendTextMessageCommandHandler
+from app.logic.commands.images import ColorizeImageCommand
+from app.logic.commands.texts import SendTextMessageToChatBotCommand
+from app.logic.handlers.images.commands import ColorizeImageCommandHandler
+from app.logic.handlers.texts.commands import SendTextMessageToChatBotCommandHandler
 from app.logic.types.handlers import (
     UT,
     CommandHandlerMapping,
@@ -47,7 +49,8 @@ class HandlerProvider(Provider):
         return cast(
             "CommandHandlerMapping",
             {
-                SendTextMessageToChatBot: SendTextMessageCommandHandler,
+                SendTextMessageToChatBotCommand: SendTextMessageToChatBotCommandHandler,
+                ColorizeImageCommand: ColorizeImageCommandHandler
             },
         )
 
@@ -97,20 +100,20 @@ class AppProvider(Provider):
         return SQLAlchemyUsersUnitOfWork(session_factory=session_maker)
 
     @provide(scope=Scope.APP)
-    async def get_openai_provider(self, settings: Settings) -> LLMTextMessageProvider:
+    async def get_openai_provider(self, settings: Settings) -> LLMTextMessageModel:
         client: AsyncOpenAI = AsyncOpenAI(
             base_url=settings.openai.base_url,
             api_key=settings.openai.api_key,
         )
 
-        return OpenAITextMessageProvider(
+        return OpenAITextMessageModek(
             client=client,
             model=settings.openai.default_model,
         )
 
     @provide(scope=Scope.APP)
     async def get_bootstrap(
-        self, events: EventHandlerMapping, commands: CommandHandlerMapping, uow: UT, text_llm: LLMTextMessageProvider
+        self, events: EventHandlerMapping, commands: CommandHandlerMapping, uow: UT, text_llm: LLMTextMessageModel
     ) -> Bootstrap[UT]:
         return Bootstrap(
             uow=uow,

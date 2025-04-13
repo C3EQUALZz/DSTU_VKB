@@ -1,5 +1,11 @@
+from enum import Enum
+
 from aiogram.filters.callback_data import CallbackData
 
 
-class ImageClickActionCallback(CallbackData, prefix="action"):
-    name: str
+class ImageCLickAction(str, Enum):
+    gray_to_color = "gray-to-color"
+
+
+class ImageClickActionCallback(CallbackData, prefix="img"):
+    action: ImageCLickAction
