@@ -1,5 +1,6 @@
 services:
   telegram-service-app:
+    &telegram-service-app
     restart: unless-stopped
     container_name: telegram-service-app
     image: telegram-service-app
@@ -12,8 +13,15 @@ services:
     depends_on:
       postgres-app-telegram:
         condition: service_healthy
+      redis:
+        condition: service_healthy
     networks:
       - telegram-service
+
+  taskiq-worker:
+    <<: *telegram-service-app
+    container_name: task-iq-worker
+    command: [ taskiq, worker, app.application.jobs:broker, -fsd]
 
   postgres-app-telegram:
     container_name: postgres-app-telegram
@@ -54,7 +62,7 @@ services:
     networks:
       - telegram-service
     env_file:
-      - ../.env
+      - .env
 
 volumes:
   postgres-app-telegram-volume:

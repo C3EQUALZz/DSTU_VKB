@@ -1,15 +1,16 @@
 import taskiq_aiogram
+from dishka.integrations.taskiq import setup_dishka as setup_taskiq_dishka
 from taskiq_redis import ListQueueBroker
 
+from app.logic.container import get_container
 from app.settings.config import get_settings
 
 broker = ListQueueBroker(str(get_settings().cache.url))
 
 taskiq_aiogram.init(
     broker,
-    # This is path to the dispatcher.
     "app.main:dp",
-    # This is path to the bot instance.
     "app.main:bot",
-    # You can specify more bots here.
 )
+
+setup_taskiq_dishka(container=get_container(), broker=broker)

@@ -26,6 +26,6 @@ class TextsCommandHandler(AbstractCommandHandler[CT], ABC):
     Abstract command handler class, from which every users command handler should be inherited from.
     """
 
-    def __init__(self, uow: UsersUnitOfWork, llm_service: TextMessageService) -> None:
+    def __init__(self, uow: UsersUnitOfWork, text_service: TextMessageService) -> None:
         self._uow: UsersUnitOfWork = uow
-        self._llm: TextMessageService = llm_service
+        self._llm: TextMessageService = text_service

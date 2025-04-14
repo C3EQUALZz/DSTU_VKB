@@ -31,7 +31,7 @@ T = TypeVar(
 )
 
 
-class OpenAITextMessageModek(LLMTextMessageModel, Generic[T]):
+class OpenAITextMessageModel(LLMTextMessageModel, Generic[T]):
     def __init__(self, client: AsyncOpenAI, model: T) -> None:
         self._client: AsyncOpenAI = client
         self._model: T = model

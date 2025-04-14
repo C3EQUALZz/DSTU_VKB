@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import override, Final, cast
+from typing import Final, cast, override
 
 import cv2
 import numpy as np
@@ -12,7 +12,7 @@ class KerasImageMessageColorizationModel(LLMImageMessageColorizationModel):
     SIZE: Final[int] = 160
 
     def __init__(self, path_to_model: Path) -> None:
-        self._model = tf.keras.models.load_model(path_to_model)  # type: ignore
+        self._model = tf.keras.models.load_model(path_to_model) # type: ignore
 
     @override
     def preprocess(self, input_data: bytes) -> np.ndarray:
@@ -63,7 +63,7 @@ class KerasImageMessageColorizationModel(LLMImageMessageColorizationModel):
         """
         Постобработка результатов
         """
-        prediction: np.ndarray[bytes] = cast(np.ndarray[bytes], np.squeeze(prediction, axis=0))
-        prediction: np.ndarray[bytes] = cast(np.ndarray[bytes], (np.clip(prediction, 0, 1) * 255).astype(np.uint8))
-        _, buf = cv2.imencode('.jpg', prediction)
+        prediction: np.ndarray[bytes] = cast("np.ndarray[bytes]", np.squeeze(prediction, axis=0))
+        prediction: np.ndarray[bytes] = cast("np.ndarray[bytes]", (np.clip(prediction, 0, 1) * 255).astype(np.uint8))
+        _, buf = cv2.imencode(".jpg", prediction)
         return buf.tobytes()

@@ -2,7 +2,7 @@ from abc import ABC
 from functools import lru_cache
 from pathlib import Path
 
-from pydantic import Field, RedisDsn
+from pydantic import Field, RedisDsn, field_validator
 from pydantic_settings import (
     BaseSettings,
     SettingsConfigDict,
@@ -79,6 +79,18 @@ class RedisSettings(CommonSettings):
     def url(self) -> RedisDsn:
         return RedisDsn(f"redis://:{self.password}@{self.host}:{self.port}")
 
+class ModelsSettings(CommonSettings):
+    path_to_colorization_model: Path = Field(alias="PATH_TO_COLORIZATION_MODEL")
+
+    @field_validator("path_to_colorization_model", mode="before")
+    def validating_path_to_colorization_model(cls, v: str) -> Path:
+        converted_to_path: Path = Path.cwd().parent.parent / Path(v)
+
+        if not converted_to_path.exists():
+            raise ValueError(f"Path {v} doesn't exists")
+
+        return converted_to_path
+
 
 class Settings(CommonSettings):
     """
@@ -91,7 +103,7 @@ class Settings(CommonSettings):
     telegram: TelegramSettings = TelegramSettings()
     openai: OpenAISettings = OpenAISettings()
     cache: RedisSettings = RedisSettings()
-
+    models: ModelsSettings = ModelsSettings()
 
 @lru_cache(1)
 def get_settings() -> Settings:

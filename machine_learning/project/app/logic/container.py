@@ -1,5 +1,8 @@
+import importlib
 import logging
 from functools import lru_cache
+from pathlib import Path
+from types import ModuleType
 from typing import cast
 
 from dishka import (
@@ -18,8 +21,15 @@ from sqlalchemy.ext.asyncio import (
     create_async_engine,
 )
 
+from app.application.jobs.factory import JobFactory
+from app.application.telegram.keyboards.callbacks.images import ImageCLickAction
+from app.infrastructure.factories.image import ImageCommandFactory
+from app.infrastructure.integrations.llm.image.gray_to_color.base import LLMImageMessageColorizationModel
+from app.infrastructure.integrations.llm.image.gray_to_color.custom import KerasImageMessageColorizationModel
 from app.infrastructure.integrations.llm.message.text.base import LLMTextMessageModel
-from app.infrastructure.integrations.llm.message.text.open_ai import OpenAITextMessageModek
+from app.infrastructure.integrations.llm.message.text.open_ai import OpenAITextMessageModel
+from app.infrastructure.services.image import ImageService
+from app.infrastructure.services.text import TextMessageService
 from app.infrastructure.uow.users.alchemy import SQLAlchemyUsersUnitOfWork
 from app.infrastructure.uow.users.base import UsersUnitOfWork
 from app.logic.bootstrap import Bootstrap
@@ -100,26 +110,60 @@ class AppProvider(Provider):
         return SQLAlchemyUsersUnitOfWork(session_factory=session_maker)
 
     @provide(scope=Scope.APP)
+    async def get_colorization_model(self, settings: Settings) -> LLMImageMessageColorizationModel:
+        return KerasImageMessageColorizationModel(
+            Path(settings.models.path_to_colorization_model)
+        )
+
+    @provide(scope=Scope.APP)
+    async def get_image_factory(self) -> ImageCommandFactory:
+        return ImageCommandFactory(
+            {ImageCLickAction.gray_to_color: ColorizeImageCommand}
+        )
+
+    @provide(scope=Scope.APP)
     async def get_openai_provider(self, settings: Settings) -> LLMTextMessageModel:
         client: AsyncOpenAI = AsyncOpenAI(
             base_url=settings.openai.base_url,
             api_key=settings.openai.api_key,
         )
 
-        return OpenAITextMessageModek(
+        return OpenAITextMessageModel(
             client=client,
             model=settings.openai.default_model,
         )
 
     @provide(scope=Scope.APP)
+    async def get_text_service(self, message_model: LLMTextMessageModel) -> TextMessageService:
+        return TextMessageService(chat_bot_model=message_model)
+
+    @provide(scope=Scope.APP)
+    async def get_image_service(self, image_colorization_model: LLMImageMessageColorizationModel) -> ImageService:
+        return ImageService(colorize_image_model=image_colorization_model)
+
+    @provide(scope=Scope.APP)
+    async def get_job_factory(self) -> JobFactory:
+        images_tasks_module: ModuleType = importlib.import_module("app.application.jobs.images.tasks")
+
+        return JobFactory(
+            {ColorizeImageCommand: getattr(images_tasks_module, "colorize_photo")},
+        )
+
+    @provide(scope=Scope.APP)
     async def get_bootstrap(
-        self, events: EventHandlerMapping, commands: CommandHandlerMapping, uow: UT, text_llm: LLMTextMessageModel
+        self,
+        events: EventHandlerMapping,
+        commands: CommandHandlerMapping,
+        uow: UT,
+        text_service: TextMessageService,
+        image_service: ImageService,
+        job_factory: JobFactory,
     ) -> Bootstrap[UT]:
         return Bootstrap(
             uow=uow,
             events_handlers_for_injection=events,
             commands_handlers_for_injection=commands,
-            dependencies={"text_llm": text_llm},
+            dependencies={"text_service": text_service, "image_service": image_service, "job_factory": job_factory},
         )
 
 

@@ -2,8 +2,6 @@ from abc import ABC, abstractmethod
 
 import numpy as np
 
-from app.domain.entities.message import ImageMessageEntity
-
 
 class LLMImageMessageColorizationModel(ABC):
     """

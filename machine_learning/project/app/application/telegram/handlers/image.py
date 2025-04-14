@@ -1,27 +1,29 @@
-from typing import Final
+from typing import TYPE_CHECKING, Any, Final
 
-from aiogram import Router, F
+from aiogram import F, Router
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
-from aiogram.types import CallbackQuery, Message
+from aiogram.types import CallbackQuery, File, Message, PhotoSize
 from aiogram_i18n import I18nContext
-
-from app.application.telegram.fsms.app import AppState
-from app.application.telegram.keyboards.callbacks.images import ImageClickActionCallback, ImageCLickAction
-from app.application.telegram.keyboards.images import build_keyboard
 from dishka.integrations.aiogram import FromDishka
 
+from app.application.telegram.fsms.app import AppState
+from app.application.telegram.keyboards.callbacks.images import ImageCLickAction, ImageClickActionCallback
+from app.application.telegram.keyboards.images import build_keyboard
+from app.infrastructure.factories.image import ImageCommandFactory
 from app.infrastructure.uow.users.base import UsersUnitOfWork
 from app.logic.bootstrap import Bootstrap
-from app.logic.message_bus import MessageBus
+
+if TYPE_CHECKING:
+    from app.logic.message_bus import MessageBus
 
 router: Final[Router] = Router(name=__name__)
 
 
 @router.message(Command("image"))
-async def start_painter_mode(message: Message, state: FSMContext, i18n: I18nContext) -> None:
+async def cmd_image_mode(message: Message, state: FSMContext, i18n: I18nContext) -> None:
     """
-    :param message:
+    :param message: Message from user which would be used
     :param state:
     :param i18n:
     :return:
@@ -34,7 +36,7 @@ async def start_painter_mode(message: Message, state: FSMContext, i18n: I18nCont
     AppState.IMAGE.ACTIVATE,
     ImageClickActionCallback.filter()
 )
-async def say_to_user(
+async def keyboard_callback(
         query: CallbackQuery,
         callback_data: ImageClickActionCallback,
         state: FSMContext,
@@ -42,7 +44,7 @@ async def say_to_user(
 ) -> None:
     await state.update_data(selected_action=callback_data.action)
     await state.set_state(AppState.IMAGE.WAITING)
-    await query.message.answer("📷 Пришли изображение для обработки")
+    await query.message.answer(i18n.get("send-image-for-processing"))
     await query.answer()
 
 
@@ -50,25 +52,32 @@ async def say_to_user(
     AppState.IMAGE.WAITING,
     F.photo,
 )
-async def handle_gray_to_color(
+async def handle_image_processing_with_ai(
         message: Message,
         state: FSMContext,
-        bootstrap: FromDishka[Bootstrap[UsersUnitOfWork]]
+        bootstrap: FromDishka[Bootstrap[UsersUnitOfWork]],
+        factory: FromDishka[ImageCommandFactory],
+        i18n: I18nContext
 ) -> None:
-    data = await state.get_data()
-    action_raw = data.get("selected_action")
+    fsm_state_data: dict[str, Any] = await state.get_data()
+    action_raw: str = fsm_state_data.get("selected_action")
+
     message_bus: MessageBus = await bootstrap.get_messagebus()
+    photo: PhotoSize = message.photo[-1]
+    file: File = await message.bot.get_file(photo.file_id)
+    image_data: bytes = (await message.bot.download_file(file.file_path)).read()
 
-    try:
-        action = ImageCLickAction(action_raw)
-    except ValueError:
-        await message.answer("❌ Неизвестное действие")
-        return
-
-    message_bus.handle(
-
-    )
+    action: ImageCLickAction = ImageCLickAction(action_raw)
 
     await state.set_state(AppState.PROCESSING)
-    await message.answer("Фото получено. Обрабатываем...")
+    await message.answer(i18n.get("image-processing"))
+
+    await message_bus.handle(
+        factory.create(
+            action.value,
+            chat_id=message.chat.id,
+            data=image_data
+        )
+    )
+
     await state.set_state(AppState.IMAGE.ACTIVATE)

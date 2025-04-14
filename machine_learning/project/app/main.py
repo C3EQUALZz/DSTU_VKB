@@ -10,17 +10,14 @@ from aiogram import (
 )
 from aiogram_i18n import I18nMiddleware
 from aiogram_i18n.cores import FluentRuntimeCore
-from dishka.integrations.aiogram import setup_dishka
+from dishka.integrations.aiogram import setup_dishka as setup_aiogram_dishka
 
-from app.application.jobs import broker
+from app import lifespan
 from app.application.telegram.handlers.common import router as menu_router
 from app.application.telegram.handlers.image import router as image_router
 from app.application.telegram.handlers.text import router as text_router
 from app.logic.container import get_container
-from app.settings.config import (
-    get_settings,
-)
-from app.settings.logger.config import setup_logging
+from app.settings.config import get_settings
 
 if TYPE_CHECKING:
     from dishka import AsyncContainer
@@ -31,28 +28,11 @@ bot: Bot = Bot(token=get_settings().telegram.token)
 dp: Dispatcher = Dispatcher()
 
 
-async def on_start(dispatcher: Dispatcher) -> None:
-    setup_logging()
-
-    if not broker.is_worker_process:
-        logger.info("Setting up taskiq")
-        await broker.startup()
-
-
-async def on_shutdown(dispatcher: Dispatcher) -> None:
-    container: AsyncContainer = get_container()
-    dispatcher.shutdown.register(container.close)
-
-    if not broker.is_worker_process:
-        logger.info("Shutting down taskiq")
-        await broker.shutdown()
-
-
 async def main() -> None:
     container: AsyncContainer = get_container()
 
-    dp.startup.register(on_start)
-    dp.shutdown.register(on_shutdown)
+    dp.startup.register(lifespan.on_start)
+    dp.shutdown.register(lifespan.on_shutdown)
 
     i18n_middleware = I18nMiddleware(
         core=FluentRuntimeCore(
@@ -67,7 +47,7 @@ async def main() -> None:
     dp.include_router(menu_router)
     dp.include_router(image_router)
 
-    setup_dishka(container=container, router=dp, auto_inject=True)
+    setup_aiogram_dishka(container=container, router=dp, auto_inject=True)
 
     await dp.start_polling(bot, skip_updates=True)
 
