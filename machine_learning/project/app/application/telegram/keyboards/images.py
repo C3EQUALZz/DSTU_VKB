@@ -11,8 +11,7 @@ def build_keyboard(i18n: I18nContext) -> InlineKeyboardBuilder:
     for action in ImageCLickAction:
         builder.row(
             InlineKeyboardButton(
-                text=i18n.get(action.value),
-                callback_data=ImageClickActionCallback(action=action).pack()
+                text=i18n.get(action.value), callback_data=ImageClickActionCallback(action=action).pack()
             )
         )
 

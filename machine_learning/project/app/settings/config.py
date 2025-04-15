@@ -79,6 +79,7 @@ class RedisSettings(CommonSettings):
     def url(self) -> RedisDsn:
         return RedisDsn(f"redis://:{self.password}@{self.host}:{self.port}")
 
+
 class ModelsSettings(CommonSettings):
     path_to_colorization_model: Path = Field(alias="PATH_TO_COLORIZATION_MODEL")
 
@@ -104,6 +105,7 @@ class Settings(CommonSettings):
     openai: OpenAISettings = OpenAISettings()
     cache: RedisSettings = RedisSettings()
     models: ModelsSettings = ModelsSettings()
+
 
 @lru_cache(1)
 def get_settings() -> Settings:

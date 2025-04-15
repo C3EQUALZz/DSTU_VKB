@@ -23,18 +23,16 @@ if TYPE_CHECKING:
 
 router: Final[Router] = Router(name=__name__)
 
+
 @router.message(Command("text"))
 async def cmd_start_chat_mode(message: Message, state: FSMContext, i18n: I18nContext) -> None:
     await state.set_state(AppState.TEXT.ACTIVATE)
     await message.answer(i18n.get("chat-bot-mode"))
 
 
-@router.message(
-    AppState.TEXT.ACTIVATE,
-    F.text & ~F.text.startswith("/") & ~F.text.startswith("@")
-)
+@router.message(AppState.TEXT.ACTIVATE, F.text & ~F.text.startswith("/") & ~F.text.startswith("@"))
 async def cmd_generate_text_message_for_chatbot(
-        message: Message, state: FSMContext, bootstrap: FromDishka[Bootstrap[UsersUnitOfWork]]
+    message: Message, state: FSMContext, bootstrap: FromDishka[Bootstrap[UsersUnitOfWork]]
 ) -> None:
     """
     This handler generates text message from chatbot. It is used for providing info about chatgpt.
@@ -48,9 +46,6 @@ async def cmd_generate_text_message_for_chatbot(
     await message_bus.handle(SendTextMessageToChatBotCommand(content=message.text))
     reply_from_bot: TextMessageEntity = message_bus.command_result
 
-    await message.answer(
-        telegram_format(reply_from_bot.content.as_generic_type()),
-        parse_mode=ParseMode.HTML
-    )
+    await message.answer(telegram_format(reply_from_bot.content.as_generic_type()), parse_mode=ParseMode.HTML)
 
     await state.set_state(AppState.TEXT.ACTIVATE)

@@ -32,15 +32,9 @@ async def cmd_image_mode(message: Message, state: FSMContext, i18n: I18nContext)
     await message.answer(text=i18n.get("image-bot-mode"), reply_markup=build_keyboard(i18n).as_markup())
 
 
-@router.callback_query(
-    AppState.IMAGE.ACTIVATE,
-    ImageClickActionCallback.filter()
-)
+@router.callback_query(AppState.IMAGE.ACTIVATE, ImageClickActionCallback.filter())
 async def keyboard_callback(
-        query: CallbackQuery,
-        callback_data: ImageClickActionCallback,
-        state: FSMContext,
-        i18n: I18nContext
+    query: CallbackQuery, callback_data: ImageClickActionCallback, state: FSMContext, i18n: I18nContext
 ) -> None:
     await state.update_data(selected_action=callback_data.action)
     await state.set_state(AppState.IMAGE.WAITING)
@@ -53,11 +47,11 @@ async def keyboard_callback(
     F.photo,
 )
 async def handle_image_processing_with_ai(
-        message: Message,
-        state: FSMContext,
-        bootstrap: FromDishka[Bootstrap[UsersUnitOfWork]],
-        factory: FromDishka[ImageCommandFactory],
-        i18n: I18nContext
+    message: Message,
+    state: FSMContext,
+    bootstrap: FromDishka[Bootstrap[UsersUnitOfWork]],
+    factory: FromDishka[ImageCommandFactory],
+    i18n: I18nContext,
 ) -> None:
     fsm_state_data: dict[str, Any] = await state.get_data()
     action_raw: str = fsm_state_data.get("selected_action")
@@ -72,12 +66,6 @@ async def handle_image_processing_with_ai(
     await state.set_state(AppState.PROCESSING)
     await message.answer(i18n.get("image-processing"))
 
-    await message_bus.handle(
-        factory.create(
-            action.value,
-            chat_id=message.chat.id,
-            data=image_data
-        )
-    )
+    await message_bus.handle(factory.create(action.value, chat_id=message.chat.id, data=image_data))
 
     await state.set_state(AppState.IMAGE.ACTIVATE)

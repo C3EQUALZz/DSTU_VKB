@@ -27,8 +27,7 @@ async def cmd_help(message: Message, i18n: I18nContext) -> None:
 
 
 @router.message(Command("settings"))
-async def cmd_settings(message: Message, i18n: I18nContext) -> None:
-    ...
+async def cmd_settings(message: Message, i18n: I18nContext) -> None: ...
 
 
 @router.message(AppState.PROCESSING)

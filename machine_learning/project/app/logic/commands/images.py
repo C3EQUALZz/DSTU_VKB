@@ -7,4 +7,3 @@ from app.logic.commands.base import AbstractCommand
 class ColorizeImageCommand(AbstractCommand):
     data: bytes
     chat_id: int
-

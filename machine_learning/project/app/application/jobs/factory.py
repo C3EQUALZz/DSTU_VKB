@@ -10,7 +10,9 @@ _ReturnType = TypeVar("_ReturnType")
 
 
 class JobFactory:
-    def __init__(self, task_name_and_func: dict[type[AbstractCommand], AsyncTaskiqDecoratedTask[_FuncParams, _ReturnType]]) -> None:
+    def __init__(
+        self, task_name_and_func: dict[type[AbstractCommand], AsyncTaskiqDecoratedTask[_FuncParams, _ReturnType]]
+    ) -> None:
         self.task_name_and_func = task_name_and_func
 
     def get_task(self, name: type[AbstractCommand]) -> AsyncTaskiqDecoratedTask:

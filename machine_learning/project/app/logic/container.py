@@ -60,7 +60,7 @@ class HandlerProvider(Provider):
             "CommandHandlerMapping",
             {
                 SendTextMessageToChatBotCommand: SendTextMessageToChatBotCommandHandler,
-                ColorizeImageCommand: ColorizeImageCommandHandler
+                ColorizeImageCommand: ColorizeImageCommandHandler,
             },
         )
 
@@ -111,15 +111,11 @@ class AppProvider(Provider):
 
     @provide(scope=Scope.APP)
     async def get_colorization_model(self, settings: Settings) -> LLMImageMessageColorizationModel:
-        return KerasImageMessageColorizationModel(
-            Path(settings.models.path_to_colorization_model)
-        )
+        return KerasImageMessageColorizationModel(Path(settings.models.path_to_colorization_model))
 
     @provide(scope=Scope.APP)
     async def get_image_factory(self) -> ImageCommandFactory:
-        return ImageCommandFactory(
-            {ImageCLickAction.gray_to_color: ColorizeImageCommand}
-        )
+        return ImageCommandFactory({ImageCLickAction.gray_to_color: ColorizeImageCommand})
 
     @provide(scope=Scope.APP)
     async def get_openai_provider(self, settings: Settings) -> LLMTextMessageModel:
@@ -146,7 +142,7 @@ class AppProvider(Provider):
         images_tasks_module: ModuleType = importlib.import_module("app.application.jobs.images.tasks")
 
         return JobFactory(
-            {ColorizeImageCommand: getattr(images_tasks_module, "colorize_photo")},
+            {ColorizeImageCommand: images_tasks_module.colorize_photo},
         )
 
     @provide(scope=Scope.APP)

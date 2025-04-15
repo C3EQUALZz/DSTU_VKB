@@ -11,4 +11,5 @@ from app.domain.entities.message import TextMessageEntity
 class UserEntity(BaseEntity):
     surname: str
     name: str
+    role: str
     messages: list[TextMessageEntity] = field(default_factory=list, kw_only=True)

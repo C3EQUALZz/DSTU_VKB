@@ -12,7 +12,7 @@ class KerasImageMessageColorizationModel(LLMImageMessageColorizationModel):
     SIZE: Final[int] = 160
 
     def __init__(self, path_to_model: Path) -> None:
-        self._model = tf.keras.models.load_model(path_to_model) # type: ignore
+        self._model = tf.keras.models.load_model(path_to_model)  # type: ignore
 
     @override
     def preprocess(self, input_data: bytes) -> np.ndarray:
@@ -47,11 +47,7 @@ class KerasImageMessageColorizationModel(LLMImageMessageColorizationModel):
         left: int = delta_w // 2
         right: int = delta_w - left
 
-        return cv2.copyMakeBorder(
-            resized, top, bottom, left, right,
-            cv2.BORDER_CONSTANT,
-            value=[0, 0, 0]
-        )
+        return cv2.copyMakeBorder(resized, top, bottom, left, right, cv2.BORDER_CONSTANT, value=[0, 0, 0])
 
     @override
     def predict(self, processed_data: np.ndarray[bytes]) -> np.ndarray[bytes]:

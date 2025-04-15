@@ -16,9 +16,7 @@ def hex_bytes_validator(o: Any) -> bytes:
 
 
 HexBytes = Annotated[
-    bytes,
-    PlainValidator(hex_bytes_validator),
-    PlainSerializer(lambda b: b.hex()), WithJsonSchema({"type": "string"})
+    bytes, PlainValidator(hex_bytes_validator), PlainSerializer(lambda b: b.hex()), WithJsonSchema({"type": "string"})
 ]
 
 
@@ -28,7 +26,4 @@ class ColorizePhotoSchema(BaseModel):
 
     @classmethod
     def from_entity(cls, entity: ImageMessageEntity) -> Self:
-        return cls(
-            chat_id=entity.chat_id,
-            photo=entity.photo
-        )
+        return cls(chat_id=entity.chat_id, photo=entity.photo)
