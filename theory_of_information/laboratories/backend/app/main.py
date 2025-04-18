@@ -7,6 +7,9 @@ from app.application.api.second_semester.second_laboratory.handlers import \
     router as second_semester_second_laboratory_router
 from app.application.api.second_semester.third_laboratory.handlers import \
     router as second_semester_third_laboratory_router
+from app.application.api.second_semester.fourth_laboratory.handlers import \
+    router as second_semester_fourth_laboratory_router
+
 from app.logic.container import container
 from app.settings.logger.config import setup_logging
 from dishka.integrations.fastapi import setup_dishka
@@ -35,5 +38,6 @@ def create_app() -> FastAPI:
     app.include_router(second_semester_first_laboratory_router)
     app.include_router(second_semester_second_laboratory_router)
     app.include_router(second_semester_third_laboratory_router)
+    app.include_router(second_semester_fourth_laboratory_router)
 
     return app

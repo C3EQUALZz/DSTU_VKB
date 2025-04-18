@@ -14,3 +14,14 @@ class LogicException(ApplicationException, ABC):
     @property
     def status(self) -> int:
         return HTTPStatus.INTERNAL_SERVER_ERROR.value
+
+
+@dataclass(eq=False)
+class StringMustContainsOnlyNumberException(LogicException):
+    @property
+    def message(self) -> str:
+        return "String must contain only numbers"
+
+    @property
+    def status(self) -> int:
+        return HTTPStatus.UNPROCESSABLE_ENTITY.value

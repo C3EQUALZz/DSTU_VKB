@@ -1,6 +1,7 @@
 from app.infrastructure.services.block_codes import BlockCodesService
 from app.infrastructure.services.convolutional_codes import \
     ConvolutionalCodesService
+from app.infrastructure.services.cyclic_codes import CyclicCodeService
 from app.infrastructure.services.field_calculator import FieldCalculatorService
 from app.infrastructure.services.interleaver import InterleaveService
 from app.logic.use_cases.calculator import EvaluateMathExpressionInFieldUseCase
@@ -9,6 +10,8 @@ from app.logic.use_cases.cascade_codes import (DecodeCascadeCodeUseCase,
                                                ShowNoisyImageUseCase)
 from app.logic.use_cases.convolutional_codes import (
     DecodeConvolutionalCodeUseCase, EncodeConvolutionalCodeUseCase)
+from app.logic.use_cases.cyclic_codes import EncodeCyclicCodeMatrixUseCase, EncodeCyclicCodePolynomUseCase, \
+    DecodeCyclicCodePolynomUseCase
 from app.settings.config import Settings
 from dishka import Provider, Scope, from_context, make_async_container, provide
 from redis.asyncio import ConnectionPool, Redis
@@ -31,7 +34,7 @@ class RedisProvider(Provider):
 class FieldCalculatorUseCasesProvider(Provider):
     @provide(scope=Scope.APP)
     async def get_evaluate_expression_use_case(
-        self,
+            self,
     ) -> EvaluateMathExpressionInFieldUseCase:
         return EvaluateMathExpressionInFieldUseCase(FieldCalculatorService())
 
@@ -68,11 +71,26 @@ class CascadeCodeUseCasesProvider(Provider):
         return ShowNoisyImageUseCase()
 
 
+class CyclicCodeUseCasesProvider(Provider):
+    @provide(scope=Scope.APP)
+    async def get_encode_expression_matrix_use_case(self) -> EncodeCyclicCodeMatrixUseCase:
+        return EncodeCyclicCodeMatrixUseCase(CyclicCodeService())
+
+    @provide(scope=Scope.APP)
+    async def get_encode_expression_polynomials_use_case(self) -> EncodeCyclicCodePolynomUseCase:
+        return EncodeCyclicCodePolynomUseCase(CyclicCodeService())
+
+    @provide(scope=Scope.APP)
+    async def get_decode_expression_polynomials_use_case(self) -> DecodeCyclicCodePolynomUseCase:
+        return DecodeCyclicCodePolynomUseCase(CyclicCodeService())
+
+
 container = make_async_container(
     RedisProvider(),
     FieldCalculatorUseCasesProvider(),
     ConvolutionalCodeUseCasesProvider(),
     CascadeCodeUseCasesProvider(),
+    CyclicCodeUseCasesProvider(),
     context={
         Settings: Settings(),
     },
