@@ -2,7 +2,7 @@ import random
 import re
 
 from app.exceptions.logic import StringMustContainsOnlyNumberException
-from app.infrastructure.services.cyclic_codes import CyclicCodeService
+from app.infrastructure.services.cyclic_codes import CyclicCodeService, cyclic_shift
 from app.logic.commands.cyclic_codes import EncodeCyclicCodeWithMatrixCommand, EncodeCyclicCodeWithPolynomCommand, \
     DecodeCyclicCodeWithPolynomCommand
 from app.logic.dtos.cyclic_codes import EncodedAndPolynomDTO, EncodedAndMatrixDTO
@@ -29,7 +29,7 @@ class EncodeCyclicCodePolynomUseCase(BaseUseCase[EncodeCyclicCodeWithPolynomComm
     async def __call__(self, command: EncodeCyclicCodeWithPolynomCommand) -> EncodedAndMatrixDTO:
         polynomials: list[str] = re.findall(r'\((.*?)\)', command.polynom)
 
-        coeffs: list[int] = self._service.pols_to_coefficients(random.choice(polynomials))
+        coeffs: list[int] = self._service.parse_generator_polynomial(random.choice(polynomials))
 
         matrix: list[list[int]] = [
             coeffs + [0] * (command.n - len(coeffs))
@@ -39,11 +39,11 @@ class EncodeCyclicCodePolynomUseCase(BaseUseCase[EncodeCyclicCodeWithPolynomComm
 
         for shift in range(m):
             row: list[int] = matrix[-1]
-            matrix.append(self._service.cyclic_shift(row, 1))
+            matrix.append(cyclic_shift(row, 1))
 
         result: EncodedAndPolynomDTO = self._service.encode(
-            symbols_to_encode=command.data,
-            matrix=matrix,
+            message_bits=command.data,
+            generator_matrix=matrix,
         )
 
         return EncodedAndMatrixDTO(
@@ -57,4 +57,4 @@ class DecodeCyclicCodePolynomUseCase(BaseUseCase[DecodeCyclicCodeWithPolynomComm
         self._service: CyclicCodeService = service
 
     async def __call__(self, command: DecodeCyclicCodeWithPolynomCommand) -> str:
-        return self._service.decode(v=command.data, g_poly_str=command.polynom)
+        return self._service.decode(received_bits=command.data, generator_poly=command.polynom)
