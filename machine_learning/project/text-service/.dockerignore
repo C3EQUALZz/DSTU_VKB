@@ -1,0 +1,14 @@
+/venv
+/.venv
+/.idea
+/.gitignore
+/.github
+LICENSE
+README.md
+/tests
+docker-compose.yaml
+Dockerfile
+./vscode
+/vscode
+notebooks
+/notebooks
