@@ -1,0 +1,100 @@
+services:
+  image-service-app-backend:
+    &image-service-app-backend
+    restart: unless-stopped
+    container_name: image-service-app-backend
+    image: image-service-app-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: [ "sh", "-c", "gunicorn --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000 --workers 4 --timeout 120 --log-level info app.main:create_app" ]
+    ports:
+      - "${API_PORT}:8000"
+    env_file:
+      - .env
+    depends_on:
+      broker:
+        condition: service_healthy
+      image-service-redis:
+        condition: service_healthy
+    networks:
+      - image-service
+
+  image-service-taskiq-worker:
+    <<: *image-service-app-backend
+    container_name: image-service-taskiq-worker
+    command: [ taskiq, worker, app.infrastructure.scheduler:scheduler, -fsd ]
+    ports:
+      - "8002:8000"
+
+  image-service-redis:
+    container_name: image-service-redis
+    image: redis:6.2-alpine
+    restart: unless-stopped
+    ports:
+      - '${REDIS_PORT}:6379'
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli", "ping" ]
+      interval: 1s
+      timeout: 3s
+      retries: 5
+    command: [ "redis-server", "--appendonly yes", "--requirepass", "${REDIS_PASSWORD}" ]
+    volumes:
+      - redis_data:/data
+    networks:
+      - image-service
+    env_file:
+      - .env
+
+  broker:
+    image: bitnami/kafka:3.9.0
+    container_name: broker
+    restart: unless-stopped
+    networks:
+      - kafka-network
+      - image-service
+    ports:
+      - "9092:9092"  # localhost доступ
+      - "29092:29092" # docker network доступ
+    environment:
+      KAFKA_ENABLE_KRAFT: "yes"
+      KAFKA_CFG_PROCESS_ROLES: broker,controller
+      KAFKA_CFG_NODE_ID: 1
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 1@broker:9093
+      KAFKA_CFG_LISTENERS: PLAINTEXT://:29092,CONTROLLER://:9093,PLAINTEXT_HOST://:9092
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://broker:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_CFG_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_CFG_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT,CONTROLLER:PLAINTEXT
+      KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE: "true"
+      ALLOW_PLAINTEXT_LISTENER: "yes"
+    volumes:
+      - kafka_data:/bitnami/kafka
+    healthcheck:
+      test: [ "CMD-SHELL", "echo 'test-message' | kafka-console-producer.sh --broker-list localhost:9092 --topic health-check-topic && kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic health-check-topic --from-beginning --max-messages 1 | grep 'test-message'" ]
+      interval: 15s
+      timeout: 10s
+      retries: 3
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
+    restart: unless-stopped
+    networks:
+      - kafka-network
+    ports:
+      - "8090:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: broker:29092
+
+
+volumes:
+  kafka_data:
+  redis_data:
+
+networks:
+  image-service:
+    driver: bridge
+  kafka-network:
+    driver: bridge
