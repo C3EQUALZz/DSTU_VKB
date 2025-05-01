@@ -33,6 +33,16 @@ class RedisSettings(CommonSettings):
 
 class ModelsSettings(CommonSettings):
     path_to_colorization_model: Path = Field(alias="PATH_TO_COLORIZATION_MODEL")
+    path_to_stylization_model: Path = Field(alias="PATH_TO_STYLIZATION_MODEL")
+
+    @field_validator("path_to_stylization_model", mode="before")
+    def validating_path_to_stylization_model(cls, v: str) -> Path:
+        converted_to_path: Path = Path.cwd().parent.parent / Path(v)
+
+        if not converted_to_path.exists():
+            raise ValueError(f"Path {v} doesn't exists")
+
+        return converted_to_path
 
     @field_validator("path_to_colorization_model", mode="before")
     def validating_path_to_colorization_model(cls, v: str) -> Path:

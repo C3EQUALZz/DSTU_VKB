@@ -22,8 +22,11 @@ from app.infrastructure.integrations.color_to_gray.impl import Cv2ImageColorToCr
 from app.infrastructure.integrations.crop.base import BaseImageCropConverter
 from app.infrastructure.integrations.crop.impl import Cv2ImageCropConverter
 from app.infrastructure.integrations.gray_to_color.base import BaseImageGrayScaleToColorConverter
+from app.infrastructure.integrations.gray_to_color.impl import KerasImageMessageColorizationModel
 from app.infrastructure.integrations.rotation.base import BaseImageRotationConverter
 from app.infrastructure.integrations.rotation.impl import Cv2ImageRotationConverter
+from app.infrastructure.integrations.stylization.base import BaseImageStylizationConverter
+from app.infrastructure.integrations.stylization.impl import KerasImageStylizationConverter
 from app.infrastructure.scheduler.base import BaseScheduler
 from app.infrastructure.scheduler.task_iq import TaskIqScheduler
 from app.infrastructure.services.colorization import ImageColorizationService
@@ -90,7 +93,8 @@ class SchedulerProvider(Provider):
     @provide(scope=Scope.APP)
     async def get_scheduler(self) -> BaseScheduler:
         colorize_tasks_module: ModuleType = importlib.import_module("app.infrastructure.scheduler.tasks.colorization")
-        transformation_tasks_module: ModuleType = importlib.import_module("app.infrastructure.scheduler.tasks.transformation")
+        transformation_tasks_module: ModuleType = importlib.import_module(
+            "app.infrastructure.scheduler.tasks.transformation")
 
         return TaskIqScheduler(task_name_and_func={
             ConvertColorToGrayScaleCommand: colorize_tasks_module.convert_rgb_to_grayscale_task,
@@ -104,8 +108,8 @@ class ImageColorizationProvider(Provider):
     settings = from_context(provides=Settings, scope=Scope.APP)
 
     @provide(scope=Scope.APP)
-    async def get_color_to_gray_converter(self) -> BaseImageGrayScaleToColorConverter:
-        return ...
+    async def get_color_to_gray_converter(self, settings: Settings) -> BaseImageGrayScaleToColorConverter:
+        return KerasImageMessageColorizationModel(path_to_model=settings.path_to_model)
 
     @provide(scope=Scope.APP)
     async def get_gray_to_color_converter(self) -> BaseImageColorToCrayScaleConverter:
@@ -184,6 +188,16 @@ class ImageTransformProvider(Provider):
         )
 
 
+class ImageStylizationProvider(Provider):
+    settings = from_context(provides=Settings, scope=Scope.APP)
+
+    @provide(scope=Scope.APP)
+    async def get_stylization_converter(self, settings: Settings) -> BaseImageStylizationConverter:
+        return KerasImageStylizationConverter(
+            path_to_stylization_model=settings.models.path_to_stylization_model
+        )
+
+
 class AppProvider(Provider):
 
     @provide(scope=Scope.APP)
@@ -220,6 +234,7 @@ def get_container() -> AsyncContainer:
         BrokerProvider(),
         ImageColorizationProvider(),
         ImageTransformProvider(),
+        ImageStylizationProvider(),
         SchedulerProvider(),
         context={Settings: get_settings()}
     )
