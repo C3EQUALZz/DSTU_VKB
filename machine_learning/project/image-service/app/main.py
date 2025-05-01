@@ -10,7 +10,7 @@ from faststream import FastStream
 from faststream.kafka import KafkaBroker
 
 from app.application.api.utils.handlers import register_exception_handlers
-from app.infrastructure.scheduler.task_iq import scheduler
+from app.infrastructure.scheduler import scheduler
 from app.infrastructure.brokers.base import BaseMessageBroker
 from app.logic.container import get_container
 from app.settings.logger.config import setup_logging

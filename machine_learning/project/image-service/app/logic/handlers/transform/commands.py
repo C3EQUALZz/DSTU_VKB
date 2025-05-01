@@ -2,7 +2,7 @@ from typing import override
 
 from app.domain.entities.image import ImageEntity
 from app.domain.values.image import PositiveNumber, ImageName
-from app.infrastructure.scheduler.schemas.image import PhotoForSendToChatSchema
+from app.infrastructure.scheduler.tasks.schemas import PhotoForSendToChatSchema
 from app.logic.commands.transform import CropImageCommand, RotateImageCommand, CropImageAndSendToChatCommand, \
     RotateImageAndSendToChatCommand
 from app.logic.handlers.transform.base import ImageTransformCommandHandler

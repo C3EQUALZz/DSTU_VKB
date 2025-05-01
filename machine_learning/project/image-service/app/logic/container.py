@@ -82,8 +82,8 @@ class SchedulerProvider(Provider):
 
     @provide(scope=Scope.APP)
     async def get_scheduler(self) -> BaseScheduler:
-        colorize_tasks_module: ModuleType = importlib.import_module("app.infrastructure.tasks.colorization")
-        transformation_tasks_module: ModuleType = importlib.import_module("app.infrastructure.tasks.transformation")
+        colorize_tasks_module: ModuleType = importlib.import_module("app.infrastructure.scheduler.tasks.colorization")
+        transformation_tasks_module: ModuleType = importlib.import_module("app.infrastructure.scheduler.tasks.transformation")
 
         return TaskIqScheduler(task_name_and_func={
             ConvertColorToGrayScaleCommand: colorize_tasks_module.convert_rgb_to_grayscale_task,
@@ -180,17 +180,28 @@ class ImageTransformProvider(Provider):
 class AppProvider(Provider):
 
     @provide(scope=Scope.APP)
+    async def get_event_buffer(self) -> EventBuffer:
+        return EventBuffer()
+
+    @provide(scope=Scope.APP)
     async def get_bootstrap(
             self,
             events: EventHandlerMapping,
             commands: CommandHandlerMapping,
-            event_buffer: EventBuffer
+            event_buffer: EventBuffer,
+            image_colorization_service: ImageColorizationService,
+            scheduler: BaseScheduler,
+            image_transform_service: ImageTransformService,
     ) -> Bootstrap:
         return Bootstrap(
             event_buffer=event_buffer,
             events_handlers_for_injection=events,
             commands_handlers_for_injection=commands,
-            dependencies={},
+            dependencies={
+                "image_colorization_service": image_colorization_service,
+                "scheduler": scheduler,
+                "image_transform_service": image_transform_service,
+            },
         )
 
 

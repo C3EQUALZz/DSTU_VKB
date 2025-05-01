@@ -10,6 +10,7 @@ from app.infrastructure.integrations.color_to_gray.base import BaseImageColorToC
 class Cv2ImageColorToCrayScaleConverter(BaseImageColorToCrayScaleConverter):
     @override
     def convert(self, image: ImageEntity) -> ImageEntity:
+        raise ValueError(image)
         cv2_image: cv2.typing.MatLike = cv2.imdecode(np.frombuffer(image.data, dtype=np.uint8), cv2.IMREAD_COLOR)
         gray_image = cv2.cvtColor(cv2_image, cv2.COLOR_BGR2GRAY)
 
