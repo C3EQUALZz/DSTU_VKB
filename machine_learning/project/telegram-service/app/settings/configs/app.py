@@ -42,6 +42,11 @@ class RedisSettings(CommonSettings):
         return RedisDsn(f"redis://:{self.password}@{self.host}:{self.port}")
 
 
+class HTTPXSettings(CommonSettings):
+    user_microservice_url: str = Field(alias="USER_MICROSERVICE_URL")
+
+
+
 class BrokerSettings(CommonSettings):
     host: str = Field(alias="BROKER_HOST")
     port: int = Field(alias="BROKER_PORT_NETWORK")
@@ -74,6 +79,21 @@ class BrokerSettings(CommonSettings):
     text_to_chatbot_topic: str = Field(
         default="text-to-chatbot",
         alias="BROKER_TEXT_TO_CHATBOT"
+    )
+
+    user_create_topic: str = Field(
+        default="user-create",
+        alias="BROKER_USER_CREATE"
+    )
+
+    user_update_topic: str = Field(
+        default="user-update",
+        alias="BROKER_USER_UPDATE"
+    )
+
+    user_delete_topic: str = Field(
+        default="user-delete",
+        alias="BROKER_USER_DELETE"
     )
 
     @property

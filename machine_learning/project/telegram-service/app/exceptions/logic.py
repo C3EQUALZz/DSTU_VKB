@@ -20,4 +20,11 @@ class MessageBusMessageError(LogicError):
 class UserAlreadyExistsError(LogicError):
     @property
     def status(self) -> int:
+        return HTTPStatus.CONFLICT.value
+
+
+@dataclass(eq=False)
+class UserDoesntExistError(LogicError):
+    @property
+    def status(self) -> int:
         return HTTPStatus.NOT_FOUND.value

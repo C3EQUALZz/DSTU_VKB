@@ -1,0 +1,55 @@
+services:
+  image-service-app-backend:
+    &image-service-app-backend
+    restart: unless-stopped
+    container_name: image-service-app-backend
+    image: image-service-app-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: [ "sh", "-c", "gunicorn --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000 --workers 4 --timeout 120 --log-level info app.main:create_app" ]
+    ports:
+      - "${API_PORT}:8000"
+    env_file:
+      - .env
+    depends_on:
+      image-service-redis:
+        condition: service_healthy
+    networks:
+      - image-service
+      - microservices-network
+
+  image-service-taskiq-worker:
+    <<: *image-service-app-backend
+    container_name: image-service-taskiq-worker
+    command: [ taskiq, worker, app.infrastructure.scheduler:scheduler, -fsd ]
+    ports:
+      - "1000:8000"
+
+  image-service-redis:
+    container_name: image-service-redis
+    image: redis:6.2-alpine
+    restart: unless-stopped
+    ports:
+      - '${REDIS_PORT}:6379'
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli", "ping" ]
+      interval: 1s
+      timeout: 3s
+      retries: 5
+    command: [ "redis-server", "--appendonly yes", "--requirepass", "${REDIS_PASSWORD}" ]
+    volumes:
+      - redis_data:/data
+    networks:
+      - image-service
+    env_file:
+      - .env
+
+volumes:
+  redis_data:
+
+networks:
+  image-service:
+    driver: bridge
+  microservices-network:
+    external: true

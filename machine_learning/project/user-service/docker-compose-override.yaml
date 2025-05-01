@@ -1,0 +1,51 @@
+services:
+  user-service-app-backend:
+    restart: unless-stopped
+    container_name: user-service-app-backend
+    image: user-service-app-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "uvicorn --factory app.main:create_app --reload --host 0.0.0.0 --port 8000"
+    ports:
+      - "${API_PORT}:8000"
+    env_file:
+      - .env
+    depends_on:
+      postgres-app-users:
+        condition: service_healthy
+    networks:
+      - user-service
+      - microservices-network
+
+  postgres-app-users:
+    container_name: postgres-app-users
+    image: postgres:16.3-alpine
+    restart: unless-stopped
+    ports:
+      - "${DATABASE_PORT}:5432"
+    volumes:
+      - postgres_data_users:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $${DATABASE_USER} -d $${DATABASE_NAME}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - user-service
+    env_file:
+      - .env
+
+volumes:
+  postgres_data_users:
+  pgadmin_data_users:
+
+networks:
+  user-service:
+    driver: bridge
+  microservices-network:
+    external: true

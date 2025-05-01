@@ -31,6 +31,7 @@ from app.logic.commands.images import (
     RotateImageCommand,
 )
 from app.logic.commands.texts import SendTextMessageToChatBotCommand
+from app.logic.commands.users import CreateUserCommand, UpdateUserCommand, DeleteUserCommand
 from app.logic.event_buffer import EventBuffer
 from app.logic.events.images import (
     ConvertColorImageToGrayScaleImageEvent,
@@ -39,6 +40,7 @@ from app.logic.events.images import (
     GetMetadataFromImageEvent,
     RotateImageEvent,
 )
+from app.logic.events.user import UserCreateEvent, UserUpdateEvent, UserDeleteEvent
 from app.logic.handlers.images.commands import (
     ConvertColorImageToGrayScaleImageCommandHandler,
     ConvertGrayScaleImageToColorImageCommandHandler,
@@ -54,6 +56,9 @@ from app.logic.handlers.images.events import (
     RotateImageEventHandler,
 )
 from app.logic.handlers.texts.commands import SendTextMessageToChatBotCommandHandler
+from app.logic.handlers.users.commands import CreateUserCommandHandler, DeleteUserCommandHandler
+from app.logic.handlers.users.events import UserCreateEventHandler, UserUpdateEventHandler, UserDeleteEventHandler
+from app.logic.message_bus import MessageBus
 from app.logic.types.handlers import (
     CommandHandlerMapping,
     EventHandlerMapping,
@@ -81,7 +86,10 @@ class HandlerProvider(Provider):
                 ConvertColorImageToGrayScaleImageCommand: ConvertColorImageToGrayScaleImageCommandHandler,
                 ConvertGrayScaleImageToColorImageCommand: ConvertGrayScaleImageToColorImageCommandHandler,
                 CropImageCommand: CropImageCommandHandler,
-                RotateImageCommand: RotateImageCommandHandler
+                RotateImageCommand: RotateImageCommandHandler,
+                CreateUserCommand: CreateUserCommandHandler,
+                UpdateUserCommand: UserUpdateEventHandler,
+                DeleteUserCommand: DeleteUserCommandHandler,
             },
         )
 
@@ -97,7 +105,10 @@ class HandlerProvider(Provider):
                 GetMetadataFromImageEvent: [GetMetadataFromImageEventHandler],
                 ConvertGrayScaleImageToColorImageEvent: [ConvertGrayScaleImageToColorImageEventHandler],
                 CropImageEvent: [CropImageEventHandler],
-                RotateImageEvent: [RotateImageEventHandler]
+                RotateImageEvent: [RotateImageEventHandler],
+                UserCreateEvent: [UserCreateEventHandler],
+                UserUpdateEvent: [UserUpdateEventHandler],
+                UserDeleteEvent: [UserDeleteEventHandler],
             },
         )
 
@@ -109,7 +120,9 @@ class BrokerProvider(Provider):
     async def get_mapping_events_and_topic(self, settings: Settings) -> EventHandlerTopicFactory:
         return EventHandlerTopicFactory(
             mapping={
-
+                UserCreateEventHandler: settings.broker.user_create_topic,
+                UserUpdateEventHandler: settings.broker.user_update_topic,
+                UserDeleteEventHandler: settings.broker.user_delete_topic,
             }
         )
 
@@ -190,6 +203,10 @@ class AppProvider(Provider):
                 "topic_command_handler_factory": topic_command_handler_factory
             },
         )
+
+    @provide(scope=Scope.APP)
+    async def get_message_bus(self, bootstrap: Bootstrap) -> MessageBus:
+        return await bootstrap.get_messagebus()
 
 
 @lru_cache(maxsize=1)

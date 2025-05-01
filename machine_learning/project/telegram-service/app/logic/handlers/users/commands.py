@@ -1,34 +1,47 @@
-from app.domain.entities.user import UserEntity
-from app.exceptions.infrastructure import UserNotFoundError
-from app.exceptions.logic import UserAlreadyExistsError
 from app.logic.commands.users import (
     CreateUserCommand,
-    DeleteUserCommand,
+    DeleteUserCommand, UpdateUserCommand,
 )
+from app.logic.events.user import UserCreateEvent, UserDeleteEvent, UserUpdateEvent
 from app.logic.handlers.users.base import UsersCommandHandler
 
 
 class CreateUserCommandHandler(UsersCommandHandler[CreateUserCommand]):
-    async def __call__(self, command: CreateUserCommand) -> UserEntity:
+    async def __call__(self, command: CreateUserCommand) -> None:
         """
         Handler for creating a new user.
         """
-
-        if await self._user_service.check_existence(command.user_id):
-            raise UserAlreadyExistsError(command.user_id)
-
-        new_user: UserEntity = UserEntity(**await command.to_dict())
-
-        added_user: UserEntity = await self._user_service.add(new_user)
-
-        return added_user
+        self._event_buffer.add(
+            UserCreateEvent(
+                user_id=command.user_id,
+                full_name=command.full_name,
+                role=command.role,
+                language_code=command.language_code,
+                user_login=command.user_login,
+            )
+        )
 
 
 class DeleteUserCommandHandler(UsersCommandHandler[DeleteUserCommand]):
     async def __call__(self, command: DeleteUserCommand) -> None:
-        if not await self._user_service.check_existence(oid=command.user_id):
-            raise UserNotFoundError(command.user_id)
+        """
+        Handler for deleting a user.
+        """
+        self._event_buffer.add(
+            UserDeleteEvent(
+                user_id=command.user_id,
+            )
+        )
 
-        deleted_user: None = await self._user_service.delete(oid=command.user_id)
 
-        return deleted_user
+class UserUpdateCommandHandler(UsersCommandHandler[UpdateUserCommand]):
+    async def __call__(self, command: UpdateUserCommand) -> None:
+        self._event_buffer.add(
+            UserUpdateEvent(
+                user_id=command.user_id,
+                full_name=command.full_name,
+                language_code=command.language_code,
+                role=command.role,
+                user_login=command.user_login,
+            )
+        )
