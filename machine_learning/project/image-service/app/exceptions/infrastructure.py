@@ -31,3 +31,10 @@ class UnknownTopicError(InfrastructureError):
     @property
     def status(self) -> int:
         return HTTPStatus.INTERNAL_SERVER_ERROR.value
+
+
+@dataclass(eq=False)
+class Cv2ImageDecodingError(InfrastructureError):
+    @property
+    def status(self) -> int:
+        return HTTPStatus.INTERNAL_SERVER_ERROR.value

@@ -49,7 +49,7 @@ async def convert_grayscale_to_rgb(
 
     return StreamingResponse(
         content=io.BytesIO(image_entity.data),
-        headers={'Content-Disposition': f'attachment; filename="{image_entity.name}"'},
+        headers={'Content-Disposition': f'attachment; filename="{image_entity.name.as_generic_type()}"'},
         media_type="image/png",
     )
 
@@ -78,6 +78,6 @@ async def convert_rgb_to_grayscale(
 
     return StreamingResponse(
         content=io.BytesIO(image_entity.data),
-        headers={'Content-Disposition': f'attachment; filename="{image_entity.name}"'},
+        headers={'Content-Disposition': f'attachment; filename="{image_entity.name.as_generic_type()}"'},
         media_type="image/png",
     )

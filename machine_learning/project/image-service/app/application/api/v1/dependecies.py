@@ -28,8 +28,10 @@ async def get_image_dimensions(
 
         height, width = img.shape[:2]
 
+        _, encoded_img = cv2.imencode(".jpg", img)
+
         return FileWithDimensions(
-            data=img.tobytes(),
+            data=encoded_img.tobytes(),
             width=width,
             height=height,
             name=file.filename,
