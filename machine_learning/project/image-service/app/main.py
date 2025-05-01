@@ -15,6 +15,7 @@ from app.infrastructure.brokers.base import BaseMessageBroker
 from app.logic.container import get_container
 from app.settings.logger.config import setup_logging
 from app.application.api.v1.colorization.handlers import router as colorization_router
+from app.application.api.v1.transformation.handlers import router as transformation_router
 
 if TYPE_CHECKING:
     from dishka import AsyncContainer
@@ -64,5 +65,6 @@ def create_app() -> FastAPI:
     setup_dishka_fastapi(container=container, app=app)
 
     app.include_router(colorization_router)
+    app.include_router(transformation_router)
 
     return app

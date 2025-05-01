@@ -5,6 +5,7 @@ import numpy as np
 
 from app.domain.entities.image import ImageEntity
 from app.domain.values.image import PositiveNumber
+from app.exceptions.infrastructure import Cv2ImageDecodingError
 from app.infrastructure.integrations.crop.base import BaseImageCropConverter
 
 
@@ -16,6 +17,9 @@ class Cv2ImageCropConverter(BaseImageCropConverter):
 
         # Декодируем изображение
         img: cv2.typing.MatLike = cv2.imdecode(buffer, cv2.IMREAD_COLOR)
+
+        if img is None:
+            raise Cv2ImageDecodingError("Failed to decoding image")
 
         # Изменяем размер изображения
         resized_img: cv2.typing.MatLike = cv2.resize(img, (new_width, new_height))

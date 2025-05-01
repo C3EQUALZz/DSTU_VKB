@@ -31,11 +31,14 @@ from app.infrastructure.services.transform import ImageTransformService
 from app.logic.bootstrap import Bootstrap
 from app.logic.commands.colorization import ConvertColorToGrayScaleCommand, ConvertGrayScaleToColorCommand, \
     ConvertColorToGrayScaleAndSendToChatCommand, ConvertGrayScaleToColorAndSendToChatCommand
-from app.logic.commands.transform import CropImageAndSendToChatCommand, RotateImageAndSendToChatCommand
+from app.logic.commands.transform import CropImageAndSendToChatCommand, RotateImageAndSendToChatCommand, \
+    CropImageCommand, RotateImageCommand
 from app.logic.event_buffer import EventBuffer
 from app.logic.handlers.colorization.commands import ConvertColorToGrayScaleCommandHandler, \
     ConvertGrayScaleToColorCommandHandler, ConvertColorToGrayScaleAndSendToChatCommandHandler, \
     ConvertGrayScaleToColorAndSendToChatCommandHandler
+from app.logic.handlers.transform.commands import CropImageAndSendToChatCommandHandler, CropImageCommandHandler, \
+    RotateImageAndSendToChatCommandHandler, RotateImageCommandHandler
 from app.logic.types.handlers import (
     CommandHandlerMapping,
     EventHandlerMapping,
@@ -61,6 +64,10 @@ class HandlerProvider(Provider):
                 ConvertGrayScaleToColorCommand: ConvertGrayScaleToColorCommandHandler,
                 ConvertColorToGrayScaleAndSendToChatCommand: ConvertColorToGrayScaleAndSendToChatCommandHandler,
                 ConvertGrayScaleToColorAndSendToChatCommand: ConvertGrayScaleToColorAndSendToChatCommandHandler,
+                CropImageAndSendToChatCommand: CropImageAndSendToChatCommandHandler,
+                CropImageCommand: CropImageCommandHandler,
+                RotateImageAndSendToChatCommand: RotateImageAndSendToChatCommandHandler,
+                RotateImageCommand: RotateImageCommandHandler,
             },
         )
 

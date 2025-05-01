@@ -1,4 +1,5 @@
 from app.domain.entities.image import ImageEntity
+from app.exceptions.infrastructure import Cv2ImageDecodingError
 from app.infrastructure.integrations.compress.base import BaseImageCompressConverter
 from typing import override
 import numpy as np
@@ -12,6 +13,9 @@ class Cv2ImageCompressConverter(BaseImageCompressConverter):
         np_arr: np.ndarray = np.frombuffer(image.data, np.uint8)
         # Декодируем изображение
         img = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+
+        if img is None:
+            raise Cv2ImageDecodingError("Failed to decoding image")
 
         # Кодируем изображение с заданным качеством
         encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), quality]

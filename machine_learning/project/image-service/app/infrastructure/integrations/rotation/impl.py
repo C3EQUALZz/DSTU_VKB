@@ -1,4 +1,5 @@
 from app.domain.entities.image import ImageEntity
+from app.exceptions.infrastructure import Cv2ImageDecodingError
 from app.infrastructure.integrations.rotation.base import BaseImageRotationConverter
 from typing import override
 import numpy as np
@@ -13,6 +14,9 @@ class Cv2ImageRotationConverter(BaseImageRotationConverter):
 
         # Декодируем изображение
         img: cv2.typing.MatLike = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+
+        if img is None:
+            raise Cv2ImageDecodingError("Failed to decoding image")
 
         # Получаем размеры изображения
         (h, w) = img.shape[:2]
