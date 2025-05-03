@@ -1,6 +1,7 @@
 from typing import Final
 
 from dishka import FromDishka
+from faststream import Logger
 from faststream.kafka import KafkaRouter, KafkaMessage
 
 from app.infrastructure.brokers.consumers.kafka.transformation.schemas import CropImageAndSendToChatSchema, \
@@ -24,8 +25,11 @@ async def handle_image_crop_topic(
         schemas: CropImageAndSendToChatSchema,
         msg: KafkaMessage,
         bootstrap: FromDishka[Bootstrap],
+        logger: Logger
 ) -> None:
+    logger.info("Handling cropping image event from telegram")
     message_bus: MessageBus = await bootstrap.get_messagebus()
+
     await message_bus.handle(
         CropImageAndSendToChatEvent(
             data=schemas.image.data,
@@ -40,6 +44,8 @@ async def handle_image_crop_topic(
 
     msg.ack()
 
+    logger.info("Successfully handled cropping image event from telegram")
+
 
 @router.subscriber(
     settings.broker.image_rotate_topic,
@@ -51,7 +57,10 @@ async def handle_image_rotate_topic(
         schemas: RotateImageAndSendToChatSchema,
         msg: KafkaMessage,
         bootstrap: FromDishka[Bootstrap],
+        logger: Logger
 ) -> None:
+    logger.info("Handling rotating image event from telegram")
+
     message_bus: MessageBus = await bootstrap.get_messagebus()
 
     await message_bus.handle(
@@ -66,3 +75,5 @@ async def handle_image_rotate_topic(
     )
 
     msg.ack()
+
+    logger.info("Successfully handled rotating image event from telegram")

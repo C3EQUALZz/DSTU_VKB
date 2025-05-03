@@ -1,7 +1,7 @@
-import logging
 from typing import Final
 
 from dishka import FromDishka
+from faststream import Logger
 from faststream.kafka import KafkaRouter, KafkaMessage
 
 from app.infrastructure.brokers.consumers.kafka.colorization.schemas import ConvertColorImageSchema, StylizeImageSchema
@@ -13,7 +13,6 @@ from app.settings.configs.app import Settings, get_settings
 
 settings: Final[Settings] = get_settings()
 router: Final[KafkaRouter] = KafkaRouter()
-logger: Final[logging.Logger] = logging.getLogger(__name__)
 
 
 @router.subscriber(
@@ -25,7 +24,8 @@ logger: Final[logging.Logger] = logging.getLogger(__name__)
 async def handle_image_style_topic(
         schemas: StylizeImageSchema,
         msg: KafkaMessage,
-        bootstrap: FromDishka[Bootstrap]
+        bootstrap: FromDishka[Bootstrap],
+        logger: Logger,
 ) -> None:
     logger.info("handling style image event from telegram")
 
@@ -59,7 +59,8 @@ async def handle_image_style_topic(
 async def handle_image_grayscale_to_color_topic(
         schemas: ConvertColorImageSchema,
         msg: KafkaMessage,
-        bootstrap: FromDishka[Bootstrap]
+        bootstrap: FromDishka[Bootstrap],
+        logger: Logger
 ) -> None:
     logger.info("handling grayscale image event from telegram")
 
@@ -89,6 +90,7 @@ async def handle_image_grayscale_to_color_topic(
 async def handle_image_color_to_grayscale_topic(
         schemas: ConvertColorImageSchema,
         msg: KafkaMessage,
+        logger: Logger,
         bootstrap: FromDishka[Bootstrap]
 ) -> None:
     logger.info("handling colorization image event from telegram")

@@ -169,7 +169,10 @@ class BrokerProvider(Provider):
 
     @provide(scope=Scope.APP)
     async def get_faststream_broker(self, settings: Settings) -> KafkaBroker:
-        broker: KafkaBroker = KafkaBroker(settings.broker.url)
+        broker: KafkaBroker = KafkaBroker(
+            settings.broker.url,
+            logger=logger,
+        )
         broker.include_router(colorization_kafka_router)
         broker.include_router(transformation_kafka_router)
         return broker
