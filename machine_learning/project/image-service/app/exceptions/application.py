@@ -20,6 +20,13 @@ class WrongFileFormatError(ApplicationException):
 
 
 @dataclass(eq=False)
+class WrongFileFormatError(ApplicationException):
+    @property
+    def status(self) -> int:
+        return HTTPStatus.UNPROCESSABLE_ENTITY.value
+
+
+@dataclass(eq=False)
 class CantDecodeImageError(ApplicationException):
     @property
     def status(self) -> int:

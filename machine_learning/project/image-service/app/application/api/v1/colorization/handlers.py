@@ -90,14 +90,11 @@ async def convert_rgb_to_grayscale(
 )
 async def style_image(
         bootstrap: FromDishka[Bootstrap],
-        original_image: UploadFile = File(...),
-        styling_template: UploadFile = File(...),
+        original_image: Annotated[UploadFile, File(description="A file read as UploadFile")],
+        styling_template: Annotated[UploadFile, File(description="A file read as UploadFile")],
 ) -> StreamingResponse:
-    # Обработка первого файла
-    original_image_with_dimensions = await get_image_dimensions(original_image)
-
-    # Обработка второго файла
-    styling_template = await get_image_dimensions(styling_template)
+    original_image_with_dimensions: FileWithDimensions = await get_image_dimensions(original_image)
+    styling_template: FileWithDimensions = await get_image_dimensions(styling_template)
 
     message_bus: MessageBus = await bootstrap.get_messagebus()
     await message_bus.handle(

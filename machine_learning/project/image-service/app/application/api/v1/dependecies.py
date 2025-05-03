@@ -11,8 +11,14 @@ from app.exceptions.application import WrongFileFormatError, CantDecodeImageErro
 async def get_image_dimensions(
         file: Annotated[UploadFile, File(description="A file read as UploadFile")]
 ) -> FileWithDimensions:
+
     if not file.content_type.startswith("image/"):
         raise WrongFileFormatError("content type must be image/, not {}".format(file.content_type))
+
+    allowed_extensions: tuple[str, str, str] = (".jpg", ".jpeg", ".png")
+
+    if not any(file.filename.lower().endswith(ext) for ext in allowed_extensions):
+        raise WrongFileFormatError("Invalid file extension. Allowed: .jpg, .jpeg, .png")
 
     try:
         contents: bytes = await file.read()
