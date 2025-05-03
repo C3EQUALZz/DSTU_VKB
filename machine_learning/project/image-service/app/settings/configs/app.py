@@ -63,9 +63,29 @@ class BrokerSettings(CommonSettings):
         alias="BROKER_IMAGE_COLOR_TO_GRAYSCALE"
     )
 
+    image_color_to_grayscale_result_topic: str = Field(
+        default="image-color-to-grayscale-result",
+        alias="BROKER_IMAGE_COLOR_TO_GRAYSCALE"
+    )
+
+    image_color_to_grayscale_group: str = Field(
+        default="image-color-to-grayscale-group",
+        alias="BROKER_IMAGE_COLOR_TO_GRAYSCALE_GROUP"
+    )
+
     image_grayscale_to_color_topic: str = Field(
         default="image-grayscale-to-color",
         alias="BROKER_IMAGE_GRAYSCALE_TO_COLOR"
+    )
+
+    image_grayscale_to_color_result_topic: str = Field(
+        default="image-grayscale-to-color-result",
+        alias="BROKER_IMAGE_GRAYSCALE_TO_COLOR"
+    )
+
+    image_grayscale_to_color_group: str = Field(
+        default="image-grayscale-to-color-group",
+        alias="BROKER_IMAGE_GRAYSCALE_TO_COLOR_GROUP"
     )
 
     image_crop_topic: str = Field(
@@ -73,9 +93,44 @@ class BrokerSettings(CommonSettings):
         alias="BROKER_IMAGE_CROP"
     )
 
+    image_crop_result_topic: str = Field(
+        default="image-crop-result",
+        alias="BROKER_IMAGE_CROP_RESULT"
+    )
+
+    image_crop_group: str = Field(
+        default="image-crop-group",
+        alias="BROKER_IMAGE_CROP_GROUP"
+    )
+
     image_rotate_topic: str = Field(
         default="image-rotate",
         alias="BROKER_IMAGE_ROTATE"
+    )
+
+    image_rotate_result_topic: str = Field(
+        default="image-rotate-result",
+        alias="BROKER_IMAGE_ROTATE_RESULT"
+    )
+
+    image_rotate_group: str = Field(
+        default="image-rotate-group",
+        alias="BROKER_IMAGE_ROTATE_GROUP"
+    )
+
+    image_style_topic: str = Field(
+        default="image-style",
+        alias="BROKER_IMAGE_STYLE"
+    )
+
+    image_style_result_topic: str = Field(
+        default="image-style-result",
+        alias="BROKER_IMAGE_STYLE_RESULT"
+    )
+
+    image_style_group: str = Field(
+        default="image-style-group",
+        alias="BROKER_IMAGE_STYLE_GROUP"
     )
 
     @property

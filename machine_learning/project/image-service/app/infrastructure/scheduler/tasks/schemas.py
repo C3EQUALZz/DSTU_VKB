@@ -59,3 +59,14 @@ class PhotoNewWidthNewHeightForSendToChatSchema(BaseModel):
             new_height=new_height,
         )
 
+
+class PairOfPhotosForStylizationAndForSendToChatSchema(BaseModel):
+    original: PhotoForSendToChatSchema
+    style: PhotoForSendToChatSchema
+
+    @classmethod
+    def from_(cls, original: ImageEntity, style: ImageEntity, chat_id: int) -> Self:
+        return cls(
+            original=PhotoForSendToChatSchema.from_(original, chat_id=chat_id),
+            style=PhotoForSendToChatSchema.from_(style, chat_id=chat_id)
+        )

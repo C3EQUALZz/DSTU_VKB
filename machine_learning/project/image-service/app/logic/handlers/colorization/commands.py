@@ -1,8 +1,10 @@
 from app.domain.entities.image import ImageEntity
 from app.domain.values.image import PositiveNumber, ImageName
-from app.infrastructure.scheduler.tasks.schemas import PhotoForSendToChatSchema
-from app.logic.commands.colorization import ConvertColorToGrayScaleAndSendToChatCommand, ConvertColorToGrayScaleCommand, \
-    ConvertGrayScaleToColorCommand, ConvertGrayScaleToColorAndSendToChatCommand
+from app.logic.commands.colorization import (
+    ConvertColorToGrayScaleCommand,
+    ConvertGrayScaleToColorCommand,
+    StylizeCommand
+)
 from app.logic.handlers.colorization.base import ImageColorizationCommandHandler
 
 
@@ -16,8 +18,6 @@ class ConvertColorToGrayScaleCommandHandler(
             height=PositiveNumber(command.height),
             name=ImageName(command.name),
         )
-
-        # For testing probably, this microservice will be used for integration with telegram
 
         return self._image_colorization_service.convert_rgb_to_grayscale(
             image=image_entity
@@ -35,42 +35,30 @@ class ConvertGrayScaleToColorCommandHandler(
             name=ImageName(command.name),
         )
 
-        # For testing probably, this microservice will be used for integration with telegram
-
         return self._image_colorization_service.convert_rgb_to_grayscale(
             image=image_entity
         )
 
 
-class ConvertColorToGrayScaleAndSendToChatCommandHandler(
-    ImageColorizationCommandHandler[ConvertColorToGrayScaleAndSendToChatCommand]
+class StylizeCommandHandler(
+    ImageColorizationCommandHandler[StylizeCommand],
 ):
-    async def __call__(self, command: ConvertColorToGrayScaleAndSendToChatCommand) -> None:
-        image_entity: ImageEntity = ImageEntity(
-            data=command.data,
-            width=PositiveNumber(command.width),
-            height=PositiveNumber(command.height),
-            name=ImageName(command.name),
+    async def __call__(self, command: StylizeCommand) -> ImageEntity:
+        original_image_entity: ImageEntity = ImageEntity(
+            data=command.original_image_data,
+            width=PositiveNumber(command.original_width),
+            height=PositiveNumber(command.original_height),
+            name=ImageName(command.original_name)
         )
 
-        await self._scheduler.schedule_task(
-            type(command),
-            PhotoForSendToChatSchema.from_(entity=image_entity, chat_id=command.chat_id),
+        style_image_entity: ImageEntity = ImageEntity(
+            data=command.style_image_data,
+            width=PositiveNumber(command.style_width),
+            height=PositiveNumber(command.style_height),
+            name=ImageName(command.style_name)
         )
 
-
-class ConvertGrayScaleToColorAndSendToChatCommandHandler(
-    ImageColorizationCommandHandler[ConvertGrayScaleToColorAndSendToChatCommand]
-):
-    async def __call__(self, command: ConvertGrayScaleToColorAndSendToChatCommand) -> None:
-        image_entity: ImageEntity = ImageEntity(
-            data=command.data,
-            width=PositiveNumber(command.width),
-            height=PositiveNumber(command.height),
-            name=ImageName(command.name),
-        )
-
-        await self._scheduler.schedule_task(
-            type(command),
-            PhotoForSendToChatSchema.from_(entity=image_entity, chat_id=command.chat_id),
+        return self._image_colorization_service.style_image(
+            original_image=original_image_entity,
+            styling_template=style_image_entity,
         )

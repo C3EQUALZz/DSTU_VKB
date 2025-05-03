@@ -10,7 +10,8 @@ from app.domain.entities.image import ImageEntity
 from app.domain.values.image import PositiveNumber, ImageName
 from app.infrastructure.brokers.base import BaseMessageBroker
 from app.infrastructure.brokers.factory import TaskTopicFactory
-from app.infrastructure.scheduler.tasks.schemas import PhotoForSendToChatSchema
+from app.infrastructure.scheduler.tasks.schemas import PhotoForSendToChatSchema, \
+    PairOfPhotosForStylizationAndForSendToChatSchema
 from app.infrastructure.services.colorization import ImageColorizationService
 from app.settings.configs.enums import TaskNamesConfig
 
@@ -64,3 +65,42 @@ async def convert_grayscale_to_rgb_task(
 
     await broker.send_message(topic=topic_name, value=schemas.from_(gray_photo, schemas.chat_id))
 
+
+@scheduler.task(task_name=TaskNamesConfig.STYLIZATION)
+@inject(patch_module=True)
+async def convert_stylization_task(
+        schemas: PairOfPhotosForStylizationAndForSendToChatSchema,
+        service: FromDishka[ImageColorizationService],
+        topic_factory: FromDishka[TaskTopicFactory],
+        broker: FromDishka[BaseMessageBroker]
+) -> None:
+    logger.debug(f"Started completing task convert_stylization_task....")
+
+    original_image_entity: ImageEntity = ImageEntity(
+        data=schemas.original.data,
+        width=PositiveNumber(schemas.original.width),
+        height=PositiveNumber(schemas.original.height),
+        name=ImageName(schemas.original.name),
+    )
+
+    style_image_entity: ImageEntity = ImageEntity(
+        data=schemas.style.data,
+        width=PositiveNumber(schemas.style.width),
+        height=PositiveNumber(schemas.style.height),
+        name=ImageName(schemas.style.name),
+    )
+
+    styled_image: ImageEntity = service.style_image(
+        original_image=original_image_entity,
+        styling_template=style_image_entity
+    )
+
+    topic_name: str = topic_factory.get_topic(TaskNamesConfig.STYLIZATION)
+
+    await broker.send_message(
+        topic=topic_name,
+        value=PhotoForSendToChatSchema.from_(
+            styled_image,
+            schemas.original.chat_id,
+        )
+    )

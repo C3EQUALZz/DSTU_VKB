@@ -1,26 +1,24 @@
 from dataclasses import dataclass
 
-from app.logic.commands.base import AbstractCommand
+from app.logic.events.base import AbstractEvent
 
 
 @dataclass(frozen=True)
-class ConvertColorToGrayScaleCommand(AbstractCommand):
+class ConvertColorToGrayScaleAndSendToChatEvent(AbstractEvent):
     data: bytes
     width: int
     height: int
     name: str
+    chat_id: int
 
 
 @dataclass(frozen=True)
-class ConvertGrayScaleToColorCommand(AbstractCommand):
-    data: bytes
-    width: int
-    height: int
-    name: str
+class ConvertGrayScaleToColorAndSendToChatEvent(ConvertColorToGrayScaleAndSendToChatEvent):
+    ...
 
 
 @dataclass(frozen=True)
-class StylizeCommand(AbstractCommand):
+class StylizeAndSendToChatEvent(AbstractEvent):
     original_image_data: bytes
     original_width: int
     original_height: int
@@ -29,3 +27,4 @@ class StylizeCommand(AbstractCommand):
     style_width: int
     style_height: int
     style_name: str
+    chat_id: int

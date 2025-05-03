@@ -3,7 +3,8 @@ from typing import Final
 
 
 class TaskNamesConfig(StrEnum):
-    RGB_TO_GRAYSCALE: Final[str] = "convert_rgb_to_grayscale"
-    GRAYSCALE_TO_RGB: Final[str] = "convert_grayscale_to_rgb"
-    CROP: Final[str] = "convert_crop"
-    ROTATION: Final[str] = "convert_rotation"
+    RGB_TO_GRAYSCALE = "convert_rgb_to_grayscale"
+    GRAYSCALE_TO_RGB = "convert_grayscale_to_rgb"
+    CROP = "convert_crop"
+    ROTATION = "convert_rotation"
+    STYLIZATION = "convert_stylization"

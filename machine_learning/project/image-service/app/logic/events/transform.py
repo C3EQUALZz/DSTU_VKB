@@ -1,22 +1,25 @@
 from dataclasses import dataclass
-
-from app.logic.commands.base import AbstractCommand
+from app.logic.events.base import AbstractEvent
 
 
 @dataclass(frozen=True)
-class CropImageCommand(AbstractCommand):
+class CropImageAndSendToChatEvent(AbstractEvent):
     data: bytes
     name: str
     old_width: int
     old_height: int
     new_width: int
     new_height: int
+    chat_id: int
 
 
 @dataclass(frozen=True)
-class RotateImageCommand(AbstractCommand):
+class RotateImageAndSendToChatEvent(AbstractEvent):
     data: bytes
     name: str
     width: int
     height: int
     angle: int
+    chat_id: int
+
+

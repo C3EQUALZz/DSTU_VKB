@@ -18,8 +18,13 @@ class ImageTransformEventHandler(AbstractEventHandler[ET], ABC):
     Abstract event handler class, from which every users event handler should be inherited from.
     """
 
-    def __init__(self, event_buffer: EventBuffer) -> None:
+    def __init__(
+            self,
+            event_buffer: EventBuffer,
+            scheduler: BaseScheduler
+    ) -> None:
         self._event_buffer: EventBuffer = event_buffer
+        self._scheduler: BaseScheduler = scheduler
 
 
 class ImageTransformCommandHandler(AbstractCommandHandler[CT], ABC):
@@ -31,8 +36,6 @@ class ImageTransformCommandHandler(AbstractCommandHandler[CT], ABC):
             self,
             event_buffer: EventBuffer,
             image_transform_service: ImageTransformService,
-            scheduler: BaseScheduler,
     ) -> None:
         self._event_buffer: EventBuffer = event_buffer
         self._image_transform_service: ImageTransformService = image_transform_service
-        self._scheduler: BaseScheduler = scheduler
