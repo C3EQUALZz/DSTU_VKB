@@ -54,7 +54,7 @@ async def main() -> None:
     broker_faststream: KafkaBroker = await container.get(KafkaBroker)
 
     setup_aiogram_dishka(container=container, router=dp, auto_inject=True)
-    setup_faststream_dishka(container, FastStream(broker_faststream, logger=logger))
+    setup_faststream_dishka(container, FastStream(broker_faststream, logger=logger), auto_inject=True)
 
     await dp.start_polling(bot, skip_updates=True)
 

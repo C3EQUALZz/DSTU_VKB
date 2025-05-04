@@ -25,5 +25,6 @@ class ImageSchema(BaseModel):
     height: int = Field(..., gt=0, description="height of the image")
 
 
-class ImageWithTelegramChatId(ImageSchema):
+class ImageWithTelegramChatId(BaseModel):
     chat_id: int = Field(..., gt=0, description="telegram chat_id of person who requested the image")
+    image: ImageSchema

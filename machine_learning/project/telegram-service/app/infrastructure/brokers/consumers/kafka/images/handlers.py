@@ -36,10 +36,10 @@ async def handle_image_rotate_result_topic(
 
     await message_bus.handle(
         ConvertedImageFromBrokerEvent(
-            data=schemas.data,
-            name=schemas.name,
-            width=schemas.width,
-            height=schemas.height,
+            data=schemas.image.data,
+            name=schemas.image.name,
+            width=schemas.image.width,
+            height=schemas.image.height,
             chat_id=schemas.chat_id,
         )
     )

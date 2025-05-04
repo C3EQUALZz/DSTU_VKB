@@ -56,6 +56,7 @@ from app.settings.configs.app import (
     Settings,
 )
 from app.settings.configs.enums import TaskNamesConfig
+from app.infrastructure.brokers.consumers.kafka.images.handlers import router as images_kafka_router
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 
@@ -112,7 +113,10 @@ class BrokerProvider(Provider):
 
     @provide(scope=Scope.APP)
     async def get_faststream_broker(self, settings: Settings) -> KafkaBroker:
-        return KafkaBroker(settings.broker.url, logger=logger)
+        broker: KafkaBroker = KafkaBroker(settings.broker.url, logger=logger)
+        broker.include_router(images_kafka_router)
+        logger.info("Included router")
+        return broker
 
     @provide(scope=Scope.APP)
     async def get_producer(
