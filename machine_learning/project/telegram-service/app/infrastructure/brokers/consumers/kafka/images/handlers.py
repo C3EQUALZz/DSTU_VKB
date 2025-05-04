@@ -44,6 +44,6 @@ async def handle_image_rotate_result_topic(
         )
     )
 
-    msg.ack()
+    await msg.ack()
 
     logger.info("Successfully handled image, header: %s", msg.headers)
