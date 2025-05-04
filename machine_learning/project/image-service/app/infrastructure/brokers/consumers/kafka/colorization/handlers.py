@@ -45,7 +45,7 @@ async def handle_image_style_topic(
         )
     )
 
-    msg.ack()
+    await msg.ack()
 
     logger.info("successfully handled color image event from telegram")
 

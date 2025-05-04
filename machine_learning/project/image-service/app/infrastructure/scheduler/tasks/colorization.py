@@ -5,11 +5,11 @@ from typing import Final
 from dishka import FromDishka
 from dishka.integrations.taskiq import inject
 
-from app.infrastructure.scheduler import scheduler
 from app.domain.entities.image import ImageEntity
 from app.domain.values.image import PositiveNumber, ImageName
 from app.infrastructure.brokers.base import BaseMessageBroker
 from app.infrastructure.brokers.factory import TaskTopicFactory
+from app.infrastructure.scheduler import scheduler
 from app.infrastructure.scheduler.tasks.schemas import PhotoForSendToChatSchema, \
     PairOfPhotosForStylizationAndForSendToChatSchema
 from app.infrastructure.services.colorization import ImageColorizationService
@@ -53,10 +53,10 @@ async def convert_grayscale_to_rgb_task(
     logger.debug(f"Started completing task convert_grayscale_to_rgb_task....")
 
     image_entity: ImageEntity = ImageEntity(
-        data=schemas.data,
-        width=PositiveNumber(schemas.width),
-        height=PositiveNumber(schemas.height),
-        name=ImageName(schemas.name),
+        data=schemas.image.data,
+        width=PositiveNumber(schemas.image.width),
+        height=PositiveNumber(schemas.image.height),
+        name=ImageName(schemas.image.name),
     )
 
     gray_photo: ImageEntity = service.convert_grayscale_to_rgb(image_entity)

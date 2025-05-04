@@ -20,7 +20,12 @@ services:
   taskiq-worker:
     <<: *telegram-service-app
     container_name: task-iq-worker
-    command: [ taskiq, worker, app.infrastructure.scheduler:scheduler, -fsd ]
+    command: [ 
+        taskiq,
+        worker,
+        app.infrastructure.scheduler:scheduler,
+        app.infrastructure.scheduler.tasks.images.handlers 
+    ]
 
   redis:
     container_name: redis-app-telegram

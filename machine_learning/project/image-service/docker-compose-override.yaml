@@ -22,7 +22,13 @@ services:
   image-service-taskiq-worker:
     <<: *image-service-app-backend
     container_name: image-service-taskiq-worker
-    command: [ taskiq, worker, app.infrastructure.scheduler:scheduler, -fsd ]
+    command: [
+      taskiq,
+      worker,
+      app.infrastructure.scheduler:scheduler,
+      app.infrastructure.scheduler.tasks.colorization,
+      app.infrastructure.scheduler.tasks.transformation
+    ]
     ports:
       - "1000:8000"
 

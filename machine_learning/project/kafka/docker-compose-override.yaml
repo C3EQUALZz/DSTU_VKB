@@ -22,22 +22,35 @@ services:
       ALLOW_PLAINTEXT_LISTENER: "yes"
     volumes:
       - kafka_data:/bitnami/kafka
-      - ./init-kafka.sh:/init-kafka.sh
     healthcheck:
       test: kafka-topics.sh --list --bootstrap-server localhost:9092 || exit 1
       interval: 1s
       timeout: 60s
       retries: 60
+  
+  kafka-init:
+    image: bitnami/kafka:3.9.0
+    container_name: kafka-init
+    restart: "no"
+    networks:
+      - kafka-network
+    depends_on:
+      broker:
+        condition: service_healthy
+    volumes:
+      - ./init-kafka.sh:/init-kafka.sh
     command:
-      - /bin/bash
+      - /bin/sh
       - -c
       - |
-        chmod +x /init-kafka.sh && /init-kafka.sh &
-        /opt/bitnami/scripts/kafka/run.sh
+        /init-kafka.sh
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
     container_name: kafka-ui
+    depends_on:
+      broker:
+        condition: service_healthy
     restart: unless-stopped
     networks:
       - kafka-network

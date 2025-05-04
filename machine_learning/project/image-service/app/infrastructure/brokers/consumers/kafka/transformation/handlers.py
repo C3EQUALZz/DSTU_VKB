@@ -74,6 +74,6 @@ async def handle_image_rotate_topic(
         )
     )
 
-    msg.ack()
+    await msg.ack()
 
     logger.info("Successfully handled rotating image event from telegram")

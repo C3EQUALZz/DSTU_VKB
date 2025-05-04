@@ -1,6 +1,6 @@
 from app.domain.entities.image import ImageEntity
 from app.domain.values.image import PositiveNumber, ImageName
-from app.infrastructure.scheduler.tasks.schemas import PhotoForSendToChatSchema
+from app.infrastructure.scheduler.tasks.schemas import PhotoForSendToChatSchema, PhotoForRotationSchema
 from app.logic.events.transform import CropImageAndSendToChatEvent, RotateImageAndSendToChatEvent
 from app.logic.handlers.transform.base import ImageTransformEventHandler
 
@@ -35,5 +35,5 @@ class RotateImageAndSendToChatEventHandler(
 
         await self._scheduler.schedule_task(
             name=self.__class__,
-            schemas=PhotoForSendToChatSchema.from_(entity=image_entity, chat_id=event.chat_id),
+            schemas=PhotoForRotationSchema.from_(entity=image_entity, chat_id=event.chat_id, angle=event.angle),
         )
