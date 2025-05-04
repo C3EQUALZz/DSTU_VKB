@@ -30,7 +30,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     faststream_broker: KafkaBroker = await container.get(KafkaBroker)
     # cache.pool = await container.get(ConnectionPool)
     # cache.client = await container.get(Redis)
-    setup_dishka_faststream(container, FastStream(faststream_broker, logger=logger))
+    setup_dishka_faststream(container, FastStream(faststream_broker, logger=logger), auto_inject=True)
 
     await broker.start()
 
