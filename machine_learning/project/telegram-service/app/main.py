@@ -2,7 +2,7 @@ import asyncio
 import contextlib
 import logging
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Final
 
 from aiogram import (
     Bot,
@@ -26,10 +26,10 @@ from app.settings.configs.app import get_settings
 if TYPE_CHECKING:
     from dishka import AsyncContainer
 
-logger = logging.getLogger(__name__)
+logger: Final[logging.Logger] = logging.getLogger(__name__)
 
-bot: Bot = Bot(token=get_settings().telegram.token)
-dp: Dispatcher = Dispatcher()
+bot: Final[Bot] = Bot(token=get_settings().telegram.token)
+dp: Final[Dispatcher] = Dispatcher()
 
 
 async def main() -> None:
@@ -54,7 +54,7 @@ async def main() -> None:
     broker_faststream: KafkaBroker = await container.get(KafkaBroker)
 
     setup_aiogram_dishka(container=container, router=dp, auto_inject=True)
-    setup_faststream_dishka(container, FastStream(broker_faststream))
+    setup_faststream_dishka(container, FastStream(broker_faststream, logger=logger))
 
     await dp.start_polling(bot, skip_updates=True)
 

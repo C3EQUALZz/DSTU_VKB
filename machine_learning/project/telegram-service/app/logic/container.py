@@ -33,13 +33,7 @@ from app.logic.commands.images import (
 from app.logic.commands.texts import SendTextMessageToChatBotCommand
 from app.logic.commands.users import CreateUserCommand, UpdateUserCommand, DeleteUserCommand
 from app.logic.event_buffer import EventBuffer
-from app.logic.events.images import (
-    ConvertColorImageToGrayScaleImageEvent,
-    ConvertGrayScaleImageToColorImageEvent,
-    CropImageEvent,
-    GetMetadataFromImageEvent,
-    RotateImageEvent,
-)
+from app.logic.events.images import ConvertedImageFromBrokerEvent
 from app.logic.events.user import UserCreateEvent, UserUpdateEvent, UserDeleteEvent
 from app.logic.handlers.images.commands import (
     ConvertColorImageToGrayScaleImageCommandHandler,
@@ -48,13 +42,7 @@ from app.logic.handlers.images.commands import (
     GetMetadataFromImageCommandHandler,
     RotateImageCommandHandler,
 )
-from app.logic.handlers.images.events import (
-    ConvertColorImageToGrayScaleImageEventHandler,
-    ConvertGrayScaleImageToColorImageEventHandler,
-    CropImageEventHandler,
-    GetMetadataFromImageEventHandler,
-    RotateImageEventHandler,
-)
+from app.logic.handlers.images.events import ConvertedImageFromBrokerEventHandler
 from app.logic.handlers.texts.commands import SendTextMessageToChatBotCommandHandler
 from app.logic.handlers.users.commands import CreateUserCommandHandler, DeleteUserCommandHandler
 from app.logic.handlers.users.events import UserCreateEventHandler, UserUpdateEventHandler, UserDeleteEventHandler
@@ -101,11 +89,7 @@ class HandlerProvider(Provider):
         return cast(
             "EventHandlerMapping",
             {
-                ConvertColorImageToGrayScaleImageEvent: [ConvertColorImageToGrayScaleImageEventHandler],
-                GetMetadataFromImageEvent: [GetMetadataFromImageEventHandler],
-                ConvertGrayScaleImageToColorImageEvent: [ConvertGrayScaleImageToColorImageEventHandler],
-                CropImageEvent: [CropImageEventHandler],
-                RotateImageEvent: [RotateImageEventHandler],
+                ConvertedImageFromBrokerEvent: [ConvertedImageFromBrokerEventHandler],
                 UserCreateEvent: [UserCreateEventHandler],
                 UserUpdateEvent: [UserUpdateEventHandler],
                 UserDeleteEvent: [UserDeleteEventHandler],
@@ -142,11 +126,9 @@ class BrokerProvider(Provider):
                 settings.broker.image_color_to_grayscale_topic: broker.publisher(
                     settings.broker.image_color_to_grayscale_topic
                 ),
-
                 settings.broker.image_grayscale_to_color_topic: broker.publisher(
                     settings.broker.image_grayscale_to_color_topic
                 ),
-
                 settings.broker.image_crop_topic: broker.publisher(settings.broker.image_crop_topic),
                 settings.broker.image_rotate_topic: broker.publisher(settings.broker.image_rotate_topic),
             }
@@ -164,7 +146,7 @@ class AppProvider(Provider):
         return CommandHandlerTopicFactory(
             mapping={
                 SendTextMessageToChatBotCommandHandler: settings.broker.text_to_chatbot_topic,
-                GetMetadataFromImageCommandHandler: settings.broker.image_get_metadata_topic,
+                GetMetadataFromImageCommandHandler: settings.broker.image_metadata_topic,
                 ConvertColorImageToGrayScaleImageCommandHandler: settings.broker.image_color_to_grayscale_topic,
                 ConvertGrayScaleImageToColorImageCommandHandler: settings.broker.image_grayscale_to_color_topic,
                 CropImageCommandHandler: settings.broker.image_crop_topic,
@@ -191,7 +173,8 @@ class AppProvider(Provider):
             event_buffer: EventBuffer,
             scheduler: BaseScheduler,
             broker: BaseMessageBroker,
-            topic_command_handler_factory: CommandHandlerTopicFactory
+            topic_command_handler_factory: CommandHandlerTopicFactory,
+            event_handler_topic_factory: EventHandlerTopicFactory
     ) -> Bootstrap:
         return Bootstrap(
             event_buffer=event_buffer,
@@ -200,7 +183,8 @@ class AppProvider(Provider):
             dependencies={
                 "scheduler": scheduler,
                 "broker": broker,
-                "topic_command_handler_factory": topic_command_handler_factory
+                "topic_command_handler_factory": topic_command_handler_factory,
+                "event_handler_topic_factory": event_handler_topic_factory
             },
         )
 

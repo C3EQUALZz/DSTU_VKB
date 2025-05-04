@@ -49,4 +49,4 @@ networks:
   telegram-service:
     driver: bridge
   microservices-network:
-    driver: bridge
+    external: true

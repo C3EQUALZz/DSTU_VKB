@@ -38,26 +38,26 @@ router.include_router(router_rotate)
 logger: Final[Logger] = logging.getLogger(__name__)
 
 
-@router.callback_query(
-    AppState.IMAGE.ACTION_SELECTION,
-    ImageClickActionCallback.filter()
-)
-async def change_message(
-        query: CallbackQuery,
-        callback_data: ImageClickActionCallback,
-        state: FSMContext,
-        i18n: I18nContext
-) -> None:
-    # Автоматически редактируем сообщение сразу при нажатии
-    try:
-
-        await query.message.edit_text(
-            text="Обрабатываю изображение",
-            reply_markup=None
-        )
-
-    except TelegramBadRequest:
-        pass  # Ес
+# @router.callback_query(
+#     AppState.IMAGE.ACTION_SELECTION,
+#     ImageClickActionCallback.filter()
+# )
+# async def change_message(
+#         query: CallbackQuery,
+#         callback_data: ImageClickActionCallback,
+#         state: FSMContext,
+#         i18n: I18nContext
+# ) -> None:
+#     # Автоматически редактируем сообщение сразу при нажатии
+#     try:
+#
+#         await query.message.edit_text(
+#             text="Обрабатываю изображение",
+#             reply_markup=None
+#         )
+#
+#     except TelegramBadRequest:
+#         pass  # Ес
 
 
 @router.message(

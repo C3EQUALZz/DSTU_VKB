@@ -56,14 +56,29 @@ class BrokerSettings(CommonSettings):
         alias="BROKER_IMAGE_COLOR_TO_GRAYSCALE"
     )
 
+    image_color_to_grayscale_result_topic: str = Field(
+        default="image-color-to-grayscale-result",
+        alias="BROKER_IMAGE_COLOR_TO_GRAYSCALE_RESULT"
+    )
+
     image_grayscale_to_color_topic: str = Field(
         default="image-grayscale-to-color",
         alias="BROKER_IMAGE_GRAYSCALE_TO_COLOR"
     )
 
+    image_grayscale_to_color_result_topic: str = Field(
+        default="image-grayscale-to-color-result",
+        alias="BROKER_IMAGE_GRAYSCALE_TO_COLOR_RESULT"
+    )
+
     image_crop_topic: str = Field(
         default="image-crop",
-        alias="BROKER_IMAGE_CROP"
+        alias="BROKER_IMAGE_CROP_TOPIC"
+    )
+
+    image_crop_result_topic: str = Field(
+        default="image-crop-result",
+        alias="BROKER_IMAGE_CROP_RESULT"
     )
 
     image_rotate_topic: str = Field(
@@ -71,9 +86,34 @@ class BrokerSettings(CommonSettings):
         alias="BROKER_IMAGE_ROTATE"
     )
 
-    image_get_metadata_topic: str = Field(
-        default="image-get-metadata",
-        alias="BROKER_IMAGE_GET_METADATA"
+    image_rotate_result_topic: str = Field(
+        default="image-rotate-result",
+        alias="BROKER_IMAGE_ROTATE_RESULT"
+    )
+
+    image_style_topic: str = Field(
+        default="image-style",
+        alias="BROKER_IMAGE_STYLE"
+    )
+
+    image_style_result_topic: str = Field(
+        default="image-style-result",
+        alias="BROKER_IMAGE_STYLE_RESULT"
+    )
+
+    image_metadata_topic: str = Field(
+        default="image-metadata",
+        alias="BROKER_IMAGE_METADATA"
+    )
+
+    image_metadata_result_topic: str = Field(
+        default="image-metadata-result",
+        alias="BROKER_IMAGE_METADATA_RESULT"
+    )
+
+    image_telegram_group: str = Field(
+        default="image-style-telegram-group",
+        alias="BROKER_IMAGE_STYLE_GROUP"
     )
 
     text_to_chatbot_topic: str = Field(

@@ -31,19 +31,9 @@ async def send_converted_image_task(
         )
     )
 
-
 @scheduler.task(task_name=TaskNamesConfig.IMAGE_METADATA.value)
 @inject(patch_module=True)
 async def send_metadata_from_image_task(
-        schemas: ImageForSendToChatSchema,
         bot: Bot = TaskiqDepends()
 ) -> None:
-    logger.info("Sending metadata from image to user with id=%s", schemas.chat_id)
-
-    await bot.send_photo(
-        chat_id=schemas.chat_id,
-        photo=BufferedInputFile(
-            schemas.data,
-            filename=schemas.name
-        )
-    )
+    ...
