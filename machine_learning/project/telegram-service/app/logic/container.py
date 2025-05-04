@@ -2,7 +2,7 @@ import importlib
 import logging
 from functools import lru_cache
 from types import ModuleType
-from typing import cast
+from typing import cast, Final
 
 from dishka import (
     AsyncContainer,
@@ -57,7 +57,7 @@ from app.settings.configs.app import (
 )
 from app.settings.configs.enums import TaskNamesConfig
 
-logger = logging.getLogger(__name__)
+logger: Final[logging.Logger] = logging.getLogger(__name__)
 
 
 class HandlerProvider(Provider):
@@ -112,7 +112,7 @@ class BrokerProvider(Provider):
 
     @provide(scope=Scope.APP)
     async def get_faststream_broker(self, settings: Settings) -> KafkaBroker:
-        return KafkaBroker(settings.broker.url)
+        return KafkaBroker(settings.broker.url, logger=logger)
 
     @provide(scope=Scope.APP)
     async def get_producer(
