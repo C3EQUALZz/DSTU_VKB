@@ -18,7 +18,8 @@ dependencies = [
     "fastapi (>=0.115.12,<0.116.0)",
     "uvicorn (>=0.34.2,<0.35.0)",
     "gunicorn (>=23.0.0,<24.0.0)",
-    "concurrent-log-handler (>=0.9.25,<0.10.0)"
+    "concurrent-log-handler (>=0.9.25,<0.10.0)",
+    "redis (>=6.0.0,<7.0.0)"
 ]
 
 

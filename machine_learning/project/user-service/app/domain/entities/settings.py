@@ -8,4 +8,3 @@ from app.domain.values.settings import TextModel, ImageModel
 class SettingsEntity(BaseEntity):
     text_model: TextModel
     image_model: ImageModel
-

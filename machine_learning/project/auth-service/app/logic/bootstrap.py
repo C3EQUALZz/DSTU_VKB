@@ -1,0 +1,87 @@
+import inspect
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Optional,
+    Union,
+    Final
+)
+
+from app.infrastructure.services.idempotency import IdempotencyService
+from app.logic.event_buffer import EventBuffer
+from app.logic.handlers.base import (
+    BaseCommandHandler,
+    BaseEventHandler,
+)
+from app.logic.message_bus import MessageBus
+from app.logic.types.handlers import (
+    CommandHandlerMapping,
+    EventHandlerMapping,
+)
+
+if TYPE_CHECKING:
+    from types import MappingProxyType
+
+    from app.logic.commands.base import BaseCommand
+    from app.logic.events.base import BaseEvent
+    from app.infrastructure.services.idempotency import IdempotencyService
+
+
+class Bootstrap:
+    """
+    Bootstrap class for Dependencies Injection purposes.
+    """
+
+    def __init__(
+            self,
+            event_buffer: EventBuffer,
+            idempotency_service: IdempotencyService,
+            events_handlers_for_injection: EventHandlerMapping,  # type: ignore
+            commands_handlers_for_injection: CommandHandlerMapping,  # type: ignore
+            dependencies: Optional[dict[str, Any]] = None,
+    ) -> None:
+        self._idempotency_service: Final[IdempotencyService] = idempotency_service
+        self._event_buffer: Final[EventBuffer] = event_buffer
+        self._dependencies: Final[dict[str, Any]] = {"event_buffer": self._event_buffer}
+        self._events_handlers_for_injection: Final[EventHandlerMapping] = events_handlers_for_injection
+        self._commands_handlers_for_injection: Final[CommandHandlerMapping] = commands_handlers_for_injection
+
+        if dependencies:
+            self._dependencies.update(dependencies)
+
+    async def get_messagebus(self) -> MessageBus:
+        """
+        Makes necessary injections to commands handlers and events handlers for creating appropriate messagebus,
+        after which returns messagebus instance.
+        """
+
+        injected_event_handlers: dict[type[BaseEvent], list[BaseEventHandler[BaseEvent]]] = {
+            event_type: [await self._inject_dependencies(handler=handler) for handler in event_handlers]
+            for event_type, event_handlers in self._events_handlers_for_injection.items()
+        }
+
+        injected_command_handlers: dict[type[BaseCommand], BaseCommandHandler[BaseCommand]] = {
+            command_type: await self._inject_dependencies(handler=handler)
+            for command_type, handler in self._commands_handlers_for_injection.items()
+        }
+
+        return MessageBus(
+            idempotency_service=self._idempotency_service,
+            event_buffer=self._event_buffer,
+            event_handlers=injected_event_handlers,
+            command_handlers=injected_command_handlers,
+        )
+
+    async def _inject_dependencies(
+            self, handler: Union[type[BaseEventHandler], type[BaseCommandHandler]]
+    ) -> Union[BaseEventHandler, BaseCommandHandler]:
+        """
+        Inspecting handler to know its signature and init params, after which only necessary dependencies will be
+        injected to the handler.
+        """
+
+        params: MappingProxyType[str, inspect.Parameter] = inspect.signature(handler).parameters
+        handler_dependencies: dict[str, Any] = {
+            name: dependency for name, dependency in self._dependencies.items() if name in params
+        }
+        return handler(**handler_dependencies)

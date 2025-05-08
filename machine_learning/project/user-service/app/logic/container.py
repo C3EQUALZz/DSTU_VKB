@@ -4,6 +4,7 @@ from typing import cast
 
 from dishka import Provider, Scope, from_context, make_async_container, provide, AsyncContainer
 from faststream.kafka import KafkaBroker
+from redis.asyncio import ConnectionPool, Redis
 from sqlalchemy.ext.asyncio import (
     AsyncEngine,
     AsyncSession,
@@ -14,15 +15,19 @@ from sqlalchemy.ext.asyncio import (
 from app.infrastructure.brokers.base import BaseMessageBroker
 from app.infrastructure.brokers.factory import EventHandlerTopicFactory
 from app.infrastructure.brokers.publishers.faststream import FastStreamKafkaMessageBroker
+from app.infrastructure.repositories.cache.idempotency.events.base import BaseIdempotencyEventCacheRepository
+from app.infrastructure.repositories.cache.idempotency.events.redis_cache import RedisIdempotencyEventCacheRepository
+from app.infrastructure.services.idempotency import IdempotencyService
 from app.infrastructure.uow.users.alchemy import SQLAlchemyUsersUnitOfWork
 from app.infrastructure.uow.users.base import UsersUnitOfWork
 from app.logic.bootstrap import Bootstrap
 from app.logic.commands.users import CreateUserCommand, UpdateUserCommand, DeleteUserCommand
-from app.logic.events.users import UserCreateEvent, UserDeleteEvent, UserUpdateEvent
+from app.logic.event_buffer import EventBuffer
+from app.logic.events.users import UserCreatedEvent, UserDeletedEvent, UserUpdatedEvent
 from app.logic.handlers.users.commands import CreateUserCommandHandler, UpdateUserCommandHandler, \
     DeleteUserCommandHandler
-from app.logic.handlers.users.events import UserCreateEventHandler, UserDeleteEventHandler, UserUpdateEventHandler
-from app.logic.types.handlers import UT, CommandHandlerMapping, EventHandlerMapping
+from app.logic.handlers.users.events import UserCreatedEventHandler, UserDeletedEventHandler, UserUpdatedEventHandler
+from app.logic.types.handlers import CommandHandlerMapping, EventHandlerMapping
 from app.settings.config import Settings, get_settings
 
 logger = logging.getLogger(__name__)
@@ -51,9 +56,9 @@ class HandlerProvider(Provider):
         return cast(
             EventHandlerMapping,
             {
-                UserCreateEvent: [UserCreateEventHandler],
-                UserDeleteEvent: [UserDeleteEventHandler],
-                UserUpdateEvent: [UserUpdateEventHandler],
+                UserCreatedEvent: [UserCreatedEventHandler],
+                UserDeletedEvent: [UserDeletedEventHandler],
+                UserUpdatedEvent: [UserUpdatedEventHandler],
             },
         )
 
@@ -65,19 +70,24 @@ class BrokerProvider(Provider):
     async def get_mapping_events_and_topic(self, settings: Settings) -> EventHandlerTopicFactory:
         return EventHandlerTopicFactory(
             mapping={
-                UserCreateEventHandler: settings.broker.user_created_topic,
-                UserDeleteEventHandler: settings.broker.user_deleted_topic,
-                UserUpdateEventHandler: settings.broker.user_updated_topic,
+                UserCreatedEventHandler: settings.broker.user_created_topic,
+                UserDeletedEventHandler: settings.broker.user_deleted_topic,
+                UserUpdatedEventHandler: settings.broker.user_updated_topic,
             }
         )
+
+    @provide(scope=Scope.APP)
+    async def get_faststream_kafka_broker(self, settings: Settings) -> KafkaBroker:
+        broker: KafkaBroker = KafkaBroker(settings.broker.url)
+
+        return broker
 
     @provide(scope=Scope.APP)
     async def get_producer(
             self,
             settings: Settings,
+            broker: KafkaBroker,
     ) -> BaseMessageBroker:
-        broker: KafkaBroker = KafkaBroker(settings.broker.url)
-
         return FastStreamKafkaMessageBroker(
             broker=broker,
             producers={
@@ -88,8 +98,39 @@ class BrokerProvider(Provider):
         )
 
 
+class CacheProvider(Provider):
+    settings = from_context(provides=Settings, scope=Scope.APP)
+
+    @provide(scope=Scope.APP)
+    async def get_redis_connection_pool(self, settings: Settings) -> ConnectionPool:
+        return ConnectionPool.from_url(str(settings.cache.url))
+
+    @provide(scope=Scope.APP)
+    async def get_redis_client(self, pool: ConnectionPool) -> Redis:
+        return Redis.from_pool(pool)
+
+    @provide(scope=Scope.APP)
+    async def get_cache_idempotency_repository(self, client: Redis) -> BaseIdempotencyEventCacheRepository:
+        return RedisIdempotencyEventCacheRepository(redis_client=client)
+
+
 class AppProvider(Provider):
     settings = from_context(provides=Settings, scope=Scope.APP)
+
+    @provide(scope=Scope.APP)
+    async def get_event_buffer(self) -> EventBuffer:
+        return EventBuffer()
+
+    @provide(scope=Scope.APP)
+    async def get_idempotency_service(
+            self,
+            event_buffer: EventBuffer,
+            idempotency_repository: BaseIdempotencyEventCacheRepository,
+    ) -> IdempotencyService:
+        return IdempotencyService(
+            event_buffer=event_buffer,
+            cache=idempotency_repository,
+        )
 
     @provide(scope=Scope.APP)
     async def get_users_uow(
@@ -100,14 +141,14 @@ class AppProvider(Provider):
     @provide(scope=Scope.APP)
     async def get_bootstrap(
             self,
+            event_buffer: EventBuffer,
             events: EventHandlerMapping,
             commands: CommandHandlerMapping,
             broker: BaseMessageBroker,
-            event_handler_and_topic_factory: EventHandlerTopicFactory,
-            uow: UT,
-    ) -> Bootstrap[UT]:
+            event_handler_and_topic_factory: EventHandlerTopicFactory
+    ) -> Bootstrap:
         return Bootstrap(
-            uow=uow,
+            event_buffer=event_buffer,
             events_handlers_for_injection=events,
             commands_handlers_for_injection=commands,
             dependencies={
@@ -152,6 +193,7 @@ def get_container() -> AsyncContainer:
         HandlerProvider(),
         BrokerProvider(),
         AppProvider(),
+        CacheProvider(),
         DatabaseProvider(),
         context={Settings: get_settings()},
     )

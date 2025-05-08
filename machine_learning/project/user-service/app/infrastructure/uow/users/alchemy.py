@@ -1,6 +1,6 @@
 from typing import Self
 
-from app.infrastructure.repositories.users.alchemy import SQLAlchemyUsersRepository
+from app.infrastructure.repositories.database.users.alchemy import SQLAlchemyUsersRepository
 from app.infrastructure.uow.base import SQLAlchemyAbstractUnitOfWork
 from app.infrastructure.uow.users.base import UsersUnitOfWork
 

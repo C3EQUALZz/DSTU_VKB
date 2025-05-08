@@ -1,7 +1,8 @@
+import builtins
 from abc import ABC, abstractmethod
 
 from app.domain.entities.user import UserEntity
-from app.infrastructure.repositories.base import AbstractRepository
+from app.infrastructure.repositories.database.base import AbstractRepository
 
 
 class UsersRepository(AbstractRepository[UserEntity], ABC):
@@ -12,7 +13,11 @@ class UsersRepository(AbstractRepository[UserEntity], ABC):
     """
 
     @abstractmethod
-    async def get_all_by_name(self, name: str, start: int | None = None, limit: int | None = None) -> list[UserEntity]:
+    async def get_by_fullname(self, surname: str, name: str) -> UserEntity | None:
+        raise NotImplementedError
+
+    @abstractmethod
+    async def get_by_email(self, email: str) -> UserEntity | None:
         raise NotImplementedError
 
     @abstractmethod
@@ -28,5 +33,5 @@ class UsersRepository(AbstractRepository[UserEntity], ABC):
         raise NotImplementedError
 
     @abstractmethod
-    async def list(self, start: int | None = None, limit: int | None = None) -> list[UserEntity]:
+    async def list(self, start: int | None = None, limit: int | None = None) -> builtins.list[UserEntity]:
         raise NotImplementedError

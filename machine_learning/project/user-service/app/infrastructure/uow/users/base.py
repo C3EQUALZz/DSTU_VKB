@@ -1,6 +1,6 @@
 from abc import ABC
 
-from app.infrastructure.repositories.users.base import UsersRepository
+from app.infrastructure.repositories.database.users.base import UsersRepository
 from app.infrastructure.uow.base import AbstractUnitOfWork
 
 

@@ -1,6 +1,7 @@
 from abc import ABC
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from typing import Any, Dict, Optional, Set
+from uuid import uuid4
 
 
 @dataclass(frozen=True)
@@ -9,6 +10,7 @@ class AbstractCommand(ABC):
     Base command, from which any domain command should be inherited.
     Commands represents external operations, which must be executed.
     """
+    oid: str = field(default_factory=lambda: str(uuid4()), kw_only=True)
 
     async def to_dict(
             self,

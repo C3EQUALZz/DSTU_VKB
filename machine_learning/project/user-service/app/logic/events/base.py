@@ -13,7 +13,7 @@ class AbstractEvent(ABC):
 
     oid: str = field(default_factory=lambda: str(uuid4()), kw_only=True)
 
-    async def to_dict(self, exclude: set[str] | None = None, include: dict[str, Any] | None = None) -> dict[str, Any]:
+    def to_dict(self, exclude: set[str] | None = None, include: dict[str, Any] | None = None) -> dict[str, Any]:
         """
         Create a dictionary representation of the model.
 

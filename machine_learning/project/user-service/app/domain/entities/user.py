@@ -7,5 +7,6 @@ from app.domain.entities.base import BaseEntity
 
 @dataclass(eq=False)
 class UserEntity(BaseEntity):
-    first_name: str
+    name: str
+    telegram_id: int | None = field(default=None)
     role: Role = field(default_factory=lambda: Role("user"))

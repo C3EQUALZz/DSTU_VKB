@@ -4,8 +4,8 @@ from sqlalchemy import Result, Row, RowMapping, delete, insert, select, update
 
 from app.domain.entities.user import UserEntity
 from app.exceptions.infrastructure import TypeSignatureError
-from app.infrastructure.repositories.base import SQLAlchemyAbstractRepository
-from app.infrastructure.repositories.users.base import UsersRepository
+from app.infrastructure.repositories.database.base import SQLAlchemyAbstractRepository
+from app.infrastructure.repositories.database.users.base import UsersRepository
 
 
 class SQLAlchemyUsersRepository(SQLAlchemyAbstractRepository, UsersRepository):

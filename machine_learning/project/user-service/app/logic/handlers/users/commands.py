@@ -1,4 +1,5 @@
 from app.domain.entities.user import UserEntity
+from app.domain.values.user import Role
 from app.exceptions.infrastructure import UserNotFoundException
 from app.infrastructure.services.users import UsersService
 
@@ -8,7 +9,7 @@ from app.logic.commands.users import (
     UpdateUserCommand,
 )
 
-from app.logic.events.users import UserCreateEvent, UserDeleteEvent, UserUpdateEvent
+from app.logic.events.users import UserCreatedEvent, UserDeletedEvent, UserUpdatedEvent
 from app.logic.handlers.users.base import UsersCommandHandler
 
 
@@ -20,12 +21,16 @@ class CreateUserCommandHandler(UsersCommandHandler[CreateUserCommand]):
         async with self._uow as uow:
             user_service: UsersService = UsersService(uow=uow)
 
-            new_user: UserEntity = UserEntity(first_name=command.first_name)
+            new_user: UserEntity = UserEntity(
+                first_name=command.first_name,
+                telegram_id=command.telegram_id,
+                role=Role(command.role),
+            )
 
             added_user: UserEntity = await user_service.add(new_user)
 
-            await uow.add_event(
-                UserCreateEvent(
+            self._event_buffer.add(
+                UserCreatedEvent(
                     oid=added_user.oid,
                     first_name=added_user.first_name,
                     role=added_user.role.as_generic_type(),
@@ -46,18 +51,19 @@ class UpdateUserCommandHandler(UsersCommandHandler[UpdateUserCommand]):
         async with self._uow as uow:
             user_service: UsersService = UsersService(uow=uow)
 
-            if not await user_service.check_existence(oid=command.oid):
-                raise UserNotFoundException(command.oid)
+            if not await user_service.check_existence(oid=command.user_id):
+                raise UserNotFoundException(command.user_id)
 
-            user: UserEntity = await user_service.get_by_id(command.oid)
+            user: UserEntity = await user_service.get_by_id(command.user_id)
 
-            updated_user = UserEntity(**await command.to_dict())
-            updated_user.oid = user.oid
+            user_info_from_command = await command.to_dict(exclude={"oid"})
+            user_info_from_command["oid"] = user_info_from_command.pop("user_id")
+            user.set_attrs(user_info_from_command)
 
-            updated_user: UserEntity = await user_service.update(updated_user)
+            updated_user: UserEntity = await user_service.update(user)
 
-            await uow.add_event(
-                UserUpdateEvent(
+            self._event_buffer.add(
+                UserUpdatedEvent(
                     oid=updated_user.oid,
                     first_name=updated_user.first_name,
                     role=updated_user.role.as_generic_type(),
@@ -77,8 +83,8 @@ class DeleteUserCommandHandler(UsersCommandHandler[DeleteUserCommand]):
 
             deleted_user: None = await user_service.delete(oid=command.oid)
 
-            await uow.add_event(
-                UserDeleteEvent(
+            self._event_buffer.add(
+                UserDeletedEvent(
                     user_oid=command.oid,
                 )
             )

@@ -2,7 +2,7 @@ from abc import ABC
 from functools import lru_cache
 from pathlib import Path
 
-from pydantic import Field
+from pydantic import Field, RedisDsn
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -53,13 +53,27 @@ class SQLAlchemySettings(CommonSettings):
     expire_on_commit: bool = Field(alias="DATABASE_EXPIRE_ON_COMMIT")
 
 
+class CacheSettings(CommonSettings):
+    host: str = Field(alias="REDIS_HOST")
+    port: int = Field(alias="REDIS_PORT_NETWORK")
+    password: str = Field(alias="REDIS_PASSWORD")
+
+    @property
+    def url(self) -> RedisDsn:
+        return RedisDsn(f"redis://:{self.password}@{self.host}:{self.port}")
+
+
 class BrokerSettings(CommonSettings):
     host: str = Field(alias="BROKER_HOST")
     port: int = Field(alias="BROKER_PORT_NETWORK")
 
-    user_created_topic: str = Field(default="user-create", alias="BROKER_USER_CREATE_TOPIC")
-    user_updated_topic: str = Field(default="user-update", alias="BROKER_USER_UPDATE_TOPIC")
-    user_deleted_topic: str = Field(default="user-delete", alias="BROKER_USER_DELETE_TOPIC")
+    user_created_topic: str = Field(default="user-created", alias="BROKER_USER_CREATED_TOPIC")
+    user_updated_topic: str = Field(default="user-updated", alias="BROKER_USER_UPDATED_TOPIC")
+    user_deleted_topic: str = Field(default="user-deleted", alias="BROKER_USER_DELETED_TOPIC")
+
+    user_create_topic: str = Field(default="user-create", alias="BROKER_USER_CREATE_TOPIC")
+    user_update_topic: str = Field(default="user-update", alias="BROKER_USER_UPDATE_TOPIC")
+    user_delete_topic: str = Field(default="user-delete", alias="BROKER_USER_DELETE_TOPIC")
 
     @property
     def url(self) -> str:
@@ -74,6 +88,7 @@ class Settings(CommonSettings):
     database: DatabaseSettings = DatabaseSettings()
     alchemy_settings: SQLAlchemySettings = SQLAlchemySettings()
     broker: BrokerSettings = BrokerSettings()
+    cache: CacheSettings = CacheSettings()
 
 
 @lru_cache(1)
