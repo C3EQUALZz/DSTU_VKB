@@ -1,0 +1,21 @@
+[project]
+name = "email-service"
+version = "0.1.0"
+description = "Microservice for sending emails"
+authors = [
+    {name = "matebookWindows",email = "dan.kovalev2013@gmail.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.12,<4.0"
+dependencies = [
+    "fastapi-mail (>=1.4.2,<2.0.0)",
+    "dishka (>=1.5.3,<2.0.0)",
+    "email-validator (>=2.2.0,<3.0.0)",
+    "redis (>=6.0.0,<7.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
