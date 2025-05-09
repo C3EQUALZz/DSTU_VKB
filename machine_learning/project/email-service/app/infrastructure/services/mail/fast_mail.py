@@ -27,6 +27,6 @@ class FastMailSender(BaseMailSender):
                 recipients=[EmailSchema.from_(recipient).value for recipient in email_entity.recipients],
                 subject=email_entity.subject.as_generic_type(),
                 subtype=MessageType(email_entity.template_name.as_generic_type()),
-                body=self._renderer.render(email_entity.template_name, email_entity.template_context)
+                body=self._renderer.render(email_entity.template_name, email_entity.body)
             )
         )

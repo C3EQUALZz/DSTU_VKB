@@ -30,3 +30,13 @@ class EmptyFieldError(DomainError):
 @dataclass(eq=False)
 class BadLengthError(DomainError):
     ...
+
+
+@dataclass(eq=False)
+class CantContainNumberFieldError(DomainError):
+    ...
+
+
+@dataclass(eq=False)
+class MalformedURL(DomainError):
+    ...

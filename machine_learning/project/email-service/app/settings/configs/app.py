@@ -43,6 +43,11 @@ class BrokerSettings(CommonSettings):
         alias="BROKER_USER_REGISTERED_TOPIC"
     )
 
+    user_registered_group: str = Field(
+        default="user-registered-group",
+        alias="BROKER_USER_REGISTERED_GROUP"
+    )
+
     @property
     def url(self) -> str:
         return f"{self.host}:{self.port}"

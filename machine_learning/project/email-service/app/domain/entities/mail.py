@@ -12,4 +12,3 @@ class EmailEntity(BaseEntity):
     subject: EmailSubject
     body: BodyOfEmailEntity
     template_name: TemplateName
-    template_context: dict[str, Any]
