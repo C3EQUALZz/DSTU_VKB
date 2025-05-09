@@ -4,7 +4,7 @@ from pathlib import Path
 
 from pydantic import (
     Field,
-    RedisDsn,
+    RedisDsn, SecretStr, EmailStr,
 )
 from pydantic_settings import (
     BaseSettings,
@@ -53,6 +53,17 @@ class BrokerSettings(CommonSettings):
         return f"{self.host}:{self.port}"
 
 
+class MailSettings(CommonSettings):
+    user_name: str = Field(alias="MAIL_USERNAME")
+    password: SecretStr = Field(alias="MAIL_PASSWORD")
+    port: int = Field(alias="MAIL_PORT")
+    server: str = Field(alias="MAIL_SERVER")
+    start_tls: bool = Field(alias="MAIL_STARTTLS")
+    ssl_tls: bool = Field(alias="MAIL_SSL_TLS")
+    mail_from: EmailStr = Field(alias="MAIL_FROM")
+    template_folder: Path = Path(__file__).parent.parent.parent.parent / 'templates',
+
+
 class Settings(CommonSettings):
     """
     Settings class which encapsulates logic of settings from other classes.
@@ -61,6 +72,7 @@ class Settings(CommonSettings):
 
     cache: RedisSettings = RedisSettings()
     broker: BrokerSettings = BrokerSettings()
+    mail: MailSettings = MailSettings()
 
 
 @lru_cache(1)

@@ -10,8 +10,9 @@ from dishka import (
     Provider,
     Scope,
 )
-
+from fastapi_mail import FastMail, ConnectionConfig
 from faststream.kafka import KafkaBroker
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 from redis.asyncio import Redis, ConnectionPool
 
 from app.infrastructure.brokers.factories import (
@@ -25,6 +26,10 @@ from app.infrastructure.repositories.cache.idempotency.commands.redis_cache impo
 from app.infrastructure.repositories.cache.idempotency.events.base import BaseIdempotencyEventCacheRepository
 from app.infrastructure.repositories.cache.idempotency.events.redis_cache import RedisIdempotencyEventCacheRepository
 from app.infrastructure.services.idempotency import IdempotencyService
+from app.infrastructure.services.mail.base import BaseMailSender
+from app.infrastructure.services.mail.fast_mail import FastMailSender
+from app.infrastructure.services.template_renderer.base import BaseTemplateRenderer
+from app.infrastructure.services.template_renderer.jinja import Jinja2TemplateRenderer
 from app.logic.bootstrap import Bootstrap
 from app.logic.event_buffer import EventBuffer
 from app.logic.message_bus import MessageBus
@@ -114,6 +119,39 @@ class CacheProvider(Provider):
     @provide(scope=Scope.APP)
     async def get_cache_idempotency_event_repository(self, client: Redis) -> BaseIdempotencyCommandCacheRepository:
         return RedisIdempotencyCommandCacheRepository(redis_client=client)
+
+
+class MailProvider(Provider):
+    settings = from_context(provides=Settings, scope=Scope.APP)
+
+    @provide(scope=Scope.APP)
+    async def get_mail_renderer(self, settings) -> BaseTemplateRenderer:
+        env: Environment = Environment(
+            loader=FileSystemLoader(settings.mail.template_folder),
+            autoescape=select_autoescape(["html", "xml"]),
+            enable_async=True,
+        )
+
+        return Jinja2TemplateRenderer(env=env)
+
+    @provide(scope=Scope.APP)
+    async def get_mail_service(self, settings: Settings) -> BaseMailSender:
+        connection_config: ConnectionConfig = ConnectionConfig(
+            MAIL_USERNAME=settings.mail.user_name,
+            MAIL_PASSWORD=settings.mail.password,
+            MAIL_FROM=settings.mail.mail_from,
+            MAIL_PORT=settings.mail.port,
+            MAIL_SERVER=settings.mail.server,
+            MAIL_SSL_TLS=settings.mail.ssl_tls,
+            TEMPLATE_FOLDER=settings.mail.template_folder,
+            MAIL_STARTTLS=settings.mail.start_tls,
+        )
+
+        return FastMailSender(
+            fastmail_app=FastMail(
+                config=connection_config
+            )
+        )
 
 
 class AppProvider(Provider):

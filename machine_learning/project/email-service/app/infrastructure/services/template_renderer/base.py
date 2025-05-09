@@ -6,7 +6,7 @@ from app.domain.values.mail import TemplateName
 
 class BaseTemplateRenderer(ABC):
     @abstractmethod
-    def render(
+    async def render(
             self,
             template_name: TemplateName,
             body: BodyOfEmailEntity

@@ -12,6 +12,6 @@ class Jinja2TemplateRenderer(BaseTemplateRenderer):
         self._env: Final[Environment] = env
 
     @override
-    def render(self, template_name: TemplateName, body: BodyOfEmailEntity) -> str:
+    async def render(self, template_name: TemplateName, body: BodyOfEmailEntity) -> str:
         template = self._env.get_template(template_name.as_generic_type())
         return template.render(body.to_dict(save_classes_value_objects=False))
