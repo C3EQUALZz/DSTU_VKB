@@ -30,3 +30,33 @@ class NonExistentNeuralNetworkWasSelected(DomainError):
 @dataclass(eq=False)
 class WrongUserRole(DomainError):
     ...
+
+
+@dataclass(eq=False)
+class EmptyEmailError(DomainError):
+    ...
+
+
+@dataclass(eq=False)
+class InvalidEmailException(DomainException):
+    email: str
+
+    @property
+    def message(self) -> str:
+        return f"The provided email is invalid: {self.email}"
+
+
+@dataclass(eq=False)
+class EmptyPasswordException(DomainException):
+    @property
+    def message(self) -> str:
+        return "Password is empty"
+
+
+@dataclass(eq=False)
+class InvalidPasswordLengthException(DomainException):
+    length: str
+
+    @property
+    def message(self) -> str:
+        return f"Password length is invalid: {self.length}"

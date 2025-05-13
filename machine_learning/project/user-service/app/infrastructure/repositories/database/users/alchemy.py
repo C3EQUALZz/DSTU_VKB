@@ -15,6 +15,20 @@ class SQLAlchemyUsersRepository(SQLAlchemyAbstractRepository, UsersRepository):
         raise NotImplementedError
 
     @override
+    async def get_by_fullname(self, surname: str, name: str, patronymic: str) -> UserEntity | None:
+        result: Result = await self._session.execute(
+            select(UserEntity).filter_by(surname=surname, name=name, patronymic=patronymic)
+        )
+
+        return result.scalar_one_or_none()
+
+    @override
+    async def get_by_email(self, email: str) -> UserEntity | None:
+        result: Result = await self._session.execute(select(UserEntity).filter_by(email=Email(email)))
+
+        return result.scalar_one_or_none()
+
+    @override
     async def add(self, model: UserEntity) -> UserEntity:
         result: Result = await self._session.execute(
             insert(UserEntity).values(**await model.to_dict()).returning(UserEntity)

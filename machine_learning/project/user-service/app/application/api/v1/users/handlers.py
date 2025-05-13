@@ -31,9 +31,9 @@ logger: Final[logging.Logger] = logging.getLogger(__name__)
     status_code=status.HTTP_200_OK,
 )
 async def get_users(
-    uow: FromDishka[UsersUnitOfWork],
-    page: int = Query(1, ge=1, description="Номер страницы"),
-    size: int = Query(10, ge=1, le=100, description="Размер страницы"),
+        uow: FromDishka[UsersUnitOfWork],
+        page: int = Query(1, ge=1, description="Номер страницы"),
+        size: int = Query(10, ge=1, le=100, description="Размер страницы"),
 ) -> list[UserSchemaResponse]:
     users_views: UsersViews = UsersViews(uow=uow)
     users: list[UserEntity] = await users_views.get_all_users(page_number=page, page_size=size)
@@ -45,8 +45,8 @@ async def get_users(
     status_code=status.HTTP_200_OK,
 )
 async def get_user(
-    user_id: UUID,
-    uow: FromDishka[UsersUnitOfWork],
+        user_id: UUID,
+        uow: FromDishka[UsersUnitOfWork],
 ) -> UserSchemaResponse:
     users_views: UsersViews = UsersViews(uow=uow)
     user: UserEntity = await users_views.get_user_by_id(str(user_id))
@@ -61,10 +61,15 @@ async def get_user(
     },
 )
 async def create_user(
-    scheme: CreateUserSchemaRequest, bootstrap: FromDishka[Bootstrap]
+        scheme: CreateUserSchemaRequest, bootstrap: FromDishka[Bootstrap]
 ) -> UserSchemaResponse:
     messagebus: MessageBus = await bootstrap.get_messagebus()
-    await messagebus.handle(CreateUserCommand(name=scheme.first_name))
+    await messagebus.handle(CreateUserCommand(
+        name=scheme.name,
+        surname=scheme.surname,
+        email=str(scheme.email),
+        password=scheme.password,
+    ))
     return UserSchemaResponse.from_entity(messagebus.command_result)
 
 
@@ -73,8 +78,8 @@ async def create_user(
     status_code=status.HTTP_200_OK,
 )
 async def update_user(
-    scheme: UpdateUserSchemaRequest,
-    bootstrap: FromDishka[Bootstrap],
+        scheme: UpdateUserSchemaRequest,
+        bootstrap: FromDishka[Bootstrap],
 ) -> UserSchemaResponse:
     messagebus: MessageBus = await bootstrap.get_messagebus()
     await messagebus.handle(UpdateUserCommand(scheme.model_dump(exclude_unset=True, exclude_none=True)))

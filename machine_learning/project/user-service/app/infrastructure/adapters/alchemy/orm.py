@@ -18,7 +18,10 @@ users_table = Table(
     "users",
     metadata,
     Column("oid", StringUUID(), primary_key=True),
-    Column("first_name", String(100), nullable=False),
+    Column("name", String(100), nullable=False),
+    Column("surname", String(100), nullable=False),
+    Column("email", String(100), nullable=False),
+    Column("password", String(100), nullable=False),
     Column("role", RoleDecorator(20), nullable=False),
     Column("created_at", DateTime(timezone=True), default=func.now()),
     Column(

@@ -16,6 +16,14 @@ class UsersRepository(AbstractRepository[UserEntity], ABC):
         raise NotImplementedError
 
     @abstractmethod
+    async def get_by_fullname(self, surname: str, name: str) -> UserEntity | None:
+        raise NotImplementedError
+
+    @abstractmethod
+    async def get_by_email(self, email: str) -> UserEntity | None:
+        raise NotImplementedError
+
+    @abstractmethod
     async def add(self, model: UserEntity) -> UserEntity:
         raise NotImplementedError
 

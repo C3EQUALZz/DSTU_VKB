@@ -17,3 +17,14 @@ class MessageBusMessageError(LogicError):
     @property
     def status(self) -> int:
         return HTTPStatus.INTERNAL_SERVER_ERROR.value
+
+
+@dataclass(eq=False)
+class InvalidPasswordError(LogicError):
+    @property
+    def message(self) -> str:
+        return "Invalid password"
+
+    @property
+    def status(self) -> int:
+        return HTTPStatus.UNAUTHORIZED.value

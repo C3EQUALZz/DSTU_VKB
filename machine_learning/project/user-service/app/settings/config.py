@@ -63,6 +63,14 @@ class CacheSettings(CommonSettings):
         return RedisDsn(f"redis://:{self.password}@{self.host}:{self.port}")
 
 
+class AuthSettings(CommonSettings):
+    private_key: str = Field(alias="PRIVATE_KEY")
+    public_key: str = Field(alias="PUBLIC_KEY")
+    algorithm: str = Field(default="RS256", alias="ALGORITHM")
+    access_token_expire_minutes: int = Field(default=5, alias="ACCESS_TOKEN_EXPIRE_MINUTES")
+    refresh_token_expire_minutes: int = Field(default=10, alias="REFRESH_TOKEN_EXPIRE_MINUTES")
+
+
 class BrokerSettings(CommonSettings):
     host: str = Field(alias="BROKER_HOST")
     port: int = Field(alias="BROKER_PORT_NETWORK")
@@ -89,6 +97,7 @@ class Settings(CommonSettings):
     alchemy_settings: SQLAlchemySettings = SQLAlchemySettings()
     broker: BrokerSettings = BrokerSettings()
     cache: CacheSettings = CacheSettings()
+    auth: AuthSettings = AuthSettings()
 
 
 @lru_cache(1)

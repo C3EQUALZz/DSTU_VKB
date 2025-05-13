@@ -30,6 +30,14 @@ class UsersService:
 
             return user
 
+    async def get_by_email(self, email: str) -> UserEntity:
+        async with self._uow as uow:
+            user: Optional[UserEntity] = await uow.users.get_by_email(email)
+            if not user:
+                raise UserNotFoundError(email)
+
+            return user
+
     async def get_all(self, start: int | None = None, limit: int | None = None) -> List[UserEntity]:
         async with self._uow as uow:
             return await uow.users.list(start=start, limit=limit)
@@ -40,17 +48,29 @@ class UsersService:
             await uow.commit()
 
     async def check_existence(
-            self,
-            oid: Optional[str] = None
+        self,
+        oid: Optional[str] = None,
+        email: Optional[str] = None,
+        surname: Optional[str] = None,
+        name: Optional[str] = None,
     ) -> bool:
-        if not oid:
-            raise MissingAttributeError("oid or email or full_name is required")
+        if not (oid or email or (surname and name)):
+            raise AttributeError("oid or email or full_name")
 
         async with self._uow as uow:
             user: Optional[UserEntity]
-
             if oid:
                 user = await uow.users.get(oid=oid)
+                if user:
+                    return True
+
+            if email:
+                user = await uow.users.get_by_email(email)
+                if user:
+                    return True
+
+            if surname and name:
+                user = await uow.users.get_by_fullname(surname=surname, name=name)
                 if user:
                     return True
 

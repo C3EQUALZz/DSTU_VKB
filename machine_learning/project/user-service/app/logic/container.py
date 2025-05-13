@@ -2,6 +2,7 @@ import logging
 from functools import lru_cache
 from typing import cast
 
+from authx import AuthXConfig, AuthX
 from dishka import Provider, Scope, from_context, make_async_container, provide, AsyncContainer
 from faststream.kafka import KafkaBroker
 from redis.asyncio import ConnectionPool, Redis
@@ -15,6 +16,9 @@ from sqlalchemy.ext.asyncio import (
 from app.infrastructure.brokers.base import BaseMessageBroker
 from app.infrastructure.brokers.factory import EventHandlerTopicFactory
 from app.infrastructure.brokers.publishers.faststream import FastStreamKafkaMessageBroker
+from app.infrastructure.repositories.cache.idempotency.commands.base import BaseIdempotencyCommandCacheRepository
+from app.infrastructure.repositories.cache.idempotency.commands.redis_cache import \
+    RedisIdempotencyCommandCacheRepository
 from app.infrastructure.repositories.cache.idempotency.events.base import BaseIdempotencyEventCacheRepository
 from app.infrastructure.repositories.cache.idempotency.events.redis_cache import RedisIdempotencyEventCacheRepository
 from app.infrastructure.services.idempotency import IdempotencyService
@@ -98,6 +102,23 @@ class BrokerProvider(Provider):
         )
 
 
+class AuthProvider(Provider):
+    settings = from_context(provides=Settings, scope=Scope.APP)
+
+    @provide(scope=Scope.APP)
+    async def get_config(self, settings: Settings) -> AuthXConfig:
+        return AuthXConfig(
+            JWT_ALGORITHM="RS256",
+            JWT_DECODE_ALGORITHMS=["RS256"],
+            JWT_PRIVATE_KEY=settings.auth.private_key,
+            JWT_PUBLIC_KEY=settings.auth.public_key,
+        )
+
+    @provide(scope=Scope.APP)
+    async def get_security(self, config: AuthXConfig) -> AuthX:
+        return AuthX(config=config)
+
+
 class CacheProvider(Provider):
     settings = from_context(provides=Settings, scope=Scope.APP)
 
@@ -110,8 +131,12 @@ class CacheProvider(Provider):
         return Redis.from_pool(pool)
 
     @provide(scope=Scope.APP)
-    async def get_cache_idempotency_repository(self, client: Redis) -> BaseIdempotencyEventCacheRepository:
+    async def get_event_cache_idempotency_repository(self, client: Redis) -> BaseIdempotencyEventCacheRepository:
         return RedisIdempotencyEventCacheRepository(redis_client=client)
+
+    @provide(scope=Scope.APP)
+    async def get_command_cache_idempotency_repository(self, client: Redis) -> BaseIdempotencyCommandCacheRepository:
+        return RedisIdempotencyCommandCacheRepository(redis_client=client)
 
 
 class AppProvider(Provider):
@@ -125,11 +150,13 @@ class AppProvider(Provider):
     async def get_idempotency_service(
             self,
             event_buffer: EventBuffer,
-            idempotency_repository: BaseIdempotencyEventCacheRepository,
+            event_idempotency_repository: BaseIdempotencyEventCacheRepository,
+            command_idempotency_repository: BaseIdempotencyCommandCacheRepository,
     ) -> IdempotencyService:
         return IdempotencyService(
             event_buffer=event_buffer,
-            cache=idempotency_repository,
+            event_cache=event_idempotency_repository,
+            command_cache=command_idempotency_repository,
         )
 
     @provide(scope=Scope.APP)
