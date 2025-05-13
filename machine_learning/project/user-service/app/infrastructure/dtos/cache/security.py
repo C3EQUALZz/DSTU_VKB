@@ -8,8 +8,8 @@ from typing import override, Self
 class JTICacheDTO(BaseCacheDTO):
     value: str
 
-    @override
     @property
+    @override
     def key(self) -> str:
         return self.value
 

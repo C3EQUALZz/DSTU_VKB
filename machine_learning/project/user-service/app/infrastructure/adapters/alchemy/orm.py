@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, String, MetaData, Table, DateTime
+from sqlalchemy import Column, ForeignKey, String, MetaData, Table, DateTime, Boolean
 from sqlalchemy.orm import relationship, registry
 from sqlalchemy.sql import func
 
@@ -7,7 +7,7 @@ from app.infrastructure.adapters.alchemy.type_decorators import (
     ImageModelDecorator,
     RoleDecorator,
     PositiveNumberDecorator,
-    StringUUID,
+    StringUUID, EmailTypeDecorator, PasswordTypeDecorator,
 )
 
 metadata = MetaData()
@@ -20,9 +20,10 @@ users_table = Table(
     Column("oid", StringUUID(), primary_key=True),
     Column("name", String(100), nullable=False),
     Column("surname", String(100), nullable=False),
-    Column("email", String(100), nullable=False),
-    Column("password", String(100), nullable=False),
+    Column("email", EmailTypeDecorator(100), nullable=False),
+    Column("password", PasswordTypeDecorator(100), nullable=False),
     Column("role", RoleDecorator(20), nullable=False),
+    Column("is_verified", Boolean, nullable=False),
     Column("created_at", DateTime(timezone=True), default=func.now()),
     Column(
         "updated_at",

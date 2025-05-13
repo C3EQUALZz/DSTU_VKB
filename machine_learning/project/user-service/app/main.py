@@ -46,8 +46,8 @@ def create_app() -> FastAPI:
     container: AsyncContainer = get_container()
 
     app = FastAPI(
-        title="Microservice backend for meeting service",
-        description="Backend API written with FastAPI for meeting service",
+        title="Microservice backend for user service",
+        description="Backend API written with FastAPI for user service",
         debug=True,
         root_path="/api/v1/users",
         lifespan=lifespan,

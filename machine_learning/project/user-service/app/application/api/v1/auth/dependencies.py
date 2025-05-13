@@ -1,5 +1,5 @@
 import logging
-
+from typing import Final
 from authx import AuthX, RequestToken, TokenPayload
 from authx.exceptions import AuthXException
 from dishka import AsyncContainer
@@ -19,7 +19,7 @@ from app.infrastructure.uow.users.base import UsersUnitOfWork
 from app.logic.container import get_container
 from app.logic.views.users import UsersViews
 
-logger = logging.getLogger(__name__)
+logger: Final[logging.Logger] = logging.getLogger(__name__)
 http_bearer = HTTPBearer(auto_error=False)
 
 

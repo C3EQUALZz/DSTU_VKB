@@ -1,7 +1,8 @@
 from app.domain.entities.user import UserEntity
-from app.domain.values.user import Role
+from app.domain.values.user import Role, Password, Email
 from app.exceptions.infrastructure import UserNotFoundException
 from app.infrastructure.services.users import UsersService
+from app.infrastructure.utils.security import hash_password
 
 from app.logic.commands.users import (
     CreateUserCommand,
@@ -22,7 +23,10 @@ class CreateUserCommandHandler(UsersCommandHandler[CreateUserCommand]):
             user_service: UsersService = UsersService(uow=uow)
 
             new_user: UserEntity = UserEntity(
-                first_name=command.first_name,
+                name=command.name,
+                surname=command.surname,
+                email=Email(command.email),
+                password=Password(hash_password(command.password)),
                 telegram_id=command.telegram_id,
                 role=Role(command.role),
             )
@@ -32,7 +36,7 @@ class CreateUserCommandHandler(UsersCommandHandler[CreateUserCommand]):
             self._event_buffer.add(
                 UserCreatedEvent(
                     oid=added_user.oid,
-                    first_name=added_user.first_name,
+                    first_name=added_user.name,
                     role=added_user.role.as_generic_type(),
                 )
             )
@@ -65,7 +69,7 @@ class UpdateUserCommandHandler(UsersCommandHandler[UpdateUserCommand]):
             self._event_buffer.add(
                 UserUpdatedEvent(
                     oid=updated_user.oid,
-                    first_name=updated_user.first_name,
+                    first_name=updated_user.name,
                     role=updated_user.role.as_generic_type(),
                 )
             )

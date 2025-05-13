@@ -11,6 +11,7 @@ class CommandCacheDTO(BaseCacheDTO):
     command: AbstractCommand
 
     @property
+    @override
     def key(self) -> str:
         return self.command.oid
 

@@ -41,6 +41,25 @@ services:
     env_file:
       - .env
 
+  redis-app-users:
+    container_name: redis-app-users
+    image: redis:6.2-alpine
+    restart: unless-stopped
+    ports:
+      - '${REDIS_PORT}:6379'
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli", "ping" ]
+      interval: 1s
+      timeout: 3s
+      retries: 5
+    command: [ "redis-server", "--appendonly yes", "--requirepass", "${REDIS_PASSWORD}" ]
+    volumes:
+      - redis_data_users:/data
+    env_file:
+      - .env
+    networks:
+      - user-service
+
   broker:
     image: bitnami/kafka:3.9.0
     container_name: broker
@@ -88,6 +107,7 @@ volumes:
   postgres_data_users:
   pgadmin_data_users:
   kafka_data:
+  redis_data_users:
 
 networks:
   user-service:

@@ -8,14 +8,16 @@ from app.domain.entities.user import UserEntity
 
 class UserSchemaResponse(BaseModel):
     oid: StringUUID
-    first_name: str = Field(min_length=1, max_length=40)
+    name: str = Field(min_length=1, max_length=40)
+    surname: str = Field(min_length=1, max_length=40)
     role: Literal["bot", "user", "admin"]
 
     @classmethod
     def from_entity(cls, entity: UserEntity) -> Self:
         return cls(
             oid=entity.oid,
-            first_name=entity.name,
+            name=entity.name,
+            surname=entity.surname,
             role=cast(Literal["bot", "user", "admin"], entity.role.as_generic_type()),
         )
 

@@ -38,25 +38,15 @@ class EmptyEmailError(DomainError):
 
 
 @dataclass(eq=False)
-class InvalidEmailException(DomainException):
-    email: str
-
-    @property
-    def message(self) -> str:
-        return f"The provided email is invalid: {self.email}"
+class InvalidEmailError(DomainError):
+    ...
 
 
 @dataclass(eq=False)
-class EmptyPasswordException(DomainException):
-    @property
-    def message(self) -> str:
-        return "Password is empty"
+class EmptyPasswordError(DomainError):
+    ...
 
 
 @dataclass(eq=False)
-class InvalidPasswordLengthException(DomainException):
-    length: str
-
-    @property
-    def message(self) -> str:
-        return f"Password length is invalid: {self.length}"
+class InvalidPasswordLengthError(DomainError):
+    ...

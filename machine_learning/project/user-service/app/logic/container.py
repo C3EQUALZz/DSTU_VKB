@@ -172,7 +172,9 @@ class AppProvider(Provider):
             events: EventHandlerMapping,
             commands: CommandHandlerMapping,
             broker: BaseMessageBroker,
-            event_handler_and_topic_factory: EventHandlerTopicFactory
+            event_handler_and_topic_factory: EventHandlerTopicFactory,
+            idempotency_service: IdempotencyService,
+            users_uow: UsersUnitOfWork,
     ) -> Bootstrap:
         return Bootstrap(
             event_buffer=event_buffer,
@@ -180,8 +182,10 @@ class AppProvider(Provider):
             commands_handlers_for_injection=commands,
             dependencies={
                 "broker": broker,
-                "event_handler_and_topic_factory": event_handler_and_topic_factory
+                "event_handler_and_topic_factory": event_handler_and_topic_factory,
+                "users_uow": users_uow,
             },
+            idempotency_service=idempotency_service,
         )
 
 

@@ -3,8 +3,8 @@ from dataclasses import dataclass
 from typing import override
 
 from app.domain.values.base import BaseValueObject
-from app.exceptions.domain import WrongUserRole, EmptyEmailError, InvalidEmailException, EmptyPasswordException, \
-    InvalidPasswordLengthException
+from app.exceptions.domain import WrongUserRole, EmptyEmailError, InvalidEmailError, EmptyPasswordError, \
+    InvalidPasswordLengthError
 
 
 @dataclass
@@ -33,7 +33,7 @@ class Email(BaseValueObject[str]):
         email_validate_pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
 
         if not re.match(email_validate_pattern, self.value):
-            raise InvalidEmailException(self.value)
+            raise InvalidEmailError(f"The provided email is invalid {self.value}")
 
     @override
     def as_generic_type(self) -> str:
@@ -47,12 +47,12 @@ class Password(BaseValueObject[bytes]):
     @override
     def validate(self) -> None:
         if not self.value:
-            raise EmptyPasswordException()
+            raise EmptyPasswordError("Password is empty")
 
         value_length = len(self.value)
 
         if value_length not in range(3, 100):
-            raise InvalidPasswordLengthException(str(value_length))
+            raise InvalidPasswordLengthError(f"Password length is invalid: {str(value_length)}")
 
     @override
     def as_generic_type(self) -> bytes:

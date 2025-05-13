@@ -11,6 +11,7 @@ class EventCacheDTO(BaseCacheDTO):
     event: AbstractEvent
 
     @property
+    @override
     def key(self) -> str:
         return self.event.oid
 

@@ -16,7 +16,7 @@ class BaseCacheDTO(ABC):
         """Преобразует объект в данные для сохранения в кэше."""
         raise NotImplementedError
 
-    @abstractmethod
     @property
+    @abstractmethod
     def key(self) -> str:
         raise NotImplementedError
