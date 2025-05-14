@@ -226,5 +226,6 @@ def get_container() -> AsyncContainer:
         AppProvider(),
         CacheProvider(),
         DatabaseProvider(),
+        AuthProvider(),
         context={Settings: get_settings()},
     )

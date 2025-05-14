@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, String, MetaData, Table, DateTime, Boolean
+from sqlalchemy import Column, ForeignKey, String, MetaData, Table, DateTime, Boolean, Integer
 from sqlalchemy.orm import relationship, registry
 from sqlalchemy.sql import func
 
@@ -23,6 +23,7 @@ users_table = Table(
     Column("email", EmailTypeDecorator(100), nullable=False),
     Column("password", PasswordTypeDecorator(100), nullable=False),
     Column("role", RoleDecorator(20), nullable=False),
+    Column("telegram_id", Integer, nullable=True),
     Column("is_verified", Boolean, nullable=False),
     Column("created_at", DateTime(timezone=True), default=func.now()),
     Column(

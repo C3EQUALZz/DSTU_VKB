@@ -10,6 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 from sqlalchemy.orm import clear_mappers
 
 from app.application.api.v1.users.handlers import router as users_router
+from app.application.api.v1.auth.handlers import router as auth_router
 from app.application.api.v1.utils.handlers import register_exception_handlers
 from app.infrastructure.adapters.alchemy.orm import metadata, start_mappers
 from app.infrastructure.brokers.base import BaseMessageBroker
@@ -57,6 +58,7 @@ def create_app() -> FastAPI:
     register_exception_handlers(app)
 
     app.include_router(users_router)
+    app.include_router(auth_router)
 
     setup_dishka_fastapi(container=container, app=app)
 

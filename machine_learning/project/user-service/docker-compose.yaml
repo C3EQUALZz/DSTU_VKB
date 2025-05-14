@@ -85,10 +85,10 @@ services:
     volumes:
       - kafka_data:/bitnami/kafka
     healthcheck:
-      test: [ "CMD-SHELL", "echo 'test-message' | kafka-console-producer.sh --broker-list localhost:9092 --topic health-check-topic && kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic health-check-topic --from-beginning --max-messages 1 | grep 'test-message'" ]
-      interval: 15s
-      timeout: 10s
-      retries: 3
+      test: kafka-topics.sh --list --bootstrap-server localhost:9092 || exit 1
+      interval: 1s
+      timeout: 60s
+      retries: 60
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest

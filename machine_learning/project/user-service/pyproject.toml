@@ -21,7 +21,8 @@ dependencies = [
     "concurrent-log-handler (>=0.9.25,<0.10.0)",
     "redis (>=6.0.0,<7.0.0)",
     "authx (>=1.4.2,<2.0.0)",
-    "bcrypt (>=4.3.0,<5.0.0)"
+    "bcrypt (>=4.3.0,<5.0.0)",
+    "python-multipart (>=0.0.20,<0.0.21)"
 ]
 
 

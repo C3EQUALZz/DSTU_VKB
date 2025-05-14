@@ -11,11 +11,13 @@ from app.infrastructure.scheduler import scheduler
 from app.infrastructure.scheduler.tasks.images.schemas import ImageForSendToChatSchema
 from app.settings.configs.enums import TaskNamesConfig
 
-
 logger: Final[Logger] = logging.getLogger(__name__)
 
 
-@scheduler.task(task_name=TaskNamesConfig.SEND_CONVERTED_IMAGE_TO_USER.value)
+@scheduler.task(
+    task_name=TaskNamesConfig.SEND_CONVERTED_IMAGE_TO_USER.value,
+    retry_on_error=True
+)
 @inject(patch_module=True)
 async def send_converted_image_task(
         schemas: ImageForSendToChatSchema,
@@ -31,7 +33,11 @@ async def send_converted_image_task(
         )
     )
 
-@scheduler.task(task_name=TaskNamesConfig.IMAGE_METADATA.value)
+
+@scheduler.task(
+    task_name=TaskNamesConfig.IMAGE_METADATA.value,
+    retry_on_error=True
+)
 @inject(patch_module=True)
 async def send_metadata_from_image_task(
         bot: Bot = TaskiqDepends()

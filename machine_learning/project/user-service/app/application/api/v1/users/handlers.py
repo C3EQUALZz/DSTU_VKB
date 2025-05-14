@@ -1,8 +1,8 @@
 import logging
 from uuid import UUID
-from typing import Final
+from typing import Final, Annotated
 from dishka.integrations.fastapi import DishkaRoute, FromDishka
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Path, Query
 from starlette import status
 
 from app.application.api.v1.users.schemas import (
@@ -29,6 +29,7 @@ logger: Final[logging.Logger] = logging.getLogger(__name__)
 @router.get(
     "/",
     status_code=status.HTTP_200_OK,
+    description="HTTP get method for getting info about all users with pagination",
 )
 async def get_users(
         uow: FromDishka[UsersUnitOfWork],
@@ -43,9 +44,10 @@ async def get_users(
 @router.get(
     "/{user_id}/",
     status_code=status.HTTP_200_OK,
+    description="HTTP get method for getting info about personality"
 )
 async def get_user(
-        user_id: UUID,
+        user_id: Annotated[UUID, Path(title="Identifier of user", description="Identifier of user which must be UUID")],
         uow: FromDishka[UsersUnitOfWork],
 ) -> UserSchemaResponse:
     users_views: UsersViews = UsersViews(uow=uow)
@@ -59,6 +61,7 @@ async def get_user(
     responses={
         status.HTTP_409_CONFLICT: {"model": UserNotFoundException},
     },
+    description="HTTP post method for creating user"
 )
 async def create_user(
         scheme: CreateUserSchemaRequest, bootstrap: FromDishka[Bootstrap]
@@ -76,13 +79,15 @@ async def create_user(
 @router.patch(
     "/{user_id}/",
     status_code=status.HTTP_200_OK,
+    description="HTTP patch method for updating user"
 )
 async def update_user(
+        user_id: Annotated[UUID, Path(title="Identifier of user", description="Identifier of user which must be UUID")],
         scheme: UpdateUserSchemaRequest,
         bootstrap: FromDishka[Bootstrap],
 ) -> UserSchemaResponse:
     messagebus: MessageBus = await bootstrap.get_messagebus()
-    await messagebus.handle(UpdateUserCommand(scheme.model_dump(exclude_unset=True, exclude_none=True)))
+    await messagebus.handle(UpdateUserCommand(**{"user_id": str(user_id), **scheme.model_dump(exclude_unset=True, exclude_none=True)}))
     return UserSchemaResponse.from_entity(messagebus.command_result)
 
 
@@ -92,8 +97,12 @@ async def update_user(
     responses={
         status.HTTP_404_NOT_FOUND: {"model": UserNotFoundException},
     },
+    description="HTTP delete method for deleting user"
 )
-async def delete_user(user_id: UUID, bootstrap: FromDishka[Bootstrap]) -> None:
+async def delete_user(
+        user_id: Annotated[UUID, Path(title="Identifier of user", description="Identifier of user which must be UUID")],
+        bootstrap: FromDishka[Bootstrap]
+) -> None:
     messagebus: MessageBus = await bootstrap.get_messagebus()
     await messagebus.handle(DeleteUserCommand(user_id=str(user_id)))
     return messagebus.command_result

@@ -36,7 +36,7 @@ class MessageBus:
         self._queue.put(message)
         while not self._queue.empty():
             message = self._queue.get()
-            if self._idempotency_service.is_processed(message):
+            if await self._idempotency_service.is_processed(message):
                 continue
             elif isinstance(message, AbstractEvent):
                 await self._handle_event(event=message)

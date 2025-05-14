@@ -3,6 +3,7 @@ from typing import Any, Sequence, override
 from sqlalchemy import Result, Row, RowMapping, delete, insert, select, update
 
 from app.domain.entities.user import UserEntity
+from app.domain.values.user import Email
 from app.exceptions.infrastructure import TypeSignatureError
 from app.infrastructure.repositories.database.base import SQLAlchemyAbstractRepository
 from app.infrastructure.repositories.database.users.base import UsersRepository
@@ -15,9 +16,9 @@ class SQLAlchemyUsersRepository(SQLAlchemyAbstractRepository, UsersRepository):
         raise NotImplementedError
 
     @override
-    async def get_by_fullname(self, surname: str, name: str, patronymic: str) -> UserEntity | None:
+    async def get_by_fullname(self, surname: str, name: str) -> UserEntity | None:
         result: Result = await self._session.execute(
-            select(UserEntity).filter_by(surname=surname, name=name, patronymic=patronymic)
+            select(UserEntity).filter_by(surname=surname, name=name)
         )
 
         return result.scalar_one_or_none()
@@ -25,7 +26,6 @@ class SQLAlchemyUsersRepository(SQLAlchemyAbstractRepository, UsersRepository):
     @override
     async def get_by_email(self, email: str) -> UserEntity | None:
         result: Result = await self._session.execute(select(UserEntity).filter_by(email=Email(email)))
-
         return result.scalar_one_or_none()
 
     @override

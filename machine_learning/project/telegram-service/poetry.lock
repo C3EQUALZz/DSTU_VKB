@@ -1406,14 +1406,14 @@ files = [
 
 [[package]]
 name = "taskiq"
-version = "0.11.16"
+version = "0.11.17"
 description = "Distributed task queue with full async support"
 optional = false
 python-versions = "<4.0,>=3.9"
 groups = ["main"]
 files = [
-    {file = "taskiq-0.11.16-py3-none-any.whl", hash = "sha256:2cbc458890c0a5544a34ea2489bce255bcbc8459b2a344b62a43f7db51c1389c"},
-    {file = "taskiq-0.11.16.tar.gz", hash = "sha256:52e73794503c41250e384f9e1a2645fa56fd25ffebbbf512ca708a7a46e728f3"},
+    {file = "taskiq-0.11.17-py3-none-any.whl", hash = "sha256:a01fe1fc9c646f71113d0b886761a5e5253a35e625491d62e3379a14a99563b7"},
+    {file = "taskiq-0.11.17.tar.gz", hash = "sha256:9c1c402beea452e8e834c53494035d653499d044ef1c7e6250c8fb7b31e52165"},
 ]
 
 [package.dependencies]
@@ -1638,4 +1638,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "abe670a7601aa6225317f9899ff74750d6e877b8d46700aaf4a578f40a25a4e7"
+content-hash = "859ddea9457191ddd957bf0a035187b3a7cf63fae06181047c9479228f28fc23"

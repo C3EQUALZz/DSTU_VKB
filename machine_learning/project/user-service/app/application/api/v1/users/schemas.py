@@ -30,31 +30,26 @@ class CreateUserSchemaRequest(BaseModel):
 
 
 class UpdateUserSchemaRequest(CreateUserSchemaRequest):
-    id: StringUUID = Field(
-        ...,
-        description="Unique identifier of the user"
-    )
-
-    name: str = Field(
+    name: str | None = Field(
         default=None,
         min_length=1,
         max_length=40,
         description="User name for updating, this field is Optional"
     )
 
-    surname: str = Field(
+    surname: str | None = Field(
         default=None,
         min_length=1,
         max_length=40,
         description="User surname for updating, this field is Optional"
     )
 
-    email: EmailStr = Field(
+    email: EmailStr | None = Field(
         default=None,
         description="Email address for user"
     )
 
-    role: Literal["bot", "user", "admin"] = Field(
+    role: Literal["bot", "user", "admin"] | None = Field(
         default="user",
         validate_default=True
     )
