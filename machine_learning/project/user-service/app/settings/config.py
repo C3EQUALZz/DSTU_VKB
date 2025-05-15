@@ -83,6 +83,12 @@ class BrokerSettings(CommonSettings):
     user_update_topic: str = Field(default="user-update", alias="BROKER_USER_UPDATE_TOPIC")
     user_delete_topic: str = Field(default="user-delete", alias="BROKER_USER_DELETE_TOPIC")
 
+    user_telegram_id_from_start_bot_topic: str = Field(default="user-telegram-start", alias="USER_TELEGRAM_ID_FROM_START_BOT")
+    user_telegram_id_from_start_bot_group_id: str = Field(default="user-telegram-start-group", alias="USER_TELEGRAM_ID_FROM_START_BOT_GROUP")
+
+    user_successfully_linked_telegram_topic: str = Field(default="user-telegram-link-success", alias="USER_SUCCESSFULLY_LINK_TOPIC")
+    user_failed_link_telegram_topic: str = Field(default="user-telegram-link-failed", alias="USER_FAILED_LINK_TOPIC")
+
     @property
     def url(self) -> str:
         return f"{self.host}:{self.port}"

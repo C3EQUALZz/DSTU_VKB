@@ -2,9 +2,10 @@ import logging
 from uuid import UUID
 from typing import Final, Annotated
 from dishka.integrations.fastapi import DishkaRoute, FromDishka
-from fastapi import APIRouter, Path, Query
+from fastapi import APIRouter, Path, Query, Depends
 from starlette import status
 
+from app.application.api.v1.auth.dependencies import RoleChecker
 from app.application.api.v1.users.schemas import (
     CreateUserSchemaRequest,
     UpdateUserSchemaRequest,
@@ -61,7 +62,8 @@ async def get_user(
     responses={
         status.HTTP_409_CONFLICT: {"model": UserNotFoundException},
     },
-    description="HTTP post method for creating user"
+    description="HTTP post method for creating user",
+    dependencies=[Depends(RoleChecker(allowed_roles=["admin"]))],
 )
 async def create_user(
         scheme: CreateUserSchemaRequest, bootstrap: FromDishka[Bootstrap]
@@ -87,7 +89,8 @@ async def update_user(
         bootstrap: FromDishka[Bootstrap],
 ) -> UserSchemaResponse:
     messagebus: MessageBus = await bootstrap.get_messagebus()
-    await messagebus.handle(UpdateUserCommand(**{"user_id": str(user_id), **scheme.model_dump(exclude_unset=True, exclude_none=True)}))
+    await messagebus.handle(
+        UpdateUserCommand(**{"user_id": str(user_id), **scheme.model_dump(exclude_unset=True, exclude_none=True)}))
     return UserSchemaResponse.from_entity(messagebus.command_result)
 
 

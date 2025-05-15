@@ -1,6 +1,6 @@
 import logging
 from functools import lru_cache
-from typing import cast
+from typing import cast, Final
 
 from authx import AuthXConfig, AuthX
 from dishka import Provider, Scope, from_context, make_async_container, provide, AsyncContainer
@@ -14,6 +14,7 @@ from sqlalchemy.ext.asyncio import (
 )
 
 from app.infrastructure.brokers.base import BaseMessageBroker
+from app.infrastructure.brokers.consumers.kafka.users.handlers import router as user_router
 from app.infrastructure.brokers.factory import EventHandlerTopicFactory
 from app.infrastructure.brokers.publishers.faststream import FastStreamKafkaMessageBroker
 from app.infrastructure.repositories.cache.idempotency.commands.base import BaseIdempotencyCommandCacheRepository
@@ -25,16 +26,22 @@ from app.infrastructure.services.idempotency import IdempotencyService
 from app.infrastructure.uow.users.alchemy import SQLAlchemyUsersUnitOfWork
 from app.infrastructure.uow.users.base import UsersUnitOfWork
 from app.logic.bootstrap import Bootstrap
+from app.logic.commands.auth import VerifyUserCredentialsCommand
 from app.logic.commands.users import CreateUserCommand, UpdateUserCommand, DeleteUserCommand
 from app.logic.event_buffer import EventBuffer
+from app.logic.events.telegram import UserStartTelegramEvent, UserSuccessfullyLinkedTelegramEvent, \
+    UserFailedLinkedTelegramEvent
 from app.logic.events.users import UserCreatedEvent, UserDeletedEvent, UserUpdatedEvent
+from app.logic.handlers.auth.commands import VerifyUserCredentialsCommandHandler
+from app.logic.handlers.telegram.events import UserStartTelegramEventHandler, \
+    UserSuccessfullyLinkedTelegramEventHandler, UserFailedLinkedTelegramEventHandler
 from app.logic.handlers.users.commands import CreateUserCommandHandler, UpdateUserCommandHandler, \
     DeleteUserCommandHandler
 from app.logic.handlers.users.events import UserCreatedEventHandler, UserDeletedEventHandler, UserUpdatedEventHandler
 from app.logic.types.handlers import CommandHandlerMapping, EventHandlerMapping
 from app.settings.config import Settings, get_settings
 
-logger = logging.getLogger(__name__)
+logger: Final[logging.Logger] = logging.getLogger(__name__)
 
 
 class HandlerProvider(Provider):
@@ -48,7 +55,8 @@ class HandlerProvider(Provider):
             {
                 CreateUserCommand: CreateUserCommandHandler,
                 UpdateUserCommand: UpdateUserCommandHandler,
-                DeleteUserCommand: DeleteUserCommandHandler
+                DeleteUserCommand: DeleteUserCommandHandler,
+                VerifyUserCredentialsCommand: VerifyUserCredentialsCommandHandler,
             },
         )
 
@@ -63,6 +71,9 @@ class HandlerProvider(Provider):
                 UserCreatedEvent: [UserCreatedEventHandler],
                 UserDeletedEvent: [UserDeletedEventHandler],
                 UserUpdatedEvent: [UserUpdatedEventHandler],
+                UserStartTelegramEvent: [UserStartTelegramEventHandler],
+                UserSuccessfullyLinkedTelegramEvent: [UserSuccessfullyLinkedTelegramEventHandler],
+                UserFailedLinkedTelegramEvent: [UserFailedLinkedTelegramEventHandler]
             },
         )
 
@@ -77,13 +88,15 @@ class BrokerProvider(Provider):
                 UserCreatedEventHandler: settings.broker.user_created_topic,
                 UserDeletedEventHandler: settings.broker.user_deleted_topic,
                 UserUpdatedEventHandler: settings.broker.user_updated_topic,
+                UserSuccessfullyLinkedTelegramEventHandler: settings.broker.user_successfully_linked_telegram_topic,
+                UserFailedLinkedTelegramEventHandler: settings.broker.user_failed_link_telegram_topic,
             }
         )
 
     @provide(scope=Scope.APP)
     async def get_faststream_kafka_broker(self, settings: Settings) -> KafkaBroker:
         broker: KafkaBroker = KafkaBroker(settings.broker.url)
-
+        broker.include_router(user_router)
         return broker
 
     @provide(scope=Scope.APP)
@@ -98,6 +111,10 @@ class BrokerProvider(Provider):
                 settings.broker.user_created_topic: broker.publisher(settings.broker.user_created_topic),
                 settings.broker.user_updated_topic: broker.publisher(settings.broker.user_updated_topic),
                 settings.broker.user_deleted_topic: broker.publisher(settings.broker.user_deleted_topic),
+                settings.broker.user_successfully_linked_telegram_topic: broker.publisher(
+                    settings.broker.user_successfully_linked_telegram_topic),
+                settings.broker.user_failed_link_telegram_topic: broker.publisher(
+                    settings.broker.user_failed_link_telegram_topic),
             }
         )
 
@@ -201,7 +218,7 @@ class DatabaseProvider(Provider):
             echo=settings.alchemy_settings.echo,
         )
 
-        logger.debug("Successfully connected to Database")
+        logger.info("Successfully connected to Database")
 
         return engine
 

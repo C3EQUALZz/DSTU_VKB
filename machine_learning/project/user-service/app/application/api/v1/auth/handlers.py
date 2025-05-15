@@ -12,7 +12,7 @@ from app.application.api.v1.auth.dependencies import (
     get_access_token_payload,
     get_refresh_token_payload,
 )
-from app.application.api.v1.auth.schemas import TokenResponse
+from app.application.api.v1.auth.schemas import TokenResponse, RegisterUserSchemaRequest
 from app.application.api.v1.users.schemas import UserSchemaResponse
 from app.domain.entities.user import UserEntity
 from app.infrastructure.dtos.cache.security import JTICacheDTO
@@ -20,6 +20,7 @@ from app.infrastructure.repositories.cache.security.base import BaseSecurityCach
 from app.infrastructure.uow.users.base import UsersUnitOfWork
 from app.logic.bootstrap import Bootstrap
 from app.logic.commands.auth import VerifyUserCredentialsCommand
+from app.logic.commands.users import CreateUserCommand
 from app.logic.message_bus import MessageBus
 from app.logic.views.users import UsersViews
 
@@ -34,9 +35,9 @@ oauth2_scheme: Final[OAuth2PasswordBearer] = OAuth2PasswordBearer(tokenUrl="/api
     summary="Endpoint for user logging",
 )
 async def login(
-    form: Annotated[OAuth2PasswordRequestForm, Depends()],
-    bootstrap: FromDishka[Bootstrap],
-    security: FromDishka[AuthX],
+        form: Annotated[OAuth2PasswordRequestForm, Depends()],
+        bootstrap: FromDishka[Bootstrap],
+        security: FromDishka[AuthX],
 ) -> TokenResponse:
     messagebus: MessageBus = await bootstrap.get_messagebus()
     await messagebus.handle(VerifyUserCredentialsCommand(email=form.username, password=form.password))
@@ -49,14 +50,35 @@ async def login(
 
 
 @router.post(
+    "/register/",
+    status_code=status.HTTP_200_OK,
+    summary="Endpoint for user registration",
+)
+async def register(
+        schemas: RegisterUserSchemaRequest,
+        bootstrap: FromDishka[Bootstrap]
+) -> UserSchemaResponse:
+    messagebus: MessageBus = await bootstrap.get_messagebus()
+
+    await messagebus.handle(CreateUserCommand(
+        name=schemas.name,
+        surname=schemas.surname,
+        email=str(schemas.email),
+        password=schemas.password,
+    ))
+
+    return UserSchemaResponse.from_entity(messagebus.command_result)
+
+
+@router.post(
     "/refresh/",
     status_code=status.HTTP_200_OK,
     response_model_exclude_none=True,
     summary="Endpoint for user refreshing",
 )
 async def refresh(
-    security: FromDishka[AuthX],
-    token: TokenPayload = Depends(get_refresh_token_payload),
+        security: FromDishka[AuthX],
+        token: TokenPayload = Depends(get_refresh_token_payload),
 ) -> TokenResponse:
     return TokenResponse(access_token=security.create_access_token(token.sub))
 
@@ -65,11 +87,11 @@ async def refresh(
     "/me/",
     status_code=status.HTTP_200_OK,
     summary="Endpoint for user info",
-    dependencies=[Depends(RoleChecker(allowed_roles=["staffer", "admin", "manager"]))],
+    dependencies=[Depends(RoleChecker(allowed_roles=["admin", "user"]))],
 )
 async def get_me(
-    uow: FromDishka[UsersUnitOfWork],
-    token: TokenPayload = Depends(get_access_token_payload),
+        uow: FromDishka[UsersUnitOfWork],
+        token: TokenPayload = Depends(get_access_token_payload),
 ) -> UserSchemaResponse:
     users_views: UsersViews = UsersViews(uow=uow)
     user: UserEntity = await users_views.get_user_by_id(token.sub)
@@ -80,10 +102,10 @@ async def get_me(
     "/logout/",
     status_code=status.HTTP_200_OK,
     summary="Endpoint for user logout. Deletes his JWT access token",
-    dependencies=[Depends(RoleChecker(allowed_roles=["staffer", "admin", "manager"]))],
+    dependencies=[Depends(RoleChecker(allowed_roles=["admin", "user"]))],
 )
 async def logout(
-    cache: FromDishka[BaseSecurityCacheRepository],
-    token: TokenPayload = Depends(get_access_token_payload),
+        cache: FromDishka[BaseSecurityCacheRepository],
+        token: TokenPayload = Depends(get_access_token_payload),
 ) -> None:
     await cache.set(JTICacheDTO(value=token.jti), ttl=36000)
