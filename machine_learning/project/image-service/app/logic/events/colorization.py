@@ -28,3 +28,8 @@ class StylizeAndSendToChatEvent(AbstractEvent):
     style_height: int
     style_name: str
     chat_id: int
+
+
+@dataclass(frozen=True)
+class ConvertImageInversionAndSendToChatEvent(ConvertColorToGrayScaleAndSendToChatEvent):
+    ...

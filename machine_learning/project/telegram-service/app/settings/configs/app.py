@@ -46,7 +46,6 @@ class HTTPXSettings(CommonSettings):
     user_microservice_url: str = Field(alias="USER_MICROSERVICE_URL")
 
 
-
 class BrokerSettings(CommonSettings):
     host: str = Field(alias="BROKER_HOST")
     port: int = Field(alias="BROKER_PORT_NETWORK")
@@ -134,6 +133,16 @@ class BrokerSettings(CommonSettings):
     user_delete_topic: str = Field(
         default="user-delete",
         alias="BROKER_USER_DELETE"
+    )
+
+    user_successfully_linked_telegram_topic: str = Field(
+        default="user-telegram-link-success",
+        alias="USER_SUCCESSFULLY_LINK_TOPIC"
+    )
+
+    user_failed_link_telegram_topic: str = Field(
+        default="user-telegram-link-failed",
+        alias="USER_FAILED_LINK_TOPIC"
     )
 
     @property

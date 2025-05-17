@@ -7,7 +7,7 @@ from faststream.kafka import KafkaRouter, KafkaMessage
 from app.infrastructure.brokers.consumers.kafka.colorization.schemas import ConvertColorImageSchema, StylizeImageSchema
 from app.logic.bootstrap import Bootstrap
 from app.logic.events.colorization import StylizeAndSendToChatEvent, ConvertGrayScaleToColorAndSendToChatEvent, \
-    ConvertColorToGrayScaleAndSendToChatEvent
+    ConvertColorToGrayScaleAndSendToChatEvent, ConvertImageInversionAndSendToChatEvent
 from app.logic.message_bus import MessageBus
 from app.settings.configs.app import Settings, get_settings
 
@@ -18,7 +18,7 @@ router: Final[KafkaRouter] = KafkaRouter()
 @router.subscriber(
     settings.broker.image_style_topic,
     group_id=settings.broker.image_style_group,
-    auto_commit=False,
+    no_ack=True,
     description="Kafka message handler for style image"
 )
 async def handle_image_style_topic(
@@ -40,7 +40,7 @@ async def handle_image_style_topic(
             style_image_data=schemas.style_image.data,
             style_width=schemas.style_image.width,
             style_height=schemas.style_image.height,
-            style_name=schemas.style_name,
+            style_name=schemas.style_image.name,
             chat_id=schemas.chat_id,
         )
     )
@@ -53,7 +53,7 @@ async def handle_image_style_topic(
 @router.subscriber(
     settings.broker.image_grayscale_to_color_topic,
     group_id=settings.broker.image_grayscale_to_color_group,
-    auto_commit=False,
+    no_ack=True,
     description="Kafka message handler for grayscale image from color"
 )
 async def handle_image_grayscale_to_color_topic(
@@ -84,7 +84,7 @@ async def handle_image_grayscale_to_color_topic(
 @router.subscriber(
     settings.broker.image_color_to_grayscale_topic,
     group_id=settings.broker.image_color_to_grayscale_group,
-    auto_commit=False,
+    no_ack=True,
     description="Kafka message handler for colorization image"
 )
 async def handle_image_color_to_grayscale_topic(
@@ -110,3 +110,33 @@ async def handle_image_color_to_grayscale_topic(
     msg.ack()
 
     logger.info("successfully handled colorization image event from telegram")
+
+
+@router.subscriber(
+    settings.broker.image_inverse_topic,
+    group_id=settings.broker.image_inverse_group,
+    no_ack=True,
+    description="Kafka message handler for inverse image"
+)
+async def handle_image_inverse_topic(
+        schemas: ConvertColorImageSchema,
+        msg: KafkaMessage,
+        logger: Logger,
+        bootstrap: FromDishka[Bootstrap],
+) -> None:
+    logger.info("handling inverse image event from telegram")
+    message_bus: MessageBus = await bootstrap.get_messagebus()
+
+    await message_bus.handle(
+        ConvertImageInversionAndSendToChatEvent(
+            data=schemas.image.data,
+            width=schemas.image.width,
+            height=schemas.image.height,
+            chat_id=schemas.chat_id,
+            name=schemas.image.name,
+        )
+    )
+
+    await msg.ack()
+
+    logger.info("successfully handled inverse image event from telegram")

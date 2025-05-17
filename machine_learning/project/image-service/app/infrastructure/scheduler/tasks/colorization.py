@@ -18,7 +18,10 @@ from app.settings.configs.enums import TaskNamesConfig
 logger: Final[Logger] = logging.getLogger(__name__)
 
 
-@scheduler.task(task_name=TaskNamesConfig.RGB_TO_GRAYSCALE)
+@scheduler.task(
+    task_name=TaskNamesConfig.RGB_TO_GRAYSCALE,
+    retry_on_error=True
+)
 @inject(patch_module=True)
 async def convert_rgb_to_grayscale_task(
         schemas: PhotoForSendToChatSchema,
@@ -29,10 +32,10 @@ async def convert_rgb_to_grayscale_task(
     logger.debug(f"Started completing task convert_rgb_to_grayscale_task....")
 
     image_entity: ImageEntity = ImageEntity(
-        data=schemas.data,
-        width=PositiveNumber(schemas.width),
-        height=PositiveNumber(schemas.height),
-        name=ImageName(schemas.name),
+        data=schemas.image.data,
+        width=PositiveNumber(schemas.image.width),
+        height=PositiveNumber(schemas.image.height),
+        name=ImageName(schemas.image.name),
     )
 
     colorized_photo: ImageEntity = service.convert_rgb_to_grayscale(image_entity)
@@ -42,7 +45,10 @@ async def convert_rgb_to_grayscale_task(
     await broker.send_message(topic=topic_name, value=schemas.from_(colorized_photo, schemas.chat_id))
 
 
-@scheduler.task(task_name=TaskNamesConfig.GRAYSCALE_TO_RGB)
+@scheduler.task(
+    task_name=TaskNamesConfig.GRAYSCALE_TO_RGB,
+    retry_on_error=True
+)
 @inject(patch_module=True)
 async def convert_grayscale_to_rgb_task(
         schemas: PhotoForSendToChatSchema,
@@ -66,7 +72,10 @@ async def convert_grayscale_to_rgb_task(
     await broker.send_message(topic=topic_name, value=schemas.from_(gray_photo, schemas.chat_id))
 
 
-@scheduler.task(task_name=TaskNamesConfig.STYLIZATION)
+@scheduler.task(
+    task_name=TaskNamesConfig.STYLIZATION,
+    retry_on_error=True
+)
 @inject(patch_module=True)
 async def convert_stylization_task(
         schemas: PairOfPhotosForStylizationAndForSendToChatSchema,
@@ -101,6 +110,39 @@ async def convert_stylization_task(
         topic=topic_name,
         value=PhotoForSendToChatSchema.from_(
             styled_image,
-            schemas.original.chat_id,
+            schemas.chat_id,
+        )
+    )
+
+
+@scheduler.task(
+    task_name=TaskNamesConfig.INVERSION,
+    retry_on_error=True
+)
+@inject(patch_module=True)
+async def convert_inversion_task(
+        schemas: PhotoForSendToChatSchema,
+        service: FromDishka[ImageColorizationService],
+        topic_factory: FromDishka[TaskTopicFactory],
+        broker: FromDishka[BaseMessageBroker]
+) -> None:
+    logger.debug("Started completing task convert_inversion_task....")
+
+    image_entity: ImageEntity = ImageEntity(
+        data=schemas.image.data,
+        width=PositiveNumber(schemas.image.width),
+        height=PositiveNumber(schemas.image.height),
+        name=ImageName(schemas.image.name),
+    )
+
+    result: ImageEntity = service.inverse_image(image_entity)
+
+    topic_name: str = topic_factory.get_topic(TaskNamesConfig.INVERSION)
+
+    await broker.send_message(
+        topic=topic_name,
+        value=PhotoForSendToChatSchema.from_(
+            entity=result,
+            chat_id=schemas.chat_id,
         )
     )

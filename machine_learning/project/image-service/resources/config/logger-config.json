@@ -56,7 +56,8 @@
     "class": "logging.handlers.QueueHandler",
     "handlers": [
       "file",
-      "stderr"
+      "stderr",
+      "console"
     ],
     "respect_handler_level": true
   },

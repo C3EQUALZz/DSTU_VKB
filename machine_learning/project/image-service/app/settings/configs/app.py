@@ -133,6 +133,21 @@ class BrokerSettings(CommonSettings):
         alias="BROKER_IMAGE_STYLE_GROUP"
     )
 
+    image_inverse_topic: str = Field(
+        default="image-inverse",
+        alias="BROKER_IMAGE_INVERSE"
+    )
+
+    image_inverse_result_topic: str = Field(
+        default="image-inverse-result",
+        alias="BROKER_IMAGE_INVERSE_RESULT"
+    )
+
+    image_inverse_group: str = Field(
+        default="image-inverse-group",
+        alias="BROKER_IMAGE_INVERSE_GROUP"
+    )
+
     @property
     def url(self) -> str:
         return f"{self.host}:{self.port}"

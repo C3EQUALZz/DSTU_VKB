@@ -3,7 +3,7 @@ from app.domain.values.image import PositiveNumber, ImageName
 from app.infrastructure.scheduler.tasks.schemas import PhotoForSendToChatSchema, \
     PairOfPhotosForStylizationAndForSendToChatSchema
 from app.logic.events.colorization import ConvertColorToGrayScaleAndSendToChatEvent, \
-    ConvertGrayScaleToColorAndSendToChatEvent, StylizeAndSendToChatEvent
+    ConvertGrayScaleToColorAndSendToChatEvent, StylizeAndSendToChatEvent, ConvertImageInversionAndSendToChatEvent
 from app.logic.handlers.colorization.base import ImageColorizationEventHandler
 
 
@@ -66,4 +66,24 @@ class StylizeAndSendToChatEventHandler(
                 style=style_image_entity,
                 chat_id=event.chat_id
             ),
+        )
+
+
+class ConvertImageInversionAndSendToChatEventHandler(
+    ImageColorizationEventHandler[ConvertImageInversionAndSendToChatEvent]
+):
+    async def __call__(self, event: ConvertImageInversionAndSendToChatEvent) -> None:
+        image_entity: ImageEntity = ImageEntity(
+            data=event.data,
+            width=PositiveNumber(event.width),
+            height=PositiveNumber(event.height),
+            name=ImageName(event.name)
+        )
+
+        await self._scheduler.schedule_task(
+            self.__class__,
+            PhotoForSendToChatSchema.from_(
+                entity=image_entity,
+                chat_id=event.chat_id
+            )
         )

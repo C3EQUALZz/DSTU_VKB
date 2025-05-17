@@ -18,7 +18,10 @@ from app.settings.configs.enums import TaskNamesConfig
 logger: Final[Logger] = logging.getLogger(__name__)
 
 
-@scheduler.task(task_name=TaskNamesConfig.CROP)
+@scheduler.task(
+    task_name=TaskNamesConfig.CROP,
+    retry_on_error=True
+)
 @inject(patch_module=True)
 async def convert_crop_task(
         schemas: PhotoNewWidthNewHeightForSendToChatSchema,
@@ -30,8 +33,8 @@ async def convert_crop_task(
 
     image_entity: ImageEntity = ImageEntity(
         data=schemas.image.data,
-        width=PositiveNumber(schemas.image.old_width),
-        height=PositiveNumber(schemas.image.old_height),
+        width=PositiveNumber(schemas.image.width),
+        height=PositiveNumber(schemas.image.height),
         name=ImageName(schemas.image.name),
     )
 
@@ -48,7 +51,10 @@ async def convert_crop_task(
     )
 
 
-@scheduler.task(task_name=TaskNamesConfig.ROTATION)
+@scheduler.task(
+    task_name=TaskNamesConfig.ROTATION,
+    retry_on_error=True
+)
 @inject(patch_module=True)
 async def convert_rotation_task(
         schemas: PhotoForRotationSchema,

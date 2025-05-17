@@ -17,6 +17,10 @@ class TextStateGroup(StatesGroup):
     PROCESSING = State()
 
 
+class StartStateGroup(StatesGroup):
+    WAITING = State()
+
+
 class AppState(StatesGroup):
     # Общие состояния
     IDLE = State()

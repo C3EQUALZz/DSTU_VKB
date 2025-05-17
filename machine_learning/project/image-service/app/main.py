@@ -10,6 +10,7 @@ from faststream import FastStream
 from faststream.kafka import KafkaBroker
 
 from app.application.api.utils.handlers import register_exception_handlers
+from app.application.api.utils.prometheus import setup_prometheus
 from app.infrastructure.scheduler import scheduler
 from app.infrastructure.brokers.base import BaseMessageBroker
 from app.logic.container import get_container
@@ -61,6 +62,7 @@ def create_app() -> FastAPI:
 
     setup_logging()
     register_exception_handlers(app)
+    setup_prometheus(app)
 
     setup_dishka_fastapi(container=container, app=app)
 

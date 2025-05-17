@@ -13,6 +13,7 @@ from dishka import (
     provide,
 )
 from faststream.kafka import KafkaBroker
+from faststream.kafka.prometheus import KafkaPrometheusMiddleware
 
 from app.infrastructure.brokers.base import BaseMessageBroker
 from app.infrastructure.brokers.factory import EventHandlerTopicFactory, TaskTopicFactory
@@ -23,6 +24,8 @@ from app.infrastructure.integrations.crop.base import BaseImageCropConverter
 from app.infrastructure.integrations.crop.impl import Cv2ImageCropConverter
 from app.infrastructure.integrations.gray_to_color.base import BaseImageGrayScaleToColorConverter
 from app.infrastructure.integrations.gray_to_color.impl import KerasImageMessageColorizationModel
+from app.infrastructure.integrations.inversion.base import BaseImageInversionConverter
+from app.infrastructure.integrations.inversion.impl import Cv2ImageInversionConverter
 from app.infrastructure.integrations.rotation.base import BaseImageRotationConverter
 from app.infrastructure.integrations.rotation.impl import Cv2ImageRotationConverter
 from app.infrastructure.integrations.stylization.base import BaseImageStylizationConverter
@@ -37,12 +40,13 @@ from app.logic.commands.colorization import ConvertColorToGrayScaleCommand, Conv
 from app.logic.commands.transform import CropImageCommand, RotateImageCommand
 from app.logic.event_buffer import EventBuffer
 from app.logic.events.colorization import ConvertColorToGrayScaleAndSendToChatEvent, \
-    ConvertGrayScaleToColorAndSendToChatEvent, StylizeAndSendToChatEvent
+    ConvertGrayScaleToColorAndSendToChatEvent, StylizeAndSendToChatEvent, ConvertImageInversionAndSendToChatEvent
 from app.logic.events.transform import CropImageAndSendToChatEvent, RotateImageAndSendToChatEvent
 from app.logic.handlers.colorization.commands import ConvertColorToGrayScaleCommandHandler, \
     ConvertGrayScaleToColorCommandHandler, StylizeCommandHandler
 from app.logic.handlers.colorization.events import ConvertColorToGrayScaleAndSendToChatEventHandler, \
-    ConvertGrayScaleToColorAndSendToChatEventHandler, StylizeAndSendToChatEventHandler
+    ConvertGrayScaleToColorAndSendToChatEventHandler, StylizeAndSendToChatEventHandler, \
+    ConvertImageInversionAndSendToChatEventHandler
 from app.logic.handlers.transform.commands import CropImageCommandHandler, RotateImageCommandHandler
 from app.logic.handlers.transform.events import CropImageAndSendToChatEventHandler, RotateImageAndSendToChatEventHandler
 from app.logic.types.handlers import (
@@ -56,6 +60,7 @@ from app.settings.configs.app import (
 from app.settings.configs.enums import TaskNamesConfig
 from app.infrastructure.brokers.consumers.kafka.colorization.handlers import router as colorization_kafka_router
 from app.infrastructure.brokers.consumers.kafka.transformation.handlers import router as transformation_kafka_router
+from prometheus_client import REGISTRY
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 
@@ -90,6 +95,7 @@ class HandlerProvider(Provider):
                 StylizeAndSendToChatEvent: [StylizeAndSendToChatEventHandler],
                 CropImageAndSendToChatEvent: [CropImageAndSendToChatEventHandler],
                 RotateImageAndSendToChatEvent: [RotateImageAndSendToChatEventHandler],
+                ConvertImageInversionAndSendToChatEvent: [ConvertImageInversionAndSendToChatEventHandler]
             },
         )
 
@@ -109,7 +115,8 @@ class SchedulerProvider(Provider):
             ConvertGrayScaleToColorAndSendToChatEventHandler: colorize_tasks_module.convert_grayscale_to_rgb_task,
             StylizeAndSendToChatEventHandler: colorize_tasks_module.convert_stylization_task,
             CropImageAndSendToChatEventHandler: transformation_tasks_module.convert_crop_task,
-            RotateImageAndSendToChatEventHandler: transformation_tasks_module.convert_rotation_task
+            RotateImageAndSendToChatEventHandler: transformation_tasks_module.convert_rotation_task,
+            ConvertImageInversionAndSendToChatEventHandler: colorize_tasks_module.convert_inversion_task
         })
 
     @provide(scope=Scope.APP)
@@ -120,7 +127,8 @@ class SchedulerProvider(Provider):
                 TaskNamesConfig.GRAYSCALE_TO_RGB: settings.broker.image_grayscale_to_color_result_topic,
                 TaskNamesConfig.RGB_TO_GRAYSCALE: settings.broker.image_color_to_grayscale_result_topic,
                 TaskNamesConfig.CROP: settings.broker.image_crop_result_topic,
-                TaskNamesConfig.ROTATION: settings.broker.image_rotate_result_topic
+                TaskNamesConfig.ROTATION: settings.broker.image_rotate_result_topic,
+                TaskNamesConfig.INVERSION: settings.broker.image_inverse_result_topic,
             }
         )
 
@@ -143,16 +151,22 @@ class ImageColorizationProvider(Provider):
         )
 
     @provide(scope=Scope.APP)
+    async def get_inversion_converter(self, settings: Settings) -> BaseImageInversionConverter:
+        return Cv2ImageInversionConverter()
+
+    @provide(scope=Scope.APP)
     async def get_image_colorization_service(
             self,
             color_to_gray_converter: BaseImageColorToCrayScaleConverter,
             gray_to_color_converter: BaseImageGrayScaleToColorConverter,
             stylization_converter: BaseImageStylizationConverter,
+            inversion_converter: BaseImageInversionConverter,
     ) -> ImageColorizationService:
         return ImageColorizationService(
             color_to_gray_converter=color_to_gray_converter,
             gray_to_color_converter=gray_to_color_converter,
             stylization_converter=stylization_converter,
+            inversion_converter=inversion_converter,
         )
 
 
@@ -172,7 +186,11 @@ class BrokerProvider(Provider):
         broker: KafkaBroker = KafkaBroker(
             settings.broker.url,
             logger=logger,
+            middlewares=(
+                KafkaPrometheusMiddleware(registry=REGISTRY, app_name="image-service"),
+            )
         )
+
         broker.include_router(colorization_kafka_router)
         broker.include_router(transformation_kafka_router)
         return broker

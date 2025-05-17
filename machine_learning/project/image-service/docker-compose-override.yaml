@@ -18,6 +18,7 @@ services:
     networks:
       - image-service
       - microservices-network
+      - grafana-network
 
   image-service-taskiq-worker:
     <<: *image-service-app-backend
@@ -58,4 +59,6 @@ networks:
   image-service:
     driver: bridge
   microservices-network:
+    external: true
+  grafana-network:
     external: true

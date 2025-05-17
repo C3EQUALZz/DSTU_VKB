@@ -20,3 +20,9 @@ class UserUpdateEvent(UserCreateEvent):
 @dataclass(frozen=True)
 class UserDeleteEvent(AbstractEvent):
     user_id: int
+
+
+@dataclass(frozen=True)
+class SendMessageSuccessLinkOrNotEvent(AbstractEvent):
+    telegram_id: int
+    message: str
