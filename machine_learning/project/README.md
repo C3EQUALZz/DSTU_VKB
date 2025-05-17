@@ -1,77 +1,53 @@
 # Общие сведения
 
-<b>«library-console-app»</b> представляет из себя пример реализации тестового задания от компании <b>«Effective Mobile»</b>.
+Проект по предмету: `Машинное обучение и искусственый интеллект`
 
 ## Задание
 
 ### Описание
 
-> Необходимо разработать консольное приложение для управления библиотекой книг. Приложение должно позволять добавлять, удалять, искать и отображать книги. Каждая книга должна содержать следующие поля:
-> - `id` (уникальный идентификатор, генерируется автоматически)
-> - `title` (название книги)
-> - `author` (автор книги)
-> - `year` (год издания)
-> - `status` (статус книги: “в наличии”, “выдана”)
-
-### Требования
-
-> - Добавление книги: Пользователь вводит `title`, `author` и `year`, после чего книга добавляется в библиотеку
-> с уникальным `id` и статусом “в наличии”.
-> - Удаление книги: Пользователь вводит `id` книги, которую нужно удалить.
-> - Поиск книги: Пользователь может искать книги по `title`, `author` или `year`.
-> - Отображение всех книг: Приложение выводит список всех книг с их `id`, `title`, `author`, `year` и `status`.
-> - Изменение статуса книги: Пользователь вводит `id` книги и новый статус (“в наличии” или “выдана”).
-
-### Дополнительные требования
-
-> - Реализовать хранение данных в текстовом или json формате.
-> - Обеспечить корректную обработку ошибок (например, попытка удалить несуществующую книгу).
-> - Написать функции для каждой операции (добавление, удаление, поиск, отображение, изменение статуса).
-> - Не использовать сторонние библиотеки.
-
-### Критерии оценки
-
-> - Корректность и полнота реализации функционала.
-> - Чистота и читаемость кода.
-> - Обработка ошибок и исключений.
-> - Удобство использования интерфейса командной строки.
-> - Структура проекта.
-
-### Будет плюсом
-
-> - Аннотации: Аннотирование функций и переменных в коде. 
-> - Документация: Наличие документации к функциям и основным блокам кода. 
-> - Описание функционала: Подробное описание функционала приложения в README файле. 
-> - Тестирование. 
-> - Объектно-ориентированный подход программирования.
+Разработать телеграмм бота `"Помогатор"`, который взаимодействует с нейронными сетями, которые вы должны обучить сами и использовать.  
 
 ## Принцип реализации
 
 В проекте используется архитектурный подход [`DDD`](https://en.wikipedia.org/wiki/Domain-driven_design) и [`EDD`](https://en.wikipedia.org/wiki/Event-driven_programming).
-За счет чего данное приложение можно с легкостью интегрировать с [`FastAPI`](https://fastapi.tiangolo.com/), [`Flask`](https://flask.palletsprojects.com/en/stable/), так как логика кода построена на ванильном [`Python 3.12`](https://www.python.org/doc/).
+Проект организован по принципу микросервисом, где разделением является - доменная область, в которой применяется микросервис. 
 
 # Зависимости
 
 В проекте используются следующие зависимости: 
 - [`poetry`](https://python-poetry.org/)
-- [`pytest`](https://docs.pytest.org/en/stable/)
 - [`mypy`](https://www.mypy-lang.org/)
 - [`ruff`](https://docs.astral.sh/ruff/linter/)
 - [`isort`](https://pycqa.github.io/isort/)
-- [`faker`](https://faker.readthedocs.io/en/master/)
+- [`faststream[aiokafka]`](https://faststream.airt.ai/latest/)
+- [`fastapi`](https://fastapi.tiangolo.com/)
+- [`prometheus-fastapi-instrumentator`](https://github.com/trallnag/prometheus-fastapi-instrumentator)
+- [`concurrent-log-handler`](https://github.com/Preston-Landers/concurrent-log-handler)
+- [`dishka`](https://dishka.readthedocs.io/en/stable/)
+- [`taskiq`](https://taskiq-python.github.io/)
+- [`taskiq-redis`](https://github.com/taskiq-python/taskiq-redis)
+- [`aiogram`](https://aiogram.dev/)
+- [`aiogram-i18n`](https://aiogram-i18n.readthedocs.io/en/latest/)
+- [`tenserflow`](https://www.tensorflow.org/?hl=ru)
+- [`taskiq-aiogram`](https://pypi.org/project/taskiq-aiogram/)
+- [`sqlalchemy[asyncpg]`](https://www.sqlalchemy.org/)
+- [`opencv`](https://opencv.org/)
+- [`formatter-chatgpt-telegram`](https://github.com/Latand/formatter-chatgpt-telegram)
+- [`pydantic`](https://docs.pydantic.dev/latest/)
   
 > [!IMPORTANT]
-> Все зависимости можно найти в [`pyproject.toml`](pyproject.toml)
+> Все зависимости можно найти в `pyproject.toml` каждого микросервиса
 
 # Структура проекта
 
 Сама логика приложения находится в `app`. Внутри данной директории есть 5 модулей.
 
-- [`application`](app/application)
-- [`domain`](app/domain)
-- [`infrastructure`](app/infrastructure)
-- [`logic`](app/logic)
-- [`settings`](app/settings)
+- `application`
+- `domain`
+- `infrastructure`
+- `logic`
+- `settings`
 
 Рассмотрим каждый модуль по отдельности зачем он нужен за что отвечает. 
 
@@ -87,8 +63,8 @@
 
 Там Вы найдете 2 директории, которые Вас должны заинтересовать `entities` и `values`. 
 
-- [`entities`](https://blog.jannikwempe.com/domain-driven-design-entities-value-objects) - это и есть наши домены, про которые я говорил выше. Пример домена книги можете увидеть [здесь](app/domain/entities/books.py)
-- [`values`](https://blog.jannikwempe.com/domain-driven-design-entities-value-objects) - здесь находятся, так называемые, `value objects`. Грубо говоря, это характеристики нашего домена, т.е поля (атрибуты) `domain`. Почему делается так? Все очень просто: для валидации данных. Пример value objects для книги [здесь](https://github.com/C3EQUALZz/library-console-app/blob/master/app/domain/values/books.py)
+- [`entities`](https://blog.jannikwempe.com/domain-driven-design-entities-value-objects) - это и есть наши домены, про которые я говорил выше.
+- [`values`](https://blog.jannikwempe.com/domain-driven-design-entities-value-objects) - здесь находятся, так называемые, `value objects`. Грубо говоря, это характеристики нашего домена, т.е поля (атрибуты) `domain`. Почему делается так? Все очень просто: для валидации данных.
 
 > [!NOTE]
 > Если Вы хотите добавить новый `domain`, то создайте `Python` файл, который описывает его. Например, `peoples.py`. Ваш класс должен наследоваться от [`BaseEntity`](app/domain/entities/base.py). Пример прилагаю ниже: 
@@ -105,7 +81,7 @@ class Human:
 ```
 
 > [!NOTE]
-> Если Вы хотите добавить новый `value object`, то создайте `Python` файл, который описывает его. Например, `surname.py`. Ваш класс должен наследоваться от [`BaseValueObject`](app/domain/values/base.py). Пример прилагаю ниже:
+> Если Вы хотите добавить новый `value object`, то создайте `Python` файл, который описывает его. Например, `surname.py`. Ваш класс должен наследоваться от `BaseValueObject`. Пример прилагаю ниже:
 
 ```python
 @dataclass(frozen=True)
@@ -160,28 +136,25 @@ class NickName(BaseValueObject[str]):
 #### `Repository`
 
 Здесь реализована логика работы с базой данных на уровне объектов. Репозиторий управляет коллекцией доменов (моделей).
-В случае данного тестового задания написана одна имплементация для работы с [книгами относительно JSON](app/infrastructure/repositories/books/jsonr.py).
 
 Как можно написать свой репозиторий? Все очень просто: Вам нужно унаследоваться от интерфейса, который описывает ваш домен.
-Пример интерфейса для репозитория управления с книгами можете увидеть [здесь](app/infrastructure/repositories/books/base.py).
 
-Например, я приведу реализацию `SQLAlchemyBookRepository`, где используется библиотека [`SQLAlchemy`](https://www.sqlalchemy.org/).
-Создайте [здесь] файл `alchemy.py`, вписав код, который ниже. 
+Например, я приведу реализацию `SQLAlchemyUserRepository`, где используется библиотека [`SQLAlchemy`](https://www.sqlalchemy.org/).
 
 ```python
-class SQLAlchemyUsersRepository(SQLAlchemyAbstractRepository[Book], BooksRepository):
+class SQLAlchemyUsersRepository(SQLAlchemyAbstractRepository[UserEntity], UsersRepository):
 
-    def get(self, id: int) -> Optional[Book]:
-        result: Result = self._session.execute(select(Book).filter_by(id=id))
+    def get(self, id: int) -> Optional[UserEntity]:
+        result: Result = self._session.execute(select(UserEntity).filter_by(id=id))
         return result.scalar_one_or_none()
 
-    def get_by_title(self, title: str) -> Optional[Book]:
-        result: Result = self._session.execute(select(Book).filter_by(title=title))
+    def get_by_title(self, title: str) -> Optional[UserEntity]:
+        result: Result = self._session.execute(select(UserEntity).filter_by(title=title))
         return result.scalar_one_or_none()
 
-    def add(self, model: Book) -> Book:
+    def add(self, model: UserEntity) -> UserEntity:
         result: Result = self._session.execute(
-            insert(Book).values(**await model.to_dict(exclude={'oid'})).returning(Book)
+            insert(UserEntity).values(**await model.to_dict(exclude={'oid'})).returning(UserEntity)
         )
 
         return result.scalar_one()
@@ -190,12 +163,8 @@ class SQLAlchemyUsersRepository(SQLAlchemyAbstractRepository[Book], BooksReposit
 #### `Unit Of Work`
 
 Название паттерна `Unit of Work` намекает на его задачу управлять атомарностью операций. 
-В моем случае относительного тестового у меня есть [`JsonAbstractUnitOfWork`](app/infrastructure/uow/books/jsonr.py), который описывает логику работы `Unit Of Work` для сохранения в `json`.
 
-> [!IMPORTANT]
-> Автор осведомлен об отсутствии транзакций для сохранения в файлы `json`, `csv`. Такой подход был выбран с той целью, чтобы можно было с легкостью заменить на `SQL` БД в будущем.
-
-Приведу пример того, как написать свой `Unit of Work` для книг, используя [`SQLAlchemy`](https://www.sqlalchemy.org/). Создайте файл в [данной директории](app/infrastructure/uow/books), назвав его, например, `alchemy.py`
+Приведу пример того, как написать свой `Unit of Work` для книг, используя [`SQLAlchemy`](https://www.sqlalchemy.org/).
 
 ```python
 class SQLAlchemyAbstractUnitOfWork(AbstractUnitOfWork):
@@ -224,11 +193,11 @@ class SQLAlchemyAbstractUnitOfWork(AbstractUnitOfWork):
         self._session.rollback()
 
 
-class SQLAlchemyBooksUnitOfWork(SQLAlchemyAbstractUnitOfWork, BooksUnitOfWork):
+class SQLAlchemyUsersUnitOfWork(SQLAlchemyAbstractUnitOfWork, UsersUnitOfWork):
 
     def __enter__(self) -> Self:
         uow = super().__enter__()
-        self.books: BooksRepository = SQLAlchemyBooksRepository(session=self._session)
+        self.users: UsersRepository = SQLAlchemyUsersRepository(session=self._session)
         return uow
 ```
 
@@ -241,17 +210,17 @@ class SQLAlchemyBooksUnitOfWork(SQLAlchemyAbstractUnitOfWork, BooksUnitOfWork):
 Приведу пример того, как написать новый сервис, если появилась сущность (домен) `Human`
 
 ```python
-class PeopleService:
+class UsersService:
     """
     Service layer core according to DDD, which using a unit of work, will perform operations on the domain model.
     """
 
-    def __init__(self, uow: PeopleUnitOfWork) -> None:
+    def __init__(self, uow: UsersUnitOfWork) -> None:
         self._uow = uow
 
-    def add(self, book: Human) -> Human:
+    def add(self, user: UserEntity) -> UserEntity:
         with self._uow as uow:
-            new_human = uow.people.add(model=human)
+            new_human = uow.people.add(model=user)
             uow.commit()
             return new_human
 
@@ -297,7 +266,7 @@ class RegisterHumanCommand(AbstractCommand):
 
 CT = TypeVar("CT", bound=AbstractCommand)
 
-class HumanCommandHandler(AbstractCommandHandler[CT], ABC):
+class UsersCommandHandler(AbstractCommandHandler[CT], ABC):
     """
     Abstract command handler class, from which every users command handler should be inherited from.
     """
@@ -305,7 +274,7 @@ class HumanCommandHandler(AbstractCommandHandler[CT], ABC):
     def __init__(self, uow: PeopleUnitOfWork) -> None:
         self._uow = uow
 
-class RegisterHumanCommandHandler(HumanCommandHandler[RegisterHumanCommand]):
+class RegisterHumanCommandHandler(UsersCommandHandler[RegisterHumanCommand]):
 
     def __call__(self, command: RegisterHumanCommand) -> Human:
         """
@@ -323,7 +292,7 @@ class RegisterHumanCommandHandler(HumanCommandHandler[RegisterHumanCommand]):
         return people_service.register(human=human)
 ```
 
-Но встает вопрос. Как это все связать, чтобы все заработало? Вам нужно добавить вот [здесь](app/logic/handlers/__init__.py) в словарике команду и её перехватчик.
+Но встает вопрос. Как это все связать, чтобы все заработало? Вам нужно добавить в контейнере в словарике команду и её перехватчик.
 Например, чтобы добавить команду и наш хендлер, нужно в конце добавить значение `RegisterHumanCommand: RegisterHumanCommandHandler`. В результате у Вас должен получится вот такой словарик. 
 
 ```python
@@ -372,81 +341,19 @@ class Settings(BaseSettings):
 
 # Установка проекта и запуск
 
-## Запуск без `Docker`
+## Запуск
 
-Предполагается, что в Вашей системе уже установлены `git`, `Python 3.12` (и позднее).
+Команда для запуска представлена ниже: 
 
-Если у Вас глобально в системе не установлен `poetry`, то проделайте следующие действия: 
-
-```bash
-git clone https://github.com/C3EQUALZz/library-console-app.git
-pip install poetry
-poetry install
-```
-
-В ином случае:
+> [!IMPORTANT]
+> - Предполагается, что в Вашей системе уже установлены `git`, `Python 3.12`, `Docker`, `Make`.
+> - Для каждой директории в текущем проекте, где `README.md` создайте файл `.env`, как показано в примере `.env.example`.
+> - В нужных проектах создайте нейросети, скачав их на свой ПК или же запустив их тренировку. Более подробно смотрите в каждой директории, где есть постфикс `-service`.
 
 ```bash
-git clone https://github.com/C3EQUALZz/library-console-app.git
-poetry install
+git clone https://github.com/C3EQUALZz/DSTU_VKB
+cd machine_learning/project
+make all
 ```
 
-Точка запуска приложения находится [`здесь`](app/main.py). Теперь для запуска Вам остается нажать вашу любимую кнопочку в `IDE` или в редакторе кода. 
-
-## Запуск с `Docker`
-
-Создаем и входим в интерактивный режим внутри контейнера. 
-
-```bash
-docker compose up -d
-docker exec -it app /bin/bash
-```
-
-Теперь Вам остается написать в консоли:
-
-```bash
-python3 app/main.py
-```
-
-# Как вообще работать с приложением?
-
-При терминальном запуске у Вас появится выбор действий. 
-
-- `Add book`
-- `Delete book`
-- `Find book`
-- `Show all books`
-- `Update book`
-- `Exit`
-
-## `Add book`
-
-Соответствует операции `Create` из [`CRUD`](https://ru.wikipedia.org/wiki/CRUD). 
-Здесь Вы вписываете книгу, которую хотите добавить.
-Например, пусть будет у нас будет такой набор данных `author = Abraham Linkoln`, `name = Authority`, `year = 1999`.
-
-## `Delete book`
-
-Соответствует операции `Delete` из [`CRUD`](https://ru.wikipedia.org/wiki/CRUD).
-Здесь Вы вписываете книгу, которую хотите удалить. 
-Посмотрите в `database.json` `oid` интересующей Вас книги, после этого можете удалить.  
-
-## `Update book`
-
-Соответствует операции `Update` из [`CRUD`](https://ru.wikipedia.org/wiki/CRUD).
-Здесь Вы описываете книгу, которую хотите изменить. 
-Почему обновляются полностью все поля? Все очень просто, так принято, как я видел в книгах.
-
-## `Find book`
-
-Соответствует операции `Read` из [`CRUD`](https://ru.wikipedia.org/wiki/CRUD).
-Здесь у Вас идет поиск книги по `id`. 
-
-## `Show all books`
-
-Соответствует операции `Read` из [`CRUD`](https://ru.wikipedia.org/wiki/CRUD).
-Здесь возвращается список всех книг в библиотеке. 
-
-## `Exit`
-
-Окончание работы программы. 
+После того, как вы настроили, то можете общаться с вашим телеграмм ботом. Приятного использования! 
