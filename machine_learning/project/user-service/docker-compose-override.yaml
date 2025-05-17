@@ -17,6 +17,7 @@ services:
     networks:
       - user-service
       - microservices-network
+      - grafana-network
 
   postgres-app-users:
     container_name: postgres-app-users
@@ -48,4 +49,6 @@ networks:
   user-service:
     driver: bridge
   microservices-network:
+    external: true
+  grafana-network:
     external: true

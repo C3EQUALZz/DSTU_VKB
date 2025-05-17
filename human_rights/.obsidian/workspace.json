@@ -1,0 +1,248 @@
+{
+  "main": {
+    "id": "8387adadc0e277bc",
+    "type": "split",
+    "children": [
+      {
+        "id": "e6e1c2012cefee6a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f526f85bbd462d5f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Сущность, понятие и классификация прав человека 07.02.2025.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Сущность, понятие и классификация прав человека 07.02.2025"
+            }
+          },
+          {
+            "id": "a8ffa34f1e99a46c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Формы реализации и защиты прав человека 21.03.2025.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Формы реализации и защиты прав человека 21.03.2025"
+            }
+          },
+          {
+            "id": "84d9196558d21548",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Государственные механизмы защиты прав человека в России 04.04.2025.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Государственные механизмы защиты прав человека в России 04.04.2025"
+            }
+          },
+          {
+            "id": "f767251cc8598885",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Особенности деятельности органов внутренних дел по обеспечению прав и свобод человека и гражданина в условиях введения особых правовых режимов 02.05.2025.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Особенности деятельности органов внутренних дел по обеспечению прав и свобод человека и гражданина в условиях введения особых правовых режимов 02.05.2025"
+            }
+          },
+          {
+            "id": "9f8991ae090a721f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Формы реализации и защиты прав человека 21.03.2025.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Формы реализации и защиты прав человека 21.03.2025"
+            }
+          },
+          {
+            "id": "c8045aa458480179",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Государственные механизмы защиты прав человека в России 04.04.2025.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Государственные механизмы защиты прав человека в России 04.04.2025"
+            }
+          }
+        ],
+        "currentTab": 4
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "730e0842bae78c9e",
+    "type": "split",
+    "children": [
+      {
+        "id": "16001cb103537c04",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "86016c9d1582b86a",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Файловый менеджер"
+            }
+          },
+          {
+            "id": "be7adc46b8b3a197",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Поиск"
+            }
+          },
+          {
+            "id": "550489b3bb080979",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Закладки"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "9ab4bb070ef95d6f",
+    "type": "split",
+    "children": [
+      {
+        "id": "afd6f9fc7c9de0ea",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6b986b30415fe5ac",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Сущность, понятие и классификация прав человека 07.02.2025.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Обратные ссылки для Сущность, понятие и классификация прав человека 07.02.2025"
+            }
+          },
+          {
+            "id": "3acbb9e76b10c58e",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Сущность, понятие и классификация прав человека 07.02.2025.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Исходящие ссылки из Сущность, понятие и классификация прав человека 07.02.2025"
+            }
+          },
+          {
+            "id": "f65a1f42507ca435",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              },
+              "icon": "lucide-tags",
+              "title": "Теги"
+            }
+          },
+          {
+            "id": "f1677be8571cbcae",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Сущность, понятие и классификация прав человека 07.02.2025.md"
+              },
+              "icon": "lucide-list",
+              "title": "Структура Сущность, понятие и классификация прав человека 07.02.2025"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Меню быстрого перехода": false,
+      "graph:Граф": false,
+      "canvas:Создать новый холст": false,
+      "daily-notes:Сегодняшняя заметка": false,
+      "templates:Вставить шаблон": false,
+      "command-palette:Открыть палитру команд": false
+    }
+  },
+  "active": "9f8991ae090a721f",
+  "lastOpenFiles": [
+    "Сущность, понятие и классификация прав человека 07.02.2025.md",
+    "Политические права граждан и их реализация 07.03.2025.md",
+    "Конституционный суд РФ и Европейский суд по правам человека. Опыт взаимодействия в деле защиты прав человека 18.04.2025.md",
+    "Исторические этапы становления системы защиты прав и свобод человека 21.02.2025.md",
+    "Государственные механизмы защиты прав человека в России 04.04.2025.md",
+    "Особенности деятельности органов внутренних дел по обеспечению прав и свобод человека и гражданина в условиях введения особых правовых режимов 02.05.2025.md",
+    "Формы реализации и защиты прав человека 21.03.2025.md",
+    "Права человека.md"
+  ]
+}
