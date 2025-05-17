@@ -1,0 +1,57 @@
+services:
+  promtail:
+    image: grafana/promtail:main-0f01f07
+    container_name: promtail
+    ports:
+      - "9080:9080"
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./promtail.yaml:/etc/promtail/config.yml
+    command: -config.file=/etc/promtail/config.yml
+    privileged: true
+    networks:
+      - grafana-network
+
+  loki:
+    image: grafana/loki:main-0f01f07
+    container_name: loki
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki.yaml:/etc/loki/local-config.yaml
+    networks:
+      - grafana-network
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheusdata:/prometheus
+    networks:
+      - grafana-network
+
+  grafana:
+    image: grafana/grafana:12.0.0
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ./grafana/datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
+      - grafanadata:/var/lib/grafana
+    networks:
+      - grafana-network
+
+volumes:
+  grafanadata:
+  prometheusdata:
+
+networks:
+  grafana-network:
+    external: true
