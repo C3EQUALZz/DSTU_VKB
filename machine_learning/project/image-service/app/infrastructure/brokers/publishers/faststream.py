@@ -1,6 +1,5 @@
 import logging
-
-from typing import Mapping, override
+from typing import Mapping, override, Final
 
 from faststream.kafka import KafkaBroker
 from faststream.kafka.publisher.asyncapi import AsyncAPIBatchPublisher, AsyncAPIDefaultPublisher
@@ -9,7 +8,8 @@ from pydantic import BaseModel
 from app.exceptions.infrastructure import UnknownTopicError
 from app.infrastructure.brokers.base import BaseMessageBroker
 
-logger = logging.getLogger(__name__)
+logger: Final[logging.Logger] = logging.getLogger(__name__)
+
 
 class FastStreamKafkaMessageBroker(BaseMessageBroker):
     def __init__(

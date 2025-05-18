@@ -7,9 +7,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: [ "sh", "-c", "gunicorn --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000 --workers 4 --timeout 120 --log-level info app.main:create_app" ]
+    command: [ "sh", "-c", "gunicorn app.main:create_app --config python:app.settings.configs.server" ]
     ports:
-      - "${API_PORT}:8000"
+      - "${API_PORT}:${API_PORT}"
     env_file:
       - .env
     depends_on:
@@ -31,7 +31,7 @@ services:
       app.infrastructure.scheduler.tasks.transformation
     ]
     ports:
-      - "1000:8000"
+      - "${WORKER_PORT}:${WORKER_PORT}"
 
   image-service-redis:
     container_name: image-service-redis

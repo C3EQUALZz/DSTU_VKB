@@ -14,8 +14,11 @@ from dishka import (
 )
 from faststream.kafka import KafkaBroker
 from faststream.kafka.prometheus import KafkaPrometheusMiddleware
+from prometheus_client import CollectorRegistry, multiprocess
 
 from app.infrastructure.brokers.base import BaseMessageBroker
+from app.infrastructure.brokers.consumers.kafka.colorization.handlers import router as colorization_kafka_router
+from app.infrastructure.brokers.consumers.kafka.transformation.handlers import router as transformation_kafka_router
 from app.infrastructure.brokers.factory import EventHandlerTopicFactory, TaskTopicFactory
 from app.infrastructure.brokers.publishers.faststream import FastStreamKafkaMessageBroker
 from app.infrastructure.integrations.color_to_gray.base import BaseImageColorToCrayScaleConverter
@@ -30,6 +33,8 @@ from app.infrastructure.integrations.rotation.base import BaseImageRotationConve
 from app.infrastructure.integrations.rotation.impl import Cv2ImageRotationConverter
 from app.infrastructure.integrations.stylization.base import BaseImageStylizationConverter
 from app.infrastructure.integrations.stylization.impl import KerasImageStylizationConverter
+from app.infrastructure.metrics.base import BaseMetricsClient
+from app.infrastructure.metrics.prometheus import PrometheusMetricsClient
 from app.infrastructure.scheduler.base import BaseScheduler
 from app.infrastructure.scheduler.task_iq import TaskIqScheduler
 from app.infrastructure.services.colorization import ImageColorizationService
@@ -58,9 +63,6 @@ from app.settings.configs.app import (
     get_settings,
 )
 from app.settings.configs.enums import TaskNamesConfig
-from app.infrastructure.brokers.consumers.kafka.colorization.handlers import router as colorization_kafka_router
-from app.infrastructure.brokers.consumers.kafka.transformation.handlers import router as transformation_kafka_router
-from prometheus_client import REGISTRY
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 
@@ -170,6 +172,20 @@ class ImageColorizationProvider(Provider):
         )
 
 
+class MonitoringProvider(Provider):
+    settings = from_context(provides=Settings, scope=Scope.APP)
+
+    @provide(scope=Scope.APP)
+    async def get_collector_registry(self) -> CollectorRegistry:
+        registry: CollectorRegistry = CollectorRegistry()
+        multiprocess.MultiProcessCollector(registry)
+        return registry
+
+    @provide(scope=Scope.APP)
+    async def get_prometheus_metrics_client(self, registry: CollectorRegistry) -> BaseMetricsClient:
+        return PrometheusMetricsClient(registry=registry)
+
+
 class BrokerProvider(Provider):
     settings = from_context(provides=Settings, scope=Scope.APP)
 
@@ -182,12 +198,15 @@ class BrokerProvider(Provider):
         )
 
     @provide(scope=Scope.APP)
-    async def get_faststream_broker(self, settings: Settings) -> KafkaBroker:
+    async def get_faststream_broker(self, settings: Settings, registry: CollectorRegistry) -> KafkaBroker:
         broker: KafkaBroker = KafkaBroker(
             settings.broker.url,
             logger=logger,
             middlewares=(
-                KafkaPrometheusMiddleware(registry=REGISTRY, app_name="image-service"),
+                KafkaPrometheusMiddleware(
+                    registry=registry,
+                    app_name="faststream-image-service",
+                ),
             )
         )
 
@@ -278,5 +297,6 @@ def get_container() -> AsyncContainer:
         ImageColorizationProvider(),
         ImageTransformProvider(),
         SchedulerProvider(),
+        MonitoringProvider(),
         context={Settings: get_settings()}
     )

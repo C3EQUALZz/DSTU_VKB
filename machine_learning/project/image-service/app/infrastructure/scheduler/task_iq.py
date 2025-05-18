@@ -1,13 +1,16 @@
+import logging
+from typing import Final
 from typing import ParamSpec, TypeVar, Mapping, override, Awaitable
 
 from pydantic import BaseModel
 from taskiq import AsyncTaskiqDecoratedTask
-from typing import Final
+
 from app.exceptions.infrastructure import UnregisteredJobError
 from app.infrastructure.scheduler.base import BaseScheduler
 from app.logic.handlers.base import AbstractEventHandler
 from app.logic.types.handlers import ET
 
+logger: Final[logging.Logger] = logging.getLogger(__name__)
 _FuncParams = ParamSpec("_FuncParams")
 _ReturnType = TypeVar("_ReturnType")
 _EventHandlerTaskIqMapping = Mapping[
@@ -28,3 +31,18 @@ class TaskIqScheduler(BaseScheduler):
             raise UnregisteredJobError(message=f"Task '{name.__class__.__name__}' is not registered")
 
         return await result.kiq(schemas)
+
+    @override
+    async def start(self) -> None:
+        from app.infrastructure.scheduler import scheduler
+
+        if not scheduler.is_worker_process:
+            logger.info("Setting up taskiq")
+            await scheduler.startup()
+
+    @override
+    async def stop(self) -> None:
+        from app.infrastructure.scheduler import scheduler
+
+        if not scheduler.is_worker_process:
+            await scheduler.shutdown()

@@ -1,6 +1,9 @@
+import multiprocessing
+import pathlib
 from abc import ABC
 from functools import lru_cache
 from pathlib import Path
+from typing import Optional
 
 from pydantic import Field, RedisDsn, field_validator
 from pydantic_settings import (
@@ -153,6 +156,30 @@ class BrokerSettings(CommonSettings):
         return f"{self.host}:{self.port}"
 
 
+class SchedulerSettings(CommonSettings):
+    host: str = Field(alias="WORKER_HOST")
+    port: int = Field(alias="WORKER_PORT")
+
+
+class ServerSettings(CommonSettings):
+    multiprocess_dir: Optional[Path] = Field(alias="PROMETHEUS_MULTIPROC_DIR", default=None)
+    workers: int = Field(alias="SERVER_WORKERS", default=multiprocessing.cpu_count() * 2 + 1)
+    max_requests: int = Field(alias="SERVER_MAX_REQUESTS", default=1000)
+    max_jitter: int = Field(alias="SERVER_MAX_JITTER", default=50)
+    bind: str = Field(alias="SERVER_BIND")
+    timeout: int = Field(alias="SERVER_TIMEOUT")
+    worker_class: str = Field(alias="SERVER_WORKER_CLASS")
+    log_level: str = Field(alias="SERVER_LOG_LEVEL")
+    log_file: str = Field(alias="SERVER_LOG_FILE")
+
+
+class CORSSettings(CommonSettings):
+    allow_origins: list[str] = Field(alias="CORS_ALLOW_ORIGINS")
+    allow_headers: list[str] = Field(alias="CORS_ALLOW_HEADERS")
+    allow_credentials: bool = Field(alias="CORS_ALLOW_CREDENTIALS")
+    allow_methods: list[str] = Field(alias="CORS_ALLOW_METHODS")
+
+
 class Settings(CommonSettings):
     """
     Settings class which encapsulates logic of settings from other classes.
@@ -162,6 +189,10 @@ class Settings(CommonSettings):
     cache: RedisSettings = RedisSettings()
     models: ModelsSettings = ModelsSettings()
     broker: BrokerSettings = BrokerSettings()
+    scheduler: SchedulerSettings = SchedulerSettings()
+    cors: CORSSettings = CORSSettings()
+    server: ServerSettings = ServerSettings()
+    project_dir: Path = pathlib.Path(__file__).parent.parent.parent.parent
 
 
 @lru_cache(1)

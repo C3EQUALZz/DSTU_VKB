@@ -13,3 +13,11 @@ class BaseScheduler(ABC):
     @abstractmethod
     async def schedule_task(self, name: type[AbstractEventHandler[ET]], schemas: BaseModel) -> Awaitable[_ReturnType]:
         raise NotImplementedError
+
+    @abstractmethod
+    async def start(self) -> None:
+        raise NotImplementedError
+
+    @abstractmethod
+    async def stop(self) -> None:
+        raise NotImplementedError
