@@ -12,7 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.application.api.middlewares.metrics import MetricsMiddleware
 from app.application.api.utils.handlers import register_exception_handlers
-from app.application.api.v1 import router_v1
+from app.application.api import router as api_router
 from app.application.api.metrics.handlers import router as metrics_router
 from app.infrastructure.brokers.base import BaseMessageBroker
 from app.infrastructure.scheduler.base import BaseScheduler
@@ -54,7 +54,6 @@ def create_app() -> FastAPI:
         title="Microservice backend for image service",
         description="Backend API written with FastAPI for image service",
         debug=True,
-        root_path="/api",
         lifespan=lifespan,
     )
 
@@ -77,7 +76,7 @@ def create_app() -> FastAPI:
 
     setup_dishka_fastapi(container=container, app=app)
 
-    app.include_router(router_v1)
+    app.include_router(api_router)
     app.include_router(metrics_router)
 
     return app

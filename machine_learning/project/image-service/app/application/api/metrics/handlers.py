@@ -18,16 +18,14 @@ router: Final[APIRouter] = APIRouter(
 @router.get(
     "/metrics",
     status_code=status.HTTP_200_OK,
-    response_class=Response,
-    summary="Handler for getting metrics from any provider",
-    description="Return metrics from any provider",
-    tags=["metrics"]
+    summary="Prometheus metrics",
+    description="Getting metrics for prometheus server",
 )
 async def get_metrics(
         metrics_client: FromDishka[BaseMetricsClient]
 ) -> Response:
     """
-    Return metrics
+    Return metrics to prometheus.
     """
     return Response(
         metrics_client.generate_latest(),
