@@ -8,7 +8,7 @@ from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoin
 from app.infrastructure.metrics.base import BaseMetricsClient
 
 
-class MetricsMiddleware(BaseHTTPMiddleware):
+class HTTPLatencyMetricsMiddleware(BaseHTTPMiddleware):
     def __init__(
             self,
             app: FastAPI,

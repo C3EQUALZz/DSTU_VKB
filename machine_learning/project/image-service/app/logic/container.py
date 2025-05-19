@@ -176,9 +176,9 @@ class MonitoringProvider(Provider):
     settings = from_context(provides=Settings, scope=Scope.APP)
 
     @provide(scope=Scope.APP)
-    async def get_collector_registry(self) -> CollectorRegistry:
+    async def get_collector_registry(self, settings: Settings) -> CollectorRegistry:
         registry: CollectorRegistry = CollectorRegistry()
-        multiprocess.MultiProcessCollector(registry)
+        multiprocess.MultiProcessCollector(registry, path=settings.project_dir / settings.server.multiprocess_dir)
         return registry
 
     @provide(scope=Scope.APP)
@@ -202,12 +202,12 @@ class BrokerProvider(Provider):
         broker: KafkaBroker = KafkaBroker(
             settings.broker.url,
             logger=logger,
-            middlewares=(
+            middlewares=[
                 KafkaPrometheusMiddleware(
                     registry=registry,
                     app_name="faststream-image-service",
                 ),
-            )
+            ]
         )
 
         broker.include_router(colorization_kafka_router)

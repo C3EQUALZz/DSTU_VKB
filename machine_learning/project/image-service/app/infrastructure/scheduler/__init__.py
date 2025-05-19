@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 from typing import Final
 
 from dishka import AsyncContainer
@@ -6,7 +7,7 @@ from dishka.integrations.faststream import setup_dishka as setup_dishka_faststre
 from dishka.integrations.taskiq import setup_dishka as setup_taskiq_dishka
 from faststream import FastStream
 from faststream.kafka import KafkaBroker
-from taskiq import TaskiqEvents, TaskiqState, SmartRetryMiddleware
+from taskiq import TaskiqEvents, TaskiqState, SmartRetryMiddleware, PrometheusMiddleware
 from taskiq_redis import ListQueueBroker
 
 from app.logic.container import get_container
@@ -22,6 +23,11 @@ scheduler: Final[ListQueueBroker] = ListQueueBroker(str(get_settings().cache.url
         use_jitter=TasksMiddlewareDefaultConfig.USE_JITTER.value,
         use_delay_exponent=TasksMiddlewareDefaultConfig.USE_DELAY_EXPONENT.value,
         max_delay_exponent=TasksMiddlewareDefaultConfig.MAX_DELAY_COMPONENT.value,
+    ),
+    PrometheusMiddleware(
+        metrics_path=settings.project_dir / settings.server.multiprocess_dir,
+        server_addr=settings.scheduler.host,
+        server_port=settings.scheduler.port
     ),
 )
 

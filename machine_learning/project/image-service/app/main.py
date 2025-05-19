@@ -10,7 +10,7 @@ from faststream import FastStream
 from faststream.kafka import KafkaBroker
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.application.api.middlewares.metrics import MetricsMiddleware
+from app.application.api.middlewares.metrics import HTTPLatencyMetricsMiddleware
 from app.application.api.utils.handlers import register_exception_handlers
 from app.application.api import router as api_router
 from app.application.api.metrics.handlers import router as metrics_router
@@ -68,7 +68,7 @@ def create_app() -> FastAPI:
     )
 
     app.add_middleware(
-        MetricsMiddleware,  # type: ignore
+        HTTPLatencyMetricsMiddleware,  # type: ignore
         container=container
     )
 
