@@ -1,0 +1,48 @@
+services:
+  second-laboratory-database:
+    image: mysql:9.0.0
+    container_name: second-laboratory-database
+    volumes:
+      - mysql_data_2nd_laboratory_uncorrected:/var/lib/mysql
+      - ./bad-certs:/etc/mysql/certs
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    command:
+      - --ssl-ca=/etc/mysql/certs/ca.crt
+      - --ssl-cert=/etc/mysql/certs/mysql.crt
+      - --ssl-key=/etc/mysql/certs/mysql.key
+      - --ssl=1
+      - --bind-address=0.0.0.0
+    ports:
+      - "${MYSQL_PORT}:3306"
+    depends_on:
+      - cert-gen
+    env_file:
+      - ../.env
+    restart: "unless-stopped"
+
+  cert-gen:
+    image: alpine
+    volumes:
+      - ./bad-certs:/bad-certs
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        apk add --no-cache openssl &&
+        if [ ! -f /certs/ca.crt ]; then
+          # Генерация недоверенного (неправильного) сертификата
+          openssl genpkey -algorithm RSA -out /bad-certs/bad-client.key -pkeyopt rsa_keygen_bits:2048 &&
+          openssl req -new -key /bad-certs/bad-client.key -out /bad-certs/bad-client.csr -subj "/CN=bad-client/O=myorg/C=US" &&
+          openssl x509 -req -in /bad-certs/bad-client.csr -signkey /bad-certs/bad-client.key -out /bad-certs/bad-client.crt -days 1 &&
+          chmod 600 /bad-certs/* && chown 999:999 /bad-certs/*
+        else
+          echo "Сертификаты уже существуют. Пропускаем генерацию."
+        fi
+    restart: "no"
+
+volumes:
+  mysql_data_2nd_laboratory_uncorrected:
