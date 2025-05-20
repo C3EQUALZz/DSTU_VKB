@@ -1,4 +1,3 @@
-from pathlib import Path
 from typing import Final
 
 from gunicorn.arbiter import Arbiter

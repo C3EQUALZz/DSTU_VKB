@@ -76,7 +76,7 @@ async def handle_image_grayscale_to_color_topic(
         )
     )
 
-    msg.ack()
+    await msg.ack()
 
     logger.info("successfully handled grayscale image event from telegram")
 
@@ -107,7 +107,7 @@ async def handle_image_color_to_grayscale_topic(
         )
     )
 
-    msg.ack()
+    await msg.ack()
 
     logger.info("successfully handled colorization image event from telegram")
 
