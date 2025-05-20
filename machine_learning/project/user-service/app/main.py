@@ -23,6 +23,7 @@ from app.infrastructure.brokers.base import BaseMessageBroker
 from app.logic.container import get_container
 from app.settings.config import Settings, get_settings
 from app.settings.logger.config import setup_logging
+from app.application.api.v1.telegram.handlers import router as telegram_router
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 
@@ -89,6 +90,7 @@ def create_app() -> FastAPI:
 
     app.include_router(users_router)
     app.include_router(auth_router)
+    app.include_router(telegram_router)
 
     setup_dishka_fastapi(container=container, app=app)
 

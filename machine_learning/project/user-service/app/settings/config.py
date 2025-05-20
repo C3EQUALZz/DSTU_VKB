@@ -118,6 +118,10 @@ class BrokerSettings(CommonSettings):
         return f"{self.host}:{self.port}"
 
 
+class TelegramSettings(CommonSettings):
+    url: str = Field(alias="TELEGRAM_URL")
+
+
 class Settings(CommonSettings):
     """
     Класс настроек, которым в дальнейшем будет оперировать приложение.
@@ -130,6 +134,7 @@ class Settings(CommonSettings):
     auth: AuthSettings = AuthSettings()
     server: ServerSettings = ServerSettings()
     cors: CORSSettings = CORSSettings()
+    telegram: TelegramSettings = TelegramSettings()
 
 
 @lru_cache(1)
