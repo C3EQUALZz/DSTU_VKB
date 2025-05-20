@@ -14,7 +14,6 @@ from dishka import (
     provide,
 )
 from faststream.kafka import KafkaBroker
-from faststream.kafka.prometheus import KafkaPrometheusMiddleware
 from prometheus_client import CollectorRegistry, multiprocess
 
 from app.infrastructure.brokers.base import BaseMessageBroker
@@ -192,7 +191,7 @@ class MonitoringProvider(Provider):
 
     @provide(scope=Scope.APP)
     async def get_prometheus_metrics_client(self, registry: CollectorRegistry) -> BaseMetricsClient:
-        return PrometheusMetricsClient(registry=registry)
+        return PrometheusMetricsClient(registry=registry, service_name="image-service")
 
 
 class BrokerProvider(Provider):

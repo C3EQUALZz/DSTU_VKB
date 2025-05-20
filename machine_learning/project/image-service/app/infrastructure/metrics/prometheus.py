@@ -12,10 +12,10 @@ class PrometheusMetricsClient(
     PrometheusDatabaseMixin,
     BaseMetricsClient
 ):
-    def __init__(self, registry: CollectorRegistry) -> None:
+    def __init__(self, registry: CollectorRegistry, service_name: str) -> None:
         self._registry: Final[CollectorRegistry] = registry
         PrometheusHTTPMixin.__init__(self, registry=registry)
-        PrometheusDatabaseMixin.__init__(self, registry=registry)
+        PrometheusDatabaseMixin.__init__(self, registry=registry, service_name=service_name)
 
     @override
     def make_app(self) -> Callable[..., ...]:
