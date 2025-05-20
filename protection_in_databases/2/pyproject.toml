@@ -1,0 +1,20 @@
+[project]
+name = "second-laboratory-protection-in-database"
+version = "0.1.0"
+description = "Implementation of second laboratory using fastapi, sqlalchemy and etc."
+authors = [
+    {name = "matebookWindows",email = "dan.kovalev2013@gmail.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.12,<4.0"
+dependencies = [
+    "sqlalchemy[asyncmy] (>=2.0.41,<3.0.0)",
+    "dishka (>=1.6.0,<2.0.0)",
+    "fastapi (>=0.115.12,<0.116.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
