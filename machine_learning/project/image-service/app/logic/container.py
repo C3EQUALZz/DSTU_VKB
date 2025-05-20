@@ -1,6 +1,7 @@
 import importlib
 import logging
 from functools import lru_cache
+from pathlib import Path
 from types import ModuleType
 from typing import cast, Final
 
@@ -178,7 +179,15 @@ class MonitoringProvider(Provider):
     @provide(scope=Scope.APP)
     async def get_collector_registry(self, settings: Settings) -> CollectorRegistry:
         registry: CollectorRegistry = CollectorRegistry()
-        multiprocess.MultiProcessCollector(registry, path=settings.project_dir / settings.server.multiprocess_dir)
+
+        path_to_multiprocessing_dir: Path = settings.project_dir / settings.server.multiprocess_dir / "app"
+        path_to_multiprocessing_dir.mkdir(exist_ok=True, parents=True)
+
+        multiprocess.MultiProcessCollector(
+            registry,
+            path=path_to_multiprocessing_dir
+        )
+
         return registry
 
     @provide(scope=Scope.APP)
@@ -203,10 +212,10 @@ class BrokerProvider(Provider):
             settings.broker.url,
             logger=logger,
             middlewares=[
-                KafkaPrometheusMiddleware(
-                    registry=registry,
-                    app_name="faststream-image-service",
-                ),
+                # KafkaPrometheusMiddleware(
+                #     registry=registry,
+                #     app_name="faststream-image-service",
+                # ),
             ]
         )
 
