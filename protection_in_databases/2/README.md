@@ -15,7 +15,7 @@
 5. Выполните команду в терминале `docker compose up --build`
 6. Откройте 2 терминал, выполните команду: `uvicorn --factory app.main:create_app --reload --host 0.0.0.0 --port 8005`
 
-> [!NOTE]
+> [!IMPORTANT]
 > [Представлю гайд как установить правильно [`openssl`](
 > https://thesecmaster.com/blog/procedure-to-install-openssl-on-the-windows-platform
 > )
@@ -26,9 +26,14 @@
 > Позже выяснил опытным путем, что библиотеки `aiomysql`, `asyncmy` просто не хотят работать с `SSL`... Есть внутренние
 > баги...
 > В итоге, нормально заработала только синхронная библиотека `pymysql`... Я просто так потратил целый день...
+> А `SQLAlchemy` как-то криво пробрасывает `SSL` параметры, поэтому я уже забил, честное слово... 
 
-> [!NOTE]
+> [!IMPORTANT]
 > Если подключаться в приложении к `MySQL` через `Docker`, то почему-то он жалуется...
 > В итоге, все нормально работает, если запускать `MySQL` из-под `Docker`, а приложение нативно через команду
 `uvicorn --factory app.main:create_app --reload --host 0.0.0.0 --port 8005`
 
+> [!NOTE]
+> За основу я взял вот [это](https://github.com/jGundermann/ssl-mysql)... Спасибо, что выложил свое решение.
+> Тут если проблемы с cертификатами будут [тык](https://tecadmin.net/mysql-connection-error-certificate-verify-failed/)
+> Настройки с [алхимией](https://docs.sqlalchemy.org/en/20/dialects/mysql.html#ssl-connections)
