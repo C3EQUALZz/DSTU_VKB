@@ -29,3 +29,10 @@ class MissingAttributeError(InfrastructureException):
     @property
     def status(self) -> int:
         return HTTPStatus.INTERNAL_SERVER_ERROR.value
+
+
+@dataclass(eq=False)
+class ConvertingError(InfrastructureException):
+    @property
+    def status(self) -> int:
+        return HTTPStatus.INTERNAL_SERVER_ERROR.value

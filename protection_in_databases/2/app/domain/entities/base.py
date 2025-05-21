@@ -1,5 +1,5 @@
 from abc import ABC
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass, field, fields
 from datetime import UTC, datetime
 from typing import Any, Dict, Optional, Set
 from uuid import uuid4
@@ -64,3 +64,24 @@ class BaseEntity(ABC):
 
     def __hash__(self) -> int:
         return hash(self.oid)
+
+    def set_attrs(
+            self,
+            updated_attrs: Dict[str, Any],
+    ) -> None:
+        valid_attrs = {f.name for f in fields(self)}
+        for attr, value in updated_attrs.items():
+            if value is None:
+                continue
+            if attr not in valid_attrs:
+                raise ValueError("Invalid attribute: %s, all attrs is here: %s", attr, valid_attrs)
+
+            current_value = getattr(self, attr)
+            if hasattr(current_value, "value"):  # Проверка Value Object
+                setattr(self, attr, type(current_value)(value))
+            else:
+                if type(value) != type(current_value):
+                    raise TypeError(f"Type mismatch for {attr}")
+                setattr(self, attr, value)
+
+        self.updated_at = datetime.now(UTC)  # Обновляем только при реальных изменениях
