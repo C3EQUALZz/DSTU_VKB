@@ -1,9 +1,12 @@
 from abc import ABC
 from functools import lru_cache
 from pathlib import Path
+from typing import Final
 
 from pydantic import Field, FilePath
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+PATH_TO_PROJECT: Final[Path] = Path(__file__).parent.parent.parent.parent
 
 
 class CommonSettings(BaseSettings, ABC):
@@ -50,12 +53,11 @@ class SQLAlchemySettings(CommonSettings):
     echo: bool = Field(alias="DATABASE_ECHO")
     auto_flush: bool = Field(alias="DATABASE_AUTO_FLUSH")
     expire_on_commit: bool = Field(alias="DATABASE_EXPIRE_ON_COMMIT")
-    ssl_cert: FilePath = Field(alias="DATABASE_SSL_CERT")
-    ssl_key: FilePath = Field(alias="DATABASE_SSL_KEY")
-    ssl_root_cert: FilePath = Field(alias="DATABASE_SSL_ROOT_CERT")
+    ssl_cert: FilePath = PATH_TO_PROJECT / Path(Field(alias="DATABASE_SSL_CERT"))
+    ssl_key: FilePath = PATH_TO_PROJECT / Path(Field(alias="DATABASE_SSL_KEY"))
+    ssl_root_cert: FilePath = PATH_TO_PROJECT / Path(Field(alias="DATABASE_SSL_ROOT_CERT"))
     ssl_mode: str = "verify-full"
     ssl_min_protocol_version: str = "TLSv1.3"
-
 
 
 class Settings(CommonSettings):

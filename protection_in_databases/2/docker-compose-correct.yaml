@@ -1,21 +1,43 @@
 services:
+  second-laboratory-app-backend:
+    restart: unless-stopped
+    container_name: second-laboratory-app-backend
+    image: second-laboratory-app-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "uvicorn --factory app.main:create_app --reload --host 0.0.0.0 --port 8000"
+    ports:
+      - "${API_PORT}:8000"
+    env_file:
+      - .env
+    depends_on:
+      second-laboratory-database:
+        condition: service_healthy
+    networks:
+      - second-laboratory
+
   second-laboratory-database:
     image: mysql:9.0.0
     container_name: second-laboratory-database
     volumes:
       - mysql_data_2nd_laboratory_correct:/var/lib/mysql
-      - ./certs:/etc/mysql/certs
+      - ./resources/certs:/etc/mysql/certs
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    command:
-      - --ssl-ca=/etc/mysql/certs/ca.crt
-      - --ssl-cert=/etc/mysql/certs/mysql.crt
-      - --ssl-key=/etc/mysql/certs/mysql.key
-      - --ssl=1
-      - --bind-address=0.0.0.0
+    command: [
+      "mysqld",
+      "--character-set-server=utf8mb4",
+      "--collation-server=utf8mb4_unicode_ci",
+      "--ssl-ca=/etc/mysql/certs/ca.crt",
+      "--ssl-cert=/etc/mysql/certs/mysql.crt",
+      "--ssl-key=/etc/mysql/certs/mysql.key",
+      "--bind-address=0.0.0.0",
+      "--require_secure_transport=ON",
+    ]
     ports:
       - "${MYSQL_PORT}:3306"
     depends_on:
@@ -23,23 +45,34 @@ services:
     env_file:
       - .env
     restart: "unless-stopped"
+    networks:
+      - second-laboratory
+    healthcheck:
+      test: [ "CMD", 'mysqladmin', 'ping', '-h', 'localhost', '-u', 'root', '-p$$MYSQL_ROOT_PASSWORD' ]
+      timeout: 20s
+      retries: 10
 
   cert-gen:
     image: alpine
     volumes:
-      - ./certs:/certs
+      - ./resources/certs:/certs
     entrypoint:
       - /bin/sh
       - -c
       - |
         apk add --no-cache openssl &&
         if [ ! -f /certs/ca.crt ]; then
-        # Генерируем только если файлов нет
-          openssl genpkey -algorithm RSA -out /certs/mysql.key -pkeyopt rsa_keygen_bits:2048 &&
-          openssl req -new -key /certs/mysql.key -out /certs/mysql.csr -subj "/CN=mysql/O=myorg/C=US" &&
-          openssl x509 -req -in /certs/mysql.csr -signkey /certs/mysql.key -out /certs/mysql.crt -days 365 &&
-          openssl genpkey -algorithm RSA -out /certs/ca.key -pkeyopt rsa_keygen_bits:2048 &&
-          openssl req -new -x509 -key /certs/ca.key -out /certs/ca.crt -days 1095 -subj "/CN=Certificate Authority/O=myorg/C=US" &&
+          # Генерируем доверенные сертификаты
+          openssl genpkey -algorithm RSA -out /certs/mysql.key -pkeyopt rsa_keygen_bits:2048
+          openssl req -new -key /certs/mysql.key -out /certs/mysql.csr -subj "/CN=mysql/O=myorg/C=US"
+          openssl x509 -req -in /certs/mysql.csr -signkey /certs/mysql.key -out /certs/mysql.crt -days 365
+          openssl genpkey -algorithm RSA -out /certs/ca.key -pkeyopt rsa_keygen_bits:2048
+          openssl req -new -x509 -key /certs/ca.key -out /certs/ca.crt -days 1095 -subj "/CN=Certificate Authority/O=myorg/C=US"
+        
+          # Генерируем клиентский сертификат
+          openssl genpkey -algorithm RSA -out /certs/client.key -pkeyopt rsa_keygen_bits:2048
+          openssl req -new -key /certs/client.key -out /certs/client.csr -subj "/CN=mysql-client/O=myorg/C=US"
+          openssl x509 -req -in /certs/client.csr -signkey /certs/client.key -out /certs/client.crt -days 365
           chmod 600 /certs/* && chown 999:999 /certs/*
         else
           echo "Сертификаты уже существуют. Пропускаем генерацию."
@@ -48,3 +81,7 @@ services:
 
 volumes:
   mysql_data_2nd_laboratory_correct:
+
+networks:
+  second-laboratory:
+    driver: bridge
