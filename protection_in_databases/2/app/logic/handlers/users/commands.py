@@ -29,7 +29,7 @@ class CreateUserCommandHandler(UsersCommandHandler[CreateUserCommand]):
                 role=Role(command.role),
             )
 
-            added_user: UserEntity = await user_service.add(new_user)
+            added_user: UserEntity = user_service.add(new_user)
 
             return added_user
 
@@ -45,16 +45,16 @@ class UpdateUserCommandHandler(UsersCommandHandler[UpdateUserCommand]):
         async with self._uow as uow:
             user_service: UsersService = UsersService(uow=uow)
 
-            if not await user_service.check_existence(oid=command.user_id):
+            if not user_service.check_existence(oid=command.user_id):
                 raise UserNotFoundError(command.user_id)
 
-            user: UserEntity = await user_service.get_by_id(command.user_id)
+            user: UserEntity = user_service.get_by_id(command.user_id)
 
             user_info_from_command = await command.to_dict(exclude={"oid"})
             user_info_from_command["oid"] = user_info_from_command.pop("user_id")
             user.set_attrs(user_info_from_command)
 
-            updated_user: UserEntity = await user_service.update(user)
+            updated_user: UserEntity = user_service.update(user)
 
             return updated_user
 
@@ -64,9 +64,7 @@ class DeleteUserCommandHandler(UsersCommandHandler[DeleteUserCommand]):
         async with self._uow as uow:
             user_service: UsersService = UsersService(uow=uow)
 
-            if not await user_service.check_existence(oid=command.user_id):
+            if not user_service.check_existence(oid=command.user_id):
                 raise UserNotFoundError(f"Couldn't find user {command.user_id}")
 
-            deleted_user: None = await user_service.delete(oid=command.user_id)
-
-            return deleted_user
+            return user_service.delete(oid=command.user_id)

@@ -10,3 +10,4 @@ docker-compose.yaml
 Dockerfile
 ./vscode
 /vscode
+./scripts

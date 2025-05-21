@@ -3,7 +3,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Final
 
-from pydantic import Field, FilePath
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 PATH_TO_PROJECT: Final[Path] = Path(__file__).parent.parent.parent.parent
@@ -16,7 +16,7 @@ class CommonSettings(BaseSettings, ABC):
     """
 
     model_config = SettingsConfigDict(
-        env_file=Path(__file__).resolve().parent.parent.parent / ".env",
+        env_file=Path(__file__).resolve().parent.parent.parent.parent / ".env",
         env_file_encoding="utf-8",
         extra="allow",
     )
@@ -36,10 +36,15 @@ class DatabaseSettings(CommonSettings):
     dialect: str = Field(alias="DATABASE_DIALECT")
     driver: str = Field(alias="DATABASE_DRIVER")
 
+    ssl_cert: Path | None = Field(alias="DATABASE_SSL_CERT", default=None)
+    ssl_key: Path | None = Field(alias="DATABASE_SSL_KEY", default=None)
+    ssl_ca: Path | None = Field(alias="DATABASE_SSL_CA", default=None)
+
     @property
     def url(self) -> str:
         if self.dialect == "sqlite":
             return f"{self.dialect}+{self.driver}:///{self.name}"
+
         return f"{self.dialect}+{self.driver}://{self.user}:{self.password}@{self.host}:{self.port}/{self.name}"
 
 
@@ -53,11 +58,6 @@ class SQLAlchemySettings(CommonSettings):
     echo: bool = Field(alias="DATABASE_ECHO")
     auto_flush: bool = Field(alias="DATABASE_AUTO_FLUSH")
     expire_on_commit: bool = Field(alias="DATABASE_EXPIRE_ON_COMMIT")
-    ssl_cert: FilePath = PATH_TO_PROJECT / Path(Field(alias="DATABASE_SSL_CERT"))
-    ssl_key: FilePath = PATH_TO_PROJECT / Path(Field(alias="DATABASE_SSL_KEY"))
-    ssl_root_cert: FilePath = PATH_TO_PROJECT / Path(Field(alias="DATABASE_SSL_ROOT_CERT"))
-    ssl_mode: str = "verify-full"
-    ssl_min_protocol_version: str = "TLSv1.3"
 
 
 class Settings(CommonSettings):

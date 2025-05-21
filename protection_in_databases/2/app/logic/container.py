@@ -2,23 +2,18 @@ import logging
 from functools import lru_cache
 from typing import cast, Final
 
-from app.logic.handlers.users.commands import CreateUserCommandHandler, UpdateUserCommandHandler, \
-    DeleteUserCommandHandler
-from app.settings.configs.app import Settings, get_settings
+import pymysql
+from pymysql import Connection
 from dishka import Provider, Scope, from_context, make_async_container, provide, AsyncContainer
-from sqlalchemy.ext.asyncio import (
-    AsyncEngine,
-    AsyncSession,
-    async_sessionmaker,
-    create_async_engine,
-)
 
-from app.infrastructure.uow.users.alchemy import SQLAlchemyUsersUnitOfWork
 from app.infrastructure.uow.users.base import UsersUnitOfWork
+from app.infrastructure.uow.users.mysql import PyMySQLUsersUnitOfWork
 from app.logic.bootstrap import Bootstrap
 from app.logic.commands.users import CreateUserCommand, UpdateUserCommand, DeleteUserCommand
 from app.logic.event_buffer import EventBuffer
+from app.logic.handlers.users.commands import CreateUserCommandHandler, UpdateUserCommandHandler, DeleteUserCommandHandler
 from app.logic.types.handlers import CommandHandlerMapping, EventHandlerMapping
+from app.settings.configs.app import Settings, get_settings, PATH_TO_PROJECT
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 
@@ -58,12 +53,6 @@ class AppProvider(Provider):
         return EventBuffer()
 
     @provide(scope=Scope.APP)
-    async def get_users_uow(
-            self, session_maker: async_sessionmaker[AsyncSession]
-    ) -> UsersUnitOfWork:
-        return SQLAlchemyUsersUnitOfWork(session_factory=session_maker)
-
-    @provide(scope=Scope.APP)
     async def get_bootstrap(
             self,
             event_buffer: EventBuffer,
@@ -85,33 +74,26 @@ class DatabaseProvider(Provider):
     settings = from_context(provides=Settings, scope=Scope.APP)
 
     @provide(scope=Scope.APP)
-    async def get_engine_client(self, settings: Settings) -> AsyncEngine:
-        engine: AsyncEngine = create_async_engine(
-            url=settings.database.url,
-            pool_pre_ping=settings.alchemy_settings.pool_pre_ping,
-            pool_recycle=settings.alchemy_settings.pool_recycle,
-            echo=settings.alchemy_settings.echo,
-            sslcert=settings.alchemy_settings.ssl_cert,
-            sslrootcert=settings.alchemy_settings.ssl_root_cert,
-            sslmode=settings.alchemy_settings.ssl_mode,
-            ssl_min_protocol_version=settings.alchemy_settings.ssl_min_protocol_version,
+    async def get_users_uow(self, connection: Connection) -> UsersUnitOfWork:
+        return PyMySQLUsersUnitOfWork(
+            connection=connection,
         )
-
-        logger.info("Successfully connected to Database")
-
-        return engine
 
     @provide(scope=Scope.APP)
-    async def get_session_maker(
-            self, engine: AsyncEngine, settings: Settings
-    ) -> async_sessionmaker[AsyncSession]:
-        session_maker: async_sessionmaker[AsyncSession] = async_sessionmaker(
-            bind=engine,
-            autoflush=settings.alchemy_settings.auto_flush,
-            expire_on_commit=settings.alchemy_settings.expire_on_commit,
+    async def get_engine_client(self, settings: Settings) -> Connection:
+        conn: Connection = pymysql.connect(
+            user=settings.database.user,
+            host=settings.database.host,
+            port=settings.database.port,
+            password=settings.database.password,
+            database=settings.database.name,
+            cursorclass=pymysql.cursors.DictCursor,
+            ssl_ca=str(PATH_TO_PROJECT / settings.database.ssl_ca),
+            ssl_cert=str(PATH_TO_PROJECT / settings.database.ssl_cert),
+            ssl_key=str(PATH_TO_PROJECT / settings.database.ssl_key),
         )
 
-        return session_maker
+        return conn
 
 
 @lru_cache(maxsize=1)
