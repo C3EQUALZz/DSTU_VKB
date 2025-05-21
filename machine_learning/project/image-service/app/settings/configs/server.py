@@ -1,4 +1,3 @@
-from pathlib import Path
 from typing import Final
 
 from gunicorn.arbiter import Arbiter
@@ -24,9 +23,6 @@ def post_fork(server: Arbiter, worker: Worker) -> None:
 
     if settings.server.multiprocess_dir is None:
         return
-
-    path_to_multiprocessing_dir: Path = settings.project_dir / settings.server.multiprocess_dir
-    path_to_multiprocessing_dir.mkdir(exist_ok=True)
 
     try:
         import prometheus_client

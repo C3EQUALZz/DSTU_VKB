@@ -1,5 +1,4 @@
 import logging
-from pathlib import Path
 from typing import Final
 
 from dishka import AsyncContainer
@@ -25,7 +24,7 @@ scheduler: Final[ListQueueBroker] = ListQueueBroker(str(get_settings().cache.url
         max_delay_exponent=TasksMiddlewareDefaultConfig.MAX_DELAY_COMPONENT.value,
     ),
     PrometheusMiddleware(
-        metrics_path=settings.project_dir / settings.server.multiprocess_dir,
+        metrics_path=settings.project_dir / settings.server.multiprocess_dir / "taskiq_worker",
         server_addr=settings.scheduler.host,
         server_port=settings.scheduler.port
     ),

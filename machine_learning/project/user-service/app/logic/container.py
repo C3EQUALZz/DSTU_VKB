@@ -1,10 +1,12 @@
 import logging
 from functools import lru_cache
+from pathlib import Path
 from typing import cast, Final
 
 from authx import AuthXConfig, AuthX
 from dishka import Provider, Scope, from_context, make_async_container, provide, AsyncContainer
 from faststream.kafka import KafkaBroker
+from prometheus_client import CollectorRegistry, multiprocess
 from redis.asyncio import ConnectionPool, Redis
 from sqlalchemy.ext.asyncio import (
     AsyncEngine,
@@ -17,6 +19,8 @@ from app.infrastructure.brokers.base import BaseMessageBroker
 from app.infrastructure.brokers.consumers.kafka.users.handlers import router as user_router
 from app.infrastructure.brokers.factory import EventHandlerTopicFactory
 from app.infrastructure.brokers.publishers.faststream import FastStreamKafkaMessageBroker
+from app.infrastructure.metrics.base import BaseMetricsClient
+from app.infrastructure.metrics.prometheus import PrometheusMetricsClient
 from app.infrastructure.repositories.cache.idempotency.commands.base import BaseIdempotencyCommandCacheRepository
 from app.infrastructure.repositories.cache.idempotency.commands.redis_cache import \
     RedisIdempotencyCommandCacheRepository
@@ -76,6 +80,27 @@ class HandlerProvider(Provider):
                 UserFailedLinkedTelegramEvent: [UserFailedLinkedTelegramEventHandler]
             },
         )
+
+class MonitoringProvider(Provider):
+    settings = from_context(provides=Settings, scope=Scope.APP)
+
+    @provide(scope=Scope.APP)
+    async def get_collector_registry(self, settings: Settings) -> CollectorRegistry:
+        registry: CollectorRegistry = CollectorRegistry()
+
+        path_to_multiprocessing_dir: Path = settings.project_dir / settings.server.multiprocess_dir / "app"
+        path_to_multiprocessing_dir.mkdir(exist_ok=True, parents=True)
+
+        multiprocess.MultiProcessCollector(
+            registry,
+            path=path_to_multiprocessing_dir
+        )
+
+        return registry
+
+    @provide(scope=Scope.APP)
+    async def get_prometheus_metrics_client(self, registry: CollectorRegistry) -> BaseMetricsClient:
+        return PrometheusMetricsClient(registry=registry, service_name="user-service")
 
 
 class BrokerProvider(Provider):
@@ -244,5 +269,6 @@ def get_container() -> AsyncContainer:
         CacheProvider(),
         DatabaseProvider(),
         AuthProvider(),
+        MonitoringProvider(),
         context={Settings: get_settings()},
     )

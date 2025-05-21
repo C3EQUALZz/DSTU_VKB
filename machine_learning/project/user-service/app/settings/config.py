@@ -1,6 +1,8 @@
+import multiprocessing
 from abc import ABC
 from functools import lru_cache
 from pathlib import Path
+from typing import Optional
 
 from pydantic import Field, RedisDsn
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -71,6 +73,25 @@ class AuthSettings(CommonSettings):
     refresh_token_expire_minutes: int = Field(default=10, alias="REFRESH_TOKEN_EXPIRE_MINUTES")
 
 
+class ServerSettings(CommonSettings):
+    multiprocess_dir: Optional[Path] = Field(alias="PROMETHEUS_MULTIPROC_DIR", default=None)
+    workers: int = Field(alias="SERVER_WORKERS", default=multiprocessing.cpu_count() * 2 + 1)
+    max_requests: int = Field(alias="SERVER_MAX_REQUESTS", default=1000)
+    max_jitter: int = Field(alias="SERVER_MAX_JITTER", default=50)
+    bind: str = Field(alias="SERVER_BIND")
+    timeout: int = Field(alias="SERVER_TIMEOUT")
+    worker_class: str = Field(alias="SERVER_WORKER_CLASS")
+    log_level: str = Field(alias="SERVER_LOG_LEVEL")
+    log_file: str = Field(alias="SERVER_LOG_FILE")
+
+
+class CORSSettings(CommonSettings):
+    allow_origins: list[str] = Field(alias="CORS_ALLOW_ORIGINS")
+    allow_headers: list[str] = Field(alias="CORS_ALLOW_HEADERS")
+    allow_credentials: bool = Field(alias="CORS_ALLOW_CREDENTIALS")
+    allow_methods: list[str] = Field(alias="CORS_ALLOW_METHODS")
+
+
 class BrokerSettings(CommonSettings):
     host: str = Field(alias="BROKER_HOST")
     port: int = Field(alias="BROKER_PORT_NETWORK")
@@ -83,15 +104,22 @@ class BrokerSettings(CommonSettings):
     user_update_topic: str = Field(default="user-update", alias="BROKER_USER_UPDATE_TOPIC")
     user_delete_topic: str = Field(default="user-delete", alias="BROKER_USER_DELETE_TOPIC")
 
-    user_telegram_id_from_start_bot_topic: str = Field(default="user-telegram-start", alias="USER_TELEGRAM_ID_FROM_START_BOT")
-    user_telegram_id_from_start_bot_group_id: str = Field(default="user-telegram-start-group", alias="USER_TELEGRAM_ID_FROM_START_BOT_GROUP")
+    user_telegram_id_from_start_bot_topic: str = Field(default="user-telegram-start",
+                                                       alias="USER_TELEGRAM_ID_FROM_START_BOT")
+    user_telegram_id_from_start_bot_group_id: str = Field(default="user-telegram-start-group",
+                                                          alias="USER_TELEGRAM_ID_FROM_START_BOT_GROUP")
 
-    user_successfully_linked_telegram_topic: str = Field(default="user-telegram-link-success", alias="USER_SUCCESSFULLY_LINK_TOPIC")
+    user_successfully_linked_telegram_topic: str = Field(default="user-telegram-link-success",
+                                                         alias="USER_SUCCESSFULLY_LINK_TOPIC")
     user_failed_link_telegram_topic: str = Field(default="user-telegram-link-failed", alias="USER_FAILED_LINK_TOPIC")
 
     @property
     def url(self) -> str:
         return f"{self.host}:{self.port}"
+
+
+class TelegramSettings(CommonSettings):
+    url: str = Field(alias="TELEGRAM_URL")
 
 
 class Settings(CommonSettings):
@@ -104,6 +132,9 @@ class Settings(CommonSettings):
     broker: BrokerSettings = BrokerSettings()
     cache: CacheSettings = CacheSettings()
     auth: AuthSettings = AuthSettings()
+    server: ServerSettings = ServerSettings()
+    cors: CORSSettings = CORSSettings()
+    telegram: TelegramSettings = TelegramSettings()
 
 
 @lru_cache(1)
