@@ -31,7 +31,7 @@ async def get_access_token_payload(
     cache: BaseSecurityCacheRepository = await container.get(BaseSecurityCacheRepository)
 
     if credentials is None:
-        raise EmptyCredentialsException
+        raise EmptyCredentialsException("Credentials for auth cannot be empty")
 
     try:
         payload = security.verify_token(RequestToken(token=credentials.credentials, location="headers", type="access"))
@@ -53,7 +53,7 @@ async def get_refresh_token_payload(
     cache: BaseSecurityCacheRepository = await container.get(BaseSecurityCacheRepository)
 
     if credentials is None:
-        raise EmptyCredentialsException
+        raise EmptyCredentialsException("Credentials for auth cannot be empty")
 
     try:
         payload = security.verify_token(RequestToken(token=credentials.credentials, location="headers", type="refresh"))

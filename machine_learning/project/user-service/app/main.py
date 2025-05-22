@@ -13,6 +13,7 @@ from faststream.asgi import make_ping_asgi, make_asyncapi_asgi
 from faststream.kafka import KafkaBroker
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 from sqlalchemy.orm import clear_mappers
+from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 from app.application.api.middlewares.metrics import HTTPLatencyMetricsMiddleware
 from app.application.api.v1.auth.handlers import router as auth_router
@@ -77,15 +78,20 @@ def create_app() -> FastAPI:
 
     app.add_middleware(
         CORSMiddleware,  # type: ignore
-        allow_origins=settings.cors.allow_origins,
+        allow_origins=settings.cors.allow_origins,  # Разрешить все домены
         allow_credentials=settings.cors.allow_credentials,
-        allow_methods=settings.cors.allow_methods,
+        allow_method=settings.cors.allow_method,
         allow_headers=settings.cors.allow_headers,
     )
 
     app.add_middleware(
         HTTPLatencyMetricsMiddleware,  # type: ignore
         container=container
+    )
+
+    app.add_middleware(
+        TrustedHostMiddleware, # type: ignore
+        allowed_hosts=settings.server.allowed_hosts,
     )
 
     app.include_router(users_router)

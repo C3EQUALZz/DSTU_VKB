@@ -83,6 +83,7 @@ class ServerSettings(CommonSettings):
     worker_class: str = Field(alias="SERVER_WORKER_CLASS")
     log_level: str = Field(alias="SERVER_LOG_LEVEL")
     log_file: str = Field(alias="SERVER_LOG_FILE")
+    allowed_host: str = Field(alias="ALLOWED_HOST")
 
 
 class CORSSettings(CommonSettings):

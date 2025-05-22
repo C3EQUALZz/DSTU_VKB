@@ -21,6 +21,6 @@ class VerifyUserCredentialsCommandHandler(AuthCommandHandler[VerifyUserCredentia
             raise UserNotFoundException(command.email)
 
         if not validate_password(password=command.password, hashed_password=user.password.as_generic_type()):
-            raise InvalidPasswordError
+            raise InvalidPasswordError(command.password)
 
         return user

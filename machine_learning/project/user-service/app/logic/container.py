@@ -26,6 +26,8 @@ from app.infrastructure.repositories.cache.idempotency.commands.redis_cache impo
     RedisIdempotencyCommandCacheRepository
 from app.infrastructure.repositories.cache.idempotency.events.base import BaseIdempotencyEventCacheRepository
 from app.infrastructure.repositories.cache.idempotency.events.redis_cache import RedisIdempotencyEventCacheRepository
+from app.infrastructure.repositories.cache.security.base import BaseSecurityCacheRepository
+from app.infrastructure.repositories.cache.security.redis_cache import RedisCacheSecurityRepository
 from app.infrastructure.services.idempotency import IdempotencyService
 from app.infrastructure.uow.users.alchemy import SQLAlchemyUsersUnitOfWork
 from app.infrastructure.uow.users.base import UsersUnitOfWork
@@ -80,6 +82,7 @@ class HandlerProvider(Provider):
                 UserFailedLinkedTelegramEvent: [UserFailedLinkedTelegramEventHandler]
             },
         )
+
 
 class MonitoringProvider(Provider):
     settings = from_context(provides=Settings, scope=Scope.APP)
@@ -179,6 +182,10 @@ class CacheProvider(Provider):
     @provide(scope=Scope.APP)
     async def get_redis_client(self, pool: ConnectionPool) -> Redis:
         return Redis.from_pool(pool)
+
+    @provide(scope=Scope.APP)
+    async def get_security_cache_repository(self, client: Redis) -> BaseSecurityCacheRepository:
+        return RedisCacheSecurityRepository(redis_client=client)
 
     @provide(scope=Scope.APP)
     async def get_event_cache_idempotency_repository(self, client: Redis) -> BaseIdempotencyEventCacheRepository:
