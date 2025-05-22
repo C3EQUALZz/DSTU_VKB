@@ -11,5 +11,4 @@ class UserEntity(BaseEntity):
     surname: str
     email: Email
     password: Password
-    is_verified: bool = field(default=False, kw_only=True)
     role: Role = field(default_factory=lambda: Role("user"))

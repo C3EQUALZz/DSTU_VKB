@@ -5,6 +5,7 @@ services:
     volumes:
       - mysql_data_2nd_laboratory_correct:/var/lib/mysql
       - ./resources/certs:/etc/mysql/certs
+      - ./resources/database:/docker-entrypoint-initdb.d/:ro
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
