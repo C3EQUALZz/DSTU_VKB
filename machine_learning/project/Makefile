@@ -51,9 +51,14 @@ down-telegram:
 	cd telegram-service && $(DC) --env-file .env -f docker-compose-override.yaml down
 
 # 👉 Поднять всё (по порядку)
-all: network grafana broker image user telegram
+production: network grafana broker image user telegram
+
+all: network broker image user telegram
+
+down-all: down-user down-broker down-image down-telegram
+	@docker network rm $(NETWORK_NAME) || true
 
 # 👉 Остановить все сервисы
-down-all: down-image down-grafana down-user down-broker down-text down-telegram
+down-production: down-image down-grafana down-user down-broker down-text down-telegram
 	@docker network rm $(NETWORK_NAME) || true
 	@docker network rm $(GRAFANA_NETWORK_NAME) || true
