@@ -3,7 +3,7 @@ import pathlib
 from abc import ABC
 from functools import lru_cache
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Literal
 
 from pydantic import Field, RedisDsn, field_validator
 from pydantic_settings import (
@@ -180,6 +180,14 @@ class CORSSettings(CommonSettings):
     allow_methods: list[str] = Field(alias="CORS_ALLOW_METHODS")
 
 
+class SentrySettings(CommonSettings):
+    dsn: str = Field(alias="SENTRY_DSN")
+    send_default_pii: bool = Field(alias="SENTRY_SEND_DEFAULT_PII", default=True)
+    traces_sample_rate: float = Field(alias="SENTRY_TRACES_SAMPLE_RATE", default=1.0)
+    profile_session_sample_rate: float = Field(alias="SENTRY_PROFILE_SESSION_SAMPLE_RATE", default=1.0)
+    profile_lifecycle: Literal["manual", "trace"] = Field(alias="SENTRY_PROFILE_LIFECYCLE", default="trace")
+
+
 class Settings(CommonSettings):
     """
     Settings class which encapsulates logic of settings from other classes.
@@ -192,6 +200,7 @@ class Settings(CommonSettings):
     scheduler: SchedulerSettings = SchedulerSettings()
     cors: CORSSettings = CORSSettings()
     server: ServerSettings = ServerSettings()
+    sentry: SentrySettings = SentrySettings()
     project_dir: Path = pathlib.Path(__file__).parent.parent.parent.parent
 
 

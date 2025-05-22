@@ -1,5 +1,6 @@
 import contextlib
 import logging
+import sentry_sdk
 from logging import Logger
 from typing import TYPE_CHECKING, AsyncGenerator, Final
 
@@ -49,6 +50,22 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
 def create_app() -> FastAPI:
     container: AsyncContainer = get_container()
     settings: Settings = get_settings()
+
+    # sentry_sdk.init(
+    #     dsn=settings.sentry.dsn,
+    #     # Add data like request headers and IP for users,
+    #     # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
+    #     send_default_pii=settings.sentry.send_default_pii,
+    #     # Set traces_sample_rate to 1.0 to capture 100%
+    #     # of transactions for tracing.
+    #     traces_sample_rate=settings.sentry.traces_sample_rate,
+    #     # Set profile_session_sample_rate to 1.0 to profile 100%
+    #     # of profile sessions.
+    #     profile_session_sample_rate=settings.sentry.profile_session_sample_rate,
+    #     # Set profile_lifecycle to "trace" to automatically
+    #     # run the profiler on when there is an active transaction
+    #     profile_lifecycle=settings.sentry.profile_lifecycle,
+    # )
 
     app: FastAPI = FastAPI(
         title="Microservice backend for image service",
