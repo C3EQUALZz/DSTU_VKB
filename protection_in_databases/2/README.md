@@ -39,3 +39,7 @@
 > За основу я взял вот [это](https://github.com/jGundermann/ssl-mysql)... Спасибо, что выложил свое решение.
 > Тут если проблемы с cертификатами будут [тык](https://tecadmin.net/mysql-connection-error-certificate-verify-failed/)
 > Настройки с [алхимией](https://docs.sqlalchemy.org/en/20/dialects/mysql.html#ssl-connections)
+
+> [!NOTE]
+> Если хотите показать неправильный сертификат, то просто в `client-key` можете переделать что-то.
+> У вас вылетит ошибка подключения - это правильное поведение. 
