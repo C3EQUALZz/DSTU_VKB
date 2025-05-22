@@ -27,12 +27,12 @@ class PyMySQLAbstractUnitOfWork(AbstractUnitOfWork):
             traceback: TracebackException | None,
     ) -> None:
         super().__exit__(exc_type, exc_value, traceback)
-        self._connection.close()
+        # self._connection.close()
 
-    async def commit(self) -> None:
+    def commit(self) -> None:
         self._connection.commit()
 
-    async def rollback(self) -> None:
+    def rollback(self) -> None:
         """
         Rollbacks all uncommited changes.
 

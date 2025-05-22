@@ -1,8 +1,6 @@
 from abc import ABC, abstractmethod
 from traceback import TracebackException
-from typing import Self, Final
-
-from pymysql import Connection
+from typing import Self
 
 
 class AbstractUnitOfWork(ABC):

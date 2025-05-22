@@ -18,7 +18,7 @@ class CreateUserCommandHandler(UsersCommandHandler[CreateUserCommand]):
         """
         Handler for creating a new user.
         """
-        async with self._uow as uow:
+        with self._uow as uow:
             user_service: UsersService = UsersService(uow=uow)
 
             new_user: UserEntity = UserEntity(
@@ -42,7 +42,7 @@ class UpdateUserCommandHandler(UsersCommandHandler[UpdateUserCommand]):
         :param command: command to execute which must be linked in app/logic/handlers/__init__
         :return: domain entity of the updated book
         """
-        async with self._uow as uow:
+        with self._uow as uow:
             user_service: UsersService = UsersService(uow=uow)
 
             if not user_service.check_existence(oid=command.user_id):
@@ -61,7 +61,7 @@ class UpdateUserCommandHandler(UsersCommandHandler[UpdateUserCommand]):
 
 class DeleteUserCommandHandler(UsersCommandHandler[DeleteUserCommand]):
     async def __call__(self, command: UpdateUserCommand) -> None:
-        async with self._uow as uow:
+        with self._uow as uow:
             user_service: UsersService = UsersService(uow=uow)
 
             if not user_service.check_existence(oid=command.user_id):
