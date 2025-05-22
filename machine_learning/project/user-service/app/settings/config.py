@@ -135,6 +135,7 @@ class Settings(CommonSettings):
     server: ServerSettings = ServerSettings()
     cors: CORSSettings = CORSSettings()
     telegram: TelegramSettings = TelegramSettings()
+    project_dir: Path = Path(__file__).parent.parent.parent.parent
 
 
 @lru_cache(1)

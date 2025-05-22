@@ -1,12 +1,12 @@
 import logging
 from functools import lru_cache
-from pathlib import Path
 from typing import cast, Final
 
 from authx import AuthXConfig, AuthX
 from dishka import Provider, Scope, from_context, make_async_container, provide, AsyncContainer
 from faststream.kafka import KafkaBroker
-from prometheus_client import CollectorRegistry, multiprocess
+from faststream.kafka.prometheus import KafkaPrometheusMiddleware
+from prometheus_client import CollectorRegistry
 from redis.asyncio import ConnectionPool, Redis
 from sqlalchemy.ext.asyncio import (
     AsyncEngine,
@@ -88,13 +88,13 @@ class MonitoringProvider(Provider):
     async def get_collector_registry(self, settings: Settings) -> CollectorRegistry:
         registry: CollectorRegistry = CollectorRegistry()
 
-        path_to_multiprocessing_dir: Path = settings.project_dir / settings.server.multiprocess_dir / "app"
-        path_to_multiprocessing_dir.mkdir(exist_ok=True, parents=True)
-
-        multiprocess.MultiProcessCollector(
-            registry,
-            path=path_to_multiprocessing_dir
-        )
+        # path_to_multiprocessing_dir: Path = settings.project_dir / settings.server.multiprocess_dir / "app"
+        # path_to_multiprocessing_dir.mkdir(exist_ok=True, parents=True)
+        #
+        # multiprocess.MultiProcessCollector(
+        #     registry,
+        #     path=path_to_multiprocessing_dir
+        # )
 
         return registry
 
@@ -119,8 +119,16 @@ class BrokerProvider(Provider):
         )
 
     @provide(scope=Scope.APP)
-    async def get_faststream_kafka_broker(self, settings: Settings) -> KafkaBroker:
-        broker: KafkaBroker = KafkaBroker(settings.broker.url)
+    async def get_faststream_kafka_broker(self, settings: Settings, registry: CollectorRegistry) -> KafkaBroker:
+        broker: KafkaBroker = KafkaBroker(
+            settings.broker.url,
+            middlewares=[
+                KafkaPrometheusMiddleware(
+                    registry=registry,
+                    app_name="faststream-image-service",
+                ),
+            ]
+        )
         broker.include_router(user_router)
         return broker
 
@@ -140,7 +148,7 @@ class BrokerProvider(Provider):
                     settings.broker.user_successfully_linked_telegram_topic),
                 settings.broker.user_failed_link_telegram_topic: broker.publisher(
                     settings.broker.user_failed_link_telegram_topic),
-            }
+            },
         )
 
 

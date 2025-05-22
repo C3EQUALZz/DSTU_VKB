@@ -14,7 +14,7 @@ class PrometheusMetricsClient(
 ):
     def __init__(self, registry: CollectorRegistry, service_name: str) -> None:
         self._registry: Final[CollectorRegistry] = registry
-        PrometheusHTTPMixin.__init__(self, registry=registry)
+        PrometheusHTTPMixin.__init__(self, registry=registry, service_name=service_name)
         PrometheusDatabaseMixin.__init__(self, registry=registry, service_name=service_name)
 
     @override

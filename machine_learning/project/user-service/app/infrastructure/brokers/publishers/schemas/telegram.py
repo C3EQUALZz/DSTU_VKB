@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 
-from app.infrastructure.adapters.alchemy.type_decorators import StringUUID
+from app.application.api.v1.utils.schemas import StringUUID
 
 
 class SendMessageToTelegramSchema(BaseModel):
