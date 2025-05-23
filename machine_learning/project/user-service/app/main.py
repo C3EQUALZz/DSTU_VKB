@@ -80,7 +80,7 @@ def create_app() -> FastAPI:
         CORSMiddleware,  # type: ignore
         allow_origins=settings.cors.allow_origins,  # Разрешить все домены
         allow_credentials=settings.cors.allow_credentials,
-        allow_method=settings.cors.allow_method,
+        allow_methods=settings.cors.allow_methods,
         allow_headers=settings.cors.allow_headers,
     )
 
