@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RETRO TERMINAL</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Courier New', monospace;
+      background-color: #000;
+      color: #00ff00;
+      line-height: 1.4;
+      padding: 30px;
+      overflow-x: hidden;
+      font-size: 18px;
+    }
+
+    .screen {
+      background-color: #000;
+      border: 15px solid #333;
+      border-radius: 10px;
+      box-shadow: 0 0 0 6px #00ff00, 
+                 0 0 30px #00ff00,
+                 0 0 60px rgba(0, 255, 0, 0.3);
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 10px;
+      position: relative;
+    }
+
+    .screen::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        rgba(0, 255, 0, 0.1) 0.1em, 
+        transparent 0.1em
+      );
+      background-size: 100% 1.4em;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .header {
+      border-bottom: 2px solid #00ff00;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      font-size: 22px;
+    }
+
+    .terminal-window {
+      border: 2px solid #00ff00;
+      margin: 20px;
+      background-color: rgba(0, 0, 0, 0.7);
+      position: relative;
+      overflow: hidden;
+      min-height: 250px;
+    }
+
+    .terminal-title {
+      background-color: #003300;
+      color: #00ff00;
+      padding: 8px 15px;
+      font-size: 18px;
+      border-bottom: 2px solid #00ff00;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .terminal-body {
+      padding: 20px;
+      min-height: 220px;
+      position: relative;
+    }
+
+    .blinking-cursor {
+      animation: blink 1s step-end infinite;
+      font-weight: bold;
+    }
+
+    @keyframes blink {
+      from, to { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .prompt {
+      color: #00ff00;
+      margin-bottom: 10px;
+    }
+
+    .command {
+      color: #ffffff;
+    }
+
+    .output {
+      margin-top: 15px;
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
+
+    .error {
+      color: #ff0000;
+      text-shadow: 0 0 8px #ff0000;
+      animation: error-blink 0.5s steps(2) 3;
+    }
+
+    @keyframes error-blink {
+      from, to { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .success {
+      color: #00ff00;
+      text-shadow: 0 0 8px #00ff00;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 25px;
+      margin: 30px 20px;
+    }
+
+    .scanlines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        rgba(0, 0, 0, 0.1) 50%, 
+        transparent 50%
+      );
+      background-size: 100% 6px;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    .noise {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAB/SURBVGhD7c4xDQAgDABR9t+5jQ4OQhqS+oI7tJXkzExmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZvYx+wG0rQv4Q3J5JQAAAABJRU5ErkJggg==');
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 99;
+    }
+
+    .glow-effect {
+      text-shadow: 0 0 8px #00ff00;
+    }
+
+    .button {
+      background: #003300;
+      border: 2px solid #00ff00;
+      color: #00ff00;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+      margin: 0 15px;
+      transition: all 0.3s;
+    }
+
+    .button:hover {
+      background: #005500;
+      text-shadow: 0 0 8px #00ff00;
+    }
+
+    .button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .controls {
+      text-align: center;
+      margin: 30px;
+    }
+
+    .status-info {
+      color: #00ff00;
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 20px;
+    }
+
+    /* Стили для кнопки регистрации */
+    .register-btn {
+      background: #003300;
+      border: 2px solid #00ff00;
+      color: #00ff00;
+      padding: 15px 30px;
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      font-size: 20px;
+      margin: 30px auto;
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s;
+      box-shadow: 0 0 15px #00ff00;
+      width: 80%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    .register-btn:hover {
+      background: #005500;
+      text-shadow: 0 0 15px #00ff00;
+      box-shadow: 0 0 30px #00ff00;
+      transform: translateY(-2px);
+    }
+
+    .register-btn::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        to bottom right,
+        transparent 45%,
+        rgba(0, 255, 0, 0.1) 50%,
+        transparent 55%
+      );
+      transform: rotate(45deg);
+      animation: shine 3s infinite linear;
+    }
+
+    @keyframes shine {
+      0% { transform: translateX(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) rotate(45deg); }
+    }
+
+    .register-btn::after {
+      content: "≫";
+      position: absolute;
+      right: 20px;
+      opacity: 0;
+      transition: all 0.3s;
+    }
+
+    .register-btn:hover::after {
+      opacity: 1;
+      right: 15px;
+    }
+
+    /* Стили для полей ввода */
+    .input-field {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid #00ff00;
+      color: #00ff00;
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+      width: 70%;
+      margin-left: 10px;
+      outline: none;
+      caret-color: #00ff00;
+    }
+
+    .input-field:focus {
+      border-bottom: 1px solid #ffffff;
+    }
+
+    .form-line {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .form-container {
+      margin-top: 20px;
+    }
+
+    .hidden {
+      display: none;
+    }
+    
+    /* Стили для прогресс-бара */
+    .progress-container {
+      width: 100%;
+      background-color: #002200;
+      margin: 20px 0;
+      border: 1px solid #00ff00;
+    }
+    
+    .progress-bar {
+      height: 20px;
+      background-color: #00aa00;
+      width: 0%;
+      transition: width 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .progress-bar::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(0, 255, 0, 0.3) 50%,
+        transparent 100%
+      );
+      animation: progressShine 2s infinite;
+    }
+    
+    @keyframes progressShine {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    
+    .progress-text {
+      text-align: center;
+      margin-top: 5px;
+      font-size: 14px;
+    }
+    
+    /* Стили для кнопки телеграм */
+    .telegram-btn {
+      display: inline-block;
+      background: #0088cc;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 20px;
+      transition: all 0.3s;
+      border: 1px solid #00aaff;
+    }
+    
+    .telegram-btn:hover {
+      background: #00aaff;
+      box-shadow: 0 0 10px #00aaff;
+    }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="scanlines"></div>
+  
+  <div class="screen">
+    <div class="header">
+      <div>RETRO TERMINAL v1.0</div>
+      <div>SYSTEM READY</div>
+    </div>
+
+    <!-- Кнопка регистрации -->
+    <button class="register-btn" id="registration-btn" onclick="startRegistration()">
+      INITIATE REGISTRATION SEQUENCE
+    </button>
+
+    <!-- Начальный экран -->
+    <div id="initial-screen">
+      <div class="terminal-window">
+        <div class="terminal-title">
+          <span>MAINFRAME CONSOLE</span>
+          <span>USER: ADMIN</span>
+        </div>
+        <div class="terminal-body" id="main-terminal">
+          <div class="prompt">> <span class="command">welcome</span></div>
+          <div class="output">
+    ██████╗ ███████╗████████╗██████╗  ██████╗ 
+    ██╔══██╗██╔════╝╚══██╔══╝██╔══██╗██╔═══██╗
+    ██████╔╝█████╗     ██║   ██████╔╝██║   ██║
+    ██╔══██╗██╔══╝     ██║   ██╔══██╗██║   ██║
+    ██║  ██║███████╗   ██║   ██║  ██║╚██████╔╝
+    ╚═╝  ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ 
+    
+    > SYSTEM INITIALIZATION COMPLETE
+    > ALL MODULES OFFLINE
+    > TYPE "START" TO BEGIN
+          </div>
+          <div class="prompt">> <span class="command blinking-cursor">_</span></div>
+        </div>
+      </div>
+
+      <div class="status-info" id="module-counter">
+        MODULES: 1/7 ACTIVE
+      </div>
+
+      <div class="controls">
+        <button class="button" onclick="addTerminal()" id="add-btn">ADD MODULE</button>
+        <button class="button" onclick="clearAll()">CLEAR ALL</button>
+      </div>
+
+      <div class="grid" id="modules-grid">
+        <!-- Модули будут добавляться здесь -->
+      </div>
+    </div>
+
+    <!-- Экран регистрации (изначально скрыт) -->
+    <div id="registration-screen" class="hidden">
+      <div class="terminal-window">
+        <div class="terminal-title">
+          <span>REGISTRATION TERMINAL</span>
+          <span>STATUS: ACTIVE</span>
+        </div>
+        <div class="terminal-body" id="registration-terminal">
+          <!-- Содержимое будет генерироваться динамически -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Конфигурация текста для разных модулей
+    const moduleConfigs = [
+      {
+        title: "ART GENERATOR",
+        status: "ACTIVE",
+        commands: [
+          "generate --style=cyberpunk --resolution=4k",
+          "processing...",
+          "rendering complete",
+          "output saved to /gallery/cyberpunk_001.png"
+        ],
+        output: [
+          "████████████████████",
+          "██░░██░░██░░██░░████",
+          "████░░██░░██░░██░░██",
+          "██░░██░░██░░██░░████",
+          "████████████████████"
+        ].join('\n')
+      },
+      {
+        title: "TEXT PROCESSOR",
+        status: "ACTIVE",
+        commands: [
+          "analyze --file=document.txt",
+          "processing text...",
+          "sentiment: positive",
+          "key themes: technology, future, innovation"
+        ],
+        output: [
+          "░░░░░░░░░░░░░░░░░░░░",
+          "░░█░░█░░█░░█░░█░░█░░",
+          "░░░░░░░░░░░░░░░░░░░░",
+          "░░█░░█░░█░░█░░█░░█░░",
+          "░░░░░░░░░░░░░░░░░░░░"
+        ].join('\n')
+      },
+      {
+        title: "DATA ANALYZER",
+        status: "STANDBY",
+        commands: [
+          "query --dataset=financial",
+          "analyzing...",
+          "trends detected",
+          "recommendation: invest in AI sector"
+        ],
+        output: [
+          "█░█░█░█░█░█░█░█░█░█",
+          "░█░█░█░█░█░█░█░█░█░",
+          "█░█░█░█░█░█░█░█░█░█",
+          "░█░█░█░█░█░█░█░█░█░",
+          "█░█░█░█░█░█░█░█░█░█"
+        ].join('\n')
+      },
+      {
+        title: "NEURAL CORE",
+        status: "ACTIVE",
+        commands: [
+          "optimize --layer=all",
+          "recalculating weights...",
+          "performance improved by 12%",
+          "ready for next task"
+        ],
+        output: [
+          "░█░█░█░█░█░█░█░█░█░",
+          "█░█░█░█░█░█░█░█░█░█",
+          "░█░█░█░█░█░█░█░█░█░",
+          "█░█░█░█░█░█░█░█░█░█",
+          "░█░█░█░█░█░█░█░█░█░"
+        ].join('\n')
+      },
+      {
+        title: "MEMORY UNIT",
+        status: "ACTIVE",
+        commands: [
+          "allocate --size=4GB",
+          "memory allocated",
+          "swap: 12% used",
+          "cache: cleared"
+        ],
+        output: [
+          "█░░█░░█░░█░░█░░█░░█",
+          "░░█░░█░░█░░█░░█░░█░",
+          "█░░█░░█░░█░░█░░█░░█",
+          "░░█░░█░░█░░█░░█░░█░",
+          "█░░█░░█░░█░░█░░█░░█"
+        ].join('\n')
+      },
+      {
+        title: "SECURITY MODULE",
+        status: "ACTIVE",
+        commands: [
+          "scan --deep --threats",
+          "scanning system...",
+          "no threats detected",
+          "firewall: active"
+        ],
+        output: [
+          "░░░░░░░░░░░░░░░░░░░░",
+          "░█░█░█░█░█░█░█░█░█░",
+          "░░░░░░░░░░░░░░░░░░░░",
+          "░█░█░█░█░█░█░█░█░█░",
+          "░░░░░░░░░░░░░░░░░░░░"
+        ].join('\n')
+      }
+    ];
+
+    const MAX_MODULES = 7;
+    let activeModules = 1; // Главный модуль уже активен
+    let currentFieldIndex = 0;
+    let formFields = [];
+    let typingInterval;
+    let instantDisplay = false;
+    let isRegistrationActive = false; // Флаг для отслеживания активной регистрации
+
+    // Эффект мерцания как у старых мониторов
+    setInterval(() => {
+      const intensity = Math.random() * 0.1;
+      document.querySelector('.screen').style.boxShadow = 
+        `0 0 0 6px #00ff00, 0 0 30px #00ff00, 0 0 ${30 + intensity * 70}px rgba(0, 255, 0, ${0.3 + intensity})`;
+    }, 100);
+
+    // Обновление счетчика модулей
+    function updateCounter() {
+      const counter = document.getElementById('module-counter');
+      counter.textContent = `MODULES: ${activeModules}/${MAX_MODULES} ACTIVE`;
+      
+      // Отключаем кнопку при достижении максимума
+      document.getElementById('add-btn').disabled = activeModules >= MAX_MODULES;
+    }
+
+    // Показать ошибку в главном терминале
+    function showError(message) {
+      const terminal = document.getElementById('registration-terminal');
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'output error';
+      errorDiv.textContent = `> ERROR: ${message}`;
+      terminal.appendChild(errorDiv);
+      
+      // Через 3 секунды убираем анимацию ошибки
+      setTimeout(() => {
+        errorDiv.classList.remove('error');
+      }, 3000);
+    }
+
+    // Показать успешное сообщение
+    function showSuccess(message) {
+      const terminal = document.getElementById('registration-terminal');
+      const successDiv = document.createElement('div');
+      successDiv.className = 'output success';
+      successDiv.textContent = `> ${message}`;
+      terminal.appendChild(successDiv);
+    }
+
+    // Добавление нового терминала
+    function addTerminal(config = null) {
+      if (activeModules >= MAX_MODULES) {
+        showError("MAXIMUM MODULES REACHED");
+        return;
+      }
+      
+      const grid = document.getElementById('modules-grid');
+      
+      // Используем переданную конфигурацию или берем следующую из预设
+      const cfg = config || moduleConfigs[activeModules % moduleConfigs.length];
+      
+      const terminal = document.createElement('div');
+      terminal.className = 'terminal-window';
+      terminal.innerHTML = `
+        <div class="terminal-title">
+          <span>${cfg.title}</span>
+          <span>${cfg.status}</span>
+        </div>
+        <div class="terminal-body">
+          ${cfg.commands.map((cmd, i) => `
+            <div class="prompt">> <span class="command">${i === 0 ? cmd : ''}</span></div>
+            ${i > 0 ? `<div class="output">${cmd}</div>` : ''}
+          `).join('')}
+          <div class="output">${cfg.output}</div>
+          <div class="prompt blinking-cursor">_</div>
+        </div>
+      `;
+      
+      grid.appendChild(terminal);
+      animateTerminal(terminal, cfg);
+      activeModules++;
+      updateCounter();
+      
+      // Обновляем главный терминал
+      updateMainTerminal();
+    }
+
+    // Анимация терминала
+    function animateTerminal(terminal, config) {
+      const body = terminal.querySelector('.terminal-body');
+      const cursor = terminal.querySelector('.blinking-cursor');
+      const commands = config.commands.slice(1); // Пропускаем первую команду
+      
+      let i = 0;
+      const typeWriter = () => {
+        if (i < commands.length) {
+          const div = document.createElement('div');
+          div.className = 'output';
+          div.textContent = commands[i];
+          cursor.insertAdjacentElement('beforebegin', div);
+          
+          // Добавляем новую строку с промптом
+          const prompt = document.createElement('div');
+          prompt.className = 'prompt';
+          prompt.innerHTML = '> <span class="command blinking-cursor">_</span>';
+          cursor.insertAdjacentElement('beforebegin', prompt);
+          
+          i++;
+          setTimeout(typeWriter, 1000 + Math.random() * 1500);
+        }
+      };
+      
+      setTimeout(typeWriter, 2000);
+    }
+
+    // Обновление главного терминала
+    function updateMainTerminal() {
+      const mainTerminal = document.getElementById('main-terminal');
+      const cursor = mainTerminal.querySelector('.blinking-cursor');
+      
+      // Удаляем старый курсор
+      const oldCursor = mainTerminal.querySelector('.blinking-cursor');
+      if (oldCursor) oldCursor.classList.remove('blinking-cursor');
+      
+      // Добавляем информацию о модуле
+      const infoDiv = document.createElement('div');
+      infoDiv.className = 'output';
+      infoDiv.textContent = `> MODULE ${activeModules-1} ACTIVATED`;
+      cursor.insertAdjacentElement('beforebegin', infoDiv);
+      
+      // Добавляем новый курсор
+      const newPrompt = document.createElement('div');
+      newPrompt.className = 'prompt';
+      newPrompt.innerHTML = '> <span class="command blinking-cursor">_</span>';
+      cursor.insertAdjacentElement('beforebegin', newPrompt);
+      
+      // Удаляем старую строку с курсором
+      cursor.remove();
+    }
+
+    // Очистка всех модулей
+    function clearAll() {
+      document.getElementById('modules-grid').innerHTML = '';
+      activeModules = 1; // Остается только главный модуль
+      updateCounter();
+      updateMainTerminal();
+      
+      // Добавляем сообщение в главный терминал
+      const mainTerminal = document.getElementById('main-terminal');
+      const cursor = mainTerminal.querySelector('.blinking-cursor');
+      
+      const infoDiv = document.createElement('div');
+      infoDiv.className = 'output';
+      infoDiv.textContent = '> ALL MODULES DEACTIVATED';
+      cursor.insertAdjacentElement('beforebegin', infoDiv);
+    }
+
+    // Функция для запуска процесса регистрации
+    function startRegistration() {
+      if (isRegistrationActive) return; // Если регистрация уже активна, ничего не делаем
+      
+      isRegistrationActive = true;
+      document.getElementById('registration-btn').disabled = true;
+      
+      // Переключаем экраны
+      document.getElementById('initial-screen').classList.add('hidden');
+      document.getElementById('registration-screen').classList.remove('hidden');
+      
+      const terminal = document.getElementById('registration-terminal');
+      terminal.innerHTML = '';
+      
+      // Создаем эффект "печатающегося" текста
+      const messages = [
+        "> INITIATING REGISTRATION SEQUENCE",
+        "> CONNECTING TO MAINFRAME...",
+        "> VERIFYING CREDENTIALS...",
+        "> REGISTRATION PROTOCOL ACTIVE",
+        "> ENTER USER CREDENTIALS:"
+      ];
+      
+      if (instantDisplay) {
+        // Если включен мгновенный вывод - показываем все сразу
+        messages.forEach(msg => {
+          const div = document.createElement('div');
+          div.className = 'output';
+          div.textContent = msg;
+          terminal.appendChild(div);
+        });
+        showRegistrationForm();
+      } else {
+        // Иначе печатаем последовательно
+        let i = 0;
+        typingInterval = setInterval(() => {
+          if (i < messages.length) {
+            const div = document.createElement('div');
+            div.className = 'output';
+            div.textContent = messages[i];
+            terminal.appendChild(div);
+            i++;
+          } else {
+            clearInterval(typingInterval);
+            showRegistrationForm();
+          }
+        }, 800);
+      }
+    }
+
+    // Показать форму регистрации
+    function showRegistrationForm() {
+      const terminal = document.getElementById('registration-terminal');
+      
+      // Создаем форму регистрации
+      const form = document.createElement('div');
+      form.className = 'form-container';
+      form.innerHTML = `
+        <div class="output">
+          ████████████████████████████
+          █                           █
+          █    USER REGISTRATION      █
+          █                           █
+          ████████████████████████████
+        </div>
+        <div class="form-line">
+          <span class="prompt">> USERNAME:</span>
+          <input type="text" class="input-field" id="username" autocomplete="off">
+          <span class="blinking-cursor">_</span>
+        </div>
+        <div class="form-line">
+          <span class="prompt">> PASSWORD:</span>
+          <input type="password" class="input-field" id="password" autocomplete="off">
+          <span class="blinking-cursor">_</span>
+        </div>
+        <div class="form-line">
+          <span class="prompt">> CONFIRM:</span>
+          <input type="password" class="input-field" id="confirm" autocomplete="off">
+          <span class="blinking-cursor">_</span>
+        </div>
+        <div class="output" style="margin-top:20px;">
+          > PRESS [ENTER] TO SUBMIT
+          > PRESS [ESC] TO CANCEL
+        </div>
+      `;
+      
+      // Добавляем форму в терминал
+      terminal.appendChild(form);
+      
+      // Получаем ссылки на поля ввода
+      formFields = [
+        document.getElementById('username'),
+        document.getElementById('password'),
+        document.getElementById('confirm')
+      ];
+      
+      // Устанавливаем фокус на первое поле
+      currentFieldIndex = 0;
+      formFields[currentFieldIndex].focus();
+      
+      // Добавляем обработчики событий
+      formFields.forEach((field, index) => {
+        // При клике на поле устанавливаем его как активное
+        field.addEventListener('click', () => {
+          currentFieldIndex = index;
+          field.focus();
+        });
+        
+        // Обработка нажатия Enter для перехода между полями
+        field.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            if (index < formFields.length - 1) {
+              currentFieldIndex = index + 1;
+              formFields[currentFieldIndex].focus();
+            } else {
+              submitRegistration();
+            }
+          } else if (e.key === 'Escape') {
+            e.preventDefault();
+            cancelRegistration();
+          } else if (e.key === 'Tab') {
+            e.preventDefault();
+            const nextIndex = e.shiftKey ? index - 1 : index + 1;
+            if (nextIndex >= 0 && nextIndex < formFields.length) {
+              currentFieldIndex = nextIndex;
+              formFields[currentFieldIndex].focus();
+            }
+          }
+        });
+      });
+      
+      // Обработка нажатия Esc для всей формы
+      document.addEventListener('keydown', handleGlobalKeyDown);
+    }
+
+    // Обработчик глобальных клавиш
+    function handleGlobalKeyDown(e) {
+      if (e.key === 'Escape') {
+        cancelRegistration();
+      } else if (e.key === 'Enter' && currentFieldIndex === formFields.length - 1) {
+        submitRegistration();
+      }
+    }
+
+    // Отмена регистрации
+    function cancelRegistration() {
+      clearInterval(typingInterval);
+      document.removeEventListener('keydown', handleGlobalKeyDown);
+      isRegistrationActive = false;
+      document.getElementById('registration-btn').disabled = false;
+      
+      // Переключаем обратно на начальный экран
+      document.getElementById('initial-screen').classList.remove('hidden');
+      document.getElementById('registration-screen').classList.add('hidden');
+    }
+
+    // Отправка формы регистрации
+    function submitRegistration() {
+      clearInterval(typingInterval);
+      document.removeEventListener('keydown', handleGlobalKeyDown);
+      
+      const username = formFields[0].value;
+      const password = formFields[1].value;
+      const confirm = formFields[2].value;
+      
+      const terminal = document.getElementById('registration-terminal');
+      
+      // Валидация
+      if (!username || !password || !confirm) {
+        showError("ALL FIELDS REQUIRED");
+        return;
+      }
+      
+      if (password !== confirm) {
+        showError("PASSWORDS DO NOT MATCH");
+        return;
+      }
+      
+      if (password.length < 7) {
+        showError("PASSWORD TOO SHORT (MIN 6 CHARS)");
+        return;
+      }
+      
+      // Если все ок - показываем успешное сообщение
+      showSuccess("REGISTRATION COMPLETE");
+      showSuccess(`WELCOME, ${username.toUpperCase()}`);
+      
+      // Добавляем курсор
+      const cursor = document.createElement('div');
+      cursor.className = 'prompt blinking-cursor';
+      cursor.innerHTML = '> _';
+      terminal.appendChild(cursor);
+      
+      // Запускаем процесс подключения к Telegram боту
+      setTimeout(() => {
+        connectToTelegramBot(username);
+      }, 1500);
+    }
+
+    // Функция подключения к Telegram боту
+    function connectToTelegramBot(username) {
+      const terminal = document.getElementById('registration-terminal');
+      
+      // Очищаем терминал
+      terminal.innerHTML = '';
+      
+      // Добавляем сообщение о подключении
+      const messages = [
+        "> INITIATING TELEGRAM CONNECTION",
+        "> CONNECTING TO https://t.me/NeironchikBot...",
+        "> ESTABLISHING SECURE CHANNEL...",
+        "> AUTHENTICATING USER..."
+      ];
+      
+      messages.forEach(msg => {
+        const div = document.createElement('div');
+        div.className = 'output';
+        div.textContent = msg;
+        terminal.appendChild(div);
+      });
+      
+      // Создаем прогресс-бар
+      const progressContainer = document.createElement('div');
+      progressContainer.className = 'progress-container';
+      progressContainer.innerHTML = `
+        <div class="progress-bar" id="progress-bar"></div>
+        <div class="progress-text" id="progress-text">CONNECTING: 0%</div>
+      `;
+      terminal.appendChild(progressContainer);
+      
+      // Анимируем прогресс-бар
+      const progressBar = document.getElementById('progress-bar');
+      const progressText = document.getElementById('progress-text');
+      let progress = 0;
+      
+      const progressInterval = setInterval(() => {
+        progress += Math.random() * 10;
+        if (progress > 100) progress = 100;
+        
+        progressBar.style.width = `${progress}%`;
+        progressText.textContent = `CONNECTING: ${Math.floor(progress)}%`;
+        
+        if (progress === 100) {
+          clearInterval(progressInterval);
+          
+          // Показываем финальное сообщение
+          setTimeout(() => {
+            const successDiv = document.createElement('div');
+            successDiv.className = 'output success';
+            successDiv.textContent = "> CONNECTION ESTABLISHED SUCCESSFULLY";
+            terminal.appendChild(successDiv);
+            
+            const welcomeDiv = document.createElement('div');
+            welcomeDiv.className = 'output';
+            welcomeDiv.textContent = `> WELCOME TO NEIRONCHIKBOT, ${username.toUpperCase()}`;
+            terminal.appendChild(welcomeDiv);
+            
+            // Добавляем кнопку для перехода в Telegram
+            const telegramBtn = document.createElement('a');
+            telegramBtn.href = 'https://t.me/NeironchikBot';
+            telegramBtn.className = 'telegram-btn';
+            telegramBtn.textContent = 'OPEN TELEGRAM';
+            telegramBtn.target = '_blank';
+            terminal.appendChild(telegramBtn);
+            
+            // Добавляем курсор
+            const cursor = document.createElement('div');
+            cursor.className = 'prompt blinking-cursor';
+            cursor.innerHTML = '> _';
+            terminal.appendChild(cursor);
+            
+            // Через 5 секунд возвращаем на начальный экран
+            setTimeout(() => {
+              isRegistrationActive = false;
+              document.getElementById('registration-btn').disabled = false;
+              document.getElementById('initial-screen').classList.remove('hidden');
+              document.getElementById('registration-screen').classList.add('hidden');
+            }, 10000);
+          }, 1000);
+        }
+      }, 200);
+    }
+
+    // Обработка нажатия Enter для мгновенного отображения
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && document.getElementById('registration-screen').classList.contains('hidden')) {
+        instantDisplay = true;
+      }
+    });
+
+    // Обработка нажатия Esc для возврата
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !document.getElementById('registration-screen').classList.contains('hidden')) {
+        cancelRegistration();
+      }
+    });
+
+    // Инициализация - добавляем первый модуль
+    window.onload = function() {
+      updateCounter();
+      
+      // Анимация главного терминала
+      const mainTerminal = document.getElementById('main-terminal');
+      setTimeout(() => {
+        const cursor = mainTerminal.querySelector('.blinking-cursor');
+        cursor.insertAdjacentHTML('beforebegin', '<div class="output">> Type "help" for available commands</div>');
+      }, 3000);
+      
+      // Автоматически добавляем первый модуль
+      setTimeout(() => {
+        addTerminal(moduleConfigs[0]);
+      }, 4000);
+    };
+  </script>
+</body>
+</html>

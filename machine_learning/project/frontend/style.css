@@ -1,0 +1,134 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Helvetica Neue', sans-serif;
+  background: #000;
+  color: white;
+  overflow-x: hidden;
+}
+
+.background-animation {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, #111 0%, #000 100%);
+  animation: pulse 8s infinite ease-in-out;
+  z-index: -1;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background: rgba(0, 0, 0, 0.6);
+  position: sticky;
+  top: 0;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}
+
+.btn {
+  padding: 12px 20px;
+  background: #ff0055;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.intro {
+  text-align: center;
+  padding: 100px 20px 40px;
+}
+
+.intro h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.intro p {
+  font-size: 18px;
+  color: #ccc;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 40px 20px;
+}
+
+.art-card {
+  position: relative;
+  width: 300px;
+  height: 200px;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.5s ease;
+  cursor: pointer;
+}
+
+.art-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.art-card::before {
+  content: attr(data-text);
+  position: absolute;
+  bottom: -100%;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  font-size: 16px;
+  transition: bottom 0.5s ease;
+  white-space: nowrap;
+  animation: scrollText 10s linear infinite;
+  overflow: hidden;
+}
+
+@keyframes scrollText {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+.art-card:hover {
+  transform: scale(1.1);
+  z-index: 10;
+}
+
+.art-card:hover::before {
+  bottom: 0;
+  animation: scrollText 10s linear infinite;
+}
+
+.art-card.locked {
+  transform: scale(1.1);
+  z-index: 10;
+}
+
+.art-card.locked::before {
+  bottom: 0;
+  white-space: normal;
+  animation: none;
+  text-align: center;
+}
