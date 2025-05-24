@@ -89,10 +89,10 @@ def create_app() -> FastAPI:
         container=container
     )
 
-    app.add_middleware(
-        TrustedHostMiddleware, # type: ignore
-        allowed_hosts=settings.server.allowed_hosts,
-    )
+    # app.add_middleware(
+    #     TrustedHostMiddleware, # type: ignore
+    #     allowed_hosts=settings.server.allowed_host,
+    # )
 
     app.include_router(users_router)
     app.include_router(auth_router)
