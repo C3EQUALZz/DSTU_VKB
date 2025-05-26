@@ -8,6 +8,7 @@ from dishka.integrations.fastapi import setup_dishka as setup_dishka_fastapi
 from dishka.integrations.faststream import setup_dishka as setup_dishka_faststream
 from fastapi import FastAPI
 from faststream import FastStream
+from faststream.asgi import make_ping_asgi, make_asyncapi_asgi
 from faststream.kafka import KafkaBroker
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -33,9 +34,13 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     broker: BaseMessageBroker = await container.get(BaseMessageBroker)
     scheduler: BaseScheduler = await container.get(BaseScheduler)
     faststream_broker: KafkaBroker = await container.get(KafkaBroker)
+    faststream_app: FastStream = FastStream(faststream_broker, logger=logger)
     # cache.pool = await container.get(ConnectionPool)
     # cache.client = await container.get(Redis)
-    setup_dishka_faststream(container, FastStream(faststream_broker, logger=logger), auto_inject=True)
+    setup_dishka_faststream(container, faststream_app, auto_inject=True)
+
+    app.mount("/health", make_ping_asgi(faststream_broker, timeout=5.0))
+    app.mount("/asyncapi", make_asyncapi_asgi(faststream_app))
 
     await broker.start()
     await scheduler.start()
