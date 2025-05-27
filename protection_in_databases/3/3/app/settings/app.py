@@ -55,6 +55,7 @@ class SQLAlchemySettings(CommonSettings):
 
 class PerformanceSettings(CommonSettings):
     select_benchmark: Path = Path(__file__).parent.parent.parent / "performance" / "select_benchmark.csv"
+    insert_benchmark: Path = Path(__file__).parent.parent.parent / "performance" / "insert_benchmark.csv"
 
 
 class Settings(CommonSettings):

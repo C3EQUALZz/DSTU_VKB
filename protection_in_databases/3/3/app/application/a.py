@@ -7,10 +7,10 @@ import csv
 import time
 from pathlib import Path
 from random import randint
-from typing import Iterable, Generator, Coroutine
+from typing import Iterable, Generator, Awaitable
 
 from sqlalchemy import text, TextClause
-from sqlalchemy.ext.asyncio import AsyncEngine, async_sessionmaker, AsyncSession
+from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 
 
 async def solve(
@@ -31,8 +31,7 @@ async def solve(
 
     marks: list[int] = [randint(0, 48) for _ in range(times)]
 
-    # Передаём mark вместе с query
-    coroutines: Generator[Coroutine[AsyncEngine, TextClause, float], None, None] = (
+    coroutines: Generator[Awaitable[float], None, None] = (
         execute_query(session_maker(), select_query, mark)
         for mark in marks
     )

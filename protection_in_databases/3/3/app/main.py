@@ -3,10 +3,11 @@ import asyncio
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncEngine, async_sessionmaker, AsyncSession
 
 from app.application.a import solve as first_question
+from app.application.b import solve as second_question
 from app.settings.app import Settings
 
 
-def main() -> None:
+async def main() -> None:
     settings: Settings = Settings()
 
     settings.performance.select_benchmark.parent.mkdir(exist_ok=True, parents=True)
@@ -25,22 +26,23 @@ def main() -> None:
     )
 
     while True:
-        choice: str = input("Введите задание для выбора: a, b, c, d. Для выхода введите 'exit'")
+        choice: str = input("Введите задание для выбора: a, b, c, d. Для выхода введите exit: ")
 
         if choice.lower().strip() == "exit":
             exit(0)
 
         match choice:
             case "a":
-                asyncio.run(
-                    first_question(
-                        session_maker=session_maker,
-                        path_to_select_benchmark_result=settings.performance.select_benchmark
-                    )
+                await first_question(
+                    session_maker=session_maker,
+                    path_to_select_benchmark_result=settings.performance.select_benchmark
                 )
 
             case "b":
-                ...
+                await second_question(
+                    session_maker=session_maker,
+                    path_to_insert_benchmark_result=settings.performance.insert_benchmark
+                )
 
             case "c":
                 ...
@@ -53,4 +55,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
