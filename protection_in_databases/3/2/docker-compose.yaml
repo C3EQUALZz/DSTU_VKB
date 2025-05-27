@@ -1,0 +1,62 @@
+services:
+  postgres-lab-3-question-2:
+    image: postgres:16.3-alpine
+    container_name: postgres-lab-3-question-2
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - ${POSTGRES_PORT}:5432
+    volumes:
+      - postgres_data_third_laboratory_question_2:/var/lib/postgresql/data
+      - ./scripts/initdb/01_init_schemas.sql:/docker-entrypoint-initdb.d/01_init_schemas.sql
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - third_laboratory_question_two
+
+  postgres-lab-3-question-2-restore:
+    image: postgres:16.3-alpine
+    container_name: postgres-lab-3-question-2-restore
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - .env
+    volumes:
+      - ./scripts/restore/script.sh:/script.sh
+      - ./scripts/restore/istudents_lab.backup:/dump/istudents_lab.backup
+    command: ["sh", "-c", "chmod +x /script.sh && ./script.sh"]
+    networks:
+      - third_laboratory_question_two
+
+  pgadmin-lab-3-question-2:
+    image: dpage/pgadmin4:9.3.0
+    container_name: pgadmin-lab-3-question-2
+    env_file:
+      - .env
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+      - PGADMIN_CONFIG_SERVER_MODE=False
+      - PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED=False
+    ports:
+      - ${PGADMIN_PORT}:80
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - third_laboratory_question_two
+
+volumes:
+  postgres_data_third_laboratory:
+
+networks:
+  third_laboratory_question_two:
+    driver: bridge

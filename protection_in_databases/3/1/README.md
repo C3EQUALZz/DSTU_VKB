@@ -1,8 +1,7 @@
 # Создать схему `istudents`
 
 > [!IMPORTANT]
-> - Если вы используете мой `Docker` с моим проектом - `DSTU_VKB` вместе, то у вас автоматически создается схема. 
-> - Все секреты такие, как имя пользователя, пароли, имя бд берутся из файла `.env`
+> - В данном случае схема автоматически создается, так как я прокидываю [данный файл](scripts/initdb/01_init_schemas.sql) в `docker-compose`
 
 Для того чтобы создать схему, используется команда, которая представлена ниже: 
 
@@ -18,10 +17,22 @@ CREATE SCHEMA istudents;
 
 ### Как проверить, что схема создана? 
 
+В начале нужно перейти в директорию, где находится данный `README.md`:
+
+```bash
+cd protection_in_databases/3/1
+```
+
+Теперь поднимаем контейнер:
+
+```docker
+docker compose --env-file .env up
+```
+
 Для этого войдите в контейнер, используя команду, которая представлена ниже:
 
 ```bash
-docker exec -it postgres-lab-3 /bin/bash
+docker exec -it postgres-lab-3-question-1 /bin/bash
 ```
 
 Теперь войдите под учетной записи, которую создали.
@@ -39,3 +50,5 @@ psql -U postgres -d third_laboratory_database
 ```bash
 \dn
 ```
+
+![result.png](docs/1.png)
