@@ -3,7 +3,7 @@
 set -e  # выход при первой ошибке
 
 # Переменные
-DB_HOST=postgres
+DB_HOST=postgres-lab-3-question-2
 DB_PORT=5432
 DB_NAME=$POSTGRES_DB
 DB_USER=$POSTGRES_USER
