@@ -5,59 +5,59 @@
 import asyncio
 import csv
 import time
+from pathlib import Path
 from random import randint
 from typing import Iterable, Generator, Coroutine
 
 from sqlalchemy import text, TextClause
-from sqlalchemy.ext.asyncio import AsyncEngine
-
-from app.settings.app import get_settings, Settings
+from sqlalchemy.ext.asyncio import AsyncEngine, async_sessionmaker, AsyncSession
 
 
-async def first_question(
-        engine: AsyncEngine,
-        times: int = 30
+async def solve(
+        session_maker: async_sessionmaker[AsyncSession],
+        path_to_select_benchmark_result: Path,
+        times: int = 30,
 ) -> None:
     """
     Точка запуска выполнения подзадания a из задания 3.
     Здесь нужно проверить сколько по времени будут выполняться запросы с определенными условиями.
-    :param engine: Движок для подключения к базе данных.
+    :param session_maker: Фабрика сессий для подключения к базе данных.
+    :param path_to_select_benchmark_result: Путь для сохранения измерений для таблицы.
     :param times: Количество раз сколько нужно выполнить запрос к базе.
     :return:
     """
-    settings: Settings = get_settings()
 
     select_query: TextClause = text("SELECT * FROM istudents.mark WHERE tmark_fk = :fk")
 
-    marks: list[int] = [randint(1, 500) for _ in range(times)]
+    marks: list[int] = [randint(0, 48) for _ in range(times)]
 
     # Передаём mark вместе с query
     coroutines: Generator[Coroutine[AsyncEngine, TextClause, float], None, None] = (
-        execute_query(engine, select_query, mark)
+        execute_query(session_maker(), select_query, mark)
         for mark in marks
     )
 
     durations: Iterable[float] = await asyncio.gather(*coroutines)
 
     # Сохраняем в CSV
-    with open(settings.performance.select_benchmark, mode="w", newline="", encoding="utf-8") as f:
+    with open(path_to_select_benchmark_result, mode="w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow(["query_number", "tmark_fk", "duration_sec"])
 
         for mark, (i, duration) in zip(marks, enumerate(durations)):
             writer.writerow([i + 1, mark, duration])
 
-    print(f"✅ Результаты сохранены в {settings.performance.select_benchmark}")
+    print(f"✅ Результаты сохранены в {path_to_select_benchmark_result}")
 
 
 async def execute_query(
-        engine: AsyncEngine,
+        session: AsyncSession,
         query: TextClause,
         mark: int
 ) -> float:
     start: float = time.perf_counter()
 
-    async with engine.connect() as conn:
-        await conn.execute(query, {"fk": mark})
+    async with session:
+        await session.execute(query, {"fk": mark})
 
     return time.perf_counter() - start

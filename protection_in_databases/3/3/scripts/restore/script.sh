@@ -3,11 +3,11 @@
 set -e  # выход при первой ошибке
 
 # Переменные
-DB_HOST=postgres
+DB_HOST=postgres-lab-3-question-3
 DB_PORT=5432
-DB_NAME=$POSTGRES_DB
-DB_USER=$POSTGRES_USER
-DB_PASSWORD=$POSTGRES_PASSWORD
+DB_NAME=$DATABASE_NAME
+DB_USER=$DATABASE_USER
+DB_PASSWORD=$DATABASE_PASSWORD
 
 # Ждём, пока Postgres станет доступен
 until PGPASSWORD="$DB_PASSWORD" psql -h $DB_HOST -p $DB_PORT -U $DB_USER -d $DB_NAME -c '\q' 2>/dev/null; do
