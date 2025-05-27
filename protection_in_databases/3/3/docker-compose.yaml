@@ -36,9 +36,9 @@ services:
     networks:
       - third_laboratory_question_three
 
-  pgadmin-lab-3-question-2:
+  pgadmin-lab-3-question-3:
     image: dpage/pgadmin4:9.3.0
-    container_name: pgadmin-lab-3-question-2
+    container_name: pgadmin-lab-3-question-3
     env_file:
       - .env
     environment:
