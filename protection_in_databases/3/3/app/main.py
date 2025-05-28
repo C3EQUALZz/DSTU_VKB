@@ -6,6 +6,7 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncEngine, async_sessi
 from app.application.a import solve as first_question
 from app.application.b import solve as second_question
 from app.application.c import solve as third_question
+from app.application.d import solve as fourth_question
 from app.settings.app import Settings
 
 
@@ -53,7 +54,10 @@ async def main() -> None:
                 )
 
             case "d":
-                ...
+                fourth_question(
+                    settings.performance.select_benchmark,
+                    settings.performance.insert_benchmark
+                )
 
             case _:
                 print("Неверный вариант для выбора. Перезапускаю! ", file=sys.stderr)
