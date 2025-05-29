@@ -3,7 +3,7 @@ import traceback
 from CTkMessagebox import CTkMessagebox
 
 
-def show_error_dialog(message: str, details: str = None):
+def show_error_dialog(message: str, details: str = None) -> None:
     """
     Показывает диалоговое окно с ошибкой
     """
