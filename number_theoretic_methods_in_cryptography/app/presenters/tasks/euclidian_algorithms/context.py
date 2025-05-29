@@ -1,6 +1,5 @@
-from app.core.dto import NumberType, ResultDTO
-from app.exceptions.models import StrategyNotSetError
-from app.models.base import BaseGCDStrategy
+from app.exceptions.presenters.euclidian_algorithms import StrategyNotSetError
+from app.models.euclidian_algorithms.base import BaseGCDStrategy, NumberType, ResultDTO
 
 
 class AlgorithmStrategyContext:

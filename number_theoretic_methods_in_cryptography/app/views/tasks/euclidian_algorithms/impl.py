@@ -1,26 +1,72 @@
 import customtkinter as ctk
 from CTkMessagebox import CTkMessagebox
+from typing import override
+from app.presenters.tasks.euclidian_algorithms.base import IGCDPresenter
+from app.views.application.container import AlgorithmContainer
+from app.views.tasks.euclidian_algorithms.base import IGCDView
 
-from app.core.interfaces.presenter import GCDPresenterInterface
-from app.views.interface import IView  # Используем общий интерфейс
 
+class GCDView(ctk.CTkFrame, IGCDView):
+    def __init__(self, master: AlgorithmContainer) -> None:
+        super().__init__(master)
+        self.presenter: IGCDPresenter | None = None
 
-class GCDView(ctk.CTkFrame, IView):  # Изменено на CTkFrame и IView
-    def __init__(self, master, presenter: GCDPresenterInterface | None) -> None:
-        super().__init__(master)  # Теперь master — контейнер (например, AlgorithmContainer)
-        self.presenter: GCDPresenterInterface | None = presenter
-
-        # Инициализация интерфейса
         self._create_input_frame()
         self._create_strategy_selector()
         self._create_output_tabs()
+
+    @override
+    def attach_presenter(self, presenter: IGCDPresenter) -> None:
+        self.presenter = presenter
         self._create_run_button()
+
+    @override
+    def set_strategies(self, strategies: list[str]) -> None:
+        self.strategy_menu.configure(values=strategies)
+        if strategies:
+            self.strategy_var.set(strategies[0])
+
+    @override
+    def get_inputs(self) -> tuple[str, str]:
+        return self.entry_a.get(), self.entry_b.get()
+
+    @override
+    def get_selected_strategy(self) -> str:
+        return self.strategy_var.get()
+
+    @override
+    def display_result(self, result: str) -> None:
+        self.result_text.configure(state="normal")
+        self.result_text.delete("1.0", "end")
+        self.result_text.insert("end", result)
+        self.result_text.configure(state="disabled")
+
+    @override
+    def display_logs(self, logs: list[str]) -> None:
+        self.log_text.configure(state="normal")
+        self.log_text.delete("1.0", "end")
+        self.log_text.insert("end", "\n".join(logs))
+        self.log_text.configure(state="disabled")
+
+    @override
+    def show_error(self, message: str) -> None:
+        CTkMessagebox(title="Ошибка", message=message, icon="cancel", option_1="ОК")
+
+    @override
+    def show(self) -> None:
+        """Отображает представление"""
+        self.pack(fill="both", expand=True)
+
+    @override
+    def hide(self) -> None:
+        """Скрывает представление"""
+        self.pack_forget()
 
     def _create_run_button(self) -> None:
         self.run_button = ctk.CTkButton(
             self,
             text="Вычислить",
-            command=self.presenter.on_calculate if self.presenter else None
+            command=self.presenter.on_calculate
         )
         self.run_button.pack(pady=10)
 
@@ -70,37 +116,4 @@ class GCDView(ctk.CTkFrame, IView):  # Изменено на CTkFrame и IView
         self.result_text.pack(fill="both", expand=True)
         self.result_text.configure(state="disabled")
 
-    def set_strategies(self, strategies: list[str]) -> None:
-        self.strategy_menu.configure(values=strategies)
-        if strategies:
-            self.strategy_var.set(strategies[0])
 
-    def get_inputs(self) -> tuple[str, str]:
-        return self.entry_a.get(), self.entry_b.get()
-
-    def get_selected_strategy(self) -> str:
-        return self.strategy_var.get()
-
-    def display_result(self, result: str) -> None:
-        self.result_text.configure(state="normal")
-        self.result_text.delete("1.0", "end")
-        self.result_text.insert("end", result)
-        self.result_text.configure(state="disabled")
-
-    def display_logs(self, logs: list[str]) -> None:
-        self.log_text.configure(state="normal")
-        self.log_text.delete("1.0", "end")
-        self.log_text.insert("end", "\n".join(logs))
-        self.log_text.configure(state="disabled")
-
-    def show_error(self, message: str) -> None:
-        CTkMessagebox(title="Ошибка", message=message, icon="cancel", option_1="ОК")
-
-    # Реализация методов IView
-    def show(self) -> None:
-        """Отображает представление"""
-        self.pack(fill="both", expand=True)
-
-    def hide(self) -> None:
-        """Скрывает представление"""
-        self.pack_forget()

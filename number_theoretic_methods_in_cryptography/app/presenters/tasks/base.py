@@ -1,12 +1,13 @@
 from abc import abstractmethod
-from typing import Protocol
+from typing import Protocol, TypeVar
 
-from app.views.base import IView
+# Обобщаем Presenter
+TView = TypeVar("TView", bound="IView")
 
 
-class IPresenter(Protocol):
+class ITaskPresenter(Protocol[TView]):
     @abstractmethod
-    def attach_view(self, view: IView) -> None:
+    def attach_view(self, view: TView) -> None:
         raise NotImplementedError
 
     @abstractmethod

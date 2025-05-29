@@ -1,41 +1,35 @@
 import customtkinter as ctk
-from app.presenters.application import MainPresenter
-from app.views.application.menu import MainMenuView
+
+from app.presenters.application.menu.impl import MenuPresenter
+from app.presenters.application.primary.base import IMainPresenter
+from app.presenters.application.primary.impl import MainPresenter
+from app.presenters.tasks.base import ITaskPresenter
 from app.views.application.container import AlgorithmContainer
-from app.presenters.algorithm1 import Algorithm1Presenter
-from app.presenters.algorithm2 import Algorithm2Presenter
+from app.views.application.menu.impl import MainMenuView
+from app.views.base import IView
+
 
 class Application(ctk.CTk):
-    def __init__(self):
+    def __init__(self, tasks: dict[str, tuple[type[ITaskPresenter], type[IView]]]) -> None:
         super().__init__()
-        self.title("MVP Multi-Algorithm App")
-        self.geometry("1000x600")
+        self.tasks = tasks
+        self.title("Данил Ковалев ВКБ42 Теоретико-числовые методы в криптографии")
+        self.geometry("1000x700")
 
-        # Инициализируем Presenter
-        self.main_presenter = MainPresenter()
-        self.main_presenter.register_presenter("algorithm1", Algorithm1Presenter)
-        self.main_presenter.register_presenter("algorithm2", Algorithm2Presenter)
+        self.container: AlgorithmContainer = AlgorithmContainer(self)
+        self.main_presenter: IMainPresenter = MainPresenter()
+        self.menu_presenter = MenuPresenter(
+            main_presenter=self.main_presenter,
+            container=self.container,
+        )
+        self.menu = MainMenuView(self, self.menu_presenter)
+        self.menu_presenter.attach_presenter(self.menu)
 
-        # Контейнеры
-        self.menu = MainMenuView(self, self.on_menu_selection)
-        self.container = AlgorithmContainer(self)
+        for name, (presenter, view) in self.tasks.items():
+            self.main_presenter.register_presenter(name, presenter)  # type: ignore
+            self.menu.register_button(name)
+            self.menu_presenter.register_view(name=name, view=view)
 
         # Отображаем элементы
-        self.menu.show()
-        self.container.show()
-
-    def on_menu_selection(self, algorithm_key: str):
-        """Обработчик выбора алгоритма"""
-        if algorithm_key == "algorithm1":
-            view = Algorithm1View(self.container)
-        elif algorithm_key == "algorithm2":
-            view = Algorithm2View(self.container)
-        else:
-            return
-
-        self.main_presenter.activate_presenter(algorithm_key, view)
-        self.container.set_content(view)
-
-if __name__ == "__main__":
-    app = Application()
-    app.mainloop()
+        self.menu.pack(side="left", fill="y", padx=10, pady=10)
+        self.container.pack(side="right", fill="both", expand=True, padx=10, pady=10)
