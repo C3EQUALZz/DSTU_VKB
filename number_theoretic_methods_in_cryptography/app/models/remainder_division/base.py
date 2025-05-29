@@ -2,9 +2,9 @@ from abc import abstractmethod
 from typing import Protocol, Iterable
 
 
-class EulerModelInterface(Protocol):
+class IRemainderDivision(Protocol):
     @abstractmethod
-    def solve_congruence(self, a: int, b: int, n: int) -> int | None:
+    def solve(self, a: int, exponent: int, modulus: int) -> int | None:
         raise NotImplementedError
 
     @abstractmethod

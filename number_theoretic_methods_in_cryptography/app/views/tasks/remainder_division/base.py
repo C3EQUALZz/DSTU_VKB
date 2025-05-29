@@ -1,8 +1,13 @@
 from abc import abstractmethod
-from typing import Iterable, Protocol
+from typing import Iterable, Protocol, TYPE_CHECKING
+
+from app.views.base import IView
+
+if TYPE_CHECKING:
+    from app.presenters.tasks.remainder_division.base import IRemainderDivisionPresenter
 
 
-class ViewInterface(Protocol):
+class IRemainderDivisionView(IView["IRemainderDivisionPresenter"], Protocol):
     @abstractmethod
     def get_a(self) -> int:
         raise NotImplementedError
@@ -41,4 +46,8 @@ class ViewInterface(Protocol):
 
     @abstractmethod
     def show_error(self, message: str) -> None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def clear_logs(self) -> None:
         raise NotImplementedError

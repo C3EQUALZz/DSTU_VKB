@@ -1,11 +1,13 @@
 from abc import abstractmethod
-from typing import Protocol
+from typing import Protocol, TYPE_CHECKING
 
-from app.presenters.tasks.euclidian_algorithms.base import IGCDPresenter
 from app.views.base import IView
 
+if TYPE_CHECKING:
+    from app.presenters.tasks.euclidian_algorithms.base import IGCDPresenter
 
-class IGCDView(IView[IGCDPresenter], Protocol):
+
+class IGCDView(IView["IGCDPresenter"], Protocol):
     @abstractmethod
     def set_strategies(self, strategies: list[str]) -> None: ...
 
@@ -23,6 +25,3 @@ class IGCDView(IView[IGCDPresenter], Protocol):
 
     @abstractmethod
     def show_error(self, message: str) -> None: ...
-
-    @abstractmethod
-    def attach_presenter(self, presenter: IGCDPresenter) -> None: ...

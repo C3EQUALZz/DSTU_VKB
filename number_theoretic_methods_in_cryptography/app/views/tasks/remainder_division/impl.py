@@ -1,53 +1,57 @@
-from typing import Iterable
+from typing import Iterable, override
 
 import customtkinter as ctk
 from CTkMessagebox import CTkMessagebox
 
-from app.presenters.interface import PresenterInterface
-from app.views.interface import ViewInterface
+from app.presenters.tasks.remainder_division.base import IRemainderDivisionPresenter
+from app.views.application.container import AlgorithmContainer
+from app.views.tasks.remainder_division.base import IRemainderDivisionView
 
 
-class EulerView(ctk.CTk, ViewInterface):
-    def __init__(self, presenter: PresenterInterface) -> None:
-        super().__init__()
-        self.presenter = presenter
-        self.title("Сравнение по модулю")
-        self.geometry("1000x650")  # Увеличена ширина окна
+class RemainderDivisionView(ctk.CTkFrame, IRemainderDivisionView):
+    def __init__(self, master: AlgorithmContainer) -> None:
+        super().__init__(master)
 
-        # Настройка темы
-        ctk.set_appearance_mode("System")  # Modes: system, light, dark
-        ctk.set_default_color_theme("blue")  # Themes: blue, dark-blue, green
-
-        # Поля ввода
+        self._presenter: IRemainderDivisionPresenter | None = None
         self._create_input_section()
+        self._create_result_section()
+        self._create_log_section()
 
-        # Кнопка вычисления
-        self.btn_calculate = ctk.CTkButton(
+    @override
+    def show(self) -> None:
+        """Отображает представление"""
+        self.pack(fill="both", expand=True)
+
+    @override
+    def hide(self) -> None:
+        """Скрывает представление"""
+        self.pack_forget()
+
+    @override
+    def attach_presenter(self, presenter: IRemainderDivisionPresenter) -> None:
+        self._presenter: IRemainderDivisionPresenter = presenter
+
+        button: ctk.CTkButton = ctk.CTkButton(
             self,
             text="Вычислить",
-            command=self._on_calculate
+            command=self._presenter.calculate
         )
-        self.btn_calculate.pack(pady=10)
 
-        # Результаты
-        self._create_result_section()
-
-        # Логи
-        self._create_log_section()
+        button.pack(pady=10)
 
     def _create_input_section(self) -> None:
         input_frame = ctk.CTkFrame(self)
         input_frame.pack(padx=20, pady=10, fill="x")  # Добавлено fill="x"
 
         # Первое число
-        ctk.CTkLabel(input_frame, text="Первое число:").grid(row=0, column=0, padx=5, sticky="e")
+        ctk.CTkLabel(input_frame, text="Основание:").grid(row=0, column=0, padx=5, sticky="e")
         self.entry_a = ctk.CTkEntry(input_frame, width=150)  # Увеличена ширина
         self.entry_a.grid(row=0, column=1, padx=5)
         self.entry_k = ctk.CTkEntry(input_frame, width=150)  # Увеличена ширина
         self.entry_k.grid(row=0, column=2, padx=5)
 
         # Второе число
-        ctk.CTkLabel(input_frame, text="Второе число:").grid(row=1, column=0, padx=5, sticky="e")
+        ctk.CTkLabel(input_frame, text="Степень:").grid(row=1, column=0, padx=5, sticky="e")
         self.entry_b = ctk.CTkEntry(input_frame, width=150)  # Увеличена ширина
         self.entry_b.grid(row=1, column=1, padx=5)
         self.entry_m = ctk.CTkEntry(input_frame, width=150)  # Увеличена ширина
@@ -79,9 +83,11 @@ class EulerView(ctk.CTk, ViewInterface):
         self.txt_logs.pack(fill="both", expand=True)
         self.txt_logs.configure(state="disabled")
 
+    @override
     def get_a(self) -> int:
         return int(self.entry_a.get())
 
+    @override
     def get_b(self) -> int:
         return int(self.entry_b.get())
 
@@ -110,8 +116,10 @@ class EulerView(ctk.CTk, ViewInterface):
             self.txt_logs.insert("end", line + "\n")
         self.txt_logs.configure(state="disabled")
 
+    def clear_logs(self) -> None:
+        self.txt_logs.configure(state="normal")
+        self.txt_logs.delete("0.0", "end")
+        self.txt_logs.configure(state="disabled")
+
     def show_error(self, message: str) -> None:
         CTkMessagebox(title="Ошибка", message=message, icon="cancel", option_1="ОК")
-
-    def _on_calculate(self) -> None:
-        self.presenter.calculate()

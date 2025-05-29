@@ -2,13 +2,12 @@ from app.models.euclidian_algorithms.base import BaseGCDStrategy, ResultDTO
 from app.models.euclidian_algorithms.bezout import GCDBezout
 from app.models.euclidian_algorithms.binary import GCDBinary
 from app.models.euclidian_algorithms.classic import GCDMod
-from app.presenters.tasks.base import ITaskPresenter
 from app.presenters.tasks.euclidian_algorithms.base import IGCDPresenter
 from app.presenters.tasks.euclidian_algorithms.context import AlgorithmStrategyContext
 from app.views.tasks.euclidian_algorithms.base import IGCDView
+from typing import override
 
-
-class GCDCalculatorPresenter(IGCDPresenter, ITaskPresenter[IGCDView]):
+class GCDCalculatorPresenter(IGCDPresenter):
     def __init__(self) -> None:
         self.view: IGCDView | None = None
         self.strategies: dict[str, type[BaseGCDStrategy]] = {
@@ -17,10 +16,12 @@ class GCDCalculatorPresenter(IGCDPresenter, ITaskPresenter[IGCDView]):
             "Расширенный": GCDBezout
         }
 
+    @override
     def attach_view(self, view: IGCDView) -> None:
         self.view = view
         self.view.set_strategies(list(self.strategies.keys()))
 
+    @override
     def on_activate(self) -> None:
         """Вызывается при активации Presenter'а (например, при выборе алгоритма)"""
         if not self.view:
@@ -33,19 +34,7 @@ class GCDCalculatorPresenter(IGCDPresenter, ITaskPresenter[IGCDView]):
         self._reset_inputs()
         self._clear_results()
 
-    def _reset_inputs(self) -> None:
-        """Сбрасывает поля ввода"""
-        if self.view:
-            ...
-            # Предположим, что в IGCDView есть метод reset_inputs()
-            ## self.view.reset_inputs()
-
-    def _clear_results(self) -> None:
-        """Очищает результаты и логи"""
-        if self.view:
-            self.view.display_result("")
-            self.view.display_logs([])
-
+    @override
     def on_calculate(self) -> None:
         a_str, b_str = self.view.get_inputs()
         strategy_name = self.view.get_selected_strategy()
@@ -75,3 +64,15 @@ class GCDCalculatorPresenter(IGCDPresenter, ITaskPresenter[IGCDView]):
 
         except Exception as e:
             self.view.show_error(str(e))
+
+    def _reset_inputs(self) -> None:
+        """Сбрасывает поля ввода"""
+        if self.view:
+            ...
+
+    def _clear_results(self) -> None:
+        """Очищает результаты и логи"""
+        if self.view:
+            self.view.display_result("")
+            self.view.display_logs([])
+

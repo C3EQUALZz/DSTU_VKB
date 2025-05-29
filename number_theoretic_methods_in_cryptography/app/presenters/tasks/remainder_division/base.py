@@ -4,10 +4,10 @@ from typing import Protocol, TYPE_CHECKING
 from app.presenters.tasks.base import ITaskPresenter
 
 if TYPE_CHECKING:
-    from app.views.tasks.euclidian_algorithms.base import IGCDView
+    from app.views.tasks.remainder_division.base import IRemainderDivisionView
 
 
-class IGCDPresenter(ITaskPresenter["IGCDView"], Protocol):
+class IRemainderDivisionPresenter(ITaskPresenter["IRemainderDivisionView"], Protocol):
     @abstractmethod
-    def on_calculate(self) -> None:
+    def calculate(self) -> None:
         raise NotImplementedError

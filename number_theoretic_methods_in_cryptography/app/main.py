@@ -1,15 +1,20 @@
 from typing import Final
 
+from app.exceptions.app import global_exception_handler
 from app.presenters.tasks.base import ITaskPresenter
 from app.presenters.tasks.euclidian_algorithms.impl import GCDCalculatorPresenter
+from app.presenters.tasks.remainder_division.impl import RemainderDivisionPresenter
 from app.views.application.application import Application
 from app.views.base import IView
 from app.views.tasks.euclidian_algorithms.impl import GCDView
+from app.views.tasks.remainder_division.impl import RemainderDivisionView
 
 TASKS: Final[dict[str, tuple[type[ITaskPresenter], type[IView]]]] = {
-    "Алгоритм Евклида": (GCDCalculatorPresenter, GCDView)
+    "Алгоритм Евклида": (GCDCalculatorPresenter, GCDView),
+    "Остаток от деления": (RemainderDivisionPresenter, RemainderDivisionView)
 }
 
 if __name__ == "__main__":
     app = Application(TASKS)
+    app.report_callback_exception = global_exception_handler
     app.mainloop()
