@@ -3,8 +3,7 @@
 """
 from typing import override
 
-from app.core.dto import NumberType, ResultDTO
-from app.models.base import BaseGCDStrategy
+from app.models.euclidian_algorithms.base import NumberType, ResultDTO, BaseGCDStrategy
 
 
 class GCDBinary(BaseGCDStrategy):
