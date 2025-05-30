@@ -91,24 +91,31 @@ class RemainderDivisionView(ctk.CTkFrame, IRemainderDivisionView):
     def get_b(self) -> int:
         return int(self.entry_b.get())
 
+    @override
     def get_k(self) -> int:
         return int(self.entry_k.get())
 
+    @override
     def get_m(self) -> int:
         return int(self.entry_m.get())
 
+    @override
     def get_n(self) -> int:
         return int(self.entry_n.get())
 
+    @override
     def set_result1(self, text: str) -> None:
         self.lbl_result1.configure(text=f"Результат 1: {text}")
 
+    @override
     def set_result2(self, text: str) -> None:
         self.lbl_result2.configure(text=f"Результат 2: {text}")
 
+    @override
     def set_sum_result(self, text: str) -> None:
         self.lbl_sum_result.configure(text=f"Сумма результатов: {text}")
 
+    @override
     def show_logs(self, logs: Iterable[str]) -> None:
         self.txt_logs.configure(state="normal")
         self.txt_logs.delete("0.0", "end")
@@ -116,6 +123,7 @@ class RemainderDivisionView(ctk.CTkFrame, IRemainderDivisionView):
             self.txt_logs.insert("end", line + "\n")
         self.txt_logs.configure(state="disabled")
 
+    @override
     def clear_logs(self) -> None:
         self.txt_logs.configure(state="normal")
         self.txt_logs.delete("0.0", "end")

@@ -4,7 +4,7 @@ from typing import Iterable, Protocol, TYPE_CHECKING
 from app.views.tasks.base import ITaskView
 
 if TYPE_CHECKING:
-    pass
+    from app.presenters.tasks.remainder_division.base import IRemainderDivisionPresenter
 
 
 class IRemainderDivisionView(ITaskView["IRemainderDivisionPresenter"], Protocol):
