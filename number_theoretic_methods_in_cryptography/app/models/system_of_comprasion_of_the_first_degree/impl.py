@@ -2,6 +2,8 @@ from math import gcd
 from typing import List, Optional, Tuple, Final, Iterable, override
 
 from app.core.registry import LogRegistry
+from app.exceptions.models.system_of_comprasion_of_the_first_degree import NumberOfResiduesAndModulesMustMatchError, \
+    InverseWasNotFoundError
 from app.models.system_of_comprasion_of_the_first_degree.base import IChineseRemainderSolver
 
 # Типы для аннотаций
@@ -47,8 +49,7 @@ class ChineseRemainderSolver(IChineseRemainderSolver):
         for i in range(len(moduli)):
             for j in range(i + 1, len(moduli)):
                 if gcd(moduli[i], moduli[j]) != 1:
-                    self._logger.add_log(f"Модули {moduli[i]} и {moduli[j]} не взаимно просты.")
-                    return None
+                    raise NumberOfResiduesAndModulesMustMatchError(f"Модули {moduli[i]} и {moduli[j]} не взаимно просты.")
 
         # Вычисление общего модуля M
         total_modulus: int = 1
@@ -63,8 +64,7 @@ class ChineseRemainderSolver(IChineseRemainderSolver):
             inv_mi: int = self._find_modular_inverse(mi, modulus)
 
             if inv_mi is None:
-                self._logger.add_log(f"Обратный элемент для {mi} по модулю {modulus} не найден.")
-                return None
+                raise InverseWasNotFoundError(f"Обратный элемент для {mi} по модулю {modulus} не найден.")
 
             # Логирование промежуточных шагов
             self._logger.add_log(f"M{index + 1} = M / m{index + 1} = {mi}")
