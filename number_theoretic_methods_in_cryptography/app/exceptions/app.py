@@ -37,8 +37,8 @@ def global_exception_handler(exc_type, exc_value, exc_traceback):
     error_details = ''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))
     error_message = f"Произошла непредвиденная ошибка:\n\n{exc_value}"
 
-    # print("Необработанное исключение:")
-    # print(error_details)
+    print("Необработанное исключение:")
+    print(error_details)
 
     # Показываем ошибку через Tk
     show_error_dialog(error_message, error_details)

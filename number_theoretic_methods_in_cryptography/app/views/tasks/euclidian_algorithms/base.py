@@ -4,7 +4,7 @@ from typing import Protocol, TYPE_CHECKING
 from app.views.tasks.base import ITaskView
 
 if TYPE_CHECKING:
-    pass
+    from app.presenters.tasks.euclidian_algorithms.base import IGCDPresenter
 
 
 class IGCDView(ITaskView["IGCDPresenter"], Protocol):
