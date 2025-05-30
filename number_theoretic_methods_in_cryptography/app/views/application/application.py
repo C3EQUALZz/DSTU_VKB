@@ -6,11 +6,11 @@ from app.presenters.application.primary.impl import MainPresenter
 from app.presenters.tasks.base import ITaskPresenter
 from app.views.application.container import AlgorithmContainer
 from app.views.application.menu.impl import MainMenuView
-from app.views.base import IView
+from app.views.tasks.base import ITaskView
 
 
 class Application(ctk.CTk):
-    def __init__(self, tasks: dict[str, tuple[type[ITaskPresenter], type[IView]]]) -> None:
+    def __init__(self, tasks: dict[str, tuple[type[ITaskPresenter], type[ITaskView]]]) -> None:
         super().__init__()
         self.tasks = tasks
         self.title("Данил Ковалев ВКБ42 Теоретико-числовые методы в криптографии")

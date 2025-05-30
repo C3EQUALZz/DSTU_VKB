@@ -2,7 +2,7 @@ from typing import Protocol
 from abc import abstractmethod
 
 from app.presenters.tasks.base import ITaskPresenter
-from app.views.base import IView, T
+from app.views.tasks.base import ITaskView, T
 
 
 class IMainPresenter(Protocol):
@@ -11,5 +11,5 @@ class IMainPresenter(Protocol):
         raise NotImplementedError
 
     @abstractmethod
-    def activate_presenter(self, key: str, view: IView[T]) -> None:
+    def activate_presenter(self, key: str, view: ITaskView[T]) -> None:
         raise NotImplementedError

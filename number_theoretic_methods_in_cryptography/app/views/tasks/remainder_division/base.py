@@ -1,13 +1,13 @@
 from abc import abstractmethod
 from typing import Iterable, Protocol, TYPE_CHECKING
 
-from app.views.base import IView
+from app.views.tasks.base import ITaskView
 
 if TYPE_CHECKING:
-    from app.presenters.tasks.remainder_division.base import IRemainderDivisionPresenter
+    pass
 
 
-class IRemainderDivisionView(IView["IRemainderDivisionPresenter"], Protocol):
+class IRemainderDivisionView(ITaskView["IRemainderDivisionPresenter"], Protocol):
     @abstractmethod
     def get_a(self) -> int:
         raise NotImplementedError

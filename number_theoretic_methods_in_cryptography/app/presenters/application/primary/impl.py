@@ -2,7 +2,7 @@ from typing import Dict, Type
 
 from app.presenters.application.primary.base import IMainPresenter
 from app.presenters.tasks.base import ITaskPresenter
-from app.views.base import IView, T
+from app.views.tasks.base import ITaskView, T
 
 
 class MainPresenter(IMainPresenter):
@@ -14,7 +14,7 @@ class MainPresenter(IMainPresenter):
         """Регистрирует Presenter для пункта меню"""
         self.presenter_map[key] = presenter_class
 
-    def activate_presenter(self, key: str, view: IView[T]) -> None:
+    def activate_presenter(self, key: str, view: ITaskView[T]) -> None:
         """Активирует Presenter по ключу"""
         if key not in self.presenter_map:
             raise ValueError(f"Presenter {key} не зарегистрирован")

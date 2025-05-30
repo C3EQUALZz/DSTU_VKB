@@ -1,13 +1,13 @@
 from abc import abstractmethod
 from typing import Protocol, TYPE_CHECKING
 
-from app.views.base import IView
+from app.views.tasks.base import ITaskView
 
 if TYPE_CHECKING:
-    from app.presenters.tasks.euclidian_algorithms.base import IGCDPresenter
+    pass
 
 
-class IGCDView(IView["IGCDPresenter"], Protocol):
+class IGCDView(ITaskView["IGCDPresenter"], Protocol):
     @abstractmethod
     def set_strategies(self, strategies: list[str]) -> None: ...
 

@@ -6,7 +6,7 @@ from app.presenters.tasks.base import ITaskPresenter
 T = TypeVar("T", bound=ITaskPresenter)
 
 
-class IView(Protocol[T]):
+class ITaskView(Protocol[T]):
     @abstractmethod
     def show(self) -> None:
         """Отображает представление"""
