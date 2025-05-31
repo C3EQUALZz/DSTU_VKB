@@ -13,14 +13,14 @@ class QuadraticComparisonView(ctk.CTkFrame, IQuadraticComparisonView):
 
         self._presenter: IQuadraticComparisonPresenter | None = None
         # Поля ввода
-        self.entry_number = ctk.CTkEntry(self, width=150, placeholder_text="Число a")
-        self.entry_prime = ctk.CTkEntry(self, width=150, placeholder_text="Простое число p")
+        self.entry_number: ctk.CTkEntry = ctk.CTkEntry(self, width=150, placeholder_text="Число a")
+        self.entry_prime: ctk.CTkEntry = ctk.CTkEntry(self, width=150, placeholder_text="Простое число p")
 
         # Результаты
-        self.label_result = ctk.CTkLabel(self, text="", wraplength=400)
+        self.label_result: ctk.CTkLabel = ctk.CTkLabel(self, text="", wraplength=400)
 
         # Логи
-        self.log_box = ctk.CTkTextbox(self, wrap="word", height=200)
+        self.log_box: ctk.CTkTextbox = ctk.CTkTextbox(self, wrap="word", height=200)
         self.log_box.configure(state="disabled")
 
         # Упаковка элементов
