@@ -1,13 +1,15 @@
-from typing import List, Tuple, Optional, Final
+from typing import List, Tuple, Final, Iterable, override
 
 from app.core.registry import LogRegistry
+from app.models.continued_fractions.base import IContinuedFractionModel
 
 
-class ContinuedFractionModel:
+class ContinuedFractionModel(IContinuedFractionModel):
     def __init__(self):
         self._registry: Final[LogRegistry] = LogRegistry()
 
-    def solve_linear_congruence(self, a: int, b: int, m: int) -> Optional[int]:
+    @override
+    def solve_linear_congruence(self, a: int, b: int, m: int) -> int:
         """
         Решает сравнение ax ≡ b (mod m) с помощью непрерывных дробей
         в соответствии с подходом, показанным на фото
@@ -16,64 +18,64 @@ class ContinuedFractionModel:
         self._registry.add_log(f"Преобразуем: x ≡ {b}/{a} (mod {m})")
 
         # Шаг 1: Построение цепной дроби для m/a
-        continued_fraction = self.get_continued_fraction(m, a)
+        continued_fraction: list[int] = self.__get_continued_fraction(m, a)
         self._registry.add_log(f"Цепная дробь: {continued_fraction}")
 
         # Шаг 2: Восстановление дроби
-        numerator, denominator = self.compute_fraction_from_continued_fraction(continued_fraction)
+        numerator, denominator = self.__compute_fraction_from_continued_fraction(continued_fraction)
         self._registry.add_log(f"Восстановленная дробь: {numerator}/{denominator}")
 
         # Шаг 3: Вычисление таблицы P и Q
-        p_table, q_table = self.compute_pq_tables_csharp_style(continued_fraction)
+        p_table, q_table = self.__compute_pq_tables(continued_fraction)
 
         # Шаг 4: Нахождение Pk (предпоследнее значение)
-        pk = p_table[len(continued_fraction) - 1]
+        pk: int = p_table[len(continued_fraction) - 1]
         self._registry.add_log(f"Pk = {pk}")
 
         # Шаг 5: Вычисление решения
-        solution = (pk * b) % m
-        self._registry.add_log(f"Ответ: x ≡ {solution} (mod {m})")
+        solution: int = (pk * b) % m
+        self._registry.add_log(f"Ответ: x = {solution} (mod {m})")
 
         # Нормализация решения
-        solution %= m
         if solution < 0:
             solution += m
         self._registry.add_log(f"x = {solution}")
 
         return solution
 
-    def get_continued_fraction(self, numerator: int, denominator: int) -> List[int]:
+    def __get_continued_fraction(self, numerator: int, denominator: int) -> List[int]:
         """Вычисляет цепную дробь для числа numerator/denominator"""
-        coefficients = []
+        coefficients: list[int] = []
         self._registry.add_log(f"{'Числитель':<12} | {'Знаменатель':<12} | {'Частное'}")
         while denominator != 0:
-            quotient = numerator // denominator
-            remainder = numerator % denominator
+            quotient: int = numerator // denominator
+            remainder: int = numerator % denominator
             self._registry.add_log(f"{numerator:<12} | {denominator:<12} | {quotient}")
             coefficients.append(quotient)
             numerator, denominator = denominator, remainder
         return coefficients
 
-    def compute_fraction_from_continued_fraction(self, coefficients: List[int]) -> Tuple[int, int]:
+    @staticmethod
+    def __compute_fraction_from_continued_fraction(coefficients: List[int]) -> Tuple[int, int]:
         """Восстанавливает дробь из цепной дроби"""
         if not coefficients:
             return 0, 1
 
         # Начинаем с последнего элемента
-        num = 1
-        denom = coefficients[-1]
+        num: int = 1
+        denom: int = coefficients[-1]
 
         # Обратный обход коэффициентов
-        for coeff in reversed(coefficients[:-1]):
-            num, denom = denom, coeff * denom + num
+        for coefficient in reversed(coefficients[:-1]):
+            num, denom = denom, coefficient * denom + num
 
         return denom, num
 
-    def compute_pq_tables_csharp_style(self, coefficients: List[int]) -> Tuple[List[int], List[int]]:
+    def __compute_pq_tables(self, coefficients: List[int]) -> Tuple[List[int], List[int]]:
         """Вычисляет таблицы Pk и Qk в стиле C# кода"""
-        n = len(coefficients)
-        p_table = [0] * (n + 1)
-        q_table = [0] * (n + 1)
+        n: int = len(coefficients)
+        p_table: list[int] = [0] * (n + 1)
+        q_table: list[int] = [0] * (n + 1)
 
         # Инициализация таблиц
         p_table[0] = 1
@@ -103,15 +105,6 @@ class ContinuedFractionModel:
 
         return p_table, q_table
 
-    @property
-    def logs(self) -> List[str]:
+    @override
+    def get_logs(self) -> Iterable[str]:
         return self._registry.logs
-
-if __name__ == "__main__":
-    model = ContinuedFractionModel()
-    solution = model.solve_linear_congruence(183, 93, 111)
-    print(f"Решение: x ≡ {solution} (mod 111)")
-
-    print("\nЛоги вычислений:")
-    for log in model.logs:
-        print(log)
