@@ -1,8 +1,8 @@
 """
 Написать и протестировать функцию, которая "переворачивает" строку, передаваемую в качестве параметра, в зеркальное состояние
 """
-from typing import AnyStr, List
 from io import StringIO
+from typing import AnyStr, List
 
 
 def reverse(string: AnyStr) -> AnyStr:
@@ -35,3 +35,12 @@ def reverse(string: AnyStr) -> AnyStr:
     buffer.close()
 
     return reversed_string
+
+
+def main() -> None:
+    while True:
+        s: str = input("Введите строку для разворота")
+        print(reverse(s))
+
+if __name__ == "__main__":
+    main()
