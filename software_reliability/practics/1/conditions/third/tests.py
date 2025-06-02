@@ -1,6 +1,6 @@
 import pytest
 
-from .main import count_min_in_rows
+from conditions.third.main import count_min_in_rows
 
 
 def test_normal_matrix():

@@ -1,6 +1,6 @@
 import pytest
 
-from first.main import reverse
+from conditions.first.main import reverse
 
 
 @pytest.mark.parametrize(

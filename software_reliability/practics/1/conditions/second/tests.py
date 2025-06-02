@@ -1,6 +1,6 @@
 import pytest
 
-from .main import reverse_number
+from conditions.second.main import reverse_number
 
 
 @pytest.mark.parametrize("input_num, expected", [
