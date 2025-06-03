@@ -19,6 +19,10 @@ class SimpleRadioStation(RadioStation):
     name: str
     frequency: float
 
+    def __post_init__(self) -> None:
+        if not isinstance(self.name, str) or len(self.name) >= 60:
+            raise ValueError("Неправильные данные для радиостанции")
+
     @override
     def is_in_frequency_range(self, min_freq: float, max_freq: float) -> bool:
         return min_freq <= self.frequency <= max_freq
@@ -58,7 +62,7 @@ def main() -> None:
             min_freq: float = float(input("Минимальная частота: "))
             max_freq: float = float(input("Максимальная частота: "))
 
-            result = manager.count_in_frequency_range(min_freq, max_freq)
+            result: int = manager.count_in_frequency_range(min_freq, max_freq)
             print(f"\nКоличество радиостанций в диапазоне: {result}")
 
         except ValueError as e:
