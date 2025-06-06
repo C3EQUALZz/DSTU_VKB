@@ -24,7 +24,8 @@ services:
         taskiq,
         worker,
         app.infrastructure.scheduler:scheduler,
-        app.infrastructure.scheduler.tasks.images.handlers 
+        app.infrastructure.scheduler.tasks.images.handlers,
+        app.infrastructure.scheduler.tasks.texts.handlers
     ]
 
   redis:

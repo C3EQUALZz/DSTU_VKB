@@ -1,0 +1,25 @@
+services:
+  text-service-app-backend:
+    restart: unless-stopped
+    container_name: text-service-app-backend
+    image: text-service-app-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: [ "sh", "-c", "gunicorn --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000 --workers 4 --timeout 120 --log-level info app.main:create_app" ]
+    ports:
+      - "${API_PORT}:8000"
+    env_file:
+      - .env
+    networks:
+      - text-service
+      - microservices-network
+      - grafana-network
+
+networks:
+  text-service:
+    driver: bridge
+  microservices-network:
+    external: true
+  grafana-network:
+    external: true

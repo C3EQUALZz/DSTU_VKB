@@ -26,8 +26,10 @@ from app.logic.bootstrap import Bootstrap
 from app.logic.commands.text import SendTextMessageToChatBotCommand, \
     SendTextMessageToChatBotAndThenReplyInMessengerCommand
 from app.logic.event_buffer import EventBuffer
+from app.logic.events.texts import SendMessageForLLMFromBrokerEvent
 from app.logic.handlers.text.commands import SendTextMessageToChatBotCommandHandler, \
     SendTextMessageToChatBotAndThenReplyInMessengerCommandHandler
+from app.logic.handlers.text.events import SendTextMessageToChatBotEventHandler
 from app.logic.types.handlers import (
     CommandHandlerMapping,
     EventHandlerMapping,
@@ -36,6 +38,7 @@ from app.settings.config import (
     Settings,
     get_settings,
 )
+from app.infrastructure.brokers.consumers.chatbot.handlers import router
 
 logger = logging.getLogger(__name__)
 
@@ -62,7 +65,7 @@ class HandlerProvider(Provider):
         return cast(
             "EventHandlerMapping",
             {
-
+                SendMessageForLLMFromBrokerEvent: [SendTextMessageToChatBotEventHandler]
             },
         )
 
@@ -72,13 +75,15 @@ class BrokerProvider(Provider):
 
     @provide(scope=Scope.APP)
     async def get_kafka_broker(self, settings: Settings) -> KafkaBroker:
-        return KafkaBroker(settings.broker.url)
+        broker: KafkaBroker = KafkaBroker(settings.broker.url)
+        broker.include_router(router)
+        return broker
 
     @provide(scope=Scope.APP)
     async def get_mapping_events_and_topic(self, settings: Settings) -> EventHandlerTopicFactory:
         return EventHandlerTopicFactory(
             mapping={
-
+                SendTextMessageToChatBotEventHandler: settings.broker.text_chatbot_result_topic
             }
         )
 
@@ -94,6 +99,7 @@ class BrokerProvider(Provider):
             producers={
                 settings.broker.text_translate_topic: broker.publisher(settings.broker.text_translate_topic),
                 settings.broker.text_chatbot_topic: broker.publisher(settings.broker.text_chatbot_topic),
+                settings.broker.text_chatbot_result_topic: broker.publisher(settings.broker.text_chatbot_result_topic)
             }
         )
 
@@ -127,12 +133,14 @@ class AppProvider(Provider):
             events: EventHandlerMapping,
             commands: CommandHandlerMapping,
             text_service: TextMessageService,
+            broker: BaseMessageBroker,
+            event_handler_topic_factory: EventHandlerTopicFactory,
     ) -> Bootstrap:
         return Bootstrap(
             event_buffer=EventBuffer(),
             events_handlers_for_injection=events,
             commands_handlers_for_injection=commands,
-            dependencies={"text_service": text_service},
+            dependencies={"text_service": text_service, "broker": broker, "factory": event_handler_topic_factory},
         )
 
 

@@ -37,7 +37,7 @@ async def handle_color_to_gray(
             name=image_entity.name,
             height=image_entity.height,
             width=image_entity.width,
-            chat_id=query.message.chat_id,
+            chat_id=query.message.chat.id,
         )
     )
 

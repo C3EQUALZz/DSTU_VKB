@@ -120,6 +120,16 @@ class BrokerSettings(CommonSettings):
         alias="BROKER_TEXT_TO_CHATBOT"
     )
 
+    text_to_chatbot_result_topic: str = Field(
+        default="text-to-chatbot-result",
+        alias="BROKER_TEXT_TO_CHATBOT_RESULT"
+    )
+
+    text_telegram_group: str = Field(
+        default="text-telegram-group",
+        alias="BROKER_TEXT_TELEGRAM_GROUP"
+    )
+
     user_create_topic: str = Field(
         default="user-create",
         alias="BROKER_USER_CREATE"

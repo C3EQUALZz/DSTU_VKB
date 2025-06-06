@@ -56,7 +56,9 @@ class OpenAITextMessageModel(LLMTextMessageModel, Generic[T]):
             timeout=30.0
         )
 
-        if content := response.choices[0].message.content:
+        try:
             return TextMessageEntity(
-                content=Text(content),
+                content=Text(response.choices[0].message.content),
             )
+        except TypeError:
+            return None

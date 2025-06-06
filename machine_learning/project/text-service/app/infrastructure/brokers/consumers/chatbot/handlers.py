@@ -3,9 +3,10 @@ from typing import Final
 from dishka import FromDishka
 from faststream.kafka import KafkaRouter
 from faststream.kafka.annotations import KafkaMessage
+
+from app.infrastructure.brokers.consumers.chatbot.schemas import TextToChatBotSchema
 from app.logic.bootstrap import Bootstrap
-from app.logic.commands.text import SendTextMessageToChatBotAndThenReplyInMessengerCommand
-from app.logic.dtos.chatbot import MessageAndChatIDDTO
+from app.logic.events.texts import SendMessageForLLMFromBrokerEvent
 from app.logic.message_bus import MessageBus
 from app.settings.config import get_settings, Settings
 
@@ -19,22 +20,17 @@ settings: Final[Settings] = get_settings()
     auto_commit=False
 )
 async def handle_text_to_chatbot(
-        message: str,
-        chat_id: int,
+        schemas: TextToChatBotSchema,
         msg: KafkaMessage,
         bootstrap: FromDishka[Bootstrap]
-):
+) -> None:
     message_bus: MessageBus = await bootstrap.get_messagebus()
 
     await message_bus.handle(
-        SendTextMessageToChatBotAndThenReplyInMessengerCommand(
-            content=message,
-            chat_id=chat_id,
+        SendMessageForLLMFromBrokerEvent(
+            content=schemas.content,
+            chat_id=schemas.chat_id,
         )
     )
 
-    result: MessageAndChatIDDTO = message_bus.command_result
-
     await msg.ack()
-
-    return result
