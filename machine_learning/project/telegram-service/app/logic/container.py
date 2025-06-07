@@ -34,6 +34,7 @@ from app.logic.commands.texts import SendTextMessageToChatBotCommand
 from app.logic.commands.users import CreateUserCommand, UpdateUserCommand, DeleteUserCommand
 from app.logic.event_buffer import EventBuffer
 from app.logic.events.images import ConvertedImageFromBrokerEvent
+from app.logic.events.texts import TextFromBrokerEvent
 from app.logic.events.user import UserCreateEvent, UserUpdateEvent, UserDeleteEvent
 from app.logic.handlers.images.commands import (
     ConvertColorImageToGrayScaleImageCommandHandler,
@@ -44,6 +45,7 @@ from app.logic.handlers.images.commands import (
 )
 from app.logic.handlers.images.events import ConvertedImageFromBrokerEventHandler
 from app.logic.handlers.texts.commands import SendTextMessageToChatBotCommandHandler
+from app.logic.handlers.texts.events import TextFromBrokerEventHandler
 from app.logic.handlers.users.commands import CreateUserCommandHandler, DeleteUserCommandHandler
 from app.logic.handlers.users.events import UserCreateEventHandler, UserUpdateEventHandler, UserDeleteEventHandler
 from app.logic.message_bus import MessageBus
@@ -57,6 +59,7 @@ from app.settings.configs.app import (
 )
 from app.settings.configs.enums import TaskNamesConfig
 from app.infrastructure.brokers.consumers.kafka.images.handlers import router as images_kafka_router
+from app.infrastructure.brokers.consumers.kafka.texts.handlers import router as texts_kafka_router
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 
@@ -94,6 +97,7 @@ class HandlerProvider(Provider):
                 UserCreateEvent: [UserCreateEventHandler],
                 UserUpdateEvent: [UserUpdateEventHandler],
                 UserDeleteEvent: [UserDeleteEventHandler],
+                TextFromBrokerEvent: [TextFromBrokerEventHandler]
             },
         )
 
@@ -115,6 +119,7 @@ class BrokerProvider(Provider):
     async def get_faststream_broker(self, settings: Settings) -> KafkaBroker:
         broker: KafkaBroker = KafkaBroker(settings.broker.url, logger=logger)
         broker.include_router(images_kafka_router)
+        broker.include_router(texts_kafka_router)
         logger.info("Included router")
         return broker
 
@@ -135,8 +140,10 @@ class BrokerProvider(Provider):
                 ),
                 settings.broker.image_crop_topic: broker.publisher(settings.broker.image_crop_topic),
                 settings.broker.image_rotate_topic: broker.publisher(settings.broker.image_rotate_topic),
+                settings.broker.text_to_chatbot_topic: broker.publisher(settings.broker.text_to_chatbot_topic),
             }
         )
+
 
 class AppProvider(Provider):
     settings = from_context(provides=Settings, scope=Scope.APP)
@@ -154,18 +161,20 @@ class AppProvider(Provider):
                 ConvertColorImageToGrayScaleImageCommandHandler: settings.broker.image_color_to_grayscale_topic,
                 ConvertGrayScaleImageToColorImageCommandHandler: settings.broker.image_grayscale_to_color_topic,
                 CropImageCommandHandler: settings.broker.image_crop_topic,
-                RotateImageCommandHandler: settings.broker.image_rotate_topic
+                RotateImageCommandHandler: settings.broker.image_rotate_topic,
             }
         )
 
     @provide(scope=Scope.APP)
     async def get_scheduler(self) -> BaseScheduler:
         images_tasks_module: ModuleType = importlib.import_module("app.infrastructure.scheduler.tasks.images.handlers")
+        texts_tasks_module: ModuleType = importlib.import_module("app.infrastructure.scheduler.tasks.texts.handlers")
 
         return TaskIqScheduler(
             task_mapping={
                 TaskNamesConfig.SEND_CONVERTED_IMAGE_TO_USER: images_tasks_module.send_converted_image_task,
                 TaskNamesConfig.IMAGE_METADATA: images_tasks_module.send_metadata_from_image_task,
+                TaskNamesConfig.SEND_TEXT_TO_USER: texts_tasks_module.send_text_from_llm_to_user_task,
             }
         )
 

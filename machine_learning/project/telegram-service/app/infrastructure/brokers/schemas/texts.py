@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
 
-class TextToChatBotSchema(BaseModel):
+class MessageLLMSchema(BaseModel):
     chat_id: int
     content: str

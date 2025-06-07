@@ -24,7 +24,8 @@ class BrokerSettings(CommonSettings):
     port: int = Field(alias="BROKER_PORT_NETWORK")
 
     text_translate_topic: str = Field(default="text-translate", alias="BROKER_TEXT_TRANSLATE_TOPIC")
-    text_chatbot_topic: str = Field(default="text-chatbot", alias="BROKER_TEXT_CHATBOT_TOPIC")
+    text_chatbot_topic: str = Field(default="text-to-chatbot", alias="BROKER_TEXT_CHATBOT_TOPIC")
+    text_chatbot_result_topic: str = Field(default="text-to-chatbot-result", alias="BROKER_TEXT_TOTAL_RESULT_TOPIC")
 
     text_chatbot_group_id: str = Field(default="text-chatbot", alias="BROKER_TEXT_CHATBOT_GROUP_ID")
 

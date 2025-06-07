@@ -24,5 +24,6 @@ kafka-topics.sh --create --if-not-exists --topic image-metadata --partitions 15 
 kafka-topics.sh --create --if-not-exists --topic image-metadata-result --partitions 15 --replication-factor 1 --bootstrap-server broker:29092
 kafka-topics.sh --create --if-not-exists --topic image-inverse --partitions 15 --replication-factor 1 --bootstrap-server broker:29092
 kafka-topics.sh --create --if-not-exists --topic image-inverse-result --partitions 15 --replication-factor 1 --bootstrap-server broker:29092
-
+kafka-topics.sh --create --if-not-exists --topic text-to-chatbot --partitions 15 --replication-factor 1 --bootstrap-server broker:29092
+kafka-topics.sh --create --if-not-exists --topic text-to-chatbot-result --partitions 15 --replication-factor 1 --bootstrap-server broker:29092
 echo "All topics created!"
