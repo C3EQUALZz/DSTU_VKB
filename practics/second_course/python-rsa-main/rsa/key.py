@@ -1,36 +1,3 @@
-#  Copyright 2011 Sybren A. Stüvel <sybren@stuvel.eu>
-#
-#  Licensed under the Apache License, Version 2.0 (the "License");
-#  you may not use this file except in compliance with the License.
-#  You may obtain a copy of the License at
-#
-#      https://www.apache.org/licenses/LICENSE-2.0
-#
-#  Unless required by applicable law or agreed to in writing, software
-#  distributed under the License is distributed on an "AS IS" BASIS,
-#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#  See the License for the specific language governing permissions and
-#  limitations under the License.
-
-"""RSA key generation code.
-
-Create new keys with the newkeys() function. It will give you a PublicKey and a
-PrivateKey object.
-
-Loading and saving keys requires the pyasn1 module. This module is imported as
-late as possible, such that other functionality will remain working in absence
-of pyasn1.
-
-.. note::
-
-    Storing public and private keys via the `pickle` module is possible.
-    However, it is insecure to load a key from an untrusted source.
-    The pickle module is not secure against erroneous or maliciously
-    constructed data. Never unpickle data received from an untrusted
-    or unauthenticated source.
-
-"""
-
 import abc
 import itertools
 import math

@@ -3,9 +3,9 @@ import logging.handlers
 import time
 import typing
 
-import rsa.core.config.logger_setup
-
-rsa.core.config.logger_setup.setup_logging()
+# import rsa.core.config.logger_setup
+#
+# rsa.core.config.logger_setup.setup_logging()
 
 
 def log_decorator(logger: logging.Logger):

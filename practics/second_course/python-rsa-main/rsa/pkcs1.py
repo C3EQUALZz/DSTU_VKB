@@ -1,31 +1,3 @@
-#  Copyright 2011 Sybren A. Stüvel <sybren@stuvel.eu>
-#
-#  Licensed under the Apache License, Version 2.0 (the "License");
-#  you may not use this file except in compliance with the License.
-#  You may obtain a copy of the License at
-#
-#      https://www.apache.org/licenses/LICENSE-2.0
-#
-#  Unless required by applicable law or agreed to in writing, software
-#  distributed under the License is distributed on an "AS IS" BASIS,
-#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#  See the License for the specific language governing permissions and
-#  limitations under the License.
-
-"""Functions for PKCS#1 version 1.5 encryption and signing
-
-This module implements certain functionality from PKCS#1 version 1.5. For a
-very clear example, read https://www.di-mgt.com.au/rsa_alg.html#pkcs1schemes
-
-At least 8 bytes of random padding is used when encrypting a message. This makes
-these methods much more secure than the ones in the ``rsa`` module.
-
-WARNING: this module leaks information when decryption fails. The exceptions
-that are raised contain the Python traceback information, which can be used to
-deduce where in the process the failure occurred. DO NOT PASS SUCH INFORMATION
-to your users.
-"""
-
 __all__ = [
     "encrypt",
     "decrypt",

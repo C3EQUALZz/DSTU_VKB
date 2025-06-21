@@ -1,4 +1,4 @@
-_# B tree индекс
+# Gin индекс
 
 Для проверки на целостность используем команду, которая представлена ниже: 
 
@@ -15,7 +15,9 @@ INSERT INTO orders (order_date, client_id) VALUES
 Для тестирования производительности:
 
 ```sql
-EXPLAIN ANALYZE SELECT * FROM orders WHERE order_date = '2023-02-20';
-```_
+EXPLAIN ANALYZE
+SELECT * FROM orders
+WHERE date_tsvector @@ to_tsquery('simple', '2026-03-27');
+```
 
-![img.png](img.png)
+![img.png](images/img.png)
