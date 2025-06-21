@@ -13,7 +13,7 @@ CREATE TABLE clients (
 CREATE INDEX idx_clients_email ON clients USING HASH(email);
 
 -- Тестовые данные
-INSERT INTO clients VALUES (email, name)
+INSERT INTO clients (email, name) VALUES
   ('egestas.nunc@icloud.com','Hadassah Mcknight'),
   ('dapibus.rutrum.justo@protonmail.com','Henry Pennington'),
   ('tincidunt.pede@protonmail.ca','Pamela Wiggins'),
@@ -82,7 +82,6 @@ INSERT INTO clients VALUES (email, name)
   ('ac.mattis@protonmail.ca','Maia Hampton'),
   ('magnis.dis.parturient@outlook.net','Coby Maxwell'),
   ('a.arcu@hotmail.com','Benjamin Richmond'),
-  ('sit.amet@aol.org','Natalie Guthrie'),
   ('rutrum.non@icloud.org','Carlos Rosario'),
   ('lorem.vitae@yahoo.couk','Rhiannon Emerson'),
   ('ut.sagittis@hotmail.com','Yuri Yang'),
