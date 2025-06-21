@@ -1,3 +1,4 @@
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
 DROP TABLE IF EXISTS employees;
 DROP INDEX IF EXISTS idx_employees_name;
 
@@ -10,7 +11,7 @@ CREATE TABLE employees
 );
 
 -- Создание индекса
-CREATE INDEX idx_employees_name ON employees (name);
+CREATE INDEX idx_employees_name ON employees USING BRIN(name);
 
 -- Уникальные тестовые данные (500 записей)
 INSERT INTO employees (name, salary)

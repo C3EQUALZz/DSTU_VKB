@@ -10,7 +10,7 @@ CREATE TABLE employees
 );
 
 -- Создание индекса
-CREATE INDEX idx_employees_name ON employees (name);
+CREATE INDEX idx_employees_name ON employees USING HASH(name);
 
 -- Уникальные тестовые данные (500 записей)
 INSERT INTO employees (name, salary)
