@@ -1,7 +1,7 @@
 services:
   postgres:
-    image: postgres-with-audit:local-2
-    container_name: postgres-lab-10-var-2
+    image: postgres-with-audit:local-4
+    container_name: postgres-lab-10-var-4
     build: ./
     env_file:
       - .env
@@ -12,7 +12,7 @@ services:
     ports:
       - ${POSTGRES_PORT}:5432
     volumes:
-      - postgres_data_tenth_laboratory_var_2:/var/lib/postgresql/data
+      - postgres_data_tenth_laboratory_var_4:/var/lib/postgresql/data
       - ./postgresql.conf:/etc/postgresql.conf
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
@@ -20,12 +20,12 @@ services:
       timeout: 5s
       retries: 3
     networks:
-      - tenth_laboratory_var_2
+      - tenth_laboratory_var_4
     command: postgres -c config_file=/etc/postgresql.conf
 
   pgadmin:
     image: dpage/pgadmin4:9.3.0
-    container_name: pgadmin-lab-10-var-2
+    container_name: pgadmin-lab-10-var-4
     env_file:
       - .env
     environment:
@@ -39,11 +39,11 @@ services:
       postgres:
         condition: service_healthy
     networks:
-      - tenth_laboratory_var_2
+      - tenth_laboratory_var_4
 
 volumes:
-  postgres_data_tenth_laboratory_var_2:
+  postgres_data_tenth_laboratory_var_4:
 
 networks:
-  tenth_laboratory_var_2:
+  tenth_laboratory_var_4:
     driver: bridge
