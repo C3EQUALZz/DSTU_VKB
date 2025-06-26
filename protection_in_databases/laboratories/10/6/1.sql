@@ -1,17 +1,15 @@
 CREATE EXTENSION IF NOT EXISTS pgaudit;
 CREATE ROLE auditor;
-DROP TABLE IF EXISTS inventory CASCADE;
+DROP TABLE IF EXISTS transactions CASCADE;
 DROP TABLE IF EXISTS audit_log CASCADE;
 
 set pgaudit.role = 'auditor';
 
-CREATE TABLE inventory
+CREATE TABLE transactions
 (
-    item_id      SERIAL PRIMARY KEY,
-    item_name    VARCHAR(100) NOT NULL,
-    category     VARCHAR(50)  NOT NULL,
-    quantity     INT          NOT NULL CHECK (quantity >= 0),
-    price        DECIMAL(10, 2) CHECK (price > 0)
+    transaction_id   SERIAL PRIMARY KEY,
+    amount           DECIMAL(10, 2) NOT NULL,
+    transaction_date DATE           NOT NULL
 );
 
 CREATE TABLE audit_log
@@ -24,3 +22,8 @@ CREATE TABLE audit_log
     new_value  JSONB,
     timestamp  TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+GRANT SELECT ON transactions TO auditor;
+REVOKE DELETE ON transactions FROM auditor;
+REVOKE UPDATE ON transactions FROM auditor;
+REVOKE INSERT ON transactions FROM auditor;
