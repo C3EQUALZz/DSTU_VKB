@@ -1,0 +1,59 @@
+.pgmanage {
+    font-size: $fontSize;
+    border-radius: $borderRadius;
+    border-width: 1px;
+    box-shadow: $dropdownBoxShadow;
+    padding: 0.5rem 0;
+
+    @include themify() {
+        background-color: themed($popupBg);
+        border: themed($border);
+    }
+
+    .mx-context-menu-item {
+        @include themify() {
+            color: themed($color);
+        }
+        &.disabled {
+            cursor: pointer;
+            @include themify() {
+                color: themed($disabledColor);
+            }
+
+            i {
+                @include themify() {
+                    color: themed($disabledColor);
+                }
+            }
+        }
+
+        &:hover:not(.disabled), &.open {
+            background-color: rgba($primaryBlue, 0.15);
+        }
+
+        .mx-right-arrow {
+            @include themify() {
+                fill: themed($color);
+            }
+        }
+
+        i {
+            width: 20px;
+            height: 16px;
+            &.icon {
+                @include themify() {
+                    color: themed($primaryBlueWhiteSwitching);
+                }                    
+            }
+
+            &.node {
+                @include themify() {
+                    background-color: themed($primaryBlueWhiteSwitching);
+                }
+            }
+        }
+        span.label {
+            font-size: inherit;
+        }
+    }
+}

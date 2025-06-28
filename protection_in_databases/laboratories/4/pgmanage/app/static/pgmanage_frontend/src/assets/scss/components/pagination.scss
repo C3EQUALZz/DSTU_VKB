@@ -1,0 +1,23 @@
+.pagination {
+    &__btn {
+        background: transparent;
+        border: 0;
+        color: $primaryBlue;
+        font-weight: 600;
+        border: 2px solid transparent;
+        transition: .1s all ease-in;
+        border-radius: $borderRadius;
+
+        &:focus {
+            outline: none;
+        }
+
+        &:hover {
+            border-color: $primaryBlue;
+        }
+    }
+
+    &__pages {
+        font-weight: 600;
+    }
+}

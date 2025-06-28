@@ -1,0 +1,103 @@
+$scrollBarWidth: 10px;
+$scrollBarTrackBg: #F2F2F3;
+$scrollBarThumbBg: #ADB1B9;
+$dropdownMaxHeightSm: 200px;
+$dropdownMaxHeightMd: 400px;
+$dropdownMinWidth: 11rem;
+
+.dropdown {
+    //bootstrap dropdown
+    &-menu {
+        font-size: $fontSize;
+        border-radius: $borderRadius;
+        border-width: 1px;
+        box-shadow: $dropdownBoxShadow;
+        min-width: $dropdownMinWidth;
+        overflow-y: auto;
+
+        @include themify() {
+            background-color: themed($surfaceBg);
+            border: themed($border);
+        }
+
+        &-sm {
+            max-height: $dropdownMaxHeightSm;
+        }
+
+        &-md {
+            max-height: $dropdownMaxHeightMd;
+        }
+
+        &-width-auto {
+            min-width: auto;
+        }
+    }
+
+    &-item {
+        padding: .5rem .75rem;
+        color: $fontColorLight;
+
+        @include themify() {
+            color: themed($color);
+        }
+
+        &:hover {
+            background-color: rgba($primaryMutedColor, 0.15);
+        }
+    }
+
+    &-searchable {
+        //custom dropdown
+        position: relative;
+
+        &__input {
+            border-radius: $borderRadius;
+            color: #333;
+            display: block;
+            font-size: .875rem;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23a5a9b1' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position-x: calc(100% - 10px);
+            background-position-y: 50%;
+            background-size: 15px 15px;
+        }
+
+        &:not(:disabled) {
+            cursor: pointer;
+        }
+
+        &__content {
+            position: absolute;
+            width: 100%;
+            max-width: 248px;
+            max-height: 248px;
+            box-shadow: $dropdownBoxShadow;
+            overflow: auto;
+            z-index: 200;
+            border-radius: 0 0 $borderRadius $borderRadius;
+
+            @include themify() {
+                background-color: themed($popupBg);
+                border: themed($border);
+            }
+
+            &_item {
+                color: inherit;
+                font-size: 0.875em;
+                line-height: 1em;
+                padding: 8px;
+                text-decoration: none;
+                display: block;
+                cursor: pointer;
+
+                &.selected {
+                    background-color: rgba($primaryBlue, 0.15);
+                }
+
+                &.highlighted {
+                    background-color: rgba($primaryMutedColor, 0.15);
+                }
+            }
+        }
+    }
+}

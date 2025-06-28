@@ -1,0 +1,63 @@
+.schema-editor {
+    &__header {
+        & > [class*=col-] {
+            padding-left: 0.75rem;
+        }
+    }
+
+    &__column {
+        border-radius: $borderRadius;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+
+        &:not(:last-of-type){
+            margin-bottom: 4px;
+        }
+
+        @include themify() {
+            color: themed($color);
+            background-color: themed($schemaEditorColumnBg);
+
+            &-deleted {
+                background-color: rgba($dangerColor, 0.25);
+            }
+
+            &-new {
+                background-color: rgba($successColor, 0.25)
+            }
+
+            &-dirty {
+                background-color: rgba($warningColor, 0.35);
+            }
+        }
+
+        .form-control, input[type='text']  {
+            background-color: transparent !important;
+            border: 0!important;
+            border-radius: 0 !important;
+            &:focus,
+            &:-webkit-autofill,
+            &:-webkit-autofill:hover,
+            &:-webkit-autofill:focus {
+                box-shadow: none !important;
+                border: 0 !important;
+            }
+
+            &:not(:disabled) {
+                &:hover, &:focus {
+                    transition: $transition;
+                    backdrop-filter: brightness(95%);
+                }
+            }
+        }
+
+        .custom-checkbox {
+           margin-left: 0.75rem;
+        }
+        
+        .cell {
+            padding: 0.375rem 0.75rem;
+            cursor: default;
+        }
+    }
+}

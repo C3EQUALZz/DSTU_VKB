@@ -1,0 +1,94 @@
+.vcron {
+    &-l-spacer {
+        display: inline-block;
+        padding: 3px;
+    }
+
+    &-select {
+        &-container {
+            display: inline-block;
+            position: relative;
+            margin: 0 0.2em;
+        }
+
+        &-input {
+            display: inline-block;
+            border-radius: $borderRadius;
+            border: $activeBorder;
+            background-color: #eee;
+            user-select: none;
+            padding: 0 0.5em;
+            font-weight: 500;
+            transition: all .2s ease-in;
+
+            @include themify() {
+                color: themed($cronLightInputColor);
+                background-color: themed($cronLightInputBg);
+            }
+
+            &:hover {
+                @include themify() {
+                    background-color: themed($cronLightInputHover);
+                }
+            }
+        }
+
+        &-list {
+            position: absolute;
+            top: 1.8em;
+            left: 0px;
+            margin: 0;
+            padding: 0;
+            border-radius: $borderRadius;
+            box-shadow: $dropdownBoxShadow;
+            list-style: none;
+            z-index: 100;
+
+            @include themify() {
+                background-color: themed($surfaceBg);
+            }
+        }
+
+        &-row {
+            display: flex;
+        }
+
+        &-col {
+            flex-grow: 1;
+            flex-basis: 0%;
+            display: inline-block;
+            box-sizing: border-box;
+            user-select: none;
+            padding: 0.2em 0.5em;
+            text-align: center;
+
+            @include themify() {
+                color: themed($color);
+            }
+
+            &:hover {
+                background-color: rgba($primaryMutedColor, 0.15);
+            }
+        }
+
+        &-selected {
+            background-color: $primaryBlue;
+            border-radius: $borderRadius;
+
+            & > * {
+                color: $white;
+            }
+
+            &:hover {
+                background-color: $primaryBlue;
+                color: $white;
+            }
+        }
+    }
+
+    &-disabled {
+        pointer-events: none;
+        filter: grayscale(1);
+        opacity: 0.5;
+    }
+}

@@ -1,0 +1,104 @@
+{% load django_vite %}
+<!doctype html>
+<html lang="en">
+  <head>
+    {% vite_hmr_client %}
+    {% vite_asset 'src/main.js' %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link id="ss_theme" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/x-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAAyAAAAMgFOp+RzAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAvtJREFUOI1tk91vU3UYxz+/05dDCz1dOzrXQScDNgpjbmIxZuB40YiTDCNErpw3XpiY+BeYELl1V5oQY3wJETA6M2RqUCQbBoSEbcSAjG0i29p1rKyzx/XlnJ6etscLsulenqvn9+Sbz+/zXDywSv0w9NDdOzi9beHdMxjd3Ptb0rNa1r7acGwqPrF5Y3XV6V9Hv7dLkioQnUljLgFsWJ4VC03X+VsHgwHltKYbZcXjrh2bnBYT8Vksq0zoiQA762sxTHNEdjhcyXT2vXdffuqrJQZfX7oWDlX5Qp0d+xl+MMWFvpuLv9z5M0q+UKC1Jbz9Qv9N7t2PNaxYoS3sbYhEWgHYEqqmJVzHeHwWq1wmFKxcMOCV559hgyKeG/psGcCV+CX48bc5NN2gfe8uOvbtJpXOUDCLVFf6SMypfHTuR2ySjWeVUd8Kgz01mXRsRsUfsHN/fIKkmub3kXGKpRJNDU9iGCYH6kyyuk6bX9VPLQdscj5SPtjyOaVCjpPTbzN4N8XR7Tl8a0qcvTOJBXQ1dSH5ZHJlv3uFQV4E57X52winj5Pbesk2NyDPXKKs67Tvewm3yKKlFCxdRXftyMHwUsDFRH1le2MrpaKJXz2D/VEPpicM7rVI8Z/RBCRrTiDZHAxE/6mAvv8A56//VXX98tmN6dkoAA7/UdzVBqnMGkrFIuu3vohpSWiJWQASecXbPTRcezzSGHts4DD33tO96pWBLHNakfd3a2xaa/K3UcAsgZkvY1mCN/qdrJNtVHhc6q6SfT/wpR1ACElfJ8vZn8ZiAJxTgjTXVPDNH2lyRpHXW/zkjCIzDx8b7nl6ZxosfXGFTCp/9dihtjqXSy6sr/Bmv/ju4qt9wzNVkhBlhLA+vaLaAE6803kqpWbczTvqR4SmX14EvHmoOdfdbX1y5KB9QBI0PYjFA6OTU3VvHTvcH/B79Q/P9Lzgkp1GS3jrbSzuFqPlW68dbywsOab/V/eNGy5Z8igmNkUSQliGlXG6tfmOSERbnv0XP0Q/X9pTxpEAAAAASUVORK5CYII="/>
+    <title>PgManage</title>
+  </head>
+  <body>
+
+  <!-- IF CHROME - Security countermeasures -->
+  <form style="display:none;" autocomplete="off">
+    <input type="text" name="prevent_autofill" id="prevent_autofill" value="" />
+    <input type="password" name="password_fake" id="password_fake" value="" />
+  </form>
+  <!-- .IF CHROME -->
+
+
+  <div id="extension-modal-wrap">
+  </div>
+
+  <div id="pgcron-modal-wrap">
+  </div>
+
+  <div id="role-modal-wrap">
+  </div>
+
+  <div id="app" class="omnidb__main omnidb__explain--default" style="min-height: 100vh;">
+  </div>
+
+
+    <div id="div_loading" class="div_loading" style='z-index: 100005; display: block;'>
+      <div class="div_loading_cover"></div>
+      <div class="div_loading_content">
+        <div class="spinner-border text-primary" style="width: 4rem; height: 4rem;" role="status">
+          <span class="sr-only ">Loading...</span>
+        </div>
+        <div>
+          <button id="bt_cancel_ajax" style='display: none; margin-top: 10px;' class='btn btn-light' onclick="cancelAjax()">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Modal Plugins -->
+    <!-- <div class="modal fade" id="modal_plugins" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header align-items-center">
+            <h2 class="modal-title font-weight-bold">Manage plugins</h2>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true"><i class="fa-solid fa-xmark"></i></span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="custom-file mb-3">
+              <input type="file" class="custom-file-input" id="plugin_file_selector" onchange="upload(this)" required>
+              <label class="custom-file-label" for="plugin_file_selector">Select plugin package to be installed...</label>
+            </div>
+
+            <div id="plugin_grid" style="width: 100%; height: 300px; overflow: hidden;"></div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- Modal Generic Message -->
+    <div class="modal fade" id="modal_message" tabindex="-1" role="dialog" aria-hidden="true">
+      <div id="modal_message_dialog" class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header align-items-center">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div id="modal_message_content" class="modal-body" style='white-space: pre-line; word-break: break-word;'>
+          </div>
+          <div class="modal-footer">
+            <button id="modal_message_yes" type="button" class="btn btn-primary" data-bs-dismiss="modal">Yes</button>
+            <button id="modal_message_ok" type="button" class="btn btn-success" data-bs-dismiss="modal">Ok</button>
+            <button id="modal_message_no" type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
+            <button id="modal_message_cancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+  	//Global variables
+    var master_key = '{{master_key}}'
+    var pgmanage_version = '{{ pgmanage_version }}';
+    var short_version = '{{ pgmanage_short_version }}';
+    var app_base_path = '{{ base_path }}'
+  	var gv_desktopMode = ('{{ desktop_mode }}' === 'True');
+    var v_omnis = undefined ;
+    var v_super_user = {{ super_user|lower }};
+    var v_csrf_cookie_name = '{{ csrf_cookie_name }}';
+    var user_name = '{{ user_name }}';
+    </script>
+  </body>
+</html>

@@ -1,0 +1,5 @@
+// hides pev2 "report a bug" link and neighboring text
+div.d-flex.align-items-center:has(a[href^='https://github.com/dalibo/pev2/issues/'][class='btn btn-primary ms-auto']),
+div.result-div div.card.align-self-center.border-danger.w-50 div.card-body p.card-text.text-body-dark {
+    display: none !important;
+}

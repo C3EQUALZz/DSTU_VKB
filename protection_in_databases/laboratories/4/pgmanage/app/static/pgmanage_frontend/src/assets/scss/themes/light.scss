@@ -1,0 +1,302 @@
+/*
+This file is part of OmniDB.
+OmniDB is open-source software, distributed "AS IS" under the MIT license in the hope that it will be useful.
+
+The MIT License (MIT)
+
+Portions Copyright (c) 2015-2020, The OmniDB Team
+Portions Copyright (c) 2017-2020, 2ndQuadrant Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
+.omnidb--theme-light {
+  .omnidb__main {
+    background-color: #F8FAFD;
+  }
+
+
+  .omnidb__theme-bg--menu-primary {
+    background-color: #1560AD;
+    &::-webkit-scrollbar-track {
+      background: #4A81d4;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #325B9A;
+    }
+  }
+
+  .omnidb__theme-bg--menu-utilities {
+    background-color: #1560AD;
+  }
+
+  .omnidb__theme-bg--light {
+    background-color: #F4F4F4;
+  }
+
+  .omnidb__theme-border--primary {
+    border: 1px solid #CAD0D8;
+  }
+
+  .omnidb__theme-border-top--primary {
+    border-top: 1px solid #CAD0D8;
+  }
+
+
+  .omnidb__theme-icon--primary {
+    color: #4A81D4;
+  }
+
+  /* TEXT */
+  .omnidb__theme-text {
+    color: #4A81D4;
+    &--primary {
+      color: #4A81D4;
+    }
+    &--secondary {
+      color: #6C757D;
+    }
+  }
+
+
+  .omnidb__workspace,
+  .omnidb__snippets {
+    &__div-left {
+      background-color: #F8FAFD;
+    }
+    &__div-right {
+      background-color: #FFFFFF;
+    }
+  }
+
+  /* OMNIS */
+  .omnis {
+    background-color: rgba(255,255,255,0.25);
+
+    &.omnis--active {
+      background-color: rgba(255,255,255,1);
+    }
+
+    &__cloned-element__waves span {
+      background-color: #2FB344;
+    }
+  }
+
+  /* ICONS */
+  .close,
+  i.icon-close {
+    color: #D72239;
+  }
+
+  /* CONSOLE */
+  .omnidb__txt-console {
+    border-color: #CAD0D8;
+  }
+
+  /* PRIMARY TAB */
+  .omnidb__tab-menu--primary {
+    .nav-tabs .nav-link.active {
+      border-top: none;
+      background-color: #3869b3;
+    }
+
+    .omnidb__tab-menu__link-name {
+    	color: #FFF;
+    }
+
+    .omnidb__tab-menu__link-icon {
+      background-color: unset;
+      color: #F9F9F9;
+    }
+  }
+
+  /* UTILITIES MENU */
+  .omnidb__utilities-menu {
+    .omnidb__menu__btn {
+      background-color: unset;
+      color: #F9F9F9;
+    }
+
+    .omnidb__menu__btn,
+    .omnidb__menu__btn-user {
+      &:hover {
+        color: #F9F9F9;
+      }
+    }
+
+    .omnidb__menu__btn-text,
+    .fa-code-branch {
+      color: #F9F9F9;
+    }
+
+    .badge-info {
+      color: #585858;
+      background-color: #FFF;
+    }
+  }
+
+  /* SECONDARY TAB */
+  .omnidb__tab-menu--secondary {
+
+    .nav-tabs {
+      border-bottom-color: transparent !important;
+    }
+
+    .omnidb__tab-menu__link {
+      border-width: 2px 1px 0 1px;
+      border-radius: 4px 4px 0 0;
+
+      &.active {
+        background-color: #FFFFFF;
+        border-color: #CAD0D8;
+        border-bottom-color: #F8FAFC;
+        border-top: 2px solid #1560AD;
+        font-weight: 500;
+
+        .omnidb__tab-menu__link-close {
+          color: #1560AD;
+        }
+      }
+
+      &:first-of-type.active {
+        border-left: transparent;
+        border-radius: 0 4px 0 0;
+      }
+
+      &:not(.active):hover {
+        transition: all .3s ease-in;
+        background-color: rgba(116, 125, 141, 0.1);
+      }
+    }
+
+    .omnidb__tab-menu__link-name {
+      color: #16171E !important;
+    }
+
+    .omnidb__tab-menu__link-icon {
+      background-color: unset;
+    }
+  }
+
+  /* TREE TAB */
+  .omnidb__tree-tabs {
+    .omnidb__tab-menu {
+      .nav-tabs {
+        border-bottom-color: transparent !important;
+      }
+
+      &__link {
+        border-radius: 4px 4px 0 0;
+        background-color: transparent;
+        border-color: #CAD0D8;
+        border-width: 2px 1px 0 1px;
+        color: #16171E;
+
+        &.active {
+          background-color: #F8FAFD;
+          border-color: #CAD0D8;
+          border-top: 2px solid #1560AD;
+          font-weight: 500;
+        }
+        
+        &-icon {
+          background-color: #E2E2E2 !important;
+        }
+      }
+    }
+  }
+
+  /* QUERY RESULT TABS */
+  .omnidb__query-result-tabs {
+    .omnidb__tab-menu {
+      &__link {
+        border-width: 0 0 2px 0;
+        border-style: solid;
+        border-radius: 0;
+        transition: border-color 0.15s ease-in-out;
+        padding-left: 0;
+        padding-right: 0;
+
+        &.active {
+          background-color: #FFFFFF;
+          border-bottom-color: #1560AD;
+          font-weight: 500;
+        }
+
+        &-name {
+          color: #16171E !important;
+        }
+
+        &:hover:not(.active) {
+          border-color: #90949a67;
+        }
+
+        &:not(:last-of-type) {
+          margin-right: 0.5rem;
+        }
+      }
+    }
+  }
+
+  /* CARD */
+  .card {
+    background-color: #FFF;
+
+    .card-header {
+      border-bottom-color: #E6E7E9;
+
+      .nav.nav-tabs {
+        border-color: transparent;
+      }
+    }
+  }
+
+  /* FORMS */
+  ::placeholder {
+    color: #808080;
+  }
+
+  .required > label::after {
+    color: #EC2424;
+  }
+
+  .custom-file > input[disabled]+label {
+    background-color: #E9ECEF;
+  }
+
+  /* Switch */
+  label.omnidb__switch--label {
+    background-color: #E2E2E2;
+
+    span {
+      color: #888;
+      background-color: #FFF;
+    }
+  }
+
+  /* SCROLLBAR FIREFOX (new versions) */
+  * {
+    scrollbar-color: #DEDEDE #EFEFEF;
+  }
+
+  /* Aimara Tree */
+  .node-all {
+    color: #1560AD;
+  }
+}

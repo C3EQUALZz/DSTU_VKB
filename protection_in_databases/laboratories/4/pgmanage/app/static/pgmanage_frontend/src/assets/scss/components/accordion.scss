@@ -1,0 +1,64 @@
+.accordion {
+    .card {
+        background-color: inherit;
+
+        &-header {
+            border-bottom: 0;
+            padding: 16px 20px;
+            cursor: pointer;
+            transition: $transition;
+            white-space: nowrap;
+
+            @include themify() {
+                background-color: themed($accordionHeadingBg);
+            }
+
+            .fa-chevron-down {
+                transform: rotate(0deg);
+                transition: inherit;
+                opacity: .5;
+            }
+
+            &:has( + .collapse.show, + .collapsing) {
+                transition: $transition;
+
+                @include themify() {
+                    background-color: themed($accordionHeadingActiveBg);
+                }
+
+                .fa-chevron-down {
+                    transform: rotate(180deg);
+                    transition: inherit;
+                    opacity: 1;
+                }
+            }
+        }
+
+        &-body {
+            .list-group {
+
+                &-item {
+                    border-bottom: 1px solid transparent;
+                    padding: 8px 20px 8px 32px;
+                    background-color: rgba($primaryBlue, 0.08);
+
+                    &:first-child {
+                        border-radius: 0;
+                    }
+
+                    &:not(:last-of-type) {
+                        border-bottom: 1px solid rgba($primaryBlue, 0.1);
+                    }
+
+                    &.active {
+                        @include themify() {
+                            color: themed($color);
+                            background-color: themed($accordionItemActiveBg);
+                            border-bottom: 1px solid themed($accordionItemActiveBg);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

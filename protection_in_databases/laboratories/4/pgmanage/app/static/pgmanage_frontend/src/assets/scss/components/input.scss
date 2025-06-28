@@ -1,0 +1,131 @@
+input {
+    &[type='text'], &[type='password'] {
+        &:focus,
+        &:-webkit-autofill,
+        &:-webkit-autofill:hover,
+        &:-webkit-autofill:focus {
+            box-shadow: $boxShadow;
+            color: $primaryLight;
+            transition: background-color 5000s ease-in-out 0s;
+
+            @include themify {
+                caret-color: themed($color);
+                border: themed($border);
+                -webkit-text-fill-color: themed($color);
+            }
+        }
+    }
+
+    &[type='checkbox'].custom-checkbox {
+        width: 1.25rem;
+        height: 1.25rem;
+        appearance: none;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        border-radius: $borderRadius;
+        box-shadow: $checkboxBoxShadow;
+        border: 1px solid $primaryBlue;
+
+        @include themify {
+            background-color: themed($inputBg) !important;
+        }
+
+        &:checked {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='16' height='16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8.5l2.5 2.5l5.5 -5.5'/%3e%3c/svg%3e");
+            background-color: $primaryBlue !important;
+        }
+    }
+}
+
+.form {
+    &-group {
+        margin-bottom: 1rem;
+        .form-control {
+            border-radius: $borderRadius;
+            font-size: $fontSize;
+            @include themify {
+                background-color: themed($inputBg);
+                border: themed($border);
+                color: themed($color);
+            }
+
+            &::placeholder {
+                font-size: $fontSize;
+            }
+
+            &:disabled {
+                color: $primaryMutedColor;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+
+                @include themify {
+                    background-color: themed($disabledInputBg);
+                }
+            }
+        }
+
+        .invalid-tooltip {
+            font-size: 12px;
+            background-color: $dangerColor;
+            padding: 4px 8px;
+            top: calc(100% + 5px);
+            left: 5px;
+        }
+    }
+
+    &-select {
+        font-size: inherit;
+
+        @include themify {
+            color: themed($color);
+            background-color: themed($inputBg);
+            border: themed($border);
+        }
+
+        &:disabled {
+            @include themify {
+                background-color: themed($disabledInputBg);
+            }
+        }
+    }
+
+    &-check-input:checked {
+        background-color: $primaryBlue;
+        border-color: $primaryBlue;
+    }
+}
+
+.custom-file {
+    &-label {
+        padding: 6px 12px;
+        border-radius: $borderRadius;
+        height: 35px;
+
+        @include themify() {
+            color: themed($color);
+            background-color: themed($customFileInputBg);
+            border: themed($customFileInputBorder);
+        }
+
+        &::after {
+            color: $fontColorDark;
+            font-weight: 500;
+            padding: inherit;
+            border-radius: 0 $borderRadius $borderRadius 0;
+            height: 35px;
+
+            @include themify() {
+                background-color: themed($customFileButtonBg);
+            }
+        }
+    }
+}
+
+.input-clear-btn {
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+}

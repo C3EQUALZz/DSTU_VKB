@@ -1,0 +1,85 @@
+.modal {
+    .nav {
+        &-tabs {
+            .nav-link {
+                font-size: $fontSize !important; //workaround! to be removed when new stylesheets are implemented
+                border-top-left-radius: $borderRadius !important; //workaround! to be removed when new stylesheets are implemented
+                border-top-right-radius: $borderRadius !important; //workaround! to be removed when new stylesheets are implemented
+                padding: 8px 16px 12px;
+                font-weight: 500;
+                border: 0;
+
+                @include themify() {
+                    color: themed($color) !important; //workaround! to be removed when new stylesheets are implemented
+                    background-color: themed($popupBg);
+                }
+
+                &.active {
+                    border: 0;
+                    position: relative;
+                    transition: babackground-color .3s ease-in-out;
+
+                    @include themify() {
+                        background-color: themed($tabsSurfaceBg);
+                    }
+                }
+
+                &:not(.active):hover {
+                    background-color: $borderColorLight;
+                    transition: all .3s ease-in;
+                    @include themify() {
+                        background-color: darken(themed($surfaceBgSecondary), 5%);
+                    }
+                }
+            }
+        }
+    }
+
+    .tab {
+        &-content {
+            border-radius: $borderRadius;
+            position: relative;
+            z-index: 1;
+            margin-top: -4px;
+
+            @include themify() {
+                background-color: themed($tabsSurfaceBg);
+            }
+        }
+    }
+}
+
+//FIXME: this is temporary put into subclass to prevent breaking of DB tab styles
+.schema-editor-scrollable {
+    .nav-tabs {
+        .nav-item {
+            &:not(:last-of-type) {
+                margin-right: 0.5rem;
+            }
+
+            &.nav-link {
+                border-width: 0 0 2px 0;
+                border-style: solid;
+                border-radius: 0;
+                padding-left: 0;
+                padding-right: 0;
+                opacity: 0.7;
+
+                @include themify() {
+                    background-color: themed($surfaceBg);
+                    color: themed($color);
+                }
+
+                &.active {
+                    border-bottom-color: $primaryBlue;
+                    font-weight: 500;
+                    opacity: 1;
+                }
+
+                &:hover:not(.active) {
+                    border-color: rgba($primaryMutedColor, 0.5);
+                }
+            }
+        }
+    }
+}
