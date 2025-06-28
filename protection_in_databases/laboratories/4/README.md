@@ -84,13 +84,41 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-Теперь вам нужно перейти в браузере на `http://localhost:8000`
-
-Данные для входа:
-- `admin`
-- `admin`
-
 ### Выполнение работы
 
-В приложении, когда вошли 
+#### Открытие `WebUI`
 
+Перейдите в браузере на адрес: `http://localhost:8000`. У вас появится окошко, как представлено на рисунке ниже:
+
+![img.png](images/1.png)
+
+Теперь введите следующие данные:
+
+- `login`: `admin`
+- `password`: `admin`
+
+#### Подключение пользователей к базе данных
+
+##### Подключение для админа - `postgres`
+
+Я здесь использую данные из `.env`.
+
+![img.png](images/2.png)
+
+##### Подключение для `viewer`
+
+![img.png](images/3.png)
+
+> [!NOTE]
+> Логин для `viewer`: `viewer`
+> Пароль: `read_only_pass`
+
+##### Подключение для `editor`
+
+![img.png](images/4.png)
+
+> [!NOTE]
+> Логин для `editor`: `editor`
+> Пароль: `edit_pass`
+
+#### Просмотр таблиц
