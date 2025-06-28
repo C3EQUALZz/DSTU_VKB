@@ -1,6 +1,7 @@
 CREATE EXTENSION IF NOT EXISTS pgaudit;
 CREATE ROLE auditor;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS audit_log;
 
 set pgaudit.role = 'auditor';
 

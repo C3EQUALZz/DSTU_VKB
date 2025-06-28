@@ -2,6 +2,7 @@ CREATE EXTENSION IF NOT EXISTS pgaudit;
 CREATE ROLE auditor;
 DROP TABLE IF EXISTS products CASCADE;
 DROP TABLE IF EXISTS sales CASCADE;
+DROP TABLE IF EXISTS audit_log;
 
 set pgaudit.role = 'auditor';
 
