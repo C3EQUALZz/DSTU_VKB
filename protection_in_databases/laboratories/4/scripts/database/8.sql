@@ -12,3 +12,9 @@ insert into wind_direction (id, time_create, city_id, direction) values
 (1, current_timestamp, 1, 'В'),
 (2, current_timestamp, 2, 'В'),
 (3, current_timestamp, 3, 'ЮВ');
+
+insert into temperature(id, time_create, city_id, temperature) values
+(1, current_timestamp, 1, 2);
+
+insert into wind_direction(id, time_create, city_id, direction) values
+(2, current_timestamp, 2, 'ЮВ');

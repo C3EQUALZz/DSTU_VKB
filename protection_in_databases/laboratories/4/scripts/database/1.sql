@@ -11,7 +11,7 @@ create table if not exists city(
 );
 
 create table if not exists temperature(
-	id serial primary key,
+	id integer not null,
 	time_create timestamp,
 	city_id integer,
 	temperature integer check (temperature > -99 and temperature < 99),
@@ -19,7 +19,7 @@ create table if not exists temperature(
 );
 
 create table if not exists wind_direction(
-	id serial primary key,
+	id integer not null,
 	time_create timestamp,
 	city_id integer,
 	direction varchar(2) check (direction in ('С', 'Ю', 'В', 'З', 'СВ', 'СЗ', 'ЮВ', 'ЮЗ')),

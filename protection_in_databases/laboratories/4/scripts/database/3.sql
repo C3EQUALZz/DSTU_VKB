@@ -19,3 +19,7 @@ begin
 end;
 $BODY$
 language 'plpgsql';
+
+CREATE TRIGGER temp_journal_temporal
+BEFORE INSERT ON temperature
+FOR EACH ROW EXECUTE FUNCTION check_previos_temp();

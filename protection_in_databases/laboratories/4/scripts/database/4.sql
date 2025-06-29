@@ -19,3 +19,8 @@ begin
 end;
 $BODY$
 language 'plpgsql';
+
+
+CREATE TRIGGER wind_journal_temporal
+BEFORE INSERT ON wind_direction
+FOR EACH ROW EXECUTE FUNCTION check_previos_wind();

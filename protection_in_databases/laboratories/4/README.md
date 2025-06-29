@@ -121,4 +121,14 @@ python manage.py runserver
 > Логин для `editor`: `editor`
 > Пароль: `edit_pass`
 
-#### Просмотр таблиц
+Для вставки данных в представление можете использовать команду, которая представлена ниже: 
+
+```sql
+UPDATE weather 
+SET 
+    temp_time = CURRENT_TIMESTAMP,
+    temperature = -5,
+    wind_time = CURRENT_TIMESTAMP,
+    direction = 'С'
+WHERE name = 'Москва';
+```
