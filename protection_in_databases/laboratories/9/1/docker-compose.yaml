@@ -1,0 +1,50 @@
+services:
+  postgres:
+    image: postgres-with-ssl:local
+    container_name: postgres-lab-9-var-1
+    build: ./
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - ${POSTGRES_PORT}:5432
+    volumes:
+      - postgres_data_ninth_laboratory_var_1:/var/lib/postgresql/data
+      - ./postgresql.conf:/etc/postgresql.conf
+      - ./pg_hba.conf:/etc/pg_hba.conf
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - ninth_laboratory_var_1
+    command: postgres -c config_file=/etc/postgresql.conf
+
+  pgadmin:
+    image: dpage/pgadmin4:9.3.0
+    container_name: pgadmin-lab-9-var-1
+    env_file:
+      - .env
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+      - PGADMIN_CONFIG_SERVER_MODE=False
+      - PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED=False
+    ports:
+      - ${PGADMIN_PORT}:80
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - ninth_laboratory_var_1
+
+volumes:
+  postgres_data_tenth_laboratory_var_1:
+
+networks:
+  ninth_laboratory_var_1:
+    driver: bridge
