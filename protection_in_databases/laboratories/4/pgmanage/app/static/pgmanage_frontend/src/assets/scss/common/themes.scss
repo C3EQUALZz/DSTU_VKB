@@ -1,0 +1,152 @@
+@import './variables.scss';
+
+//shortcuts
+$borderColor: 'borderColor';
+$border: 'border';
+$color: 'color';
+$disabledColor: 'disabledColor';
+$surfaceBg: 'surfaceBg';
+$surfaceBgSecondary: 'surfaceBgSecondary';
+$surfaceBgTertiary: 'surfaceBgTertiary';
+$inputBg: 'inputBg';
+$disabledInputBg: 'disabledInputBg';
+$customFileInputBg: 'customFileInputBg';
+$customFileInputBorder: 'customFileInputBorder';
+$customFileButtonBg: 'customFileButtonBg';
+$cardHeader: 'cardHeader';
+$accordionHeadingBg: 'accordionHeadingBg';
+$accordionHeadingActiveBg: 'accordionHeadingActiveBg';
+$accordionItemActiveBg: 'accordionItemActiveBg';
+$tabsSurfaceBg: 'tabsSurfaceBg';
+$buttonOutlinePrimaryBg: 'buttonOutlinePrimaryBg';
+$buttonOutlineSecondaryBg: 'buttonOutlineSecondaryBg';
+$buttonOutlineSuccessBg: 'buttonOutlineSuccessBg';
+$buttonOutlineDangerBg: 'buttonOutlineDangerBg';
+$fileItemBgActive: 'fileItemBgActive';
+$cronLightInputColor: 'cronLightInputColor';
+$cronLightInputBg: 'cronLightInputBg';
+$cronLightInputHover: 'cronLightInputHover';
+$tooltipBg: 'tooltipBg';
+$pev2Bg: 'pev2Bg';
+$pev2NavLinkColor: 'pev2NavLinkColor';
+$pev2ProgressBorder: 'pev2ProgressBorder';
+$pev2TableRowHighlight: 'pev2TableRowHighlight';
+$pev2PlanNodeHeader: 'pev2PlanNodeHeader';
+$pev2MutedText: 'pev2MutedText';
+$pev2StatsTableBg: 'pev2StatsTableBg';
+$pev2StatsTableTheadLight: 'pev2StatsTableTheadLight';
+$pev2StatsTableTheadDark: 'pev2StatsTableTheadDark';
+$pev2CodeBlockBg: 'pev2CodeBlockBg';
+$schemaEditorColumnBg: 'schemaEditorColumnBg';
+$primaryBlueWhiteSwitching: 'primaryBlueWhiteSwitching';
+$erdCardWrapBg: 'erdCardWrapBg';
+$popupBg: 'popupBg';
+$colorPickerBtnBorder: 'colorPickerBtnBorder';
+$cardListGroupItem: 'cardListGroupItem';
+
+$themes: (
+    light: (
+        borderColor: $borderColorLight,
+        border: $borderLight,
+        color: $fontColorLight,
+        disabledColor: $disabledFontColorLight,
+        surfaceBg: $bgSurfaceLight,
+        surfaceBgSecondary: $bgLightSecondary,
+        surfaceBgTertiary: $bgLightTertiary,
+        inputBg: $bgSurfaceLight,
+        customFileInputBg: $bgSurfaceLight,
+        customFileInputBorder: $borderLight,
+        customFileButtonBg: $secondaryGrey,
+        cardHeader: $bgLightSecondary,
+        accordionHeadingBg: $accordionHeadingBgLight,
+        accordionHeadingActiveBg: $accordionHeadingActiveBgLight,
+        accordionItemActiveBg: rgba($primaryBlue, .15),
+        disabledInputBg: $bgLight,
+        tabsSurfaceBg: $bgSurfaceBlueLight,
+        buttonOutlinePrimaryBg: transparent,
+        buttonOutlineSecondaryBg: transparent,
+        buttonOutlineSuccessBg: transparent,
+        buttonOutlineDangerBg: transparent,
+        fileItemBgActive: $bgSurfaceBlueLight,
+        cronLightInputColor: $primaryBlue,
+        cronLightInputBg: transparent,
+        cronLightInputHover: rgba($primaryBlue, 0.15),
+        tooltipBg: #C6DAF3,
+        pev2Bg: $white,
+        pev2NavLinkColor: $primaryBlue,
+        pev2TableRowHighlight: rgba($primaryBlue, 0.15),
+        pev2PlanNodeHeader: $bgLightTertiary,
+        pev2MutedText: rgba($primaryDark, 0.6),
+        pev2StatsTableBg: $bgLightTertiary,
+        pev2StatsTableTheadLight: rgba($primaryBlue, 0.05),
+        pev2StatsTableTheadDark: rgba($primaryBlue, 0.1),
+        pev2CodeBlockBg: $bgLightTertiary,
+        schemaEditorColumnBg: rgba($primaryBlue, 0.15),
+        primaryBlueWhiteSwitching: $primaryBlue,
+        erdCardWrapBg: $bgLightSecondary,
+        popupBg: $bgSurfaceLight,
+        colorPickerBtnBorder: $borderColorLight,
+        cardListGroupItem: $bgLightTertiary,
+    ),
+    dark: (
+        borderColor: $borderColorDark,
+        border: $borderDark,
+        color: $fontColorDark,
+        disabledColor: $disabledFontColorDark,
+        surfaceBg: $bgSurfaceDark,
+        surfaceBgSecondary: $bgSurfaceSecondaryDark,
+        surfaceBgTertiary: $bgSurfaceTertiaryDark,
+        inputBg: $inputBgDark,
+        customFileInputBg: rgba($secondaryGrey, .5),
+        customFileInputBorder: rgba($secondaryGrey, .5),
+        customFileButtonBg: $secondaryGrey,
+        cardHeader: $bgDarkSecondary,
+        accordionHeadingBg: $accordionHeadingBgDark,
+        accordionHeadingActiveBg: $accordionHeadingActiveBgDark,
+        accordionItemActiveBg: $darkHighlighted,
+        disabledInputBg: $disabledInputBgDark,
+        tabsSurfaceBg: $bgSurfaceTertiaryDark,
+        buttonOutlinePrimaryBg: rgba($primaryBlue, 0.15),
+        buttonOutlineSecondaryBg: rgba($secondaryGrey, 0.15),
+        buttonOutlineSuccessBg: rgba($successColor, 0.15),
+        buttonOutlineDangerBg: rgba($dangerColor, 0.15),
+        fileItemBgActive: $bgSurfaceSecondaryDark,
+        cronLightInputColor: $white,
+        cronLightInputBg: rgba($primaryBlue, 0.15),
+        cronLightInputHover: $primaryBlue,
+        tooltipBg: $darkHighlighted,
+        pev2Bg: $primaryDark,
+        pev2NavLinkColor: $white,
+        pev2TableRowHighlight: rgba($white, 0.1),
+        pev2PlanNodeHeader: #2B4A6F,
+        pev2MutedText: #BBC1CB,
+        pev2StatsTableBg: #2B4A6F,
+        pev2StatsTableTheadLight: #203A59,
+        pev2StatsTableTheadDark: #203A59,
+        pev2CodeBlockBg: lighten($primaryDark, 2.5%),
+        schemaEditorColumnBg: rgba($primaryBlue, 0.15),
+        primaryBlueWhiteSwitching: $white,
+        erdCardWrapBg: $bgDarkSecondary,
+        popupBg: $bgDark,
+        colorPickerBtnBorder: $secondaryGrey,
+        cardListGroupItem: transparent,
+    ),
+);
+
+@mixin themify() {
+    @each $theme, $map in $themes {
+        .pgmanage-theme--#{$theme} & {
+            $theme-map: () !global;
+            @each $key, $submap in $map {
+                $value: map-get(map-get($themes, $theme), '#{$key}');
+                $theme-map: map-merge($theme-map, ($key: $value)) !global;
+            }
+            @content;
+            $theme-map: () !global;
+      }
+    }
+  }
+
+@function themed($key) {
+    @return map-get($theme-map, $key);
+}

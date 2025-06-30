@@ -25,7 +25,7 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4:9.3.0
-    container_name: pgadmin-lab-8
+    container_name: pgadmin-lab-10-var-1
     env_file:
       - .env
     environment:

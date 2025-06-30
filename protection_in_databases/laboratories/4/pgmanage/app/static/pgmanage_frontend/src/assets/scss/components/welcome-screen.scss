@@ -1,0 +1,189 @@
+.welcome {
+    &__container {
+        height: 100vh;
+    }
+
+    &__header, &__main {
+        padding: 0 1.5rem;
+        h1 {
+            color: $primaryBlue;
+        }
+    }
+
+    &__header {
+        position: relative;
+
+        &::after {
+            content : '';
+            display: block;
+            background: linear-gradient(to right, $primaryMutedColor, transparent) ;
+            height: 1px;
+            width: calc(100% / 2);
+        }
+    }
+
+    &__logo {
+        width: 400px;
+
+        img {
+            width: 100%;
+            height: auto;
+
+            &[id='gears'] {
+                width: 60px;
+                margin-left: 2rem;
+                filter: grayscale(1);
+            }
+        }
+    }
+
+    .recent-conections {
+        &__item {
+            position: relative;
+            cursor: pointer;
+
+            &:not(:last-of-type) {
+                margin-bottom: 8px;
+            }
+
+            &_wrap {
+                transition: all .2s ease-in-out;
+                padding: 12px 16px;
+                border-radius: $borderRadius;
+                max-height: 95px;
+
+                @include themify() {
+                    border: themed($border);
+                }
+            }
+
+            &_text {
+                max-width: calc(100% - 90px);
+            }
+
+            &_title {
+                font-weight: 500;
+                white-space: nowrap;
+                width: fit-content;
+                position: relative;
+            }
+
+            &_logo {
+                width: 50px;
+                height: 50px;
+                border-radius: $borderRadius;
+                overflow: hidden;
+                flex-shrink: 0;
+                transition: all .2s ease-in-out;
+
+                @include themify() {
+                    border: themed($border);
+                }
+
+                & > .icon {
+                    height: 100%;
+                    mask-position: center;
+                    mask-size: 40px 40px;
+                    mask-repeat: no-repeat;
+                    -webkit-mask-position: center;
+                    -webkit-mask-size: 40px 40px;
+                    -webkit-mask-repeat: no-repeat;
+                    background-color: $secondaryGrey;
+
+                    &-mariadb {
+                        mask-image: url("../images/db_icons/mariadb.svg");
+                        -webkit-mask-image: url("../images/db_icons/mariadb.svg");
+                    }
+
+                    &-mysql {
+                        mask-image: url("../images/db_icons/mysql.svg");
+                        -webkit-mask-image: url("../images/db_icons/mysql.svg");
+                    }
+
+                    &-oracle {
+                        mask-image: url("../images/db_icons/oracle.svg");
+                        -webkit-mask-image: url("../images/db_icons/oracle.svg");
+                    }
+
+                    &-postgresql {
+                        mask-image: url("../images/db_icons/postgresql.svg");
+                        -webkit-mask-image: url("../images/db_icons/postgresql.svg");
+                    }
+
+                    &-sqlite {
+                        mask-image: url("../../images/db_icons/sqlite.svg");
+                        -webkit-mask-image: url("../images/db_icons/sqlite.svg");
+                    }
+
+                    &-terminal {
+                        mask-image: url("../images/db_icons/terminal.svg");
+                        -webkit-mask-image: url("../images/db_icons/terminal.svg");
+                    }
+                }
+            }
+
+            &:hover {
+                .recent-conections__item_wrap {
+                    background-color: rgba($primaryBlue, .15);
+                    border: 1px solid $primaryBlue;
+                }
+
+
+                .recent-conections__item_logo {
+                    border: 1px solid $primaryBlue;
+                    & > .icon {
+                        background-color: $primaryBlue;
+                    }
+                }
+            }
+        }
+    }
+
+    .hotkeys {
+        .hotkey {
+            &__label {
+                display: inline-block;
+                min-width: 40%;
+            }
+
+            &__button {
+                display: inline-block;
+                padding: 0 .35rem;
+                border-radius: 4px;
+                text-align: center;
+                white-space: nowrap;
+                vertical-align: baseline;
+                background: rgba($primaryMutedColor, 0.2);
+                border-bottom: 2px solid $primaryMutedColor;
+                margin: 0 .14rem;
+            }
+        }
+    }
+
+    .links {
+        &__group {
+            &:not(:last-of-type) {
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        &__item {
+            color: $primaryMutedColor;
+            text-decoration: none;
+            transition: all .15s ease-in-out;
+            display: inline;
+            width: fit-content;
+
+            &:hover {
+                color: $primaryBlue;
+                i {
+                    color: $primaryBlue;
+                }
+            }
+
+            &:not(:last-of-type) {
+                margin-bottom: 0.5rem;
+            }
+        }
+    }
+}

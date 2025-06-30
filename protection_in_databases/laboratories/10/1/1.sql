@@ -4,6 +4,7 @@ CREATE ROLE auditor;
 set pgaudit.role = 'auditor';
 
 DROP TABLE IF EXISTS clients;
+DROP TABLE IF EXISTS audit_log;
 
 CREATE TABLE clients (
     client_id SERIAL PRIMARY KEY,

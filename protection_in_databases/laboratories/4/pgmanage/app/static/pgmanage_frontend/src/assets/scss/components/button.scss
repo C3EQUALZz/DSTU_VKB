@@ -1,0 +1,210 @@
+.btn {
+    color: $primaryLight !important;
+    font-size: $fontSize;
+    border: 1px solid transparent;
+    font-weight: 500;
+    border-radius: $borderRadius;
+    box-sizing: border-box;
+    transition: all .3s;
+    white-space: nowrap;
+
+    &:disabled {
+        opacity: .4;
+        pointer-events: none;
+    }
+
+    &:hover {
+        border-color: transparent;
+        opacity: .8;
+        color: $primaryLight;
+    }
+
+    &-primary {
+        background-color: $primaryBlue!important; //workaround! to be removed when new stylesheets are implemented
+
+        &:hover, &:focus, &.focus {
+            background-color: $primaryBlue !important; //workaround! to be removed when new stylesheets are implemented;
+        }
+    }
+
+    &-secondary {
+        background-color: $secondaryGrey!important; //workaround! to be removed when new stylesheets are implemented
+
+        &:hover, &:focus, &.focus {
+            background-color: $secondaryGrey;
+        }
+    }
+
+    &-success {
+        background-color: $successColor;
+
+        &:hover, &:focus, &.focus {
+            background-color: $successColor;
+        }
+    }
+
+    &-danger {
+        background-color: $dangerColor;
+
+        &:hover, &:focus, &.focus {
+            background-color: $dangerColor;
+        }
+    }
+    //outline buttons
+    &-outline {
+        &-primary {
+            border: 1px solid $primaryBlue !important; //workaround! to be removed when new stylesheets are implemented
+            color: $primaryBlue !important; //workaround! to be removed when new stylesheets are implemented
+
+            @include themify() {
+                background-color: themed($buttonOutlinePrimaryBg);
+            }
+
+            &:hover {
+                opacity: 1;
+                color: $bgSurfaceLight !important; //workaround! to be removed when new stylesheets are implemented
+                background-color: $primaryBlue !important; //workaround! to be removed when new stylesheets are implemented
+            }
+        }
+
+        &-secondary {
+            border: 1px solid $secondaryGrey !important; //workaround! to be removed when new stylesheets are implemented
+            color: $secondaryGrey !important; //workaround! to be removed when new stylesheets are implemented
+    
+            @include themify() {
+                background-color: themed($buttonOutlineSecondaryBg) !important;
+            }
+
+            &:hover, &.active {
+                opacity: 1;
+                color: $bgSurfaceLight !important; //workaround! to be removed when new stylesheets are implemented
+                background-color: $secondaryGrey !important; //workaround! to be removed when new stylesheets are implemented
+            }
+        }
+
+        &-success {
+            border: 1px solid $successColor !important; //workaround! to be removed when new stylesheets are implemented
+            color: $successColor !important; //workaround! to be removed when new stylesheets are implemented
+
+            @include themify() {
+                background-color: themed($buttonOutlineSuccessBg);
+            }
+
+            &:hover {
+                opacity: 1;
+                color: $bgSurfaceLight !important; //workaround! to be removed when new stylesheets are implemented
+                background-color: $successColor !important; //workaround! to be removed when new stylesheets are implemented
+            }
+        }
+
+        &-danger {
+            border: 1px solid $dangerColor !important; //workaround! to be removed when new stylesheets are implemented
+            color: $dangerColor !important; //workaround! to be removed when new stylesheets are implemented
+
+            @include themify() {
+                background-color: themed($buttonOutlineDangerBg);
+            }
+
+            &:hover {
+                opacity: 1;
+                color: $bgSurfaceLight !important; //workaround! to be removed when new stylesheets are implemented
+                background-color: $dangerColor !important; //workaround! to be removed when new stylesheets are implemented
+            }
+        }
+    }
+
+    &-ghost {
+        padding: 0.375rem;
+        background-color: transparent !important; //workaround! to be removed when new stylesheets are implemented
+        border: 1px solid transparent  !important; //workaround! to be removed when new stylesheets are implemented
+
+        &-primary {
+            color: $primaryBlue  !important; //workaround! to be removed when new stylesheets are implemented
+
+            &:hover {
+                color: $primaryLight !important; //workaround! to be removed when new stylesheets are implemented
+                background-color: $primaryBlue  !important; //workaround! to be removed when new stylesheets are implemented
+            }
+        }
+
+        &-secondary {
+            color: $secondaryGrey !important; //workaround! to be removed when new stylesheets are implemented
+    
+            &:hover {
+                color: $primaryLight !important; //workaround! to be removed when new stylesheets are implemented
+                background-color: $secondaryGrey !important; //workaround! to be removed when new stylesheets are implemented
+            }
+        }
+
+        &-success {    
+            color: $successColor !important; //workaround! to be removed when new stylesheets are implemented
+
+            &:hover {
+                color: $primaryLight !important; //workaround! to be removed when new stylesheets are implemented
+                background-color: $successColor !important; //workaround! to be removed when new stylesheets are implemented
+            }
+        }
+
+        &-danger {
+            color: $dangerColor !important; //workaround! to be removed when new stylesheets are implemented
+    
+            &:hover {
+                color: $primaryLight !important; //workaround! to be removed when new stylesheets are implemented
+                background-color: $dangerColor !important; //workaround! to be removed when new stylesheets are implemented
+            }
+        }
+    }
+
+    &-icon {
+        padding: 0;
+        background-color: transparent !important; //workaround! to be removed when new stylesheets are implemented
+        border: 0 !important; //workaround! to be removed when new stylesheets are implemented
+        
+        &:active, &:focus {
+            box-shadow: none;
+        }
+
+        &-primary, &-primary:hover {
+            color: $primaryBlue !important;
+        }
+
+        &-secondary, &-secondary:hover {
+            color: $secondaryGrey !important;
+        }
+
+        &-success, &-success:hover{
+            color: $successColor !important;
+        }
+
+        &-danger, &-danger:hover {
+            color: $dangerColor !important;
+        }
+    }
+
+    &-link {
+        color: $primaryBlue!important; //workaround! to be removed when new stylesheets are implemented;
+        flex-shrink: 0;
+    }
+
+    &-square {
+        padding: 0.25rem 0.5rem;
+        width: 2.2rem;
+        height: 2.2rem;
+        flex-shrink: 0;
+    }
+
+    //color picker circle button
+    &.color-picker__btn {
+        width: 1.75rem;
+        height: 1.75rem;
+        border-radius: 50%;
+
+        @include themify() {
+            border: 1px solid themed($colorPickerBtnBorder);
+        }
+
+        &:after {
+            content: none;
+        }
+    }
+}

@@ -1,0 +1,36 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres-lab-4
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - ${POSTGRES_PORT}:5432
+    volumes:
+      - postgres_data_fourth_laboratory:/var/lib/postgresql/data
+      - ./scripts/database/1.sql:/docker-entrypoint-initdb.d/01_init_tables.sql
+      - ./scripts/database/2.sql:/docker-entrypoint-initdb.d/02_init_indexes.sql
+      - ./scripts/database/3.sql:/docker-entrypoint-initdb.d/03_init_trigger_temperature.sql
+      - ./scripts/database/4.sql:/docker-entrypoint-initdb.d/04_init_trigger_wind_direction.sql
+      - ./scripts/database/5.sql:/docker-entrypoint-initdb.d/05_init_view_weather.sql
+      - ./scripts/database/6.sql:/docker-entrypoint-initdb.d/06_init_trigger_for_view_weather.sql
+      - ./scripts/database/7.sql:/docker-entrypoint-initdb.d/07_init_users.sql
+      - ./scripts/database/8.sql:/docker-entrypoint-initdb.d/08_init_data_for_tables.sql
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      fourth_laboratory:
+
+volumes:
+  postgres_data_fourth_laboratory:
+
+networks:
+  fourth_laboratory:
+    driver: bridge

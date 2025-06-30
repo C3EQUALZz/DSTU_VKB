@@ -1,0 +1,72 @@
+//common
+$primaryBlue: #1560AD;
+$primaryLight: #F8FAFD;
+$primaryDark: #16171E;
+$primaryMutedColor: #90949A;
+$secondaryGrey: #747D8D;
+$white:#FFFFFF;
+$borderRadius: 6px;
+$boxShadow: 0 0 0 4px rgba(32, 107, 196, .25);
+$dropdownBoxShadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+$checkboxBoxShadow: 0 1px 1px rgba(24, 36, 51, 0.06);
+$activeBorder: 1px solid $primaryBlue;
+$scrollbarSize: 7px;
+$transition: all .3s ease-in-out;
+$fa-font-path: '@fortawesome/fontawesome-free/webfonts';
+
+//typography
+$fontFamily: 'Poppins', sans-serif;
+$fontFamilyMonospace: 'Ubuntu Mono', monospace;
+$fontSize: 0.875rem;
+$fontWeight: 400;
+$fontWeightMedium: 500;
+$fontWeightBold: 700;
+$lineHeight: 1.4;
+
+//light mode
+$bgLight: $primaryLight;
+$bgLightSecondary: #F3F7FC;
+$bgLightTertiary: #E8EFF8;
+$fontColorLight: $primaryDark;
+$bgSurfaceLight: $white;
+$bgSurfaceSecondaryLight: $bgLightSecondary;
+$bgSurfaceTertiaryLight: $bgLightTertiary;
+$borderColorLight: #CAD0D8;
+$borderLight: 1px solid $borderColorLight;
+$disabledFontColorLight: #C8D3E1;
+$accordionHeadingBgLight: rgba($borderColorLight, .5);
+$accordionHeadingActiveBgLight: rgba($primaryBlue, .2);
+$bgSurfaceBlueLight: #E8EFF8;
+
+//dark mode
+$bgDark: #161D2D;
+$bgDarkSecondary: #16243C;
+$bgDarkTertiary: #162D4E;
+$fontColorDark: $primaryLight;
+$bgSurfaceDark: $primaryDark;
+$bgSurfaceSecondaryDark: $bgDarkSecondary;
+$bgSurfaceTertiaryDark: $bgDarkTertiary;
+$borderColorDark: #162D4E;
+$borderDark: 1px solid $borderColorDark;
+$borderColorActiveDark: #314264;
+$disabledFontColorDark: #313C52;
+$accordionHeadingBgDark: rgba($primaryBlue, .15);
+$accordionHeadingActiveBgDark: rgba($primaryBlue, .2);
+$inputBgDark: #1A2234;
+$disabledInputBgDark: #404958;
+
+//accent colors
+$darkHighlighted: #164171;
+$dangerColor: #D72239;
+$successColor: #2FB344;
+$warningColor: #F76707;
+$infoColor: $primaryBlue;
+
+//label colors:
+$labelRed: #DC3545;
+$labelGreen: $successColor;
+$labelCyan: #00DBD3;
+$labelYellow: #FFC107;
+$labelPurple: #AE37FF;
+$labelPink: #D63384;
+$labelOrange: $warningColor;

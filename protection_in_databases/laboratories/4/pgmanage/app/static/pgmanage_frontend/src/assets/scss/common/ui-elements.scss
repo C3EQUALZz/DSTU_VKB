@@ -1,0 +1,69 @@
+.border {
+    @include themify() {
+        border: themed($border) !important;
+    }
+}
+
+.border-top {
+    @include themify() {
+        border-top: themed($border) !important;
+    }
+}
+
+.border-bottom {
+    @include themify() {
+        border-bottom: themed($border) !important;
+    }
+}
+
+.border-start {
+    @include themify() {
+        border-left: themed($border) !important;
+    }
+}
+
+.border-end {
+    @include themify() {
+        border-right: themed($border) !important;
+    }
+}
+
+.border-radius {
+    border-radius: $borderRadius;
+}
+
+::-webkit-scrollbar {
+    width: $scrollbarSize;
+    height: $scrollbarSize;
+
+    &-track {
+        background-color: transparent;
+    }
+
+    &-thumb {
+        background-color: rgba($secondaryGrey, 0.4);
+        border-radius: 2px;
+
+        &:hover {
+            background-color: rgba($secondaryGrey, 0.8);
+        }
+    }
+
+    &-button {
+        display: none;
+    }
+
+    &-corner {
+        background: transparent;
+    }
+}
+
+.badge {
+    &-primary {
+        background-color: $primaryBlue;
+    }
+}
+
+:root{
+    --nav-bar-height: 2.35rem;
+}

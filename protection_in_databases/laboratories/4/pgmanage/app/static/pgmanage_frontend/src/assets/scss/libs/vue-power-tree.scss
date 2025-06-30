@@ -1,0 +1,96 @@
+.vue-power-tree {
+  position: relative;
+  cursor: default;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  min-width: fit-content;
+
+  &-root {
+    & > .vue-power-tree-nodes-list {
+      overflow: hidden;
+      position: relative;
+      padding-bottom: 4px
+    }
+  }
+
+  &-toggle {
+    width: 15px;
+  }
+
+  &-selected {
+    & > .vue-power-tree-node-item {
+      background-color: rgba($primaryBlue, .2);
+    }
+  }
+
+  &-node {
+    display: flex;
+    flex-direction: column;
+
+    &-list,
+    &-item {
+      position: relative;
+      display: flex;
+      flex-direction: row
+    }
+  
+    &-item {
+      padding: 0 10px;
+      
+      &.vue-power-tree-cursor-inside {
+        outline: 1px solid rgba(0, 101, 255, .5)
+      }
+    }
+  }
+
+  &-gap {
+    width: 20px;
+    min-height: 1px;
+    flex-shrink: 0;
+  }
+
+  &-row {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    margin-right: auto;
+    min-height: 25px;
+  }
+
+  &-title {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-grow: 1;
+    white-space: nowrap;
+  }
+
+  &-cursor {
+    position: absolute;
+    border: 1px solid rgba(0, 101, 255, .5);
+    height: 1px;
+    width: 100%
+  }
+
+  &-drag-info {
+    position: absolute;
+    background-color: #00000080;
+    opacity: .5;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    padding: 5px 10px
+  }
+
+  .icon_tree {
+    display: inline-block;
+    width: 30px;
+    height: 16px;
+    font-size: 15px;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    text-align: center;
+  }
+}
