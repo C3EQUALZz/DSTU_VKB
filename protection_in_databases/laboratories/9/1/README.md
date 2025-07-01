@@ -23,9 +23,6 @@
 psql "host=localhost port=5435 dbname=ninth_laboratory_database_var_1 user=user2 sslmode=verify-full sslrootcert=certs/ca.pem sslcert=certs/client-cert.pem sslkey=certs/client-key.pem"
 ```
 
-> [!NOTE]
-> На данный момент у автора не работает подключение, выдает `EOF`. 
-
 ![img.png](images/img.png)
 
 ### Выполнение лабораторной работы
