@@ -4,6 +4,7 @@ $STATE = 'California'
 $LOCATION = 'Santa Clara'
 $BLOCK_SIZE = 4096
 $DAYS = 365
+$PG_USER = "user2"  # Имя пользователя PostgreSQL
 
 # Запрашиваем параметры у пользователя
 $REPLY = Read-Host "Enter country code [empty for default value - US]"
@@ -23,9 +24,9 @@ if ($REPLY) { $DAYS = [int]$REPLY }
 
 # Формируем строки для openssl
 $OPENSSL_SUBJ = "/C=$COUNTRY/ST=$STATE/L=$LOCATION"
-$OPENSSL_CA = "$OPENSSL_SUBJ/CN=fake-CA"
-$OPENSSL_SERVER = "$OPENSSL_SUBJ/CN=localhost"
-$OPENSSL_CLIENT = "$OPENSSL_SUBJ/CN=fake-client"
+$OPENSSL_CA = "$OPENSSL_SUBJ/CN=PostgreSQL-Root-CA"
+$OPENSSL_SERVER = "$OPENSSL_SUBJ/CN=postgres"  # Имя контейнера
+$OPENSSL_CLIENT = "$OPENSSL_SUBJ/CN=$PG_USER"  # Имя пользователя БД
 
 # Создаем директорию
 New-Item -Path "certs" -ItemType Directory -Force | Out-Null
@@ -92,6 +93,7 @@ Remove-Item san.cnf -ErrorAction SilentlyContinue
 Write-Host "Генерация клиентских сертификатов..."
 openssl req -newkey rsa:$BLOCK_SIZE -nodes `
     -subj "$OPENSSL_CLIENT" `
+    -addext "extendedKeyUsage = clientAuth" `
     -keyout certs\client-key.pem -out certs\client-req.pem
 Check-OpenSSLError
 
@@ -99,15 +101,32 @@ Check-OpenSSLError
 openssl rsa -in certs\client-key.pem -out certs\client-key.pem
 Check-OpenSSLError
 
+# Создаем временный конфиг для расширения
+$EXT_CONFIG = @"
+[extendedKeyUsage]
+extendedKeyUsage = clientAuth
+"@
+$EXT_CONFIG | Out-File -FilePath ext.cnf -Encoding ASCII
+
 openssl x509 -req -in certs\client-req.pem -days $DAYS `
     -CA certs\ca.pem -CAkey certs\ca-key.pem -CAcreateserial `
-    -out certs\client-cert.pem
+    -out certs\client-cert.pem -extfile ext.cnf -extensions extendedKeyUsage
 Check-OpenSSLError
+
+# Удаляем временный файл
+Remove-Item ext.cnf -ErrorAction SilentlyContinue
 
 # Проверяем сертификаты
 Write-Host "Проверка сертификатов..."
 openssl verify -CAfile certs\ca.pem certs\server-cert.pem certs\client-cert.pem
 Check-OpenSSLError
 
+# Устанавливаем правильные права
+icacls certs\server-key.pem /inheritance:r
+icacls certs\server-key.pem /grant:r "$($env:USERNAME):(F)"
+icacls certs\client-key.pem /inheritance:r
+icacls certs\client-key.pem /grant:r "$($env:USERNAME):(F)"
+
 # Вывод завершения
 Write-Host "Сертификаты успешно созданы в директории certs/"
+Write-Host "Клиентский сертификат для пользователя: $PG_USER"

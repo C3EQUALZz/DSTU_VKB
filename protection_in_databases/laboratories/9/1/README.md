@@ -17,6 +17,19 @@
 
 Скачайте клиент `PostgreSQL` с официального сайта, после этого проставьте переменные окружения, как сказано на фото. 
 
+Теперь из-под `Windows` `Powershell` можно подключиться, используя команду: 
+
+```bash
+psql "host=localhost port=5432 dbname=ninth_laboratory_database_var_1 user=user2 \
+      sslmode=verify-full \
+      sslrootcert=certs/ca.pem \
+      sslcert=certs/client-cert.pem \
+      sslkey=certs/client-key.pem"
+```
+
+> [!NOTE]
+> На данный момент у автора не работает подключение, выдает `EOF`. 
+
 ![img.png](images/img.png)
 
 ### Выполнение лабораторной работы
@@ -30,6 +43,3 @@ SELECT
     pgp_sym_decrypt(email::bytea, 'secret_key') AS decrypted_email
 FROM client_data;
 ```
-
-
-
