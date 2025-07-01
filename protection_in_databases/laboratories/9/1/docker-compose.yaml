@@ -12,9 +12,12 @@ services:
     ports:
       - ${POSTGRES_PORT}:5432
     volumes:
-      - postgres_data_ninth_laboratory_var_1:/var/lib/postgresql/data
+      - postgres_data_tenth_laboratory_var_1:/var/lib/postgresql/data
       - ./postgresql.conf:/etc/postgresql.conf
       - ./pg_hba.conf:/etc/pg_hba.conf
+      - ./1.sql:/docker-entrypoint-initdb.d/01_init_extension.sql
+      - ./2.sql:/docker-entrypoint-initdb.d/02_init_tables.sql
+      - ./3.sql:/docker-entrypoint-initdb.d/03_fill_tables.sql
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
       interval: 10s
@@ -22,7 +25,7 @@ services:
       retries: 3
     networks:
       - ninth_laboratory_var_1
-    command: postgres -c config_file=/etc/postgresql.conf
+    command: postgres -c config_file=/etc/postgresql.conf -c hba_file=/etc/pg_hba.conf
 
   pgadmin:
     image: dpage/pgadmin4:9.3.0
