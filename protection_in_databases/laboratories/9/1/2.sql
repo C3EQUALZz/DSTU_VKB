@@ -3,3 +3,5 @@ CREATE TABLE client_data (
     name VARCHAR(100) NOT NULL,
     email BYTEA NOT NULL  -- поле для зашифрованных данных
 );
+
+GRANT SELECT ON client_data TO user2;
