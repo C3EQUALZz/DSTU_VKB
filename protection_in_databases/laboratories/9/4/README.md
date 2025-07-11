@@ -52,6 +52,11 @@ VALUES
 
 ![img.png](images/2.png)
 
+> [!IMPORTANT]
+> На стороне сервера невозможно настроить `verify-x` - это клиентская настройка, не более того. 
+> https://postgrespro.ru/docs/postgrespro/current/libpq-ssl
 
+![img.png](images/3.png)
 
+![img.png](images/4.png)
 
