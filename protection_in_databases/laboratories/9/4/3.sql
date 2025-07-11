@@ -13,5 +13,5 @@ END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- Права на функции
-GRANT EXECUTE ON FUNCTION encrypt_password(TEXT) TO auth_user;
-GRANT EXECUTE ON FUNCTION decrypt_password(bytea) TO auth_user;
+GRANT EXECUTE ON FUNCTION encrypt_password(TEXT) TO user2;
+GRANT EXECUTE ON FUNCTION decrypt_password(bytea) TO user2;

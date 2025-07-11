@@ -26,6 +26,8 @@ psql "host=localhost port=5435 dbname=ninth_laboratory_database_var_4 user=user2
 > [!NOTE]
 > Запускать команду для подключения к базе данных нужно из-под текущей директории, где `README.md`
 
+![img.png](images/1.png)
+
 ### Выполнение лабораторной работы
 
 Проверьте наличие данных:
@@ -45,9 +47,10 @@ SELECT user_id, decrypt_password(password) FROM user_accounts;
 ```sql
 INSERT INTO user_accounts (username, encrypted_password)
 VALUES
-    ('alexey', encrypt_password('strongPass123!')),
+    ('alexey', encrypt_password('strongPass123!'));
 ```
 
+![img.png](images/2.png)
 
 
 
