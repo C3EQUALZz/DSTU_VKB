@@ -42,6 +42,8 @@ SELECT * FROM employee_info;
 SELECT employee_id, decrypt_salary(salary) FROM employee_info;
 ```
 
+![img.png](images/4.png)
+
 Вставьте новые данные:
 
 ```sql
@@ -55,3 +57,11 @@ VALUES
 ```sql
 SELECT * FROM employee_info;
 ```
+
+> [!IMPORTANT]
+> На стороне сервера невозможно настроить `verify-full` - это клиентская настройка, не более того. 
+> https://postgrespro.ru/docs/postgrespro/current/libpq-ssl
+
+![img.png](images/2.png)
+
+![img.png](images/3.png)

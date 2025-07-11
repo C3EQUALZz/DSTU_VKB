@@ -16,7 +16,7 @@ GRANT EXECUTE ON FUNCTION decrypt_salary(bytea) TO user2;
 GRANT EXECUTE ON FUNCTION encrypt_salary(numeric) TO user2;
 
 
-INSERT INTO employee_info (first_name, last_name, email, encrypted_salary)
+INSERT INTO employee_info (first_name, last_name, email, salary)
 VALUES
     ('Иван', 'Иванов', 'ivanov@company.com', encrypt_salary(100000)),
     ('Мария', 'Петрова', 'petrova@company.com', encrypt_salary(85000)),
