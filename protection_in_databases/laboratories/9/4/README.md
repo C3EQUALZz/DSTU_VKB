@@ -58,5 +58,4 @@ VALUES
 
 ![img.png](images/3.png)
 
-![img.png](images/4.png)
 
