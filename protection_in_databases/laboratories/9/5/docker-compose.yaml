@@ -1,7 +1,7 @@
 services:
   postgres:
-    image: postgres-with-ssl:local-4
-    container_name: postgres-lab-9-var-4
+    image: postgres-with-ssl:local-5
+    container_name: postgres-lab-9-var-5
     build: ./
     env_file:
       - .env
@@ -12,7 +12,7 @@ services:
     ports:
       - ${POSTGRES_PORT}:5432
     volumes:
-      - postgres_data_tenth_laboratory_var_4:/var/lib/postgresql/data
+      - postgres_data_tenth_laboratory_var_5:/var/lib/postgresql/data
       - ./postgresql.conf:/etc/postgresql.conf
       - ./pg_hba.conf:/etc/pg_hba.conf
       - ./1.sql:/docker-entrypoint-initdb.d/01_init_user.sql
@@ -25,12 +25,12 @@ services:
       timeout: 5s
       retries: 3
     networks:
-      - ninth_laboratory_var_4
+      - ninth_laboratory_var_5
     command: postgres -c config_file=/etc/postgresql.conf -c hba_file=/etc/pg_hba.conf
 
 volumes:
-  postgres_data_tenth_laboratory_var_4:
+  postgres_data_tenth_laboratory_var_5:
 
 networks:
-  ninth_laboratory_var_4:
+  ninth_laboratory_var_5:
     driver: bridge
