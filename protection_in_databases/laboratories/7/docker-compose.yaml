@@ -1,0 +1,46 @@
+services:
+  mssql-server:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    hostname: mssql-server
+    container_name: mssql-server
+    environment:
+      ACCEPT_EULA: ${ACCEPT_EULA}
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+      MSSQL_PID: Developer  # Developer (бесплатный), Express, Standard, Enterprise
+    volumes:
+      - mssql_data:/var/opt/mssql
+      - ./mssql.conf:/var/opt/mssql/mssql.conf
+    ports:
+      - ${MSSQL_PORT}:${MSSQL_PORT}
+    networks:
+      - lab-network-7
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P ${MSSQL_SA_PASSWORD} -C -Q 'SELECT 1' || exit 1" ]
+      interval: 10s
+      retries: 10
+      start_period: 10s
+      timeout: 3s
+
+  sqlserver.configurator:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    user: root
+    volumes:
+      - ./1.sql:/docker-entrypoint-initdb.d/1.sql
+      - ./2.sql:/docker-entrypoint-initdb.d/2.sql
+      - ./3.sql:/docker-entrypoint-initdb.d/3.sql
+      - ./scripts/init.sh:/init.sh
+    depends_on:
+      mssql-server:
+        condition: service_healthy
+    command: ["/bin/bash", "/init.sh"]
+    networks:
+      - lab-network-7
+
+
+volumes:
+  mssql_data:
+
+networks:
+  lab-network-7:
+    driver: bridge
