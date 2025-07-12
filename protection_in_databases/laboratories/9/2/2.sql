@@ -1,15 +1,13 @@
-INSERT INTO payment_records (account_number, amount)
-VALUES
-    (pgp_sym_encrypt('40817810500000000001', 'my_strong_key_123!'), 1500.75),
-    (pgp_sym_encrypt('40817810500000000002', 'my_strong_key_123!'), 3200.50);
+-- Создаем таблицу платежных записей
+CREATE TABLE payment_records (
+    payment_id SERIAL PRIMARY KEY,
+    account_number BYTEA NOT NULL,  -- Зашифрованный номер счета
+    amount DECIMAL(10, 2) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
 
--- Функция для расшифровки (для тестирования)
-CREATE OR REPLACE FUNCTION decrypt_account(encrypted BYTEA)
-RETURNS TEXT AS $$
-BEGIN
-    RETURN pgp_sym_decrypt(encrypted, 'my_strong_key_123!');
-END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+COMMENT ON TABLE payment_records IS 'Таблица платежных записей с зашифрованными номерами счетов';
+COMMENT ON COLUMN payment_records.account_number IS 'Номер счета, зашифрованный симметричным ключом';
 
--- Даем права на функцию
-GRANT EXECUTE ON FUNCTION decrypt_account(bytea) TO user2;
+GRANT SELECT, INSERT ON payment_records TO user2;
+GRANT USAGE, SELECT ON SEQUENCE payment_records_payment_id_seq TO user2;

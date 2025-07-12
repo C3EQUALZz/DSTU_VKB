@@ -48,7 +48,7 @@ FROM payment_records;
 
 ```sql
 INSERT INTO payment_records (account_number, amount)
-VALUES (pgp_sym_encrypt('40817810500000000003', 'my_strong_key_123!'), 5400.00);
+VALUES (encrypt_account('40817810500000000003'), 5400.00);
 ```
 
 Проверьте вставку: 

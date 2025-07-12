@@ -1,0 +1,36 @@
+services:
+  postgres:
+    image: postgres-with-ssl:local-6
+    container_name: postgres-lab-9-var-6
+    build: ./
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - ${POSTGRES_PORT}:5432
+    volumes:
+      - postgres_data_tenth_laboratory_var_6:/var/lib/postgresql/data
+      - ./postgresql.conf:/etc/postgresql.conf
+      - ./pg_hba.conf:/etc/pg_hba.conf
+      - ./1.sql:/docker-entrypoint-initdb.d/01_init_user.sql
+      - ./2.sql:/docker-entrypoint-initdb.d/02_init_table.sql
+      - ./3.sql:/docker-entrypoint-initdb.d/03_init_functions.sql
+      - ./4.sql:/docker-entrypoint-initdb.d/04_fill_data.sql
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - ninth_laboratory_var_6
+    command: postgres -c config_file=/etc/postgresql.conf -c hba_file=/etc/pg_hba.conf
+
+volumes:
+  postgres_data_tenth_laboratory_var_6:
+
+networks:
+  ninth_laboratory_var_6:
+    driver: bridge
