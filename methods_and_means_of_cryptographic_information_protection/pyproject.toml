@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=66.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+
+[tool.setuptools.dynamic]
+version = { attr = "cryptography_methods.__version__" }
+
+[project]
+name = "cryptography_methods"
+dynamic = ["version"]
+description = "Laboratories 4th course 1st semester for Safaryan"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "Danil Kovalev", email = "dan.kovalev2013@gmail.com" },
+]
+classifiers = [
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Typing :: Typed",
+]
+dependencies = [
+    "aiogram>=3.21.0",
+]
