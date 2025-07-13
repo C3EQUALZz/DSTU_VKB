@@ -8,7 +8,6 @@ include-package-data = true
 [tool.setuptools.packages.find]
 where = ["src"]
 
-
 [tool.setuptools.dynamic]
 version = { attr = "cryptography_methods.__version__" }
 
@@ -22,6 +21,8 @@ authors = [
     { name = "Danil Kovalev", email = "dan.kovalev2013@gmail.com" },
 ]
 classifiers = [
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "License :: OSI Approved :: MIT License",
@@ -30,4 +31,104 @@ classifiers = [
 ]
 dependencies = [
     "aiogram>=3.21.0",
+    "dishka>=1.6.0",
 ]
+
+[project.optional-dependencies]
+lint = [
+    "ruff==0.11.13",
+    "bandit==1.8.3",
+    "codespell==2.4.1",
+    "mypy==1.16.0",
+    "basedpyright==1.29.2",
+    # semgrep depends on opentelemetry-exporter-otlp>=v1.25,<1.33.0
+    "semgrep==1.124.0",
+    "opentelemetry-exporter-otlp>=1.25.0,<1.35.0",
+]
+dev = [
+    "cryptography_methods[lint]",
+]
+
+[tool.basedpyright]
+include = ["src", "tests"]
+ignore = ["**/__pycache__", "**/alembic"]
+pythonVersion = "3.10"
+reportAny = false
+reportUnusedCallResult = false
+
+[tool.mypy]
+mypy_path = "src"
+files = ["src"]
+python_version = "3.10"
+exclude=[
+    "src/cryptography_methods/setup/configs/settings.py"
+]
+
+strict = true
+pretty = true
+warn_return_any = true
+warn_unreachable = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+allow_redefinition = true
+allow_untyped_calls = true
+disallow_any_explicit = false
+disallow_any_generics = false
+disallow_subclassing_any = false
+disallow_untyped_decorators = false
+show_error_codes = true
+show_error_context = true
+show_column_numbers = true
+check_untyped_defs = true
+namespace_packages = true
+ignore_missing_imports = true
+
+[tool.ruff]
+src = ["src"]
+include = ["src/**.py"]
+target-version = "py310"
+line-length = 79
+fix = true
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = ["D", "CPY001", "A005"]
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint.isort]
+known-first-party = ["src"]
+no-lines-before = ["local-folder"]
+
+[tool.coverage.run]
+parallel = true
+branch = true
+concurrency = ["thread", "multiprocessing"]
+source = ["src"]
+omit = ["**/__init__.py"]
+
+[tool.coverage.report]
+show_missing = true
+skip_empty = true
+exclude_also = [
+    'if TYPE_CHECKING:',
+    "if __name__ == .__main__.:",
+    '@(abc\.)?abstractmethod',
+    "raise NotImplementedError",
+    "pass",
+    '\.\.\.',
+]
+omit = [
+    '*/__init__.py',
+]
+
+[tool.semgrep]
+paths = ["src"]
+include = ["src"]
+
+[tool.bandit]
+targets = "src"
+
+[tool.codespell]
+skip = "*.pyi,*.pyc,./site"
