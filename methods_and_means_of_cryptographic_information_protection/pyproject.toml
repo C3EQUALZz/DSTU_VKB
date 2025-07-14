@@ -31,7 +31,10 @@ classifiers = [
 ]
 dependencies = [
     "aiogram>=3.21.0",
+    "aiogram-dialog>=2.4.0",
     "dishka>=1.6.0",
+    "sqlalchemy>=2.0.41",
+    "structlog>=25.4.0",
 ]
 
 [project.optional-dependencies]
