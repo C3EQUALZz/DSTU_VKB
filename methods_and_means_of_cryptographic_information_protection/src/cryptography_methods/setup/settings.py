@@ -1,7 +1,10 @@
 import os
 from pathlib import Path
-from typing import Literal
+from typing import Literal, Final
 from pydantic import BaseModel, Field
+
+PATH_TO_RESOURCES: Final[Path] = Path(__file__).parent.parent.parent.parent / "resources"
+EXAMPLE_SIMPLE_PERMUTATION_PATH: Final[Path] = PATH_TO_RESOURCES / "simple_data_permutation" / "1.png"
 
 
 class LoggingConfig(BaseModel):
