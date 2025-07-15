@@ -1,18 +1,13 @@
-from abc import ABC
 from collections import deque
-from collections.abc import Iterable
 from dataclasses import dataclass, field
+from typing import Iterable
 
+from cryptography_methods.domain.common.entities.base_entity import BaseEntity, OIDType
 from cryptography_methods.domain.common.events import BaseDomainEvent
 
 
 @dataclass
-class BaseService(ABC):
-    """
-    Each Domain Service must inherit from this class.
-    With this class, we can add different events from business logic.
-    For example, user created -> event for another microservice.
-    """
+class BaseAggregateRoot(BaseEntity[OIDType]):
     _events: deque[BaseDomainEvent] = field(
         default_factory=deque,
         init=False,
