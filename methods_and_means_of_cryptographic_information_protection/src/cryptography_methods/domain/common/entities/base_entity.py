@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
-from typing import Generic, TypeVar
+from typing import Generic, TypeVar, Any
 
+from cryptography_methods.domain.common.errors.base import DomainError
 from cryptography_methods.domain.common.errors.time_errors import InconsistentTimeError
 from cryptography_methods.domain.common.values import (
     CreateTime,
@@ -11,7 +12,7 @@ from cryptography_methods.domain.common.values import (
 OIDType = TypeVar("OIDType")
 
 
-@dataclass
+@dataclass(eq=False)
 class BaseEntity(Generic[OIDType]):
     """Abstract base class for all domain entities.
 
@@ -68,6 +69,10 @@ class BaseEntity(Generic[OIDType]):
             )
 
     def __eq__(self, other: object) -> bool:
+        """
+        Two entities are considered equal if they have the same `id`,
+        regardless of other attribute values.
+        """
         if other is None:
             return False
 
@@ -78,3 +83,20 @@ class BaseEntity(Generic[OIDType]):
             return bool(other.id == self.id)
 
         return False
+
+    def __setattr__(self, name: str, value: Any) -> None:
+        """
+        Prevents modifying the `id` after it's set.
+        Other attributes can be changed as usual.
+        """
+        if name == "id" and getattr(self, "id", None) is not None:
+            raise DomainError("Changing entity ID is not permitted.")
+        super().__setattr__(name, value)
+
+    def __hash__(self) -> int:
+        """
+        Generate a hash based on entity type and the immutable `id`.
+        This allows entities to be used in hash-based collections and
+        reduces the risk of hash collisions between different entity types.
+        """
+        return hash((type(self), self.id_))

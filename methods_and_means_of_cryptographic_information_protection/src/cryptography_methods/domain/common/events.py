@@ -4,10 +4,11 @@ from dataclasses import asdict, dataclass, field
 from datetime import datetime, UTC
 from typing import Any
 from uuid import UUID
+from bazario import Notification
 
 
 @dataclass(frozen=True)
-class BaseDomainEvent:
+class BaseDomainEvent(Notification):
     """
     Base event, from which any domain event should be inherited.
     Events represents internal operations, which may be executed.

@@ -13,5 +13,6 @@ class UserCommandGateway(Protocol):
     async def read_by_id(self, user_id: UserID) -> User:
         ...
 
+    @abstractmethod
     async def read_all_by_social_media(self):
         ...

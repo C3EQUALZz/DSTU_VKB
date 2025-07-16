@@ -1,4 +1,4 @@
-from cryptography_methods.domain.common.errors.base import DomainFieldError
+from cryptography_methods.domain.common.errors.base import DomainFieldError, DomainError
 
 
 class UserNameCantBeEmptyStringError(DomainFieldError):
@@ -34,4 +34,24 @@ class UserMiddleNameCantBeNumberError(DomainFieldError):
 
 
 class UserMiddleNameLengthError(DomainFieldError):
+    ...
+
+
+class RoleAssignmentNotPermittedError(DomainError):
+    ...
+
+
+class RoleChangeNotPermittedError(DomainError):
+    ...
+
+
+class TelegramAccountHasBeenLinkedError(DomainError):
+    ...
+
+
+class BotCantBeLinkedToUserError(DomainError):
+    ...
+
+
+class UserAlreadyBlockedError(DomainError):
     ...

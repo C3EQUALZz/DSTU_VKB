@@ -6,7 +6,7 @@ from cryptography_methods.domain.common.entities.base_entity import BaseEntity, 
 from cryptography_methods.domain.common.events import BaseDomainEvent
 
 
-@dataclass
+@dataclass(eq=False)
 class BaseAggregateRoot(BaseEntity[OIDType]):
     _events: deque[BaseDomainEvent] = field(
         default_factory=deque,
@@ -16,10 +16,10 @@ class BaseAggregateRoot(BaseEntity[OIDType]):
         compare=False,
     )
 
-    def register_event(self, event: BaseDomainEvent) -> None:
+    def _register_event(self, event: BaseDomainEvent) -> None:
         self._events.append(event)
 
-    def register_events(self, event: Iterable[BaseDomainEvent]) -> None:
+    def _register_events(self, event: Iterable[BaseDomainEvent]) -> None:
         self._events.extend(event)
 
     def get_events(self) -> deque[BaseDomainEvent]:
