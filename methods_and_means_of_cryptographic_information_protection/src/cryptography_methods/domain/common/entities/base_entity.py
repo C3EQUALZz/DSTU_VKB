@@ -1,5 +1,4 @@
-from dataclasses import dataclass, field
-from typing import Generic, TypeVar, Any
+from typing import Generic, TypeVar, Hashable
 
 from cryptography_methods.domain.common.errors.base import DomainError
 from cryptography_methods.domain.common.errors.time_errors import InconsistentTimeError
@@ -9,10 +8,9 @@ from cryptography_methods.domain.common.values import (
     UpdateTime,
 )
 
-OIDType = TypeVar("OIDType")
+OIDType = TypeVar("OIDType", bound=Hashable)
 
 
-@dataclass(eq=False)
 class BaseEntity(Generic[OIDType]):
     """Abstract base class for all domain entities.
 
@@ -35,38 +33,38 @@ class BaseEntity(Generic[OIDType]):
         OIDType: The type parameter for the entity's identifier.
 
     Note:
-        - Uses @dataclass for automatic boilerplate reduction
         - Designed to be inherited by concrete entity classes
         - Supports any identifier type through generics
         - Forms the foundation of the domain model hierarchy
             ...
     """
 
-    id: OIDType
+    def __init__(self, id: OIDType) -> None:
+        self.id: OIDType = id
+        self.created_at: CreateTime = CreateTime.now()
+        self.updated_at: UpdateTime = UpdateTime.now()
+        self.deleted_at: DeleteTime = DeleteTime.create_not_deleted()
 
-    created_at: CreateTime = field(
-        default_factory=lambda: CreateTime.now(),
-        kw_only=True,
-    )
-
-    updated_at: UpdateTime = field(
-        default_factory=lambda: UpdateTime.now(),
-        kw_only=True,
-    )
-
-    deleted_at: DeleteTime = field(
-        default_factory=lambda: DeleteTime.create_not_deleted(),
-        kw_only=True,
-    )
-
-    def __post_init__(self) -> None:
-        """Ensure timestamps are consistent."""
         if self.updated_at.value < self.created_at.value:
             raise InconsistentTimeError(
                 f"{self.updated_at.value.strftime('%Y-%m-%d %H:%M:%S')}"
                 f" cannot be earlier than"
                 f" {self.created_at.value.strftime('%Y-%m-%d %H:%M:%S')}",
             )
+
+    @property
+    def id(self) -> OIDType:
+        return self.id
+
+    @id.setter
+    def id(self, value: OIDType) -> None:
+        """
+       Prevents modifying the `id` after it's set.
+       Other attributes can be changed as usual.
+        """
+        if getattr(self, "_id", None) is not None:
+            raise DomainError("Changing entity ID is not permitted.")
+        self._id: OIDType = value
 
     def __eq__(self, other: object) -> bool:
         """
@@ -84,19 +82,10 @@ class BaseEntity(Generic[OIDType]):
 
         return False
 
-    def __setattr__(self, name: str, value: Any) -> None:
-        """
-        Prevents modifying the `id` after it's set.
-        Other attributes can be changed as usual.
-        """
-        if name == "id" and getattr(self, "id", None) is not None:
-            raise DomainError("Changing entity ID is not permitted.")
-        super().__setattr__(name, value)
-
     def __hash__(self) -> int:
         """
         Generate a hash based on entity type and the immutable `id`.
         This allows entities to be used in hash-based collections and
         reduces the risk of hash collisions between different entity types.
         """
-        return hash((type(self), self.id_))
+        return hash((type(self), self.id))

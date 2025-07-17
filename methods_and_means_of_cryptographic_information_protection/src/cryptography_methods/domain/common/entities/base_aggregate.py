@@ -1,20 +1,14 @@
 from collections import deque
-from dataclasses import dataclass, field
-from typing import Iterable
+from typing import Iterable, Final
 
 from cryptography_methods.domain.common.entities.base_entity import BaseEntity, OIDType
 from cryptography_methods.domain.common.events import BaseDomainEvent
 
 
-@dataclass(eq=False)
 class BaseAggregateRoot(BaseEntity[OIDType]):
-    _events: deque[BaseDomainEvent] = field(
-        default_factory=deque,
-        init=False,
-        repr=False,
-        hash=False,
-        compare=False,
-    )
+    def __init__(self, id: OIDType) -> None:
+        super().__init__(id)
+        self._events: Final[deque[BaseDomainEvent]] = deque()
 
     def _register_event(self, event: BaseDomainEvent) -> None:
         self._events.append(event)

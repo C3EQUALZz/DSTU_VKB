@@ -49,9 +49,21 @@ class TelegramAccountHasBeenLinkedError(DomainError):
     ...
 
 
+class CantUnLinkUnexistingAccountError(DomainError):
+    ...
+
+
+class CantBlockSuperUserError(DomainError):
+    ...
+
+
 class BotCantBeLinkedToUserError(DomainError):
     ...
 
 
 class UserAlreadyBlockedError(DomainError):
+    ...
+
+
+class AccessError(DomainError):
     ...

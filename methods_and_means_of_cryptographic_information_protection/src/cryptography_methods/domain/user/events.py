@@ -45,14 +45,17 @@ class UserLinkedTelegramAccountEvent(BaseDomainEvent):
 
 
 @dataclass(frozen=True)
+class UserUnLinkedTelegramAccountEvent(BaseDomainEvent):
+    user_id: UUID
+    telegram_account_id: int
+
+
+@dataclass(frozen=True)
 class UserChangedRoleEvent(BaseDomainEvent):
     user_id: UUID
     role: str
 
 
 @dataclass(frozen=True)
-class UserChangedFullNameEvent(BaseDomainEvent):
+class UserWasBlockedEvent(BaseDomainEvent):
     user_id: UUID
-    first_name: str
-    last_name: str
-    middle_name: str
