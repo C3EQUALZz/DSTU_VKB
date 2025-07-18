@@ -59,3 +59,11 @@ class UserChangedRoleEvent(BaseDomainEvent):
 @dataclass(frozen=True)
 class UserWasBlockedEvent(BaseDomainEvent):
     user_id: UUID
+
+
+@dataclass(frozen=True)
+class UserChangedFullNameEvent(BaseDomainEvent):
+    user_id: UUID
+    first_name: str
+    middle_name: str
+    second_name: str

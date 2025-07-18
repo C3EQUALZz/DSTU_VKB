@@ -9,7 +9,7 @@ from cryptography_methods.domain.cipher_table.values.table_id import TableID
 from cryptography_methods.domain.common.entities.base_entity import BaseEntity
 
 
-@dataclass(repr=False)
+@dataclass(eq=False, kw_only=True, repr=False)
 class Table(BaseEntity[TableID]):
     width: TableDimension
     height: TableDimension

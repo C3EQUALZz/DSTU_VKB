@@ -1,9 +1,11 @@
 from dataclasses import dataclass
-from typing import final, Final
+from itertools import chain
+from typing import final, Final, Iterable
 
 from cryptography_methods.application.common.ports.user.command_gateway import UserCommandGateway
 from cryptography_methods.application.common.transaction_manager import TransactionManager
 from cryptography_methods.application.errors.user import UserAlreadyExists
+from cryptography_methods.domain.common.events import BaseDomainEvent
 from cryptography_methods.domain.user.entities.telegram import TelegramAccount
 from cryptography_methods.domain.user.entities.user import User
 from cryptography_methods.domain.user.services.telegram_service import TelegramService
@@ -62,7 +64,12 @@ class RegisterUserViaTelegramCommandHandler:
         await self._user_gateway.add(user=new_user)
         await self._transaction_manager.flush()
 
-        await self._event_bus.publish(new_user.pull_events())
+        events_for_publishing: Iterable[BaseDomainEvent] = chain(
+            self._user_service.pull_events(),
+            self._user_service.pull_events()
+        )
+
+        await self._event_bus.publish(events_for_publishing)
         await self._transaction_manager.commit()
 
         return new_user.id

@@ -1,16 +1,17 @@
-from typing import Generic, TypeVar, Hashable
+from dataclasses import dataclass, field
+from typing import Generic, TypeVar, Hashable, Any
 
 from cryptography_methods.domain.common.errors.base import DomainError
 from cryptography_methods.domain.common.errors.time_errors import InconsistentTimeError
 from cryptography_methods.domain.common.values import (
     CreateTime,
-    DeleteTime,
     UpdateTime,
 )
 
 OIDType = TypeVar("OIDType", bound=Hashable)
 
 
+@dataclass(eq=False, kw_only=True)
 class BaseEntity(Generic[OIDType]):
     """Abstract base class for all domain entities.
 
@@ -38,13 +39,12 @@ class BaseEntity(Generic[OIDType]):
         - Forms the foundation of the domain model hierarchy
             ...
     """
+    id: OIDType
 
-    def __init__(self, id: OIDType) -> None:
-        self.id: OIDType = id
-        self.created_at: CreateTime = CreateTime.now()
-        self.updated_at: UpdateTime = UpdateTime.now()
-        self.deleted_at: DeleteTime = DeleteTime.create_not_deleted()
+    created_at: CreateTime = field(default_factory=CreateTime.now())
+    updated_at: UpdateTime = field(default_factory=UpdateTime.now())
 
+    def __post_init__(self) -> None:
         if self.updated_at.value < self.created_at.value:
             raise InconsistentTimeError(
                 f"{self.updated_at.value.strftime('%Y-%m-%d %H:%M:%S')}"
@@ -52,19 +52,14 @@ class BaseEntity(Generic[OIDType]):
                 f" {self.created_at.value.strftime('%Y-%m-%d %H:%M:%S')}",
             )
 
-    @property
-    def id(self) -> OIDType:
-        return self.id
-
-    @id.setter
-    def id(self, value: OIDType) -> None:
+    def __setattr__(self, name: str, value: Any) -> None:
         """
-       Prevents modifying the `id` after it's set.
-       Other attributes can be changed as usual.
+        Prevents modifying the `id` after it's set.
+        Other attributes can be changed as usual.
         """
-        if getattr(self, "_id", None) is not None:
+        if name == "id_" and getattr(self, "id_", None) is not None:
             raise DomainError("Changing entity ID is not permitted.")
-        self._id: OIDType = value
+        super().__setattr__(name, value)
 
     def __eq__(self, other: object) -> bool:
         """

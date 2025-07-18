@@ -1,4 +1,5 @@
 import asyncio
+from asyncio import Task
 from typing import Iterable
 
 from bazario.asyncio import Publisher
@@ -14,5 +15,9 @@ class BazarioEventBus(EventBus):
 
     @override
     async def publish(self, events: Iterable[BaseDomainEvent]) -> None:
+        background_tasks: set[Task] = set()
+
         for event in events:
-            asyncio.create_task(self._publisher.publish(event))
+            task: Task = asyncio.create_task(self._publisher.publish(event))
+            background_tasks.add(task)
+            task.add_done_callback(background_tasks.discard)
