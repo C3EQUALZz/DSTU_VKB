@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from typing import Literal, Final
+
 from pydantic import BaseModel, Field
 
 PATH_TO_RESOURCES: Final[Path] = Path(__file__).parent.parent.parent.parent / "resources"
@@ -67,16 +68,33 @@ class RedisConfig(BaseModel):
         description="Redis password",
         validate_default=True
     )
-    db: int = Field(
-        alias="REDIS_DB",
+    default_cache_db: int = Field(
+        alias="DEFAULT_CACHE_REDIS_DB",
         default=0,
-        description="Redis db",
+        description="Redis db for caching events",
+        validate_default=True
+    )
+    aiogram_fsm_cache_db: int = Field(
+        alias="AIOGRAM_FSM_CACHE_DB",
+        default=1,
+        description="Redis db for aiogram fsm",
+        validate_default=True
+    )
+
+    max_connections: int = Field(
+        alias="REDIS_MAX_CONNECTIONS",
+        default=20,
+        description="Redis max connections",
         validate_default=True
     )
 
     @property
     def url(self) -> str:
-        return f"redis://{self.user}:{self.password}@{self.host}:{self.port}/{self.db}"
+        return f"redis://{self.user}:{self.password}@{self.host}:{self.port}/{self.default_cache_db}"
+
+    @property
+    def aiogram_fsm_url(self) -> str:
+        return f"redis://{self.user}:{self.password}@{self.host}:{self.port}/{self.aiogram_fsm_cache_db}"
 
 
 class Configs(BaseModel):

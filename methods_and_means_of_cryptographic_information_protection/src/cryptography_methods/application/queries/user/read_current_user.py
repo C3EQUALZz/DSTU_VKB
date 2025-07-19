@@ -29,4 +29,5 @@ class ReadCurrentUserQueryHandler:
             role=str(user.role),
             telegram_id=user.telegram_account.id if user.telegram_account else None,
             last_name=user.second_name if user.second_name else None,
+            language=user.telegram_account.language_code if user.telegram_account else "ru"
         )

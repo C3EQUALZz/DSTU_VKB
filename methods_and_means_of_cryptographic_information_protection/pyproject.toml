@@ -32,9 +32,12 @@ classifiers = [
 dependencies = [
     "aiogram>=3.21.0",
     "aiogram-dialog>=2.4.0",
+    "aiogram-i18n>=1.4",
     "asyncpg>=0.30.0",
     "bazario>=0.4.2",
     "dishka>=1.6.0",
+    "fluent-runtime>=0.4.0",
+    "redis>=6.2.0",
     "sqlalchemy>=2.0.41",
     "structlog>=25.4.0",
 ]

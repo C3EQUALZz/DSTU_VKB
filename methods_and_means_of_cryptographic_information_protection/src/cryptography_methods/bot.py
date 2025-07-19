@@ -1,0 +1,3 @@
+async def main() -> None:
+    setup_logging(level="INFO")
+    ...
