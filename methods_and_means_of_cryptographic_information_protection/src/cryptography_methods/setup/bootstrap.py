@@ -5,13 +5,20 @@ from types import TracebackType
 from typing import Any, Final
 
 from aiogram import Dispatcher
-from aiogram.fsm.storage.base import DefaultKeyBuilder, BaseStorage
+from aiogram.fsm.storage.base import DefaultKeyBuilder, BaseStorage, BaseEventIsolation
 from aiogram.fsm.storage.memory import SimpleEventIsolation, MemoryStorage
-from aiogram.fsm.storage.redis import RedisStorage
+from aiogram.fsm.storage.redis import RedisStorage, RedisEventIsolation
+from aiogram_i18n import I18nMiddleware
+from aiogram_dialog import setup_dialogs
+from aiogram_i18n.cores import FluentRuntimeCore
 
+from cryptography_methods.infrastructure.persistence.models.users import map_user_aggregate
 from cryptography_methods.presentation.bot.middlewares.stale_message_middleware import StaleMessageMiddleware
+from cryptography_methods.presentation.bot.middlewares.timing_middleware import TimingMiddleware
 from cryptography_methods.setup.logging import configure_logging
-from cryptography_methods.setup.settings import Configs, LoggingConfig, TelegramConfig, RedisConfig
+from cryptography_methods.setup.settings import Configs, LoggingConfig, TelegramConfig, RedisConfig, I18NConfig
+
+from cryptography_methods.presentation.bot.handlers.common import router as common_router
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 
@@ -21,22 +28,39 @@ def setup_configs() -> Configs:
     return Configs()
 
 
+def setup_map_tables() -> None:
+    map_user_aggregate()
+
+
 def setup_dispatcher(
         telegram_config: TelegramConfig,
         redis_config: RedisConfig,
 ) -> Dispatcher:
-    if telegram_config.use_redis_storage:
-        logger.debug("Using Redis storage")
-        storage: BaseStorage = RedisStorage.from_url(
+    storage: BaseStorage
+    event_isolation: BaseEventIsolation
+
+    if telegram_config.use_fsm_redis_storage:
+        logger.info("Using Redis storage for fsm states")
+        storage = RedisStorage.from_url(
             url=redis_config.aiogram_fsm_url,
             key_builder=DefaultKeyBuilder(with_bot_id=True, with_destiny=True)
         )
     else:
-        logger.debug("Using memory storage")
-        storage: BaseStorage = MemoryStorage()
+        logger.debug("Using memory storage for fsm states")
+        storage = MemoryStorage()
+
+    if telegram_config.use_redis_event_isolation:
+        logger.info("Using Redis event isolation")
+        event_isolation = RedisEventIsolation.from_url(
+            url=redis_config.aiogram_event_isolation_url,
+            key_builder=DefaultKeyBuilder(with_bot_id=True, with_destiny=True)
+        )
+    else:
+        logger.info("Using memory event isolation")
+        event_isolation = SimpleEventIsolation()
 
     dp: Dispatcher = Dispatcher(
-        events_isolation=SimpleEventIsolation(),
+        events_isolation=event_isolation,
         storage=storage
     )
 
@@ -45,19 +69,34 @@ def setup_dispatcher(
 
 def setup_bot_middlewares(dp: Dispatcher) -> None:
     dp.update.middleware(StaleMessageMiddleware())
+    dp.update.middleware(TimingMiddleware())
+    logger.info("Configured all middlewares for bot")
 
+
+def setup_bot_i18n(dp: Dispatcher, i18n_config: I18NConfig) -> None:
+    i18n_middleware: I18nMiddleware = I18nMiddleware(
+        core=FluentRuntimeCore(
+            path=i18n_config.path,
+            default_locale=i18n_config.default_locale,
+        )
+    )
+
+    i18n_middleware.setup(dp)
+    logger.info("Configured i18n for bot")
 
 
 def setup_bot_routes(dp: Dispatcher) -> None:
-    ...
+    setup_dialogs(dp)
+    dp.include_router(common_router)
 
 
 def setup_logging(logger_config: LoggingConfig) -> None:
     configure_logging(logger_config)
 
     root_logger: logging.Logger = logging.getLogger()
-    root_logger.info("Logger configured")
     sys.excepthook = global_exception_handler
+
+    root_logger.info("Logger configured")
 
 
 def global_exception_handler(

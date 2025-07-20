@@ -9,10 +9,10 @@ from cryptography_methods.domain.cipher_table.errors import (
 from cryptography_methods.domain.cipher_table.events import TableCreatedAndFilledSuccessfullyEvent
 from cryptography_methods.domain.cipher_table.services.id_generator import CipherTableIdGenerator
 from cryptography_methods.domain.cipher_table.values.table_dimension import TableDimension
-from cryptography_methods.domain.common.services import BaseService
+from cryptography_methods.domain.common.services import DomainService
 
 
-class CipherTableService(BaseService):
+class CipherTableService(DomainService):
     def __init__(
             self,
             id_generator: CipherTableIdGenerator

@@ -3,10 +3,10 @@ from typing import Final
 from cryptography_methods.domain.cipher_table.entities.table import Table
 from cryptography_methods.domain.cipher_table.events import SwappedSpacesOnSymbolsEvent
 from cryptography_methods.domain.cipher_table.services.cipher_table_service import CipherTableService
-from cryptography_methods.domain.common.services import BaseService
+from cryptography_methods.domain.common.services import DomainService
 
 
-class SimpleTablePermutationService(BaseService):
+class SimpleTablePermutationService(DomainService):
     """
     Сервис для реализации логики шифра - простая перестановка.
     """
@@ -30,7 +30,7 @@ class SimpleTablePermutationService(BaseService):
         """
         mapped_data: str = data.replace("  ", "|").replace(" ", "_")
 
-        self.register_event(
+        self._record_event(
             SwappedSpacesOnSymbolsEvent(
                 old_string=data,
                 new_string=mapped_data,
@@ -42,6 +42,10 @@ class SimpleTablePermutationService(BaseService):
             height=height,
             data=mapped_data,
             fill_by_columns=True
+        )
+
+        self._record_events(
+            self._cipher_table_service.pull_events()
         )
 
         return "".join("".join(column for column in row) for row in table)
@@ -67,7 +71,15 @@ class SimpleTablePermutationService(BaseService):
             fill_by_columns=False
         )
 
+        self._record_events(
+            self._cipher_table_service.pull_events()
+        )
+
         transposed_data: zip = zip(*table)
+
+        self._record_event(
+            ...
+        )
 
         decrypted_string_without_spaces: str = "".join("".join(column for column in row) for row in transposed_data)
         return decrypted_string_without_spaces.replace("|", "  ").replace("_", " ")

@@ -1,7 +1,7 @@
 from typing import Final
 
 from aiogram.types import ContentType
-from aiogram_dialog import Dialog, Window, LaunchMode
+from aiogram_dialog import Dialog, Window
 from aiogram_dialog.widgets.kbd import Button
 from aiogram_dialog.widgets.media import StaticMedia
 from aiogram_dialog.widgets.text import Const
@@ -33,6 +33,5 @@ SIMPLE_DATA_PERMUTATION_START_DIALOG: Final[Dialog] = Dialog(
             on_click=on_click_decryption,
         ),
         state=SimpleDataPermutationStartStates.START,
-        launch_mode=LaunchMode.SINGLE_TOP
     ),
 )

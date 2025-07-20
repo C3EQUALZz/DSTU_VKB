@@ -33,6 +33,7 @@ dependencies = [
     "aiogram>=3.21.0",
     "aiogram-dialog>=2.4.0",
     "aiogram-i18n>=1.4",
+    "alembic>=1.16.4",
     "asyncpg>=0.30.0",
     "bazario>=0.4.2",
     "dishka>=1.6.0",

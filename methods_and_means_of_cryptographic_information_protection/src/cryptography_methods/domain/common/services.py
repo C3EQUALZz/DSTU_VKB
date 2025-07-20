@@ -13,6 +13,9 @@ class DomainService:
     def _record_event(self, event: BaseDomainEvent) -> None:
         self._events.append(event)
 
+    def _record_events(self, events: Iterable[BaseDomainEvent]) -> None:
+        self._events.extend(events)
+
     def get_events(self) -> Iterable[BaseDomainEvent]:
         return self._events
 
