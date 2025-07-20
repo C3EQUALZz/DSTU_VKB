@@ -23,6 +23,7 @@ from cryptography_methods.domain.user.values.telegram_id import TelegramID
 
 class TelegramService(DomainService):
     def __init__(self, access_service: AccessService) -> None:
+        super().__init__()
         self._access_service: Final[AccessService] = access_service
 
     # noinspection PyMethodMayBeStatic

@@ -26,6 +26,8 @@ def configs_provider() -> Provider:
     return provider
 
 
+def interactors_provider() -> Provider:
+    provider: Final[Provider] = Provider(scope=Scope.APP)
 
 
 def setup_providers() -> Iterable[Provider]:

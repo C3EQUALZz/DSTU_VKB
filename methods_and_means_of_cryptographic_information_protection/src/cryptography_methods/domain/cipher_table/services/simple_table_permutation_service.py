@@ -12,6 +12,7 @@ class SimpleTablePermutationService(DomainService):
     """
 
     def __init__(self, cipher_table_service: CipherTableService) -> None:
+        super().__init__()
         self._cipher_table_service: Final[CipherTableService] = cipher_table_service
 
     def encrypt(self, data: str, width: int, height: int) -> str:

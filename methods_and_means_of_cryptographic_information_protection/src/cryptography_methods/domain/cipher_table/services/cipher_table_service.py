@@ -1,3 +1,4 @@
+import logging
 from typing import Final, overload
 
 from cryptography_methods.domain.cipher_table.entities.table import Table
@@ -10,6 +11,8 @@ from cryptography_methods.domain.cipher_table.events import TableCreatedAndFille
 from cryptography_methods.domain.cipher_table.services.id_generator import CipherTableIdGenerator
 from cryptography_methods.domain.cipher_table.values.table_dimension import TableDimension
 from cryptography_methods.domain.common.services import DomainService
+
+logger: Final[logging.Logger] = logging.getLogger(__name__)
 
 
 class CipherTableService(DomainService):
@@ -65,6 +68,9 @@ class CipherTableService(DomainService):
         validated_width: TableDimension = TableDimension(width)
         validated_height: TableDimension = TableDimension(height)
 
+        logger.info("Validated width: %s", validated_width)
+        logger.info("Validated height: %s", validated_height)
+
         if (
                 isinstance(data, list) and
                 all(isinstance(item, list) for item in data) and
@@ -75,7 +81,19 @@ class CipherTableService(DomainService):
                     "В строке не может быть пробелов. Замените пробел на '_' и двойные пробелы на '|'"
                 )
 
-            if len(data) * sum(len(row) for row in data) != validated_width * validated_height:
+            count_of_table_columns_with_data: int = len(data)
+            count_of_table_rows_with_data: int = sum(len(row) for row in data)
+
+            logger.info(
+                "Count of table columns: %s",
+                count_of_table_columns_with_data,
+            )
+            logger.info(
+                "Count of table rows: %s",
+                count_of_table_rows_with_data,
+            )
+
+            if count_of_table_columns_with_data * count_of_table_rows_with_data != validated_width * validated_height:
                 raise TableWidthAndHeightNotDoesntMatchDataError(
                     "Количество данных и фактические размеры таблицы не совпадают"
                 )
@@ -110,7 +128,7 @@ class CipherTableService(DomainService):
         else:
             raise UnknownTypeDataForCreateTableError("Неизвестный тип данных для создания таблицы")
 
-        self.register_event(
+        self._record_event(
             TableCreatedAndFilledSuccessfullyEvent(
                 table=filled_table,
                 fill_by_column=fill_by_columns,
@@ -132,12 +150,16 @@ class CipherTableService(DomainService):
             height=height
         )
 
+        logger.info("Created empty table: %s", created_table)
+
         if fill_by_columns:
+            logger.info("Filling table by columns")
             # Обработка заполнения по столбцам
             for col in range(width.value):
                 for row in range(height.value):
                     created_table[row, col] = data[row][col]
         else:
+            logger.info("Filling table by rows")
             # Обработка заполнения по строкам (по умолчанию)
             for row in range(height.value):
                 for col in range(width.value):

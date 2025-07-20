@@ -22,6 +22,7 @@ from cryptography_methods.domain.user.values.user_role import UserRole
 
 class UserService(DomainService):
     def __init__(self, user_id_generator: UserIdGenerator) -> None:
+        super().__init__()
         self._user_id_generator: Final[UserIdGenerator] = user_id_generator
 
     def create(

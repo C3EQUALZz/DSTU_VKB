@@ -8,17 +8,18 @@ from aiogram import Dispatcher
 from aiogram.fsm.storage.base import DefaultKeyBuilder, BaseStorage, BaseEventIsolation
 from aiogram.fsm.storage.memory import SimpleEventIsolation, MemoryStorage
 from aiogram.fsm.storage.redis import RedisStorage, RedisEventIsolation
-from aiogram_i18n import I18nMiddleware
 from aiogram_dialog import setup_dialogs
+from aiogram_i18n import I18nMiddleware
 from aiogram_i18n.cores import FluentRuntimeCore
+from click import Group
 
 from cryptography_methods.infrastructure.persistence.models.users import map_user_aggregate
+from cryptography_methods.presentation.bot.handlers.common import router as common_router
 from cryptography_methods.presentation.bot.middlewares.stale_message_middleware import StaleMessageMiddleware
 from cryptography_methods.presentation.bot.middlewares.timing_middleware import TimingMiddleware
+from cryptography_methods.presentation.cli.handlers.simple_data_permutation import simple_data_permutation_group
 from cryptography_methods.setup.logging import configure_logging
 from cryptography_methods.setup.settings import Configs, LoggingConfig, TelegramConfig, RedisConfig, I18NConfig
-
-from cryptography_methods.presentation.bot.handlers.common import router as common_router
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 
@@ -90,19 +91,36 @@ def setup_bot_routes(dp: Dispatcher) -> None:
     dp.include_router(common_router)
 
 
+def setup_cli_routes(main_group: Group) -> None:
+    main_group.add_command(simple_data_permutation_group)  # type: ignore
+
+
 def setup_logging(logger_config: LoggingConfig) -> None:
     configure_logging(logger_config)
 
     root_logger: logging.Logger = logging.getLogger()
-    sys.excepthook = global_exception_handler
+
+    if logger_config.level == "DEBUG":
+        sys.excepthook = global_exception_handler_with_traceback
+    else:
+        sys.excepthook = global_exception_handler_without_traceback
 
     root_logger.info("Logger configured")
 
 
-def global_exception_handler(
+def global_exception_handler_with_traceback(
         exc_type: type[BaseException],
         value: BaseException,
         traceback: TracebackType | None,
 ) -> Any:  # noqa: ANN401
     root_logger: logging.Logger = logging.getLogger()
     root_logger.exception("Error", exc_info=(exc_type, value, traceback))
+
+
+def global_exception_handler_without_traceback(
+        exc_type: type[BaseException],
+        value: BaseException,
+        traceback: TracebackType | None,
+) -> Any:  # noqa: ANN401
+    root_logger: logging.Logger = logging.getLogger()
+    root_logger.error("Error: %s %s", exc_type.__name__, value)
