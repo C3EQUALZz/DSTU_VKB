@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import Self
+
 from typing_extensions import override
 
 from cryptography_methods.domain.cipher_table.errors import NegativeTableDimensionError, ZeroTableDimensionError
@@ -51,3 +52,7 @@ class TableDimension(BaseValueObject):
 
     def __rmul__(self, other: object) -> Self:
         return self.__mul__(other)
+
+    @property
+    def raw_value(self) -> int:
+        return self.value

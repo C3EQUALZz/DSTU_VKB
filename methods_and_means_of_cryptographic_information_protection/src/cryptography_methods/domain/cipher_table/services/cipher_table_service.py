@@ -1,14 +1,21 @@
 import logging
-from typing import Final, overload
+from typing import Final
 
 from cryptography_methods.domain.cipher_table.entities.table import Table
 from cryptography_methods.domain.cipher_table.errors import (
     TableWidthAndHeightNotDoesntMatchDataError,
-    UnknownTypeDataForCreateTableError,
     DataCantContainBadSymbolsError
 )
 from cryptography_methods.domain.cipher_table.events import TableCreatedAndFilledSuccessfullyEvent
 from cryptography_methods.domain.cipher_table.services.id_generator import CipherTableIdGenerator
+from cryptography_methods.domain.cipher_table.services.table_creation.base import TableCreationStrategy
+from cryptography_methods.domain.cipher_table.services.table_creation.by_columns_strategy import (
+    ByColumnsTableCreationStrategy
+)
+from cryptography_methods.domain.cipher_table.services.table_creation.by_rows_strategy import (
+    ByRowsTableCreationStrategy
+)
+from cryptography_methods.domain.cipher_table.services.table_creation.context import TableCreationContext
 from cryptography_methods.domain.cipher_table.values.table_dimension import TableDimension
 from cryptography_methods.domain.common.services import DomainService
 
@@ -23,31 +30,11 @@ class CipherTableService(DomainService):
         super().__init__()
         self._id_generator: Final[CipherTableIdGenerator] = id_generator
 
-    @overload
     def create(
             self,
             width: int,
             height: int,
             data: str,
-            fill_by_columns: bool = False,
-    ) -> Table:
-        ...
-
-    @overload
-    def create(
-            self,
-            width: int,
-            height: int,
-            data: list[list[str]],
-            fill_by_columns: bool = False
-    ) -> Table:
-        ...
-
-    def create(
-            self,
-            width: int,
-            height: int,
-            data: list[list[str]] | str,
             fill_by_columns: bool = False,
     ) -> Table:
         """
@@ -71,102 +58,44 @@ class CipherTableService(DomainService):
         logger.info("Validated width: %s", validated_width)
         logger.info("Validated height: %s", validated_height)
 
-        if (
-                isinstance(data, list) and
-                all(isinstance(item, list) for item in data) and
-                all(isinstance(subitem, str) for sublist in data for subitem in sublist)
-        ):
-            if any(cell.isspace() or cell == "" for row in data for cell in row):
-                raise DataCantContainBadSymbolsError(
-                    "В строке не может быть пробелов. Замените пробел на '_' и двойные пробелы на '|'"
-                )
+        if data.isspace() or data == "":
+            raise DataCantContainBadSymbolsError("The data for the table cannot be empty")
 
-            count_of_table_columns_with_data: int = len(data)
-            count_of_table_rows_with_data: int = sum(len(row) for row in data)
+        count_of_symbols: int = len(data)
 
-            logger.info(
-                "Count of table columns: %s",
-                count_of_table_columns_with_data,
-            )
-            logger.info(
-                "Count of table rows: %s",
-                count_of_table_rows_with_data,
+        logger.info("Length of symbols: %s in sentence", count_of_symbols)
+
+        if count_of_symbols != validated_width * validated_height:
+            raise TableWidthAndHeightNotDoesntMatchDataError(
+                "The amount of data and the actual size of the table do not match"
             )
 
-            if count_of_table_columns_with_data * count_of_table_rows_with_data != validated_width * validated_height:
-                raise TableWidthAndHeightNotDoesntMatchDataError(
-                    "Количество данных и фактические размеры таблицы не совпадают"
-                )
+        strategy: TableCreationStrategy
 
-            filled_table: Table = self.__create_and_fill_data_for_table(
-                width=validated_width,
-                height=validated_height,
-                data=data,
-                fill_by_columns=fill_by_columns,
-            )
-
-        elif isinstance(data, str):
-            if data.isspace() or data == "":
-                raise DataCantContainBadSymbolsError("Данные для таблицы не могут быть пустыми")
-
-            if len(data) != validated_width * validated_height:
-                raise TableWidthAndHeightNotDoesntMatchDataError(
-                    "Количество данных и фактические размеры таблицы не совпадают"
-                )
-
-            data_for_creating_table: list[list[str]] = [
-                list(data[i * validated_width: (i + 1) * validated_width])
-                for i in range(validated_height)
-            ]
-
-            filled_table: Table = self.__create_and_fill_data_for_table(
-                width=validated_width,
-                height=validated_height,
-                data=data_for_creating_table,
-                fill_by_columns=fill_by_columns,
+        if fill_by_columns:
+            strategy = ByColumnsTableCreationStrategy(
+                id_generator=self._id_generator,
             )
         else:
-            raise UnknownTypeDataForCreateTableError("Неизвестный тип данных для создания таблицы")
+            strategy = ByRowsTableCreationStrategy(
+                id_generator=self._id_generator,
+            )
+
+        context: TableCreationContext = TableCreationContext(
+            strategy=strategy,
+        )
+
+        table: Table = context(
+            data=data,
+            width=validated_width,
+            height=validated_height,
+        )
 
         self._record_event(
             TableCreatedAndFilledSuccessfullyEvent(
-                table=filled_table,
+                table=table,
                 fill_by_column=fill_by_columns,
             )
         )
 
-        return filled_table
-
-    def __create_and_fill_data_for_table(
-            self,
-            width: TableDimension,
-            height: TableDimension,
-            data: list[list[str]],
-            fill_by_columns: bool = False
-    ) -> Table:
-        created_table: Table = Table(
-            id=self._id_generator(),
-            width=width,
-            height=height
-        )
-
-        logger.info("Created empty table: %s", created_table)
-
-        if fill_by_columns:
-            logger.info("Filling table by columns")
-            # Обработка заполнения по столбцам
-            for col in range(width.value):
-                for row in range(height.value):
-                    created_table[row, col] = data[row][col]
-        else:
-            logger.info("Filling table by rows")
-            # Обработка заполнения по строкам (по умолчанию)
-            for row in range(height.value):
-                for col in range(width.value):
-                    created_table[row, col] = data[row][col]
-
-        for row_index, row in enumerate(data):
-            for cell_index, cell in enumerate(row):
-                created_table[row_index, cell_index] = cell
-
-        return created_table
+        return table

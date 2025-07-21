@@ -41,8 +41,8 @@ class BaseEntity(Generic[OIDType]):
     """
     id: OIDType
 
-    created_at: CreateTime = field(default_factory=CreateTime.now())
-    updated_at: UpdateTime = field(default_factory=UpdateTime.now())
+    created_at: CreateTime = field(default_factory=lambda: CreateTime.now())
+    updated_at: UpdateTime = field(default_factory=lambda: UpdateTime.now())
 
     def __post_init__(self) -> None:
         if self.updated_at.value < self.created_at.value:
