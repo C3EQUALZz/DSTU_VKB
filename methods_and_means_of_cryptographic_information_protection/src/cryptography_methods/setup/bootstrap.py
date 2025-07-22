@@ -18,6 +18,7 @@ from cryptography_methods.presentation.bot.handlers.common import router as comm
 from cryptography_methods.presentation.bot.middlewares.stale_message_middleware import StaleMessageMiddleware
 from cryptography_methods.presentation.bot.middlewares.timing_middleware import TimingMiddleware
 from cryptography_methods.presentation.cli.handlers.simple_data_permutation import simple_data_permutation_group
+from cryptography_methods.presentation.cli.handlers.ceaser_classic import ceaser_classic_group
 from cryptography_methods.setup.logging import configure_logging
 from cryptography_methods.setup.settings import Configs, LoggingConfig, TelegramConfig, RedisConfig, I18NConfig
 
@@ -93,6 +94,7 @@ def setup_bot_routes(dp: Dispatcher) -> None:
 
 def setup_cli_routes(main_group: Group) -> None:
     main_group.add_command(simple_data_permutation_group)  # type: ignore
+    main_group.add_command(ceaser_classic_group) # type: ignore
 
 
 def setup_logging(logger_config: LoggingConfig) -> None:

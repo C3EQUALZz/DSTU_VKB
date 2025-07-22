@@ -3,7 +3,7 @@ from typing import Final
 from cryptography_methods.domain.cipher_table.entities.table import Table
 from cryptography_methods.domain.cipher_table.events import SwappedSpacesOnSymbolsEvent
 from cryptography_methods.domain.cipher_table.services.cipher_table_service import CipherTableService
-from cryptography_methods.domain.common.services import DomainService
+from cryptography_methods.domain.common.services.base import DomainService
 
 
 class SimpleTablePermutationService(DomainService):

@@ -18,7 +18,7 @@ from cryptography_methods.domain.cipher_table.services.table_creation.by_rows_st
 )
 from cryptography_methods.domain.cipher_table.services.table_creation.context import TableCreationContext
 from cryptography_methods.domain.cipher_table.values.table_dimension import TableDimension
-from cryptography_methods.domain.common.services import DomainService
+from cryptography_methods.domain.common.services.base import DomainService
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 

@@ -15,7 +15,7 @@ from cryptography_methods.domain.cipher_table.services.cipher_table_service impo
 from cryptography_methods.domain.cipher_table.services.id_generator import CipherTableIdGenerator
 from cryptography_methods.domain.cipher_table.values.key_simple_key_permutation import KeyForSimpleKeyPermutation
 from cryptography_methods.domain.cipher_table.values.table_dimension import TableDimension
-from cryptography_methods.domain.common.services import DomainService
+from cryptography_methods.domain.common.services.base import DomainService
 from collections import deque
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
@@ -109,7 +109,7 @@ class SingleKeyPermutationService(DomainService):
             context = AlphabetCreationContext(strategy)
             return context()
 
-        logger.info("Not Implemented for this alphabet. Please check corren")
+        logger.info("Not Implemented for this alphabet. Please check")
 
         raise NotImplementedError
 

@@ -5,8 +5,8 @@ class AlphabetCreationContext:
     def __init__(self, strategy: AlphabetCreationStrategy) -> None:
         self.strategy: AlphabetCreationStrategy = strategy
 
-    def __call__(self) -> str:
-        return self._strategy.create()
+    def __call__(self, with_uppercase_symbols: bool = False) -> str:
+        return self._strategy.create(with_uppercase_symbols)
 
     @property
     def strategy(self) -> AlphabetCreationStrategy:

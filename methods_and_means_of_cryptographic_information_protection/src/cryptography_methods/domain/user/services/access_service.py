@@ -1,6 +1,6 @@
 from datetime import datetime, UTC
 
-from cryptography_methods.domain.common.services import DomainService
+from cryptography_methods.domain.common.services.base import DomainService
 from cryptography_methods.domain.common.values import UpdateTime
 from cryptography_methods.domain.user.entities.user import User
 from cryptography_methods.domain.user.errors import (
