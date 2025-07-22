@@ -1,10 +1,12 @@
 from dataclasses import dataclass
 from typing import final, Final
 
-from cryptography_methods.application.common.ports.simple_table_permutation.view_models import \
+from cryptography_methods.application.common.views.simple_table_permutation import (
     SimpleTablePermutationEncryptView
-from cryptography_methods.domain.cipher_table.services.simple_table_permutation_service import \
+)
+from cryptography_methods.domain.cipher_table.services.simple_table_permutation_service import (
     SimpleTablePermutationService
+)
 
 
 @dataclass(frozen=True, slots=True)

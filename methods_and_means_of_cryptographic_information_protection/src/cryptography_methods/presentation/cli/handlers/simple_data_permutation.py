@@ -13,7 +13,7 @@ from cryptography_methods.application.commands.simple_table_permutation.encrypt 
     SimpleTablePermutationEncryptCommandHandler,
     SimpleTablePermutationEncryptCommand
 )
-from cryptography_methods.application.common.ports.simple_table_permutation.view_models import (
+from cryptography_methods.application.common.views.simple_table_permutation import (
     SimpleTablePermutationEncryptView,
     SimpleTablePermutationDecryptView
 )

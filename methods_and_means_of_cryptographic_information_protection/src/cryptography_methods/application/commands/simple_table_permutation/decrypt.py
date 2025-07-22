@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Final, final
 
-from cryptography_methods.application.common.ports.simple_table_permutation.view_models import (
+from cryptography_methods.application.common.views.simple_table_permutation import (
     SimpleTablePermutationDecryptView
 )
 from cryptography_methods.domain.cipher_table.services.simple_table_permutation_service import (

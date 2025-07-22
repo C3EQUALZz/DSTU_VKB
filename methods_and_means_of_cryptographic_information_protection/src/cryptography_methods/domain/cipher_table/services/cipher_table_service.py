@@ -4,7 +4,8 @@ from typing import Final
 from cryptography_methods.domain.cipher_table.entities.table import Table
 from cryptography_methods.domain.cipher_table.errors import (
     TableWidthAndHeightNotDoesntMatchDataError,
-    DataCantContainBadSymbolsError
+    DataCantContainBadSymbolsError,
+    TableSizesDoNotMatchError
 )
 from cryptography_methods.domain.cipher_table.events import TableCreatedAndFilledSuccessfullyEvent
 from cryptography_methods.domain.cipher_table.services.id_generator import CipherTableIdGenerator
@@ -99,3 +100,27 @@ class CipherTableService(DomainService):
         )
 
         return table
+
+    def vertical_stack(self, upper_table: Table, lower_table: Table) -> Table:
+        logger.info("Checking that lower and upper table width matching...")
+
+        if upper_table.width != lower_table.width:
+            raise TableSizesDoNotMatchError("width of upper and lower tables do not match")
+
+        stacked_table: Table = Table(
+            id=self._id_generator(),
+            width=upper_table.width,
+            height=upper_table.height + lower_table.height,
+        )
+
+        for row_idx in range(upper_table.height):
+            stacked_table.data[row_idx] = upper_table[row_idx][:]
+
+        for row_idx in range(lower_table.height):
+            stacked_table.data[lower_table.height + row_idx] = lower_table.data[row_idx][:]
+
+        logger.info("Built stacked table using vertical stack, new table:\n%s\n", stacked_table)
+
+        return stacked_table
+
+

@@ -8,12 +8,23 @@ from cryptography_methods.application.commands.simple_table_permutation.decrypt 
 from cryptography_methods.application.commands.simple_table_permutation.encrypt import (
     SimpleTablePermutationEncryptCommandHandler
 )
+from cryptography_methods.application.commands.single_key_permutation.decrypt import (
+    SingleKeyPermutationDecryptCommandHandler
+)
+from cryptography_methods.application.commands.single_key_permutation.encrypt import (
+    SingleKeyPermutationEncryptCommandHandler
+)
 from cryptography_methods.domain.cipher_table.services.cipher_table_service import CipherTableService
 from cryptography_methods.domain.cipher_table.services.id_generator import CipherTableIdGenerator
 from cryptography_methods.domain.cipher_table.services.simple_table_permutation_service import (
     SimpleTablePermutationService
 )
-from cryptography_methods.infrastructure.adapters.uuid_4_cipher_table_id_generator import UUID4CipherTableIdGenerator
+from cryptography_methods.domain.cipher_table.services.single_key_permutation_service import (
+    SingleKeyPermutationService
+)
+from cryptography_methods.infrastructure.adapters.uuid_4_cipher_table_id_generator import (
+    UUID4CipherTableIdGenerator
+)
 
 
 def interactors_provider() -> Provider:
@@ -21,6 +32,8 @@ def interactors_provider() -> Provider:
     provider.provide_all(
         SimpleTablePermutationDecryptCommandHandler,
         SimpleTablePermutationEncryptCommandHandler,
+        SingleKeyPermutationEncryptCommandHandler,
+        SingleKeyPermutationDecryptCommandHandler
     )
     return provider
 
@@ -35,7 +48,8 @@ def services_provider() -> Provider:
     provider: Final[Provider] = Provider(scope=Scope.APP)
     provider.provide_all(
         CipherTableService,
-        SimpleTablePermutationService
+        SimpleTablePermutationService,
+        SingleKeyPermutationService
     )
     return provider
 

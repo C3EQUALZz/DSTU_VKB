@@ -19,3 +19,15 @@ class UnknownTypeDataForCreateTableError(DomainError):
 
 class DataCantContainBadSymbolsError(DomainError):
     ...
+
+
+class OnlyLettersCanBeInKeyError(DomainFieldError):
+    ...
+
+
+class StringContainsCharactersFromDifferentAlphabetsError(DomainFieldError):
+    ...
+
+
+class TableSizesDoNotMatchError(DomainError):
+    ...
