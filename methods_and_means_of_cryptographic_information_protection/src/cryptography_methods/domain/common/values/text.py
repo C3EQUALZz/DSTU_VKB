@@ -35,3 +35,9 @@ class Text(BaseValueObject):
     @override
     def __str__(self) -> str:
         return str(self.value)
+
+    def islower(self) -> bool:
+        return self.value.islower()
+
+    def isupper(self) -> bool:
+        return self.value.isupper()

@@ -17,4 +17,16 @@ python cli.py ceaser-classic decrypt -t "ТБ ЙФСМУБ ХЦОНУЁШВ ФЭ
 > [!NOTE]
 > Перед запуском перейдите в директорию `src/cryptography_methods`, у вас должен быть на этом уровне `cli.py`
 
-### 
+### Аффинная система подстановок Цезаря
+
+Для запуска шифрования нужно использовать команду: 
+
+```bash
+python cli.py affine-system-of-ceaser-substitutions encrypt -t "ПРИЛЕТАЮ ЗАВТРА" -a 4 -b 2
+```
+
+Для запуска дешифрования нужно использовать команду:
+
+```bash
+python cli.py affine-system-of-ceaser-substitutions decrypt -t "АДЕРХЛВЪ БВЙЛДВ" -a 4 -b 2
+```
