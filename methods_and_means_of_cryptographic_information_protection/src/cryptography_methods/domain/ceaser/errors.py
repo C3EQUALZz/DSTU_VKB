@@ -19,3 +19,11 @@ class NumbersAreNotRelativelyPrime(DomainFieldError):
 
 class CantFindModularInverse(DomainError):
     ...
+
+
+class BadKeyForCaesarKeywordError(DomainFieldError):
+    ...
+
+
+class TextLanguageAndKeyLanguageAreDifferentError(DomainFieldError):
+    ...

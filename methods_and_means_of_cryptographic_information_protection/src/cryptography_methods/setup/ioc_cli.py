@@ -10,6 +10,8 @@ from cryptography_methods.application.commands.affine_system_of_ceaser_substitut
 )
 from cryptography_methods.application.commands.ceaser_classic.decrypt import CeaserClassicDecryptCommandHandler
 from cryptography_methods.application.commands.ceaser_classic.encrypt import CeaserClassicEncryptCommandHandler
+from cryptography_methods.application.commands.ceaser_keyword.decrypt import CeaserKeywordDecryptCommandHandler
+from cryptography_methods.application.commands.ceaser_keyword.encrypt import CeaserKeywordEncryptCommandHandler
 from cryptography_methods.application.commands.simple_table_permutation.decrypt import (
     SimpleTablePermutationDecryptCommandHandler
 )
@@ -23,6 +25,7 @@ from cryptography_methods.application.commands.single_key_permutation.encrypt im
     SingleKeyPermutationEncryptCommandHandler
 )
 from cryptography_methods.domain.ceaser.services.affine_cipher_service import AffineCipherService
+from cryptography_methods.domain.ceaser.services.ceaser_keyword_service import CeaserKeywordService
 from cryptography_methods.domain.ceaser.services.classic_ceaser_service import ClassicCeaserService
 from cryptography_methods.domain.cipher_table.services.cipher_table_service import CipherTableService
 from cryptography_methods.domain.cipher_table.services.id_generator import CipherTableIdGenerator
@@ -48,7 +51,9 @@ def interactors_provider() -> Provider:
         CeaserClassicEncryptCommandHandler,
         CeaserClassicDecryptCommandHandler,
         AffineSystemOfCeaserSubstitutionEncryptCommandHandler,
-        AffineSystemOfCeaserSubstitutionDecryptCommandHandler
+        AffineSystemOfCeaserSubstitutionDecryptCommandHandler,
+        CeaserKeywordDecryptCommandHandler,
+        CeaserKeywordEncryptCommandHandler
     )
     return provider
 
@@ -67,7 +72,8 @@ def services_provider() -> Provider:
         SingleKeyPermutationService,
         ClassicCeaserService,
         AlphabetService,
-        AffineCipherService
+        AffineCipherService,
+        CeaserKeywordService
     )
     return provider
 
