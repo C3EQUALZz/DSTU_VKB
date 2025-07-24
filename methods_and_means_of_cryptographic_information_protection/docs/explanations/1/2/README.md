@@ -59,3 +59,4 @@ python cli.py ceaser-keyword encrypt -t "ПРИЛЕТАЮ ЗАВТРА" -k 5 -ke
 ```bash
 python cli.py ceaser-keyword decrypt -t "ЗИТДРКЫЩ ОЫЭКИЫ" -k 5 -keyw "РАБОТА"
 ```
+
