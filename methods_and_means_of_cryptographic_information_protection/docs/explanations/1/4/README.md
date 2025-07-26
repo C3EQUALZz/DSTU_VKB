@@ -14,7 +14,7 @@ python cli.py vigenere encrypt -t "ПРИЛЕТАЮ ДЕСЯТОГО" -k "РАБ
 Для запуска дешифрования нужно использовать команду: 
 
 ```bash
-python cli.py vigenere decrypt -t "ПРИЛЕТАЮ ДЕСЯТОГО" -k "РАБОТА"
+python cli.py vigenere decrypt -t "АРЙЪЧТРЮ ЕУДЯГОДЭ" -k "РАБОТА"
 ```
 
 [Видео для объяснения алгоритма, чтобы решать вручную](https://youtu.be/KST4bGAH-8Y?si=qe4aim9KgFCZBXqa)

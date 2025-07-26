@@ -31,7 +31,7 @@ class VigenereDecryptCommandHandler:
             text=text_for_encryption
         ))
 
-        decrypted_text: Text = self._vigenere_service.encrypt(
+        decrypted_text: Text = self._vigenere_service.decrypt(
             key=keyword,
             text=text_for_encryption,
         )
