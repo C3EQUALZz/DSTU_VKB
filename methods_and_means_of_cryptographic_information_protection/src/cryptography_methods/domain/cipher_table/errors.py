@@ -31,3 +31,7 @@ class StringContainsCharactersFromDifferentAlphabetsError(DomainFieldError):
 
 class TableSizesDoNotMatchError(DomainError):
     ...
+
+
+class CantFindSymbolInTableError(DomainError):
+    ...

@@ -60,3 +60,16 @@ python cli.py ceaser-keyword encrypt -t "ПРИЛЕТАЮ ЗАВТРА" -k 5 -ke
 python cli.py ceaser-keyword decrypt -t "ЗИТДРКЫЩ ОЫЭКИЫ" -k 5 -keyw "РАБОТА"
 ```
 
+### Система Трисемуса
+
+Для запуска шифрования использовать команду: 
+
+```bash
+python cli.py trithemius encrypt -t "ПРИЛЕТАЮ ЗАВТРА" -k "РАБОТА" -c 8 -r 4
+```
+
+Для запуска дешифрования использовать команду: 
+
+```bash
+python cli.py trithemius decrypt -t "ЩЕУЦНЙЖГ СЖКЙЕЖ" -k "РАБОТА" -c 8 -r 4
+```

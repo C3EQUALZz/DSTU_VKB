@@ -24,9 +24,12 @@ from cryptography_methods.application.commands.single_key_permutation.decrypt im
 from cryptography_methods.application.commands.single_key_permutation.encrypt import (
     SingleKeyPermutationEncryptCommandHandler
 )
+from cryptography_methods.application.commands.trithemius.decrypt import TrithemiusDecryptCommandHandler
+from cryptography_methods.application.commands.trithemius.encrypt import TrithemiusEncryptCommandHandler
 from cryptography_methods.domain.ceaser.services.affine_cipher_service import AffineCipherService
 from cryptography_methods.domain.ceaser.services.ceaser_keyword_service import CeaserKeywordService
 from cryptography_methods.domain.ceaser.services.classic_ceaser_service import ClassicCeaserService
+from cryptography_methods.domain.ceaser.services.trithemius_service import TrithemiusService
 from cryptography_methods.domain.cipher_table.services.cipher_table_service import CipherTableService
 from cryptography_methods.domain.cipher_table.services.id_generator import CipherTableIdGenerator
 from cryptography_methods.domain.cipher_table.services.simple_table_permutation_service import (
@@ -53,7 +56,9 @@ def interactors_provider() -> Provider:
         AffineSystemOfCeaserSubstitutionEncryptCommandHandler,
         AffineSystemOfCeaserSubstitutionDecryptCommandHandler,
         CeaserKeywordDecryptCommandHandler,
-        CeaserKeywordEncryptCommandHandler
+        CeaserKeywordEncryptCommandHandler,
+        TrithemiusDecryptCommandHandler,
+        TrithemiusEncryptCommandHandler
     )
     return provider
 
@@ -73,7 +78,8 @@ def services_provider() -> Provider:
         ClassicCeaserService,
         AlphabetService,
         AffineCipherService,
-        CeaserKeywordService
+        CeaserKeywordService,
+        TrithemiusService
     )
     return provider
 

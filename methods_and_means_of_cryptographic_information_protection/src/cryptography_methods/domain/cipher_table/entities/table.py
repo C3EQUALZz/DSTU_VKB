@@ -1,12 +1,16 @@
+import logging
 from collections.abc import Sequence
 from dataclasses import dataclass, field
-from typing import Any, overload, Iterator
+from typing import Any, overload, Iterator, Final
 
 from typing_extensions import override
 
+from cryptography_methods.domain.cipher_table.errors import CantFindSymbolInTableError
 from cryptography_methods.domain.cipher_table.values.table_dimension import TableDimension
 from cryptography_methods.domain.cipher_table.values.table_id import TableID
 from cryptography_methods.domain.common.entities.base_entity import BaseEntity
+
+logger: Final[logging.Logger] = logging.getLogger(__name__)
 
 
 @dataclass(eq=False, kw_only=True, repr=False)
@@ -80,3 +84,14 @@ class Table(BaseEntity[TableID]):
     @override
     def __repr__(self) -> str:
         return f"Table(width={self.width}, height={self.height}, data={self.data})"
+
+    def find(self, char: str) -> tuple[int, int]:
+        for i in range(len(self.data)):
+            for j in range(len(self.data[i])):
+                if self.data[i][j] == char:
+                    logger.info(
+                        "Successfully found char: %s at index row=%s, column=%s",
+                        char, i, j
+                    )
+                    return i, j
+        raise CantFindSymbolInTableError(f"Cant find symbol {char} in table")

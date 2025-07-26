@@ -1,6 +1,8 @@
+import logging
 import re
 from collections.abc import Iterator
 from dataclasses import dataclass
+from typing import Self, Final
 
 from typing_extensions import override
 
@@ -9,6 +11,8 @@ from cryptography_methods.domain.common.errors.text import (
     StringContainsMultipleLanguagesError
 )
 from cryptography_methods.domain.common.values import BaseValueObject
+
+logger: Final[logging.Logger] = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True, eq=True, unsafe_hash=True)
@@ -35,6 +39,24 @@ class Text(BaseValueObject):
     @override
     def __str__(self) -> str:
         return str(self.value)
+
+    def lower(self) -> Self:
+        lowered_text: str = self.value.lower()
+        logger.info(
+            "Called lowering for symbols, original text: %s, lowered text: %s",
+            self.value,
+            lowered_text
+        )
+        return Text(lowered_text)
+
+    def upper(self) -> Self:
+        uppercased_text: str = self.value.upper()
+        logger.info(
+            "Called uppercasing for symbols, original text: %s, uppercased text: %s",
+            self.value,
+            uppercased_text
+        )
+        return Text(uppercased_text)
 
     def islower(self) -> bool:
         return self.value.islower()

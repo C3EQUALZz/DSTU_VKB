@@ -22,6 +22,7 @@ from cryptography_methods.presentation.cli.handlers.affine_system_of_ceaser_subs
 from cryptography_methods.presentation.cli.handlers.ceaser_keyword import ceaser_keyword_group
 from cryptography_methods.presentation.cli.handlers.simple_data_permutation import simple_data_permutation_group
 from cryptography_methods.presentation.cli.handlers.ceaser_classic import ceaser_classic_group
+from cryptography_methods.presentation.cli.handlers.trithemius import trithemius_group
 from cryptography_methods.setup.logging import configure_logging
 from cryptography_methods.setup.settings import Configs, LoggingConfig, TelegramConfig, RedisConfig, I18NConfig
 
@@ -100,6 +101,7 @@ def setup_cli_routes(main_group: Group) -> None:
     main_group.add_command(ceaser_classic_group) # type: ignore
     main_group.add_command(affine_system_of_ceaser_substitutions_group) # type: ignore
     main_group.add_command(ceaser_keyword_group) # type: ignore
+    main_group.add_command(trithemius_group) # type: ignore
 
 
 def setup_logging(logger_config: LoggingConfig) -> None:

@@ -93,6 +93,30 @@ class TableDimension(BaseValueObject):
     def __len__(self) -> int:
         return self.value
 
+    def __mod__(self, other: object) -> int:
+        if isinstance(other, int):
+            return self.value % other
+
+        if isinstance(other, TableDimension):
+            return self.value % other.value
+
+        raise NotImplementedError(
+            f"Not implemented for type: {type(other)}, "
+            f"use int or TableDimension"
+        )
+
+    def __rmod__(self, other: object) -> int:
+        if isinstance(other, int):
+            return other % self.value
+
+        if isinstance(other, TableDimension):
+            return other.value % self.value
+
+        raise NotImplementedError(
+            f"Not implemented for type: {type(other)}, "
+            f"use int or TableDimension"
+        )
+
     @property
     def raw_value(self) -> int:
         return self.value
