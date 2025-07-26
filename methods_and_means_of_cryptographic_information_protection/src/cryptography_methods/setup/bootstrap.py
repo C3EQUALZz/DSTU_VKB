@@ -24,6 +24,7 @@ from cryptography_methods.presentation.cli.handlers.simple_data_permutation impo
 from cryptography_methods.presentation.cli.handlers.ceaser_classic import ceaser_classic_group
 from cryptography_methods.presentation.cli.handlers.trithemius import trithemius_group
 from cryptography_methods.presentation.cli.handlers.playfair import playfair_group
+from cryptography_methods.presentation.cli.handlers.vigenere import vigenere_group
 from cryptography_methods.setup.logging import configure_logging
 from cryptography_methods.setup.settings import Configs, LoggingConfig, TelegramConfig, RedisConfig, I18NConfig
 
@@ -104,6 +105,7 @@ def setup_cli_routes(main_group: Group) -> None:
     main_group.add_command(ceaser_keyword_group) # type: ignore
     main_group.add_command(trithemius_group) # type: ignore
     main_group.add_command(playfair_group) # type: ignore
+    main_group.add_command(vigenere_group) # type: ignore
 
 
 def setup_logging(logger_config: LoggingConfig) -> None:

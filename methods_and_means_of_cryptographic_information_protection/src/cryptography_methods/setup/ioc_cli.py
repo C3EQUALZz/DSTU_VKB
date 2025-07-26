@@ -28,6 +28,8 @@ from cryptography_methods.application.commands.single_key_permutation.encrypt im
 )
 from cryptography_methods.application.commands.trithemius.decrypt import TrithemiusDecryptCommandHandler
 from cryptography_methods.application.commands.trithemius.encrypt import TrithemiusEncryptCommandHandler
+from cryptography_methods.application.commands.vigenere.decrypt import VigenereDecryptCommandHandler
+from cryptography_methods.application.commands.vigenere.encrypt import VigenereEncryptCommandHandler
 from cryptography_methods.domain.ceaser.services.affine_cipher_service import AffineCipherService
 from cryptography_methods.domain.ceaser.services.ceaser_keyword_service import CeaserKeywordService
 from cryptography_methods.domain.ceaser.services.classic_ceaser_service import ClassicCeaserService
@@ -42,6 +44,7 @@ from cryptography_methods.domain.cipher_table.services.single_key_permutation_se
 )
 from cryptography_methods.domain.common.services.alphabet_service import AlphabetService
 from cryptography_methods.domain.playfair.services.playfair_service import PlayfairService
+from cryptography_methods.domain.vigenere.services.vigenere_service import VigenereService
 from cryptography_methods.infrastructure.adapters.uuid_4_cipher_table_id_generator import (
     UUID4CipherTableIdGenerator
 )
@@ -63,7 +66,9 @@ def interactors_provider() -> Provider:
         TrithemiusDecryptCommandHandler,
         TrithemiusEncryptCommandHandler,
         PlayfairEncryptCommandHandler,
-        PlayfairDecryptCommandHandler
+        PlayfairDecryptCommandHandler,
+        VigenereEncryptCommandHandler,
+        VigenereDecryptCommandHandler
     )
     return provider
 
@@ -85,7 +90,8 @@ def services_provider() -> Provider:
         AffineCipherService,
         CeaserKeywordService,
         TrithemiusService,
-        PlayfairService
+        PlayfairService,
+        VigenereService
     )
     return provider
 
