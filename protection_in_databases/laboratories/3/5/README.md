@@ -90,3 +90,9 @@ uv sync
 
 Скорее всего фрагментация диска может как-то влиять, но вставка просто в кучу с точки зрения логики должна быть дольше. 
 
+Нашел такое вот обсуждение, что иногда может повысить производительность, но это скорее редкость. 
+
+![img.png](docs/5.png)
+
+https://www.sqlservercentral.com/forums/topic/better-insert-performance-on-a-table-only-with-a-clustered-index-or-a-table-without-any-index-on-sqlserver-2008
+
