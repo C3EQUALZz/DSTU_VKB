@@ -1,7 +1,7 @@
 services:
-  postgres-lab-3-question-3:
+  postgres-lab-3-question-5:
     image: postgres:16.3-alpine
-    container_name: postgres-lab-3-question-3
+    container_name: postgres-lab-3-question-5
     env_file:
       - .env
     environment:
@@ -11,7 +11,7 @@ services:
     ports:
       - ${DATABASE_PORT}:5432
     volumes:
-      - postgres_data_third_laboratory_question_3:/var/lib/postgresql/data
+      - postgres_data_third_laboratory_question_5:/var/lib/postgresql/data
       - ./scripts/initdb/01_init_schemas.sql:/docker-entrypoint-initdb.d/01_init_schemas.sql
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
@@ -19,13 +19,13 @@ services:
       timeout: 5s
       retries: 3
     networks:
-      - third_laboratory_question_three
+      - third_laboratory_question_fifth
 
-  postgres-lab-3-question-3-restore:
+  postgres-lab-3-question-5-restore:
     image: postgres:16.3-alpine
-    container_name: postgres-lab-3-question-3-restore
+    container_name: postgres-lab-3-question-5-restore
     depends_on:
-      postgres-lab-3-question-3:
+      postgres-lab-3-question-5:
         condition: service_healthy
     env_file:
       - .env
@@ -34,11 +34,26 @@ services:
       - ./scripts/restore/istudents_lab.backup:/dump/istudents_lab.backup
     command: ["sh", "-c", "chmod +x /script.sh && ./script.sh"]
     networks:
-      - third_laboratory_question_three
+      - third_laboratory_question_fifth
 
-  pgadmin-lab-3-question-3:
+  postgres-lab-3-question-5-apply-indexes:
+    image: postgres:16.3-alpine
+    container_name: postgres-lab-3-question-5-apply-indexes
+    depends_on:
+      postgres-lab-3-question-5-restore:
+        condition: service_completed_successfully
+    env_file:
+      - .env
+    command: ["sh", "-c", "chmod +x /script.sh && ./script.sh"]
+    volumes:
+      - ./scripts/indexes/03_init_indexes.sql:/scripts/03_init_indexes.sql
+      - ./scripts/indexes/script.sh:/script.sh
+    networks:
+      - third_laboratory_question_fifth
+
+  pgadmin-lab-3-question-5:
     image: dpage/pgadmin4:9.3.0
-    container_name: pgadmin-lab-3-question-3
+    container_name: pgadmin-lab-3-question-5
     env_file:
       - .env
     environment:
@@ -49,14 +64,14 @@ services:
     ports:
       - ${PGADMIN_PORT}:80
     depends_on:
-      postgres-lab-3-question-3:
+      postgres-lab-3-question-5:
         condition: service_healthy
     networks:
-      - third_laboratory_question_three
+      - third_laboratory_question_fifth
 
 volumes:
-  postgres_data_third_laboratory_question_3:
+  postgres_data_third_laboratory_question_5:
 
 networks:
-  third_laboratory_question_three:
+  third_laboratory_question_fifth:
     driver: bridge
