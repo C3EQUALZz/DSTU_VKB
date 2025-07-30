@@ -11,7 +11,7 @@ F(x,y) ={ x + y, если x > y
 
 # Определяем функцию F(x, y)
 def f(x: float, y: float) -> float:
-    return x - y if x > y else x + y
+    return x + y if x > y else x - y
 
 
 def main() -> None:
