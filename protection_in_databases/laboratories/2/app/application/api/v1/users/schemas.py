@@ -40,7 +40,7 @@ class CreateUserSchemaRequest(BaseModel):
     email: EmailStr = Field(..., description="Email address for user")
 
 
-class UpdateUserSchemaRequest(CreateUserSchemaRequest):
+class UpdateUserSchemaRequest(BaseModel):
     name: str | None = Field(
         default=None,
         min_length=1,

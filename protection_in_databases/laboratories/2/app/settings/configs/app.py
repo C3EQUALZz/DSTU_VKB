@@ -28,17 +28,17 @@ class DatabaseSettings(CommonSettings):
     Здесь есть параметры Optional с той целью, потому что может использоваться sqlite.
     """
 
-    host: str | None = Field(alias="DATABASE_HOST", default=None)
-    port: int | None = Field(alias="DATABASE_PORT_NETWORK", default=None)
-    user: str | None = Field(alias="DATABASE_USER", default=None)
-    password: str | None = Field(alias="DATABASE_PASSWORD", default=None)
+    host: str | None = Field(alias="DATABASE_HOST")
+    port: int | None = Field(alias="DATABASE_PORT_NETWORK")
+    user: str | None = Field(alias="DATABASE_USER")
+    password: str | None = Field(alias="DATABASE_PASSWORD")
     name: str = Field(alias="DATABASE_NAME")
     dialect: str = Field(alias="DATABASE_DIALECT")
     driver: str = Field(alias="DATABASE_DRIVER")
 
-    ssl_cert: Path | None = Field(alias="DATABASE_SSL_CERT", default=None)
-    ssl_key: Path | None = Field(alias="DATABASE_SSL_KEY", default=None)
-    ssl_ca: Path | None = Field(alias="DATABASE_SSL_CA", default=None)
+    ssl_cert: Path | None = Field(alias="DATABASE_SSL_CERT")
+    ssl_key: Path | None = Field(alias="DATABASE_SSL_KEY")
+    ssl_ca: Path | None = Field(alias="DATABASE_SSL_CA")
 
     @property
     def url(self) -> str:
@@ -64,7 +64,6 @@ class Settings(CommonSettings):
     """
     Класс настроек, которым в дальнейшем будет оперировать приложение.
     """
-
     database: DatabaseSettings = DatabaseSettings()
     alchemy_settings: SQLAlchemySettings = SQLAlchemySettings()
 
