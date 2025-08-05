@@ -43,3 +43,15 @@
 > [!NOTE]
 > Если хотите показать неправильный сертификат, то просто в `client-key` можете переделать что-то.
 > У вас вылетит ошибка подключения - это правильное поведение. 
+
+Для подключения из-под терминала можно использовать такой вот пример: 
+
+```bash
+docker exec -it second-laboratory-database mysql -u root -p"secure_password" --ssl-ca=/etc/mysql/certs/ca.pem --ssl-cert=/etc/mysql/certs/client-cert.pem --ssl-key=/etc/mysql/certs/client-key.pem
+```
+
+Если хотите продемонстрировать неправильное, то можно просто поставить не тот сертификат:
+
+```bash
+docker exec -it second-laboratory-database mysql -u root -p"secure_password" --ssl-ca=/etc/mysql/certs/ca.pem --ssl-cert=/etc/mysql/certs/server-cert.pem --ssl-key=/etc/mysql/certs/client-key.pem
+```

@@ -1,7 +1,7 @@
 import logging
 from functools import lru_cache
 from typing import cast, Final
-
+from pathlib import Path
 import pymysql
 from pymysql import Connection
 from dishka import Provider, Scope, from_context, make_async_container, provide, AsyncContainer
@@ -88,9 +88,9 @@ class DatabaseProvider(Provider):
             password=settings.database.password,
             database=settings.database.name,
             cursorclass=pymysql.cursors.DictCursor,
-            ssl_ca=str(PATH_TO_PROJECT / settings.database.ssl_ca),
-            ssl_cert=str(PATH_TO_PROJECT / settings.database.ssl_cert),
-            ssl_key=str(PATH_TO_PROJECT / settings.database.ssl_key),
+            ssl_ca=f"{PATH_TO_PROJECT}{settings.database.ssl_ca}",
+            ssl_cert=f"{PATH_TO_PROJECT}{settings.database.ssl_cert}",
+            ssl_key=f"{PATH_TO_PROJECT}{settings.database.ssl_key}",
         )
 
         return conn
