@@ -1,0 +1,23 @@
+services:
+  sns-vm1:
+    image: alpine:3.22.1
+    container_name: sns-vm1
+    command: sh -c "apk add --no-cache iputils bind-tools && tail -f /dev/null"
+    networks:
+      first_laboratory:
+        ipv4_address: 192.168.1.11
+
+  sniffer-vm2:
+    image: nicolaka/netshoot:latest
+    command: [ "tshark", "-i", "eth0", "-f", "icmp", "-V" ]
+    container_name: sniffer-vm2
+    networks:
+      first_laboratory:
+        ipv4_address: 192.168.1.22
+
+networks:
+  first_laboratory:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
