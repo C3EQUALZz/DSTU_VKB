@@ -1,0 +1,61 @@
+services:
+  sns-vm1-lab-2:
+    image: dockurr/windows
+    container_name: sns-vm1-lab-2
+    environment:
+      VERSION: "11"
+      LANGUAGE: "Russian"
+      REGION: "ru-RU"
+      KEYBOARD: "en-US"
+      RAM_SIZE: "4G"
+      CPU_CORES: "3"
+    devices:
+      - /dev/kvm
+      - /dev/net/tun
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "8006:8006"
+      - "3389:3389/tcp"
+      - "3389:3389/udp"
+    volumes:
+      - ./sns-vm1-lab-2-storage:/storage
+    restart: always
+    stop_grace_period: 2m
+    networks:
+      second_laboratory:
+        ipv4_address: 192.168.1.11
+
+  sniffer-vm2-lab-2:
+    image: dockurr/windows
+    container_name: sns-vm1-lab-2
+    environment:
+      VERSION: "11"
+      LANGUAGE: "Russian"
+      REGION: "ru-RU"
+      KEYBOARD: "en-US"
+      RAM_SIZE: "4G"
+      CPU_CORES: "3"
+    devices:
+      - /dev/kvm
+      - /dev/net/tun
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "8007:8006"
+      - "3390:3389/tcp"
+      - "3390:3389/udp"
+    volumes:
+      - ./sniffer-vm2-lab-2-storage:/storage
+    restart: always
+    stop_grace_period: 2m
+    networks:
+      second_laboratory:
+        ipv4_address: 192.168.1.22
+
+networks:
+  second_laboratory:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
