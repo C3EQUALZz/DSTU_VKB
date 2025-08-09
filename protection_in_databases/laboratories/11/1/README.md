@@ -4,25 +4,26 @@
 Реализуйте мандатное управление доступом: пользователи с уровнем допуска `confidential` могут просматривать данные,
 но не изменять их. Настройте дискреционное управление для предоставления права на вставку данных роли `manager_role`.
 
-> [!IMPORTANT]
-> Лабораторную, к сожалению, невозможно выполнить с помощью `Docker` из-за особенностей `SeLinux` под `Docker`.
-> Мною было проведено исследование по попытке настроить `SeLinux` в `Docker контейнерах`.
-> Были попытки создания кастомных образов и их настройки, но все было тщетно. 
-> Сурс, по которому я тоже убедился, что нельзя сделать с помощью `Docker` [тык](https://serverfault.com/questions/757606/how-to-enable-selinux-inside-of-a-centos-docker-container)
-
-Мною было решено установить `Fedora Linux` для выполнения данной лабораторной работы. 
-В дальнейшем гайд будет расписан только для `Fedora Linux`. 
-
-> [!NOTE]
-> Для скачки `iso` и создания носителя ссылка [тык](https://fedoraproject.org/workstation/download)
-
 ### Выполнение лабораторной работы
 
-#### Настройка `SELinux`
+Создадим главного пользователя для подключения к базе данных: 
 
+```bash
+sudo -u postgres psql -c "CREATE USER eleventh_laboratory_first_variant_user WITH PASSWORD 'eleventh_laboratory_first_variant_password';"
+```
 
+Создайте базу данных через терминал, используя команду, которая представлена ниже: 
 
-> [!IMPORTANT]
-> Здесь нашел отрывок, что в `sql` коде не нужно использовать `CREATE EXTENSION` https://pigsty.io/ext/sec/sepgsql/
+```bash
+sudo -u postgres psql -c "CREATE DATABASE eleventh_laboratory_first_variant_db OWNER eleventh_laboratory_first_variant_user;"
+```
 
+После ручного создания теперь можно подключиться из-под `Dbeaver`, используя параметры:
 
+- порт: `5432`
+- хост: `localhost`
+- имя базы данных: `eleventh_laboratory_first_variant_db`
+- пользователь: `eleventh_laboratory_first_variant_user`
+- пароль: `eleventh_laboratory_first_variant_password`
+
+После этого у вас откроется окно скрипта, здесь можно использовать ``
