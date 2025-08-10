@@ -1,0 +1,57 @@
+x-default-machine-conf: &x-default-env
+  VERSION: "xp"
+  RAM_SIZE: "4G"
+  CPU_CORES: "3"
+  USERNAME: "danil"
+  PASSWORD: "danil"
+  LANGUAGE: "English"
+  REGION: "ru-RU"
+  KEYBOARD: "en-US"
+
+x-default-devices: &x-default
+  image: dockurr/windows
+  devices:
+    - /dev/kvm
+    - /dev/net/tun
+  cap_add:
+    - NET_ADMIN
+  restart: always
+  stop_grace_period: 2m
+
+services:
+  # Зомби-машина (Windows XP)
+  zombie-machine:
+    <<: *x-default
+    container_name: zombie-machine
+    hostname: zombie-machine
+    environment:
+      <<: *x-default-env
+    ports:
+      - 3390:3389/tcp  # RDP доступ
+    volumes:
+      - ./zombie-machine:/storage
+    networks:
+      sixth_laboratory:
+        ipv4_address: 192.168.1.11
+
+  # Целевая машина (Windows XP)
+  target-machine:
+    <<: *x-default
+    container_name: target-machine
+    hostname: target-machine
+    environment:
+      <<: *x-default-env
+    ports:
+      - 3391:3389/tcp  # RDP доступ
+    volumes:
+      - ./target-machine:/storage
+    networks:
+      sixth_laboratory:
+        ipv4_address: 192.168.1.22
+
+networks:
+  sixth_laboratory:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
