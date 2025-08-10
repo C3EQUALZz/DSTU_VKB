@@ -27,6 +27,8 @@ services:
     environment:
       <<: *x-default-env
     ports:
+      - 8006:8006
+      - 3390:3390/udp
       - 3390:3389/tcp  # RDP доступ
     volumes:
       - ./zombie-machine:/storage
@@ -42,6 +44,8 @@ services:
     environment:
       <<: *x-default-env
     ports:
+      - 8007:8006
+      - 3391:3389/udp
       - 3391:3389/tcp  # RDP доступ
     volumes:
       - ./target-machine:/storage
