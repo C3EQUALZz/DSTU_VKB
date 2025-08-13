@@ -12,18 +12,21 @@
 sudo -u postgres psql -c "CREATE USER eleventh_laboratory_first_variant_user WITH PASSWORD 'eleventh_laboratory_first_variant_password';"
 ```
 
+> [!NOTE]
+> После выполнения команды должно высветиться `CREATE ROLE`. 
+
 Создайте базу данных через терминал, используя команду, которая представлена ниже: 
 
 ```bash
 sudo -u postgres psql -c "CREATE DATABASE eleventh_laboratory_first_variant_db OWNER eleventh_laboratory_first_variant_user;"
 ```
 
-После ручного создания теперь можно подключиться из-под `Dbeaver`, используя параметры:
+> [!NOTE]
+> После этой команды должно высветиться `CREATE DATABASE`.
+> Если возникают проблемы, то временно отключите `SELinux`, используя команду: `sudo setenforce 0`.
 
-- порт: `5432`
-- хост: `localhost`
-- имя базы данных: `eleventh_laboratory_first_variant_db`
-- пользователь: `eleventh_laboratory_first_variant_user`
-- пароль: `eleventh_laboratory_first_variant_password`
+Если есть проблемы с созданием роли, то перейдите от пользователя `postgres` и выполните команду, которая представлена ниже:
 
-После этого у вас откроется окно скрипта, здесь можно использовать ``
+```bash
+ALTER USER eleventh_laboratory_first_variant_user CREATEROLE;
+```

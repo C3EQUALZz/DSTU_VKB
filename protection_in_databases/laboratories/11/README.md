@@ -63,6 +63,16 @@ sudo gedit /var/lib/pgsql/data/postgresql.conf
 sudo systemctl restart postgresql
 ```
 
+#### Настройка `pg_hba.conf`
+
+Откройте файл `/var/lib/pgsql/data/pg_hba.conf` с помощью `gedit`:
+
+```bash
+sudo gedit /var/lib/pgsql/data/pg_hba.conf
+```
+
+В конец пролистайте и поменяйте вместо `peer` на `md5`.
+
 Поздравляю. У вас создан `PostgreSQL` с `SeLinux`. 
 
 > [!IMPORTANT]
