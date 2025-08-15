@@ -7,6 +7,7 @@ from cryptography_methods.domain.common.services.base import DomainService
 from cryptography_methods.domain.linear_feedback_shift_register.entities.linear_feedback_shift_register import (
     LinearFeedbackShiftRegister
 )
+from cryptography_methods.domain.linear_feedback_shift_register.errors import TooManyMutationsError
 from cryptography_methods.domain.linear_feedback_shift_register.values.register_state import RegisterState
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
@@ -64,4 +65,4 @@ class LinearFeedbackShiftRegisterService(DomainService):
                     output_sequence="".join(output_sequence)
                 )
 
-        raise ...
+        raise TooManyMutationsError("Too many mutations, please check your input")

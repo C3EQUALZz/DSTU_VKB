@@ -4,11 +4,12 @@ from typing_extensions import override
 
 from cryptography_methods.domain.common.entities.base_entity import BaseEntity
 from cryptography_methods.domain.linear_feedback_shift_register.values.feedback_positions import FeedbackPositions
+from cryptography_methods.domain.linear_feedback_shift_register.values.register_id import RegisterID
 from cryptography_methods.domain.linear_feedback_shift_register.values.register_state import RegisterState
 
 
 @dataclass(eq=False, kw_only=True)
-class LinearFeedbackShiftRegister(BaseEntity):
+class LinearFeedbackShiftRegister(BaseEntity[RegisterID]):
     """
     Регистр сдвига с линейной обратной связью (LFSR)
 
