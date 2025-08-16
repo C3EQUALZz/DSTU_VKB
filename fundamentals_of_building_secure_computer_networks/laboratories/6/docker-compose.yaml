@@ -1,61 +1,45 @@
-x-default-machine-conf: &x-default-env
-  VERSION: "xp"
-  RAM_SIZE: "4G"
-  CPU_CORES: "3"
-  USERNAME: "danil"
-  PASSWORD: "danil"
-  LANGUAGE: "English"
-  REGION: "ru-RU"
-  KEYBOARD: "en-US"
-
-x-default-devices: &x-default
-  image: dockurr/windows
-  devices:
-    - /dev/kvm
-    - /dev/net/tun
-  cap_add:
-    - NET_ADMIN
-  restart: always
-  stop_grace_period: 2m
-
 services:
-  # Зомби-машина (Windows XP)
-  zombie-machine:
-    <<: *x-default
-    container_name: zombie-machine
-    hostname: zombie-machine
-    environment:
-      <<: *x-default-env
-    ports:
-      - 8006:8006
-      - 3390:3390/udp
-      - 3390:3389/tcp  # RDP доступ
-    volumes:
-      - ./zombie-machine:/storage
+  zombie:
+    image: alpine:3.22.1
+    container_name: zombie
+    command: >
+      sh -c "
+      apk add --no-cache iptables drill;
+      iptables -A INPUT -p tcp --tcp-flags ALL SYN,ACK -j REJECT --reject-with tcp-reset;
+      # Генерируем фоновый трафик
+      while true; do
+        drill @8.8.8.8 example.com >/dev/null 2>&1;
+        sleep 0.5;
+      done &
+      # Бесконечное ожидание
+      tail -f /dev/null
+      "
+    cap_add:
+      - NET_ADMIN
     networks:
-      sixth_laboratory:
-        ipv4_address: 192.168.1.11
+      sixth_laboratory_network:
+        ipv4_address: 192.168.6.11
 
-  # Целевая машина (Windows XP)
-  target-machine:
-    <<: *x-default
-    container_name: target-machine
-    hostname: target-machine
-    environment:
-      <<: *x-default-env
-    ports:
-      - 8007:8006
-      - 3391:3389/udp
-      - 3391:3389/tcp  # RDP доступ
-    volumes:
-      - ./target-machine:/storage
+  target:
+    image: nginx:alpine
+    container_name: target
     networks:
-      sixth_laboratory:
-        ipv4_address: 192.168.1.22
+      sixth_laboratory_network:
+        ipv4_address: 192.168.6.22
+
+  attacker:
+    image: instrumentisto/nmap:latest  # Используем образ с предустановленным nmap
+    container_name: attacker
+    command: ["tail", "-f", "/dev/null"]
+    cap_add:
+      - NET_ADMIN
+    networks:
+      sixth_laboratory_network:
+        ipv4_address: 192.168.6.33
 
 networks:
-  sixth_laboratory:
+  sixth_laboratory_network:
     driver: bridge
     ipam:
       config:
-        - subnet: 192.168.1.0/24
+        - subnet: 192.168.6.0/24
