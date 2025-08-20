@@ -1,0 +1,74 @@
+# Cross-platform shell configuration
+# Use PowerShell on Windows (higher precedence than shell setting)
+set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
+# Use sh on Unix-like systems
+set shell := ["sh", "-c"]
+
+DOCKER_COMPOSE_DEV := "docker-compose.dev.yaml"
+
+[doc("All command information")]
+[private]
+default:
+  @just --list --unsorted --list-heading $'Project commands…\n'
+
+[doc("Prepare venv and repo for developing")]
+[group("Common")]
+@bootstrap:
+    cp .env.dist .env
+    python -m pip install uv
+    just venv-sync
+    pre-commit install
+
+
+[doc("Sync latest versions of packages")]
+[group("Common")]
+@venv-sync:
+    uv pip install -e ".[dev]"
+
+
+[doc("Run server application")]
+[group("Common")]
+@serve:
+    python -m automatic_responses
+
+[doc("Run all containers")]
+[group("infra")]
+@up:
+  docker compose -f {{ DOCKER_COMPOSE_DEV }} --profile api up --build -d
+
+[doc("Run all containers except web-backend")]
+[group("infra")]
+@infra:
+    docker compose -f {{ DOCKER_COMPOSE_DEV }} up -d chroma redis rabbitmq --wait
+
+[doc("Stop all containers")]
+[group("infra")]
+@stop:
+  docker compose -f {{ DOCKER_COMPOSE_DEV }} --profile api stop
+
+[doc("Down all containers")]
+[group("infra")]
+@down:
+  docker compose -f {{ DOCKER_COMPOSE_DEV }} --profile api down
+  docker image prune -f
+
+[doc("Lint check")]
+[group("Lint")]
+@lint:
+    echo "Run ruff check..."
+    ruff check --exit-non-zero-on-fix
+    echo "Run ruff format..."
+    ruff format
+    echo "Run codespell..."
+    codespell
+
+[doc("Static analysis")]
+[group("Static")]
+@static:
+    echo "Run mypy.."
+    mypy --config-file pyproject.toml
+    echo "Run bandit..."
+    bandit -c pyproject.toml -r src
+    echo "Run semgrep..."
+    semgrep scan --config auto --error
+
