@@ -29,8 +29,10 @@ classifiers = [
 ]
 requires-python = ">=3.11"
 dependencies = [
+    "aiogram>=3.22.0",
     "bazario>=0.4.2",
     "click>=8.1.8",
+    "structlog>=25.4.0",
 ]
 
 [project.optional-dependencies]
