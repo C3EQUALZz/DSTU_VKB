@@ -59,3 +59,6 @@ class Username(BaseValueObject):
     @override
     def __str__(self) -> str:
         return self.value
+
+    def __len__(self) -> int:
+        return len(self.value)

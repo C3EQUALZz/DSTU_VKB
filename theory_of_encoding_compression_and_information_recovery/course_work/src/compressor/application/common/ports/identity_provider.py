@@ -2,7 +2,7 @@ from abc import abstractmethod
 from typing import Protocol
 
 from compressor.domain.users.values.user_id import UserID
-from delivery_service.domain.staff.staff_role import RoleCollection
+from compressor.domain.users.values.user_role import UserRole
 
 
 class IdentityProvider(Protocol):
@@ -11,5 +11,5 @@ class IdentityProvider(Protocol):
         raise NotImplementedError
 
     @abstractmethod
-    async def get_current_staff_roles(self) -> RoleCollection:
+    async def get_current_role(self) -> UserRole:
         raise NotImplementedError

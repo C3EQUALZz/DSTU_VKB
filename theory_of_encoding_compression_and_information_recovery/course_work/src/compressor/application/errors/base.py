@@ -1,5 +1,5 @@
 from compressor.domain.common.errors.base import AppError
 
 
-class InfrastructureError(AppError):
+class ApplicationError(AppError):
     ...
