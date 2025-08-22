@@ -13,13 +13,13 @@ class TelegramUserCommandGateway(Protocol):
         ...
 
     @abstractmethod
-    async def read_by_id(self, user_id: UserID) -> TelegramUser:
+    async def read_by_id(self, user_id: UserID) -> TelegramUser | None:
         ...
 
     @abstractmethod
-    async def read_by_telegram_user_id(self, telegram_id: TelegramID) -> TelegramUser:
+    async def read_by_telegram_user_id(self, telegram_id: TelegramID) -> TelegramUser | None:
         ...
 
     @abstractmethod
-    async def read_by_username(self, username: Username) -> TelegramUser:
+    async def read_by_username(self, username: Username) -> TelegramUser | None:
         ...

@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, AmqpDsn
 
 
 class RabbitMQConfig(BaseModel):
@@ -29,4 +29,8 @@ class RabbitMQConfig(BaseModel):
 
     @property
     def uri(self) -> str:
-        return f"amqp://{self.login}:{self.password}@{self.host}:{self.port}"
+        return str(
+            AmqpDsn(
+                url=f"amqp://{self.login}:{self.password}@{self.host}:{self.port}"
+            )
+        )

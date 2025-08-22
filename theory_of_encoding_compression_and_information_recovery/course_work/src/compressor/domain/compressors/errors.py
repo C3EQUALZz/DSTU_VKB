@@ -7,3 +7,7 @@ class CantDecompressThisFileError(DomainError):
 
 class BadDataError(DomainError):
     ...
+
+
+class UnknownCompressorError(DomainError):
+    ...

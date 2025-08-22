@@ -4,8 +4,8 @@ from functools import lru_cache
 from types import TracebackType
 from typing import Any
 
-from compressor.setup.config.logs import build_structlog_logger, LoggingConfig
-from compressor.setup.config.settings import AppConfig
+from compressor.setup.configs.logs import build_structlog_logger, LoggingConfig
+from compressor.setup.configs.settings import AppConfig
 
 
 @lru_cache(maxsize=1)

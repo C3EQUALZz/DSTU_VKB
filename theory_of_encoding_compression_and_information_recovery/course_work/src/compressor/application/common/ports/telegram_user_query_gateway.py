@@ -1,6 +1,7 @@
 from abc import abstractmethod
 from typing import Protocol
 
+from compressor.application.common.query_params.user import UserListParams
 from compressor.domain.users.entities.telegram_user import TelegramUser
 from compressor.domain.users.values.telegram_user_id import TelegramID
 from compressor.domain.users.values.user_id import UserID
@@ -21,5 +22,5 @@ class TelegramUserQueryGateway(Protocol):
         ...
 
     @abstractmethod
-    async def read_all(self, pagination: ...) -> list[TelegramUser]:
+    async def read_all(self, pagination: UserListParams) -> list[TelegramUser]:
         ...

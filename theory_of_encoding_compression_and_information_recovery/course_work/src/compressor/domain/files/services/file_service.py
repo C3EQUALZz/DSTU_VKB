@@ -53,6 +53,8 @@ class FileService(DomainService):
             compression_type=compression_type
         )
 
+        return new_entity
+
 
     def calculate_compression_ratio(self, compressed_file: CompressedFile, file: File) -> FileSize:
         return compressed_file.size / file.size

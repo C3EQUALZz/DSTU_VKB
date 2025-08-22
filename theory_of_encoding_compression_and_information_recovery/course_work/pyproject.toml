@@ -30,8 +30,14 @@ classifiers = [
 requires-python = ">=3.11"
 dependencies = [
     "aiogram>=3.22.0",
+    "aiogram-dialog>=2.4.0",
+    "aiogram-i18n>=1.4",
+    "asyncpg>=0.30.0",
     "bazario>=0.4.2",
+    "bcrypt>=4.3.0",
     "click>=8.1.8",
+    "fluent-runtime>=0.4.0",
+    "sqlalchemy>=2.0.43",
     "structlog>=25.4.0",
 ]
 

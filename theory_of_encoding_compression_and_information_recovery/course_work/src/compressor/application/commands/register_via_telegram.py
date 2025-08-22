@@ -5,6 +5,7 @@ from typing import Final, final, cast
 from compressor.application.common.ports.telegram_user_command_gateway import TelegramUserCommandGateway
 from compressor.application.common.ports.telegram_user_query_gateway import TelegramUserQueryGateway
 from compressor.application.common.ports.transaction_manager import TransactionManager
+from compressor.application.common.views.register_via_telegram import RegisterViaTelegramView
 from compressor.application.errors.user import UserNotFoundError
 from compressor.domain.users.entities.telegram_user import TelegramUser
 from compressor.domain.users.services.telegram_service import TelegramService
@@ -16,14 +17,14 @@ logger: Final[logging.Logger] = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)
-class TelegramBotStartCommand:
+class RegisterViaTelegramCommand:
     telegram_id: int
     username: str
     password: str
 
 
 @final
-class TelegramBotStartCommandHandler:
+class RegisterViaTelegramCommandHandler:
     def __init__(
             self,
             telegram_command_gateway: TelegramUserCommandGateway,
@@ -36,7 +37,7 @@ class TelegramBotStartCommandHandler:
         self._telegram_service: Final[TelegramService] = telegram_service
         self._telegram_query_gateway: Final[TelegramUserQueryGateway] = telegram_query_gateway
 
-    async def __call__(self, data: TelegramBotStartCommand) -> ...:
+    async def __call__(self, data: RegisterViaTelegramCommand) -> RegisterViaTelegramView:
         if await self._telegram_query_gateway.read_by_telegram_id(
                 telegram_user_id=cast(TelegramID, data.telegram_id)
         ):
@@ -52,3 +53,9 @@ class TelegramBotStartCommandHandler:
         await self._telegram_command_gateway.add(user=new_telegram_user)
         await self._transaction_manager.flush()
         await self._transaction_manager.commit()
+
+        return RegisterViaTelegramView(
+            telegram_id=new_telegram_user.id,
+            user_id=new_telegram_user.user.id,
+            name=new_telegram_user.telegram_username.value
+        )

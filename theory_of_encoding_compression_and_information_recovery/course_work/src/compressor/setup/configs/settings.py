@@ -2,9 +2,9 @@ import os
 
 from pydantic import BaseModel, Field
 
-from compressor.setup.config.broker import RabbitMQConfig
-from compressor.setup.config.cache import RedisConfig
-from compressor.setup.config.logs import LoggingConfig
+from compressor.setup.configs.broker import RabbitMQConfig
+from compressor.setup.configs.cache import RedisConfig
+from compressor.setup.configs.logs import LoggingConfig
 
 
 class AppConfig(BaseModel):
