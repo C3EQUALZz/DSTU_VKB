@@ -1,7 +1,9 @@
-from enum import Enum
 from typing import Final
 
+from typing_extensions import override
+
 from compressor.domain.compressors.errors import UnknownCompressorError
+from compressor.domain.compressors.factories.text.base import TextFileCompressorFactory, CompressorType
 from compressor.domain.compressors.services.base import Compressor
 from compressor.domain.compressors.services.bzip2.facade import BZip2Compressor
 from compressor.domain.compressors.services.fastlz.facade import FastLZCompressor
@@ -10,15 +12,7 @@ from compressor.domain.compressors.services.lempel_ziv_markov_chain.facade impor
 from compressor.domain.compressors.services.pigz.facade import PigzCompressor
 
 
-class CompressorType(Enum):
-    GZIP = "gzip"
-    FASTLZ = "fastlz"
-    PIGZ = "pigz"
-    LZMA = "lzma"
-    BZIP2 = "bzip2"
-
-
-class FileCompressorFactory:
+class TextFileCompressorFactoryImpl(TextFileCompressorFactory):
     def __init__(
             self,
             gzip_compressor: GunZipCompressor,
@@ -33,6 +27,7 @@ class FileCompressorFactory:
         self._lzma_compressor: Final[LZMACompressor] = lzma_compressor
         self._bzip2_compressor: Final[BZip2Compressor] = bzip2_compressor
 
+    @override
     def create(self, compressor_type: CompressorType) -> Compressor:
         if compressor_type == CompressorType.GZIP:
             return self._gzip_compressor

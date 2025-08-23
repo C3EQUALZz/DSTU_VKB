@@ -4,7 +4,7 @@ from sqlalchemy import select, Select
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing_extensions import override
 
-from compressor.application.common.ports.telegram_user_query_gateway import TelegramUserQueryGateway
+from compressor.application.common.ports.user.telegram_user_query_gateway import TelegramUserQueryGateway
 from compressor.application.common.query_params.user import UserListParams
 from compressor.domain.users.entities.telegram_user import TelegramUser
 from compressor.domain.users.values.telegram_user_id import TelegramID

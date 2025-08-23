@@ -1,9 +1,10 @@
 from typing import Final
+
 from sqlalchemy import Select, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing_extensions import override
 
-from compressor.application.common.ports.telegram_user_command_gateway import TelegramUserCommandGateway
+from compressor.application.common.ports.user.telegram_user_command_gateway import TelegramUserCommandGateway
 from compressor.domain.users.entities.telegram_user import TelegramUser
 from compressor.domain.users.values.telegram_user_id import TelegramID
 from compressor.domain.users.values.user_id import UserID
@@ -23,7 +24,7 @@ class SqlAlchemyTelegramUserCommandGateway(TelegramUserCommandGateway):
         select_stmt: Select[tuple[TelegramUser]] = select(
             TelegramUser
         ).where(
-            TelegramUser.user.id == user_id # type: ignore
+            TelegramUser.user.id == user_id  # type: ignore
         )
 
         user: TelegramUser | None = (
@@ -32,13 +33,12 @@ class SqlAlchemyTelegramUserCommandGateway(TelegramUserCommandGateway):
 
         return user
 
-
     @override
     async def read_by_telegram_user_id(self, telegram_id: TelegramID) -> TelegramUser | None:
         select_stmt: Select[tuple[TelegramUser]] = select(
             TelegramUser
         ).where(
-            TelegramUser.id == telegram_id # type: ignore
+            TelegramUser.id == telegram_id  # type: ignore
         )
 
         user: TelegramUser | None = (

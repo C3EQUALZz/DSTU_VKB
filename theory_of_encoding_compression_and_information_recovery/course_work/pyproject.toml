@@ -36,9 +36,13 @@ dependencies = [
     "bazario>=0.4.2",
     "bcrypt>=4.3.0",
     "click>=8.1.8",
+    "dishka>=1.6.0",
     "fluent-runtime>=0.4.0",
     "sqlalchemy>=2.0.43",
     "structlog>=25.4.0",
+    "taskiq>=0.11.18",
+    "taskiq-aio-pika>=0.4.3",
+    "taskiq-redis>=1.1.0",
 ]
 
 [project.optional-dependencies]

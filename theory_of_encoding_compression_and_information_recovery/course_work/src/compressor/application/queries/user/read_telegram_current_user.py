@@ -2,8 +2,8 @@ from dataclasses import dataclass
 from typing import Final, final
 
 from compressor.application.common.ports.identity_provider import IdentityProvider
-from compressor.application.common.ports.telegram_user_query_gateway import TelegramUserQueryGateway
-from compressor.application.common.views.telegram_user import TelegramUserView
+from compressor.application.common.ports.user.telegram_user_query_gateway import TelegramUserQueryGateway
+from compressor.application.common.views.users import TelegramUserView
 from compressor.domain.users.entities.telegram_user import TelegramUser
 from compressor.domain.users.values.user_id import UserID
 

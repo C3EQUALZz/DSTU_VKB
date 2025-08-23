@@ -2,10 +2,10 @@ import logging
 from dataclasses import dataclass
 from typing import Final, final, cast
 
-from compressor.application.common.ports.telegram_user_command_gateway import TelegramUserCommandGateway
-from compressor.application.common.ports.telegram_user_query_gateway import TelegramUserQueryGateway
 from compressor.application.common.ports.transaction_manager import TransactionManager
-from compressor.application.common.views.register_via_telegram import RegisterViaTelegramView
+from compressor.application.common.ports.user.telegram_user_command_gateway import TelegramUserCommandGateway
+from compressor.application.common.ports.user.telegram_user_query_gateway import TelegramUserQueryGateway
+from compressor.application.common.views.users import RegisterViaTelegramView
 from compressor.application.errors.user import UserNotFoundError
 from compressor.domain.users.entities.telegram_user import TelegramUser
 from compressor.domain.users.services.telegram_service import TelegramService
@@ -17,14 +17,14 @@ logger: Final[logging.Logger] = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)
-class RegisterViaTelegramCommand:
+class RegisterUserCommand:
     telegram_id: int
     username: str
     password: str
 
 
 @final
-class RegisterViaTelegramCommandHandler:
+class RegisterUserCommandHandler:
     def __init__(
             self,
             telegram_command_gateway: TelegramUserCommandGateway,
@@ -37,12 +37,16 @@ class RegisterViaTelegramCommandHandler:
         self._telegram_service: Final[TelegramService] = telegram_service
         self._telegram_query_gateway: Final[TelegramUserQueryGateway] = telegram_query_gateway
 
-    async def __call__(self, data: RegisterViaTelegramCommand) -> RegisterViaTelegramView:
+    async def __call__(self, data: RegisterUserCommand) -> RegisterViaTelegramView:
+        logger.info("Started registration with telegram user id: %s", data.telegram_id)
+
         if await self._telegram_query_gateway.read_by_telegram_id(
                 telegram_user_id=cast(TelegramID, data.telegram_id)
         ):
             msg: str = "User with telegram_id {} not found".format(data.telegram_id)
             raise UserNotFoundError(msg)
+
+        logger.info("User not found in database, creating new user")
 
         new_telegram_user: TelegramUser = self._telegram_service.create(
             telegram_id=cast(TelegramID, data.telegram_id),
@@ -53,6 +57,8 @@ class RegisterViaTelegramCommandHandler:
         await self._telegram_command_gateway.add(user=new_telegram_user)
         await self._transaction_manager.flush()
         await self._transaction_manager.commit()
+
+        logger.info("User was successfully registered with id: %d", new_telegram_user.user.id)
 
         return RegisterViaTelegramView(
             telegram_id=new_telegram_user.id,
