@@ -29,6 +29,7 @@ classifiers = [
 ]
 requires-python = ">=3.11"
 dependencies = [
+    "aioboto3>=15.1.0",
     "aiogram>=3.22.0",
     "aiogram-dialog>=2.4.0",
     "aiogram-i18n>=1.4",

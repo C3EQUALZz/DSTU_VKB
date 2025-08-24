@@ -32,12 +32,14 @@ class TextFileCompressionTaskCommandHandler:
         self._id_provider: Final[IdentityProvider] = id_provider
 
     async def __call__(self, data: TextFileCompressionTaskCommand) -> TaskView:
+
+
         new_file: File = self._file_service.create(path=data.path)
         current_user_id: UserID = await self._id_provider.get_current_user_id()
 
         new_task: TaskID = await self._file_scheduler.compress_and_send_file(
             dto=FileInfoDTO(
-                file_id=new_file.id,
+                file_path=new_file.path,
                 compressor_type=CompressorType(data.compressor_type),
                 user_id=current_user_id
             )

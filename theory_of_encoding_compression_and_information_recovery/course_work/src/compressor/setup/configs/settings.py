@@ -6,6 +6,7 @@ from compressor.setup.configs.broker import RabbitMQConfig
 from compressor.setup.configs.cache import RedisConfig
 from compressor.setup.configs.database import PostgresConfig, SQLAlchemyConfig
 from compressor.setup.configs.logs import LoggingConfig
+from compressor.setup.configs.s3 import S3Config
 from compressor.setup.configs.task_iq import TaskIQConfig
 from compressor.setup.configs.telegram import TGConfig
 
@@ -38,4 +39,8 @@ class AppConfig(BaseModel):
     alchemy: SQLAlchemyConfig = Field(
         default_factory=lambda: SQLAlchemyConfig(**os.environ),
         description="Alchemy config"
+    )
+    s3: S3Config = Field(
+        default_factory=lambda: S3Config(**os.environ),
+        description="S3 config"
     )
