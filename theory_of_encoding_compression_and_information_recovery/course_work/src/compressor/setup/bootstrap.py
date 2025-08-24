@@ -1,6 +1,7 @@
 import logging
 import sys
 from functools import lru_cache
+from pathlib import Path
 from types import TracebackType
 from typing import Any
 from typing import Final
@@ -110,9 +111,12 @@ def setup_telegram_bot_event_isolation(
 def setup_telegram_bot_middlewares(dp: Dispatcher, telegram_bot_config: TGConfig) -> None:
     logger.debug("Start setup middlewares for telegram bot...")
 
+    path_to_locales: Path = Path(__file__).resolve().parent / "presentation" / "locales/{locale}/LC_MESSAGES"
+    logger.debug("Path to locales: %s", path_to_locales)
+
     i18n_middleware: I18nMiddleware = I18nMiddleware(
         core=FluentRuntimeCore(
-            path="locales/{locale}/LC_MESSAGES",
+            path=path_to_locales,
             default_locale=telegram_bot_config.default_locale,
             use_isolating=telegram_bot_config.use_i18n_isolation
         )

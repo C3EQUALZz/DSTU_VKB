@@ -3,22 +3,31 @@ from aiogram_dialog import DialogManager
 from aiogram_dialog.widgets.input import MessageInput
 from dishka import FromDishka
 from dishka.integrations.aiogram_dialog import inject
-from compressor.application.commands.register_via_telegram import (
-    RegisterViaTelegramCommandHandler,
-    RegisterViaTelegramCommand
+
+from compressor.application.commands.user.register_via_telegram import (
+    RegisterUserCommand,
+    RegisterUserCommandHandler
 )
+from compressor.domain.users.errors import SmallPasswordLength
+
 
 @inject
 async def register_handler_callback(
         message: Message,
         message_input: MessageInput,
         manager: DialogManager,
-        interactor: FromDishka[RegisterViaTelegramCommandHandler]
+        interactor: FromDishka[RegisterUserCommandHandler]
 ) -> None:
-    command: RegisterViaTelegramCommand = RegisterViaTelegramCommand(
+    command: RegisterUserCommand = RegisterUserCommand(
         telegram_id=message.from_user.id,
         username=message.from_user.username,
-        password=message_input.get_widget_data(DialogManager, default=""),
+        password=manager.dialog_data["password"],
     )
-    await interactor(data=command)
-    await manager.next()
+    try:
+        await interactor(data=command)
+    except SmallPasswordLength as e:
+        await message.reply("Слишком слабый пароль! Введите получше!")
+        await manager.back()
+    else:
+        await message.delete()
+        await manager.next()

@@ -10,4 +10,3 @@ from compressor.domain.files.values.file_size import FileSize
 class File(BaseEntity[FileID]):
     path: Path
     size: FileSize
-    is_dir: bool

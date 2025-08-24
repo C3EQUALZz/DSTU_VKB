@@ -12,7 +12,7 @@ class CompressorType(Enum):
     BZIP2 = "bzip2"
 
 
-class TextFileCompressorFactory(Protocol):
+class FileCompressorFactory(Protocol):
     @abstractmethod
     def create(self, compressor_type: CompressorType) -> Compressor:
         ...

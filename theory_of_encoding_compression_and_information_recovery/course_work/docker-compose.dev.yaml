@@ -1,0 +1,232 @@
+x-default: &default
+  restart: unless-stopped
+  networks:
+    - overlay
+
+x-healthcheck-interval: &hc-interval
+  interval: 30s
+  timeout: 60s
+  retries: 5
+  start_period: 10s
+
+x-db-environment: &x-db-environment
+  POSTGRES_SSL_MODE: 'disable'
+  POSTGRES_HOST: ${POSTGRES_HOST}
+  POSTGRES_PORT: ${POSTGRES_PORT}
+  POSTGRES_DB: ${POSTGRES_DB}
+  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  POSTGRES_USER: ${POSTGRES_USER}
+
+x-redis-environment: &x-redis-environment
+  REDIS_PASSWORD: ${REDIS_PASSWORD}
+  REDIS_USER: ${REDIS_USER}
+  REDIS_USER_PASSWORD: ${REDIS_USER_PASSWORD}
+  REDIS_PORT: ${REDIS_PORT}
+  REDIS_CACHE_DB: ${REDIS_CACHE_DB}
+  REDIS_WORKER_DB: ${REDIS_WORKER_DB}
+  REDIS_EVENT_ISOLATION_DB: ${REDIS_EVENT_ISOLATION_DB}
+  REDIS_FSM_MEMORY_DB: ${REDIS_FSM_MEMORY_DB}
+  REDIS_MAX_CONNECTIONS: ${REDIS_MAX_CONNECTIONS}
+
+x-rabbit-environment: &x-rabbit-environment
+  RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+  RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+  RABBITMQ_PORT: ${RABBITMQ_PORT}
+  RABBITMQ_UI_PORT: ${RABBITMQ_UI_PORT}
+
+x-sqlalchemy-environment: &x-sqlalchemy-environment
+  DB_POOL_PRE_PING: ${DB_POOL_PRE_PING}
+  DB_POOL_RECYCLE: ${DB_POOL_RECYCLE}
+  DB_ECHO: ${DB_ECHO}
+  DB_AUTO_FLUSH: ${DB_AUTO_FLUSH}
+  DB_EXPIRE_ON_COMMIT: ${DB_EXPIRE_ON_COMMIT}
+  DB_DEBUG: ${DB_DEBUG}
+  DB_FUTURE: ${DB_FUTURE}
+
+x-app-environment: &x-app-environment
+  POSTGRES_HOST: db
+  RABBITMQ_HOST: rabbitmq
+  REDIS_HOST: redis
+  MINIO_HOST: minio
+  LOGGING_LEVEL: INFO
+  RENDER_JSON_LOGS: False
+  PEPPER: ${PEPPER}
+  BOT_TOKEN: ${BOT_TOKEN}
+
+x-minio-environment: &x-minio-environment
+  MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+  MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+  MINIO_DEFAULT_BUCKETS: ${MINIO_DEFAULT_BUCKETS}
+
+services:
+  db:
+    <<: *default
+    profiles: [ "bot", "db" ]
+    container_name: compressor.db
+    hostname: compressor.db
+    image: postgres:17.6-alpine3.22
+    environment:
+      <<: *x-db-environment
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+    ports:
+      - 127.0.0.1:${POSTGRES_PORT}:${POSTGRES_PORT}
+    healthcheck:
+      test: [ 'CMD-SHELL', 'pg_isready -U $POSTGRES_USER' ]
+      <<: *hc-interval
+    volumes:
+      - compressor.postgres.data:/var/lib/postgresql/data
+      - ./deploy/dev/postgres/postgresql.conf:/etc/postgresql.conf
+      - ./deploy/dev/postgres/pg_hba.conf:/etc/pg_hba.conf
+
+  bot:
+    <<: *default
+    profiles: [ "bot" ]
+    container_name: compressor.bot
+    hostname: compressor.bot
+    build:
+      context: .
+      dockerfile: ./deploy/dev/compressor/Dockerfile
+    environment:
+      <<: [ *x-db-environment, *x-app-environment, *x-redis-environment, *x-sqlalchemy-environment, *x-rabbit-environment, *x-minio-environment ]
+    command: /bin/sh -cx "./telegram_entrypoint.sh"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  worker:
+    <<: *default
+    profiles: [ "bot", "worker" ]
+    container_name: compressor.worker
+    hostname: compressor.worker
+    build:
+      context: .
+      dockerfile: ./deploy/dev/compressor/Dockerfile
+    environment:
+      <<: [ *x-db-environment, *x-app-environment, *x-redis-environment, *x-sqlalchemy-environment, *x-rabbit-environment, *x-minio-environment ]
+    command: /bin/sh -cx "./worker_entrypoint.sh"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  redis:
+    <<: *default
+    profiles: [ "bot", "worker", "cache" ]
+    image: redis:8.0.2-alpine
+    container_name: compressor.redis
+    hostname: compressor.redis
+    environment:
+      <<: *x-redis-environment
+    command: /bin/sh -cx "/usr/local/bin/redis_entrypoint.sh"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+    healthcheck:
+      test: [ "CMD", "redis-cli", "-a", "$REDIS_PASSWORD", "ping" ]
+      <<: *hc-interval
+    ports:
+      - 127.0.0.1:${REDIS_PORT}:${REDIS_PORT}
+    volumes:
+      - compressor.redis.data:/data
+      - ./deploy/dev/redis/redis_entrypoint.sh:/usr/local/bin/redis_entrypoint.sh
+
+  rabbitmq:
+    <<: *default
+    profiles: [ "api", "worker" ]
+    image: rabbitmq:4.0-management-alpine
+    container_name: compressor.rabbitmq
+    hostname: compressor.rabbitmq
+    expose:
+      # AMQP protocol port
+      - ${RABBITMQ_PORT}
+      # HTTP management UI
+      - ${RABBITMQ_UI_PORT}
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 512M
+        reservations:
+          cpus: '1'
+          memory: 256M
+    ports:
+      - 127.0.0.1:${RABBITMQ_PORT}:${RABBITMQ_PORT}
+      - 127.0.0.1:${RABBITMQ_UI_PORT}:${RABBITMQ_UI_PORT}
+    environment:
+      <<: *x-rabbit-environment
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: -rabbit log_levels [{connection,error},{default,error}]
+    healthcheck:
+      test: [ "CMD", "rabbitmq-diagnostics", "ping" ]
+      <<: *hc-interval
+    volumes:
+      - compressor.rabbitmq.data:/var/lib/rabbitmq/:rw
+
+  minio:
+    <<: *default
+    profiles: [ "api", "s3" ]
+    image: bitnami/minio:2024.7.26
+    container_name: compressor.minio
+    hostname: compressor.minio
+    ports:
+      - 127.0.0.1:${MINIO_PORT}:${MINIO_PORT}
+      - 127.0.0.1:${MINIO_UI_PORT}:${MINIO_UI_PORT}
+    environment:
+      <<: *x-minio-environment
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 512M
+        reservations:
+          cpus: '1'
+          memory: 256M
+    healthcheck:
+      test: [ "CMD", "curl", "-k", "https://localhost:$MINIO_PORT/minio/health/live" ]
+    volumes:
+      - compressor.minio.data:/data
+
+volumes:
+  compressor.postgres.data: { }
+  compressor.redis.data: { }
+  compressor.rabbitmq.data: { }
+  compressor.minio.data: { }
+
+networks:
+  overlay:
+    driver: bridge
+

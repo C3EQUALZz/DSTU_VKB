@@ -1,5 +1,6 @@
-from typing import Final, Mapping
 from collections import deque
+from typing import Final, Mapping
+
 from aiogram import Router
 from aiogram.enums import ParseMode, ChatType
 from aiogram.filters import Command
@@ -7,8 +8,8 @@ from aiogram.types import Message
 from aiogram_i18n import I18nContext
 from dishka import FromDishka
 
-from compressor.application.common.views.telegram_user import TelegramUserView
-from compressor.application.queries.read_telegram_current_user import (
+from compressor.application.common.views.users import TelegramUserView
+from compressor.application.queries.user.read_telegram_current_user import (
     ReadCurrentTelegramUserQueryHandler,
     ReadCurrentTelegramUserQuery
 )

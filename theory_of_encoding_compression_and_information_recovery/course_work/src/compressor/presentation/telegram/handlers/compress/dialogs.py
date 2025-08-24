@@ -16,7 +16,8 @@ from compressor.presentation.telegram.handlers.compress.consts import (
     COMPRESS_BINARY_OR_TEXT_FILE,
     ASK_FOR_BINARY_OR_TEXT_FILE,
     CHOOSE_BINARY_OR_TEXT_FILE_COMPRESSION_TYPE,
-    SELECTOR_ALGORITHM, STARTED_PROCESSING,
+    SELECTOR_ALGORITHM,
+    STARTED_PROCESSING,
 )
 from compressor.presentation.telegram.handlers.compress.getters import (
     get_compression_for_binary_or_text_files,

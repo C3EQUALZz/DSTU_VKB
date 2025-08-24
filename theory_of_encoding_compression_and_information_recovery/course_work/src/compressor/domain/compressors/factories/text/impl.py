@@ -3,7 +3,7 @@ from typing import Final
 from typing_extensions import override
 
 from compressor.domain.compressors.errors import UnknownCompressorError
-from compressor.domain.compressors.factories.text.base import TextFileCompressorFactory, CompressorType
+from compressor.domain.compressors.factories.text.base import FileCompressorFactory, CompressorType
 from compressor.domain.compressors.services.base import Compressor
 from compressor.domain.compressors.services.bzip2.facade import BZip2Compressor
 from compressor.domain.compressors.services.fastlz.facade import FastLZCompressor
@@ -12,7 +12,7 @@ from compressor.domain.compressors.services.lempel_ziv_markov_chain.facade impor
 from compressor.domain.compressors.services.pigz.facade import PigzCompressor
 
 
-class TextFileCompressorFactoryImpl(TextFileCompressorFactory):
+class FileCompressorFactoryImpl(FileCompressorFactory):
     def __init__(
             self,
             gzip_compressor: GunZipCompressor,

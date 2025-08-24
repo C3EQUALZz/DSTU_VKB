@@ -12,4 +12,3 @@ class CompressedFile(BaseEntity[FileID]):
     path: Path
     size: FileSize
     compression_type: CompressionType
-    is_dir: bool

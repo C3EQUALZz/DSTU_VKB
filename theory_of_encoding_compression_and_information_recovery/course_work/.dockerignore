@@ -1,0 +1,17 @@
+/venv
+/.venv
+/.idea
+/.gitignore
+/.github
+/data
+data
+.pre-commit-config.yaml
+.env.dist
+justfile
+LICENSE
+README.md
+/tests
+docker-compose.yaml
+Dockerfile
+./vscode
+/vscode
