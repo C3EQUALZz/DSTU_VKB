@@ -5,7 +5,7 @@ from compressor.infrastructure.task_manager.task_id import TaskID
 from compressor.infrastructure.task_manager.text.contracts import FileInfoDTO
 
 
-class TextFileScheduler(Protocol):
+class TextFileTaskManager(Protocol):
     @abstractmethod
     async def compress_and_send_file(self, dto: FileInfoDTO) -> TaskID:
         ...

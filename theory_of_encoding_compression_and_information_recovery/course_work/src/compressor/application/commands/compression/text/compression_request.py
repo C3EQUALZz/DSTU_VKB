@@ -9,7 +9,7 @@ from compressor.domain.files.entities.file import File
 from compressor.domain.files.services.file_service import FileService
 from compressor.domain.users.values.user_id import UserID
 from compressor.infrastructure.task_manager.task_id import TaskID
-from compressor.infrastructure.task_manager.text.base import TextFileScheduler
+from compressor.infrastructure.task_manager.text.base import TextFileTaskManager
 from compressor.infrastructure.task_manager.text.contracts import FileInfoDTO
 
 
@@ -23,11 +23,11 @@ class TextFileCompressionTaskCommand:
 class TextFileCompressionTaskCommandHandler:
     def __init__(
             self,
-            file_scheduler: TextFileScheduler,
+            file_scheduler: TextFileTaskManager,
             file_service: FileService,
             id_provider: IdentityProvider
     ) -> None:
-        self._file_scheduler: Final[TextFileScheduler] = file_scheduler
+        self._file_scheduler: Final[TextFileTaskManager] = file_scheduler
         self._file_service: Final[FileService] = file_service
         self._id_provider: Final[IdentityProvider] = id_provider
 

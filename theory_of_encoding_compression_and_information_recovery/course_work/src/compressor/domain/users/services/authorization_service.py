@@ -1,3 +1,5 @@
+from typing import TypeVar
+
 from compressor.domain.common.services.base import DomainService
 from compressor.domain.users.entities.user import User
 from compressor.domain.users.errors import (
@@ -11,13 +13,15 @@ from compressor.domain.users.services.authorization.base import (
 )
 from compressor.domain.users.values.user_role import UserRole
 
+PC = TypeVar("PC", bound=PermissionContext)
+
 
 class AuthorizationService(DomainService):
     def __init__(self) -> None:
         super().__init__()
 
     # noinspection PyMethodMayBeStatic
-    def authorize[PC: PermissionContext](self, permission: Permission[PC], *, context: PC) -> None:
+    def authorize(self, permission: Permission[PC], *, context: PC) -> None:
         """
         :raises AuthorizationError:
         """
