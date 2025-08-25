@@ -11,3 +11,7 @@ class DocumentNotProvidedError(TelegramPresentationError):
 
 class AlgorithmNotProvidedError(TelegramPresentationError):
     ...
+
+
+class TaskIdNotProviderError(TelegramPresentationError):
+    ...

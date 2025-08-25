@@ -1,6 +1,8 @@
 from typing import Final, Any
 
-SUPPORTED_BINARY_OR_TEXT_FILE_COMPRESSORS: Final[tuple[tuple[str, str]], ...] = (
+from compressor.presentation.errors.telegram import TaskIdNotProviderError
+
+SUPPORTED_BINARY_OR_TEXT_FILE_COMPRESSORS: Final[tuple[tuple[str, str], ...]] = (
     ("LZMA", "1"),
     ("PIGZ", "2"),
     ("GZIP", "3"),
@@ -19,7 +21,7 @@ async def task_id_getter(dialog_data: dict[str, Any], **kwargs) -> dict[str, Any
     task_id: str | None = dialog_data.get("task_id", None)
 
     if task_id is None:
-        raise ...
+        raise TaskIdNotProviderError("task id not provided")
 
     return {
         "task_id": task_id,

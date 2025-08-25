@@ -44,12 +44,12 @@ default:
 [doc("Stop all containers")]
 [group("infra")]
 @stop:
-  docker compose -f {{ DOCKER_COMPOSE_DEV }} --profile api stop
+  docker compose -f {{ DOCKER_COMPOSE_DEV }} --profile bot stop
 
 [doc("Down all containers")]
 [group("infra")]
 @down:
-  docker compose -f {{ DOCKER_COMPOSE_DEV }} --profile api down
+  docker compose -f {{ DOCKER_COMPOSE_DEV }} --profile bot down
   docker image prune -f
 
 [doc("Lint check")]

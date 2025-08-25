@@ -3,7 +3,6 @@ from typing import Self
 from typing_extensions import override
 
 from compressor.domain.common.values.base import BaseValueObject
-from compressor.domain.files.entities.compressed_file import CompressedFile
 from compressor.domain.files.errors.file import FileSizeNegativeError
 
 
@@ -21,26 +20,18 @@ class FileSize(BaseValueObject):
         return str(self.value)
 
     def __ge__(self, other: object) -> bool:
-        if isinstance(other, CompressedFile):
-            return self.value >= other.size.value
-
         if isinstance(other, (int, float)):
             return self.value >= other
 
         return False
 
     def __le__(self, other: object) -> bool:
-        if isinstance(other, CompressedFile):
-            return self.value <= other.size.value
-
         if isinstance(other, (int, float)):
             return self.value <= other
 
         return False
 
     def __eq__(self, other: object) -> bool:
-        if isinstance(other, CompressedFile):
-            return self.value == other.size.value
 
         if isinstance(other, int):
             return self.value == other
@@ -51,9 +42,6 @@ class FileSize(BaseValueObject):
         return False
 
     def __ne__(self, other: object) -> bool:
-        if isinstance(other, CompressedFile):
-            return self.value != other.size.value
-
         if isinstance(other, int):
             return self.value != other
 
@@ -63,25 +51,17 @@ class FileSize(BaseValueObject):
         return False
 
     def __gt__(self, other: object) -> bool:
-        if isinstance(other, CompressedFile):
-            return self.value > other.size.value
-
         if isinstance(other, (int, float)):
             return self.value > other
 
         return False
 
     def __lt__(self, other: object) -> bool:
-        if isinstance(other, CompressedFile):
-            return self.value < other.size.value
         if isinstance(other, (int, float)):
             return self.value < other
         return False
 
     def __truediv__(self, other: object) -> Self:
-        if isinstance(other, CompressedFile):
-            return FileSize(self.value / other.size.value)
-
         if isinstance(other, (int, float)):
             if round(other, 0) == 0:
                 msg: str = "Cannot divide by zero"
