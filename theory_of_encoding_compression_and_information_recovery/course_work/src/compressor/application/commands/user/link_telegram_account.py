@@ -4,8 +4,10 @@ from typing import final, Final, cast
 from uuid import UUID
 
 from compressor.application.common.ports.access_revoker import AccessRevoker
+from compressor.application.common.ports.transaction_manager import TransactionManager
 from compressor.application.common.ports.user_command_gateway import UserCommandGateway
-from compressor.application.errors.user import UserNotFoundError
+from compressor.application.errors.user import UserNotFoundError, UserHasLinkedTelegramAccountBeforeError, \
+    UserIsBotError
 from compressor.application.services.user.current_user_service import CurrentUserService
 from compressor.domain.users.entities.telegram_user import TelegramUser
 from compressor.domain.users.entities.user import User
@@ -44,20 +46,25 @@ class LinkTelegramAccountCommandHandler:
             access_revoker: AccessRevoker,
             user_command_gateway: UserCommandGateway,
             telegram_service: TelegramService,
+            transaction_manager: TransactionManager,
     ) -> None:
         self._current_user_service: Final[CurrentUserService] = current_user_service
         self._access_revoker: Final[AccessRevoker] = access_revoker
         self._authorization_service: Final[AuthorizationService] = authorization_service
         self._user_command_gateway: Final[UserCommandGateway] = user_command_gateway
         self._telegram_service: Final[TelegramService] = telegram_service
+        self._transaction_manager: Final[TransactionManager] = transaction_manager
 
     async def __call__(self, data: LinkTelegramAccountCommand) -> None:
         logger.info("Started link telegram account")
 
+        logger.info("Detecting current user")
         current_user: User = await self._current_user_service.get_current_user()
+        logger.info("Current user detected, id: %s", current_user.id)
 
         typed_user_id: UserID = cast(UserID, data.user_id)
 
+        logger.info("Searching user to link telegram by id: %s", data.user_id)
         user: User | None = await self._user_command_gateway.read_by_id(
             typed_user_id,
         )
@@ -65,6 +72,14 @@ class LinkTelegramAccountCommandHandler:
         if user is None:
             msg: str = f"User with id: {data.user_id} does not exist."
             raise UserNotFoundError(msg)
+
+        logger.info("User was successfully found with user id: %s", user.id)
+
+        logger.info(
+            "Started authorization for current user id: %s, user_id: %s",
+            current_user.id,
+            user.id
+        )
 
         self._authorization_service.authorize(
             AnyOf(
@@ -77,9 +92,18 @@ class LinkTelegramAccountCommandHandler:
             ),
         )
 
+        logger.info("User was successfully authorized")
+
+        if user.telegram is not None:
+            msg: str = f"User with id {user.id} has already linked telegram account."
+            raise UserHasLinkedTelegramAccountBeforeError(msg)
+
         if data.is_bot is True:
             await self._access_revoker.remove_all_user_access(user_id=typed_user_id)
-            raise ...
+            msg: str = "User was permanently banned."
+            raise UserIsBotError(msg)
+
+        logger.info("Started link telegram account for user with id: %s", user.id)
 
         new_telegram_account: TelegramUser = self._telegram_service.create(
             telegram_id=cast(TelegramID, data.telegram_id),
@@ -90,4 +114,10 @@ class LinkTelegramAccountCommandHandler:
             is_bot=data.is_bot,
         )
 
+        user.telegram = new_telegram_account
+        await self._transaction_manager.commit()
 
+        logger.info(
+            "Finished link telegram account for user with id: %s",
+            new_telegram_account.id
+        )

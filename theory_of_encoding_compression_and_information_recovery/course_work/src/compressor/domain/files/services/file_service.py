@@ -27,6 +27,7 @@ class FileService(DomainService):
             id=file_id,
             path=path,
             size=FileSize(len(data.getvalue())),
+            data=data,
         )
 
         logger.debug("Successfully created file: %s", new_entity)
@@ -47,7 +48,8 @@ class FileService(DomainService):
             id=file_id,
             path=path,
             size=FileSize(len(data.getvalue())),
-            compression_type=compression_type
+            compression_type=compression_type,
+            data=data,
         )
 
         logger.debug("Successfully created file: %s", new_entity)

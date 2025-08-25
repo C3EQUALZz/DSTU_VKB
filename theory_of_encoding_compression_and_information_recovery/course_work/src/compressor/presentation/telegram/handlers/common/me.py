@@ -9,7 +9,7 @@ from aiogram_i18n import I18nContext
 from dishka import FromDishka
 
 from compressor.application.common.views.users import UserView
-from compressor.application.queries.user.read_telegram_current_user import (
+from compressor.application.queries.user.read_current_user import (
     ReadCurrentTelegramUserQueryHandler,
     ReadCurrentTelegramUserQuery
 )

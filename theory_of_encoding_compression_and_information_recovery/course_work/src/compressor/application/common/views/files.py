@@ -1,10 +1,10 @@
 from dataclasses import dataclass
-from pathlib import Path
+from io import BytesIO
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)
 class CompressedFileView:
-    path: Path
+    data: BytesIO
     file_id: str
     name: str
     size: float

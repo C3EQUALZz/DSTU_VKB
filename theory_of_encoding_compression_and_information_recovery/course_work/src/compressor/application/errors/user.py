@@ -7,3 +7,11 @@ class UserNotFoundError(ApplicationError):
 
 class UserAlreadyExistsError(ApplicationError):
     ...
+
+
+class UserHasLinkedTelegramAccountBeforeError(ApplicationError):
+    ...
+
+
+class UserIsBotError(ApplicationError):
+    ...
