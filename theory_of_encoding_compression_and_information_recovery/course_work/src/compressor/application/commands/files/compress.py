@@ -67,14 +67,14 @@ class CompressFileCommandHandler:
         await self._file_storage.add(
             FileStorageDTO(
                 file_id=new_file.id,
-                path=new_file.file_name,
+                name=new_file.file_name,
                 data=data.data
             )
         )
 
         new_task: TaskID = await self._file_scheduler.compress_and_send_file(
             dto=FileInfoDTO(
-                file_path=new_file.path,
+                file_name=new_file.file_name,
                 compressor_type=CompressorType(data.compressor_type),
                 user_id=current_user_id,
                 file_id=new_file.id
