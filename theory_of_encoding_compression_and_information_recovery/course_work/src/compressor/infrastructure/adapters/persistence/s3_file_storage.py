@@ -1,7 +1,6 @@
 import logging
 from io import BytesIO
-from pathlib import Path
-from typing import Final
+from typing import Final, Any
 
 from aiobotocore.client import AioBaseClient
 from botocore.exceptions import EndpointConnectionError, ClientError
@@ -9,6 +8,7 @@ from typing_extensions import override
 
 from compressor.application.common.ports.storage import FileStorage, FileStorageDTO
 from compressor.domain.files.values.file_id import FileID
+from compressor.domain.files.values.file_name import FileName
 from compressor.infrastructure.adapters.persistence.constants import (
     UPLOAD_FILE_FAILED,
     DOWNLOAD_FILE_FAILED,
@@ -21,20 +21,31 @@ logger: Final[logging.Logger] = logging.getLogger(__name__)
 
 class S3FileStorage(FileStorage):
     def __init__(self, client: AioBaseClient) -> None:
-        self._client = client
-        self._bucket_name: str = "files_bucket"
+        self._client: Final[AioBaseClient] = client
+        self._bucket_name: Final[str] = "files_bucket"
 
     @override
     async def add(self, dto: FileStorageDTO) -> None:
-        s3_key: str = str(dto.path)
+        s3_key: str = f"files/{str(dto.file_id)}"
+
+        logger.info("Build s3 key for storage: %s", s3_key)
+
         dto.data.seek(0)
 
         try:
+            logger.info("Started uploading file: %s", s3_key)
             await self._client.upload_fileobj(
                 dto.data,
                 self._bucket_name,
-                s3_key
+                s3_key,
+                ExtraArgs={
+                    'Metadata': {
+                        "original_filename": dto.name.value
+                    },
+                    'ContentType': 'application/octet-stream',  # Можно определить по расширению файла
+                }
             )
+            logger.info("Finished uploading file: %s", s3_key)
 
             dto.data.flush()
             dto.data.seek(0)
@@ -61,6 +72,8 @@ class S3FileStorage(FileStorage):
                 Bucket=self._bucket_name,
                 Key=s3_key
             )
+            metadata: dict[str, Any] = response.get('Metadata', {})
+            original_filename: str = metadata.get('original_filename', s3_key.split('/')[-1])
 
             file_data = BytesIO(await response['Body'].read())
             file_data.seek(0)
@@ -80,7 +93,7 @@ class S3FileStorage(FileStorage):
         else:
             return FileStorageDTO(
                 file_id=file_id,
-                path=Path(s3_key),
+                name=FileName(original_filename),
                 data=file_data
             )
 

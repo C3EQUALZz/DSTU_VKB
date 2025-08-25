@@ -4,60 +4,60 @@ from sqlalchemy import select, Select
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing_extensions import override
 
-from compressor.application.common.ports.user.telegram_user_query_gateway import TelegramUserQueryGateway
+from compressor.application.common.ports.user_query_gateway import UserQueryGateway
 from compressor.application.common.query_params.user import UserListParams
-from compressor.domain.users.entities.telegram_user import TelegramUser
+from compressor.domain.users.entities.user import User
 from compressor.domain.users.values.telegram_user_id import TelegramID
 from compressor.domain.users.values.user_id import UserID
 from compressor.domain.users.values.username import Username
 
 
-class SqlAlchemyUserQueryGateway(TelegramUserQueryGateway):
+class SqlAlchemyUserQueryGateway(UserQueryGateway):
     def __init__(self, session: AsyncSession) -> None:
         self._session: Final[AsyncSession] = session
 
     @override
-    async def read_by_id(self, user_id: UserID) -> TelegramUser | None:
-        select_stmt: Select[tuple[TelegramUser]] = select(
-            TelegramUser
+    async def read_by_id(self, user_id: UserID) -> User | None:
+        select_stmt: Select[tuple[User]] = select(
+            User
         ).where(
-            TelegramUser.user.id == user_id  # type: ignore
+            User.id == user_id  # type: ignore
         )
 
-        user: TelegramUser | None = (
+        user: User | None = (
             await self._session.execute(select_stmt)
         ).scalar_one_or_none()
 
         return user
 
     @override
-    async def read_by_username(self, username: Username) -> TelegramUser | None:
-        select_stmt: Select[tuple[TelegramUser]] = select(
-            TelegramUser
+    async def read_by_username(self, username: Username) -> User | None:
+        select_stmt: Select[tuple[User]] = select(
+            User
         ).where(
-            TelegramUser.telegram_username == username  # type: ignore
+            User.username == username  # type: ignore
         )
 
-        user: TelegramUser | None = (
+        user: User | None = (
             await self._session.execute(select_stmt)
         ).scalar_one_or_none()
 
         return user
 
     @override
-    async def read_by_telegram_id(self, telegram_user_id: TelegramID) -> TelegramUser | None:
-        select_stmt: Select[tuple[TelegramUser]] = select(
-            TelegramUser
+    async def read_by_telegram_id(self, telegram_user_id: TelegramID) -> User | None:
+        select_stmt: Select[tuple[User]] = select(
+            User
         ).where(
-            TelegramUser.id == telegram_user_id  # type: ignore
+            User.telegram.id == telegram_user_id  # type: ignore
         )
 
-        user: TelegramUser | None = (
+        user: User | None = (
             await self._session.execute(select_stmt)
         ).scalar_one_or_none()
 
         return user
 
     @override
-    async def read_all(self, params: UserListParams) -> list[TelegramUser]:
+    async def read_all(self, params: UserListParams) -> list[User]:
         ...

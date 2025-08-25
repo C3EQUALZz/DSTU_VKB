@@ -10,10 +10,11 @@ from compressor.application.common.views.tasks import TaskView
 from compressor.domain.compressors.factories.text.base import CompressorType
 from compressor.domain.files.entities.file import File
 from compressor.domain.files.services.file_service import FileService
+from compressor.domain.files.values.file_name import FileName
 from compressor.domain.users.values.user_id import UserID
 from compressor.infrastructure.task_manager.task_id import TaskID
-from compressor.infrastructure.task_manager.text.base import TextFileTaskManager
-from compressor.infrastructure.task_manager.text.contracts import FileInfoDTO
+from compressor.infrastructure.task_manager.files.base import FileTaskManager
+from compressor.infrastructure.task_manager.files.contracts import FileInfoDTO
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 
@@ -22,20 +23,20 @@ logger: Final[logging.Logger] = logging.getLogger(__name__)
 class CompressFileCommand:
     compressor_type: str
     data: BytesIO
-    path: Path
+    file_name: str
 
 
 @final
 class CompressFileCommandHandler:
     def __init__(
             self,
-            file_scheduler: TextFileTaskManager,
+            file_scheduler: FileTaskManager,
             file_service: FileService,
             file_storage: FileStorage,
             id_provider: IdentityProvider
     ) -> None:
         self._file_storage: Final[FileStorage] = file_storage
-        self._file_scheduler: Final[TextFileTaskManager] = file_scheduler
+        self._file_scheduler: Final[FileTaskManager] = file_scheduler
         self._file_service: Final[FileService] = file_service
         self._id_provider: Final[IdentityProvider] = id_provider
 
@@ -43,27 +44,30 @@ class CompressFileCommandHandler:
         logger.info(
             "Started file compression, compressor type: %s, file name: %s",
             data.compressor_type,
-            data.path
+            data.file_name
         )
 
         logger.info("Getting current user id")
         current_user_id: UserID = await self._id_provider.get_current_user_id()
         logger.info("Successfully got current user id: %s", current_user_id)
 
-        logger.info("Creating a new file entity with name: %s", data.path)
-        new_file: File = self._file_service.create(path=data.path, data=data.data)
-        logger.info("Successfully created new file entity with name: %s", new_file.path)
+        logger.info("Creating a new file entity with name: %s", data.file_name)
+        new_file: File = self._file_service.create(
+            file_name=FileName(data.file_name),
+            data=data.data
+        )
+        logger.info("Successfully created new file entity with name: %s", new_file.file_name)
 
         logger.info(
             "Starting saving file in file storage, with id: %s and path: %s",
             new_file.id,
-            new_file.path
+            new_file.file_name
         )
 
         await self._file_storage.add(
             FileStorageDTO(
                 file_id=new_file.id,
-                path=new_file.path,
+                path=new_file.file_name,
                 data=data.data
             )
         )

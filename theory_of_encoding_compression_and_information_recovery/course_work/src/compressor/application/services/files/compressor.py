@@ -42,7 +42,7 @@ class FileCompressorService:
 
         file: File = self._file_service.create(
             data=file_info.data,
-            path=file_info.path
+            file_name=file_info.path
         )
 
         logger.info("Started creating of file compressor with type: %s", dto.compressor_type)
@@ -51,11 +51,10 @@ class FileCompressorService:
 
         compressed_file: CompressedFile = compressor.compress(file=file)
 
-
         return CompressedFileView(
             file_id=compressed_file.id,
-            path=compressed_file.path,
-            name=compressed_file.path.name,
+            name=compressed_file.file_name.value,
             size=compressed_file.size.value,
             compression_type=compressed_file.compression_type,
+            data=compressed_file.data,
         )

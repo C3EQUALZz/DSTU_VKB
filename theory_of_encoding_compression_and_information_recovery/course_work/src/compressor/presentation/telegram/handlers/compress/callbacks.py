@@ -1,5 +1,4 @@
-import tempfile
-from pathlib import Path
+from io import BytesIO
 from typing import Any
 
 from aiogram import Bot
@@ -10,8 +9,8 @@ from aiogram_dialog.widgets.kbd import Button
 from dishka import FromDishka
 from dishka.integrations.aiogram_dialog import inject
 
-from compressor.application.commands.compress_file import CompressFileCommandHandler, CompressFileCommand
-from compressor.application.common.views.compress_file import InitiateCompressFileView
+from compressor.application.commands.files.compress import CompressFileCommandHandler, CompressFileCommand
+from compressor.application.common.views.tasks import TaskView
 from compressor.presentation.errors.telegram import DocumentNotProvidedError, AlgorithmNotProvidedError
 from compressor.presentation.telegram.handlers.compress.getters import SUPPORTED_BINARY_OR_TEXT_FILE_COMPRESSORS
 
@@ -21,7 +20,9 @@ async def start_compress_binary_or_text_file_subdialog(
         button: Button,
         manager: DialogManager
 ) -> None:
-    await manager.start()
+    await manager.start(
+        
+    )
 
 
 async def on_algorithm_selected(
@@ -56,17 +57,19 @@ async def compress_binary_or_text_file(
         SUPPORTED_BINARY_OR_TEXT_FILE_COMPRESSORS
     ), "gzip")
 
+    data: BytesIO = BytesIO()
 
-    with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
-        await bot.download(document.file_id, destination=tmp_file.name)
-        file_path: Path = Path(tmp_file.name)
+    await bot.download(document.file_id, destination=data)
+
+    file_name: str = document.file_name if document.file_name is None else document.file_id
 
     command: CompressFileCommand = CompressFileCommand(
         compressor_type=algorithm,
-        path=file_path
+        file_name=file_name,
+        data=data
     )
 
-    view: InitiateCompressFileView = await interactor(command)
+    view: TaskView = await interactor(command)
 
     manager.dialog_data["task_id"] = view.task_id
 

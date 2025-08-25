@@ -1,16 +1,16 @@
 from abc import abstractmethod
 from dataclasses import dataclass
 from io import BytesIO
-from pathlib import Path
 from typing import Protocol
 
 from compressor.domain.files.values.file_id import FileID
+from compressor.domain.files.values.file_name import FileName
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)
 class FileStorageDTO:
     file_id: FileID
-    path: Path
+    name: FileName
     data: BytesIO
 
 

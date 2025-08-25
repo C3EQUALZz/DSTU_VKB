@@ -13,7 +13,7 @@ from compressor.application.common.views.files import CompressedFileView
 from compressor.application.services.files.compressor import FileCompressorService
 from compressor.application.services.files.contracts import CompressTextFileDTO
 from compressor.domain.files.values.file_id import FileID
-from compressor.infrastructure.task_manager.text.contracts import FileInfoDTO
+from compressor.infrastructure.task_manager.files.contracts import FileInfoDTO
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 

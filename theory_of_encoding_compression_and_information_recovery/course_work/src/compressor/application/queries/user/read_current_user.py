@@ -2,9 +2,9 @@ from dataclasses import dataclass
 from typing import Final, final
 
 from compressor.application.common.ports.identity_provider import IdentityProvider
-from compressor.application.common.ports.telegram_user_query_gateway import TelegramUserQueryGateway
+from compressor.application.common.ports.user_query_gateway import UserQueryGateway
 from compressor.application.common.views.users import UserView
-from compressor.domain.users.entities.telegram_user import TelegramUser
+from compressor.domain.users.entities.user import User
 from compressor.domain.users.values.user_id import UserID
 
 
@@ -17,18 +17,18 @@ class ReadCurrentTelegramUserQueryHandler:
     def __init__(
             self,
             idp: IdentityProvider,
-            user_gateway: TelegramUserQueryGateway
+            user_gateway: UserQueryGateway
     ) -> None:
         self._idp: Final[IdentityProvider] = idp
-        self._user_gateway: Final[TelegramUserQueryGateway] = user_gateway
+        self._user_gateway: Final[UserQueryGateway] = user_gateway
 
     async def __call__(self, data: ReadCurrentTelegramUserQuery) -> UserView:
         user_id: UserID = await self._idp.get_current_user_id()
-        telegram_user: TelegramUser = await self._user_gateway.read_by_id(user_id)
+        user: User = await self._user_gateway.read_by_id(user_id)
 
         return UserView(
-            first_name=str(telegram_user.username),
-            role=str(telegram_user.user.role),
-            telegram_id=telegram_user.id,
-            language=telegram_user.language.value
+            first_name=str(user.username),
+            role=str(user.role.value),
+            telegram_id=user.telegram.id if user.telegram else None,
+            language=user.language.value,
         )

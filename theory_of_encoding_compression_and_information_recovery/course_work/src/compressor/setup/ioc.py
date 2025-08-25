@@ -11,8 +11,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from compressor.application.common.ports.identity_provider import CompositeIdentityProvider, IdentityProvider
 from compressor.application.common.ports.transaction_manager import TransactionManager
-from compressor.application.common.ports.telegram_user_command_gateway import UserCommandGateway
-from compressor.application.common.ports.telegram_user_query_gateway import TelegramUserQueryGateway
+from compressor.application.common.ports.user_command_gateway import UserCommandGateway
+from compressor.application.common.ports.user_query_gateway import UserQueryGateway
 from compressor.domain.files.ports.file_id_generator import FileIDGenerator
 from compressor.domain.files.services.file_service import FileService
 from compressor.domain.users.ports.password_hasher import PasswordHasher
@@ -21,22 +21,22 @@ from compressor.domain.users.services.authorization_service import Authorization
 from compressor.domain.users.services.telegram_service import TelegramService
 from compressor.domain.users.services.user_service import UserService
 from compressor.infrastructure.adapters.common.password_hasher_bcrypt import PasswordPepper, BcryptPasswordHasher
-from compressor.infrastructure.adapters.common.uuid4_file_id_generator import UUID4FileIDGenerator
 from compressor.infrastructure.adapters.common.telegram_identity_provider import TelegramIdentityProvider
+from compressor.infrastructure.adapters.common.uuid4_file_id_generator import UUID4FileIDGenerator
 from compressor.infrastructure.adapters.common.uuid4_user_id_generator import UUID4UserIDGenerator
-from compressor.infrastructure.adapters.persistence.alchemy_telegram_user_command_gateway import (
-    SqlAlchemyTelegramUserCommandGateway
+from compressor.infrastructure.adapters.persistence.alchemy_transaction_manager import SqlAlchemyTransactionManager
+from compressor.infrastructure.adapters.persistence.alchemy_user_command_gateway import (
+    SqlAlchemyUserCommandGateway
 )
-from compressor.infrastructure.adapters.persistence.alchemy_telegram_user_query_gateway import (
+from compressor.infrastructure.adapters.persistence.alchemy_user_query_gateway import (
     SqlAlchemyUserQueryGateway
 )
-from compressor.infrastructure.adapters.persistence.alchemy_transaction_manager import SqlAlchemyTransactionManager
 from compressor.infrastructure.cache.provider import get_redis_pool, get_redis
 from compressor.infrastructure.event_bus.base import EventBus
 from compressor.infrastructure.event_bus.bazario_event_bus import BazarioEventBus
 from compressor.infrastructure.persistence.provider import get_engine, get_sessionmaker, get_session
-from compressor.infrastructure.task_manager.text.base import TextFileTaskManager
-from compressor.infrastructure.task_manager.text.task_iq import TaskIQTextFileTaskManager
+from compressor.infrastructure.task_manager.files.base import FileTaskManager
+from compressor.infrastructure.task_manager.files.task_iq import TaskIQFileTaskManager
 from compressor.setup.configs.cache import RedisConfig
 from compressor.setup.configs.database import PostgresConfig, SQLAlchemyConfig
 
@@ -80,8 +80,8 @@ def domain_ports_provider() -> Provider:
 def gateways_provider() -> Provider:
     provider: Final[Provider] = Provider(scope=Scope.REQUEST)
     provider.provide(source=SqlAlchemyTransactionManager, provides=TransactionManager)
-    provider.provide(source=SqlAlchemyTelegramUserCommandGateway, provides=UserCommandGateway)
-    provider.provide(source=SqlAlchemyUserQueryGateway, provides=TelegramUserQueryGateway)
+    provider.provide(source=SqlAlchemyUserCommandGateway, provides=UserCommandGateway)
+    provider.provide(source=SqlAlchemyUserQueryGateway, provides=UserQueryGateway)
     return provider
 
 
@@ -101,8 +101,9 @@ def event_bus_provider() -> Provider:
 
 def task_manager_provider() -> Provider:
     provider: Final[Provider] = Provider(scope=Scope.REQUEST)
-    provider.provide(TaskIQTextFileTaskManager, provides=TextFileTaskManager)
+    provider.provide(TaskIQFileTaskManager, provides=FileTaskManager)
     return provider
+
 
 def auth_provider() -> Provider:
     provider: Final[Provider] = Provider(scope=Scope.REQUEST)
