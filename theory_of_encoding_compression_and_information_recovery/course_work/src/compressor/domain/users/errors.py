@@ -9,6 +9,10 @@ class UsernameError(DomainFieldError):
     ...
 
 
+class EmptyFieldError(DomainFieldError):
+    ...
+
+
 class RoleAssignmentNotPermittedError(DomainError):
     ...
 

@@ -9,9 +9,10 @@ from dishka.integrations.taskiq import TaskiqProvider
 from redis.asyncio import Redis
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from compressor.application.common.ports.identity_provider import CompositeIdentityProvider, IdentityProvider
 from compressor.application.common.ports.transaction_manager import TransactionManager
-from compressor.application.common.ports.user.telegram_user_command_gateway import TelegramUserCommandGateway
-from compressor.application.common.ports.user.telegram_user_query_gateway import TelegramUserQueryGateway
+from compressor.application.common.ports.telegram_user_command_gateway import UserCommandGateway
+from compressor.application.common.ports.telegram_user_query_gateway import TelegramUserQueryGateway
 from compressor.domain.files.ports.file_id_generator import FileIDGenerator
 from compressor.domain.files.services.file_service import FileService
 from compressor.domain.users.ports.password_hasher import PasswordHasher
@@ -20,9 +21,9 @@ from compressor.domain.users.services.authorization_service import Authorization
 from compressor.domain.users.services.telegram_service import TelegramService
 from compressor.domain.users.services.user_service import UserService
 from compressor.infrastructure.adapters.common.password_hasher_bcrypt import PasswordPepper, BcryptPasswordHasher
-from compressor.infrastructure.adapters.common.sha256_file_id_generator import FileSha256IDGenerator
+from compressor.infrastructure.adapters.common.uuid4_file_id_generator import UUID4FileIDGenerator
 from compressor.infrastructure.adapters.common.telegram_identity_provider import TelegramIdentityProvider
-from compressor.infrastructure.adapters.common.uui4_user_id_generator import UUID4UserIDGenerator
+from compressor.infrastructure.adapters.common.uuid4_user_id_generator import UUID4UserIDGenerator
 from compressor.infrastructure.adapters.persistence.alchemy_telegram_user_command_gateway import (
     SqlAlchemyTelegramUserCommandGateway
 )
@@ -68,7 +69,7 @@ def domain_ports_provider() -> Provider:
     provider: Final[Provider] = Provider(scope=Scope.REQUEST)
     provider.provide(source=BcryptPasswordHasher, provides=PasswordHasher)
     provider.provide(source=UUID4UserIDGenerator, provides=UserIDGenerator)
-    provider.provide(source=FileSha256IDGenerator, provides=FileIDGenerator)
+    provider.provide(source=UUID4FileIDGenerator, provides=FileIDGenerator)
     provider.provide(source=UserService)
     provider.provide(source=TelegramService)
     provider.provide(source=AuthorizationService)
@@ -79,7 +80,7 @@ def domain_ports_provider() -> Provider:
 def gateways_provider() -> Provider:
     provider: Final[Provider] = Provider(scope=Scope.REQUEST)
     provider.provide(source=SqlAlchemyTransactionManager, provides=TransactionManager)
-    provider.provide(source=SqlAlchemyTelegramUserCommandGateway, provides=TelegramUserCommandGateway)
+    provider.provide(source=SqlAlchemyTelegramUserCommandGateway, provides=UserCommandGateway)
     provider.provide(source=SqlAlchemyUserQueryGateway, provides=TelegramUserQueryGateway)
     return provider
 
@@ -101,6 +102,11 @@ def event_bus_provider() -> Provider:
 def task_manager_provider() -> Provider:
     provider: Final[Provider] = Provider(scope=Scope.REQUEST)
     provider.provide(TaskIQTextFileTaskManager, provides=TextFileTaskManager)
+    return provider
+
+def auth_provider() -> Provider:
+    provider: Final[Provider] = Provider(scope=Scope.REQUEST)
+    provider.decorate(CompositeIdentityProvider, provides=IdentityProvider)
     return provider
 
 
@@ -136,5 +142,6 @@ def setup_providers() -> Iterable[Provider]:
         domain_ports_provider(),
         gateways_provider(),
         event_bus_provider(),
-        task_manager_provider()
+        task_manager_provider(),
+        auth_provider()
     )

@@ -55,7 +55,7 @@ class UserService(DomainService):
         user.password_hash = hashed_password
 
     # noinspection PyMethodMayBeStatic
-    def change_username(self, user: User, new_username: UserRawPassword) -> None:
+    def change_username(self, user: User, new_username: Username) -> None:
         if user.role == UserRole.SUPER_ADMIN:
             msg: str = f"User {user.username} is not allowed to change username."
             raise CantChangeUsernameError(msg)

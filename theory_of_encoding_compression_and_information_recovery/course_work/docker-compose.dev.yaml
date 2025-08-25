@@ -51,12 +51,14 @@ x-app-environment: &x-app-environment
   LOGGING_LEVEL: INFO
   RENDER_JSON_LOGS: False
   PEPPER: ${PEPPER}
-  BOT_TOKEN: ${BOT_TOKEN}
+  TELEGRAM_TOKEN: ${TELEGRAM_TOKEN}
 
 x-minio-environment: &x-minio-environment
   MINIO_ROOT_USER: ${MINIO_ROOT_USER}
   MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
   MINIO_DEFAULT_BUCKETS: ${MINIO_DEFAULT_BUCKETS}
+  MINIO_SCHEME: http
+  MINIO_SKIP_CLIENT: yes
 
 services:
   db:
@@ -167,7 +169,7 @@ services:
 
   rabbitmq:
     <<: *default
-    profiles: [ "api", "worker" ]
+    profiles: [ "bot", "worker" ]
     image: rabbitmq:4.0-management-alpine
     container_name: compressor.rabbitmq
     hostname: compressor.rabbitmq
@@ -198,7 +200,7 @@ services:
 
   minio:
     <<: *default
-    profiles: [ "api", "s3" ]
+    profiles: [ "bot", "s3" ]
     image: bitnami/minio:2024.7.26
     container_name: compressor.minio
     hostname: compressor.minio

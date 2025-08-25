@@ -8,7 +8,7 @@ from aiogram.types import Message
 from aiogram_i18n import I18nContext
 from dishka import FromDishka
 
-from compressor.application.common.views.users import TelegramUserView
+from compressor.application.common.views.users import UserView
 from compressor.application.queries.user.read_telegram_current_user import (
     ReadCurrentTelegramUserQueryHandler,
     ReadCurrentTelegramUserQuery
@@ -30,7 +30,7 @@ from compressor.presentation.telegram.handlers.common.consts import (
 router: Final[Router] = Router()
 
 
-def format_view(view: TelegramUserView, i18n: I18nContext) -> str:
+def format_view(view: UserView, i18n: I18nContext) -> str:
     row_roles_and_i18n_values_mapping: Mapping[str, str] = {
         "admin": ADMIN,
         "user": USER,
@@ -68,7 +68,7 @@ async def cmd_me_handler(
         i18n: I18nContext
 ) -> None:
     query: ReadCurrentTelegramUserQuery = ReadCurrentTelegramUserQuery()
-    view: TelegramUserView = await interactor(query)
+    view: UserView = await interactor(query)
     await message.reply(
         text=format_view(view, i18n=i18n),
         parse_mode=ParseMode.HTML

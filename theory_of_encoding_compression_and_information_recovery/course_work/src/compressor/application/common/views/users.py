@@ -1,17 +1,20 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from uuid import UUID
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)
-class RegisterViaTelegramView:
+class SignUpView:
     user_id: UUID
-    telegram_id: int
-    name: str
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)
-class TelegramUserView:
+class CreateUserView:
+    user_id: UUID
+
+
+@dataclass(frozen=True, slots=True, kw_only=True)
+class UserView:
     first_name: str
     role: str
-    telegram_id: int
     language: str
+    telegram_id: int | None = field(default=None)
