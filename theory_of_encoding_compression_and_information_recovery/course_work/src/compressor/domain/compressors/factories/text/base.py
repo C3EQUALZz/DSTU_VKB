@@ -1,6 +1,7 @@
 from abc import abstractmethod
-from typing import Protocol
 from enum import Enum
+from typing import Protocol
+
 from compressor.domain.compressors.services.base import Compressor
 
 

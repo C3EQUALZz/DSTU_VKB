@@ -1,4 +1,4 @@
-from compressor.domain.common.errors.base import DomainFieldError, DomainError
+from compressor.domain.common.errors.base import DomainError, DomainFieldError
 
 
 class SmallPasswordLength(DomainFieldError):

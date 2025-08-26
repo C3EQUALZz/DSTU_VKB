@@ -1,11 +1,11 @@
 import asyncio
 import logging
-from typing import Final, Coroutine
 from functools import partial
+from typing import TYPE_CHECKING, Final
+
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
-from aiogram.fsm.storage.base import BaseStorage, BaseEventIsolation
 from dishka import AsyncContainer, make_async_container
 from dishka.integrations.aiogram import setup_dishka
 from taskiq import AsyncBroker
@@ -13,12 +13,12 @@ from taskiq import AsyncBroker
 from compressor.infrastructure.adapters.common.password_hasher_bcrypt import PasswordPepper
 from compressor.setup.bootstrap import (
     setup_logging,
+    setup_task_manager,
     setup_telegram_bot_dispatcher,
-    setup_telegram_bot_storage,
     setup_telegram_bot_event_isolation,
     setup_telegram_bot_middlewares,
+    setup_telegram_bot_storage,
     setup_telegram_routes,
-    setup_task_manager
 )
 from compressor.setup.configs.cache import RedisConfig
 from compressor.setup.configs.database import PostgresConfig, SQLAlchemyConfig
@@ -27,16 +27,21 @@ from compressor.setup.configs.settings import AppConfig
 from compressor.setup.configs.telegram import TGConfig
 from compressor.setup.ioc import setup_providers
 
+if TYPE_CHECKING:
+    from collections.abc import Coroutine
+
+    from aiogram.fsm.storage.base import BaseEventIsolation, BaseStorage
+
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 
 
-async def on_start(dp: Dispatcher, container: AsyncContainer, task_manager: AsyncBroker, *args, **kwargs) -> None:
+async def on_start(dp: Dispatcher, container: AsyncContainer, task_manager: AsyncBroker, *args, **kwargs) -> None: # noqa: ARG001
     if not task_manager.is_worker_process:
         logger.info("Setting up taskiq")
         await task_manager.startup()
 
 
-async def on_shutdown(dp: Dispatcher, container: AsyncContainer, task_manager: AsyncBroker, *args, **kwargs) -> None:
+async def on_shutdown(dp: Dispatcher, container: AsyncContainer, task_manager: AsyncBroker, *args, **kwargs) -> None:  # noqa: ARG001
     if not task_manager.is_worker_process:
         logger.info("Shutting down taskiq")
         await task_manager.shutdown()

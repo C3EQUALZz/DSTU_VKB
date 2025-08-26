@@ -2,12 +2,12 @@ from typing import Final
 
 from compressor.domain.common.services.base import DomainService
 from compressor.domain.users.constants import (
+    MAX_TELEGRAM_USERNAME_LENGTH,
     MIN_TELEGRAM_ID_VALUE,
     MIN_TELEGRAM_USERNAME_LENGTH,
-    MAX_TELEGRAM_USERNAME_LENGTH
 )
 from compressor.domain.users.entities.telegram_user import TelegramUser
-from compressor.domain.users.errors import TelegramIDMustBePositiveError, InvalidTelegramUsernameError
+from compressor.domain.users.errors import InvalidTelegramUsernameError, TelegramIDMustBePositiveError
 from compressor.domain.users.events import TelegramUserCreatedEvent, TelegramUserUpdatedEvent
 from compressor.domain.users.services.user_service import UserService
 from compressor.domain.users.values.telegram_user_id import TelegramID

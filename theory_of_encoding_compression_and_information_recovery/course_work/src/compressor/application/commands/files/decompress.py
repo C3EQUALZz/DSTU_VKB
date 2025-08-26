@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from io import BytesIO
-from typing import final, Final
+from typing import Final, final
 
 from compressor.application.common.ports.identity_provider import IdentityProvider
 from compressor.application.common.ports.storage import FileStorage

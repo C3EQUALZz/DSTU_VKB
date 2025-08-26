@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, AmqpDsn
+from pydantic import AmqpDsn, BaseModel, Field
 
 
 class RabbitMQConfig(BaseModel):

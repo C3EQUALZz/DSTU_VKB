@@ -8,22 +8,22 @@ from aiogram_dialog.widgets.kbd import Button, Group, Select
 from aiogram_dialog.widgets.text import Format
 
 from compressor.presentation.telegram.handlers.compress.callbacks import (
+    compress_binary_or_text_file,
     on_algorithm_selected,
-    compress_binary_or_text_file
 )
 from compressor.presentation.telegram.handlers.compress.consts import (
-    COMPRESS_START,
-    COMPRESS_BINARY_OR_TEXT_FILE,
     ASK_FOR_BINARY_OR_TEXT_FILE,
     CHOOSE_BINARY_OR_TEXT_FILE_COMPRESSION_TYPE,
+    COMPRESS_BINARY_OR_TEXT_FILE,
+    COMPRESS_START,
     SELECTOR_ALGORITHM,
     STARTED_PROCESSING,
 )
 from compressor.presentation.telegram.handlers.compress.getters import (
     get_compression_for_binary_or_text_files,
-    task_id_getter
+    task_id_getter,
 )
-from compressor.presentation.telegram.handlers.compress.states import CompressStates, CompressBinaryOrTextFileStates
+from compressor.presentation.telegram.handlers.compress.states import CompressBinaryOrTextFileStates, CompressStates
 from compressor.presentation.telegram.widgets.i18n_format import I18NFormat
 
 COMPRESS_DIALOG: Final[Dialog] = Dialog(

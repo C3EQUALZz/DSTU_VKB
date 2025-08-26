@@ -35,11 +35,11 @@ users_table: Final[sa.Table] = sa.Table(
 
 def map_user_table() -> None:
     from compressor.domain.users.entities.user import User
+    from compressor.domain.users.values.language_code import LanguageCode
     from compressor.domain.users.values.user_id import UserID
-    from compressor.domain.users.values.username import Username
     from compressor.domain.users.values.user_password_hash import UserPasswordHash
     from compressor.domain.users.values.user_role import UserRole
-    from compressor.domain.users.values.language_code import LanguageCode
+    from compressor.domain.users.values.username import Username
 
     mapper_registry.map_imperatively(
         User,

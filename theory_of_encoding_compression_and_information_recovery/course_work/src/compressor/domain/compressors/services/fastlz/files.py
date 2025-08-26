@@ -6,16 +6,16 @@ import os
 
 from compressor.domain.compressors.errors import BadDataError
 from compressor.domain.compressors.services.fastlz.common import (
-    update_adler32,
+    call_decompressor_for_buffer_level,
     detect_magic_bytes,
-    read_unsigned_integer_32_bit,
     read_unsigned_integer_16_bit,
-    call_decompressor_for_buffer_level
+    read_unsigned_integer_32_bit,
+    update_adler32,
 )
 from compressor.domain.compressors.services.fastlz.configuration import (
     FastLZConfiguration,
     FastLZConstants,
-    FastLzLevel
+    FastLzLevel,
 )
 from compressor.domain.compressors.services.fastlz.level1 import Compressor as CompressorLevel1
 from compressor.domain.compressors.services.fastlz.level2 import Compressor as CompressorLevel2
@@ -337,7 +337,7 @@ class FileDecompressor:
                 # Make sure that the checksums match.
                 if checksum != header.chunk_checksum:
                     raise BadDataError(
-                        "Checksum mismatch: Expected {}, got {}".format(hex(header.chunk_checksum), hex(checksum))
+                        f"Checksum mismatch: Expected {hex(header.chunk_checksum)}, got {hex(checksum)}"
                     )
 
                 # Get the uncompressed size (the original file size) by reading 4 bytes
@@ -401,7 +401,7 @@ class FileDecompressor:
                     # comparing the checksum.
                     if checksum != header.chunk_checksum:
                         raise BadDataError(
-                            "Checksum mismatch: Expected {}, got {}".format(hex(header.chunk_checksum), hex(checksum))
+                            f"Checksum mismatch: Expected {hex(header.chunk_checksum)}, got {hex(checksum)}"
                         )
 
                 elif header.chunk_options == 1:
@@ -417,7 +417,7 @@ class FileDecompressor:
                     # Make sure that everything has been read correctly.
                     if checksum != header.chunk_checksum:
                         raise BadDataError(
-                            "Checksum mismatch: Expected {}, got {}".format(hex(header.chunk_checksum), hex(checksum))
+                            f"Checksum mismatch: Expected {hex(header.chunk_checksum)}, got {hex(checksum)}"
                         )
 
                     # Decompress the given data.
@@ -428,7 +428,7 @@ class FileDecompressor:
                     if decompressed_size != header.chunk_extra:
                         raise BadDataError(
                             "Expected {} bytes after decompression, got {} "
-                            + "bytes.".format(header.chunk_extra, decompressed_size)
+                             "bytes."
                         )
 
                     # Add the decompressed buffer to the output.
@@ -437,7 +437,7 @@ class FileDecompressor:
 
                 else:
                     # This is using a compression method not (yet) known.
-                    raise BadDataError("Unknown compression method {}.".format(header.chunk_options))
+                    raise BadDataError(f"Unknown compression method {header.chunk_options}.")
 
         # Return the destination buffer.
         return destination

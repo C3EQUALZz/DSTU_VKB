@@ -1,8 +1,8 @@
 from abc import abstractmethod
 from typing import Protocol
 
-from compressor.infrastructure.task_manager.task_id import TaskID
 from compressor.infrastructure.task_manager.files.contracts import FileInfoDTO
+from compressor.infrastructure.task_manager.task_id import TaskID
 
 
 class FileTaskManager(Protocol):

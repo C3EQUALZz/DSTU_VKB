@@ -1,7 +1,6 @@
 import logging
 from dataclasses import dataclass
-from typing import cast
-from typing import final, Final
+from typing import Final, cast, final
 from uuid import UUID
 
 from compressor.application.common.ports.user_query_gateway import UserQueryGateway
@@ -52,7 +51,7 @@ class ReadUserByIDQueryHandler:
         )
         logger.info("User successfully authorized, user_id: %s", current_user.id)
 
-        typed_user_id: UserID = cast(UserID, data.user_id)
+        typed_user_id: UserID = cast("UserID", data.user_id)
 
         logger.info("Trying to get user by id for admin: %s", data.user_id)
         user: User = await self._user_query_gateway.read_by_id(typed_user_id)

@@ -2,7 +2,7 @@ from typing import Final
 
 from compressor.domain.common.services.base import DomainService
 from compressor.domain.users.entities.user import User
-from compressor.domain.users.errors import RoleAssignmentNotPermittedError, CantChangeUsernameError
+from compressor.domain.users.errors import CantChangeUsernameError, RoleAssignmentNotPermittedError
 from compressor.domain.users.ports.password_hasher import PasswordHasher
 from compressor.domain.users.ports.user_id_generator import UserIDGenerator
 from compressor.domain.users.values.user_id import UserID

@@ -12,7 +12,7 @@ class FileName(BaseValueObject):
 
     @override
     def _validate(self) -> None:
-        if self.value.isspace() or self.value == '':
+        if self.value.isspace() or self.value == "":
             msg: str = "file name must be provided, it cannot be empty"
             raise FileNameIsEmptyError(msg)
 

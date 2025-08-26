@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import Self
+
 from typing_extensions import override
 
 from compressor.domain.common.values.base import BaseValueObject

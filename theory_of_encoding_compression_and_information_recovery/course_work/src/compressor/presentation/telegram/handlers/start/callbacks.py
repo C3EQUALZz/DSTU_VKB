@@ -4,10 +4,7 @@ from aiogram_dialog.widgets.input import MessageInput
 from dishka import FromDishka
 from dishka.integrations.aiogram_dialog import inject
 
-from compressor.application.commands.user.signup import (
-    SignUpCommand,
-    SignUpCommandHandler
-)
+from compressor.application.commands.user.signup import SignUpCommand, SignUpCommandHandler
 from compressor.domain.users.errors import SmallPasswordLength
 
 
@@ -27,7 +24,7 @@ async def register_handler_callback(
 
     try:
         await interactor(data=command)
-    except SmallPasswordLength as e:
+    except SmallPasswordLength:
         await message.reply("Слишком слабый пароль! Введите получше!")
         await manager.back()
     else:

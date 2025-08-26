@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any, Generic, TypeVar
 
 from compressor.domain.common.errors.base import DomainError
@@ -40,12 +40,12 @@ class BaseEntity(Generic[OIDType]):
     id: OIDType
 
     created_at: datetime = field(
-        default_factory=lambda: datetime.now(timezone.utc),
+        default_factory=lambda: datetime.now(UTC),
         kw_only=True,
     )
 
     updated_at: datetime = field(
-        default_factory=lambda: datetime.now(timezone.utc),
+        default_factory=lambda: datetime.now(UTC),
         kw_only=True,
     )
 

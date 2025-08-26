@@ -4,7 +4,7 @@ from aiogram import Bot
 from aiogram.types import BufferedInputFile
 from typing_extensions import override
 
-from compressor.application.common.ports.sender import Sender, FileForSendInfoDTO
+from compressor.application.common.ports.sender import FileForSendInfoDTO, Sender
 from compressor.application.common.ports.storage import FileStorage, FileStorageDTO
 from compressor.application.common.ports.user_query_gateway import UserQueryGateway
 from compressor.domain.users.entities.user import User

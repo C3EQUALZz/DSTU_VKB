@@ -10,4 +10,4 @@ from compressor.domain.files.values.file_id import FileID
 class UUID4FileIDGenerator(FileIDGenerator):
     @override
     def __call__(self) -> FileID:
-        return cast(FileID, uuid4())
+        return cast("FileID", uuid4())

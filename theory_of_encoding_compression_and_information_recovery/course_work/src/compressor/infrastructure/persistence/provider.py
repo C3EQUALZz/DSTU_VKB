@@ -2,7 +2,6 @@ from collections.abc import AsyncIterator
 
 from aioboto3 import Session
 from aiobotocore.client import AioBaseClient
-
 from sqlalchemy.ext.asyncio import (
     AsyncEngine,
     AsyncSession,

@@ -3,9 +3,9 @@ from typing import TypeVar
 from compressor.domain.common.services.base import DomainService
 from compressor.domain.users.entities.user import User
 from compressor.domain.users.errors import (
-    AuthorizationError,
     ActivationChangeNotPermittedError,
-    RoleChangeNotPermittedError
+    AuthorizationError,
+    RoleChangeNotPermittedError,
 )
 from compressor.domain.users.services.authorization.base import (
     Permission,

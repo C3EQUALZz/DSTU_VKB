@@ -1,6 +1,6 @@
 from typing import Final
 
-from sqlalchemy import select, Select
+from sqlalchemy import Select, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing_extensions import override
 

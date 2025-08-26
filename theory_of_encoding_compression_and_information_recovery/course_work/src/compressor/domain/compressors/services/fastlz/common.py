@@ -2,16 +2,10 @@
 Common utility methods for the FastLZ algorithm.
 """
 
-from compressor.domain.compressors.services.fastlz.configuration import (
-    FastLZConstants,
-    FastLzLevel
-)
-from compressor.domain.compressors.services.fastlz.level1 import (
-    Decompressor as DecompressorLevel1
-)
-from compressor.domain.compressors.services.fastlz.level2 import (
-    Decompressor as DecompressorLevel2
-)
+from compressor.domain.compressors.services.fastlz.configuration import FastLZConstants, FastLzLevel
+from compressor.domain.compressors.services.fastlz.level1 import Decompressor as DecompressorLevel1
+from compressor.domain.compressors.services.fastlz.level2 import Decompressor as DecompressorLevel2
+
 
 def determine_level_from_buffer(buffer):
     """
@@ -35,9 +29,9 @@ def determine_level_from_buffer(buffer):
     # Fail if the level value is invalid.
     if level == 1:
         return FastLzLevel.LEVEL1
-    elif level == 2:
+    if level == 2:
         return FastLzLevel.LEVEL2
-    raise ValueError("Invalid level {}.".format(level))
+    raise ValueError(f"Invalid level {level}.")
 
 
 def call_decompressor_for_buffer_level(buffer):
@@ -57,11 +51,11 @@ def call_decompressor_for_buffer_level(buffer):
     if level == FastLzLevel.LEVEL1:
         # Use level 1.
         return DecompressorLevel1().decompress(buffer)
-    elif level == FastLzLevel.LEVEL2:
+    if level == FastLzLevel.LEVEL2:
         # Use level 2.
         return DecompressorLevel2().decompress(buffer)
 
-    raise ValueError("Invalid level {} for decompression.".format(level))
+    raise ValueError(f"Invalid level {level} for decompression.")
 
 
 def update_adler32(checksum, buffer):

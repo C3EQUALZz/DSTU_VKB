@@ -1,4 +1,5 @@
 from dishka import AsyncContainer, make_async_container
+from dishka.integrations.taskiq import setup_dishka
 from taskiq import AsyncBroker
 
 from compressor.infrastructure.adapters.common.password_hasher_bcrypt import PasswordPepper
@@ -9,7 +10,7 @@ from compressor.setup.configs.s3 import S3Config
 from compressor.setup.configs.settings import AppConfig
 from compressor.setup.configs.telegram import TGConfig
 from compressor.setup.ioc import setup_providers
-from dishka.integrations.taskiq import setup_dishka
+
 
 def create_taskiq_app() -> AsyncBroker:
     config: AppConfig = AppConfig()

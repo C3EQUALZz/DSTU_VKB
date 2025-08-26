@@ -1,5 +1,5 @@
 import logging
-from typing import Any, Optional, Dict, Union, Final
+from typing import Any, Final
 
 from aiogram_dialog.api.internal import TextWidget
 from aiogram_dialog.api.protocols import DialogManager
@@ -17,10 +17,10 @@ class I18NFormat(Text):
     def __init__(
             self,
             text: str,
-            locale: Optional[Union[TextWidget, MagicFilter, str]] = None,
-            when: Optional[WhenCondition] = None,
+            locale: TextWidget | MagicFilter | str | None = None,
+            when: WhenCondition | None = None,
             /,
-            **mapping: Union[TextWidget, MagicFilter, str, int, float, bool],
+            **mapping: TextWidget | MagicFilter | str | float | bool,
     ) -> None:
         super().__init__(when)
         self.text = text
@@ -29,7 +29,7 @@ class I18NFormat(Text):
 
     @staticmethod
     async def _resolve(
-            value: Union[TextWidget, MagicFilter, str, int, float, bool], data: dict, manager: DialogManager
+            value: TextWidget | MagicFilter | str | float | bool, data: dict, manager: DialogManager
     ) -> Any:
         if isinstance(value, TextWidget):
             return await value.render_text(data, manager)
@@ -37,7 +37,7 @@ class I18NFormat(Text):
             return value.resolve(data)
         return value
 
-    async def _transform(self, data: dict, manager: DialogManager) -> Dict[str, Any]:
+    async def _transform(self, data: dict, manager: DialogManager) -> dict[str, Any]:
         transformed_data = {}
         for key, val in self.mapping.items():
             resolved_val = await self._resolve(val, data, manager)
@@ -45,7 +45,7 @@ class I18NFormat(Text):
         return transformed_data
 
     async def _render_text(self, data: dict, manager: DialogManager) -> str:
-        i18n: Optional[I18nContext] = manager.middleware_data.get(I18N_FORMAT_KEY)
+        i18n: I18nContext | None = manager.middleware_data.get(I18N_FORMAT_KEY)
         if i18n is None:
             raise ValueError("I18nContext not found in manager.middleware_data")
 

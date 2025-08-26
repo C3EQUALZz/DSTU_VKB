@@ -71,7 +71,7 @@ class GrantAdminCommandHandler:
             ),
         )
 
-        typed_user_id: UserID = cast(UserID, data.user_id)
+        typed_user_id: UserID = cast("UserID", data.user_id)
 
         user: User | None = await self._user_command_gateway.read_by_id(
             typed_user_id,

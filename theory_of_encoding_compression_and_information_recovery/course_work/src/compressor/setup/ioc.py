@@ -1,10 +1,11 @@
-from typing import Iterable, Final, cast
+from collections.abc import Iterable
+from typing import Final, cast
 
 from aiogram import Bot
-from bazario.asyncio import Registry, Dispatcher
+from bazario.asyncio import Dispatcher, Registry
 from bazario.asyncio.resolvers.dishka import DishkaResolver
-from dishka import Provider, Scope, provide, WithParents
-from dishka.integrations.aiogram import AiogramProvider, AiogramMiddlewareData
+from dishka import Provider, Scope, WithParents, provide
+from dishka.integrations.aiogram import AiogramMiddlewareData, AiogramProvider
 from dishka.integrations.taskiq import TaskiqProvider
 from redis.asyncio import Redis
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -19,7 +20,6 @@ from compressor.application.commands.user.link_telegram_account import LinkTeleg
 from compressor.application.commands.user.revoke_admin import RevokeAdminCommandHandler
 from compressor.application.commands.user.signup import SignUpCommandHandler
 from compressor.application.common.ports.access_revoker import AccessRevoker
-from compressor.application.common.ports.identity_provider import IdentityProvider
 from compressor.application.common.ports.sender import Sender
 from compressor.application.common.ports.storage import FileStorage
 from compressor.application.common.ports.transaction_manager import TransactionManager
@@ -35,28 +35,24 @@ from compressor.domain.users.services.telegram_service import TelegramService
 from compressor.domain.users.services.user_service import UserService
 from compressor.domain.users.values.telegram_user_id import TelegramID
 from compressor.infrastructure.adapters.auth.telegram_access_revoker import TelegramAccessRevoker
-from compressor.infrastructure.adapters.common.password_hasher_bcrypt import PasswordPepper, BcryptPasswordHasher
+from compressor.infrastructure.adapters.common.password_hasher_bcrypt import BcryptPasswordHasher, PasswordPepper
 from compressor.infrastructure.adapters.common.telegram_identity_provider import TelegramIdentityProvider
 from compressor.infrastructure.adapters.common.uuid4_file_id_generator import UUID4FileIDGenerator
 from compressor.infrastructure.adapters.common.uuid4_user_id_generator import UUID4UserIDGenerator
 from compressor.infrastructure.adapters.persistence.alchemy_transaction_manager import SqlAlchemyTransactionManager
-from compressor.infrastructure.adapters.persistence.alchemy_user_command_gateway import (
-    SqlAlchemyUserCommandGateway
-)
-from compressor.infrastructure.adapters.persistence.alchemy_user_query_gateway import (
-    SqlAlchemyUserQueryGateway
-)
+from compressor.infrastructure.adapters.persistence.alchemy_user_command_gateway import SqlAlchemyUserCommandGateway
+from compressor.infrastructure.adapters.persistence.alchemy_user_query_gateway import SqlAlchemyUserQueryGateway
 from compressor.infrastructure.adapters.persistence.s3_file_storage import S3FileStorage
 from compressor.infrastructure.adapters.telegram_sender import TelegramSender
-from compressor.infrastructure.cache.provider import get_redis_pool, get_redis
+from compressor.infrastructure.cache.provider import get_redis, get_redis_pool
 from compressor.infrastructure.event_bus.base import EventBus
 from compressor.infrastructure.event_bus.bazario_event_bus import BazarioEventBus
 from compressor.infrastructure.persistence.provider import (
     get_engine,
-    get_sessionmaker,
-    get_session,
+    get_s3_client,
     get_s3_session,
-    get_s3_client
+    get_session,
+    get_sessionmaker,
 )
 from compressor.infrastructure.task_manager.files.base import FileTaskManager
 from compressor.infrastructure.task_manager.files.task_iq import TaskIQFileTaskManager
@@ -174,7 +170,7 @@ class TelegramProvider(Provider):
             self, middleware_data: AiogramMiddlewareData
     ) -> TelegramID | None:
         if current_chat := middleware_data.get("event_chat"):
-            return cast(TelegramID, current_chat.id)
+            return cast("TelegramID", current_chat.id)
         return None
 
     @provide(scope=scope.REQUEST)

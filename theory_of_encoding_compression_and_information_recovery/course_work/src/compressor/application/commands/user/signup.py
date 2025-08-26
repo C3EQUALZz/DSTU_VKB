@@ -41,7 +41,7 @@ class SignUpCommandHandler:
         if await self._user_command_gateway.read_by_username(
                 username=Username(data.username),
         ):
-            msg: str = "User with username {} not found".format(data.username)
+            msg: str = f"User with username {data.username} not found"
             raise UserAlreadyExistsError(msg)
 
         logger.info("User not found in database, creating new user")

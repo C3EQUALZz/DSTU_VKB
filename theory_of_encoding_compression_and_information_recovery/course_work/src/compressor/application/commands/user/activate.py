@@ -1,6 +1,6 @@
 import logging
 from dataclasses import dataclass
-from typing import final, Final, cast
+from typing import Final, cast, final
 from uuid import UUID
 
 from compressor.application.common.ports.transaction_manager import TransactionManager
@@ -8,14 +8,12 @@ from compressor.application.common.ports.user_command_gateway import UserCommand
 from compressor.application.errors.user import UserNotFoundError
 from compressor.application.services.user.current_user_service import CurrentUserService
 from compressor.domain.users.entities.user import User
-
 from compressor.domain.users.services.authorization.permission import (
     CanManageRole,
-    RoleManagementContext,
     CanManageSubordinate,
-    UserManagementContext
+    RoleManagementContext,
+    UserManagementContext,
 )
-
 from compressor.domain.users.services.authorization_service import AuthorizationService
 from compressor.domain.users.values.user_id import UserID
 from compressor.domain.users.values.user_role import UserRole
@@ -64,7 +62,7 @@ class ActivateUserCommandHandler:
             ),
         )
 
-        typed_user_id: UserID = cast(UserID, data.user_id)
+        typed_user_id: UserID = cast("UserID", data.user_id)
 
         user: User | None = await self._user_command_gateway.read_by_id(
             typed_user_id,

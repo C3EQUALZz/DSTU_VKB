@@ -1,4 +1,5 @@
-from typing import Final, Iterable
+from collections.abc import Iterable
+from typing import Final
 
 from aiogram.enums import ChatType
 from aiogram.filters import BaseFilter

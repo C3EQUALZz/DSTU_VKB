@@ -1,8 +1,9 @@
 from collections import deque
-from typing import Final, Mapping
+from collections.abc import Mapping
+from typing import Final
 
 from aiogram import Router
-from aiogram.enums import ParseMode, ChatType
+from aiogram.enums import ChatType, ParseMode
 from aiogram.filters import Command
 from aiogram.types import Message
 from aiogram_i18n import I18nContext
@@ -10,21 +11,21 @@ from dishka import FromDishka
 
 from compressor.application.common.views.users import UserView
 from compressor.application.queries.user.read_current_user import (
+    ReadCurrentTelegramUserQuery,
     ReadCurrentTelegramUserQueryHandler,
-    ReadCurrentTelegramUserQuery
 )
 from compressor.presentation.telegram.filters.chat import ChatTypeFilter
 from compressor.presentation.telegram.handlers.common.consts import (
-    ME,
-    USER_INFO_TITLE,
-    NAME,
     ADMIN,
-    USER,
-    SUPPORT,
+    LANGUAGE,
+    ME,
+    NAME,
     SUPER_ADMIN,
-    TELEGRAM_ACCOUNT_TITLE,
+    SUPPORT,
     TELEGRAM_ACCOUNT_ID,
-    LANGUAGE
+    TELEGRAM_ACCOUNT_TITLE,
+    USER,
+    USER_INFO_TITLE,
 )
 
 router: Final[Router] = Router()

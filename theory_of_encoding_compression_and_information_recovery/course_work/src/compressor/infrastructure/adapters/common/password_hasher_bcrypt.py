@@ -1,9 +1,10 @@
 import base64
 import hashlib
 import hmac
-from typing import NewType, Final
-from typing_extensions import override
+from typing import Final, NewType
+
 import bcrypt
+from typing_extensions import override
 
 from compressor.domain.users.ports.password_hasher import PasswordHasher
 from compressor.domain.users.values.user_password_hash import UserPasswordHash

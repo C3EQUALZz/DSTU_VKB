@@ -6,10 +6,7 @@ This should be the correct entry point for most applications.
 
 from compressor.domain.compressors.services.fastlz.common import call_decompressor_for_buffer_level
 from compressor.domain.compressors.services.fastlz.configuration import FastLzLevel
-from compressor.domain.compressors.services.fastlz.files import (
-    FileCompressor,
-    FileDecompressor
-)
+from compressor.domain.compressors.services.fastlz.files import FileCompressor, FileDecompressor
 from compressor.domain.compressors.services.fastlz.level1 import Compressor as CompressorLevel1
 from compressor.domain.compressors.services.fastlz.level2 import Compressor as CompressorLevel2
 
@@ -38,7 +35,7 @@ class FastLzInterface:
         # Use the selected level if possible.
         if level == FastLzLevel.LEVEL1:
             return CompressorLevel1().compress(decompressed)
-        elif level == FastLzLevel.LEVEL2:
+        if level == FastLzLevel.LEVEL2:
             return CompressorLevel2().compress(decompressed)
 
         # For short blocks, choose level 1.

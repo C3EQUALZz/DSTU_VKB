@@ -1,6 +1,6 @@
 import logging
 from dataclasses import dataclass
-from typing import Final, final, cast
+from typing import Final, cast, final
 from uuid import UUID
 
 from compressor.application.common.ports.transaction_manager import TransactionManager
@@ -71,7 +71,7 @@ class RevokeAdminCommandHandler:
             ),
         )
 
-        user_id: UserID = cast(UserID, data.user_id)
+        user_id: UserID = cast("UserID", data.user_id)
 
         user: User | None = await self._user_command_gateway.read_by_id(
             user_id=user_id,

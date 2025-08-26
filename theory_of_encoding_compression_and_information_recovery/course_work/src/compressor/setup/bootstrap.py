@@ -3,28 +3,26 @@ import sys
 from functools import lru_cache
 from pathlib import Path
 from types import TracebackType
-from typing import Any
-from typing import Final
+from typing import Any, Final
 
 from aiogram import Dispatcher
-from aiogram.fsm.storage.base import BaseStorage, DefaultKeyBuilder, BaseEventIsolation
+from aiogram.fsm.storage.base import BaseEventIsolation, BaseStorage, DefaultKeyBuilder
 from aiogram.fsm.storage.memory import MemoryStorage, SimpleEventIsolation
-from aiogram.fsm.storage.redis import RedisStorage, RedisEventIsolation
+from aiogram.fsm.storage.redis import RedisEventIsolation, RedisStorage
 from aiogram_dialog import setup_dialogs
 from aiogram_i18n import I18nMiddleware
 from aiogram_i18n.cores import FluentRuntimeCore
-from babel import default_locale
 from taskiq import AsyncBroker, SmartRetryMiddleware, TaskiqScheduler, async_shared_broker
 from taskiq.schedule_sources import LabelScheduleSource
 from taskiq_aio_pika import AioPikaBroker
 from taskiq_redis import RedisAsyncResultBackend
 
-from compressor.presentation.telegram.handlers import setup_all_handlers, setup_all_dialogs
+from compressor.presentation.telegram.handlers import setup_all_dialogs, setup_all_handlers
 from compressor.presentation.telegram.middlewares.stale_message_middleware import StaleMessageMiddleware
 from compressor.presentation.telegram.middlewares.timing_middleware import TimingMiddleware
 from compressor.setup.configs.broker import RabbitMQConfig
 from compressor.setup.configs.cache import RedisConfig
-from compressor.setup.configs.logs import build_structlog_logger, LoggingConfig
+from compressor.setup.configs.logs import LoggingConfig, build_structlog_logger
 from compressor.setup.configs.settings import AppConfig
 from compressor.setup.configs.task_iq import TaskIQConfig
 from compressor.setup.configs.telegram import TGConfig

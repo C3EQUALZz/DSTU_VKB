@@ -1,18 +1,18 @@
 import logging
 from io import BytesIO
-from typing import Final, Any
+from typing import Any, Final
 
 from aiobotocore.client import AioBaseClient
-from botocore.exceptions import EndpointConnectionError, ClientError
+from botocore.exceptions import ClientError, EndpointConnectionError
 from typing_extensions import override
 
 from compressor.application.common.ports.storage import FileStorage, FileStorageDTO
 from compressor.domain.files.values.file_id import FileID
 from compressor.domain.files.values.file_name import FileName
 from compressor.infrastructure.adapters.persistence.constants import (
-    UPLOAD_FILE_FAILED,
+    DELETE_FILE_FAILED,
     DOWNLOAD_FILE_FAILED,
-    DELETE_FILE_FAILED
+    UPLOAD_FILE_FAILED,
 )
 from compressor.infrastructure.errors.file_storage import FileStorageError
 
@@ -26,7 +26,7 @@ class S3FileStorage(FileStorage):
 
     @override
     async def add(self, dto: FileStorageDTO) -> None:
-        s3_key: str = f"files/{str(dto.file_id)}"
+        s3_key: str = f"files/{dto.file_id!s}"
 
         logger.info("Build s3 key for storage: %s", s3_key)
 
@@ -39,10 +39,10 @@ class S3FileStorage(FileStorage):
                 self._bucket_name,
                 s3_key,
                 ExtraArgs={
-                    'Metadata': {
+                    "Metadata": {
                         "original_filename": dto.name.value
                     },
-                    'ContentType': 'application/octet-stream',  # Можно определить по расширению файла
+                    "ContentType": "application/octet-stream",  # Можно определить по расширению файла
                 }
             )
             logger.info("Finished uploading file: %s", s3_key)
@@ -72,14 +72,14 @@ class S3FileStorage(FileStorage):
                 Bucket=self._bucket_name,
                 Key=s3_key
             )
-            metadata: dict[str, Any] = response.get('Metadata', {})
-            original_filename: str = metadata.get('original_filename', s3_key.split('/')[-1])
+            metadata: dict[str, Any] = response.get("Metadata", {})
+            original_filename: str = metadata.get("original_filename", s3_key.split("/")[-1])
 
-            file_data = BytesIO(await response['Body'].read())
+            file_data = BytesIO(await response["Body"].read())
             file_data.seek(0)
 
         except ClientError as e:
-            if e.response['Error']['Code'] == 'NoSuchKey':
+            if e.response["Error"]["Code"] == "NoSuchKey":
                 logger.warning(f"File not found in S3: {s3_key}")
                 return None
             logger.exception(DOWNLOAD_FILE_FAILED)
@@ -109,7 +109,7 @@ class S3FileStorage(FileStorage):
             logger.info(f"File successfully deleted from S3: {s3_key}")
 
         except ClientError as e:
-            if e.response['Error']['Code'] == 'NoSuchKey':
+            if e.response["Error"]["Code"] == "NoSuchKey":
                 logger.warning(f"File not found in S3: {s3_key}")
                 return
             logger.exception(DELETE_FILE_FAILED)

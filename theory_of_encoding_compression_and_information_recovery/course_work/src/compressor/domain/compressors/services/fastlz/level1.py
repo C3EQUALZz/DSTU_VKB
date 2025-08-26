@@ -2,17 +2,15 @@
 Implementation of the FastLZ compression algorithm, level 1.
 """
 from compressor.domain.compressors.errors import BadDataError
-
 from compressor.domain.compressors.services.fastlz.common import (
-    get_last_bits,
-    read_unsigned_integer_32_bit,
     calculate_hash_value,
-    emit_literal_instructions,
     compare_buffer_content_until_mismatch,
+    emit_literal_instructions,
+    get_last_bits,
+    memcpy,
     memmove,
-    memcpy
+    read_unsigned_integer_32_bit,
 )
-
 from compressor.domain.compressors.services.fastlz.configuration import FastLZConfiguration
 
 

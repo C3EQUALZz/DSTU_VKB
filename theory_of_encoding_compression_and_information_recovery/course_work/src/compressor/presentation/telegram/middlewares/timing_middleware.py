@@ -1,6 +1,7 @@
 import logging
 import time
-from typing import Final, Callable, Dict, Any, Awaitable
+from collections.abc import Awaitable, Callable
+from typing import Any, Final
 
 from aiogram import BaseMiddleware
 from aiogram.types import TelegramObject
@@ -13,9 +14,9 @@ class TimingMiddleware(BaseMiddleware):
     @override
     async def __call__(
             self,
-            handler: Callable[[TelegramObject, Dict[str, Any]], Awaitable[Any]],
+            handler: Callable[[TelegramObject, dict[str, Any]], Awaitable[Any]],
             event: TelegramObject,
-            data: Dict[str, Any]
+            data: dict[str, Any]
     ) -> Any:
         start_time: float = time.perf_counter()
         result: Any = await handler(event, data)

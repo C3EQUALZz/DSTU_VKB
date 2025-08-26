@@ -1,8 +1,8 @@
 from aiogram import Dispatcher
 
 from compressor.presentation.telegram.handlers.compress.dialogs import (
+    COMPRESS_BINARY_OR_TEXT_FILE_DIALOG,
     COMPRESS_DIALOG,
-    COMPRESS_BINARY_OR_TEXT_FILE_DIALOG
 )
 from compressor.presentation.telegram.handlers.compress.handlers import router as compress_router
 

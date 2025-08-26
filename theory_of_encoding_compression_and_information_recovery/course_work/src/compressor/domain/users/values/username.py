@@ -4,12 +4,12 @@ from typing import override
 
 from compressor.domain.common.values.base import BaseValueObject
 from compressor.domain.users.constants import (
-    USERNAME_MIN_LEN,
-    USERNAME_MAX_LEN,
-    PATTERN_START,
     PATTERN_ALLOWED_CHARS,
+    PATTERN_END,
     PATTERN_NO_CONSECUTIVE_SPECIALS,
-    PATTERN_END
+    PATTERN_START,
+    USERNAME_MAX_LEN,
+    USERNAME_MIN_LEN,
 )
 from compressor.domain.users.errors import UsernameError
 

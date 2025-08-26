@@ -2,17 +2,15 @@
 Implementation of the FastLZ compression algorithm, level 2.
 """
 from compressor.domain.compressors.errors import BadDataError
-
 from compressor.domain.compressors.services.fastlz.common import (
-    read_unsigned_integer_32_bit,
     calculate_hash_value,
-    emit_literal_instructions,
     compare_buffer_content_until_mismatch,
+    emit_literal_instructions,
     get_last_bits,
+    memcpy,
     memmove,
-    memcpy
+    read_unsigned_integer_32_bit,
 )
-
 from compressor.domain.compressors.services.fastlz.configuration import FastLZConfiguration
 
 
@@ -308,86 +306,85 @@ class Compressor:
                 # This is the least significant byte of the offset.
                 destination.append(match_offset & 255)
                 bytes_written += 1
+        # We have to use level 2 encoding.
+
+        elif match_length < 7:
+            # This is a short match instruction.
+
+            # Reduce the offset as we know that we are in this case.
+            match_offset -= match_offset_max_level2
+
+            # Write opcode[0].
+            # The 3 most significant bits will be the match length (range 3 to 8;
+            # value 1 = 3-byte-match, value 2 = 4-byte-match ...)
+            # The 5 least significant bits will be the 5 most significant bits of
+            # the offset - which is larger than 31, so we are just writing 11111_2
+            # for it.
+            destination.append((match_length << 5) + 31)
+            bytes_written += 1
+
+            # Write the remaining opcode[...].
+
+            # With the value 31 from above and the following value 255 it holds
+            #   (31 << 8) + 255 = 7936 + 255 = 8191 = `MAX_L2_DISTANCE`,
+            # so we indicate that we are in the "larger offset" case by writing the
+            # following byte (which is the 255 from the above formula).
+            destination.append(255)
+            bytes_written += 1
+
+            # Write the most significant byte of the remaining offset.
+            destination.append(match_offset >> 8)
+            bytes_written += 1
+
+            # Write the least significant byte of the remaining offset.
+            destination.append(match_offset & 255)
+            bytes_written += 1
         else:
-            # We have to use level 2 encoding.
+            # This is a long match instruction.
 
-            if match_length < 7:
-                # This is a short match instruction.
+            # Reduce the offset as we know that we are in this case.
+            match_offset -= match_offset_max_level2
 
-                # Reduce the offset as we know that we are in this case.
-                match_offset -= match_offset_max_level2
+            # Write opcode[0].
+            # (7 << 5) = 11100000_2 is the indicator for a long match.
+            # The 5 least significant bits will be the 5 most significant bits of
+            # the offset - which is larger than 31, so we are just writing 11111_2
+            # for it.
+            destination.append((7 << 5) + 31)
+            bytes_written += 1
 
-                # Write opcode[0].
-                # The 3 most significant bits will be the match length (range 3 to 8;
-                # value 1 = 3-byte-match, value 2 = 4-byte-match ...)
-                # The 5 least significant bits will be the 5 most significant bits of
-                # the offset - which is larger than 31, so we are just writing 11111_2
-                # for it.
-                destination.append((match_length << 5) + 31)
-                bytes_written += 1
-
-                # Write the remaining opcode[...].
-
-                # With the value 31 from above and the following value 255 it holds
-                #   (31 << 8) + 255 = 7936 + 255 = 8191 = `MAX_L2_DISTANCE`,
-                # so we indicate that we are in the "larger offset" case by writing the
-                # following byte (which is the 255 from the above formula).
+            # Write opcode[1] (which can have multiple bytes).
+            # This is the match length.
+            # We subtract `7` - corresponding to the long match indicator in the 3
+            # most significant bits of opcode[0].
+            match_length -= 7
+            # This uses a Gamma code.
+            while match_length >= 255:
+                # While the match length still cannot be written into 1 byte, write
+                # full bytes.
                 destination.append(255)
                 bytes_written += 1
+                match_length -= 255
+            # Write the remaining length value which fits into 1 byte.
+            destination.append(match_length)
+            bytes_written += 1
 
-                # Write the most significant byte of the remaining offset.
-                destination.append(match_offset >> 8)
-                bytes_written += 1
+            # Write the remaining opcode[...].
 
-                # Write the least significant byte of the remaining offset.
-                destination.append(match_offset & 255)
-                bytes_written += 1
-            else:
-                # This is a long match instruction.
+            # With the value 31 from above and the following value 255 it holds
+            #   (31 << 8) + 255 = 7936 + 255 = 8191 = `MAX_L2_DISTANCE`,
+            # so we indicate that we are in the "larger offset" case by writing the
+            # following byte (which is the 255 from the above formula).
+            destination.append(255)
+            bytes_written += 1
 
-                # Reduce the offset as we know that we are in this case.
-                match_offset -= match_offset_max_level2
+            # Write the most significant byte of the remaining offset.
+            destination.append(match_offset >> 8)
+            bytes_written += 1
 
-                # Write opcode[0].
-                # (7 << 5) = 11100000_2 is the indicator for a long match.
-                # The 5 least significant bits will be the 5 most significant bits of
-                # the offset - which is larger than 31, so we are just writing 11111_2
-                # for it.
-                destination.append((7 << 5) + 31)
-                bytes_written += 1
-
-                # Write opcode[1] (which can have multiple bytes).
-                # This is the match length.
-                # We subtract `7` - corresponding to the long match indicator in the 3
-                # most significant bits of opcode[0].
-                match_length -= 7
-                # This uses a Gamma code.
-                while match_length >= 255:
-                    # While the match length still cannot be written into 1 byte, write
-                    # full bytes.
-                    destination.append(255)
-                    bytes_written += 1
-                    match_length -= 255
-                # Write the remaining length value which fits into 1 byte.
-                destination.append(match_length)
-                bytes_written += 1
-
-                # Write the remaining opcode[...].
-
-                # With the value 31 from above and the following value 255 it holds
-                #   (31 << 8) + 255 = 7936 + 255 = 8191 = `MAX_L2_DISTANCE`,
-                # so we indicate that we are in the "larger offset" case by writing the
-                # following byte (which is the 255 from the above formula).
-                destination.append(255)
-                bytes_written += 1
-
-                # Write the most significant byte of the remaining offset.
-                destination.append(match_offset >> 8)
-                bytes_written += 1
-
-                # Write the least significant byte of the remaining offset.
-                destination.append(match_offset & 255)
-                bytes_written += 1
+            # Write the least significant byte of the remaining offset.
+            destination.append(match_offset & 255)
+            bytes_written += 1
 
         # Return the number of bytes written.
         return bytes_written

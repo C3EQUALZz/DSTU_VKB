@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+
 @dataclass(frozen=True, slots=True)
 class BZip2Configuration:
     CHUNK_SIZE: int = 8192  # Размер чанка по умолчанию

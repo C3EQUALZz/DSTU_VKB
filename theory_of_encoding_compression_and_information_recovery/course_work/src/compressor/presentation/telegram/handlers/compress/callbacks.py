@@ -2,16 +2,16 @@ from io import BytesIO
 from typing import Any
 
 from aiogram import Bot
-from aiogram.types import CallbackQuery, Message, Document
+from aiogram.types import CallbackQuery, Document, Message
 from aiogram_dialog import DialogManager
 from aiogram_dialog.widgets.input import MessageInput
 from aiogram_dialog.widgets.kbd import Button
 from dishka import FromDishka
 from dishka.integrations.aiogram_dialog import inject
 
-from compressor.application.commands.files.compress import CompressFileCommandHandler, CompressFileCommand
+from compressor.application.commands.files.compress import CompressFileCommand, CompressFileCommandHandler
 from compressor.application.common.views.tasks import TaskView
-from compressor.presentation.errors.telegram import DocumentNotProvidedError, AlgorithmNotProvidedError
+from compressor.presentation.errors.telegram import AlgorithmNotProvidedError, DocumentNotProvidedError
 from compressor.presentation.telegram.handlers.compress.getters import SUPPORTED_BINARY_OR_TEXT_FILE_COMPRESSORS
 
 
@@ -21,7 +21,7 @@ async def start_compress_binary_or_text_file_subdialog(
         manager: DialogManager
 ) -> None:
     await manager.start(
-        
+
     )
 
 
@@ -42,7 +42,7 @@ async def compress_binary_or_text_file(
         manager: DialogManager,
         interactor: FromDishka[CompressFileCommandHandler]
 ) -> None:
-    bot: Bot = manager.middleware_data['bot']
+    bot: Bot = manager.middleware_data["bot"]
     algorithm_id: str | None = manager.dialog_data.get("selected_algorithm_id", None)
     document: Document | None = message.document
 

@@ -12,7 +12,7 @@ class UserFirstName(BaseValueObject):
 
     @override
     def _validate(self) -> None:
-        if self.value.isspace() or self.value == '':
+        if self.value.isspace() or self.value == "":
             raise EmptyFieldError("Telegram name cannot be empty string, please provide a info")
 
     def __len__(self) -> int:

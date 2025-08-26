@@ -26,7 +26,7 @@ class BZip2Compressor(Compressor):
     @override
     def compress(self, file: File) -> CompressedFile:
         source_path: Path = file.path
-        dest_path: Path = source_path.with_suffix(source_path.suffix + '.bz2')
+        dest_path: Path = source_path.with_suffix(source_path.suffix + ".bz2")
         data: BytesIO = BytesIO()
 
         with Path.open(

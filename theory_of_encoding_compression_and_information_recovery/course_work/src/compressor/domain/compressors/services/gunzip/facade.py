@@ -3,15 +3,15 @@ import logging
 from pathlib import Path
 from typing import Final
 
+from typing_extensions import override
+
 from compressor.domain.compressors.errors import CantDecompressThisFileError
+from compressor.domain.compressors.services.base import Compressor
 from compressor.domain.compressors.services.gunzip.configuration import GunZipConfiguration
 from compressor.domain.files.entities.compressed_file import CompressedFile
 from compressor.domain.files.entities.file import File
-from compressor.domain.files.values.compression_type import CompressionType
-from compressor.domain.compressors.services.base import Compressor
-from typing_extensions import override
-
 from compressor.domain.files.services.file_service import FileService
+from compressor.domain.files.values.compression_type import CompressionType
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 
@@ -25,7 +25,7 @@ class GunZipCompressor(Compressor):
     @override
     def compress(self, file: File) -> CompressedFile:
         source_path: Path = file.path
-        dest_path: Path = source_path.with_suffix(source_path.suffix + '.gz')
+        dest_path: Path = source_path.with_suffix(source_path.suffix + ".gz")
 
         with Path.open(source_path, "rb") as f_in, gzip.open(dest_path, "wb") as f_out:
             while chunk := f_in.read(self._gunzip_configuration.CHUNK_SIZE):

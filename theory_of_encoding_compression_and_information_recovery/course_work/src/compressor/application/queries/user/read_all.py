@@ -1,6 +1,6 @@
 import logging
 from dataclasses import dataclass
-from typing import final, Final
+from typing import Final, final
 
 from compressor.application.common.ports.user_query_gateway import UserQueryGateway
 from compressor.application.common.query_params.pagination import Pagination

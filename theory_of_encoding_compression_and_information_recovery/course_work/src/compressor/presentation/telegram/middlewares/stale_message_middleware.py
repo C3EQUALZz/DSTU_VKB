@@ -1,8 +1,9 @@
 import time
-from typing import Final, Callable, Dict, Any, Awaitable, cast
+from collections.abc import Awaitable, Callable
+from typing import Any, Final, cast
 
 from aiogram import BaseMiddleware
-from aiogram.types import TelegramObject, Message
+from aiogram.types import Message, TelegramObject
 from typing_extensions import override
 
 
@@ -13,11 +14,11 @@ class StaleMessageMiddleware(BaseMiddleware):
     @override
     async def __call__(
             self,
-            handler: Callable[[TelegramObject, Dict[str, Any]], Awaitable[Any]],
+            handler: Callable[[TelegramObject, dict[str, Any]], Awaitable[Any]],
             event: TelegramObject,
-            data: Dict[str, Any],
+            data: dict[str, Any],
     ) -> Any:
-        message: Message = cast(Message, data.get("message"))
+        message: Message = cast("Message", data.get("message"))
 
         if message:
             message_age: float = time.time() - message.date.timestamp()

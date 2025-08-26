@@ -1,5 +1,6 @@
 import logging
 from typing import Final
+
 from aiogram.types import User
 from aiogram_dialog import DialogManager
 

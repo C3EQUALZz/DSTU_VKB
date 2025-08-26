@@ -3,7 +3,7 @@ from typing import Final
 from typing_extensions import override
 
 from compressor.domain.compressors.errors import UnknownCompressorError
-from compressor.domain.compressors.factories.text.base import FileCompressorFactory, CompressorType
+from compressor.domain.compressors.factories.text.base import CompressorType, FileCompressorFactory
 from compressor.domain.compressors.services.base import Compressor
 from compressor.domain.compressors.services.bzip2.facade import BZip2Compressor
 from compressor.domain.compressors.services.fastlz.facade import FastLZCompressor

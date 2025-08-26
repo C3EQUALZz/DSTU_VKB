@@ -8,7 +8,7 @@ from dishka.integrations.taskiq import inject
 from taskiq import Context, TaskiqDepends
 from taskiq.brokers.shared_broker import shared_task
 
-from compressor.application.common.ports.sender import Sender, FileForSendInfoDTO
+from compressor.application.common.ports.sender import FileForSendInfoDTO, Sender
 from compressor.application.common.views.files import CompressedFileView
 from compressor.application.services.files.compressor import FileCompressorService
 from compressor.application.services.files.contracts import CompressTextFileDTO
@@ -52,7 +52,7 @@ async def compress_and_send_file_task(
     task: Task = asyncio.create_task(sender.send_file(
         user_id=data.user_id,
         file=FileForSendInfoDTO(
-            file_id=cast(FileID, view.file_id)
+            file_id=cast("FileID", view.file_id)
         )
     ))
     tasks.add(task)

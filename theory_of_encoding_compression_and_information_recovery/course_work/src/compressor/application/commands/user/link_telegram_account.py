@@ -1,13 +1,16 @@
 import logging
 from dataclasses import dataclass
-from typing import final, Final, cast
+from typing import Final, cast, final
 from uuid import UUID
 
 from compressor.application.common.ports.access_revoker import AccessRevoker
 from compressor.application.common.ports.transaction_manager import TransactionManager
 from compressor.application.common.ports.user_command_gateway import UserCommandGateway
-from compressor.application.errors.user import UserNotFoundError, UserHasLinkedTelegramAccountBeforeError, \
-    UserIsBotError
+from compressor.application.errors.user import (
+    UserHasLinkedTelegramAccountBeforeError,
+    UserIsBotError,
+    UserNotFoundError,
+)
 from compressor.application.services.user.current_user_service import CurrentUserService
 from compressor.domain.users.entities.telegram_user import TelegramUser
 from compressor.domain.users.entities.user import User
@@ -15,7 +18,7 @@ from compressor.domain.users.services.authorization.composite import AnyOf
 from compressor.domain.users.services.authorization.permission import (
     CanManageSelf,
     CanManageSubordinate,
-    UserManagementContext
+    UserManagementContext,
 )
 from compressor.domain.users.services.authorization_service import AuthorizationService
 from compressor.domain.users.services.telegram_service import TelegramService
@@ -62,7 +65,7 @@ class LinkTelegramAccountCommandHandler:
         current_user: User = await self._current_user_service.get_current_user()
         logger.info("Current user detected, id: %s", current_user.id)
 
-        typed_user_id: UserID = cast(UserID, data.user_id)
+        typed_user_id: UserID = cast("UserID", data.user_id)
 
         logger.info("Searching user to link telegram by id: %s", data.user_id)
         user: User | None = await self._user_command_gateway.read_by_id(
@@ -106,8 +109,8 @@ class LinkTelegramAccountCommandHandler:
         logger.info("Started link telegram account for user with id: %s", user.id)
 
         new_telegram_account: TelegramUser = self._telegram_service.create(
-            telegram_id=cast(TelegramID, data.telegram_id),
-            first_name=cast(UserFirstName, data.first_name),
+            telegram_id=cast("TelegramID", data.telegram_id),
+            first_name=cast("UserFirstName", data.first_name),
             username=data.username,
             last_name=data.last_name,
             is_premium=data.is_premium,

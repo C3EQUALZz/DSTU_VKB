@@ -1,5 +1,6 @@
 import logging
 from typing import Final
+
 from typing_extensions import override
 
 from compressor.domain.compressors.services.base import Compressor
