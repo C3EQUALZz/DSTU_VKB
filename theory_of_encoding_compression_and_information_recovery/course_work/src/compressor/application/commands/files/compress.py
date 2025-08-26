@@ -1,7 +1,6 @@
 import logging
 from dataclasses import dataclass
 from io import BytesIO
-from pathlib import Path
 from typing import final, Final
 
 from compressor.application.common.ports.identity_provider import IdentityProvider
@@ -12,9 +11,9 @@ from compressor.domain.files.entities.file import File
 from compressor.domain.files.services.file_service import FileService
 from compressor.domain.files.values.file_name import FileName
 from compressor.domain.users.values.user_id import UserID
-from compressor.infrastructure.task_manager.task_id import TaskID
 from compressor.infrastructure.task_manager.files.base import FileTaskManager
 from compressor.infrastructure.task_manager.files.contracts import FileInfoDTO
+from compressor.infrastructure.task_manager.task_id import TaskID
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 

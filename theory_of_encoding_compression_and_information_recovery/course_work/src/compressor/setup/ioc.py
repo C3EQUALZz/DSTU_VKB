@@ -1,4 +1,4 @@
-from typing import Iterable, Final
+from typing import Iterable, Final, cast
 
 from aiogram import Bot
 from bazario.asyncio import Registry, Dispatcher
@@ -9,10 +9,23 @@ from dishka.integrations.taskiq import TaskiqProvider
 from redis.asyncio import Redis
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from compressor.application.common.ports.identity_provider import CompositeIdentityProvider, IdentityProvider
+from compressor.application.commands.files.compress import CompressFileCommandHandler
+from compressor.application.commands.files.decompress import DecompressFileCommandHandler
+from compressor.application.commands.user.activate import ActivateUserCommandHandler
+from compressor.application.commands.user.create import CreateUserCommandHandler
+from compressor.application.commands.user.deactivate import DeactivateUserCommandHandler
+from compressor.application.commands.user.grant_admin import GrantAdminCommandHandler
+from compressor.application.commands.user.link_telegram_account import LinkTelegramAccountCommandHandler
+from compressor.application.commands.user.revoke_admin import RevokeAdminCommandHandler
+from compressor.application.commands.user.signup import SignUpCommandHandler
+from compressor.application.common.ports.access_revoker import AccessRevoker
+from compressor.application.common.ports.identity_provider import IdentityProvider
+from compressor.application.common.ports.sender import Sender
+from compressor.application.common.ports.storage import FileStorage
 from compressor.application.common.ports.transaction_manager import TransactionManager
 from compressor.application.common.ports.user_command_gateway import UserCommandGateway
 from compressor.application.common.ports.user_query_gateway import UserQueryGateway
+from compressor.application.services.user.current_user_service import CurrentUserService
 from compressor.domain.files.ports.file_id_generator import FileIDGenerator
 from compressor.domain.files.services.file_service import FileService
 from compressor.domain.users.ports.password_hasher import PasswordHasher
@@ -20,6 +33,8 @@ from compressor.domain.users.ports.user_id_generator import UserIDGenerator
 from compressor.domain.users.services.authorization_service import AuthorizationService
 from compressor.domain.users.services.telegram_service import TelegramService
 from compressor.domain.users.services.user_service import UserService
+from compressor.domain.users.values.telegram_user_id import TelegramID
+from compressor.infrastructure.adapters.auth.telegram_access_revoker import TelegramAccessRevoker
 from compressor.infrastructure.adapters.common.password_hasher_bcrypt import PasswordPepper, BcryptPasswordHasher
 from compressor.infrastructure.adapters.common.telegram_identity_provider import TelegramIdentityProvider
 from compressor.infrastructure.adapters.common.uuid4_file_id_generator import UUID4FileIDGenerator
@@ -31,14 +46,23 @@ from compressor.infrastructure.adapters.persistence.alchemy_user_command_gateway
 from compressor.infrastructure.adapters.persistence.alchemy_user_query_gateway import (
     SqlAlchemyUserQueryGateway
 )
+from compressor.infrastructure.adapters.persistence.s3_file_storage import S3FileStorage
+from compressor.infrastructure.adapters.telegram_sender import TelegramSender
 from compressor.infrastructure.cache.provider import get_redis_pool, get_redis
 from compressor.infrastructure.event_bus.base import EventBus
 from compressor.infrastructure.event_bus.bazario_event_bus import BazarioEventBus
-from compressor.infrastructure.persistence.provider import get_engine, get_sessionmaker, get_session
+from compressor.infrastructure.persistence.provider import (
+    get_engine,
+    get_sessionmaker,
+    get_session,
+    get_s3_session,
+    get_s3_client
+)
 from compressor.infrastructure.task_manager.files.base import FileTaskManager
 from compressor.infrastructure.task_manager.files.task_iq import TaskIQFileTaskManager
 from compressor.setup.configs.cache import RedisConfig
 from compressor.setup.configs.database import PostgresConfig, SQLAlchemyConfig
+from compressor.setup.configs.telegram import TGConfig
 
 
 def configs_provider() -> Provider:
@@ -47,6 +71,7 @@ def configs_provider() -> Provider:
     provider.from_context(provides=SQLAlchemyConfig)
     provider.from_context(provides=PasswordPepper)
     provider.from_context(provides=RedisConfig)
+    provider.from_context(provides=TGConfig)
     return provider
 
 
@@ -105,9 +130,39 @@ def task_manager_provider() -> Provider:
     return provider
 
 
+def sender_provider() -> Provider:
+    provider: Final[Provider] = Provider(scope=Scope.REQUEST)
+    provider.provide(TelegramSender, provides=Sender)
+    return provider
+
+
+def file_storage_provider() -> Provider:
+    provider: Final[Provider] = Provider(scope=Scope.REQUEST)
+    provider.provide(S3FileStorage, provides=FileStorage)
+    provider.provide(get_s3_session)
+    provider.provide(get_s3_client)
+    return provider
+
+
 def auth_provider() -> Provider:
     provider: Final[Provider] = Provider(scope=Scope.REQUEST)
-    provider.decorate(CompositeIdentityProvider, provides=IdentityProvider)
+    provider.provide(CurrentUserService)
+    provider.provide(TelegramAccessRevoker, provides=AccessRevoker)
+    return provider
+
+def interactors_provider() -> Provider:
+    provider: Final[Provider] = Provider(scope=Scope.REQUEST)
+    provider.provide_all(
+        ActivateUserCommandHandler,
+        CreateUserCommandHandler,
+        DeactivateUserCommandHandler,
+        GrantAdminCommandHandler,
+        LinkTelegramAccountCommandHandler,
+        RevokeAdminCommandHandler,
+        SignUpCommandHandler,
+        CompressFileCommandHandler,
+        DecompressFileCommandHandler
+    )
     return provider
 
 
@@ -117,9 +172,9 @@ class TelegramProvider(Provider):
     @provide(scope=Scope.REQUEST)
     def get_current_telegram_user_id(
             self, middleware_data: AiogramMiddlewareData
-    ) -> int | None:
+    ) -> TelegramID | None:
         if current_chat := middleware_data.get("event_chat"):
-            return current_chat.id
+            return cast(TelegramID, current_chat.id)
         return None
 
     @provide(scope=scope.REQUEST)
@@ -144,5 +199,9 @@ def setup_providers() -> Iterable[Provider]:
         gateways_provider(),
         event_bus_provider(),
         task_manager_provider(),
-        auth_provider()
+        auth_provider(),
+        sender_provider(),
+        db_provider(),
+        file_storage_provider(),
+        interactors_provider(),
     )

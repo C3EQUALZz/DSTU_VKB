@@ -10,6 +10,7 @@ from dishka import AsyncContainer, make_async_container
 from dishka.integrations.aiogram import setup_dishka
 from taskiq import AsyncBroker
 
+from compressor.infrastructure.adapters.common.password_hasher_bcrypt import PasswordPepper
 from compressor.setup.bootstrap import (
     setup_logging,
     setup_telegram_bot_dispatcher,
@@ -21,19 +22,21 @@ from compressor.setup.bootstrap import (
 )
 from compressor.setup.configs.cache import RedisConfig
 from compressor.setup.configs.database import PostgresConfig, SQLAlchemyConfig
+from compressor.setup.configs.s3 import S3Config
 from compressor.setup.configs.settings import AppConfig
+from compressor.setup.configs.telegram import TGConfig
 from compressor.setup.ioc import setup_providers
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 
 
-async def on_start(dp: Dispatcher, container: AsyncContainer, task_manager: AsyncBroker) -> None:
+async def on_start(dp: Dispatcher, container: AsyncContainer, task_manager: AsyncBroker, *args, **kwargs) -> None:
     if not task_manager.is_worker_process:
         logger.info("Setting up taskiq")
         await task_manager.startup()
 
 
-async def on_shutdown(dp: Dispatcher, container: AsyncContainer, task_manager: AsyncBroker) -> None:
+async def on_shutdown(dp: Dispatcher, container: AsyncContainer, task_manager: AsyncBroker, *args, **kwargs) -> None:
     if not task_manager.is_worker_process:
         logger.info("Shutting down taskiq")
         await task_manager.shutdown()
@@ -52,12 +55,12 @@ async def create_aiogram_app() -> None:
 
     storage: BaseStorage = setup_telegram_bot_storage(
         telegram_bot_config=config.telegram_bot,
-        redis_config=config.redis_config,
+        redis_config=config.cache,
     )
 
     events_isolation: BaseEventIsolation = setup_telegram_bot_event_isolation(
         telegram_bot_config=config.telegram_bot,
-        redis_config=config.redis_config,
+        redis_config=config.cache,
     )
 
     dp: Dispatcher = setup_telegram_bot_dispatcher(
@@ -78,6 +81,9 @@ async def create_aiogram_app() -> None:
         RedisConfig: config.cache,
         PostgresConfig: config.database,
         SQLAlchemyConfig: config.alchemy,
+        S3Config: config.s3,
+        PasswordPepper: config.telegram_bot.pepper,
+        TGConfig: config.telegram_bot
     }
 
     container: AsyncContainer = make_async_container(*setup_providers(), context=context)
@@ -92,17 +98,20 @@ async def create_aiogram_app() -> None:
     partial_start: partial[Coroutine[AsyncContainer, AsyncBroker, None]] = partial(
         on_start,
         container=container,
-        worker=task_manager
+        task_manager=task_manager,
+        dp=dp
     )
 
     partial_shutdown: partial[Coroutine[AsyncContainer, AsyncBroker, None]] = partial(
         on_shutdown,
         container=container,
-        worker=task_manager
+        task_manager=task_manager,
+        dp=dp
     )
 
-    await dp.startup.register(partial_start)
-    await dp.shutdown.register(partial_shutdown)
+    dp.startup.register(partial_start)
+    dp.shutdown.register(partial_shutdown)
+
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)
 
