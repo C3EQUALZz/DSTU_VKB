@@ -1,4 +1,5 @@
-from typing import Any, Optional, Dict, Union
+import logging
+from typing import Any, Optional, Dict, Union, Final
 
 from aiogram_dialog.api.internal import TextWidget
 from aiogram_dialog.api.protocols import DialogManager
@@ -7,17 +8,19 @@ from aiogram_dialog.widgets.text import Text
 from aiogram_i18n import I18nContext
 from magic_filter import MagicFilter
 
+logger: Final[logging.Logger] = logging.getLogger(__name__)
+
 I18N_FORMAT_KEY = "i18n"
 
 
 class I18NFormat(Text):
     def __init__(
-        self,
-        text: str,
-        locale: Optional[Union[TextWidget, MagicFilter, str]] = None,
-        when: Optional[WhenCondition] = None,
-        /,
-        **mapping: Union[TextWidget, MagicFilter, str, int, float, bool],
+            self,
+            text: str,
+            locale: Optional[Union[TextWidget, MagicFilter, str]] = None,
+            when: Optional[WhenCondition] = None,
+            /,
+            **mapping: Union[TextWidget, MagicFilter, str, int, float, bool],
     ) -> None:
         super().__init__(when)
         self.text = text
@@ -26,7 +29,7 @@ class I18NFormat(Text):
 
     @staticmethod
     async def _resolve(
-        value: Union[TextWidget, MagicFilter, str, int, float, bool], data: dict, manager: DialogManager
+            value: Union[TextWidget, MagicFilter, str, int, float, bool], data: dict, manager: DialogManager
     ) -> Any:
         if isinstance(value, TextWidget):
             return await value.render_text(data, manager)
@@ -46,7 +49,14 @@ class I18NFormat(Text):
         if i18n is None:
             raise ValueError("I18nContext not found in manager.middleware_data")
 
+        logger.debug("data info i18n: %s", data)
+
         transformed_data = await self._transform(data, manager)
+
+        logger.debug("transformed data i18n: %s", transformed_data)
+
         locale_str = await self._resolve(self.locale, data, manager) if self.locale else None
+
+        logger.debug("locale i18n: %s", locale_str)
 
         return i18n.get(self.text, locale_str, **transformed_data)

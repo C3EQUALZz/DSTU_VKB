@@ -17,33 +17,27 @@ class PostgresConfig(BaseModel):
 
     user: str = Field(
         alias="POSTGRES_USER",
-        default="postgres",
         description="Database username to connect",
-        validate_default=True,
     )
     password: str = Field(
         alias="POSTGRES_PASSWORD",
-        default="postgres",
         description="Database password to connect",
-        validate_default=True,
     )
     host: str = Field(
         alias="POSTGRES_HOST",
-        default="localhost",
         description="Database server hostname or IP address",
-        validate_default=True,
     )
     port: int = Field(
         alias="POSTGRES_PORT",
-        default="5432",
         description="Database server port",
-        validate_default=True,
     )
     db_name: str = Field(
         alias="POSTGRES_DB",
-        default="user-service",
         description="Database name to connect",
-        validate_default=True,
+    )
+    driver: str = Field(
+        alias="POSTGRES_DRIVER",
+        description="Database driver name",
     )
 
     @property

@@ -13,6 +13,7 @@ from aiogram.fsm.storage.redis import RedisStorage, RedisEventIsolation
 from aiogram_dialog import setup_dialogs
 from aiogram_i18n import I18nMiddleware
 from aiogram_i18n.cores import FluentRuntimeCore
+from babel import default_locale
 from taskiq import AsyncBroker, SmartRetryMiddleware, TaskiqScheduler, async_shared_broker
 from taskiq.schedule_sources import LabelScheduleSource
 from taskiq_aio_pika import AioPikaBroker
@@ -118,7 +119,7 @@ def setup_telegram_bot_middlewares(dp: Dispatcher, telegram_bot_config: TGConfig
         core=FluentRuntimeCore(
             path=path_to_locales / "{locale}" / "LC_MESSAGES",
             default_locale=telegram_bot_config.default_locale,
-            use_isolating=telegram_bot_config.use_i18n_isolation
+            use_isolating=telegram_bot_config.use_i18n_isolation,
         )
     )
 
