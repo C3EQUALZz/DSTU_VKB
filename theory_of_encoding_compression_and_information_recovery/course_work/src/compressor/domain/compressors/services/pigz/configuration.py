@@ -13,7 +13,7 @@ class Configuration:
     """
 
     # Определение числа доступных ядер процессора.
-    CPU_COUNT: Final[int] = os.cpu_count()
+    CPU_COUNT: Final[int] = os.cpu_count() if os.cpu_count() is not None else 6  # type: ignore[assignment]
 
     # Размер блока для сжатия (в килобайтах).
     DEFAULT_BLOCK_SIZE_KB: Final[int] = 128

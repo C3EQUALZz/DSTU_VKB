@@ -5,6 +5,7 @@ from typing_extensions import override
 
 from compressor.domain.compressors.services.base import Compressor
 from compressor.domain.compressors.services.gunzip.facade import GunZipCompressor
+from compressor.domain.compressors.services.pigz.configuration import Configuration
 from compressor.domain.compressors.services.pigz.pigz_file import PigzFile
 from compressor.domain.files.entities.compressed_file import CompressedFile
 from compressor.domain.files.entities.file import File
@@ -19,10 +20,11 @@ class PigzCompressor(Compressor):
         super().__init__()
         self._file_service: Final[FileService] = file_service
         self._gzip_compressor: Final[GunZipCompressor] = gzip_compressor
+        self._pigz_configuration: Final[Configuration] = Configuration()
 
     @override
     def compress(self, file: File) -> CompressedFile:
-        pigz_file = PigzFile(file.path)
+        pigz_file = PigzFile(file.path, configuration=self._pigz_configuration)
         pigz_file.process_compression_target()
 
         logger.debug("Compressed to %s", file.path)

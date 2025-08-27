@@ -1,5 +1,7 @@
 from typing import Any, Final
 
+from aiogram_dialog import DialogManager
+
 from compressor.presentation.errors.telegram import TaskIdNotProviderError
 
 SUPPORTED_BINARY_OR_TEXT_FILE_COMPRESSORS: Final[tuple[tuple[str, str], ...]] = (
@@ -18,8 +20,8 @@ async def get_compression_for_binary_or_text_files(**kwargs: Any) -> dict[str, A
     }
 
 
-async def task_id_getter(dialog_data: dict[str, Any], **kwargs: Any) -> dict[str, Any]:  # noqa: ANN401, ARG001
-    task_id: str | None = dialog_data.get("task_id")
+async def task_id_getter(dialog_manager: DialogManager, **kwargs: Any) -> dict[str, Any]:  # noqa: ANN401, ARG001
+    task_id: str | None = dialog_manager.dialog_data.get("task_id")
     msg: str
 
     if task_id is None:

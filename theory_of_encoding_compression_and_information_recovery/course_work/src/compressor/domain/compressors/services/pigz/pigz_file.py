@@ -23,12 +23,13 @@ class PigzFile:
     def __init__(
             self,
             compression_target: Path,
-            configuration: Configuration = Configuration,
+            configuration: Configuration,
     ) -> None:
         """
         Take in a file or directory and gzip using multiple system cores.
         Значения по умолчанию берутся из объекта configuration.
         """
+        msg: str
         self.config = configuration
         self.compression_target = compression_target
         self.compression_level = self.config.COMPRESS_LEVEL_BEST
@@ -48,16 +49,18 @@ class PigzFile:
         self.chunk_queue = PriorityQueue()
 
         if self.compression_target.is_dir():
-            raise NotImplementedError("Compression of directories is not supported yet.")
+            msg = "Compression of directories is not supported yet."
+            raise NotImplementedError(msg)
         if not self.compression_target.exists():
-            raise FileNotFoundError(f"{self.compression_target} does not exist.")
+            msg = f"{self.compression_target} does not exist."
+            raise FileNotFoundError(msg)
 
         # Настройка пула потоков для параллельного сжатия
         self.pool = Pool(processes=self.workers)
         self.read_thread = Thread(target=self._read_file)
         self.write_thread = Thread(target=self._write_file)
 
-    def process_compression_target(self):
+    def process_compression_target(self) -> None:
         """
         Setup output file.
         Start read and write threads.
@@ -68,14 +71,14 @@ class PigzFile:
         self.read_thread.start()  # Затем поток чтения
         self.write_thread.join()  # Ждём завершения записи
 
-    def _set_output_filename(self):
+    def _set_output_filename(self) -> None:
         """
         Set the output filename based on the input filename.
         """
         base = self.compression_target.name
         self.output_filename = base + ".gz"
 
-    def _write_output_header(self):
+    def _write_output_header(self) -> None:
         """
         Write gzip header to file.
         See RFC documentation: http://www.zlib.org/rfc-gzip.html#header-trailer
@@ -97,29 +100,29 @@ class PigzFile:
         if flags & self.config.FNAME:
             self.output_file.write(fname)
 
-    def _write_header_id(self):
+    def _write_header_id(self) -> None:
         self.output_file.write((0x1F).to_bytes(1, sys.byteorder))
         self.output_file.write((0x8B).to_bytes(1, sys.byteorder))
 
-    def _write_header_cm(self):
+    def _write_header_cm(self) -> None:
         self.output_file.write((8).to_bytes(1, sys.byteorder))
 
-    def _write_header_flg(self, flags):
+    def _write_header_flg(self, flags) -> None:
         self.output_file.write(flags.to_bytes(1, sys.byteorder))
 
-    def _write_header_mtime(self):
+    def _write_header_mtime(self) -> None:
         mtime = self._determine_mtime()
         self.output_file.write(mtime.to_bytes(4, sys.byteorder))
 
-    def _write_header_xfl(self):
+    def _write_header_xfl(self) -> None:
         extra_flags = self._determine_extra_flags(self.compression_level)
         self.output_file.write(extra_flags.to_bytes(1, sys.byteorder))
 
-    def _write_header_os(self):
+    def _write_header_os(self) -> None:
         os_number = self._determine_operating_system()
         self.output_file.write(os_number.to_bytes(1, sys.byteorder))
 
-    def _setup_output_file(self):
+    def _setup_output_file(self) -> None:
         """
         Setup the output file.
         """
@@ -128,18 +131,18 @@ class PigzFile:
         self.output_file = full_path.open("wb")
         self._write_output_header()
 
-    def _determine_mtime(self):
+    def _determine_mtime(self) -> int:
         try:
             return int(self.compression_target.stat().st_mtime)
         except Exception:
             return int(time.time())
 
     @staticmethod
-    def _determine_extra_flags(compression_level):
+    def _determine_extra_flags(compression_level: int) -> int:
         return 2 if compression_level >= 9 else 4 if compression_level == 1 else 0
 
     @staticmethod
-    def _determine_operating_system():
+    def _determine_operating_system() -> int:
         if sys.platform.startswith(("freebsd", "linux", "aix", "darwin")):
             return 3
         if sys.platform.startswith("win32"):

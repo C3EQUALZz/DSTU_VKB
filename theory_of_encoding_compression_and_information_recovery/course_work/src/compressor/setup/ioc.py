@@ -25,7 +25,10 @@ from compressor.application.common.ports.storage import FileStorage
 from compressor.application.common.ports.transaction_manager import TransactionManager
 from compressor.application.common.ports.user_command_gateway import UserCommandGateway
 from compressor.application.common.ports.user_query_gateway import UserQueryGateway
+from compressor.application.services.files.compressor import FileCompressorService
 from compressor.application.services.user.current_user_service import CurrentUserService
+from compressor.domain.compressors.factories.text.base import FileCompressorFactory
+from compressor.domain.compressors.factories.text.impl import FileCompressorFactoryImpl
 from compressor.domain.files.ports.file_id_generator import FileIDGenerator
 from compressor.domain.files.services.file_service import FileService
 from compressor.domain.users.ports.password_hasher import PasswordHasher
@@ -95,6 +98,7 @@ def domain_ports_provider() -> Provider:
     provider.provide(source=TelegramService)
     provider.provide(source=AuthorizationService)
     provider.provide(source=FileService)
+    provider.provide(source=FileCompressorFactoryImpl, provides=FileCompressorFactory)
     return provider
 
 
@@ -129,6 +133,12 @@ def task_manager_provider() -> Provider:
 def sender_provider() -> Provider:
     provider: Final[Provider] = Provider(scope=Scope.REQUEST)
     provider.provide(TelegramSender, provides=Sender)
+    return provider
+
+
+def application_services_provider() -> Provider:
+    provider: Final[Provider] = Provider(scope=Scope.REQUEST)
+    provider.provide_all(FileCompressorService)
     return provider
 
 
@@ -197,4 +207,5 @@ def setup_providers() -> Iterable[Provider]:
         db_provider(),
         file_storage_provider(),
         interactors_provider(),
+        application_services_provider(),
     )
