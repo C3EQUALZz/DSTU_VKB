@@ -60,7 +60,7 @@ class PostgresConfig(BaseModel):
                 password=self.password,
                 host=self.host,
                 port=self.port,
-                path=self.db,
+                path=self.db_name,
             ),
         )
 

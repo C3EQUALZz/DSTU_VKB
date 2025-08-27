@@ -42,6 +42,7 @@ x-sqlalchemy-environment: &x-sqlalchemy-environment
   DB_EXPIRE_ON_COMMIT: ${DB_EXPIRE_ON_COMMIT}
   DB_DEBUG: ${DB_DEBUG}
   DB_FUTURE: ${DB_FUTURE}
+  POSTGRES_DRIVER: ${POSTGRES_DRIVER}
 
 x-app-environment: &x-app-environment
   POSTGRES_HOST: db

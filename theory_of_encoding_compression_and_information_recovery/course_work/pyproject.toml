@@ -124,7 +124,7 @@ select = ["ALL"]
 ignore = ["D", "CPY001", "A005", "TRY003", "COM812"]
 
 [tool.ruff.lint.per-file-ignores]
-"src/compressor/infrastructure/persistence/alembic/**" = ["ERA001", "INP001"]
+"src/compressor/infrastructure/persistence/migrations/**" = ["INP001", "ERA001", "I001", "Q000", "UP007", "W291", "E501", "UP035"]
 "tests/**" = ["S101"]
 
 [tool.ruff.format]
@@ -154,7 +154,7 @@ exclude_also = [
 ]
 omit = [
     'src/compressor/infrastructure/persistence/adapters/*.py',
-    'src/compressor/infrastructure/persistence/alembic/env.py',
+    'src/compressor/infrastructure/persistence/migrations/env.py',
     '*/__init__.py',
 ]
 

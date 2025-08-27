@@ -17,6 +17,8 @@ from taskiq.schedule_sources import LabelScheduleSource
 from taskiq_aio_pika import AioPikaBroker
 from taskiq_redis import RedisAsyncResultBackend
 
+from compressor.infrastructure.persistence.models.telegram_users import map_telegram_user_table
+from compressor.infrastructure.persistence.models.users import map_user_table
 from compressor.presentation.telegram.handlers import setup_all_dialogs, setup_all_handlers
 from compressor.presentation.telegram.middlewares.stale_message_middleware import StaleMessageMiddleware
 from compressor.presentation.telegram.middlewares.timing_middleware import TimingMiddleware
@@ -33,6 +35,10 @@ logger: Final[logging.Logger] = logging.getLogger(__name__)
 @lru_cache(maxsize=1)
 def setup_configs() -> AppConfig:
     return AppConfig()
+
+def setup_map_tables() -> None:
+    map_telegram_user_table()
+    map_user_table()
 
 
 def setup_task_manager(

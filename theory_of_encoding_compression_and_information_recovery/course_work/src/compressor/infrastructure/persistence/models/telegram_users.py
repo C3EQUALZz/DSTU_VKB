@@ -51,10 +51,7 @@ def map_telegram_user_table() -> None:
         properties={
             "id": composite(TelegramID, telegram_users_table.c.telegram_id),
             "first_name": composite(UserFirstName, telegram_users_table.c.first_name),
-            "user": relationship(
-                "User",
-                back_populates="telegram",
-                uselist=False
-            ),
+            "user": relationship("User", back_populates="telegram", uselist=False),
         },
+        column_prefix="_",
     )

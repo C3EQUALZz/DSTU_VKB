@@ -1,6 +1,7 @@
 import re
 from dataclasses import dataclass
-from typing import override
+
+from typing_extensions import override
 
 from compressor.domain.common.values.base import BaseValueObject
 from compressor.domain.users.constants import (

@@ -51,11 +51,8 @@ def map_user_table() -> None:
             "role": composite(UserRole, users_table.c.role),
             "language": composite(LanguageCode, users_table.c.language_code),
             "telegram": relationship(
-                "TelegramUser",
-                back_populates="user",
-                uselist=False,
-                cascade="all, delete-orphan",
-                lazy="joined"
+                "TelegramUser", back_populates="user", uselist=False, cascade="all, delete-orphan", lazy="joined"
             ),
         },
+        column_prefix="_",
     )
