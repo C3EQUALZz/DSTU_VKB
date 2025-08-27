@@ -18,10 +18,10 @@ if TYPE_CHECKING:
 
 
 async def on_algorithm_selected(
-        callback: CallbackQuery,
-        widget: Any,
-        manager: DialogManager,
-        item_id: str
+    callback: CallbackQuery,  # noqa: ARG001
+    widget: Any,  # noqa: ARG001, ANN401
+    manager: DialogManager,
+    item_id: str,
 ) -> None:
     manager.dialog_data["selected_algorithm_id"] = item_id
     await manager.next()
@@ -29,10 +29,10 @@ async def on_algorithm_selected(
 
 @inject
 async def compress_binary_or_text_file(
-        message: Message,
-        message_input: MessageInput,
-        manager: DialogManager,
-        interactor: FromDishka[CompressFileCommandHandler]
+    message: Message,
+    message_input: MessageInput,  # noqa: ARG001
+    manager: DialogManager,
+    interactor: FromDishka[CompressFileCommandHandler],
 ) -> None:
     bot: Bot = manager.middleware_data["bot"]
     algorithm_id: str | None = manager.dialog_data.get("selected_algorithm_id", None)
@@ -47,10 +47,13 @@ async def compress_binary_or_text_file(
         msg = "Document must be provided"
         raise DocumentNotProvidedError(msg)
 
-    algorithm: str = next(filter(
-        lambda pair_with_name_and_id: pair_with_name_and_id[1] == algorithm_id,
-        SUPPORTED_BINARY_OR_TEXT_FILE_COMPRESSORS
-    ), "gzip")
+    algorithm: tuple[str, str] = next(
+        filter(
+            lambda pair_with_name_and_id: pair_with_name_and_id[1] == algorithm_id,
+            SUPPORTED_BINARY_OR_TEXT_FILE_COMPRESSORS,
+        ),
+        SUPPORTED_BINARY_OR_TEXT_FILE_COMPRESSORS[0],
+    )
 
     data: BytesIO = BytesIO()
 
@@ -58,11 +61,7 @@ async def compress_binary_or_text_file(
 
     file_name: str = document.file_name if document.file_name is not None else document.file_id
 
-    command: CompressFileCommand = CompressFileCommand(
-        compressor_type=algorithm,
-        file_name=file_name,
-        data=data
-    )
+    command: CompressFileCommand = CompressFileCommand(compressor_type=algorithm[0], file_name=file_name, data=data)
 
     view: TaskView = await interactor(command)
 

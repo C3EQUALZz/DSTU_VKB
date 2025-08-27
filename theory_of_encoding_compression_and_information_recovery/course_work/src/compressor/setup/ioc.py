@@ -146,6 +146,7 @@ def auth_provider() -> Provider:
     provider.provide(TelegramAccessRevoker, provides=AccessRevoker)
     return provider
 
+
 def interactors_provider() -> Provider:
     provider: Final[Provider] = Provider(scope=Scope.REQUEST)
     provider.provide_all(
@@ -157,7 +158,7 @@ def interactors_provider() -> Provider:
         RevokeAdminCommandHandler,
         SignUpCommandHandler,
         CompressFileCommandHandler,
-        DecompressFileCommandHandler
+        DecompressFileCommandHandler,
     )
     return provider
 
@@ -166,17 +167,13 @@ class TelegramProvider(Provider):
     scope = Scope.REQUEST
 
     @provide(scope=Scope.REQUEST)
-    def get_current_telegram_user_id(
-            self, middleware_data: AiogramMiddlewareData
-    ) -> TelegramID | None:
+    def get_current_telegram_user_id(self, middleware_data: AiogramMiddlewareData) -> TelegramID | None:
         if current_chat := middleware_data.get("event_chat"):
-            return cast("TelegramID", current_chat.id)
+            return cast(TelegramID, current_chat.id)  # noqa: TC006
         return None
 
     @provide(scope=scope.REQUEST)
-    def get_current_bot(
-            self, middleware_data: AiogramMiddlewareData
-    ) -> Bot | None:
+    def get_current_bot(self, middleware_data: AiogramMiddlewareData) -> Bot | None:
         if bot := middleware_data.get("bot"):
             return bot
         return None

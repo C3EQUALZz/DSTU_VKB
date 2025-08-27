@@ -85,7 +85,7 @@ class SQLAlchemyConfig(BaseModel):
     )
     echo: bool = Field(
         alias="DB_ECHO",
-        default=False,
+        default=True,
         description="Enable database echo mode for debugging.",
         validate_default=True,
     )

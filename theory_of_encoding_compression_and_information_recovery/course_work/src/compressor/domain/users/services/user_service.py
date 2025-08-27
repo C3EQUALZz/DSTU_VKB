@@ -1,3 +1,4 @@
+import logging
 from typing import Final
 
 from compressor.domain.common.services.base import DomainService
@@ -11,29 +12,34 @@ from compressor.domain.users.values.user_raw_password import UserRawPassword
 from compressor.domain.users.values.user_role import UserRole
 from compressor.domain.users.values.username import Username
 
+logger: Final[logging.Logger] = logging.getLogger(__name__)
+
 
 class UserService(DomainService):
     def __init__(
-            self,
-            user_id_generator: UserIDGenerator,
-            password_hasher: PasswordHasher,
+        self,
+        user_id_generator: UserIDGenerator,
+        password_hasher: PasswordHasher,
     ) -> None:
         super().__init__()
         self._user_id_generator: Final[UserIDGenerator] = user_id_generator
         self._password_hasher: Final[PasswordHasher] = password_hasher
 
     def create(
-            self,
-            username: Username,
-            raw_password: UserRawPassword,
-            role: UserRole = UserRole.USER,
-            is_active: bool = True,
+        self,
+        username: Username,
+        raw_password: UserRawPassword,
+        role: UserRole = UserRole.USER,
+        is_active: bool = True,
     ) -> User:
+        logger.debug("Started creating domain user entity with username %s", username)
+
         if not role.is_assignable:
             msg: str = f"Assignment of role {role} is not permitted."
             raise RoleAssignmentNotPermittedError(msg)
 
         user_id: UserID = self._user_id_generator()
+        logger.debug("Generated user id for new user: %s", user_id)
         password_hash: UserPasswordHash = self._password_hasher.hash(raw_password)
 
         return User(

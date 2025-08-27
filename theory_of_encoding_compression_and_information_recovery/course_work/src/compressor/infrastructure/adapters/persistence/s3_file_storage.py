@@ -22,7 +22,7 @@ logger: Final[logging.Logger] = logging.getLogger(__name__)
 class S3FileStorage(FileStorage):
     def __init__(self, client: AioBaseClient) -> None:
         self._client: Final[AioBaseClient] = client
-        self._bucket_name: Final[str] = "files_bucket"
+        self._bucket_name: Final[str] = "files"
 
     @override
     async def add(self, dto: FileStorageDTO) -> None:
@@ -39,11 +39,9 @@ class S3FileStorage(FileStorage):
                 self._bucket_name,
                 s3_key,
                 ExtraArgs={
-                    "Metadata": {
-                        "original_filename": dto.name.value
-                    },
+                    "Metadata": {"original_filename": dto.name.value},
                     "ContentType": "application/octet-stream",  # Можно определить по расширению файла
-                }
+                },
             )
             logger.info("Finished uploading file: %s", s3_key)
 
@@ -68,10 +66,7 @@ class S3FileStorage(FileStorage):
         s3_key: str = f"files/{file_id}"
 
         try:
-            response = await self._client.get_object(
-                Bucket=self._bucket_name,
-                Key=s3_key
-            )
+            response = await self._client.get_object(Bucket=self._bucket_name, Key=s3_key)
             metadata: dict[str, Any] = response.get("Metadata", {})
             original_filename: str = metadata.get("original_filename", s3_key.split("/")[-1])
 
@@ -80,7 +75,7 @@ class S3FileStorage(FileStorage):
 
         except ClientError as e:
             if e.response["Error"]["Code"] == "NoSuchKey":
-                logger.warning(f"File not found in S3: {s3_key}")
+                logger.warning("File not found in S3: %s", s3_key)
                 return None
             logger.exception(DOWNLOAD_FILE_FAILED)
             raise FileStorageError(DOWNLOAD_FILE_FAILED) from e
@@ -91,26 +86,19 @@ class S3FileStorage(FileStorage):
             logger.exception(DOWNLOAD_FILE_FAILED)
             raise FileStorageError(DOWNLOAD_FILE_FAILED) from e
         else:
-            return FileStorageDTO(
-                file_id=file_id,
-                name=FileName(original_filename),
-                data=file_data
-            )
+            return FileStorageDTO(file_id=file_id, name=FileName(original_filename), data=file_data)
 
     @override
     async def delete_by_id(self, file_id: FileID) -> None:
         s3_key: str = f"files/{file_id}"
 
         try:
-            await self._client.delete_object(
-                Bucket=self._bucket_name,
-                Key=s3_key
-            )
-            logger.info(f"File successfully deleted from S3: {s3_key}")
+            await self._client.delete_object(Bucket=self._bucket_name, Key=s3_key)
+            logger.info("File successfully deleted from S3: %s", s3_key)
 
         except ClientError as e:
             if e.response["Error"]["Code"] == "NoSuchKey":
-                logger.warning(f"File not found in S3: {s3_key}")
+                logger.warning("File not found in S3: %s", s3_key)
                 return
             logger.exception(DELETE_FILE_FAILED)
             raise FileStorageError(DELETE_FILE_FAILED) from e

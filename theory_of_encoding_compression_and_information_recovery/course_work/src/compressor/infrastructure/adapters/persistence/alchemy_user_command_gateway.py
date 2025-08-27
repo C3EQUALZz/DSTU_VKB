@@ -1,3 +1,4 @@
+import logging
 from typing import Final
 
 from sqlalchemy import Select, select
@@ -5,10 +6,13 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from typing_extensions import override
 
 from compressor.application.common.ports.user_command_gateway import UserCommandGateway
+from compressor.domain.users.entities.telegram_user import TelegramUser
 from compressor.domain.users.entities.user import User
 from compressor.domain.users.values.telegram_user_id import TelegramID
 from compressor.domain.users.values.user_id import UserID
 from compressor.domain.users.values.username import Username
+
+logger: Final[logging.Logger] = logging.getLogger(__name__)
 
 
 class SqlAlchemyUserCommandGateway(UserCommandGateway):
@@ -21,42 +25,28 @@ class SqlAlchemyUserCommandGateway(UserCommandGateway):
 
     @override
     async def read_by_id(self, user_id: UserID) -> User | None:
-        select_stmt: Select[tuple[User]] = select(
-            User
-        ).where(
-            User.id == user_id  # type: ignore
-        )
+        logger.debug("Started reading user by id: %s in user command gateway", user_id)
 
-        user: User | None = (
-            await self._session.execute(select_stmt)
-        ).scalar_one_or_none()
+        select_stmt: Select[tuple[User]] = select(User).where(User.id == user_id)  # type: ignore
+
+        user: User | None = (await self._session.execute(select_stmt)).scalar_one_or_none()
+
+        logger.debug("Successfully found user: %s", user)
 
         return user
 
     @override
     async def read_by_telegram_user_id(self, telegram_id: TelegramID) -> User | None:
-        select_stmt: Select[tuple[User]] = select(
-            User
-        ).where(
-            User.telegram.id == telegram_id  # type: ignore
-        )
+        select_stmt: Select[tuple[User]] = select(User).where(TelegramUser.id == telegram_id)  # type: ignore
 
-        user: User | None = (
-            await self._session.execute(select_stmt)
-        ).scalar_one_or_none()
+        user: User | None = (await self._session.execute(select_stmt)).scalar_one_or_none()
 
         return user
 
     @override
     async def read_by_username(self, username: Username) -> User | None:
-        select_stmt: Select[tuple[User]] = select(
-            User
-        ).where(
-            User.username == username  # type: ignore
-        )
+        select_stmt: Select[tuple[User]] = select(User).where(User.username == username)  # type: ignore
 
-        user: User | None = (
-            await self._session.execute(select_stmt)
-        ).scalar_one_or_none()
+        user: User | None = (await self._session.execute(select_stmt)).scalar_one_or_none()
 
         return user

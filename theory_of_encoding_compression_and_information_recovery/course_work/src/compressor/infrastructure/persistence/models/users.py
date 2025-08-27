@@ -13,7 +13,7 @@ from compressor.infrastructure.persistence.models.base import mapper_registry
 users_table: Final[sa.Table] = sa.Table(
     "users",
     mapper_registry.metadata,
-    sa.Column("id", sa.UUID, primary_key=True, unique=True, nullable=False),
+    sa.Column("id", sa.UUID(as_uuid=True), primary_key=True, unique=True, nullable=False),
     sa.Column("username", sa.String(50), nullable=False, unique=True),
     sa.Column("password_hash", sa.LargeBinary, nullable=False),
     sa.Column("role", sa.Enum(UserRole, name="userrole"), default=UserRole.USER, nullable=False),

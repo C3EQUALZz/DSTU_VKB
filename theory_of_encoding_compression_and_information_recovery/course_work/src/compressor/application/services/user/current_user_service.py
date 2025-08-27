@@ -24,7 +24,11 @@ class CurrentUserService:
         self._access_revoker: Final[AccessRevoker] = access_revoker
 
     async def get_current_user(self) -> User:
-        current_user_id: UserID = await self._identity_provider.get_current_user_id()
+        current_user_id: UserID | None = await self._identity_provider.get_current_user_id()
+
+        if current_user_id is None:
+            raise AuthorizationError(AUTHZ_NOT_AUTHORIZED)
+
         user: User | None = await self._user_query_gateway.read_by_id(current_user_id)
 
         if user is None or not user.is_active:

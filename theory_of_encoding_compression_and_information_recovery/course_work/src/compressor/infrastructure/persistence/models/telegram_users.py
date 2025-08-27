@@ -11,7 +11,9 @@ telegram_users_table: Final[sa.Table] = sa.Table(
     "telegram_users",
     mapper_registry.metadata,
     sa.Column("telegram_id", sa.BigInteger, primary_key=True),
-    sa.Column("user_id", sa.UUID, sa.ForeignKey("users.id", ondelete="CASCADE"), unique=True, nullable=True),
+    sa.Column(
+        "user_id", sa.UUID(as_uuid=True), sa.ForeignKey("users.id", ondelete="CASCADE"), unique=True, nullable=True
+    ),
     sa.Column("first_name", sa.String(255), nullable=False),
     sa.Column("username", sa.String(255), nullable=True),
     sa.Column("last_name", sa.String(255), nullable=True),
