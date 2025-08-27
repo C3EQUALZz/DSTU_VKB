@@ -5,7 +5,7 @@ ENV UV_COMPILE_BYTECODE 1
 ENV UV_SYSTEM_PYTHON 1
 ENV UV_NO_CACHE 1
 
-COPY ./pyproject.toml ./deploy/dev/compressor/telegram_entrypoint.sh ./deploy/dev/compressor/worker_entrypoint.sh ./
+COPY ./pyproject.toml ./deploy/dev/compressor/telegram_entrypoint.sh ./deploy/dev/compressor/worker_entrypoint.sh alembic.ini ./
 COPY ./src ./src
 
 RUN uv pip install --system --no-cache --target dependencies ".[dev]"

@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 
-echo 'Starting telegram bot...'
+echo 'Running migrations to database'
+python -m alembic upgrade head
 
+echo 'Starting telegram bot...'
 python -m src.compressor.telegram_bot

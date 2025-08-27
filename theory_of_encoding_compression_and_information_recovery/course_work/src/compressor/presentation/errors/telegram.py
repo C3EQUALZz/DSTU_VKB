@@ -15,3 +15,11 @@ class AlgorithmNotProvidedError(TelegramPresentationError):
 
 class TaskIdNotProviderError(TelegramPresentationError):
     ...
+
+
+class UserCantBeNoneError(TelegramPresentationError):
+    ...
+
+
+class MessageCantBeNoneError(TelegramPresentationError):
+    ...

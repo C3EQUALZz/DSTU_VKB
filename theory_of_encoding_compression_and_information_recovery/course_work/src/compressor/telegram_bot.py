@@ -8,11 +8,13 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from dishka import AsyncContainer, make_async_container
 from dishka.integrations.aiogram import setup_dishka
+from sqlalchemy.orm import clear_mappers
 from taskiq import AsyncBroker
 
 from compressor.infrastructure.adapters.common.password_hasher_bcrypt import PasswordPepper
 from compressor.setup.bootstrap import (
     setup_logging,
+    setup_map_tables,
     setup_task_manager,
     setup_telegram_bot_dispatcher,
     setup_telegram_bot_event_isolation,
@@ -35,18 +37,21 @@ if TYPE_CHECKING:
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 
 
-async def on_start(dp: Dispatcher, container: AsyncContainer, task_manager: AsyncBroker, *args, **kwargs) -> None: # noqa: ARG001
+async def on_start(dp: Dispatcher, container: AsyncContainer, task_manager: AsyncBroker, *args, **kwargs) -> None: # noqa: ARG001, ANN002, ANN003
+    setup_map_tables()
+
     if not task_manager.is_worker_process:
         logger.info("Setting up taskiq")
         await task_manager.startup()
 
 
-async def on_shutdown(dp: Dispatcher, container: AsyncContainer, task_manager: AsyncBroker, *args, **kwargs) -> None:  # noqa: ARG001
+async def on_shutdown(dp: Dispatcher, container: AsyncContainer, task_manager: AsyncBroker, *args, **kwargs) -> None:  # noqa: ARG001, ANN002, ANN003
     if not task_manager.is_worker_process:
         logger.info("Shutting down taskiq")
         await task_manager.shutdown()
 
     dp.shutdown.register(container.close)
+    clear_mappers()
 
 async def create_aiogram_app() -> None:
     config: AppConfig = AppConfig()

@@ -21,8 +21,10 @@ class Username(BaseValueObject):
 
     @override
     def _validate(self) -> None:
+        msg: str
+
         if len(self.value) < USERNAME_MIN_LEN or len(self.value) > USERNAME_MAX_LEN:
-            msg: str = (
+            msg = (
                 f"Username must be between "
                 f"{USERNAME_MIN_LEN} and "
                 f"{USERNAME_MAX_LEN} characters."
@@ -31,19 +33,19 @@ class Username(BaseValueObject):
             raise UsernameError(msg)
 
         if not re.match(PATTERN_START, self.value):
-            msg: str = "Username must start with a letter (A-Z, a-z, А-Я, а-я) or a digit (0-9)."
+            msg = "Username must start with a letter (A-Z, a-z, А-Я, а-я) or a digit (0-9)."  # noqa: RUF001
             raise UsernameError(msg)
 
         if not re.fullmatch(PATTERN_ALLOWED_CHARS, self.value):
-            msg: str = (
-                "Username can only contain letters (A-Z, a-z, А-Я, а-я), digits (0-9), "
+            msg = (
+                "Username can only contain letters (A-Z, a-z, А-Я, а-я), digits (0-9), "  # noqa: RUF001
                 "dots (.), hyphens (-), and underscores (_)."
             )
 
             raise UsernameError(msg)
 
         if not re.fullmatch(PATTERN_NO_CONSECUTIVE_SPECIALS, self.value):
-            msg: str = (
+            msg = (
                 "Username cannot contain consecutive special characters"
                 " like .., --, or __."
             )
@@ -51,9 +53,7 @@ class Username(BaseValueObject):
             raise UsernameError(msg)
 
         if not re.match(PATTERN_END, self.value):
-            msg: str = (
-                "Username must end with a letter (A-Z, a-z, А-Я, а-я) or a digit (0-9)."
-            )
+            msg = "Username must end with a letter (A-Z, a-z, А-Я, а-я) or a digit (0-9)."  # noqa: RUF001
 
             raise UsernameError(msg)
 

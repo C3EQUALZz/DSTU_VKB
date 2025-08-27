@@ -9,9 +9,12 @@ from compressor.setup.configs.logs import LoggingConfig
 from compressor.setup.configs.s3 import S3Config
 from compressor.setup.configs.task_iq import TaskIQConfig
 from compressor.setup.configs.telegram import TGConfig
-
+from dotenv import load_dotenv
 
 class AppConfig(BaseModel):
+    load_dotenv(
+        r"/home/c3equalz/Programmig/DSTU_VKB/theory_of_encoding_compression_and_information_recovery/course_work/.env"
+    )
     logging: LoggingConfig = Field(
         default_factory=lambda: LoggingConfig(**os.environ),
         description="Logging config",
