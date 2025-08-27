@@ -4,7 +4,7 @@ from typing import Final
 from aiogram.enums import ContentType
 from aiogram_dialog import Dialog, Window
 from aiogram_dialog.widgets.input import MessageInput
-from aiogram_dialog.widgets.kbd import Button, Group, Select
+from aiogram_dialog.widgets.kbd import Group, Select, Start
 from aiogram_dialog.widgets.text import Format
 
 from compressor.presentation.telegram.handlers.compress.callbacks import (
@@ -30,11 +30,12 @@ COMPRESS_DIALOG: Final[Dialog] = Dialog(
     Window(
         I18NFormat(COMPRESS_START),
         Group(
-            Button(
+            Start(
                 I18NFormat(COMPRESS_BINARY_OR_TEXT_FILE),
                 id=COMPRESS_BINARY_OR_TEXT_FILE,
+                state=CompressBinaryOrTextFileStates.START,
             ),
-            width=1
+            width=1,
         ),
         state=CompressStates.START,
     ),
@@ -44,7 +45,7 @@ COMPRESS_BINARY_OR_TEXT_FILE_DIALOG: Final[Dialog] = Dialog(
     Window(
         I18NFormat(CHOOSE_BINARY_OR_TEXT_FILE_COMPRESSION_TYPE),
         Select(
-            Format("{item[0]} ({pos}/data[count]})"),
+            Format("{item[0]} ({pos}/{data[count]})"),
             id=SELECTOR_ALGORITHM,
             item_id_getter=operator.itemgetter(1),
             items="compressor_algorithms",

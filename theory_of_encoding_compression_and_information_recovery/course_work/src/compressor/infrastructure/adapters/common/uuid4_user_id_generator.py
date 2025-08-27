@@ -9,5 +9,5 @@ from compressor.domain.users.values.user_id import UserID
 
 class UUID4UserIDGenerator(UserIDGenerator):
     @override
-    async def __call__(self) -> UserID:
+    def __call__(self) -> UserID:
         return cast("UserID", uuid4())

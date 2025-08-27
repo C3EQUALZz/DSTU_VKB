@@ -36,32 +36,33 @@ logger: Final[logging.Logger] = logging.getLogger(__name__)
 def setup_configs() -> AppConfig:
     return AppConfig()
 
+
 def setup_map_tables() -> None:
     map_telegram_user_table()
     map_user_table()
 
 
 def setup_task_manager(
-        taskiq_config: TaskIQConfig,
-        rabbitmq_config: RabbitMQConfig,
-        redis_config: RedisConfig
+    taskiq_config: TaskIQConfig, rabbitmq_config: RabbitMQConfig, redis_config: RedisConfig
 ) -> AsyncBroker:
     logger.debug("Creating taskiq broker for task management....")
-    broker: AsyncBroker = AioPikaBroker(
-        url=rabbitmq_config.uri,
-        declare_exchange=taskiq_config.declare_exchange,
-        declare_queues_kwargs={"durable": taskiq_config.durable_queue},
-        declare_exchange_kwargs={"durable": taskiq_config.durable_exchange},
-    ).with_middlewares(
-        SmartRetryMiddleware(
-            default_retry_count=taskiq_config.default_retry_count,
-            default_delay=taskiq_config.default_delay,
-            use_jitter=taskiq_config.use_jitter,
-            use_delay_exponent=taskiq_config.use_delay_exponent,
-            max_delay_exponent=taskiq_config.max_delay_exponent
-        ),
-    ).with_result_backend(
-        RedisAsyncResultBackend(redis_url=redis_config.worker_uri)
+    broker: AsyncBroker = (
+        AioPikaBroker(
+            url=rabbitmq_config.uri,
+            declare_exchange=taskiq_config.declare_exchange,
+            declare_queues_kwargs={"durable": taskiq_config.durable_queue},
+            declare_exchange_kwargs={"durable": taskiq_config.durable_exchange},
+        )
+        .with_middlewares(
+            SmartRetryMiddleware(
+                default_retry_count=taskiq_config.default_retry_count,
+                default_delay=taskiq_config.default_delay,
+                use_jitter=taskiq_config.use_jitter,
+                use_delay_exponent=taskiq_config.use_delay_exponent,
+                max_delay_exponent=taskiq_config.max_delay_exponent,
+            ),
+        )
+        .with_result_backend(RedisAsyncResultBackend(redis_url=redis_config.worker_uri))
     )
     logger.debug("Set async shared broker")
     async_shared_broker.default_broker(broker)
@@ -80,8 +81,8 @@ def setup_scheduler(broker: AsyncBroker) -> TaskiqScheduler:
 
 
 def setup_telegram_bot_storage(
-        telegram_bot_config: TGConfig,
-        redis_config: RedisConfig,
+    telegram_bot_config: TGConfig,
+    redis_config: RedisConfig,
 ) -> BaseStorage:
     logger.debug("Creating storage for telegram bot...")
 
@@ -98,8 +99,8 @@ def setup_telegram_bot_storage(
 
 
 def setup_telegram_bot_event_isolation(
-        telegram_bot_config: TGConfig,
-        redis_config: RedisConfig,
+    telegram_bot_config: TGConfig,
+    redis_config: RedisConfig,
 ) -> BaseEventIsolation:
     logger.debug("Creating event isolation storage for telegram bot...")
 
@@ -142,8 +143,8 @@ def setup_telegram_routes(dp: Dispatcher) -> None:
 
 
 def setup_telegram_bot_dispatcher(
-        storage: BaseStorage,
-        events_isolation: BaseEventIsolation,
+    storage: BaseStorage,
+    events_isolation: BaseEventIsolation,
 ) -> Dispatcher:
     logger.debug("Creating dispatcher for telegram bot...")
 
@@ -166,9 +167,9 @@ def setup_logging(logger_config: LoggingConfig) -> None:
 
 
 def global_exception_handler_with_traceback(
-        exc_type: type[BaseException],
-        value: BaseException,
-        traceback: TracebackType | None,
+    exc_type: type[BaseException],
+    value: BaseException,
+    traceback: TracebackType | None,
 ) -> Any:  # noqa: ANN401
     root_logger: logging.Logger = logging.getLogger()
     root_logger.exception("Error", exc_info=(exc_type, value, traceback))

@@ -18,7 +18,7 @@ users_table: Final[sa.Table] = sa.Table(
     sa.Column("password_hash", sa.LargeBinary, nullable=False),
     sa.Column("role", sa.Enum(UserRole, name="userrole"), default=UserRole.USER, nullable=False),
     sa.Column("is_active", sa.Boolean, nullable=False, default=True),
-    sa.Column("language_code", sa.String(10), nullable=False, default="ru"),
+    sa.Column("language_code", sa.Enum(LanguageCode, name="userlanguage"), nullable=False, default=LanguageCode.RU),
     sa.Column(
         "created_at",
         sa.DateTime,
@@ -47,7 +47,7 @@ def map_user_table() -> None:
             "username": composite(Username, users_table.c.username),
             "password_hash": composite(UserPasswordHash, users_table.c.password_hash),
             "role": users_table.c.role,
-            "language": composite(LanguageCode, users_table.c.language_code),
+            "language": users_table.c.language_code,
             "telegram": relationship(
                 "TelegramUser", back_populates="user", uselist=False, cascade="all, delete-orphan", lazy="joined"
             ),
