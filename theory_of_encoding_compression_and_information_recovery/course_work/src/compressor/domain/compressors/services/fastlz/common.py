@@ -1,16 +1,17 @@
-# mypy: ignore-errors
-# ruff: noqa
-
 """
 Common utility methods for the FastLZ algorithm.
 """
 
-from compressor.domain.compressors.services.fastlz.configuration import FastLZConstants, FastLzLevel
+from compressor.domain.compressors.services.fastlz.configuration import (
+    FastLZConfiguration,
+    FastLZConstants,
+    FastLzLevel,
+)
 from compressor.domain.compressors.services.fastlz.level1 import Decompressor as DecompressorLevel1
 from compressor.domain.compressors.services.fastlz.level2 import Decompressor as DecompressorLevel2
 
 
-def determine_level_from_buffer(buffer):
+def determine_level_from_buffer(buffer: bytearray) -> int:
     """
     Determine the FastLZ level from the given buffer.
 
@@ -32,12 +33,13 @@ def determine_level_from_buffer(buffer):
     # Fail if the level value is invalid.
     if level == 1:
         return FastLzLevel.LEVEL1
-    if level == 2:
+    if level == 2:  # noqa: PLR2004
         return FastLzLevel.LEVEL2
-    raise ValueError(f"Invalid level {level}.")
+    msg = f"Invalid level {level}."
+    raise ValueError(msg)
 
 
-def call_decompressor_for_buffer_level(buffer):
+def call_decompressor_for_buffer_level(buffer: bytearray) -> bytearray:
     """
     Call the decompressor for the FastLZ level determined from the given buffer.
 
@@ -58,10 +60,11 @@ def call_decompressor_for_buffer_level(buffer):
         # Use level 2.
         return DecompressorLevel2().decompress(buffer)
 
-    raise ValueError(f"Invalid level {level} for decompression.")
+    msg = f"Invalid level {level} for decompression."
+    raise ValueError(msg)
 
 
-def update_adler32(checksum, buffer):
+def update_adler32(checksum: int, buffer: bytearray) -> int:
     """
     Update the running Adler-32 checksum with the bytes of the buffer and return the
     updated checksum.
@@ -122,7 +125,7 @@ def update_adler32(checksum, buffer):
     return (sum2 << 16) + sum1
 
 
-def read_unsigned_integer_16_bit(buffer, start_position):
+def read_unsigned_integer_16_bit(buffer: bytearray, start_position: int) -> int:
     """
     Read an unsigned 16 bit integer value (= 2 bytes) from the buffer starting at the
     given index.
@@ -139,7 +142,7 @@ def read_unsigned_integer_16_bit(buffer, start_position):
     return buffer[start_position] + (buffer[start_position + 1] << 8)
 
 
-def read_unsigned_integer_32_bit(buffer, start_position):
+def read_unsigned_integer_32_bit(buffer: bytearray, start_position: int) -> int:
     """
     Read an unsigned 32 bit integer value (= 4 bytes) from the buffer starting at the
     given index.
@@ -154,14 +157,14 @@ def read_unsigned_integer_32_bit(buffer, start_position):
              given index.
     """
     return (
-            buffer[start_position]
-            + (buffer[start_position + 1] << 8)
-            + (buffer[start_position + 2] << 16)
-            + (buffer[start_position + 3] << 24)
+        buffer[start_position]
+        + (buffer[start_position + 1] << 8)
+        + (buffer[start_position + 2] << 16)
+        + (buffer[start_position + 3] << 24)
     )
 
 
-def memmove(buffer, start_position, byte_count):
+def memmove(buffer: bytearray, start_position: int, byte_count: int) -> None:
     """
     Basic re-implementation of the classical `memmove` method. This method is able to
     handle buffer overlaps.
@@ -188,7 +191,7 @@ def memmove(buffer, start_position, byte_count):
         buffer.append(buffer[index])
 
 
-def memcpy(source, destination, source_start_position, byte_count):
+def memcpy(source: bytearray, destination: bytearray, source_start_position: int, byte_count: int) -> None:
     """
     Basic re-implementation of the classical `memcpy` method. This method is not able to
     handle buffer overlaps.
@@ -212,13 +215,14 @@ def memcpy(source, destination, source_start_position, byte_count):
     """
     # Make sure that there is no overlap.
     if source_start_position + byte_count > len(source):
-        raise ValueError("`memcpy` cannot handle overlaps. Please use `memmove`.")
+        msg = "`memcpy` cannot handle overlaps. Please use `memmove`."
+        raise ValueError(msg)
 
     # Use slicing for the copy operation.
-    destination += source[source_start_position: source_start_position + byte_count]
+    destination += source[source_start_position : source_start_position + byte_count]
 
 
-def calculate_hash_value(value, configuration):
+def calculate_hash_value(value: int, configuration: type[FastLZConfiguration]) -> int:
     """
     Hash the given 32 bit unsigned integer value into a 16 bit unsigned integer value.
 
@@ -231,8 +235,7 @@ def calculate_hash_value(value, configuration):
     :return: The 16 bit unsigned integer value being the hash of the given value.
     :rtype: int
     """
-    # The multiplication value seems to be
-    #   (2 ** 32) * (math.sqrt(5) - 1) // 2
+    # The multiplication value seems to be (2 ** 32) * (math.sqrt(5) - 1) // 2
     # (calculation in Python), see `Doxygen source for OpenADFortTk, file
     # Open64.osprey1.0.common.util.id_map.h
     # <https://web.archive.org/web/20170624215708/https://www.mcs.anl.gov/OpenAD/OpenADFortTkExtendedDox/id__map_8h_source.html>`_
@@ -241,7 +244,7 @@ def calculate_hash_value(value, configuration):
     return hash_value & configuration.HASH_TABLE_MASK
 
 
-def compare_buffer_content_until_mismatch(buffer, start1, start2, end2):
+def compare_buffer_content_until_mismatch(buffer: bytearray, start1: int, start2: int, end2: int) -> int:
     """
     Compare the content of the buffer starting at the both positions. Stop if a mismatch
     occurs or the second position (which should be the greater one) has reached the
@@ -287,7 +290,13 @@ def compare_buffer_content_until_mismatch(buffer, start1, start2, end2):
     return length
 
 
-def emit_literal_instructions(source, destination, source_start_position, length, configuration):
+def emit_literal_instructions(
+    source: bytearray,
+    destination: bytearray,
+    source_start_position: int,
+    length: int,
+    configuration: type[FastLZConfiguration],
+) -> int:
     """
     Emit the given number of literal bytes. Each group of `LITERAL_MAX` bytes is
     preceded by the literal command itself (`000` followed by the length value using 5
@@ -328,7 +337,7 @@ def emit_literal_instructions(source, destination, source_start_position, length
         bytes_written += 1
 
         # Copy the 32 characters of the current group.
-        destination += source[source_position: source_position + literal_max]
+        destination += source[source_position : source_position + literal_max]
         source_position += literal_max
         bytes_written += literal_max
 
@@ -343,14 +352,14 @@ def emit_literal_instructions(source, destination, source_start_position, length
         bytes_written += 1
 
         # Copy the required number of characters.
-        destination += source[source_position: source_position + length]
+        destination += source[source_position : source_position + length]
         bytes_written += length
 
     # Return the number of bytes written.
     return bytes_written
 
 
-def detect_magic_bytes(buffer):
+def detect_magic_bytes(buffer: bytearray) -> bool:
     """
     Check if the buffer represents a 6pack archive.
 
@@ -366,9 +375,4 @@ def detect_magic_bytes(buffer):
         return False
 
     # Perform a byte-wise check.
-    for index, value in enumerate(FastLZConstants.SIXPACK_MAGIC_IDENTIFIER):
-        if buffer[index] != value:
-            return False
-
-    # No problems could be detected with the magic identifier.
-    return True
+    return all(buffer[index] == value for index, value in enumerate(FastLZConstants.SIXPACK_MAGIC_IDENTIFIER))

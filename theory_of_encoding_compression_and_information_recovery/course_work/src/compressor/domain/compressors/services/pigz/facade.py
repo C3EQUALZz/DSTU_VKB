@@ -1,4 +1,7 @@
 import logging
+import tempfile
+from io import BytesIO
+from pathlib import Path
 from typing import Final
 
 from typing_extensions import override
@@ -11,6 +14,7 @@ from compressor.domain.files.entities.compressed_file import CompressedFile
 from compressor.domain.files.entities.file import File
 from compressor.domain.files.services.file_service import FileService
 from compressor.domain.files.values.compression_type import CompressionType
+from compressor.domain.files.values.file_name import FileName
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 
@@ -24,15 +28,26 @@ class PigzCompressor(Compressor):
 
     @override
     def compress(self, file: File) -> CompressedFile:
-        pigz_file = PigzFile(file.path, configuration=self._pigz_configuration)
-        pigz_file.process_compression_target()
+        data: BytesIO
 
-        logger.debug("Compressed to %s", file.path)
+        with tempfile.NamedTemporaryFile(delete=True) as temp_file:
+            file.data.seek(0)
+            temp_file.write(file.data.read())
+            temp_file.flush()
 
-        return self._file_service.create_compressed_file(
-            path=file.path,
-            compression_type=CompressionType.GZIP,
-        )
+            pigz_file = PigzFile(Path(temp_file.name), configuration=self._pigz_configuration)
+            pigz_file.process_compression_target()
+
+            logger.debug("Compressed to %s", temp_file.name)
+
+            with open(temp_file, mode="rb") as tmp:  # noqa: PTH123
+                data = BytesIO(tmp.read())
+
+            data.seek(0)
+
+            return self._file_service.create_compressed_file(
+                file_name=FileName(temp_file.name), compression_type=CompressionType.GZIP, data=data
+            )
 
     @override
     def decompress(self, file: CompressedFile) -> File:

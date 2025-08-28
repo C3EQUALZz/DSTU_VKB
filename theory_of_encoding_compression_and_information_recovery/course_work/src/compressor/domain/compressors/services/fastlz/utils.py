@@ -1,12 +1,9 @@
-# mypy: ignore-errors
-# ruff: noqa
-
 """
 Collection of common utility methods.
 """
 
 
-def shift_left_and_cut(value, shift=1, bits=8):
+def shift_left_and_cut(value: int, shift: int = 1, bits: int = 8) -> int:
     """
     Shift the given value to the left and cut it to the desired size.
 
@@ -23,10 +20,11 @@ def shift_left_and_cut(value, shift=1, bits=8):
     :return: The value being shifted with a maximum of `bits` bits.
     :rtype: int
     """
-    return get_last_bits(value << shift, bits)
+    result: int = get_last_bits(value << shift, bits)
+    return result
 
 
-def get_last_bits(value, bits=8):
+def get_last_bits(value: int, bits: int = 8) -> int:
     """
     Get the last `bits` bits from the given value.
 
@@ -44,7 +42,7 @@ def get_last_bits(value, bits=8):
     return value & mask
 
 
-def get_last_bytes(value, byte_count=1):
+def get_last_bytes(value: int, byte_count: int = 1) -> int:
     """
     Get the last `byte_count` bytes from the given value.
 
@@ -63,7 +61,7 @@ def get_last_bytes(value, byte_count=1):
     return get_last_bits(value, bits)
 
 
-def compare_first_bytes(data_buffer, start_position1, start_position2, byte_count):
+def compare_first_bytes(data_buffer: bytearray, start_position1: int, start_position2: int, byte_count: int) -> bool:
     """
     Compare the first `byte_count` bytes of the buffer using the given start positions.
 

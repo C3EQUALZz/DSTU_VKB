@@ -19,7 +19,7 @@ class FastLzInterface:
     """
 
     @staticmethod
-    def compress(decompressed, level=FastLzLevel.AUTOMATIC):
+    def compress(decompressed: bytearray, level: FastLzLevel = FastLzLevel.AUTOMATIC) -> bytearray:
         """
         Compress the given buffer using the given FastLZ level.
 
@@ -39,7 +39,7 @@ class FastLzInterface:
             return CompressorLevel2().compress(decompressed)
 
         # For short blocks, choose level 1.
-        if len(decompressed) < 65536:
+        if len(decompressed) < 65536:  # noqa: PLR2004
             # Use level 1.
             return CompressorLevel1().compress(decompressed)
 
@@ -47,7 +47,9 @@ class FastLzInterface:
         return CompressorLevel2().compress(decompressed)
 
     @staticmethod
-    def compress_file(input_file, output_file=None, level=FastLzLevel.AUTOMATIC):
+    def compress_file(
+        input_file: str, output_file: str | None = None, level: FastLzLevel = FastLzLevel.AUTOMATIC
+    ) -> bytearray:
         """
         Compress the given file using the given FastLZ level.
 
@@ -64,13 +66,15 @@ class FastLzInterface:
         :return: The compressed buffer.
         :rtype: bytearray
         """
-        with open(input_file, mode="rb") as infile:
+        with open(input_file, mode="rb") as infile:  # noqa: PTH123
             decompressed = bytearray(infile.read())
+
+        compressed: bytearray
 
         if level != FastLzLevel.AUTOMATIC:
             # Use the selected level.
             compressed = FileCompressor().compress(decompressed, input_file, level)
-        elif len(decompressed) < 65536:
+        elif len(decompressed) < 65536:  # noqa: PLR2004
             # For short blocks, choose level 1.
             compressed = FileCompressor().compress(decompressed, input_file, FastLzLevel.LEVEL1)
         else:
@@ -78,13 +82,13 @@ class FastLzInterface:
             compressed = FileCompressor().compress(decompressed, input_file, FastLzLevel.LEVEL2)
 
         if output_file:
-            with open(output_file, mode="wb") as outfile:
+            with open(output_file, mode="wb") as outfile:  # noqa: PTH123
                 outfile.write(compressed)
 
         return compressed
 
     @staticmethod
-    def decompress(compressed):
+    def decompress(compressed: bytearray) -> bytearray:
         """
         Decompress the given buffer using the FastLZ algorithm.
 
@@ -96,10 +100,11 @@ class FastLzInterface:
 
         :raises ValueError: The level is invalid.
         """
-        return call_decompressor_for_buffer_level(compressed)
+        result: bytearray = call_decompressor_for_buffer_level(compressed)
+        return result
 
     @staticmethod
-    def decompress_file(input_file, output_file=None):
+    def decompress_file(input_file: str, output_file: str | None = None) -> bytearray:
         """
         Decompress the given file using the FastLZ algorithm.
 
@@ -113,12 +118,12 @@ class FastLzInterface:
         :return: The decompressed buffer.
         :rtype: bytearray
         """
-        with open(input_file, mode="rb") as infile:
+        with open(input_file, mode="rb") as infile:  # noqa: PTH123
             compressed = bytearray(infile.read())
         decompressed = FileDecompressor().decompress(compressed)
 
         if output_file:
-            with open(output_file, mode="wb") as outfile:
+            with open(output_file, mode="wb") as outfile:  # noqa: PTH123
                 outfile.write(decompressed)
 
         return decompressed

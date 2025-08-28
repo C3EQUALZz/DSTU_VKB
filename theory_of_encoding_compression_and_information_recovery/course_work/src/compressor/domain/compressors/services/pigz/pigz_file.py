@@ -21,9 +21,9 @@ class PigzFile:
     """Class to implement Pigz functionality in Python"""
 
     def __init__(
-            self,
-            compression_target: Path,
-            configuration: Configuration,
+        self,
+        compression_target: Path,
+        configuration: Configuration,
     ) -> None:
         """
         Take in a file or directory and gzip using multiple system cores.
@@ -150,7 +150,7 @@ class PigzFile:
         return 255
 
     @staticmethod
-    def _determine_fname(input_filename):
+    def _determine_fname(input_filename: str) -> bytes:
         try:
             fname = Path(input_filename).name
             if not isinstance(fname, bytes):
@@ -181,12 +181,11 @@ class PigzFile:
 
     def _process_chunk(self, chunk_num: int, chunk: bytes) -> None:
         with self._last_chunk_lock:
-            last_chunk = (chunk_num == self._last_chunk)
+            last_chunk = chunk_num == self._last_chunk
         compressed_chunk = self._compress_chunk(chunk, last_chunk)
         self.chunk_queue.put((chunk_num, chunk, compressed_chunk))
 
     def _compress_chunk(self, chunk: bytes, is_last_chunk: bool) -> bytes:
-
         compressor = zlib.compressobj(
             level=self.compression_level,
             method=zlib.DEFLATED,
@@ -237,4 +236,3 @@ class PigzFile:
     def _close_workers(self) -> None:
         self.pool.close()
         self.pool.join()
-

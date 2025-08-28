@@ -21,26 +21,82 @@ from compressor.domain.compressors.services.fastlz.level1 import Compressor as C
 from compressor.domain.compressors.services.fastlz.level2 import Compressor as CompressorLevel2
 
 
+class ChunkHeader:
+    """
+    Container for the chunk header data.
+    """
+
+    chunk_id = 0
+    """
+    The ID of the chunk, using 2 bytes.
+
+    This is either 1 (= first chunk) or 17 (= not the first chunk).
+
+    :type: :class:`int`
+    """
+
+    chunk_options = 0
+    """
+    The options of the chunk, using 2 bytes.
+
+    This is either 0 (= uncompressed data, simply copy the data to the output) or 1
+    (= compressed using FastLZ).
+
+    :type: :class:`int`
+    """
+
+    chunk_size = 0
+    """
+    The size of the current chunk, using 4 bytes.
+
+    This is either `10 + len(filename) + 1` if this is the first chunk, the compressed
+    size for compressed data or the original size of the block for uncompressed data.
+
+    :type: :class:`int`
+    """
+
+    chunk_checksum = 0
+    """
+    The checksum of the current chunk, using 4 bytes.
+
+    This is the current Adler-32 checksum based upon the content.
+
+    :type: :class:`int`
+    """
+
+    chunk_extra = 0
+    """
+    The extra data of the current chunk, using 4 bytes.
+
+    This is 0 for the first chunk and the number of bytes read from the input file
+    during compression. This will never exceed the block size.
+
+    :type: :class:`int`
+    """
+
+    def __init__(self) -> None:
+        self.chunk_id = 0
+        self.chunk_options = 0
+        self.chunk_size = 0
+        self.chunk_checksum = 0
+        self.chunk_extra = 0
+
+
 class FileCompressor:
     """
     The implementation of the (file) compressor (6pack).
     """
 
-    configuration = None
-    """
-    The configuration class to use.
-
-    :type: :class:`class`
-    """
-
-    def __init__(self, configuration=FastLZConfiguration):
+    def __init__(self, configuration: type[FastLZConfiguration] = FastLZConfiguration) -> None:
         """
         :param configuration: The configuration class to use.
         :type configuration: class
         """
         self.configuration = configuration
 
-    def compress(self, source, filename, level=FastLzLevel.LEVEL1):
+    def compress(  # noqa: PLR0915
+        self, source: bytearray, filename: str, level: FastLzLevel = FastLzLevel.LEVEL1
+    ) -> bytearray:
         """
         Compress the given source buffer using the FastLZ algorithm.
 
@@ -61,11 +117,13 @@ class FileCompressor:
         """
         # Forbid the automatic level.
         if level == FastLzLevel.AUTOMATIC:
-            raise ValueError("Automatic level not supported for 6pack.")
+            msg = "Automatic level not supported for 6pack."
+            raise ValueError(msg)
 
         # Check if this already is a 6pack archive.
         if detect_magic_bytes(source):
-            raise BadDataError("File already is a 6pack archive.")
+            msg = "File already is a 6pack archive."
+            raise BadDataError(msg)
 
         # The source parameters: the current position inside the source buffer and the
         # overall length of the source buffer.
@@ -82,7 +140,7 @@ class FileCompressor:
         destination_position += len(FastLZConstants.SIXPACK_MAGIC_IDENTIFIER)
 
         # Determine the actual filename.
-        shown_name = bytearray(os.path.basename(filename), encoding="utf8")
+        shown_name = bytearray(os.path.basename(filename), encoding="utf8")  # noqa: PTH119
 
         # Write the file size to the buffer and add the length of the filename using 2
         # bytes.
@@ -96,8 +154,7 @@ class FileCompressor:
         # Update the checksum for the buffer with the file size and filename length.
         checksum = update_adler32(checksum, buffer)
         # Update the checksum using the filename with a null-byte added at the end.
-        # This is not directly obvious, but can be derived from passing
-        #   strlen(shown_name) + 1
+        # This is not directly obvious, but can be derived from passing strlen(shown_name) + 1
         # to the checksum calculation in the original implementation.
         checksum = update_adler32(checksum, shown_name + bytearray(1))
 
@@ -131,13 +188,13 @@ class FileCompressor:
             compression_method = 1
 
             # Retrieve the current block from the input.
-            buffer = source[source_position: source_position + FastLZConstants.BLOCK_SIZE_COMPRESSION]
+            buffer = source[source_position : source_position + FastLZConstants.BLOCK_SIZE_COMPRESSION]
             bytes_read = len(buffer)
             source_position += bytes_read
 
             # If the input is too small, disable compression as it does not make any
             # sense.
-            if bytes_read < 32:
+            if bytes_read < 32:  # noqa: PLR2004
                 compression_method = 0
 
             # Write to the output.
@@ -193,7 +250,7 @@ class FileCompressor:
         return destination
 
     @staticmethod
-    def _get_file_size_buffer(source):
+    def _get_file_size_buffer(source: bytearray) -> bytearray:
         """
         Write the file size to a buffer of size 8, while only the first 4 bytes are
         actually used for the file size.
@@ -221,7 +278,7 @@ class FileCompressor:
         return buffer
 
     @staticmethod
-    def _write_chunk_header(buffer, header):
+    def _write_chunk_header(buffer: bytearray, header: ChunkHeader) -> None:
         """
         Write the header for the current chunk.
 
@@ -270,14 +327,14 @@ class FileDecompressor:
     :type: :class:`class`
     """
 
-    def __init__(self, configuration=FastLZConfiguration):
+    def __init__(self, configuration: type[FastLZConfiguration] = FastLZConfiguration) -> None:
         """
         :param configuration: The configuration class to use.
         :type configuration: class
         """
         self.configuration = configuration
 
-    def decompress(self, source):
+    def decompress(self, source: bytearray) -> bytearray:  # noqa: C901, PLR0912, PLR0915
         """
         Decompress the given source buffer using the FastLZ algorithm.
 
@@ -292,7 +349,8 @@ class FileDecompressor:
         """
         # Check if this is a 6pack archive.
         if not detect_magic_bytes(source):
-            raise BadDataError("File is not a 6pack archive.")
+            msg = "File is not a 6pack archive."
+            raise BadDataError(msg)
 
         # The source parameters: the current position inside the source buffer and the
         # overall length of the source buffer.
@@ -316,7 +374,7 @@ class FileDecompressor:
 
             # Handle the different chunk types.
 
-            if header.chunk_id == 1 and 10 < header.chunk_size < FastLZConstants.BLOCK_SIZE_DECOMPRESSION:
+            if header.chunk_id == 1 and 10 < header.chunk_size < FastLZConstants.BLOCK_SIZE_DECOMPRESSION:  # noqa: PLR2004
                 # This is the first chunk in the file.
                 # It cannot be smaller than 11 bytes, as it contains the original file
                 # size (using 8 bytes), the number of bytes for the original filename
@@ -327,7 +385,7 @@ class FileDecompressor:
                 destination_position = 0
 
                 # Retrieve the current chunk from the source buffer.
-                buffer = source[source_position: source_position + header.chunk_size]
+                buffer = source[source_position : source_position + header.chunk_size]
                 source_position += len(buffer)
 
                 # Calculate the initial checksum value.
@@ -336,9 +394,8 @@ class FileDecompressor:
 
                 # Make sure that the checksums match.
                 if checksum != header.chunk_checksum:
-                    raise BadDataError(
-                        f"Checksum mismatch: Expected {hex(header.chunk_checksum)}, got {hex(checksum)}"
-                    )
+                    msg = f"Checksum mismatch: Expected {hex(header.chunk_checksum)}, got {hex(checksum)}"
+                    raise BadDataError(msg)
 
                 # Get the uncompressed size (the original file size) by reading 4 bytes
                 # from the buffer.
@@ -357,10 +414,10 @@ class FileDecompressor:
                 # Another note: The output file name still has the trailing null-byte.
                 name_length = read_unsigned_integer_16_bit(buffer, 8)
                 name_length = min(name_length, header.chunk_size - 10)
-                output_file_name = buffer[10: 10 + name_length]
-                assert len(output_file_name) == name_length
+                output_file_name = buffer[10 : 10 + name_length]
+                assert len(output_file_name) == name_length  # noqa: S101
 
-            if header.chunk_id == 17 and decompressed_size:
+            if header.chunk_id == 17 and decompressed_size:  # noqa: PLR2004
                 # This is not the first chunk.
 
                 # Handle the different compression variants.
@@ -376,15 +433,16 @@ class FileDecompressor:
                     while remaining > 0:
                         # Make sure to not read across the source buffer bounds.
                         if source_position >= source_length:
-                            raise BadDataError("Reached end while copying data.")
+                            msg = "Reached end while copying data."
+                            raise BadDataError(msg)
 
                         # Determine the size of the current block.
                         bytes_in_block = min(remaining, FastLZConstants.BLOCK_SIZE_DECOMPRESSION)
 
                         # Read the current block from the source buffer and make sure
                         # that it actually has the desired length.
-                        buffer = source[source_position: source_position + bytes_in_block]
-                        assert len(buffer) == bytes_in_block
+                        buffer = source[source_position : source_position + bytes_in_block]
+                        assert len(buffer) == bytes_in_block  # noqa: S101
                         source_position += bytes_in_block
 
                         # Add the current block to the output.
@@ -400,15 +458,14 @@ class FileDecompressor:
                     # Make sure that everything has been read/written correctly by
                     # comparing the checksum.
                     if checksum != header.chunk_checksum:
-                        raise BadDataError(
-                            f"Checksum mismatch: Expected {hex(header.chunk_checksum)}, got {hex(checksum)}"
-                        )
+                        msg = f"Checksum mismatch: Expected {hex(header.chunk_checksum)}, got {hex(checksum)}"
+                        raise BadDataError(msg)
 
                 elif header.chunk_options == 1:
                     # This has been compressed using FastLZ.
 
                     # Read the current chunk from the input.
-                    compressed_buffer = source[source_position: source_position + header.chunk_size]
+                    compressed_buffer = source[source_position : source_position + header.chunk_size]
                     source_position += header.chunk_size
 
                     # Update the checksum.
@@ -416,9 +473,8 @@ class FileDecompressor:
 
                     # Make sure that everything has been read correctly.
                     if checksum != header.chunk_checksum:
-                        raise BadDataError(
-                            f"Checksum mismatch: Expected {hex(header.chunk_checksum)}, got {hex(checksum)}"
-                        )
+                        msg = f"Checksum mismatch: Expected {hex(header.chunk_checksum)}, got {hex(checksum)}"
+                        raise BadDataError(msg)
 
                     # Decompress the given data.
                     decompressed_buffer = call_decompressor_for_buffer_level(compressed_buffer)
@@ -426,10 +482,8 @@ class FileDecompressor:
 
                     # Make sure that we did not lose/added some data.
                     if decompressed_size != header.chunk_extra:
-                        raise BadDataError(
-                            "Expected {} bytes after decompression, got {} "
-                             "bytes."
-                        )
+                        msg = f"Expected {header.chunk_extra} bytes after decompression, got {decompressed_size} bytes."
+                        raise BadDataError(msg)
 
                     # Add the decompressed buffer to the output.
                     destination += decompressed_buffer
@@ -437,13 +491,14 @@ class FileDecompressor:
 
                 else:
                     # This is using a compression method not (yet) known.
-                    raise BadDataError(f"Unknown compression method {header.chunk_options}.")
+                    msg = f"Unknown compression method {header.chunk_options}."
+                    raise BadDataError(msg)
 
         # Return the destination buffer.
         return destination
 
     @staticmethod
-    def _read_chunk_header(buffer, start_position):
+    def _read_chunk_header(buffer: bytearray, start_position: int) -> ChunkHeader:
         """
         Read the header for the current chunk.
 
@@ -475,64 +530,3 @@ class FileDecompressor:
 
         # Return the header data.
         return header
-
-
-class ChunkHeader:
-    """
-    Container for the chunk header data.
-    """
-
-    chunk_id = 0
-    """
-    The ID of the chunk, using 2 bytes.
-
-    This is either 1 (= first chunk) or 17 (= not the first chunk).
-
-    :type: :class:`int`
-    """
-
-    chunk_options = 0
-    """
-    The options of the chunk, using 2 bytes.
-
-    This is either 0 (= uncompressed data, simply copy the data to the output) or 1
-    (= compressed using FastLZ).
-
-    :type: :class:`int`
-    """
-
-    chunk_size = 0
-    """
-    The size of the current chunk, using 4 bytes.
-
-    This is either `10 + len(filename) + 1` if this is the first chunk, the compressed
-    size for compressed data or the original size of the block for uncompressed data.
-
-    :type: :class:`int`
-    """
-
-    chunk_checksum = 0
-    """
-    The checksum of the current chunk, using 4 bytes.
-
-    This is the current Adler-32 checksum based upon the content.
-
-    :type: :class:`int`
-    """
-
-    chunk_extra = 0
-    """
-    The extra data of the current chunk, using 4 bytes.
-
-    This is 0 for the first chunk and the number of bytes read from the input file
-    during compression. This will never exceed the block size.
-
-    :type: :class:`int`
-    """
-
-    def __init__(self):
-        self.chunk_id = 0
-        self.chunk_options = 0
-        self.chunk_size = 0
-        self.chunk_checksum = 0
-        self.chunk_extra = 0

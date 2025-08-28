@@ -1,17 +1,18 @@
 """
 Implementation of the FastLZ compression algorithm, level 2.
 """
+
 from compressor.domain.compressors.errors import BadDataError
 from compressor.domain.compressors.services.fastlz.common import (
     calculate_hash_value,
     compare_buffer_content_until_mismatch,
     emit_literal_instructions,
-    get_last_bits,
     memcpy,
     memmove,
     read_unsigned_integer_32_bit,
 )
 from compressor.domain.compressors.services.fastlz.configuration import FastLZConfiguration
+from compressor.domain.compressors.services.fastlz.utils import get_last_bits
 
 
 class Compressor:
@@ -19,21 +20,14 @@ class Compressor:
     The implementation of the (string) compressor for level 2.
     """
 
-    configuration = None
-    """
-    The configuration class to use.
-
-    :type: :class:`class`
-    """
-
-    def __init__(self, configuration=FastLZConfiguration) -> None:
+    def __init__(self, configuration: type[FastLZConfiguration] = FastLZConfiguration) -> None:
         """
         :param configuration: The configuration class to use.
         :type configuration: class
         """
         self.configuration = configuration
 
-    def compress(self, source: bytearray) -> bytearray:
+    def compress(self, source: bytearray) -> bytearray:  # noqa: PLR0915
         """
         Compress the given source buffer using the FastLZ algorithm.
 
@@ -84,15 +78,11 @@ class Compressor:
             while True:
                 # Read the first 4 bytes of the current input and only keep the 3 least
                 # significant ones.
-                current_sequence = read_unsigned_integer_32_bit(
-                    source, source_position
-                )
+                current_sequence = read_unsigned_integer_32_bit(source, source_position)
                 current_sequence &= 0xFFFFFF
 
                 # Hash the current group of 3 bytes.
-                current_hash = calculate_hash_value(
-                    current_sequence, self.configuration
-                )
+                current_hash = calculate_hash_value(current_sequence, self.configuration)
 
                 # Get the position of the referenced entry by retrieving the
                 # corresponding index from the hash table.
@@ -110,9 +100,7 @@ class Compressor:
                 if current_offset < self.configuration.MATCH_OFFSET_MAX_LEVEL1:
                     # The offset is small enough, so we will keep the 3 least
                     # significant bytes of the value to compare it.
-                    comparison_value = read_unsigned_integer_32_bit(
-                        source, referenced_position
-                    )
+                    comparison_value = read_unsigned_integer_32_bit(source, referenced_position)
                     comparison_value &= 0xFFFFFF
                 else:
                     # The offset is too large, so we will use (1 << 24) > (2^24 - 1),
@@ -140,17 +128,15 @@ class Compressor:
             source_position -= 1
 
             # Check if this needs at least a 5-byte-match. This is special to level 2.
-            if current_offset >= self.configuration.MATCH_OFFSET_MAX_LEVEL2:
-                # The offset is too large for regular (level 1) encoding.
-                if (
-                        source[referenced_position + 3] != source[source_position + 3]
-                        or source[referenced_position + 4] != source[source_position + 4]
-                ):
-                    # Check for byte 4 and 5.
-                    # If they match, move 1 position forward and check for a (longer)
-                    # match again.
-                    source_position += 1
-                    continue
+            if current_offset >= self.configuration.MATCH_OFFSET_MAX_LEVEL2 and (
+                source[referenced_position + 3] != source[source_position + 3]
+                or source[referenced_position + 4] != source[source_position + 4]
+            ):
+                # Check for byte 4 and 5.
+                # If they match, move 1 position forward and check for a (longer)
+                # match again.
+                source_position += 1
+                continue
 
             # Check whether the current position is after the start position of the
             # current iteration.
@@ -176,31 +162,23 @@ class Compressor:
             )
 
             # Emit the corresponding match instructions.
-            output_length = self._emit_match_instruction(
-                destination, match_length, current_offset
-            )
+            output_length = self._emit_match_instruction(destination, match_length, current_offset)
             destination_position += output_length
 
             # Move the input position to the end of match minus 2 bytes.
             source_position += match_length
 
             # Get the next 4 bytes.
-            current_sequence = read_unsigned_integer_32_bit(
-                source, source_position
-            )
+            current_sequence = read_unsigned_integer_32_bit(source, source_position)
 
             # Save the current position for the hash of the 3 least significant bytes.
-            current_hash = calculate_hash_value(
-                current_sequence & 0xFFFFFF, self.configuration
-            )
+            current_hash = calculate_hash_value(current_sequence & 0xFFFFFF, self.configuration)
             hash_table[current_hash] = source_position
             source_position += 1
 
             # Save the current position for the hash of the 3 most significant bytes.
             current_sequence >>= 8
-            current_hash = calculate_hash_value(
-                current_sequence, self.configuration
-            )
+            current_hash = calculate_hash_value(current_sequence, self.configuration)
             hash_table[current_hash] = source_position
             source_position += 1
 
@@ -228,7 +206,7 @@ class Compressor:
         # Return the destination buffer.
         return destination
 
-    def _emit_match_instruction(self, destination, match_length, match_offset):
+    def _emit_match_instruction(self, destination: bytearray, match_length: int, match_offset: int) -> int:  # noqa: PLR0915
         """
         Emit the given match instruction.
 
@@ -259,7 +237,7 @@ class Compressor:
             # We can use the simple encoding similar to level 1, as the match offset is
             # small enough.
 
-            if match_length < 7:
+            if match_length < 7:  # noqa: PLR2004
                 # This is a short match instruction.
 
                 # Write opcode[0].
@@ -292,7 +270,7 @@ class Compressor:
                 # most significant bits of opcode[0].
                 match_length -= 7
                 # This uses a Gamma code.
-                while match_length >= 255:
+                while match_length >= 255:  # noqa: PLR2004
                     # While the match length still cannot be written into 1 byte, write
                     # full bytes.
                     destination.append(255)
@@ -308,7 +286,7 @@ class Compressor:
                 bytes_written += 1
         # We have to use level 2 encoding.
 
-        elif match_length < 7:
+        elif match_length < 7:  # noqa: PLR2004
             # This is a short match instruction.
 
             # Reduce the offset as we know that we are in this case.
@@ -359,7 +337,7 @@ class Compressor:
             # most significant bits of opcode[0].
             match_length -= 7
             # This uses a Gamma code.
-            while match_length >= 255:
+            while match_length >= 255:  # noqa: PLR2004
                 # While the match length still cannot be written into 1 byte, write
                 # full bytes.
                 destination.append(255)
@@ -395,21 +373,14 @@ class Decompressor:
     The implementation of the (string) decompressor for level 2.
     """
 
-    configuration = None
-    """
-    The configuration class to use.
-
-    :type: :class:`class`
-    """
-
-    def __init__(self, configuration=FastLZConfiguration):
+    def __init__(self, configuration: type[FastLZConfiguration] = FastLZConfiguration) -> None:
         """
         :param configuration: The configuration class to use.
         :type configuration: class
         """
         self.configuration = configuration
 
-    def decompress(self, source):
+    def decompress(self, source: bytearray) -> bytearray:  # noqa: C901, PLR0915
         """
         Decompress the given source buffer using the FastLZ algorithm.
 
@@ -440,7 +411,7 @@ class Decompressor:
         # Iterate until the end of the input has been reached.
         while source_position < source_length:
             # Handle the different instruction types.
-            if instruction_code >= 32:
+            if instruction_code >= 32:  # noqa: PLR2004
                 # This is a match instruction.
                 # This cannot be reached in the first iteration, as there are only 5
                 # bits (with a maximum value of 11111_2 = 31) - the first instruction
@@ -466,8 +437,7 @@ class Decompressor:
                 # This is possible as we are already working with the shifted offset
                 # value here.
                 # The `-1` basically means `offset + 1`, as an offset of 0 does not
-                # make much sense. We could write
-                #     destination_position - (match_offset_part1 + 1)
+                # make much sense. We could write destination_position - (match_offset_part1 + 1)
                 # as well to make it more obvious, but without the brackets it may
                 # actually be faster.
                 referenced_index = destination_position - match_offset_part1 - 1
@@ -489,7 +459,8 @@ class Decompressor:
 
                         # Make sure that we can read another byte.
                         if source_position >= source_length:
-                            raise BadDataError("End of input reached too early.")
+                            msg = "End of input reached too early."
+                            raise BadDataError(msg)
 
                         # Retrieve the current byte.
                         additional_length = source[source_position]
@@ -501,7 +472,7 @@ class Decompressor:
                         match_length += additional_length
 
                         # There is no other byte with an additional length value to add.
-                        if additional_length != 255:
+                        if additional_length != 255:  # noqa: PLR2004
                             break
 
                 # The next byte holds the 8 least significant bits of the offset, so
@@ -516,40 +487,35 @@ class Decompressor:
 
                 # Handle greater match distances of 16 bit, which only occur for level
                 # 2.
-                if additional_offset == 255:
-                    if match_offset_part1 == (31 << 8):
-                        # We have the largest offset value possible until now.
-                        # With the additional offset being 255 and checking for the
-                        # most significant bits leading to 31 << 8, we have
-                        #   (31 << 8) + 255 = 7936 + 255 = 8191 = `MAX_L2_DISTANCE`.
-                        # For the second condition being true, the 5 least significant
-                        # bits of opcode[0] have to be 11111_2 = 31. After shifting it
-                        # to the left using `value << 8`, we get 31 << 8 - which is what
-                        # we check for.
+                if additional_offset == 255 and match_offset_part1 == (31 << 8):  # noqa: PLR2004
+                    # We have the largest offset value possible until now.
+                    # With the additional offset being 255 and checking for the
+                    # most significant bits leading to 31 << 8, we have
+                    #   (31 << 8) + 255 = 7936 + 255 = 8191 = `MAX_L2_DISTANCE`.
+                    # For the second condition being true, the 5 least significant
+                    # bits of opcode[0] have to be 11111_2 = 31. After shifting it
+                    # to the left using `value << 8`, we get 31 << 8 - which is what
+                    # we check for.
 
-                        # Make sure that we can read another byte.
-                        if source_position >= source_length:
-                            raise BadDataError("End of input reached too early.")
+                    # Make sure that we can read another byte.
+                    if source_position >= source_length:
+                        msg = "End of input reached too early."
+                        raise BadDataError(msg)
 
-                        # The additional offset value are the next 2 bytes of the input,
-                        # which leads to the offset not being greater than 65535 =
-                        # 2^16 - 1.
-                        offset = source[source_position] << 8
-                        source_position += 1
-                        offset += source[source_position]
-                        source_position += 1
+                    # The additional offset value are the next 2 bytes of the input,
+                    # which leads to the offset not being greater than 65535 =
+                    # 2^16 - 1.
+                    offset = source[source_position] << 8
+                    source_position += 1
+                    offset += source[source_position]
+                    source_position += 1
 
-                        # Determine the new referenced index.
-                        # We already know that the offset is at least `MAX_L2_DISTANCE`
-                        # when we reach this code. The `offset` value cannot be greater
-                        # than 65535, the `- 1` can be added as an offset of 0 does not
-                        # make any sense.
-                        referenced_index = (
-                                destination_position
-                                - offset
-                                - self.configuration.MATCH_OFFSET_MAX_LEVEL2
-                                - 1
-                        )
+                    # Determine the new referenced index.
+                    # We already know that the offset is at least `MAX_L2_DISTANCE`
+                    # when we reach this code. The `offset` value cannot be greater
+                    # than 65535, the `- 1` can be added as an offset of 0 does not
+                    # make any sense.
+                    referenced_index = destination_position - offset - self.configuration.MATCH_OFFSET_MAX_LEVEL2 - 1
 
                 # Abort if the referenced position is before the start of the
                 # destination buffer.
@@ -558,7 +524,8 @@ class Decompressor:
                 # empty dictionary on every block compression run, this is no problem
                 # for us.
                 if referenced_index < 0:
-                    raise BadDataError("Referenced index is too small.")
+                    msg = "Referenced index is too small."
+                    raise BadDataError(msg)
 
                 # Copy the specified amount of bytes. We have to use `memmove` as there
                 # might be overlaps.
@@ -577,9 +544,8 @@ class Decompressor:
 
                 # Make sure that we have enough bytes left in the input.
                 if source_position + literal_length > source_length:
-                    raise BadDataError(
-                        "Not enough values available to copy with literal instruction."
-                    )
+                    msg = "Not enough values available to copy with literal instruction."
+                    raise BadDataError(msg)
 
                 # Copy the specified amount of bytes. We can use `memcpy` as there are
                 # no overlaps.
