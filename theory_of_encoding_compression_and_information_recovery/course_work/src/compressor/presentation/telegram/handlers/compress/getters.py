@@ -5,7 +5,7 @@ from aiogram_dialog import DialogManager
 from compressor.presentation.errors.telegram import TaskIdNotProviderError
 
 SUPPORTED_BINARY_OR_TEXT_FILE_COMPRESSORS: Final[tuple[tuple[str, str], ...]] = (
-    ("lzma", "1"),
+    ("xz", "1"),
     ("pigz", "2"),
     ("gzip", "3"),
     ("fastlz", "4"),

@@ -29,6 +29,11 @@ from compressor.application.services.files.compressor import FileCompressorServi
 from compressor.application.services.user.current_user_service import CurrentUserService
 from compressor.domain.compressors.factories.text.base import FileCompressorFactory
 from compressor.domain.compressors.factories.text.impl import FileCompressorFactoryImpl
+from compressor.domain.compressors.services.bzip2.facade import BZip2Compressor
+from compressor.domain.compressors.services.fastlz.facade import FastLZCompressor
+from compressor.domain.compressors.services.gunzip.facade import GunZipCompressor
+from compressor.domain.compressors.services.lempel_ziv_markov_chain.facade import LZMACompressor
+from compressor.domain.compressors.services.pigz.facade import PigzCompressor
 from compressor.domain.files.ports.file_id_generator import FileIDGenerator
 from compressor.domain.files.services.file_service import FileService
 from compressor.domain.users.ports.password_hasher import PasswordHasher
@@ -99,6 +104,11 @@ def domain_ports_provider() -> Provider:
     provider.provide(source=AuthorizationService)
     provider.provide(source=FileService)
     provider.provide(source=FileCompressorFactoryImpl, provides=FileCompressorFactory)
+    provider.provide(source=GunZipCompressor)
+    provider.provide(source=FastLZCompressor)
+    provider.provide(source=PigzCompressor)
+    provider.provide(source=LZMACompressor)
+    provider.provide(source=BZip2Compressor)
     return provider
 
 

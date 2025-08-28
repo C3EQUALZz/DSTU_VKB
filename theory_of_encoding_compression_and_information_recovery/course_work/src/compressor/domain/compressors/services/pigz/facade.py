@@ -29,6 +29,11 @@ class PigzCompressor(Compressor):
     @override
     def compress(self, file: File) -> CompressedFile:
         data: BytesIO
+        converted_source_path_to_path: Path = Path(file.file_name.value)
+
+        dest_path: FileName = FileName(
+            str(converted_source_path_to_path.with_suffix(converted_source_path_to_path.suffix + ".gz"))
+        )
 
         with tempfile.NamedTemporaryFile(delete=True) as temp_file:
             file.data.seek(0)
@@ -40,13 +45,13 @@ class PigzCompressor(Compressor):
 
             logger.debug("Compressed to %s", temp_file.name)
 
-            with open(temp_file, mode="rb") as tmp:  # noqa: PTH123
-                data = BytesIO(tmp.read())
+            temp_file.seek(0)
+            data = BytesIO(temp_file.read())
 
             data.seek(0)
 
             return self._file_service.create_compressed_file(
-                file_name=FileName(temp_file.name), compression_type=CompressionType.GZIP, data=data
+                file_name=dest_path, compression_type=CompressionType.GZIP, data=data
             )
 
     @override

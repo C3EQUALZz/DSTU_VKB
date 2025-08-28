@@ -8,3 +8,9 @@ from compressor.domain.files.values.file_id import FileID
 class CompressTextFileDTO:
     compressor_type: CompressorType
     file_id: FileID
+
+
+@dataclass(frozen=True, slots=True)
+class DecompressTextFileDTO:
+    compressor_type: CompressorType
+    file_id: FileID

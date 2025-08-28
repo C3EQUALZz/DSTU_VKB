@@ -1,11 +1,25 @@
+import logging
 from dataclasses import dataclass
 from io import BytesIO
-from typing import Final, final
+from pathlib import Path
+from typing import TYPE_CHECKING, Final, final
 
-from compressor.application.common.ports.identity_provider import IdentityProvider
-from compressor.application.common.ports.storage import FileStorage
+from compressor.application.common.ports.storage import FileStorage, FileStorageDTO
+from compressor.application.common.views.tasks import TaskView
+from compressor.application.services.user.current_user_service import CurrentUserService
+from compressor.domain.compressors.factories.text.base import CompressorType
 from compressor.domain.files.services.file_service import FileService
+from compressor.domain.files.values.compression_type import CompressionType
+from compressor.domain.files.values.file_name import FileName
 from compressor.infrastructure.task_manager.files.base import FileTaskManager
+from compressor.infrastructure.task_manager.files.contracts import FileInfoDTO
+
+if TYPE_CHECKING:
+    from compressor.domain.files.entities.compressed_file import CompressedFile
+    from compressor.domain.users.entities.user import User
+    from compressor.infrastructure.task_manager.task_id import TaskID
+
+logger: Final[logging.Logger] = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)
@@ -18,16 +32,47 @@ class DecompressFileCommand:
 @final
 class DecompressFileCommandHandler:
     def __init__(
-            self,
-            file_scheduler: FileTaskManager,
-            file_service: FileService,
-            file_storage: FileStorage,
-            id_provider: IdentityProvider
+        self,
+        file_scheduler: FileTaskManager,
+        file_service: FileService,
+        file_storage: FileStorage,
+        current_user_service: CurrentUserService,
     ) -> None:
         self._file_scheduler: Final[FileTaskManager] = file_scheduler
         self._file_service: Final[FileService] = file_service
         self._file_storage: Final[FileStorage] = file_storage
-        self._id_provider: Final[IdentityProvider] = id_provider
+        self._current_user_service: Final[CurrentUserService] = current_user_service
 
-    async def __call__(self, data: DecompressFileCommand):
-        ...
+    async def __call__(self, data: DecompressFileCommand) -> TaskView:
+        logger.info(
+            "Started file compression, compressor type: %s, file name: %s", data.compressor_type, data.file_name
+        )
+        logger.info("Getting current user id")
+        current_user: User = await self._current_user_service.get_current_user()
+
+        logger.info("Successfully got current user id: %s", current_user.id)
+
+        logger.info("Creating a new file compressed entity with name: %s", data.file_name)
+
+        new_file: CompressedFile = self._file_service.create_compressed_file(
+            file_name=FileName(data.file_name),
+            data=data.data,
+            compression_type=CompressionType(Path(data.file_name).suffix),
+        )
+
+        logger.info("Starting saving file in file storage, with id: %s and path: %s", new_file.id, new_file.file_name)
+
+        await self._file_storage.add(FileStorageDTO(file_id=new_file.id, name=new_file.file_name, data=data.data))
+
+        logger.info("Successfully created new file entity with name: %s", new_file.file_name)
+
+        new_task: TaskID = await self._file_scheduler.decompress_and_send_file(
+            dto=FileInfoDTO(
+                file_name=new_file.file_name,
+                compressor_type=CompressorType(data.compressor_type),
+                user_id=current_user.id,
+                file_id=new_file.id,
+            )
+        )
+
+        return TaskView(task_id=new_task)

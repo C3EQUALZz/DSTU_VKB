@@ -3,10 +3,9 @@ from dataclasses import dataclass
 from io import BytesIO
 from typing import TYPE_CHECKING, Final, final
 
-from compressor.application.common.ports.identity_provider import IdentityProvider
 from compressor.application.common.ports.storage import FileStorage, FileStorageDTO
 from compressor.application.common.views.tasks import TaskView
-from compressor.application.errors.auth import AuthenticationError
+from compressor.application.services.user.current_user_service import CurrentUserService
 from compressor.domain.compressors.factories.text.base import CompressorType
 from compressor.domain.files.services.file_service import FileService
 from compressor.domain.files.values.file_name import FileName
@@ -15,7 +14,7 @@ from compressor.infrastructure.task_manager.files.contracts import FileInfoDTO
 
 if TYPE_CHECKING:
     from compressor.domain.files.entities.file import File
-    from compressor.domain.users.values.user_id import UserID
+    from compressor.domain.users.entities.user import User
     from compressor.infrastructure.task_manager.task_id import TaskID
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
@@ -35,12 +34,12 @@ class CompressFileCommandHandler:
         file_scheduler: FileTaskManager,
         file_service: FileService,
         file_storage: FileStorage,
-        id_provider: IdentityProvider,
+        current_user_service: CurrentUserService,
     ) -> None:
         self._file_storage: Final[FileStorage] = file_storage
         self._file_scheduler: Final[FileTaskManager] = file_scheduler
         self._file_service: Final[FileService] = file_service
-        self._id_provider: Final[IdentityProvider] = id_provider
+        self._current_user_service: Final[CurrentUserService] = current_user_service
 
     async def __call__(self, data: CompressFileCommand) -> TaskView:
         logger.info(
@@ -48,13 +47,9 @@ class CompressFileCommandHandler:
         )
 
         logger.info("Getting current user id")
-        current_user_id: UserID | None = await self._id_provider.get_current_user_id()
+        current_user: User = await self._current_user_service.get_current_user()
 
-        if current_user_id is None:
-            msg: str = "User not authencated"
-            raise AuthenticationError(msg)
-
-        logger.info("Successfully got current user id: %s", current_user_id)
+        logger.info("Successfully got current user id: %s", current_user.id)
 
         logger.info("Creating a new file entity with name: %s", data.file_name)
         new_file: File = self._file_service.create(file_name=FileName(data.file_name), data=data.data)
@@ -68,7 +63,7 @@ class CompressFileCommandHandler:
             dto=FileInfoDTO(
                 file_name=new_file.file_name,
                 compressor_type=CompressorType(data.compressor_type),
-                user_id=current_user_id,
+                user_id=current_user.id,
                 file_id=new_file.id,
             )
         )

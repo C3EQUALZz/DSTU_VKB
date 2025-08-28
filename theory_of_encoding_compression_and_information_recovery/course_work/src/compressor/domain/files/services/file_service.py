@@ -1,15 +1,17 @@
 import logging
 from io import BytesIO
-from typing import Final
+from typing import TYPE_CHECKING, Final
 
 from compressor.domain.common.services.base import DomainService
 from compressor.domain.files.entities.compressed_file import CompressedFile
 from compressor.domain.files.entities.file import File
 from compressor.domain.files.ports.file_id_generator import FileIDGenerator
 from compressor.domain.files.values.compression_type import CompressionType
-from compressor.domain.files.values.file_id import FileID
 from compressor.domain.files.values.file_name import FileName
 from compressor.domain.files.values.file_size import FileSize
+
+if TYPE_CHECKING:
+    from compressor.domain.files.values.file_id import FileID
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 
@@ -35,10 +37,7 @@ class FileService(DomainService):
         return new_entity
 
     def create_compressed_file(
-            self,
-            data: BytesIO,
-            file_name: FileName,
-            compression_type: CompressionType
+        self, data: BytesIO, file_name: FileName, compression_type: CompressionType
     ) -> CompressedFile:
         logger.debug("Started compressed file creation in FileService")
 
@@ -55,7 +54,6 @@ class FileService(DomainService):
         logger.debug("Successfully created file: %s", new_entity)
 
         return new_entity
-
 
     def calculate_compression_ratio(self, compressed_file: CompressedFile, file: File) -> FileSize:
         return compressed_file.size / file.size

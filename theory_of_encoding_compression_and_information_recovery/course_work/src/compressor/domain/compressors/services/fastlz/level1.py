@@ -3,14 +3,7 @@ Implementation of the FastLZ compression algorithm, level 1.
 """
 
 from compressor.domain.compressors.errors import BadDataError
-from compressor.domain.compressors.services.fastlz.common import (
-    calculate_hash_value,
-    compare_buffer_content_until_mismatch,
-    emit_literal_instructions,
-    memcpy,
-    memmove,
-    read_unsigned_integer_32_bit,
-)
+from compressor.domain.compressors.services.fastlz import common
 from compressor.domain.compressors.services.fastlz.configuration import FastLZConfiguration
 from compressor.domain.compressors.services.fastlz.utils import get_last_bits
 
@@ -78,11 +71,11 @@ class Compressor:
             while True:
                 # Read the first 4 bytes of the current input and only keep the 3 least
                 # significant ones.
-                current_sequence = read_unsigned_integer_32_bit(source, source_position)
+                current_sequence = common.read_unsigned_integer_32_bit(source, source_position)
                 current_sequence &= 0xFFFFFF
 
                 # Hash the current group of 3 bytes.
-                current_hash = calculate_hash_value(current_sequence, self.configuration)
+                current_hash = common.calculate_hash_value(current_sequence, self.configuration)
 
                 # Get the position of the referenced entry by retrieving the
                 # corresponding index from the hash table.
@@ -100,7 +93,7 @@ class Compressor:
                 if current_offset < self.configuration.MATCH_OFFSET_MAX_LEVEL1:
                     # The offset is small enough, so we will keep the 3 least
                     # significant bytes of the value to compare it.
-                    comparison_value = read_unsigned_integer_32_bit(source, referenced_position)
+                    comparison_value = common.read_unsigned_integer_32_bit(source, referenced_position)
                     comparison_value &= 0xFFFFFF
                 else:
                     # The offset is too large, so we will use (1 << 24) > (2^24 - 1),
@@ -133,7 +126,7 @@ class Compressor:
             # If this is the case, emit the corresponding literal instructions.
             if source_position > iteration_start_position:
                 # We still have to determine the literal length here.
-                output_length = emit_literal_instructions(
+                output_length = common.emit_literal_instructions(
                     source,
                     destination,
                     iteration_start_position,
@@ -146,7 +139,7 @@ class Compressor:
             # We increase the positions by 3 as we have already checked the first 3
             # bytes in the loop above.
             # This implies the minimal match length of 3 as well.
-            match_length = compare_buffer_content_until_mismatch(
+            match_length = common.compare_buffer_content_until_mismatch(
                 source, referenced_position + 3, source_position + 3, source_bound
             )
 
@@ -158,16 +151,16 @@ class Compressor:
             source_position += match_length
 
             # Get the next 4 bytes.
-            current_sequence = read_unsigned_integer_32_bit(source, source_position)
+            current_sequence = common.read_unsigned_integer_32_bit(source, source_position)
 
             # Save the current position for the hash of the 3 least significant bytes.
-            current_hash = calculate_hash_value(current_sequence & 0xFFFFFF, self.configuration)
+            current_hash = common.calculate_hash_value(current_sequence & 0xFFFFFF, self.configuration)
             hash_table[current_hash] = source_position
             source_position += 1
 
             # Save the current position for the hash of the 3 most significant bytes.
             current_sequence >>= 8
-            current_hash = calculate_hash_value(current_sequence, self.configuration)
+            current_hash = common.calculate_hash_value(current_sequence, self.configuration)
             hash_table[current_hash] = source_position
             source_position += 1
 
@@ -176,7 +169,7 @@ class Compressor:
 
         # Emit the final literal instruction.
         literal_length = source_length - iteration_start_position
-        output_length = emit_literal_instructions(
+        output_length = common.emit_literal_instructions(
             source,
             destination,
             iteration_start_position,
@@ -417,7 +410,7 @@ class Decompressor:
 
                 # Copy the specified amount of bytes. We have to use `memmove` as there
                 # might be overlaps.
-                memmove(destination, referenced_index, match_length)
+                common.memmove(destination, referenced_index, match_length)
                 destination_position += match_length
             else:
                 # This is a literal instruction.
@@ -437,7 +430,7 @@ class Decompressor:
 
                 # Copy the specified amount of bytes. We can use `memcpy` as there are
                 # no overlaps.
-                memcpy(source, destination, source_position, literal_length)
+                common.memcpy(source, destination, source_position, literal_length)
 
                 # Move the positions forward.
                 source_position += literal_length

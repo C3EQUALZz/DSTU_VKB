@@ -3,6 +3,10 @@
 /.idea
 /.gitignore
 /.github
+/.ruff_cache
+/.mypy_cache
+.ruff_cache
+.mypy_cache
 /data
 data
 .pre-commit-config.yaml
