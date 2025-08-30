@@ -43,6 +43,9 @@ class Text(BaseValueObject):
     def __str__(self) -> str:
         return str(self.value)
 
+    def __getitem__(self, index: int) -> str:
+        return self.value[index]
+
     def lower(self) -> Self:
         lowered_text: str = self.value.lower()
         logger.info(

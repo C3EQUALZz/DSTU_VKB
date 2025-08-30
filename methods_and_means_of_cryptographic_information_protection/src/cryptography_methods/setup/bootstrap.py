@@ -20,6 +20,7 @@ from cryptography_methods.presentation.bot.middlewares.timing_middleware import 
 from cryptography_methods.presentation.cli.handlers.affine_system_of_ceaser_substitutions import \
     affine_system_of_ceaser_substitutions_group
 from cryptography_methods.presentation.cli.handlers.ceaser_keyword import ceaser_keyword_group
+from cryptography_methods.presentation.cli.handlers.magic_table import magic_table_group
 from cryptography_methods.presentation.cli.handlers.simple_data_permutation import simple_data_permutation_group
 from cryptography_methods.presentation.cli.handlers.ceaser_classic import ceaser_classic_group
 from cryptography_methods.presentation.cli.handlers.single_key_permutation import single_key_permutation_group
@@ -108,6 +109,7 @@ def setup_cli_routes(main_group: Group) -> None:
     main_group.add_command(trithemius_group) # type: ignore
     main_group.add_command(playfair_group) # type: ignore
     main_group.add_command(vigenere_group) # type: ignore
+    main_group.add_command(magic_table_group) # type: ignore
 
 
 def setup_logging(logger_config: LoggingConfig) -> None:

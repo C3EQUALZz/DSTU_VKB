@@ -27,6 +27,22 @@ python cli.py simple-data-permutation decrypt -t "ПЛАСЬГВОЕРЕЮЕМО
 python cli.py single-key-permutation encrypt -t "ВИНОВЕТ КТО ВМЕШИВАЮТСЯ В ДЕЛА, КОТОРЫЕ ЕГО НЕ КАСАЮТСЯ" -r 11 -c 5 -k "ЛИНИЯ"
 ```
 
+Для дешифровки тест:
+
 ```bash
 python cli.py single-key-permutation decrypt -t "_ОВЯНВТИ_ЕМОНВ_ЕРО_КШЫВДАИЕЕЕСВ_НЛААЕ_АЮЕГК,ТТОТ_СС_ОКЯ" -r 11 -c 5 -k "ЛИНИЯ"
+```
+
+### Магический квадрат
+
+Для шифровки тест:
+
+```bash
+python cli.py magic-table encrypt -t "ВРЕМЕНА МЕНЯЮТСЯ" -k "[[1,14,15,4],[12,7,6,9],[8,11,10,5],[13,2,3,16]]"
+```
+
+Для дешифровки тест:
+
+```bash
+python cli.py magic-table decrypt -t "ВРЕМЕНА МЕНЯЮТСЯ" -k "[[1,14,15,4],[12,7,6,9],[8,11,10,5],[13,2,3,16]]"
 ```

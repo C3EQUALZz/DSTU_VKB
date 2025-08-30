@@ -12,6 +12,8 @@ from cryptography_methods.application.commands.ceaser_classic.decrypt import Cea
 from cryptography_methods.application.commands.ceaser_classic.encrypt import CeaserClassicEncryptCommandHandler
 from cryptography_methods.application.commands.ceaser_keyword.decrypt import CeaserKeywordDecryptCommandHandler
 from cryptography_methods.application.commands.ceaser_keyword.encrypt import CeaserKeywordEncryptCommandHandler
+from cryptography_methods.application.commands.magic_table.decrypt import MagicTableDecryptCommandHandler
+from cryptography_methods.application.commands.magic_table.encrypt import MagicTableEncryptCommandHandler
 from cryptography_methods.application.commands.playfair.decrypt import PlayfairDecryptCommandHandler
 from cryptography_methods.application.commands.playfair.encrypt import PlayfairEncryptCommandHandler
 from cryptography_methods.application.commands.simple_table_permutation.decrypt import (
@@ -36,6 +38,7 @@ from cryptography_methods.domain.ceaser.services.classic_ceaser_service import C
 from cryptography_methods.domain.ceaser.services.trithemius_service import TrithemiusService
 from cryptography_methods.domain.cipher_table.services.cipher_table_service import CipherTableService
 from cryptography_methods.domain.cipher_table.services.id_generator import CipherTableIdGenerator
+from cryptography_methods.domain.cipher_table.services.magic_table_service import MagicTableService
 from cryptography_methods.domain.cipher_table.services.simple_table_permutation_service import (
     SimpleTablePermutationService
 )
@@ -68,7 +71,9 @@ def interactors_provider() -> Provider:
         PlayfairEncryptCommandHandler,
         PlayfairDecryptCommandHandler,
         VigenereEncryptCommandHandler,
-        VigenereDecryptCommandHandler
+        VigenereDecryptCommandHandler,
+        MagicTableDecryptCommandHandler,
+        MagicTableEncryptCommandHandler
     )
     return provider
 
@@ -91,7 +96,8 @@ def services_provider() -> Provider:
         CeaserKeywordService,
         TrithemiusService,
         PlayfairService,
-        VigenereService
+        VigenereService,
+        MagicTableService
     )
     return provider
 
