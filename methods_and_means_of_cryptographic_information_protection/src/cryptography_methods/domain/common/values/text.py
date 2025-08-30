@@ -36,6 +36,9 @@ class Text(BaseValueObject):
     def __iter__(self) -> Iterator[str]:
         return iter(self.value)
 
+    def __len__(self) -> int:
+        return len(self.value)
+
     @override
     def __str__(self) -> str:
         return str(self.value)

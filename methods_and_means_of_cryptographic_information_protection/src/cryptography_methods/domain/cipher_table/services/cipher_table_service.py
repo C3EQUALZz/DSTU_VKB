@@ -102,6 +102,12 @@ class CipherTableService(DomainService):
         return table
 
     def vertical_stack(self, upper_table: Table, lower_table: Table) -> Table:
+        logger.info(
+            "Start creating vertical stack for tables: upper_table: %s, lower_table: %s",
+            upper_table,
+            lower_table
+        )
+
         logger.info("Checking that lower and upper table width matching...")
 
         if upper_table.width != lower_table.width:
@@ -117,10 +123,61 @@ class CipherTableService(DomainService):
             stacked_table.data[row_idx] = upper_table[row_idx][:]
 
         for row_idx in range(lower_table.height):
-            stacked_table.data[lower_table.height + row_idx] = lower_table.data[row_idx][:]
+            stacked_table.data[upper_table.height + row_idx] = lower_table.data[row_idx][:]
 
         logger.info("Built stacked table using vertical stack, new table:\n%s\n", stacked_table)
 
         return stacked_table
+
+    def sort_columns_by_row(self, table: Table, row_index: int) -> Table:
+        """
+        Сортирует столбцы таблицы по значениям в указанной строке
+
+        Args:
+            table: исходная таблица
+            row_index: индекс строки, по значениям которой нужно сортировать
+
+        Returns:
+            Новая таблица с отсортированными столбцами
+        """
+        logger.info("Started sorting table by row index: %s", row_index)
+
+        if row_index < 0 or row_index >= table.height:
+            raise IndexError(f"Row index {row_index} is out of bounds for table with height {table.height}")
+
+        # Создаем список кортежей (значение, индекс столбца) для указанной строки
+        column_values = []
+        for col in range(table.width):
+            try:
+                value = int(table[row_index, col])
+            except ValueError:
+                value = table[row_index, col]
+            column_values.append((value, col))
+
+        logger.info("Creating column values with value and index of column: %s", row_index)
+
+        # Сортируем по значениям
+        column_values.sort(key=lambda x: x[0])
+        logger.info("Sorted column values: %s", column_values)
+
+        # Получаем порядок столбцов после сортировки
+        sorted_column_indices: list[int] = [col_idx for _, col_idx in column_values]
+        logger.info("Get the order of columns after sorting: %s", sorted_column_indices)
+
+        # Создаем новую таблицу с отсортированными столбцами
+        sorted_table: Table = Table(
+            id=self._id_generator(),
+            width=table.width,
+            height=table.height
+        )
+
+        # Заполняем новую таблицу
+        for row in range(table.height):
+            for new_col, old_col in enumerate(sorted_column_indices):
+                sorted_table[row, new_col] = table[row, old_col]
+
+        logger.info("Finished sorting table. Result:\n%s.", sorted_table)
+
+        return sorted_table
 
 

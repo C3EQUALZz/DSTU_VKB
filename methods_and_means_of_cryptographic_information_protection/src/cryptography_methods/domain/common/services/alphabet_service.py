@@ -1,5 +1,6 @@
 import logging
 import re
+import string
 from typing import Final
 
 from cryptography_methods.domain.cipher_table.services.alphabet_creation.base import AlphabetCreationStrategy
@@ -69,10 +70,12 @@ class AlphabetService(DomainService):
 
     # noinspection PyMethodMayBeStatic
     def get_language_from_the_text(self, text: Text) -> LanguageType:
-        if re.fullmatch(r"^[а-яА-ЯЁё][а-яА-ЯЁё\s\-\,\.\:\;\!\?]*[а-яА-ЯЁё]$", str(text), re.UNICODE):
+        filtered_text: str = "".join(char for char in text if char not in string.punctuation)
+
+        if re.fullmatch(r"^[а-яА-ЯЁё][а-яА-ЯЁё\s\-\,\.\:\;\!\?]*[а-яА-ЯЁё]$", filtered_text, re.UNICODE):
             return LanguageType.RUSSIAN
 
-        if re.fullmatch(r"^[a-zA-Z][a-zA-Z\s\-\,\.\:\;\!\?]*[a-zA-Z]$", str(text), re.UNICODE):
+        if re.fullmatch(r"^[a-zA-Z][a-zA-Z\s\-\,\.\:\;\!\?]*[a-zA-Z]$", filtered_text, re.UNICODE):
             return LanguageType.ENGLISH
 
         raise NotImplementedError("Not Implemented for this alphabet.")

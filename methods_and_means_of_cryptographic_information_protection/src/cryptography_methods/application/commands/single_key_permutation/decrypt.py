@@ -1,10 +1,15 @@
+import logging
 from dataclasses import dataclass
 from typing import final, Final
 
+from cryptography_methods.application.common.views.single_key_permutation import SingleKeyPermutationDecryptView
 from cryptography_methods.domain.cipher_table.services.single_key_permutation_service import (
     SingleKeyPermutationService
 )
-from cryptography_methods.application.common.views.single_key_permutation import SingleKeyPermutationDecryptView
+from cryptography_methods.domain.cipher_table.values.table_dimension import TableDimension
+from cryptography_methods.domain.common.values.text import Text
+
+logger: Final[logging.Logger] = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True, slots=True)
@@ -24,16 +29,31 @@ class SingleKeyPermutationDecryptCommandHandler:
         self._single_key_permutation_service: Final[SingleKeyPermutationService] = single_key_permutation_service
 
     async def __call__(self, data: SingleKeyPermutationDecryptCommand) -> SingleKeyPermutationDecryptView:
-        decrypted_text: str = self._single_key_permutation_service.decrypt(
-            data=data.data,
-            key=data.key,
-            width=data.width,
-            height=data.height,
+        mapped_data: str = data.data.replace("  ", "|").replace(" ", "_")
+        logger.info("Replaced all spaces on symbols in text for encryption, changed data: %s", mapped_data)
+        mapped_key: str = data.key.replace("  ", "|").replace(" ", "_")
+        logger.info("Replace all spaces on symbols in key for encryption, changed data: %s", mapped_key)
+
+        validated_data: Text = Text(mapped_data)
+        logger.info("Validated data: %s", validated_data)
+        validated_key: Text = Text(mapped_key)
+        logger.info("Validated key: %s", validated_key)
+        table_width: TableDimension = TableDimension(data.width)
+        logger.info("Validated table width: %s", table_width)
+        table_height: TableDimension = TableDimension(data.height)
+        logger.info("Validated table height: %s", table_height)
+
+        decrypted_text: Text = self._single_key_permutation_service.decrypt(
+            data=validated_data,
+            width=table_width,
+            height=table_height,
+            key=validated_key,
         )
+        logger.info("Finished decryption, returning string: %s", decrypted_text)
 
         return SingleKeyPermutationDecryptView(
             original_text=data.data,
-            decrypted_text=decrypted_text,
+            decrypted_text=decrypted_text.value,
             key=data.key,
             width=data.width,
             height=data.height,
