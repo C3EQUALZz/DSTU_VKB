@@ -70,12 +70,7 @@ def cmd_decrypt_handler(
         key: str,
         interactor: FromDishka[MagicTableDecryptCommandHandler]
 ) -> None:
-    rows = key.split(';')
-    square_data = []
-    for row in rows:
-        click.echo(rows)
-        values = row.split(',')
-        square_data.append([int(x.strip()) for x in values])
+    parsed_keys: list[list[int]] = json.loads(key)
 
     if text == "" or text.isspace():
         click.echo("Please provide any text, not space", err=True)
@@ -83,7 +78,7 @@ def cmd_decrypt_handler(
 
     command: MagicTableDecryptCommand = MagicTableDecryptCommand(
         text=text,
-        table=square_data
+        table=parsed_keys
     )
 
     view: MagicTableDecryptView = asyncio.run(interactor(command))

@@ -44,5 +44,5 @@ python cli.py magic-table encrypt -t "ВРЕМЕНА МЕНЯЮТСЯ" -k "[[1,1
 Для дешифровки тест:
 
 ```bash
-python cli.py magic-table decrypt -t "ВРЕМЕНА МЕНЯЮТСЯ" -k "[[1,14,15,4],[12,7,6,9],[8,11,10,5],[13,2,3,16]]"
+python cli.py magic-table decrypt -t "ВТСМЯАНМ НЕЕЮРЕЯ" -k "[[1,14,15,4],[12,7,6,9],[8,11,10,5],[13,2,3,16]]"
 ```

@@ -28,7 +28,7 @@ class MagicTableDecryptCommandHandler:
         magic_table: MagicTable = MagicTable(data.table)
         logger.info("Magic table: %s", magic_table)
 
-        decrypted_text: Text = self._magic_table_service.encrypt(
+        decrypted_text: Text = self._magic_table_service.decrypt(
             data=validated_text,
             magic_table=magic_table,
         )
