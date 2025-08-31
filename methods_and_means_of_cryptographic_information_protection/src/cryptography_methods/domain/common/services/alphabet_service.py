@@ -70,7 +70,7 @@ class AlphabetService(DomainService):
 
     # noinspection PyMethodMayBeStatic
     def get_language_from_the_text(self, text: Text) -> LanguageType:
-        filtered_text: str = "".join(char for char in text if char not in string.punctuation)
+        filtered_text: str = "".join(char for char in text if char not in string.punctuation).strip()
 
         if re.fullmatch(r"^[а-яА-ЯЁё][а-яА-ЯЁё\s\-\,\.\:\;\!\?]*[а-яА-ЯЁё]$", filtered_text, re.UNICODE):
             return LanguageType.RUSSIAN
