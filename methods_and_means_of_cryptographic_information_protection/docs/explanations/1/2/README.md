@@ -8,13 +8,13 @@
 Для запуска шифрования нужно использовать команду: 
 
 ```bash
-python cli.py ceaser-classic encrypt -t "МЫ ДОЛЖНЫ ПРИЗНАТЬ ОЧЕВИДНОЕ: ПОНИМАЮТ ЛИШЬ ТЕ, КТО ХОЧЕТ ПОНЯТЬ" -k 6
+python cli.py ceaser-classic encrypt -t "МЫ ДОЛЖНЫ ПРИЗНАТЬ ОЧЕВИДНОЕ: ПОНИМАЮТ ЛИШЬ ТЕ, КТО ХОЧЕТ ПОНЯТЬ" -k 12
 ```
 
 Для запуска дешифрования нужно использовать команду: 
 
 ```bash
-python cli.py ceaser-classic decrypt -t "ТБ ЙФСМУБ ХЦОНУЁШВ ФЭКЗОЙУФК: ХФУОТЁДШ СОЮВ ШК, РШФ ЫФЭКШ ХФУЕШВ" -k 6
+python cli.py ceaser-classic decrypt -t "ШЖ ПЪЧТЩЖ ЫЬФУЩЛЮЗ ЪГРНФПЩЪР: ЫЪЩФШЛЙЮ ЧФДЗ ЮР, ЦЮЪ БЪГРЮ ЫЪЩКЮЗ" -k 12
 ```
 
 > [!NOTE]
@@ -25,13 +25,13 @@ python cli.py ceaser-classic decrypt -t "ТБ ЙФСМУБ ХЦОНУЁШВ ФЭ
 Для запуска шифрования нужно использовать команду: 
 
 ```bash
-python cli.py affine-system-of-ceaser-substitutions encrypt -t "ПРИЛЕТАЮ ЗАВТРА" -a 4 -b 2
+python cli.py affine-system-of-ceaser-substitutions encrypt -t "СМЫСЛ НАШЕЙ ЖИЗНИ - НЕПРЕРЫВНОЕ ДВИЖЕНИЕ" -a 2 -b 3
 ```
 
 Для запуска дешифрования нужно использовать команду:
 
 ```bash
-python cli.py affine-system-of-ceaser-substitutions decrypt -t "АДЕРХЛВЪ БВЙЛДВ" -a 4 -b 2
+python cli.py affine-system-of-ceaser-substitutions decrypt -t "ЁЬЩЁЪ ЮГУМЦ РФТЮФ - ЮМВДМДЩЖЮАМ КЖФРМЮФМ" -a 2 -b 3
 ```
 
 ### Система шифрования Цезаря с ключевым словом
@@ -39,13 +39,13 @@ python cli.py affine-system-of-ceaser-substitutions decrypt -t "АДЕРХЛВЪ
 Для запуска шифрования нужно использовать команду: 
 
 ```bash
-python cli.py ceaser-keyword encrypt -t "ПРИЛЕТАЮ ЗАВТРА" -k 5 -keyw "РАБОТА"
+python cli.py ceaser-keyword encrypt -t "РАЗУМА ЛИШАЕТ НЕ СОМНЕНИЕ, А УВЕРЕННОСТЬ" -k 12 -keyw "ШИФРТЕКСТ"
 ```
 
 Для запуска дешифрования нужно использовать команду: 
 
 ```bash
-python cli.py ceaser-keyword decrypt -t "ЗИТДРКЫЩ ОЫЭКИЫ" -k 5 -keyw "РАБОТА"
+python cli.py ceaser-keyword decrypt -t "ЕПЬАИП ШЭЁПЩС ФЩ КРИФЩФЭЩ, П АХЩЕЩФФРКСЛ" -k 12 -keyw "ШИФРТЕКСТ"
 ```
 
 ### Система Трисемуса
@@ -53,11 +53,11 @@ python cli.py ceaser-keyword decrypt -t "ЗИТДРКЫЩ ОЫЭКИЫ" -k 5 -ke
 Для запуска шифрования использовать команду: 
 
 ```bash
-python cli.py trithemius encrypt -t "ПРИЛЕТАЮ ЗАВТРА" -k "РАБОТА" -c 8 -r 4
+python cli.py trithemius encrypt -t "УСПЕХ - ЭТО КОГДА ТЫ ДЕВЯТЬ РАЗ УПАЛ, НО ДЕСЯТЬ РАЗ ПОДНЯЛСЯ" -k "ШИФРТЕКСТ" -c 8 -r 4
 ```
 
 Для запуска дешифрования использовать команду: 
 
 ```bash
-python cli.py trithemius decrypt -t "ЩЕУЦНЙЖГ СЖКЙЕЖ" -k "РАБОТА" -c 8 -r 4
+python cli.py trithemius decrypt -t "ЭЙЬЖЮ - ЕДЫ ЗЫОПЛ ДР ПЖНСДТ ГЛХ ЭЬЛЧ, ЪЫ ПЖЙСДТ ГЛХ ЬЫПЪСЧЙС" -k "ШИФРТЕКСТ" -c 8 -r 4
 ```
