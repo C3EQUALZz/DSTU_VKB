@@ -26,23 +26,33 @@ class VigenereService(DomainService):
             text,
             uppercase_symbols=True
         )
-        logger.info("Using alphabet: %s (length: %d)", alphabet, len(alphabet))
+
+        alphabet_without_one_russian_letter: str = alphabet.replace('Ё', '').replace('ё', '')
+        logger.info("Deleted letter 'ё' from alphabet: %s", alphabet_without_one_russian_letter)
+
+        logger.info(
+            "Using alphabet: %s (length: %d)",
+            alphabet_without_one_russian_letter,
+            len(alphabet_without_one_russian_letter)
+        )
 
         # Оптимизированная очистка ключа с использованием set для быстрого поиска
-        alphabet_set: set[str] = set(alphabet)
+        alphabet_set: set[str] = set(alphabet_without_one_russian_letter)
         cleaned_key: str = ''.join(filter(alphabet_set.__contains__, key.value.upper()))
 
         # Создаем бесконечный итератор ключа
         key_iter: cycle[str] = cycle(cleaned_key)
-        n: int = len(alphabet)
+        n: int = len(alphabet_without_one_russian_letter)
 
         # Используем deque для эффективного добавления символов
         result_chars: deque[str] = deque()
         # Создаем словарь для быстрого поиска индексов символов
-        char_index_map: dict[str, int] = {char: idx for idx, char in enumerate(alphabet)}
+        char_index_map: dict[str, int] = {char: idx for idx, char in enumerate(alphabet_without_one_russian_letter)}
+        logger.info("Build char index map: %s", char_index_map)
 
         for char in text.value:
             char_upper = char.upper()
+            logger.info("Processing char: %s", char_upper)
             if char_upper in char_index_map:
                 key_char: str = next(key_iter)
                 logger.info("Key char for encryption: %s", key_char)
@@ -59,7 +69,7 @@ class VigenereService(DomainService):
                 new_pos: int = (text_pos + offset) % n
                 logger.info("New position for encryption: %s", new_pos)
 
-                new_char: str = alphabet[new_pos]
+                new_char: str = alphabet_without_one_russian_letter[new_pos]
                 new_char_for_encryption: str = new_char if char.isupper() else new_char.lower()
                 logger.info("New char for encryption: %s", new_char_for_encryption)
 
