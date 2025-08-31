@@ -1,4 +1,7 @@
+import ast
 import asyncio
+import json
+import string
 
 import click
 from dishka import FromDishka
@@ -17,31 +20,47 @@ from cryptography_methods.application.common.views.double_square_whitestone impo
 )
 
 
-@click.group(name="double_square_whitestone")
+@click.group(name="double-square-whitestone")
 def double_square_whitestone_group() -> None:
     ...
 
 
 @double_square_whitestone_group.command("encrypt")
-@click.option("-key", "--keyword", required=False, help="Keyword for encryption", type=list[list[str]], default=None)
+@click.option("-lt", "--left-table", required=True, help="Left table for encryption", type=str)
+@click.option("-rt", "--right-table", required=True, help="Right table for encryption", type=str)
 @click.option("-t", "--text", required=True, help="Text for encryption", type=str)
 def cmd_encrypt_handler(
         text: str,
-        key: list[list[str]] | None,
+        left_table: str,
+        right_table: str,
         interactor: FromDishka[EncryptDoubleSquareWhitestoneCommandHandler]
 ) -> None:
+    converted_left_table: list[list[str]] = ast.literal_eval(left_table)
+
+    if not all(
+            (column.isalpha() or column.isspace() or column in string.punctuation)
+            for row in converted_left_table for column in row
+    ):
+        click.echo("All symbols must be alphas, not another", err=True)
+        return
+
+    converted_right_table: list[list[str]] = ast.literal_eval(right_table)
+
+    if not all(
+            (column.isalpha() or column.isspace() or column in string.punctuation)
+            for row in converted_right_table for column in row
+    ):
+        click.echo("All symbols must be alphas, not another", err=True)
+        return
+
     if text == "" or text.isspace():
         click.echo("Please provide any text, not space", err=True)
         return
 
-    if key is not None:
-        if not all((symbol.isalpha() or symbol.isspace() or symbol in ":,.") for table in key for symbol in table):
-            click.echo("All symbols must be alphas, not another", err=True)
-            return
-
     command: EncryptDoubleSquareWhitestoneCommand = EncryptDoubleSquareWhitestoneCommand(
         text=text,
-        key_for_encryption=key
+        left_table=converted_left_table,
+        right_table=converted_right_table,
     )
 
     view: DoubleSquareWhitestoneEncryptView = asyncio.run(interactor(command))
@@ -57,33 +76,49 @@ def cmd_encrypt_handler(
     table.add_row([
         view.text,
         view.encrypted_text,
-        view.key_for_encryption[0],
-        view.key_for_encryption[1],
+        view.left_table,
+        view.right_table,
     ])
 
     click.echo(table)
 
 
 @double_square_whitestone_group.command("decrypt")
-@click.option("-key", "--keyword", required=False, help="Keyword for decryption", type=list[list[str]], default=None)
+@click.option("-lt", "--left-table", required=True, help="Left table for decryption", type=str)
+@click.option("-rt", "--right-table", required=True, help="Right table for decryption", type=str)
 @click.option("-t", "--text", required=True, help="Text for decryption", type=str)
 def cmd_decrypt_handler(
-        key: list[list[str]],
         text: str,
+        left_table: str,
+        right_table: str,
         interactor: FromDishka[DecryptDoubleSquareWhitestoneCommandHandler]
 ) -> None:
+    converted_left_table: list[list[str]] = ast.literal_eval(left_table)
+
+    if not all(
+            (column in string.punctuation + string.ascii_letters or column.isalpha())
+            for row in converted_left_table for column in row
+    ):
+        click.echo("All symbols must be alphas, not another", err=True)
+        return
+
+    converted_right_table: list[list[str]] = ast.literal_eval(right_table)
+
+    if not all(
+            (column in string.punctuation + string.ascii_letters or column.isalpha())
+            for row in converted_right_table for column in row
+    ):
+        click.echo("All symbols must be alphas, not another", err=True)
+        return
+
     if text == "" or text.isspace():
         click.echo("Please provide any text, not space", err=True)
         return
 
-    if key is not None:
-        if not all((symbol.isalpha() or symbol.isspace() or symbol in ":,.") for table in key for symbol in table):
-            click.echo("All symbols must be alphas, not another", err=True)
-            return
-
     command: DecryptDoubleSquareWhitestoneCommand = DecryptDoubleSquareWhitestoneCommand(
         text=text,
-        key_for_decryption=key
+        left_table=converted_left_table,
+        right_table=converted_right_table,
     )
 
     view: DoubleSquareWhitestoneDecryptView = asyncio.run(interactor(command))
@@ -99,8 +134,8 @@ def cmd_decrypt_handler(
     table.add_row([
         view.text,
         view.decrypted_text,
-        view.key_for_decryption[0],
-        view.key_for_decryption[1],
+        view.left_table,
+        view.right_table,
     ])
 
     click.echo(table)

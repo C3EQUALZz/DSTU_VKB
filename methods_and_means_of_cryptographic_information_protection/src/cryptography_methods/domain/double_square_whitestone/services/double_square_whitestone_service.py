@@ -1,3 +1,4 @@
+import logging
 import random
 from typing import Final
 
@@ -10,6 +11,8 @@ from cryptography_methods.domain.common.values.text import Text
 from cryptography_methods.domain.double_square_whitestone.entities.double_table import DoubleTableWhitestone
 from cryptography_methods.domain.double_square_whitestone.errors import UnSupportedLanguageTypeForThisCypher
 from cryptography_methods.domain.double_square_whitestone.services.id_generator import DoubleTableWhitestoneIdGenerator
+
+logger: Final[logging.Logger] = logging.getLogger(__name__)
 
 
 class DoubleSquareWhitestoneService(DomainService):
@@ -88,18 +91,50 @@ class DoubleSquareWhitestoneService(DomainService):
         for i in range(0, len(raw_text), 2):
             first_char = raw_text[i]
             second_char = raw_text[i + 1]
+            logger.info("Processing pair: (%s, %s)", first_char, second_char)
             first_char_row_index, first_char_column_index = key_for_encryption.left_table.find(first_char)
+            logger.info(
+                "Indexes for first char in left table: row - %s, column - %s",
+                first_char_row_index,
+                first_char_column_index
+            )
             second_char_row_index, second_char_column_index = key_for_encryption.right_table.find(second_char)
+            logger.info(
+                "Indexes for second char in right table: row - %s, column - %s",
+                second_char_row_index,
+                second_char_column_index
+            )
 
             if first_char_row_index == second_char_row_index:  # Одна строка
+                logger.info("Chars in same row")
                 encrypted_text += key_for_encryption.right_table[first_char_row_index][first_char_column_index]
+                logger.info(
+                    "Taking new encrypted char at indexes in right table: row - %s, column - %s, encrypted char - %s",
+                    first_char_row_index,
+                    first_char_column_index,
+                    key_for_encryption.right_table[first_char_row_index][first_char_column_index]
+                )
                 encrypted_text += key_for_encryption.left_table[second_char_row_index][second_char_column_index]
+                logger.info(
+                    "Taking new encrypted char in left table: row - %s, column - %s, encrypted char - %s",
+                    second_char_row_index,
+                    second_char_column_index,
+                    key_for_encryption.left_table[second_char_row_index][second_char_column_index]
+                )
             elif first_char_column_index == second_char_column_index:  # Один столбец
+                logger.info("Chars in same column")
                 encrypted_text += key_for_encryption.right_table[first_char_row_index][first_char_column_index]
+                logger.info(
+                    "Taking new encrypted char in right table: row - %s, column - %s",
+                    first_char_row_index,
+                    first_char_column_index
+                )
                 encrypted_text += key_for_encryption.left_table[second_char_row_index][second_char_column_index]
             else:
                 encrypted_text += key_for_encryption.right_table[first_char_row_index][second_char_column_index]
                 encrypted_text += key_for_encryption.left_table[second_char_row_index][first_char_column_index]
+
+            logger.info("Encrypted text: %s", encrypted_text)
 
         return Text(encrypted_text)
 

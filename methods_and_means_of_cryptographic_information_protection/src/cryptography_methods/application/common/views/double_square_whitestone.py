@@ -5,11 +5,13 @@ from dataclasses import dataclass
 class DoubleSquareWhitestoneEncryptView:
     text: str
     encrypted_text: str
-    key_for_encryption: tuple[list[str], list[str]]
+    left_table: list[list[str]]
+    right_table: list[list[str]]
 
 
 @dataclass(frozen=True, slots=True)
 class DoubleSquareWhitestoneDecryptView:
     text: str
     decrypted_text: str
-    key_for_decryption: tuple[list[str], list[str]]
+    left_table: list[list[str]]
+    right_table: list[list[str]]

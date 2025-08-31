@@ -7,7 +7,8 @@ from cryptography_methods.application.common.views.double_square_whitestone impo
 @dataclass(frozen=True, slots=True, kw_only=True)
 class DecryptDoubleSquareWhitestoneCommand:
     text: str
-    key_for_decryption: tuple[list[str], list[str]] | None = None
+    left_table: list[list[str]]
+    right_table: list[list[str]]
 
 
 @final
