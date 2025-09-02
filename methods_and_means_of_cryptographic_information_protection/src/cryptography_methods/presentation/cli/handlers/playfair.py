@@ -28,13 +28,9 @@ def playfair_group() -> None:
 @playfair_group.command("encrypt")
 @click.option("-t", "--text", required=True, help="Text to encrypt", type=str)
 @click.option("-k", "--key", required=True, help="Key for encryption", type=str)
-@click.option("-c", "--columns", required=True, help="Number of columns for table", type=int)
-@click.option("-r", "--rows", required=True, help="Number of rows for table", type=int)
 def cmd_encrypt_handler(
         text: str,
         key: str,
-        columns: int,
-        rows: int,
         interactor: FromDishka[PlayfairEncryptCommandHandler]
 ) -> None:
     if text == "" or text.isspace():
@@ -45,15 +41,9 @@ def cmd_encrypt_handler(
         click.echo("Please provide any key, not space", err=True)
         return
 
-    if rows < 0 or columns < 0:
-        click.echo("Please provide any number of columns and rows", err=True)
-        return
-
     command: PlayfairEncryptCommand = PlayfairEncryptCommand(
         text=text,
         key=key,
-        columns=columns,
-        rows=rows,
     )
 
     view: PlayfairEncryptView = asyncio.run(interactor(command))
@@ -84,13 +74,9 @@ def cmd_encrypt_handler(
 @playfair_group.command("decrypt")
 @click.option("-t", "--text", required=True, help="Text to encrypt", type=str)
 @click.option("-k", "--key", required=True, help="Key for encryption", type=str)
-@click.option("-c", "--columns", required=True, help="Number of columns for table", type=int)
-@click.option("-r", "--rows", required=True, help="Number of rows for table", type=int)
 def cmd_decrypt_handler(
         text: str,
         key: str,
-        columns: int,
-        rows: int,
         interactor: FromDishka[PlayfairDecryptCommandHandler]
 ) -> None:
     if text == "" or text.isspace():
@@ -101,15 +87,9 @@ def cmd_decrypt_handler(
         click.echo("Please provide any key, not space", err=True)
         return
 
-    if rows < 0 or columns < 0:
-        click.echo("Please provide any number of columns and rows", err=True)
-        return
-
     command: PlayfairDecryptCommand = PlayfairDecryptCommand(
         text=text,
         key=key,
-        columns=columns,
-        rows=rows,
     )
 
     view: PlayfairDecryptView = asyncio.run(interactor(command))

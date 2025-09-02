@@ -1,3 +1,4 @@
+import logging
 from dataclasses import dataclass
 from typing import final, Final
 
@@ -7,13 +8,12 @@ from cryptography_methods.domain.common.services.alphabet_service import Alphabe
 from cryptography_methods.domain.common.values.text import Text
 from cryptography_methods.domain.playfair.services.playfair_service import PlayfairService
 
+logger: Final[logging.Logger] = logging.getLogger(__name__)
 
 @dataclass(frozen=True, slots=True)
 class PlayfairEncryptCommand:
     text: str
     key: str
-    columns: int
-    rows: int
 
 
 @final
@@ -27,14 +27,29 @@ class PlayfairEncryptCommandHandler:
         self._playfair_service: Final[PlayfairService] = playfair_service
 
     async def __call__(self, data: PlayfairEncryptCommand) -> PlayfairEncryptView:
-        table_width: TableDimension = TableDimension(data.columns)
-        table_height: TableDimension = TableDimension(data.rows)
+        logger.info("Started playfair encryption")
         key_for_encryption: Text = Text(data.key)
+        logger.info("Validated key for encryption")
         text_for_encryption: Text = Text(data.text)
+        logger.info("Validated text for encryption")
+        table_width: TableDimension
+        table_height: TableDimension
 
         length_of_alphabet: int = len(self._alphabet_service.build_alphabet_by_provided_text(
             text=text_for_encryption
         ))
+        logger.info("Current length of alphabet - %s", length_of_alphabet)
+
+        if length_of_alphabet == 33:
+            table_width: TableDimension = TableDimension(8)
+            table_height: TableDimension = TableDimension(4)
+        elif length_of_alphabet == 26:
+            table_width: TableDimension = TableDimension(5)
+            table_height: TableDimension = TableDimension(5)
+        else:
+            raise NotImplementedError("Not implemented for this language")
+
+        logger.info("table width - %s, table height - %s", table_width, table_height)
 
         encrypted_text: Text = self._playfair_service.encrypt(
             table_width=table_width,
@@ -47,7 +62,7 @@ class PlayfairEncryptCommandHandler:
             original_text=data.text,
             encrypted_text=encrypted_text.value,
             key=data.key,
-            width=data.columns,
-            height=data.rows,
+            width=table_width.value,
+            height=table_height.value,
             length_of_alphabet=length_of_alphabet
         )

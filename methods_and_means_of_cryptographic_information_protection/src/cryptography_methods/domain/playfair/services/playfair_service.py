@@ -9,6 +9,7 @@ from cryptography_methods.domain.common.services.alphabet_service import Alphabe
 from cryptography_methods.domain.common.services.base import DomainService
 from cryptography_methods.domain.common.values.languages import LanguageType
 from cryptography_methods.domain.common.values.text import Text
+from cryptography_methods.domain.playfair.errors import CountOfSymbolsInTextMustBeEven
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 
@@ -63,12 +64,16 @@ class PlayfairService(DomainService):
             text: Text,
             mode: str
     ) -> Text:
+        if (count_of_symbols := len("".join(text.value.strip().split()))) % 2 != 0:
+            msg = f"Current number of symbols - {count_of_symbols}, this is not even"
+            raise CountOfSymbolsInTextMustBeEven(msg)
+
         # Подготовка таблицы
-        table = self._build_table(table_width, table_height, keyword, text)
+        table: Table = self._build_table(table_width, table_height, keyword, text)
         logger.info("Playfair table created: %s", table.data)
 
         # Обработка текста
-        bigrams = self._prepare_text(text.value)
+        bigrams: list[tuple[str, str]] = self._prepare_text(text.value)
         logger.info("Prepared bigrams: %s", bigrams)
 
         # Обработка биграмм
@@ -92,26 +97,31 @@ class PlayfairService(DomainService):
             text: Text
     ) -> Table:
         """Создает таблицу Плейфейра"""
-        # Определение языка
-        language_type = self._alphabet_service.get_language_from_the_text(text)
-        alphabet = self._alphabet_service.build_alphabet_by_provided_language_type(
+        logger.info("Started for building table for playfair")
+        language_type: LanguageType = self._alphabet_service.get_language_from_the_text(text)
+        logger.info("Current language type: %s", language_type)
+
+        alphabet: str = self._alphabet_service.build_alphabet_by_provided_language_type(
             language_type=language_type,
             uppercase_symbols=True
         )
+        logger.info("Built alphabet for playfair: %s", alphabet)
 
         # Обработка русского алфавита
-        if language_type == LanguageType.RUSSIAN and table_width * table_height == 32:
+        if language_type == LanguageType.RUSSIAN:
+            logger.info("Current language is Russian, deleting Ё from alphabet string")
             alphabet = alphabet.replace("Ё", "")
+            logger.info("New alphabet after deleting Ё: %s", alphabet)
 
         # Обработка ключа
-        cleaned_keyword = "".join(
-            char.upper() for char in keyword.value if char.isalpha()
+        cleaned_keyword: str = "".join(
+            char.upper() for char in keyword if char.isalpha()
         )
-        unique_key = "".join(dict.fromkeys(cleaned_keyword))
-        remaining_alphabet = "".join(char for char in alphabet if char not in unique_key)
-        data = unique_key + remaining_alphabet
+        unique_key: str = "".join(dict.fromkeys(cleaned_keyword))
+        remaining_alphabet: str = "".join(char for char in alphabet if char not in unique_key)
+        data: str = unique_key + remaining_alphabet
+        logger.info("Configured data for table: %s", data)
 
-        # Создание таблицы
         return self._table_service.create(
             width=table_width.value,
             height=table_height.value,
@@ -122,11 +132,15 @@ class PlayfairService(DomainService):
     def _prepare_text(self, text: str) -> List[Tuple[str, str]]:
         """Подготавливает текст, разбивая на биграммы"""
         # Фильтрация и нормализация букв
-        letters = []
+        logger.info("Started preparing text for bigrams")
+        letters: deque[str] = deque()
         for char in text:
+            logger.info("Processing char: %s", char)
             if char.isalpha():
+                logger.info("Current char is alpha")
                 letters.append(char.upper())
             elif char == "Ё":
+                logger.info("Current char is Ё, replacing on Е")
                 letters.append("Е")
 
         # Формирование биграмм с заполнителем
@@ -148,7 +162,8 @@ class PlayfairService(DomainService):
 
         return bigrams
 
-    def _encrypt_bigram(self, table: Table, bigram: Tuple[str, str]) -> Tuple[str, str]:
+    @staticmethod
+    def _encrypt_bigram(table: Table, bigram: tuple[str, str]) -> tuple[str, str]:
         """Шифрует биграмму по правилам Плейфейра"""
         char1, char2 = bigram
         row1, col1 = table.find(char1)
@@ -169,7 +184,8 @@ class PlayfairService(DomainService):
         # Буквы в разных строках и столбцах
         return table[row1, col2], table[row2, col1]
 
-    def _decrypt_bigram(self, table: Table, bigram: Tuple[str, str]) -> Tuple[str, str]:
+    @staticmethod
+    def _decrypt_bigram(table: Table, bigram: tuple[str, str]) -> tuple[str, str]:
         """Дешифрует биграмму по правилам Плейфейра"""
         char1, char2 = bigram
         row1, col1 = table.find(char1)
@@ -190,16 +206,18 @@ class PlayfairService(DomainService):
         # Буквы в разных строках и столбцах
         return table[row1, col2], table[row2, col1]
 
-    def _rebuild_text(self, original: str, bigrams: List[Tuple[str, str]]) -> str:
+    @staticmethod
+    def _rebuild_text(original: str, bigrams: List[Tuple[str, str]]) -> str:
         """Собирает текст из биграмм с сохранением не-буквенных символов"""
         # Создаем очередь всех букв
-        all_chars = deque()
+        all_chars: deque[str] = deque()
+
         for a, b in bigrams:
             all_chars.append(a)
             all_chars.append(b)
 
         # Собираем результат с сохранением оригинального регистра и символов
-        result = []
+        result: deque[str] = deque()
         for char in original:
             if not char.isalpha():
                 result.append(char)
