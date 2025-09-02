@@ -83,7 +83,7 @@ class GCDBinary(BaseGCDStrategy):
 
             # Шаг 4.2: Меняем местами, если a > b
             if a > b:
-                self._registry.add_log("a > b, меняем местами: {a=}, {b=}")
+                self._registry.add_log(f"a > b, меняем местами: {a=}, {b=}")
                 a, b = b, a
 
             # Шаг 4.3: Выполняем вычитание
