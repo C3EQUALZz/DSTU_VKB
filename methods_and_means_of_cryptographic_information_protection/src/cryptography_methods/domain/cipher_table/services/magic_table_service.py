@@ -13,7 +13,6 @@ class MagicTableService(DomainService):
         super().__init__()
 
     def encrypt(self, data: Text, magic_table: MagicTable) -> Text:
-
         table_with_encrypted_chars: list[list[str]] = [
             ["" for _ in range(magic_table.width)]
             for _ in range(magic_table.height)
