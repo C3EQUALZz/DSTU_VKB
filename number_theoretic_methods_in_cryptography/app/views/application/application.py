@@ -13,7 +13,7 @@ class Application(ctk.CTk):
     def __init__(self, tasks: dict[str, tuple[type[ITaskPresenter], type[ITaskView]]]) -> None:
         super().__init__()
         self.tasks = tasks
-        self.title("Данил Ковалев ВКБ42 Теоретико-числовые методы в криптографии")
+        self.title("Данил Ковалев ВКБ43 Теоретико-числовые методы в криптографии")
         self.geometry("1000x700")
 
         self.container: AlgorithmContainer = AlgorithmContainer(self)

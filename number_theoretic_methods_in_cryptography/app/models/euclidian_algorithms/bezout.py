@@ -60,7 +60,7 @@ class GCDBezout(BaseGCDStrategy):
 
         # Шаг 3: Основной цикл расширенного алгоритма Евклида
         while b_abs != 0:
-            self._registry.add_log(f"b пока не равен 0, продолжаю цикл, {b=}")
+            self._registry.add_log(f"b пока не равен 0, продолжаю цикл, {b_abs=}")
             # Вычисляем частное от деления
             quotient: NumberType = a_abs // b_abs
             self._registry.add_log(f"Вычисляем частное от деления {a_abs=}, {b_abs=}: {quotient=}")
