@@ -72,12 +72,14 @@ class GCDBezout(BaseGCDStrategy):
             # Обновляем коэффициенты Безу для a
             current_coefficient_a, next_coefficient_a = next_coefficient_a, current_coefficient_a - quotient * next_coefficient_a
             self._registry.add_log(
-                f"Обновляем коэффициента Безу для a: {current_coefficient_a=}, {next_coefficient_a=}")
+                f"Обновляем коэффициента Безу для a: {current_coefficient_a=}, {next_coefficient_a=}"
+            )
 
             # Обновляем коэффициенты Безу для b
             current_coefficient_b, next_coefficient_b = next_coefficient_b, current_coefficient_b - quotient * next_coefficient_b
             self._registry.add_log(
-                f"Обновляем коэффициенты Безу для b: {current_coefficient_b=}, {next_coefficient_b=}")
+                f"Обновляем коэффициенты Безу для b: {current_coefficient_b=}, {next_coefficient_b=}"
+            )
 
             self._iterations += 1
 
