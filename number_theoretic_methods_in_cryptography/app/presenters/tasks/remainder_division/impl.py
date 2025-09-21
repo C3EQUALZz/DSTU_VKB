@@ -1,4 +1,4 @@
-from typing import Iterable, override
+from typing import override
 
 from app.models.remainder_division.base import IRemainderDivision
 from app.models.remainder_division.impl import EulerFermatModel
@@ -27,31 +27,34 @@ class RemainderDivisionPresenter(IRemainderDivisionPresenter):
             return
 
         self._view.clear_logs()
+        mode = self._view.get_mode()
 
         try:
-            a: int = self._view.get_a()
-            b: int = self._view.get_b()
-
-            k: int = self._view.get_k()
-            m: int = self._view.get_m()
-
-            n: int = self._view.get_n()
-
-            # Вычисляем результаты для первого и второго чисел
-            result1 = self._model.solve(a=a, exponent=b, modulus=n)
-
-            result2 = self._model.solve(a=k, exponent=m, modulus=n)
-
-            sum_result = (result1 + result2) % n
-
-            # Обновляем _view
-            self._view.set_result1(f"{result1}")
-            self._view.set_result2(f"{result2}")
-            self._view.set_sum_result(f"{sum_result}")
-
-            # Получаем логи из модели
-            logs: Iterable[str] = self._model.get_logs()
-            self._view.show_logs(logs)
+            n = self._view.get_n()
+            if mode == "Одно выражение":
+                a = self._view.get_a()
+                b = self._view.get_b()
+                result = self._model.solve(a, b, n)
+                logs = self._model.get_logs()
+                self._view.set_result1(f"{result}")
+                self._view.set_result2("")
+                self._view.set_sum_result("")
+                self._view.show_logs(logs)
+            else:
+                a = self._view.get_a()
+                b = self._view.get_b()
+                k = self._view.get_k()
+                m = self._view.get_m()
+                result1 = self._model.solve(a, b, n)
+                logs1 = self._model.get_logs()
+                result2 = self._model.solve(k, m, n)
+                logs2 = self._model.get_logs()
+                total = (result1 + result2) % n
+                combined_logs = list(logs1) + ["---"] + list(logs2)
+                self._view.set_result1(f"{result1}")
+                self._view.set_result2(f"{result2}")
+                self._view.set_sum_result(f"{total}")
+                self._view.show_logs(combined_logs)
 
         except ValueError as e:
             self._view.show_error(str(e))
