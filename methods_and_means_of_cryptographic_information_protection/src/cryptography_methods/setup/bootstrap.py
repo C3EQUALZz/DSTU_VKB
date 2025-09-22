@@ -10,6 +10,7 @@ from aiogram.fsm.storage.memory import SimpleEventIsolation, MemoryStorage
 from aiogram_dialog import setup_dialogs
 from click import Group
 
+from cryptography_methods.presentation.bot.handlers.atbash import setup_atbash_routers, setup_atbash_dialogs
 from cryptography_methods.presentation.bot.handlers.common import router as common_router
 from cryptography_methods.presentation.bot.middlewares.stale_message_middleware import StaleMessageMiddleware
 from cryptography_methods.presentation.bot.middlewares.timing_middleware import TimingMiddleware
@@ -36,7 +37,7 @@ def setup_configs() -> Configs:
     return Configs()
 
 
-def setup_dispatcher(telegram_config: TelegramConfig) -> Dispatcher:
+def setup_dispatcher() -> Dispatcher:
     storage: BaseStorage
     event_isolation: BaseEventIsolation
 
@@ -50,6 +51,9 @@ def setup_dispatcher(telegram_config: TelegramConfig) -> Dispatcher:
         events_isolation=event_isolation,
         storage=storage
     )
+
+    setup_atbash_routers(dp)
+    setup_atbash_dialogs(dp)
 
     return dp
 

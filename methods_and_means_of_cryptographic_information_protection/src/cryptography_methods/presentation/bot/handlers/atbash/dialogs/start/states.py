@@ -1,5 +1,5 @@
 from aiogram.fsm.state import StatesGroup, State
 
 
-class AtabashStartStates(StatesGroup):
+class AtbashStartStates(StatesGroup):
     START = State()

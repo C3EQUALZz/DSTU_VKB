@@ -36,7 +36,7 @@ async def on_shutdown(dp: Dispatcher, container: AsyncContainer) -> None:
 async def main() -> None:
     configs: Configs = setup_configs()
     setup_logging(logger_config=configs.logging)
-    dp: Dispatcher = setup_dispatcher(telegram_config=configs.telegram)
+    dp: Dispatcher = setup_dispatcher()
     setup_bot_middlewares(dp)
     setup_bot_routes(dp=dp)
 
@@ -53,8 +53,8 @@ async def main() -> None:
         context=context
     )
 
-    dp.startup.register(partial(on_start, container=container))
-    dp.shutdown.register(partial(on_shutdown, container=container))
+    dp.startup.register(partial(on_start, container=container, dp=dp))
+    dp.shutdown.register(partial(on_shutdown, container=container, dp=dp))
 
     setup_aiogram_dishka(container=container, router=dp, auto_inject=True)
 

@@ -2,8 +2,9 @@ from typing import Any
 
 from aiogram.types import Message
 from aiogram_dialog import DialogManager
-from aiogram_dialog.widgets.input import TextInput
+from aiogram_dialog.widgets.input import MessageInput
 from dishka import FromDishka
+from dishka.integrations.aiogram_dialog import inject
 
 from cryptography_methods.application.commands.atbash.decrypt import AtbashDecryptCommandHandler, AtbashDecryptCommand
 from cryptography_methods.application.common.views.atbash import AtbashDecryptionView
@@ -18,9 +19,10 @@ async def decrypt_atbash_error(
     await message.answer("Должна быть введена обычная строка")
 
 
+@inject
 async def decrypt_atbash_handler(
         message: Message,
-        text_input: TextInput,
+        message_input: MessageInput,
         manager: DialogManager,
         interactor: FromDishka[AtbashDecryptCommandHandler]
 ) -> None:
