@@ -28,11 +28,13 @@ class EulerFermatModel(IRemainderDivision):
             # Малая теорема Ферма: a^(p-1) ≡ 1 mod p
             reduced_exponent = exponent % (modulus - 1)
             self._registry.add_log(f"Малая теорема Ферма: уменьшаем степень {exponent} до {reduced_exponent}")
+            self._registry.add_log(f"Малая теорема Ферма: формула - {a}^{reduced_exponent} = 1 mod {modulus}")
         else:
             # Теорема Эйлера: a^φ(n) ≡ 1 mod n
             phi = self._euler_phi(modulus)
             reduced_exponent = exponent % phi
             self._registry.add_log(f"Теорема Эйлера: уменьшаем степень {exponent} до {reduced_exponent}")
+            self._registry.add_log(f"Теорема Эйлера: формула - {a}^{phi} = 1 mod {modulus}")
 
         # Вычисляем результат
         result = self._modular_pow(a, reduced_exponent, modulus)
@@ -84,7 +86,7 @@ class EulerFermatModel(IRemainderDivision):
         while exponent > 0:
             if exponent % 2 == 1:
                 result = (result * base) % modulus
-                self._registry.add_log(f"Нечетный показатель → result = {result}")
+                self._registry.add_log(f"Нечетный показатель -> result = {result}")
             base = (base * base) % modulus
             exponent = exponent // 2
             self._registry.add_log(f"exponent = {exponent}, base = {base}")

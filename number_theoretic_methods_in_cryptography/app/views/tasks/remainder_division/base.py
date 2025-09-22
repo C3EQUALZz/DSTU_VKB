@@ -13,6 +13,10 @@ class IRemainderDivisionView(ITaskView["IRemainderDivisionPresenter"], Protocol)
         raise NotImplementedError
 
     @abstractmethod
+    def get_mode(self) -> str:
+        raise NotImplementedError
+
+    @abstractmethod
     def get_b(self) -> int:
         raise NotImplementedError
 
