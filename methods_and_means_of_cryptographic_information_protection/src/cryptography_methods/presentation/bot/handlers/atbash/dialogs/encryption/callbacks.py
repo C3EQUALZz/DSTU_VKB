@@ -42,4 +42,3 @@ async def encrypt_atbash_handler(
     )
     await message.reply(text=message_for_reply)
     await manager.done(show_mode=ShowMode.NO_UPDATE)
-    # await manager.next(show_mode=ShowMode.NO_UPDATE)
