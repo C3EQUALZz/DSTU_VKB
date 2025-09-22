@@ -1,7 +1,7 @@
 from typing import Final
 
 from aiogram.enums import ContentType
-from aiogram_dialog import Dialog, Window
+from aiogram_dialog import Dialog, Window, StartMode
 from aiogram_dialog.widgets.kbd import SwitchTo, Start
 from aiogram_dialog.widgets.media import StaticMedia
 from aiogram_dialog.widgets.text import Const
@@ -21,7 +21,7 @@ START_ATBASH_DIALOG: Final[Dialog] = Dialog(
         Start(
             Const("Шифрование"),
             id="encrypt_atabash_button_sub_dialog",
-            state=EncryptAtbashDialogStates.ASK_TEXT
+            state=EncryptAtbashDialogStates.ASK_TEXT,
         ),
         Start(
             Const("Дешифрование"),

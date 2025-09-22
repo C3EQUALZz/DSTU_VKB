@@ -1,7 +1,7 @@
 from typing import Any
 
 from aiogram.types import Message
-from aiogram_dialog import DialogManager
+from aiogram_dialog import DialogManager, ShowMode
 from aiogram_dialog.widgets.input import MessageInput
 from dishka import FromDishka
 from dishka.integrations.aiogram_dialog import inject
@@ -41,4 +41,4 @@ async def decrypt_atbash_handler(
         f"Ваше сообщение было зашифровано: '{view.decrypted_text}'"
     )
     await message.reply(text=message_for_reply)
-    await manager.done()
+    await manager.done(show_mode=ShowMode.NO_UPDATE)
