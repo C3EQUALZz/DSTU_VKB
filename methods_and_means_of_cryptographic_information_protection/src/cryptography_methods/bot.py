@@ -13,24 +13,20 @@ from cryptography_methods.setup.bootstrap import (
     setup_logging,
     setup_dispatcher,
     setup_bot_middlewares,
-    setup_bot_i18n,
     setup_bot_routes,
-    setup_map_tables
+    setup_configs,
 )
 
 from cryptography_methods.setup.ioc import setup_providers
 from cryptography_methods.setup.settings import (
     Configs,
-    PostgresConfig,
-    SQLAlchemyConfig,
-    RedisConfig
 )
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 
 
 async def on_start(dp: Dispatcher, container: AsyncContainer) -> None:
-    setup_map_tables()
+    ...
 
 
 async def on_shutdown(dp: Dispatcher, container: AsyncContainer) -> None:
@@ -38,11 +34,10 @@ async def on_shutdown(dp: Dispatcher, container: AsyncContainer) -> None:
 
 
 async def main() -> None:
-    configs: Configs = Configs()
+    configs: Configs = setup_configs()
     setup_logging(logger_config=configs.logging)
-    dp: Dispatcher = setup_dispatcher(telegram_config=configs.telegram, redis_config=configs.redis)
+    dp: Dispatcher = setup_dispatcher(telegram_config=configs.telegram)
     setup_bot_middlewares(dp)
-    setup_bot_i18n(dp=dp, i18n_config=configs.i18n_config)
     setup_bot_routes(dp=dp)
 
     bot: Bot = Bot(
@@ -51,9 +46,6 @@ async def main() -> None:
     )
 
     context: dict[Any, Any] = {
-        PostgresConfig: configs.postgres,
-        SQLAlchemyConfig: configs.alchemy,
-        RedisConfig: configs.redis,
     }
 
     container: AsyncContainer = make_async_container(

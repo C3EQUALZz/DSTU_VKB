@@ -8,6 +8,8 @@ from cryptography_methods.application.commands.affine_system_of_ceaser_substitut
 from cryptography_methods.application.commands.affine_system_of_ceaser_substitutions.encrypt import (
     AffineSystemOfCeaserSubstitutionEncryptCommandHandler
 )
+from cryptography_methods.application.commands.atbash.decrypt import AtbashDecryptCommandHandler
+from cryptography_methods.application.commands.atbash.encrypt import AtbashEncryptCommandHandler
 from cryptography_methods.application.commands.ceaser_classic.decrypt import CeaserClassicDecryptCommandHandler
 from cryptography_methods.application.commands.ceaser_classic.encrypt import CeaserClassicEncryptCommandHandler
 from cryptography_methods.application.commands.ceaser_keyword.decrypt import CeaserKeywordDecryptCommandHandler
@@ -36,6 +38,7 @@ from cryptography_methods.application.commands.trithemius.decrypt import Trithem
 from cryptography_methods.application.commands.trithemius.encrypt import TrithemiusEncryptCommandHandler
 from cryptography_methods.application.commands.vigenere.decrypt import VigenereDecryptCommandHandler
 from cryptography_methods.application.commands.vigenere.encrypt import VigenereEncryptCommandHandler
+from cryptography_methods.domain.atbash.services.atbash_service import AtbashService
 from cryptography_methods.domain.ceaser.services.affine_cipher_service import AffineCipherService
 from cryptography_methods.domain.ceaser.services.ceaser_keyword_service import CeaserKeywordService
 from cryptography_methods.domain.ceaser.services.classic_ceaser_service import ClassicCeaserService
@@ -84,7 +87,9 @@ def interactors_provider() -> Provider:
         MagicTableDecryptCommandHandler,
         MagicTableEncryptCommandHandler,
         EncryptDoubleSquareWhitestoneCommandHandler,
-        DecryptDoubleSquareWhitestoneCommandHandler
+        DecryptDoubleSquareWhitestoneCommandHandler,
+        AtbashEncryptCommandHandler,
+        AtbashDecryptCommandHandler
     )
     return provider
 
@@ -110,7 +115,8 @@ def services_provider() -> Provider:
         PlayfairService,
         VigenereService,
         MagicTableService,
-        DoubleSquareWhitestoneService
+        DoubleSquareWhitestoneService,
+        AtbashService
     )
     return provider
 
