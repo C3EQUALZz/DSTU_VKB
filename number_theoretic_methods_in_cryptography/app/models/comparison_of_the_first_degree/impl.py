@@ -37,7 +37,7 @@ class LinearCongruenceSolver(ILinearCongruenceSolver):
         simplified_constant: int = constant_term // gcd_value
         simplified_modulus: int = modulus // gcd_value
         self._logger.add_log(
-            f"Упрощенное сравнение: {simplified_coefficient}x ≡ {simplified_constant} (mod {simplified_modulus})"
+            f"Упрощенное сравнение: {simplified_coefficient}x = {simplified_constant} (mod {simplified_modulus})"
         )
 
         # Шаг 3: Поиск обратного элемента
@@ -52,7 +52,7 @@ class LinearCongruenceSolver(ILinearCongruenceSolver):
         # Шаг 4: Вычисление основного решения
         base_solution: int = (simplified_constant * inverse) % simplified_modulus
         self._logger.add_log(
-            f"Основное решение: x ≡ {base_solution} (mod {simplified_modulus})"
+            f"Основное решение: x = {base_solution} (mod {simplified_modulus})"
         )
 
         # Шаг 5: Все решения
@@ -60,7 +60,7 @@ class LinearCongruenceSolver(ILinearCongruenceSolver):
         self._logger.add_log("Все решения:")
 
         for solution in all_solutions:
-            self._logger.add_log(f"x ≡ {solution} (mod {modulus})")
+            self._logger.add_log(f"x = {solution} (mod {modulus})")
 
         return base_solution
 
