@@ -40,7 +40,7 @@ class TelegramConfig(BaseModel):
 
 
 class Configs(BaseModel):
-    load_dotenv(r"D:\Progrramming\PycharmProjects\DSTU_VKB\methods_and_means_of_cryptographic_information_protection\.env")
+    load_dotenv(r"D:\PycharmProjects\DSTU_VKB\methods_and_means_of_cryptographic_information_protection\.env")
     logging: LoggingConfig = Field(
         default_factory=lambda: LoggingConfig(**os.environ),
         description="Logging config",
