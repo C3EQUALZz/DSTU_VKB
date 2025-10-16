@@ -16,5 +16,9 @@ class ICRTView(ITaskView["ICRTPresenter"], Protocol):
         raise NotImplementedError
 
     @abstractmethod
+    def get_coefficients(self) -> list[str]:
+        raise NotImplementedError
+
+    @abstractmethod
     def show_logs(self, logs: Iterable[str]) -> None:
         raise NotImplementedError

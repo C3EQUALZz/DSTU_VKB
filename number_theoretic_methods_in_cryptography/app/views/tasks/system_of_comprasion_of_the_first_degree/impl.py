@@ -16,7 +16,7 @@ class CRTView(ctk.CTkFrame, ICRTView):
 
         self.__presenter: ICRTPresenter | None = None
         self.__equation_count: int = 3  # По умолчанию 3 уравнения
-        self.__entries = []  # Список полей ввода
+        self.__entries = []  # Список полей ввода (a_i, m_i, c_i)
 
         self.__input_frame = None
         self.__log_frame = None
@@ -57,6 +57,11 @@ class CRTView(ctk.CTkFrame, ICRTView):
     def get_moduli(self) -> list[str]:
         """Возвращает список модулей"""
         return [entry[1].get() for entry in self.__entries]
+
+    @override
+    def get_coefficients(self) -> list[str]:
+        """Возвращает список коэффициентов при x"""
+        return [entry[2].get() for entry in self.__entries]
 
     @override
     def show_logs(self, logs: Iterable[str]) -> None:
@@ -131,17 +136,22 @@ class CRTView(ctk.CTkFrame, ICRTView):
             row = ctk.CTkFrame(self.__input_frame)
             row.pack(pady=5)
 
-            label_a = ctk.CTkLabel(row, text=f"a{i + 1}")
+            label_a = ctk.CTkLabel(row, text=f"b{i + 1}")
             label_a.pack(side="left", padx=5)
             entry_a = ctk.CTkEntry(row, width=80)
             entry_a.pack(side="left")
+
+            label_c = ctk.CTkLabel(row, text=f"c{i + 1}")
+            label_c.pack(side="left", padx=5)
+            entry_c = ctk.CTkEntry(row, width=80)
+            entry_c.pack(side="left")
 
             label_m = ctk.CTkLabel(row, text=f"m{i + 1}")
             label_m.pack(side="left", padx=5)
             entry_m = ctk.CTkEntry(row, width=80)
             entry_m.pack(side="left")
 
-            self.__entries.append((entry_a, entry_m))
+            self.__entries.append((entry_a, entry_m, entry_c))
 
     def __create_log_box(self, parent: ctk.CTkFrame) -> None:
         self.__log_frame = ctk.CTkFrame(parent)

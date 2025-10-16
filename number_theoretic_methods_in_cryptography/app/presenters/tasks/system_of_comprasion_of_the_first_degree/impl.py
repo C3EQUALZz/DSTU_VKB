@@ -27,11 +27,12 @@ class CRTPresenter(ICRTPresenter):
     def solve_system(self) -> None:
         try:
             # Получаем данные из View
-            a_values = [int(val) for val in self._view.get_remainders()]
+            b_values = [int(val) for val in self._view.get_remainders()]
             m_values = [int(val) for val in self._view.get_moduli()]
+            c_values = [int(val) for val in self._view.get_coefficients()]
 
             # Обновляем View
-            if self._model.solve(a_values, m_values):
+            if self._model.solve(b_values, m_values, c_values):
                 self._view.show_logs(self._model.get_logs())
             else:
                 raise ComparisonSystemIsIncompatible("Система сравнений несовместна")

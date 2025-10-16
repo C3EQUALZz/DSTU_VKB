@@ -23,7 +23,8 @@ class ChineseRemainderSolver(IChineseRemainderSolver):
     def solve(
             self,
             remainders: List[Remainder],
-            moduli: List[Modulus]
+            moduli: List[Modulus],
+            coefficients: List[int] | None = None
     ) -> Optional[Tuple[Modulus, Modulus]]:
         """
         Решает систему сравнений вида:
@@ -40,8 +41,12 @@ class ChineseRemainderSolver(IChineseRemainderSolver):
             tuple(solution, modulus): Основное решение и общий модуль M.
             None: Если система несовместна.
         """
-        # Проверка соответствия длины остатков и модулей
-        if len(remainders) != len(moduli):
+        # Нормализуем коэффициенты: по умолчанию все равны 1 (x ≡ a_i (mod m_i))
+        if coefficients is None:
+            coefficients = [1 for _ in remainders]
+
+        # Проверка соответствия длины остатков и модулей и коэффициентов
+        if len(remainders) != len(moduli) or len(coefficients) != len(moduli):
             self._logger.add_log("Ошибка: Количество остатков и модулей должно совпадать.")
             return None
 
@@ -51,15 +56,35 @@ class ChineseRemainderSolver(IChineseRemainderSolver):
                 if gcd(moduli[i], moduli[j]) != 1:
                     raise NumberOfResiduesAndModulesMustMatchError(f"Модули {moduli[i]} и {moduli[j]} не взаимно просты.")
 
+        # Преобразуем уравнения c_i x ≡ a_i (mod m_i) к виду x ≡ a'_i (mod m'_i)
+        # где m'_i = m_i / gcd(c_i, m_i), a'_i = (a_i / gcd) * (c_i/gcd)^{-1} (mod m'_i)
+        reduced_remainders: list[int] = []
+        reduced_moduli: list[int] = []
+        for index, (a_i, m_i, c_i) in enumerate(zip(remainders, moduli, coefficients)):
+            d = gcd(c_i, m_i)
+            if a_i % d != 0:
+                self._logger.add_log(f"Уравнение {index + 1}: {c_i}x ≡ {a_i} (mod {m_i}) несовместно, так как d=gcd({c_i},{m_i})={d} не делит {a_i}.")
+                return None
+            m_reduced = m_i // d
+            a_reduced = (a_i // d)
+            c_reduced = (c_i // d) % m_reduced
+            inv_c = self._find_modular_inverse(c_reduced % m_reduced, m_reduced)
+            if inv_c is None:
+                raise InverseWasNotFoundError(f"Обратный элемент для {c_reduced} по модулю {m_reduced} не найден.")
+            a_prime = (a_reduced * inv_c) % m_reduced
+            reduced_remainders.append(a_prime)
+            reduced_moduli.append(m_reduced)
+            self._logger.add_log(f"Уравнение {index + 1}: приведено к x ≡ {a_prime} (mod {m_reduced}).")
+
         # Вычисление общего модуля M
         total_modulus: int = 1
-        for modulus in moduli:
+        for modulus in reduced_moduli:
             total_modulus *= modulus
         self._logger.add_log(f"Общий модуль M = {total_modulus}")
 
         # Вычисление решения
         partial_solutions_sum: int = 0
-        for index, (remainder, modulus) in enumerate(zip(remainders, moduli)):
+        for index, (remainder, modulus) in enumerate(zip(reduced_remainders, reduced_moduli)):
             mi: int = total_modulus // modulus
             inv_mi: int = self._find_modular_inverse(mi, modulus)
 
