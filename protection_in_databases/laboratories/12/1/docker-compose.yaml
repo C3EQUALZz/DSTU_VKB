@@ -1,0 +1,71 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: lab12_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      LANG: ru_RU.UTF-8
+      LC_ALL: ru_RU.UTF-8
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./pg_hba.conf:/etc/pg_hba.conf
+    networks:
+      lab12_network:
+        ipv4_address: 192.168.1.10
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    command: postgres -c hba_file=/etc/pg_hba.conf
+
+  # Клиент с разрешенным IP (для позитивного теста)
+  client_allowed:
+    image: postgres:15-alpine
+    container_name: lab12_client_allowed
+    environment:
+      PGPASSWORD: postgres
+    networks:
+      lab12_network:
+        ipv4_address: 192.168.1.50
+    depends_on:
+      - postgres
+    command: sleep infinity
+    restart: unless-stopped
+
+  # Клиент с запрещенным IP (для негативного теста)
+  client_blocked:
+    image: postgres:15-alpine
+    container_name: lab12_client_blocked
+    environment:
+      PGPASSWORD: postgres
+    networks:
+      blocked_network:
+        ipv4_address: 192.168.2.50
+    depends_on:
+      - postgres
+    command: sleep infinity
+    restart: unless-stopped
+
+networks:
+  lab12_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
+          gateway: 192.168.1.1
+  
+  blocked_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.2.0/24
+          gateway: 192.168.2.1
+
+volumes:
+  postgres_data:
