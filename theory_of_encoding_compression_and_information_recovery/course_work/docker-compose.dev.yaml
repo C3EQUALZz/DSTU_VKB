@@ -57,7 +57,7 @@ x-app-environment: &x-app-environment
 x-minio-environment: &x-minio-environment
   MINIO_ROOT_USER: ${MINIO_ROOT_USER}
   MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
-  MINIO_DEFAULT_BUCKETS: ${MINIO_DEFAULT_BUCKETS}
+  MINIO_IMAGES_BUCKET: ${MINIO_FILES_BUCKET}
   MINIO_SCHEME: http
   MINIO_PORT: ${MINIO_PORT}
   MINIO_UI_PORT: ${MINIO_UI_PORT}
@@ -208,14 +208,26 @@ services:
   minio:
     <<: *default
     profiles: [ "bot", "s3" ]
-    image: bitnami/minio:2024.7.26
-    container_name: compressor.minio
-    hostname: compressor.minio
+    image: quay.io/minio/minio:RELEASE.2025-03-12T18-04-18Z
+    container_name: pix_erase.minio
+    hostname: pix_erase.minio
     ports:
       - 127.0.0.1:${MINIO_PORT}:${MINIO_PORT}
       - 127.0.0.1:${MINIO_UI_PORT}:${MINIO_UI_PORT}
     environment:
       <<: *x-minio-environment
+    entrypoint: >
+      /bin/sh -c '
+        isAlive() { curl -sf http://127.0.0.1:${MINIO_PORT}/minio/health/live; }    # check if Minio is alive
+        minio $0 "$@" --quiet & echo $! > /tmp/minio.pid                   # start Minio in the background
+        while ! isAlive; do sleep 0.1; done                                # wait until Minio is alive
+        mc alias set minio http://127.0.0.1:${MINIO_PORT} ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD} # setup Minio client
+        mc mb minio/${MINIO_FILES_BUCKET} || true                                    # create a test bucket
+        mc anonymous set public minio/${MINIO_FILES_BUCKET}                          # make the test bucket public
+        kill -s INT $(cat /tmp/minio.pid) && rm /tmp/minio.pid             # stop Minio
+        while isAlive; do sleep 0.1; done                                  # wait until Minio is stopped
+        exec minio $0 "$@"                                                 # start Minio in the foreground
+      '
     deploy:
       resources:
         limits:
@@ -224,8 +236,10 @@ services:
         reservations:
           cpus: '1'
           memory: 256M
+    command: server /data --console-address :${MINIO_UI_PORT}
     healthcheck:
-      test: [ "CMD", "curl", "-k", "http://localhost:$MINIO_PORT/minio/health/live" ]
+      test: "curl -k -f http://127.0.0.1:${MINIO_PORT}/minio/health/live || exit 1"
+      <<: *hc-interval
     volumes:
       - compressor.minio.data:/data
 
