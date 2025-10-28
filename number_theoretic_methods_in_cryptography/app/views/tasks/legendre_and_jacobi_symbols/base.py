@@ -9,33 +9,17 @@ if TYPE_CHECKING:
 
 class ILegendreJacobiView(ITaskView["ILegendreJacobiPresenter"], Protocol):
     @abstractmethod
-    def get_a1(self):
+    def get_numerator(self) -> str:
         raise NotImplementedError
 
     @abstractmethod
-    def get_b1(self):
+    def get_denominator(self) -> str:
         raise NotImplementedError
 
     @abstractmethod
-    def get_a2(self):
+    def set_result(self, symbol_type: str, result: int | str) -> None:
         raise NotImplementedError
 
     @abstractmethod
-    def get_b2(self):
-        raise NotImplementedError
-
-    @abstractmethod
-    def set_legendre_result(self, result: int) -> None:
-        raise NotImplementedError
-
-    @abstractmethod
-    def set_legendre_logs(self, logs: Iterable[str]) -> None:
-        raise NotImplementedError
-
-    @abstractmethod
-    def set_jacobi_result(self, result: int) -> None:
-        raise NotImplementedError
-
-    @abstractmethod
-    def set_jacobi_logs(self, logs: Iterable[str]) -> None:
+    def set_logs(self, logs: Iterable[str]) -> None:
         raise NotImplementedError

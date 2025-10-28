@@ -14,14 +14,11 @@ class LegendreJacobiView(ctk.CTkFrame, ILegendreJacobiView):
         self._presenter: ILegendreJacobiPresenter | None = None
 
         # Входные данные
-        self.entry_a1: ctk.CTkEntry = ctk.CTkEntry(self, width=100)
-        self.entry_b1: ctk.CTkEntry = ctk.CTkEntry(self, width=100)
-        self.entry_a2: ctk.CTkEntry = ctk.CTkEntry(self, width=100)
-        self.entry_b2: ctk.CTkEntry = ctk.CTkEntry(self, width=100)
+        self.entry_numerator: ctk.CTkEntry = ctk.CTkEntry(self, width=100)
+        self.entry_denominator: ctk.CTkEntry = ctk.CTkEntry(self, width=100)
 
         # Результаты
-        self.legendre_text: ctk.CTkTextbox = ctk.CTkTextbox(self, wrap="word")
-        self.jacobi_text: ctk.CTkTextbox = ctk.CTkTextbox(self, wrap="word")
+        self.result_text: ctk.CTkTextbox = ctk.CTkTextbox(self, wrap="word")
 
         # Размещение элементов
         self.__create_layout()
@@ -40,83 +37,45 @@ class LegendreJacobiView(ctk.CTkFrame, ILegendreJacobiView):
     def attach_presenter(self, presenter: ILegendreJacobiPresenter) -> None:
         self._presenter: ILegendreJacobiPresenter = presenter
         button: ctk.CTkButton = ctk.CTkButton(self, text="Вычислить", command=self._presenter.calculate)
-        button.grid(row=2, column=0, columnspan=4, pady=15, sticky="ew")
+        button.grid(row=2, column=0, columnspan=2, pady=15, sticky="ew")
 
     @override
-    def get_a1(self) -> str:
-        return self.entry_a1.get()
+    def get_numerator(self) -> str:
+        return self.entry_numerator.get()
 
     @override
-    def get_b1(self) -> str:
-        return self.entry_b1.get()
+    def get_denominator(self) -> str:
+        return self.entry_denominator.get()
 
     @override
-    def get_a2(self) -> str:
-        return self.entry_a2.get()
+    def set_result(self, symbol_type: str, result: int | str) -> None:
+        self.result_text.configure(state="normal")
+        self.result_text.delete("0.0", "end")
+        self.result_text.insert("end", f"Результат символа {symbol_type}: {result}\n")
+        self.result_text.configure(state="disabled")
 
     @override
-    def get_b2(self) -> str:
-        return self.entry_b2.get()
-
-    @override
-    def set_legendre_result(self, result: int) -> None:
-        self.legendre_text.configure(state="normal")
-        self.legendre_text.delete("0.0", "end")
-        self.legendre_text.insert("end", f"Результат символа Лежандра: {result if result != -2 else "Невозможно посчитать"}\n")
-        self.legendre_text.configure(state="disabled")
-
-    @override
-    def set_legendre_logs(self, logs: Iterable[str]) -> None:
-        self.legendre_text.configure(state="normal")
+    def set_logs(self, logs: Iterable[str]) -> None:
+        self.result_text.configure(state="normal")
         for log in logs:
-            self.legendre_text.insert("end", log + "\n")
-        self.legendre_text.configure(state="disabled")
-
-    @override
-    def set_jacobi_result(self, result: int) -> None:
-        self.jacobi_text.configure(state="normal")
-        self.jacobi_text.delete("0.0", "end")
-        self.jacobi_text.insert("end", f"Результат символа Якоби: {result}\n")
-        self.jacobi_text.configure(state="disabled")
-
-    @override
-    def set_jacobi_logs(self, logs: Iterable[str]) -> None:
-        self.jacobi_text.configure(state="normal")
-        for log in logs:
-            self.jacobi_text.insert("end", log + "\n")
-        self.jacobi_text.configure(state="disabled")
+            self.result_text.insert("end", log + "\n")
+        self.result_text.configure(state="disabled")
 
     def __create_layout(self) -> None:
         # Настройка сетки для основного фрейма
-        self.grid_columnconfigure((0, 1, 2, 3), weight=1)  # 4 равные колонки
+        self.grid_columnconfigure((0, 1), weight=1)  # 2 равные колонки
         self.grid_rowconfigure(0, weight=0)  # Входные данные
         self.grid_rowconfigure(1, weight=0)  # Кнопка
-        self.grid_rowconfigure(2, weight=0)  # Заголовки результатов
-        self.grid_rowconfigure(3, weight=1)  # Текстовые поля результатов
+        self.grid_rowconfigure(2, weight=1)  # Текстовое поле результатов
 
         # --- Входные данные ---
-        # a1
-        ctk.CTkLabel(self, text="a1").grid(row=0, column=0, padx=5, pady=5, sticky="e")
-        self.entry_a1.grid(row=0, column=1, padx=5, pady=5, sticky="w")
+        # Числитель
+        ctk.CTkLabel(self, text="Числитель (a)").grid(row=0, column=0, padx=5, pady=5, sticky="e")
+        self.entry_numerator.grid(row=0, column=1, padx=5, pady=5, sticky="w")
 
-        # b1
-        ctk.CTkLabel(self, text="b1").grid(row=0, column=2, padx=5, pady=5, sticky="e")
-        self.entry_b1.grid(row=0, column=3, padx=5, pady=5, sticky="w")
-
-        # a2
-        ctk.CTkLabel(self, text="a2").grid(row=1, column=0, padx=5, pady=5, sticky="e")
-        self.entry_a2.grid(row=1, column=1, padx=5, pady=5, sticky="w")
-
-        # b2
-        ctk.CTkLabel(self, text="b2").grid(row=1, column=2, padx=5, pady=5, sticky="e")
-        self.entry_b2.grid(row=1, column=3, padx=5, pady=5, sticky="w")
+        # Знаменатель
+        ctk.CTkLabel(self, text="Знаменатель (n)").grid(row=1, column=0, padx=5, pady=5, sticky="e")
+        self.entry_denominator.grid(row=1, column=1, padx=5, pady=5, sticky="w")
 
         # --- Результаты ---
-        # Символ Лежандра
-        self.legendre_text.grid(row=4, column=0, columnspan=2, sticky="nsew", padx=10, pady=5)
-
-        # Символ Якоби
-        self.jacobi_text.grid(row=4, column=2, columnspan=2, sticky="nsew", padx=10, pady=5)
-
-        # --- Растяжение текстовых полей ---
-        self.grid_rowconfigure(4, weight=1)
+        self.result_text.grid(row=3, column=0, columnspan=2, sticky="nsew", padx=10, pady=5)

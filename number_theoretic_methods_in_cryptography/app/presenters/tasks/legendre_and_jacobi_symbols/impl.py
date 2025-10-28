@@ -25,25 +25,42 @@ class LegendreJacobiPresenter(ILegendreJacobiPresenter):
     @override
     def calculate(self) -> None:
         try:
-            a1: int = int(self._view.get_a1())
-            b1: int = int(self._view.get_b1())
-            a2: int = int(self._view.get_a2())
-            b2: int = int(self._view.get_b2())
+            numerator: int = int(self._view.get_numerator())
+            denominator: int = int(self._view.get_denominator())
         except ValueError:
             raise MustWriteNumbersOnlyError("Введите целые числа, а не какие-то другие")
 
-        if b1 <= 0 or b2 <= 0:
-            raise DenominatorsMustBePositiveNumbers("Знаменатели должны быть положительными числами")
+        if denominator <= 0:
+            raise DenominatorsMustBePositiveNumbers("Знаменатель должен быть положительным числом")
 
-        numerator: int = a1 * a2
-        denominator: int = b1 * b2
+        # Определяем тип символа на основе знаменателя
+        if self._is_prime(denominator):
+            # Если знаменатель простое число - вычисляем символ Лежандра
+            symbol_type = "Лежандра"
+            try:
+                result: int = self._model.calculate_legendre(numerator, denominator)
+                self._view.set_result(symbol_type, result if result != -2 else "Невозможно посчитать")
+                self._view.set_logs(self._model.get_legendre_logs())
+            except Exception as e:
+                self._view.set_result(symbol_type, f"Ошибка: {str(e)}")
+                self._view.set_logs([f"Ошибка вычисления символа Лежандра: {str(e)}"])
+        else:
+            # Если знаменатель составное число - вычисляем символ Якоби
+            symbol_type = "Якоби"
+            try:
+                result: int = self._model.calculate_jacobi(numerator, denominator)
+                self._view.set_result(symbol_type, result)
+                self._view.set_logs(self._model.get_jacobi_logs())
+            except ValueError as e:
+                self._view.set_result(symbol_type, f"Ошибка: {str(e)}")
+                self._view.set_logs([f"Ошибка вычисления символа Якоби: {str(e)}"])
 
-        # Символ Лежандра
-        legendre_result: int = self._model.calculate_legendre(numerator, denominator)
-        self._view.set_legendre_result(legendre_result)
-        self._view.set_legendre_logs(self._model.get_legendre_logs())
-
-        # Символ Якоби
-        jacobi_result: int = self._model.calculate_jacobi(numerator, denominator)
-        self._view.set_jacobi_result(jacobi_result)
-        self._view.set_jacobi_logs(self._model.get_jacobi_logs())
+    @staticmethod
+    def _is_prime(n: int) -> bool:
+        """Проверяет, является ли число простым."""
+        if n < 2:
+            return False
+        for i in range(2, int(n ** 0.5) + 1):
+            if n % i == 0:
+                return False
+        return True
