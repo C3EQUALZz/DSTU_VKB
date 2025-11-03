@@ -37,3 +37,11 @@ just up
 
 > [!IMPORTANT]
 > Вполне возможны баги, писал на скорую руку. 
+
+Для локального запуска worker:
+
+```bash
+taskiq worker --ack-type when_saved src.compressor.worker:create_taskiq_app src.compressor.infrastructure.task_manager.files.tasks
+```
+
+Для запуска бота через кнопочку в пичарме удобно. 
