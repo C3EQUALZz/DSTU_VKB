@@ -25,6 +25,7 @@ from compressor.application.common.ports.storage import FileStorage
 from compressor.application.common.ports.transaction_manager import TransactionManager
 from compressor.application.common.ports.user_command_gateway import UserCommandGateway
 from compressor.application.common.ports.user_query_gateway import UserQueryGateway
+from compressor.application.queries.user.read_current_user import ReadCurrentTelegramUserQueryHandler
 from compressor.application.services.files.compressor import FileCompressorService
 from compressor.application.services.user.current_user_service import CurrentUserService
 from compressor.domain.compressors.factories.text.base import FileCompressorFactory
@@ -179,6 +180,7 @@ def interactors_provider() -> Provider:
         SignUpCommandHandler,
         CompressFileCommandHandler,
         DecompressFileCommandHandler,
+        ReadCurrentTelegramUserQueryHandler
     )
     return provider
 

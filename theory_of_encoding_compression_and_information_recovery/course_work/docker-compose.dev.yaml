@@ -209,8 +209,8 @@ services:
     <<: *default
     profiles: [ "bot", "s3" ]
     image: quay.io/minio/minio:RELEASE.2025-03-12T18-04-18Z
-    container_name: pix_erase.minio
-    hostname: pix_erase.minio
+    container_name: course_work.minio
+    hostname: course_work.minio
     ports:
       - 127.0.0.1:${MINIO_PORT}:${MINIO_PORT}
       - 127.0.0.1:${MINIO_UI_PORT}:${MINIO_UI_PORT}
