@@ -56,3 +56,4 @@ class TelegramSender(Sender):
 
         async with Bot(token=self._tg_config.bot_token) as bot:
             await bot.send_document(chat_id=user.telegram.id, document=document)
+            await bot.close()

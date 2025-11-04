@@ -2,8 +2,8 @@ from typing import Final
 
 DECOMPRESS_START: Final[str] = "start_decompress"
 
-DECOMPRESS_BINARY_OR_TEXT_FILE: Final[str] = "compress_binary_or_text_file"
-CHOOSE_BINARY_OR_TEXT_FILE_COMPRESSION_TYPE: Final[str] = "choose_compression_type"
+DECOMPRESS_BINARY_OR_TEXT_FILE: Final[str] = "decompress_binary_or_text_file"
+CHOOSE_BINARY_OR_TEXT_FILE_DECOMPRESSION_TYPE: Final[str] = "choose_compression_type"
 
 SELECTOR_ALGORITHM: Final[str] = "selector_algorithm"
 

@@ -2,7 +2,7 @@ from io import BytesIO
 from typing import TYPE_CHECKING, Any
 
 from aiogram.types import CallbackQuery, Document, Message
-from aiogram_dialog import DialogManager
+from aiogram_dialog import DialogManager, ShowMode
 from aiogram_dialog.widgets.input import MessageInput
 from dishka import FromDishka
 from dishka.integrations.aiogram_dialog import inject
@@ -18,10 +18,10 @@ if TYPE_CHECKING:
 
 
 async def on_algorithm_selected(
-    callback: CallbackQuery,  # noqa: ARG001
-    widget: Any,  # noqa: ARG001, ANN401
-    manager: DialogManager,
-    item_id: str,
+        callback: CallbackQuery,  # noqa: ARG001
+        widget: Any,  # noqa: ARG001, ANN401
+        manager: DialogManager,
+        item_id: str,
 ) -> None:
     manager.dialog_data["selected_algorithm_id"] = item_id
     await manager.next()
@@ -29,10 +29,10 @@ async def on_algorithm_selected(
 
 @inject
 async def compress_binary_or_text_file(
-    message: Message,
-    message_input: MessageInput,  # noqa: ARG001
-    manager: DialogManager,
-    interactor: FromDishka[CompressFileCommandHandler],
+        message: Message,
+        message_input: MessageInput,  # noqa: ARG001
+        manager: DialogManager,
+        interactor: FromDishka[CompressFileCommandHandler],
 ) -> None:
     bot: Bot = manager.middleware_data["bot"]
     algorithm_id: str | None = manager.dialog_data.get("selected_algorithm_id", None)
@@ -68,3 +68,11 @@ async def compress_binary_or_text_file(
     manager.dialog_data["task_id"] = view.task_id
 
     await manager.next()
+
+
+async def end_dialog(
+        _: Any,
+        __: Any,
+        dialog_manager: DialogManager
+) -> None:
+    await dialog_manager.done(show_mode=ShowMode.NO_UPDATE)

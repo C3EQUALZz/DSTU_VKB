@@ -117,7 +117,10 @@ def setup_telegram_bot_event_isolation(
 def setup_telegram_bot_middlewares(dp: Dispatcher, telegram_bot_config: TGConfig) -> None:
     logger.debug("Start setup middlewares for telegram bot...")
 
-    path_to_locales: Path = Path("src") / "compressor" / "presentation" / "telegram" / "locales"
+    # path_to_locales: Path = Path("src") / "compressor" / "presentation" / "telegram" / "locales"
+    # hard coded, sorry
+    path_to_locales: Path = Path(r"D:\PycharmProjects\DSTU_VKB\theory_of_encoding_compression_and_information_recovery"
+                                 r"\course_work\src\compressor\presentation\telegram\locales")
     logger.debug("Path to locales: %s", path_to_locales)
 
     i18n_middleware: I18nMiddleware = I18nMiddleware(

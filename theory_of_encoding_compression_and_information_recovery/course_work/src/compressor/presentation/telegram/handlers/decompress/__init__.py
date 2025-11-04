@@ -7,7 +7,7 @@ from compressor.presentation.telegram.handlers.decompress.dialogs import (
 from compressor.presentation.telegram.handlers.decompress.handlers import router as decompress_router
 
 
-def setup_compress_handlers(dp: Dispatcher) -> None:
+def setup_decompress_handlers(dp: Dispatcher) -> None:
     dp.include_router(decompress_router)
 
 

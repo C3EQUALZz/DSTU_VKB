@@ -14,7 +14,7 @@ from compressor.presentation.telegram.handlers.decompress.callbacks import (
 from compressor.presentation.telegram.handlers.decompress.consts import (
     DECOMPRESS_BINARY_OR_TEXT_FILE,
     DECOMPRESS_START,
-    CHOOSE_BINARY_OR_TEXT_FILE_COMPRESSION_TYPE,
+    CHOOSE_BINARY_OR_TEXT_FILE_DECOMPRESSION_TYPE,
     SELECTOR_ALGORITHM,
     STARTED_PROCESSING,
     ASK_FOR_BINARY_OR_TEXT_FILE
@@ -46,7 +46,7 @@ DECOMPRESS_DIALOG: Final[Dialog] = Dialog(
 
 DECOMPRESS_BINARY_OR_TEXT_FILE_DIALOG: Final[Dialog] = Dialog(
     Window(
-        I18NFormat(CHOOSE_BINARY_OR_TEXT_FILE_COMPRESSION_TYPE),
+        I18NFormat(CHOOSE_BINARY_OR_TEXT_FILE_DECOMPRESSION_TYPE),
         Select(
             Format("{item[0]} ({pos}/{data[count]})"),
             id=SELECTOR_ALGORITHM,

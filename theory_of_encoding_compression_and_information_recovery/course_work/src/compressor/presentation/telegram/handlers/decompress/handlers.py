@@ -13,7 +13,7 @@ router: Final[Router] = Router()
 
 
 @router.message(ChatTypeFilter(allowed_chat_types=[ChatType.PRIVATE]), Command("decompress"))
-async def cmd_compress_handler(
+async def cmd_decompress_handler(
     _: Message,
     dialog_manager: DialogManager,
 ) -> None:

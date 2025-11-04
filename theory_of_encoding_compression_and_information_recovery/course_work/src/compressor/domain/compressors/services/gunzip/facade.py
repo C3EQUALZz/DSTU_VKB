@@ -30,7 +30,7 @@ class GunZipCompressor(Compressor):
         converted_source_path_to_path: Path = Path(source_path.value)
 
         dest_path: FileName = FileName(
-            str(converted_source_path_to_path.with_suffix(converted_source_path_to_path.suffix + ".gz"))
+            str(converted_source_path_to_path.with_suffix(converted_source_path_to_path.suffix + ".gzip"))
         )
 
         data: BytesIO = BytesIO()

@@ -9,7 +9,7 @@ from aiogram_dialog.widgets.text import Format
 
 from compressor.presentation.telegram.handlers.compress.callbacks import (
     compress_binary_or_text_file,
-    on_algorithm_selected,
+    on_algorithm_selected, end_dialog,
 )
 from compressor.presentation.telegram.handlers.compress.consts import (
     ASK_FOR_BINARY_OR_TEXT_FILE,
@@ -62,6 +62,7 @@ COMPRESS_BINARY_OR_TEXT_FILE_DIALOG: Final[Dialog] = Dialog(
     Window(
         I18NFormat(STARTED_PROCESSING),
         state=CompressBinaryOrTextFileStates.DONE,
-        getter=task_id_getter
+        getter=task_id_getter,
+        on_process_result=end_dialog
     )
 )
