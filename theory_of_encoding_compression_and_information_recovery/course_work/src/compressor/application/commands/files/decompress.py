@@ -57,7 +57,7 @@ class DecompressFileCommandHandler:
         new_file: CompressedFile = self._file_service.create_compressed_file(
             file_name=FileName(data.file_name),
             data=data.data,
-            compression_type=CompressionType(Path(data.file_name).suffix),
+            compression_type=CompressionType(Path(data.file_name).suffix.lstrip(".")),
         )
 
         logger.info("Starting saving file in file storage, with id: %s and path: %s", new_file.id, new_file.file_name)

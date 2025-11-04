@@ -1,3 +1,6 @@
+from aiogram import Bot
+from aiogram.client.default import DefaultBotProperties
+from aiogram.enums import ParseMode
 from dishka import AsyncContainer, make_async_container
 from dishka.integrations.taskiq import setup_dishka
 from sqlalchemy.orm import clear_mappers
@@ -27,6 +30,11 @@ def create_taskiq_app() -> AsyncBroker:
         taskiq_config=config.task_manager, rabbitmq_config=config.broker, redis_config=config.cache
     )
 
+    bot: Bot = Bot(
+        token=config.telegram_bot.bot_token,
+        default=DefaultBotProperties(parse_mode=ParseMode.HTML),
+    )
+
     task_manager.on_event(TaskiqEvents.WORKER_STARTUP)(startup)
     task_manager.on_event(TaskiqEvents.CLIENT_SHUTDOWN)(shutdown)
 
@@ -37,6 +45,7 @@ def create_taskiq_app() -> AsyncBroker:
         S3Config: config.s3,
         PasswordPepper: config.telegram_bot.pepper,
         TGConfig: config.telegram_bot,
+        Bot: bot
     }
 
     container: AsyncContainer = make_async_container(*setup_providers(), context=context)

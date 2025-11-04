@@ -93,7 +93,8 @@ async def create_aiogram_app() -> None:
         SQLAlchemyConfig: config.alchemy,
         S3Config: config.s3,
         PasswordPepper: config.telegram_bot.pepper,
-        TGConfig: config.telegram_bot
+        TGConfig: config.telegram_bot,
+        Bot: bot
     }
 
     container: AsyncContainer = make_async_container(*setup_providers(), context=context)

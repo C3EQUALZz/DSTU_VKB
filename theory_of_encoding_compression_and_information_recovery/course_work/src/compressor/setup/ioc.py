@@ -77,6 +77,7 @@ def configs_provider() -> Provider:
     provider.from_context(provides=PasswordPepper)
     provider.from_context(provides=RedisConfig)
     provider.from_context(provides=TGConfig)
+    provider.from_context(provides=Bot)
     return provider
 
 

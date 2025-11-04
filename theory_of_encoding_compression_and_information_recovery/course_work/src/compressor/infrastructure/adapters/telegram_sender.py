@@ -19,14 +19,16 @@ if TYPE_CHECKING:
 
 class TelegramSender(Sender):
     def __init__(
-        self,
-        tg_config: TGConfig,
-        user_query_gateway: UserQueryGateway,
-        file_storage: FileStorage,
+            self,
+            tg_config: TGConfig,
+            user_query_gateway: UserQueryGateway,
+            file_storage: FileStorage,
+            bot: Bot
     ) -> None:
         self._tg_config: Final[TGConfig] = tg_config
         self._user_query_gateway: Final[UserQueryGateway] = user_query_gateway
         self._file_storage: Final[FileStorage] = file_storage
+        self._bot: Bot = bot
 
     @override
     async def send_file(self, user_id: UserID, file: FileForSendInfoDTO) -> None:
@@ -54,6 +56,4 @@ class TelegramSender(Sender):
             msg = f"User with id: {user.id} does not have telegram account"
             raise UserDoesntHaveTelegramAccountError(msg)
 
-        async with Bot(token=self._tg_config.bot_token) as bot:
-            await bot.send_document(chat_id=user.telegram.id, document=document)
-            await bot.close()
+        await self._bot.send_document(chat_id=user.telegram.id, document=document)
