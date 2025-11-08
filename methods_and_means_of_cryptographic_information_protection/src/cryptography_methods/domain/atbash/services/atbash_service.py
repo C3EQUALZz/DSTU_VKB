@@ -28,11 +28,15 @@ class AtbashService(DomainService):
 
         for alpha in text:
             logger.info("Processing alpha - %s", alpha)
-            if alpha in punctuation:
+            if alpha in punctuation or alpha.isspace():
                 logger.info("Current alpha is punctuation - %s", alpha)
                 deque_with_encrypted_text.append(alpha)
             else:
-                deque_with_encrypted_text.append(alphabet[~alphabet.index(alpha.lower() if alpha.isupper() else alpha)])
+                index_of_new_alpha: int = alphabet.index(alpha.lower() if alpha.isupper() else alpha)
+                logger.info("New index of alpha - %s", index_of_new_alpha)
+                new_letter: str = alphabet[~index_of_new_alpha]
+                logger.info("New letter - %s", new_letter)
+                deque_with_encrypted_text.append(new_letter)
 
         return Text("".join(deque_with_encrypted_text))
 
@@ -44,9 +48,11 @@ class AtbashService(DomainService):
         deque_with_encrypted_text: deque[str] = deque()
 
         for alpha in text:
-            if alpha in punctuation:
+            if alpha in punctuation or alpha.isspace():
                 deque_with_encrypted_text.append(alpha)
             else:
-                deque_with_encrypted_text.append(alphabet[~alphabet.index(alpha)])
+                index_of_new_alpha: int = alphabet.index(alpha)
+                new_letter: str = alphabet[~index_of_new_alpha]
+                deque_with_encrypted_text.append(new_letter)
 
         return Text("".join(deque_with_encrypted_text))
