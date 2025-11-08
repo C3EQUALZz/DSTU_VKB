@@ -41,7 +41,7 @@ just up
 Для локального запуска worker:
 
 ```bash
-taskiq worker --ack-type when_saved src.compressor.worker:create_taskiq_app src.compressor.infrastructure.task_manager.files.tasks
+taskiq worker --workers 1 src.compressor.worker:create_taskiq_app src.compressor.infrastructure.task_manager.files.tasks
 ```
 
 Для запуска бота через кнопочку в пичарме удобно. 

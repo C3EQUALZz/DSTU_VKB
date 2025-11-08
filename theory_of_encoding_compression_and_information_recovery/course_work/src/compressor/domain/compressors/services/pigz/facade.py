@@ -32,7 +32,7 @@ class PigzCompressor(Compressor):
         converted_source_path_to_path: Path = Path(file.file_name.value)
 
         dest_path: FileName = FileName(
-            str(converted_source_path_to_path.with_suffix(converted_source_path_to_path.suffix + ".gz"))
+            str(converted_source_path_to_path.with_suffix(converted_source_path_to_path.suffix + ".gzip"))
         )
 
         with tempfile.NamedTemporaryFile(delete=True) as temp_file:
