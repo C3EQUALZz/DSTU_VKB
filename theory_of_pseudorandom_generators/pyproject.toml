@@ -31,6 +31,9 @@ dependencies = [
     "bazario==0.4.2",
     "click>=8.3.1",
     "dishka==1.7.1",
+    "matplotlib>=3.10.7",
+    "numpy>=1.26.0",
+    "scipy>=1.11.0",
     "structlog==25.4.0",
 ]
 

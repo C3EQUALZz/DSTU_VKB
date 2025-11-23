@@ -1,0 +1,2 @@
+"""Ports for Fibonacci generator."""
+

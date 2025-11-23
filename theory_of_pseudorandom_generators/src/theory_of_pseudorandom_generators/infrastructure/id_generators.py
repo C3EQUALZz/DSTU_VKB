@@ -20,6 +20,12 @@ from theory_of_pseudorandom_generators.domain.polynomial_congruent_pseudorandom_
 from theory_of_pseudorandom_generators.domain.polynomial_congruent_pseudorandom_number_generator.values.polynomial_congruent_generator_id import (
     PolynomialCongruentGeneratorID,
 )
+from theory_of_pseudorandom_generators.domain.geffey_pseudorandom_number_generator_on_shift_registers_with_linear_feedback.ports.geffe_generator_id_generator import (
+    GeffeGeneratorIDGenerator,
+)
+from theory_of_pseudorandom_generators.domain.geffey_pseudorandom_number_generator_on_shift_registers_with_linear_feedback.values.geffe_generator_id import (
+    GeffeGeneratorID,
+)
 
 
 class UUID4LinearCongruentIDGenerator(LinearCongruentIDGenerator):
@@ -38,3 +44,9 @@ class UUID4RegisterIDGenerator(RegisterIDGenerator):
     @override
     def __call__(self) -> RegisterID:
         return RegisterID(uuid4())
+
+
+class UUID4GeffeGeneratorIDGenerator(GeffeGeneratorIDGenerator):
+    @override
+    def __call__(self) -> GeffeGeneratorID:
+        return GeffeGeneratorID(uuid4())
