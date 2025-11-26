@@ -45,7 +45,7 @@ class GeffeyPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackCommand
     register3_column_index: int = 0
 
     # Output parameters
-    number_count: int = 10
+    number_count: int = 200
 
 
 @final
@@ -129,14 +129,15 @@ class GeffeyPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackCommand
         logger.info(decimal_sequence)
 
         # Save to file
-        file_path = Path.home() / "Desktop" / "Geffen.txt"
+        path_to_save: Path = Path(__file__).parent.parent.parent.parent.parent / "Geffey.txt"
+
         try:
-            with open(file_path, "w", encoding="utf-8") as f:
+            with open(path_to_save, "w", encoding="utf-8") as f:
                 f.write(f"{generator}\n")
                 f.write("\n".join(states) + "\n")
                 f.write("Десятичные значения:\n")
                 f.write(decimal_sequence)
-            logger.info("Значения сохранены в файл: %s", file_path)
+            logger.info("Значения сохранены в файл: %s", path_to_save)
         except OSError as e:
             logger.error("Ошибка при сохранении файла: %s", e)
 

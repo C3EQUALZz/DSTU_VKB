@@ -102,7 +102,7 @@ def geffe_generator_group() -> None:
 @click.option(
     "-n",
     "--number-count",
-    default=10,
+    default=200,
     help="Number of decimal numbers to generate",
     type=int,
 )

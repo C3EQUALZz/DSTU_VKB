@@ -16,11 +16,10 @@ logger: logging.Logger = logging.getLogger(__name__)
 class MethodologyForAssessingTheQualityOfGpspHistogramOfTheDistributionOfElementsCommand:
     """Command for generating histograms."""
 
-    linear_congruent_file: Path | None = None
-    square_congruent_file: Path | None = None
-    fibonacci_file: Path | None = None
-    geffe_file: Path | None = None
-    output_dir: Path | None = None
+    linear_congruent_file: Path
+    square_congruent_file: Path
+    fibonacci_file: Path
+    geffe_file: Path
     show: bool = True
 
 
@@ -50,48 +49,46 @@ class MethodologyForAssessingTheQualityOfGpspHistogramOfTheDistributionOfElement
         generators = []
 
         # Linear Congruent Generator
-        if command.linear_congruent_file and command.linear_congruent_file.exists():
-            try:
-                data = self._histogram_service.get_data_from_file(
-                    command.linear_congruent_file
-                )
-                title = "Линейный конгруэнтный генератор"
-                generators.append((title, data, "linear_congruent"))
-                logger.info("Загружены данные для линейного конгруэнтного генератора")
-            except Exception as e:
-                logger.error("Ошибка при загрузке данных линейного генератора: %s", e)
+        try:
+            data = self._histogram_service.get_data_from_file(
+                command.linear_congruent_file
+            )
+            title = "Линейный конгруэнтный генератор"
+            generators.append((title, data, "linear_congruent"))
+            logger.info("Загружены данные для линейного конгруэнтного генератора")
+        except Exception as e:
+            logger.error("Ошибка при загрузке данных линейного генератора: %s", e)
+
 
         # Square Congruent Generator
-        if command.square_congruent_file and command.square_congruent_file.exists():
-            try:
-                data = self._histogram_service.get_data_from_file(
-                    command.square_congruent_file
-                )
-                title = "Квадратичный конгруэнтный генератор"
-                generators.append((title, data, "square_congruent"))
-                logger.info("Загружены данные для квадратичного конгруэнтного генератора")
-            except Exception as e:
-                logger.error("Ошибка при загрузке данных квадратичного генератора: %s", e)
+        try:
+            data = self._histogram_service.get_data_from_file(
+                command.square_congruent_file
+            )
+            title = "Квадратичный конгруэнтный генератор"
+            generators.append((title, data, "square_congruent"))
+            logger.info("Загружены данные для квадратичного конгруэнтного генератора")
+        except Exception as e:
+            logger.error("Ошибка при загрузке данных квадратичного генератора: %s", e)
+
 
         # Fibonacci Generator
-        if command.fibonacci_file and command.fibonacci_file.exists():
-            try:
-                data = self._histogram_service.get_data_from_file(command.fibonacci_file)
-                title = "Генератор Фибоначчи"
-                generators.append((title, data, "fibonacci"))
-                logger.info("Загружены данные для генератора Фибоначчи")
-            except Exception as e:
-                logger.error("Ошибка при загрузке данных генератора Фибоначчи: %s", e)
+        try:
+            data = self._histogram_service.get_data_from_file(command.fibonacci_file)
+            title = "Генератор Фибоначчи"
+            generators.append((title, data, "fibonacci"))
+            logger.info("Загружены данные для генератора Фибоначчи")
+        except Exception as e:
+            logger.error("Ошибка при загрузке данных генератора Фибоначчи: %s", e)
 
         # Geffe Generator
-        if command.geffe_file and command.geffe_file.exists():
-            try:
-                data = self._histogram_service.get_data_from_file(command.geffe_file)
-                title = "Генератор Геффе"
-                generators.append((title, data, "geffe"))
-                logger.info("Загружены данные для генератора Геффе")
-            except Exception as e:
-                logger.error("Ошибка при загрузке данных генератора Геффе: %s", e)
+        try:
+            data = self._histogram_service.get_data_from_file(command.geffe_file)
+            title = "Генератор Геффе"
+            generators.append((title, data, "geffe"))
+            logger.info("Загружены данные для генератора Геффе")
+        except Exception as e:
+            logger.error("Ошибка при загрузке данных генератора Геффе: %s", e)
 
         if not generators:
             logger.warning("Не найдено ни одного файла с данными для построения гистограмм")
@@ -108,11 +105,10 @@ class MethodologyForAssessingTheQualityOfGpspHistogramOfTheDistributionOfElement
             logger.info("Ожидаемая частота (равномерное распределение): %.6f", stats.get("expected_frequency", 0))
             logger.info("Дисперсия частот: %.6f", stats.get("frequency_variance", 0))
 
-            # Create histogram
-            output_path = None
-            if command.output_dir:
-                command.output_dir.mkdir(parents=True, exist_ok=True)
-                output_path = command.output_dir / f"{name}_histogram.png"
+            dir_to_save: Path = Path(__file__).parent.parent.parent.parent.parent / "histograms"
+
+            dir_to_save.mkdir(parents=True, exist_ok=True)
+            output_path = dir_to_save / f"{name}_histogram.png"
 
             try:
                 self._histogram_service.create_histogram(

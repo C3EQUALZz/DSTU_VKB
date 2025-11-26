@@ -14,11 +14,14 @@ from theory_of_pseudorandom_generators.presentation.cli.geffey_pseudorandom_numb
 from theory_of_pseudorandom_generators.presentation.cli.linear_congruent_pseudorandom_number_generator import (
     linear_congruent_pseudorandom_number_generator_group,
 )
-from theory_of_pseudorandom_generators.presentation.cli.methodology_for_assessing_the_quality_of_gpsp_evaluation_tests_checking_unlinked_series import (
+from theory_of_pseudorandom_generators.presentation.cli.methodology_for_assessing_the_quality_of_gpsp_distribution_on_plane import (
     plane_distribution_group,
 )
-from theory_of_pseudorandom_generators.presentation.cli.methodology_for_assessing_the_quality_of_gpsp_histogram_of_the_distribution_of_elements import (
+from theory_of_pseudorandom_generators.presentation.cli.methodology_for_assessing_the_quality_of_gpsp_evaluation_tests_checking_unlinked_series import (
     nist_tests_group,
+)
+from theory_of_pseudorandom_generators.presentation.cli.methodology_for_assessing_the_quality_of_gpsp_histogram_of_the_distribution_of_elements import (
+    histogram_group,
 )
 from theory_of_pseudorandom_generators.presentation.cli.polynomial_congruent_pseudorandom_number_generator import (
     polynomial_congruent_pseudorandom_number_generator_group,
@@ -32,6 +35,7 @@ def setup_cli_routes(main_group: Group) -> None:
     main_group.add_command(linear_congruent_pseudorandom_number_generator_group)  # type: ignore
     main_group.add_command(plane_distribution_group)  # type: ignore
     main_group.add_command(nist_tests_group)  # type: ignore
+    main_group.add_command(histogram_group)  # type: ignore
     main_group.add_command(polynomial_congruent_pseudorandom_number_generator_group)  # type: ignore
 
 

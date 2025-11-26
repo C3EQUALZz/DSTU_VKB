@@ -1,97 +1,73 @@
-"""CLI commands for NIST tests."""
+"""CLI команды для построения гистограмм распределения элементов."""
 
 from pathlib import Path
 
 import click
 from dishka import FromDishka
 
-from theory_of_pseudorandom_generators.application.commands.methodology_for_assessing_the_quality_of_gpsp_evaluation_tests_checking_unlinked_series import (
-    MethodologyForAssessingTheQualityOfGpspEvaluationTestsCheckingUnlinkedSeriesCommand,
-    MethodologyForAssessingTheQualityOfGpspEvaluationTestsCheckingUnlinkedSeriesCommandHandler,
+from theory_of_pseudorandom_generators.application.commands.methodology_for_assessing_the_quality_of_gpsp_histogram_of_the_distribution_of_elements import (
+    MethodologyForAssessingTheQualityOfGpspHistogramOfTheDistributionOfElementsCommand,
+    MethodologyForAssessingTheQualityOfGpspHistogramOfTheDistributionOfElementsCommandHandler,
 )
 
 
-@click.group(name="methodology_for_assessing_the_quality_of_gpsp_evaluation_tests_checking_unlinked_series")
-def nist_tests_group() -> None:
-    """NIST tests commands."""
+@click.group(
+    name="methodology_for_assessing_the_quality_of_gpsp_histogram_of_the_distribution_of_elements",
+)
+def histogram_group() -> None:
+    """Команды для построения гистограмм распределения элементов."""
 
 
-@nist_tests_group.command(name="run")
+@histogram_group.command(name="generate")
 @click.option(
     "--linear-congruent-file",
     type=click.Path(exists=True, path_type=Path),
-    help="Path to linear congruent generator sequence file",
+    help="Путь к файлу с последовательностью линейного конгруэнтного генератора",
 )
 @click.option(
     "--square-congruent-file",
     type=click.Path(exists=True, path_type=Path),
-    help="Path to square congruent generator sequence file",
+    help="Путь к файлу с последовательностью квадратичного конгруэнтного генератора",
 )
 @click.option(
     "--fibonacci-file",
     type=click.Path(exists=True, path_type=Path),
-    help="Path to Fibonacci generator sequence file",
+    help="Путь к файлу с последовательностью генератора Фибоначчи",
 )
 @click.option(
     "--geffe-file",
     type=click.Path(exists=True, path_type=Path),
-    help="Path to Geffe generator sequence file",
+    help="Путь к файлу с последовательностью генератора Геффе",
 )
 @click.option(
-    "-m",
-    "--block-size",
-    required=True,
-    type=int,
-    help="Block size parameter (m)",
+    "--show/--no-show",
+    default=True,
+    help="Показывать ли гистограммы на экране",
 )
-@click.option(
-    "-a",
-    "--alpha",
-    default=0.01,
-    type=float,
-    help="Significance level (default: 0.01)",
-)
-@click.option(
-    "--desktop",
-    is_flag=True,
-    help="Use Desktop directory for default file paths",
-)
-def cmd_run_handler(
-    linear_congruent_file: Path | None,
-    square_congruent_file: Path | None,
-    fibonacci_file: Path | None,
-    geffe_file: Path | None,
-    block_size: int,
-    alpha: float,
-    desktop: bool,
+def cmd_generate_handler(
+    linear_congruent_file: Path,
+    square_congruent_file: Path,
+    fibonacci_file: Path,
+    geffe_file: Path,
+    show: bool,
     interactor: FromDishka[
-        MethodologyForAssessingTheQualityOfGpspEvaluationTestsCheckingUnlinkedSeriesCommandHandler
+        MethodologyForAssessingTheQualityOfGpspHistogramOfTheDistributionOfElementsCommandHandler
     ],
 ) -> None:
-    """Run NIST tests on PRNG sequences."""
-    # If desktop flag is set, use default Desktop paths
-    if desktop:
-        desktop_path = Path.home() / "Desktop"
-        if linear_congruent_file is None:
-            linear_congruent_file = desktop_path / "LinearCongruent.txt"
-        if square_congruent_file is None:
-            square_congruent_file = desktop_path / "SquareCongruent.txt"
-        if fibonacci_file is None:
-            fibonacci_file = desktop_path / "Fibonacci.txt"
-        if geffe_file is None:
-            geffe_file = desktop_path / "Geffen.txt"
+    """Построить гистограммы распределения элементов для различных ГПСЧ."""
 
-    command = MethodologyForAssessingTheQualityOfGpspEvaluationTestsCheckingUnlinkedSeriesCommand(
+    command = MethodologyForAssessingTheQualityOfGpspHistogramOfTheDistributionOfElementsCommand(
         linear_congruent_file=linear_congruent_file,
         square_congruent_file=square_congruent_file,
         fibonacci_file=fibonacci_file,
         geffe_file=geffe_file,
-        block_size=block_size,
-        alpha=alpha,
+        show=show,
     )
 
     try:
         interactor(command)
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         click.echo(f"Ошибка: {e}", err=True)
+
+
 
