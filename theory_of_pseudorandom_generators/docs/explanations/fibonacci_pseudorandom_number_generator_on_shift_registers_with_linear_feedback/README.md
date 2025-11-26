@@ -1,4 +1,4 @@
-# 2 лабораторная работа (Полиномиальный конгруэнтный генератор псевдослучайных чисел)
+# Генератор Фибоначчи псевдослучайных чисел на регистрах сдвига с линейной обратной связью
 
 > [!IMPORTANT]
 > Перейдите в директорию с файлом `cli.py` в терминале. 
@@ -7,5 +7,5 @@
 Для запуска лабораторной работы используем команду, которая представлена ниже: 
 
 ```bash
-python cli.py polynomial_congruent_pseudorandom_number_generator generate -a1 25 -a2 106 -b 1075 -x0 1 -m 6075
+python cli.py fibonacci_pseudorandom_number_generator_on_shift_registers_with_linear_feedback generate -p "1 1 1 0 1 1" -k 2 -s "1 0 0 0 0"
 ```

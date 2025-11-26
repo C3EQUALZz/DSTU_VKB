@@ -90,7 +90,7 @@ class PolynomialCongruentPseudorandomNumberGeneratorCommandHandler:
         logger.info("Начало периода: %s", start_period_index)
         logger.info("Время поиска периода: %s мс", end_time)
 
-        path_to_save: Path = Path(__file__).parent.parent.parent.parent.parent / "2_lab.txt"
+        path_to_save: Path = Path(__file__).parent.parent.parent.parent.parent / "polynomial_congruent.txt"
 
         with open(path_to_save, "w", encoding="utf-8") as f:
             f.write(string_binary_sequence)

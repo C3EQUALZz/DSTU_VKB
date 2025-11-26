@@ -1,4 +1,4 @@
-"""Command handler for Fibonacci generator."""
+"""Командный обработчик для генератора Фибоначчи."""
 
 import logging
 from collections.abc import Sequence
@@ -18,7 +18,7 @@ logger: Final[logging.Logger] = logging.getLogger(__name__)
 
 @dataclass(frozen=True, slots=True, kw_only=True)
 class FibonacciPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackCommand:
-    """Command for generating Fibonacci sequence."""
+    """Команда для генерации последовательности Фибоначчи."""
 
     polynomial_coefficients: Sequence[int]
     start_state: Sequence[int]
@@ -28,13 +28,13 @@ class FibonacciPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackComm
 
 @final
 class FibonacciPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackCommandHandler:
-    """Handler for Fibonacci generator command."""
+    """Обработчик команды генератора Фибоначчи."""
 
     def __init__(self, register_service: RegisterService) -> None:
-        """Initialize handler with register service.
+        """
+        Инициализировать обработчик сервисом работы с регистрами.
 
-        Args:
-            register_service: Service for working with registers
+        :param register_service: сервис для работы с регистрами
         """
         self._register_service: Final[RegisterService] = register_service
 
@@ -42,10 +42,10 @@ class FibonacciPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackComm
         self,
         command: FibonacciPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackCommand,
     ) -> None:
-        """Handle Fibonacci generator command.
+        """
+        Обработать команду генератора Фибоначчи.
 
-        Args:
-            command: Command with generator parameters
+        :param command: команда с параметрами генератора
         """
         logger.info(
             "Начинается генерация псевдослучайных чисел с помощью генератора Фибоначчи. "
@@ -56,7 +56,7 @@ class FibonacciPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackComm
             command.column_index,
         )
 
-        # Create register
+        # Создаем регистр
         register: Register = self._register_service.create(
             polynomial_coefficients=command.polynomial_coefficients,
             start_position=command.start_state,
@@ -67,21 +67,19 @@ class FibonacciPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackComm
         logger.info("Создание регистра успешно!")
         logger.info("%s", register)
 
-        # Generate sequence
-        logger.info("Значения регистра:")
+        # Генерируем последовательность
         binary_sequence = list(self._register_service.get_binary_sequence(register))
 
-        # Add decimal representation of start state (last element in Java output)
+        # Добавляем десятичное представление начального состояния
         start_state_binary = "".join(str(bit) for bit in register.start_position)
         start_state_decimal = int(start_state_binary, 2) if start_state_binary else 0
 
-        # Print intermediate results (matching Java output format)
-        # Java: binary states -> ... -> decimal of start state
+        # Формируем строку промежуточных результатов
         output_separator = " -> "
         output = output_separator.join(binary_sequence) + output_separator + str(start_state_decimal)
-        logger.info(output)
+        logger.info("Значения регистра: %s", output)
 
-        # Calculate period
+        # Вычисляем период
         period = register.get_period()
         max_period = register.max_period
 
@@ -93,13 +91,13 @@ class FibonacciPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackComm
             "" if is_max else "не",
         )
 
-        # Save sequence to file (without separators, matching Java format)
-        file_path = Path.home() / "Desktop" / "Fibonacci.txt"
+        path_to_save: Path = Path(__file__).parent.parent.parent.parent.parent / "Fibonacci.txt"
+
         file_output = "".join(binary_sequence) + str(start_state_decimal)
         try:
-            with open(file_path, "w", encoding="utf-8") as f:
+            with open(path_to_save, "w", encoding="utf-8") as f:
                 f.write(file_output)
-            logger.info("Значения сохранены в файл: %s", file_path)
+            logger.info("Значения сохранены в файл: %s", path_to_save)
         except OSError as e:
             logger.error("Ошибка при сохранении файла: %s", e)
 
