@@ -33,6 +33,7 @@ dependencies = [
     "dishka==1.7.1",
     "matplotlib>=3.10.7",
     "numpy>=1.26.0",
+    "pydantic>=2.12.4",
     "scipy>=1.11.0",
     "structlog==25.4.0",
 ]
