@@ -133,9 +133,6 @@ class GeffeyPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackCommand
 
         try:
             with open(path_to_save, "w", encoding="utf-8") as f:
-                f.write(f"{generator}\n")
-                f.write("\n".join(states) + "\n")
-                f.write("Десятичные значения:\n")
                 f.write(decimal_sequence)
             logger.info("Значения сохранены в файл: %s", path_to_save)
         except OSError as e:

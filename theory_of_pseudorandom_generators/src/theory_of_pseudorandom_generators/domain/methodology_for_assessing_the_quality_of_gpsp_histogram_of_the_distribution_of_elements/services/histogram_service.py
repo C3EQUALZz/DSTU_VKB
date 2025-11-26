@@ -1,5 +1,6 @@
 """Service for generating histograms."""
 
+import logging
 from collections import Counter
 from collections.abc import Sequence
 from pathlib import Path
@@ -10,6 +11,8 @@ import matplotlib.pyplot as plt
 matplotlib.use("Agg")  # Use non-interactive backend
 
 from theory_of_pseudorandom_generators.domain.common.services.base import DomainService
+
+logger: logging.Logger = logging.getLogger(__name__)
 
 
 class HistogramService(DomainService):
@@ -42,8 +45,16 @@ class HistogramService(DomainService):
             # First, try to find "Десятичные значения:" marker
             for i, line in enumerate(lines):
                 if "Десятичные значения" in line or "десятичные" in line.lower():
-                    if i + 1 < len(lines):
-                        decimal_line = lines[i + 1]
+                    # Берем следующую непустую строку после маркера
+                    for j in range(i + 1, len(lines)):
+                        next_line = lines[j].strip()
+                        if not next_line:
+                            continue
+                        # Проверяем, что это строка с числами (табуляция или пробелы)
+                        if "\t" in next_line or (next_line and all(c.isdigit() or c.isspace() or c == '\t' for c in next_line)):
+                            decimal_line = next_line
+                            break
+                    if decimal_line:
                         break
 
             # If no marker found, try to find tab-separated line (usually last meaningful line)
@@ -52,28 +63,30 @@ class HistogramService(DomainService):
                     line = line.strip()
                     if not line:
                         continue
-                    # Skip header lines
+                    # Skip header lines and intermediate results (lines with "->" or ".")
                     if any(
                         keyword in line.lower()
-                        for keyword in ["генератор", "период", "значение", "количество"]
-                    ):
+                        for keyword in ["генератор", "период", "значение", "количество", "->"]
+                    ) or "." in line and "->" in line:
                         continue
                     # Check if it looks like tab-separated numbers
                     if "\t" in line:
                         # Verify it's numbers
                         parts = line.split("\t")
-                        if all(part.strip().isdigit() for part in parts if part.strip()):
+                        if parts and all(part.strip().isdigit() for part in parts if part.strip()):
                             decimal_line = line
                             break
-                    # Or space-separated numbers
-                    elif " " in line:
+                    # Or space-separated numbers (but not single numbers from intermediate results)
+                    elif " " in line and not line.startswith(("0.", "1.", "2.", "3.", "4.", "5.", "6.", "7.", "8.", "9.")):
                         parts = line.split()
-                        if all(part.strip().isdigit() for part in parts if part.strip()):
+                        # Проверяем, что это не промежуточные результаты (не должно быть "->")
+                        if "->" not in line and all(part.strip().isdigit() for part in parts if part.strip()):
                             decimal_line = line
                             break
 
             # Parse the found line
             if decimal_line:
+                logger.debug("Найдена строка с десятичными значениями (первые 100 символов): %s", decimal_line[:100])
                 if "\t" in decimal_line:
                     values = [
                         int(x.strip())
@@ -86,6 +99,7 @@ class HistogramService(DomainService):
                         for x in decimal_line.split()
                         if x.strip() and x.strip().isdigit()
                     ]
+                logger.info("Прочитано десятичных чисел из файла: %s", len(values))
                 if values:
                     return values
 
@@ -147,8 +161,27 @@ class HistogramService(DomainService):
         unique_values = sorted(counter.keys())
         frequencies = [counter[val] for val in unique_values]
 
+        # Определяем размер фигуры в зависимости от количества уникальных значений
+        num_unique = len(unique_values)
+        if num_unique > 100:
+            # Для большого количества значений увеличиваем ширину и уменьшаем размер шрифта
+            fig_width = max(20, num_unique * 0.15)
+            fig_height = 8
+            font_size = 6
+            rotation_angle = 90  # Вертикальные подписи для лучшей читаемости
+        elif num_unique > 50:
+            fig_width = 16
+            fig_height = 7
+            font_size = 7
+            rotation_angle = 75
+        else:
+            fig_width = 12
+            fig_height = 6
+            font_size = 8
+            rotation_angle = 45
+
         # Create histogram
-        fig, ax = plt.subplots(figsize=(12, 6))
+        fig, ax = plt.subplots(figsize=(fig_width, fig_height))
         bars = ax.bar(
             [str(val) for val in unique_values],
             frequencies,
@@ -165,19 +198,31 @@ class HistogramService(DomainService):
         # Set integer ticks on y-axis
         ax.yaxis.set_major_locator(plt.MaxNLocator(integer=True))
 
-        # Add value labels on bars
-        for bar in bars:
-            height = bar.get_height()
-            ax.text(
-                bar.get_x() + bar.get_width() / 2.0,
-                height,
-                f"{int(height)}",
-                ha="center",
-                va="bottom",
-                fontsize=8,
-            )
+        # Add value labels on bars (только если не слишком много значений)
+        if num_unique <= 100:
+            for bar in bars:
+                height = bar.get_height()
+                ax.text(
+                    bar.get_x() + bar.get_width() / 2.0,
+                    height,
+                    f"{int(height)}",
+                    ha="center",
+                    va="bottom",
+                    fontsize=font_size,
+                )
 
-        plt.xticks(rotation=45, ha="right")
+        # Настройка подписей на оси X
+        # Если значений много, показываем только каждое N-е значение
+        if num_unique > 50:
+            # Показываем примерно 30-40 подписей максимум
+            step = max(1, num_unique // 40)
+            tick_positions = list(range(0, num_unique, step))
+            tick_labels = [str(unique_values[i]) for i in tick_positions]
+            ax.set_xticks(tick_positions)
+            ax.set_xticklabels(tick_labels, rotation=rotation_angle, ha="right", fontsize=font_size)
+        else:
+            plt.xticks(rotation=rotation_angle, ha="right", fontsize=font_size)
+        
         plt.tight_layout()
 
         if output_path:

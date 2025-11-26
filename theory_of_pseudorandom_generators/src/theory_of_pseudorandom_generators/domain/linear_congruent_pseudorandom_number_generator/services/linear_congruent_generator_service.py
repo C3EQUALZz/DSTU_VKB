@@ -75,6 +75,7 @@ class LinearCongruentGeneratorService(DomainService):
         )
         sequence: deque[int] = deque([generator.x])
         current: int = generator.x
+        logger.info("Начальный элемент последовательности: %s", current)
 
         for index in range(1, count):
             current = generator.next(current)

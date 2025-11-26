@@ -62,10 +62,10 @@ class PolynomialCongruentPseudorandomNumberGeneratorCommandHandler:
 
         start_time: float = time.perf_counter()
 
-        sequence: Iterable[int] = self._polynomial_congruent_service.get_random_sequence(
+        sequence: Iterable[int] = list(self._polynomial_congruent_service.get_random_sequence(
             generator=polynomial_generator,
             count=data.size,
-        )
+        ))
 
         binary_sequence: Generator[str, Any, None] = (bin(x)[2:] for x in sequence)
         string_binary_sequence: str = ", ".join(binary_sequence)
@@ -93,6 +93,6 @@ class PolynomialCongruentPseudorandomNumberGeneratorCommandHandler:
         path_to_save: Path = Path(__file__).parent.parent.parent.parent.parent / "polynomial_congruent.txt"
 
         with open(path_to_save, "w", encoding="utf-8") as f:
-            f.write(string_binary_sequence)
+            f.write(" ".join(map(str, sequence)))
 
         logger.info("Файл с параметрами генератора: %s", path_to_save)

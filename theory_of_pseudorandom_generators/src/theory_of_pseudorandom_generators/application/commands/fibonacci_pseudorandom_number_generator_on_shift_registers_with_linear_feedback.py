@@ -79,6 +79,13 @@ class FibonacciPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackComm
         output = output_separator.join(binary_sequence) + output_separator + str(start_state_decimal)
         logger.info("Значения регистра: %s", output)
 
+        # Генерируем десятичную последовательность для сохранения в файл
+        decimal_sequence = list(self._register_service.get_decimal_sequence(register))
+        
+        # Формируем строку десятичных значений с табуляцией
+        decimal_values_str = "\t".join(str(num) for num in decimal_sequence)
+        logger.info("Десятичные значения: %s", decimal_values_str[:200] + ("..." if len(decimal_values_str) > 200 else ""))
+
         # Вычисляем период
         period = register.get_period()
         max_period = register.max_period
@@ -93,10 +100,9 @@ class FibonacciPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackComm
 
         path_to_save: Path = Path(__file__).parent.parent.parent.parent.parent / "Fibonacci.txt"
 
-        file_output = "".join(binary_sequence) + str(start_state_decimal)
         try:
             with open(path_to_save, "w", encoding="utf-8") as f:
-                f.write(file_output)
+                f.write(decimal_values_str)
             logger.info("Значения сохранены в файл: %s", path_to_save)
         except OSError as e:
             logger.error("Ошибка при сохранении файла: %s", e)
