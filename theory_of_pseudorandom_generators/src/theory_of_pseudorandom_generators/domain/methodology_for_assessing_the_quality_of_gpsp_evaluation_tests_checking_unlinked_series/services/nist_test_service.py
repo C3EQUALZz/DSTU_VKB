@@ -1,5 +1,6 @@
 """Service for running NIST tests."""
 
+import re
 from pathlib import Path
 
 from theory_of_pseudorandom_generators.domain.common.services.base import DomainService
@@ -18,19 +19,41 @@ class NISTTestService(DomainService):
         """Read binary sequence from file.
 
         Args:
-            file_path: Path to file with binary sequence
+            file_path: Path to file with decimal numbers (will be converted to binary)
 
         Returns:
-            Binary sequence as string
+            Binary sequence as string (concatenated binary representations)
         """
         try:
             with open(file_path, encoding="utf-8") as f:
-                # Read first line (matching Java implementation)
                 first_line = f.readline().strip()
                 if not first_line:
                     msg = f"Файл {file_path} пуст"
                     raise ValueError(msg)
-                return first_line
+                
+                # Split by whitespace (spaces, tabs, etc.)
+                numbers = re.split(r'\s+', first_line)
+                
+                # Convert each decimal number to binary and concatenate
+                binary_parts = []
+                for num_str in numbers:
+                    if num_str.strip():  # Skip empty strings
+                        try:
+                            decimal_num = int(num_str.strip())
+                            # Convert to binary and remove '0b' prefix
+                            binary_str = bin(decimal_num)[2:]
+                            binary_parts.append(binary_str)
+                        except ValueError as e:
+                            msg = f"Не удалось преобразовать '{num_str}' в число: {e}"
+                            raise ValueError(msg) from e
+                
+                if not binary_parts:
+                    msg = f"Не найдено чисел в файле {file_path}"
+                    raise ValueError(msg)
+                
+                # Concatenate all binary representations
+                sequence = ''.join(binary_parts)
+                return sequence
         except OSError as e:
             msg = f"Ошибка при чтении файла {file_path}: {e}"
             raise ValueError(msg) from e
