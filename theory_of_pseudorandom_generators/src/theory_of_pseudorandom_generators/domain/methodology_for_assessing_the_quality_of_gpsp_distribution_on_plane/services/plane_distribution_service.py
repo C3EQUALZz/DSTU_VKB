@@ -3,11 +3,11 @@
 import math
 from collections.abc import Sequence
 from pathlib import Path
-from typing import Final
 
-import matplotlib.pyplot as plt
 import matplotlib
-matplotlib.use('Agg')  # Use non-interactive backend
+import matplotlib.pyplot as plt
+
+matplotlib.use("Agg")  # Use non-interactive backend
 
 from theory_of_pseudorandom_generators.domain.common.services.base import DomainService
 
@@ -25,7 +25,7 @@ class PlaneDistributionService(DomainService):
             List of decimal numbers
         """
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
+            with open(file_path, encoding="utf-8") as f:
                 # Read first line with tab-separated values (matching Java implementation)
                 first_line = f.readline().strip()
                 if not first_line:
@@ -56,7 +56,7 @@ class PlaneDistributionService(DomainService):
         except OSError as e:
             msg = f"Ошибка при чтении файла {file_path}: {e}"
             raise ValueError(msg) from e
-        except ValueError as e:
+        except ValueError:
             raise
 
     def create_plane_distribution(
@@ -199,6 +199,7 @@ class PlaneDistributionService(DomainService):
         return {
             "correlation": correlation,
             "sequence_length": len(data),
-            "unique_pairs": len(set(zip(x_coords, y_coords))),
+            "unique_pairs": len(set(zip(x_coords, y_coords, strict=False))),
         }
+
 

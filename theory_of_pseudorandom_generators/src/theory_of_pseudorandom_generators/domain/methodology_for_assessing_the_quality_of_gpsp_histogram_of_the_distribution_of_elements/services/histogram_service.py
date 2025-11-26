@@ -3,11 +3,11 @@
 from collections import Counter
 from collections.abc import Sequence
 from pathlib import Path
-from typing import Final
 
-import matplotlib.pyplot as plt
 import matplotlib
-matplotlib.use('Agg')  # Use non-interactive backend
+import matplotlib.pyplot as plt
+
+matplotlib.use("Agg")  # Use non-interactive backend
 
 from theory_of_pseudorandom_generators.domain.common.services.base import DomainService
 
@@ -30,8 +30,8 @@ class HistogramService(DomainService):
             List of decimal numbers
         """
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
-                lines = [line.strip() for line in f.readlines() if line.strip()]
+            with open(file_path, encoding="utf-8") as f:
+                lines = [line.strip() for line in f if line.strip()]
 
             if not lines:
                 msg = f"Файл {file_path} пуст"
@@ -120,7 +120,7 @@ class HistogramService(DomainService):
         except OSError as e:
             msg = f"Ошибка при чтении файла {file_path}: {e}"
             raise ValueError(msg) from e
-        except ValueError as e:
+        except ValueError:
             raise
 
     def create_histogram(

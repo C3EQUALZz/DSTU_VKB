@@ -16,3 +16,4 @@ class RegisterIDGenerator(Protocol):
         """Generate a new Register ID."""
         ...
 
+

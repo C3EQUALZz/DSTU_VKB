@@ -1,6 +1,5 @@
 """NIST test interface and implementations."""
 
-from abc import ABC, abstractmethod
 from typing import Protocol
 
 import numpy as np
@@ -162,4 +161,5 @@ class RunsTest:
 
     def __str__(self) -> str:
         return "Тест на последовательность одинаковых бит"
+
 

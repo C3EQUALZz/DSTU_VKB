@@ -1,2 +1,3 @@
 """Entities for Fibonacci generator."""
 
+

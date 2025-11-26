@@ -5,3 +5,4 @@ from uuid import UUID
 
 GeffeGeneratorID = NewType("GeffeGeneratorID", UUID)
 
+

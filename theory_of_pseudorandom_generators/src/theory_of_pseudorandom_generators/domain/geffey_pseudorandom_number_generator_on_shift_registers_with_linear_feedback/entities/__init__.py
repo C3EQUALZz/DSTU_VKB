@@ -1,2 +1,3 @@
 """Entities for Geffe generator."""
 
+

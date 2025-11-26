@@ -16,3 +16,4 @@ class GeffeGeneratorIDGenerator(Protocol):
         """Generate a new Geffe generator ID."""
         ...
 
+

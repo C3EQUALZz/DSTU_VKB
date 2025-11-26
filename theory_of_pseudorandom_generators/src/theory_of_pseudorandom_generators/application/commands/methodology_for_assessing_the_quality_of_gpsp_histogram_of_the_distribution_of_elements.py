@@ -126,3 +126,4 @@ class MethodologyForAssessingTheQualityOfGpspHistogramOfTheDistributionOfElement
             except Exception as e:
                 logger.error("Ошибка при построении гистограммы для %s: %s", title, e)
 
+

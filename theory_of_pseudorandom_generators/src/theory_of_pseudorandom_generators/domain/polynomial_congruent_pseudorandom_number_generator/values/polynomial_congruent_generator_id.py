@@ -5,3 +5,4 @@ from uuid import UUID
 
 PolynomialCongruentGeneratorID = NewType("PolynomialCongruentGeneratorID", UUID)
 
+

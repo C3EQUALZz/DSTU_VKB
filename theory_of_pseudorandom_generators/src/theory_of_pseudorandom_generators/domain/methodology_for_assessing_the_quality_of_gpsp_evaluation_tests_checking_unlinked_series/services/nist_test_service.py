@@ -1,7 +1,6 @@
 """Service for running NIST tests."""
 
 from pathlib import Path
-from typing import Final
 
 from theory_of_pseudorandom_generators.domain.common.services.base import DomainService
 from theory_of_pseudorandom_generators.domain.methodology_for_assessing_the_quality_of_gpsp_evaluation_tests_checking_unlinked_series.entities.nist_test import (
@@ -25,7 +24,7 @@ class NISTTestService(DomainService):
             Binary sequence as string
         """
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
+            with open(file_path, encoding="utf-8") as f:
                 # Read first line (matching Java implementation)
                 first_line = f.readline().strip()
                 if not first_line:
@@ -106,4 +105,5 @@ class NISTTestService(DomainService):
                 )
 
         return results
+
 

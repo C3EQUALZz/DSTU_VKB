@@ -6,5 +6,5 @@ from theory_of_pseudorandom_generators.domain.common.errors.base import DomainEr
 class WrongParameterValueError(DomainError):
     """Raised when a parameter has an invalid value."""
 
-    ...
+
 

@@ -77,3 +77,4 @@ class PolynomialCongruentGenerator(BaseAggregateRoot[PolynomialCongruentGenerato
         ]
         return "\n".join(lines)
 
+

@@ -1,12 +1,16 @@
 import logging
 import time
+from collections.abc import Generator, Iterable
 from dataclasses import dataclass
-from typing import final, Final, Iterable, Generator, Any
 from pathlib import Path
-from theory_of_pseudorandom_generators.domain.linear_congruent_pseudorandom_number_generator.entities.linear_congruent_generator import \
-    LinearCongruentGenerator
-from theory_of_pseudorandom_generators.domain.linear_congruent_pseudorandom_number_generator.services.linear_congruent_generator_service import \
-    LinearCongruentGeneratorService
+from typing import Any, Final, final
+
+from theory_of_pseudorandom_generators.domain.linear_congruent_pseudorandom_number_generator.entities.linear_congruent_generator import (
+    LinearCongruentGenerator,
+)
+from theory_of_pseudorandom_generators.domain.linear_congruent_pseudorandom_number_generator.services.linear_congruent_generator_service import (
+    LinearCongruentGeneratorService,
+)
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 
@@ -65,7 +69,7 @@ class LinearCongruentPseudorandomNumberGeneratorCommandHandler:
 
         logger.info(string_binary_sequence)
 
-        end_time: int = int((time.perf_counter() - start_time) * 1000)
+        end_time: float = (time.perf_counter() - start_time) * 1000
 
         logger.info("Продолжительность генерации %s мс", end_time)
 
@@ -77,14 +81,16 @@ class LinearCongruentPseudorandomNumberGeneratorCommandHandler:
         period = self._linear_congruent_service.get_period(linear_generator)
         start_period_index = self._linear_congruent_service.get_start_period_index(linear_generator)
 
-        end_time = int((time.perf_counter() - start_time) * 1000)
+        end_time = (time.perf_counter() - start_time) * 1000
 
         logger.info("Период последовательности: %s", period)
         logger.info("Начало периода: %s", start_period_index)
         logger.info("Время поиска периода: %s мс", end_time)
 
-        path_to_save: Path = Path(__file__).parent.parent.parent / "1_lab.txt"
+        path_to_save: Path = Path(__file__).parent.parent.parent.parent.parent / "1_lab.txt"
 
         with open(path_to_save, "w", encoding="utf-8") as f:
             f.write(string_binary_sequence)
+
+        logger.info("Файл с параметрами генератора: %s", path_to_save)
 

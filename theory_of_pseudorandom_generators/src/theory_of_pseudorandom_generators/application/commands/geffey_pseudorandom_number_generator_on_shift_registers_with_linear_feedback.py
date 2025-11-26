@@ -140,3 +140,4 @@ class GeffeyPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackCommand
         except OSError as e:
             logger.error("Ошибка при сохранении файла: %s", e)
 
+

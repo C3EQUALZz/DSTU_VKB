@@ -1,7 +1,8 @@
 """Service for working with polynomial congruent generator."""
 
 from collections import deque
-from typing import Final, Iterable
+from collections.abc import Iterable
+from typing import Final
 
 from theory_of_pseudorandom_generators.domain.common.services.base import DomainService
 from theory_of_pseudorandom_generators.domain.polynomial_congruent_pseudorandom_number_generator.entities.polynomial_congruent_generator import (
@@ -179,4 +180,5 @@ class PolynomialCongruentGeneratorService(DomainService):
             start += 1
 
         return start
+
 

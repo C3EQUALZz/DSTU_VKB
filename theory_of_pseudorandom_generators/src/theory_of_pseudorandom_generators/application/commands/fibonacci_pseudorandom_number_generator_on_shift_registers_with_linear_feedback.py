@@ -70,7 +70,7 @@ class FibonacciPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackComm
         # Generate sequence
         logger.info("Значения регистра:")
         binary_sequence = list(self._register_service.get_binary_sequence(register))
-        
+
         # Add decimal representation of start state (last element in Java output)
         start_state_binary = "".join(str(bit) for bit in register.start_position)
         start_state_decimal = int(start_state_binary, 2) if start_state_binary else 0

@@ -2,10 +2,10 @@ from dataclasses import dataclass
 
 from theory_of_pseudorandom_generators.domain.common.entities.base_aggregate import BaseAggregateRoot
 from theory_of_pseudorandom_generators.domain.linear_congruent_pseudorandom_number_generator.errors import (
-    WrongParameterValueError
+    WrongParameterValueError,
 )
 from theory_of_pseudorandom_generators.domain.linear_congruent_pseudorandom_number_generator.values.linear_congruent_generator_id import (
-    LinearCongruentGeneratorID
+    LinearCongruentGeneratorID,
 )
 
 
@@ -63,4 +63,4 @@ class LinearCongruentGenerator(BaseAggregateRoot[LinearCongruentGeneratorID]):
             ),
         ]
 
-        return "\n".join(lines)
+        return " ".join(lines)

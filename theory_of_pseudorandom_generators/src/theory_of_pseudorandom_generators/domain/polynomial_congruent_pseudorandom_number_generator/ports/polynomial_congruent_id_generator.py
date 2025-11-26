@@ -16,3 +16,4 @@ class PolynomialCongruentIDGenerator(Protocol):
         """Generate a new Polynomial Congruent Generator ID."""
         ...
 
+

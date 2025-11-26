@@ -2,7 +2,6 @@
 
 from collections.abc import Sequence
 from dataclasses import dataclass, field
-from typing import Final
 
 from theory_of_pseudorandom_generators.domain.common.entities.base_aggregate import (
     BaseAggregateRoot,
