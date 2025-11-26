@@ -1,14 +1,15 @@
 import logging
 import time
+from collections.abc import Generator, Iterable
 from dataclasses import dataclass
 from pathlib import Path
-from typing import final, Final, Iterable, Generator, Any
+from typing import Any, Final, final
 
 from theory_of_pseudorandom_generators.domain.polynomial_congruent_pseudorandom_number_generator.entities.polynomial_congruent_generator import (
-    PolynomialCongruentGenerator
+    PolynomialCongruentGenerator,
 )
 from theory_of_pseudorandom_generators.domain.polynomial_congruent_pseudorandom_number_generator.services.polynomial_congruent_generator_service import (
-    PolynomialCongruentGeneratorService
+    PolynomialCongruentGeneratorService,
 )
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
@@ -28,10 +29,9 @@ class PolynomialCongruentPseudorandomNumberGeneratorCommand:
 class PolynomialCongruentPseudorandomNumberGeneratorCommandHandler:
     def __init__(
             self,
-            polynomial_congruent_generator_service: PolynomialCongruentGeneratorService,
+            polynomial_congruent_gen: PolynomialCongruentGeneratorService,
     ) -> None:
-        self._polynomial_congruent_service: Final[
-            PolynomialCongruentGeneratorService] = polynomial_congruent_generator_service
+        self._polynomial_congruent_service: Final[PolynomialCongruentGeneratorService] = polynomial_congruent_gen
 
     def __call__(self, data: PolynomialCongruentPseudorandomNumberGeneratorCommand) -> None:
         logger.info(
@@ -72,7 +72,7 @@ class PolynomialCongruentPseudorandomNumberGeneratorCommandHandler:
 
         logger.info(string_binary_sequence)
 
-        end_time: int = int((time.perf_counter() - start_time) * 1000)
+        end_time: float = (time.perf_counter() - start_time) * 1000
 
         logger.info("Продолжительность генерации %s мс", end_time)
 
@@ -84,13 +84,15 @@ class PolynomialCongruentPseudorandomNumberGeneratorCommandHandler:
         period = self._polynomial_congruent_service.get_period(polynomial_generator)
         start_period_index = self._polynomial_congruent_service.get_start_period_index(polynomial_generator)
 
-        end_time = int((time.perf_counter() - start_time) * 1000)
+        end_time: float = (time.perf_counter() - start_time) * 1000
 
         logger.info("Период последовательности: %s", period)
         logger.info("Начало периода: %s", start_period_index)
         logger.info("Время поиска периода: %s мс", end_time)
 
-        path_to_save: Path = Path(__file__).parent.parent.parent / "2_lab.txt"
+        path_to_save: Path = Path(__file__).parent.parent.parent.parent.parent / "2_lab.txt"
 
         with open(path_to_save, "w", encoding="utf-8") as f:
             f.write(string_binary_sequence)
+
+        logger.info("Файл с параметрами генератора: %s", path_to_save)

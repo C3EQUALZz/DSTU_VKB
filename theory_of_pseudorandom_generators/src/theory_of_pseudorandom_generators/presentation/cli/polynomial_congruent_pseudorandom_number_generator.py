@@ -2,8 +2,8 @@ import click
 from dishka import FromDishka
 
 from theory_of_pseudorandom_generators.application.commands.polynomial_congruent_pseudorandom_number_generator import (
+    PolynomialCongruentPseudorandomNumberGeneratorCommand,
     PolynomialCongruentPseudorandomNumberGeneratorCommandHandler,
-    PolynomialCongruentPseudorandomNumberGeneratorCommand
 )
 
 

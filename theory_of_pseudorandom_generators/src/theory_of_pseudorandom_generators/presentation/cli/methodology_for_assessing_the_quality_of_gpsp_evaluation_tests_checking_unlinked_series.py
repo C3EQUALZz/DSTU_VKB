@@ -1,8 +1,9 @@
 """CLI commands for plane distribution generation."""
 
+from pathlib import Path
+
 import click
 from dishka import FromDishka
-from pathlib import Path
 
 from theory_of_pseudorandom_generators.application.commands.methodology_for_assessing_the_quality_of_gpsp_distribution_on_plane import (
     MethodologyForAssessingTheQualityOfGpspDistributionOnPlaneCommand,
@@ -13,7 +14,6 @@ from theory_of_pseudorandom_generators.application.commands.methodology_for_asse
 @click.group(name="methodology_for_assessing_the_quality_of_gpsp_distribution_on_plane")
 def plane_distribution_group() -> None:
     """Plane distribution generation commands."""
-    ...
 
 
 @plane_distribution_group.command(name="generate")

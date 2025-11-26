@@ -4,11 +4,9 @@ import click
 from dishka import Container, make_container
 from dishka.integrations.click import setup_dishka
 
-from theory_of_pseudorandom_generators.setup.bootstrap import setup_logging, setup_cli_routes
+from theory_of_pseudorandom_generators.setup.bootstrap import setup_cli_routes, setup_logging
+from theory_of_pseudorandom_generators.setup.config_logger import LoggingConfig
 from theory_of_pseudorandom_generators.setup.ioc import setup_providers
-from theory_of_pseudorandom_generators.setup.config_logger import (
-    LoggingConfig
-)
 
 
 @click.group()

@@ -12,7 +12,6 @@ from theory_of_pseudorandom_generators.application.commands.fibonacci_pseudorand
 @click.group(name="fibonacci_pseudorandom_number_generator_on_shift_registers_with_linear_feedback")
 def fibonacci_generator_group() -> None:
     """Fibonacci generator commands."""
-    ...
 
 
 @fibonacci_generator_group.command(name="generate")

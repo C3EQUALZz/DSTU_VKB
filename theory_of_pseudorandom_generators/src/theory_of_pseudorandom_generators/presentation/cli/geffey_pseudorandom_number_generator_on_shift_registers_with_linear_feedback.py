@@ -12,7 +12,6 @@ from theory_of_pseudorandom_generators.application.commands.geffey_pseudorandom_
 @click.group(name="geffey_pseudorandom_number_generator_on_shift_registers_with_linear_feedback")
 def geffe_generator_group() -> None:
     """Geffe generator commands."""
-    ...
 
 
 @geffe_generator_group.command(name="generate")

@@ -1,4 +1,4 @@
-# 1 лабораторная работа (Линейный конгруэнтный генератор псевдослучайных чисел)
+# 2 лабораторная работа (Полиномиальный конгруэнтный генератор псевдослучайных чисел)
 
 > [!IMPORTANT]
 > Перейдите в директорию с файлом `cli.py` в терминале. 
@@ -7,5 +7,5 @@
 Для запуска лабораторной работы используем команду, которая представлена ниже: 
 
 ```bash
-python cli.py linear_congruent_pseudorandom_number_generator generate -a 105 -b 1073 -x0 1 -m 6075
+python cli.py polynomial_congruent_pseudorandom_number_generator generate -a1 25 -a2 106 -b 1075 -x0 1 -m 6075
 ```

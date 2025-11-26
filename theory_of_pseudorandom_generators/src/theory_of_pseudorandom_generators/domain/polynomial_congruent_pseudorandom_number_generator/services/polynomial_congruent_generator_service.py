@@ -1,7 +1,8 @@
-"""Service for working with polynomial congruent generator."""
+"""Сервис для работы с полиномиальным конгруэнтным генератором."""
 
 from collections import deque
 from collections.abc import Iterable
+import logging
 from typing import Final
 
 from theory_of_pseudorandom_generators.domain.common.services.base import DomainService
@@ -13,14 +14,17 @@ from theory_of_pseudorandom_generators.domain.polynomial_congruent_pseudorandom_
 )
 
 
+logger: Final[logging.Logger] = logging.getLogger(__name__)
+
+
 class PolynomialCongruentGeneratorService(DomainService):
-    """Service for creating and managing polynomial congruent generators."""
+    """Сервис для создания и управления полиномиальными конгруэнтными генераторами."""
 
     def __init__(self, id_generator: PolynomialCongruentIDGenerator) -> None:
-        """Initialize service with ID generator.
+        """
+        Инициализация сервиса генератором идентификаторов.
 
-        Args:
-            id_generator: Generator for creating polynomial congruent generator IDs
+        :param id_generator: генератор идентификаторов для полиномиального конгруэнтного генератора
         """
         super().__init__()
         self._id_generator: Final[PolynomialCongruentIDGenerator] = id_generator
@@ -33,19 +37,26 @@ class PolynomialCongruentGeneratorService(DomainService):
         x: int,
         m: int,
     ) -> PolynomialCongruentGenerator:
-        """Create a new polynomial congruent generator.
-
-        Args:
-            a1: Coefficient a1
-            a2: Coefficient a2
-            b: Coefficient b
-            x: Initial value x0
-            m: Modulus
-
-        Returns:
-            New polynomial congruent generator instance
         """
-        return PolynomialCongruentGenerator(
+        Создать новый полиномиальный конгруэнтный генератор.
+
+        :param a1: коэффициент a1
+        :param a2: коэффициент a2
+        :param b: коэффициент b
+        :param x: начальное значение x0
+        :param m: модуль m
+        :return: экземпляр полиномиального конгруэнтного генератора
+        """
+        logger.info(
+            "Создание полиномиального конгруэнтного генератора с параметрами: a1=%s, a2=%s, b=%s, x0=%s, m=%s",
+            a1,
+            a2,
+            b,
+            x,
+            m,
+        )
+
+        generator = PolynomialCongruentGenerator(
             id=self._id_generator(),
             a1=a1,
             a2=a2,
@@ -54,124 +65,153 @@ class PolynomialCongruentGeneratorService(DomainService):
             m=m,
         )
 
+        logger.info("Полиномиальный конгруэнтный генератор успешно создан: %s", generator)
+        return generator
+
     @staticmethod
     def get_random_sequence(
         generator: PolynomialCongruentGenerator,
         count: int,
     ) -> Iterable[int]:
-        """Generate a sequence of pseudorandom numbers.
-
-        Args:
-            generator: The generator entity
-            count: Number of elements to generate
-
-        Returns:
-            Sequence of generated numbers
         """
+        Сгенерировать последовательность псевдослучайных чисел.
+
+        :param generator: объект генератора
+        :param count: количество элементов для генерации
+        :return: последовательность сгенерированных чисел
+        """
+        logger.info(
+            "Запуск генерации последовательности полиномиальным конгруэнтным генератором, количество элементов: %s",
+            count,
+        )
+
         sequence: deque[int] = deque([generator.x])
         current: int = generator.x
 
-        for _ in range(1, count):
+        for index in range(1, count):
             current = generator.next(current)
             sequence.append(current)
+            logger.debug("Сгенерирован элемент последовательности #%s: %s", index, current)
 
+        logger.info("Генерация последовательности завершена, всего элементов: %s", len(sequence))
         return sequence
 
     @staticmethod
     def is_maximized_period(
         generator: PolynomialCongruentGenerator,
     ) -> bool:
-        """Check if the generator has maximum period (m).
-
-        Note: This is a simplified check. Full conditions for maximum period
-        in quadratic congruent generators are more complex than linear ones.
-
-        Args:
-            generator: The generator entity
-
-        Returns:
-            True if period might be maximized, False otherwise
         """
-        # Basic check: if all parameters are valid and generator works
-        # Full maximum period conditions for quadratic generators are complex
-        # and depend on prime factorization of m
-        # For now, we'll do a basic validation
+        Выполнена ли (упрощённая) проверка на максимально возможный период (m).
+
+        Важно: это **упрощённая** проверка. Полные условия максимального периода
+        для квадратичных (полиномиальных) конгруэнтных генераторов значительно сложнее,
+        чем для линейных, и зависят от простых множителей модуля m.
+
+        :param generator: объект генератора
+        :return: ``True``, если базовые условия выполнены, иначе ``False``
+        """
+        logger.info(
+            "Проверка (упрощённого) условия максимального периода для полиномиального генератора: %s",
+            generator,
+        )
+
+        # Базовая проверка: модуль должен быть больше 1
         if generator.m <= 1:
+            logger.info("Условие максимального периода не выполнено: m <= 1")
             return False
 
-        # Check if parameters are in valid range
+        # Проверка диапазона параметров
         if not (0 <= generator.a1 < generator.m):
+            logger.info("Условие максимального периода не выполнено: a1 вне допустимого диапазона")
             return False
         if not (0 <= generator.a2 < generator.m):
+            logger.info("Условие максимального периода не выполнено: a2 вне допустимого диапазона")
             return False
         if not (0 <= generator.b < generator.m):
+            logger.info("Условие максимального периода не выполнено: b вне допустимого диапазона")
             return False
         if not (0 <= generator.x < generator.m):
+            logger.info("Условие максимального периода не выполнено: x0 вне допустимого диапазона")
             return False
 
-        # More detailed checks would require analysis of m's prime factors
-        # For now, return True if basic conditions are met
-        # Actual period calculation will be done by get_period()
+        logger.info(
+            "Базовые условия для потенциально максимального периода выполнены. "
+            "Точная длина периода будет вычислена функцией get_period().",
+        )
         return True
 
     @staticmethod
     def get_period(
         generator: PolynomialCongruentGenerator,
     ) -> int:
-        """Get the period of the sequence using Floyd's cycle detection.
-
-        Args:
-            generator: The generator entity
-
-        Returns:
-            The period length
         """
-        # Floyd's cycle detection algorithm
+        Определить длину периода последовательности с помощью алгоритма
+        обнаружения цикла Флойда.
+
+        :param generator: объект генератора
+        :return: длина периода
+        """
+        logger.info(
+            "Вычисление длины периода для полиномиального конгруэнтного генератора: %s",
+            generator,
+        )
+
+        # Алгоритм обнаружения цикла Флойда (метод «черепаха и заяц»)
         turtle = generator.next(generator.x)
         hare = generator.next(generator.next(generator.x))
+        logger.debug("Начальные значения алгоритма Флойда: черепаха=%s, заяц=%s", turtle, hare)
 
-        # Find meeting point
+        # Поиск точки встречи
+        steps_to_meet = 0
         while turtle != hare:
             turtle = generator.next(turtle)
             hare = generator.next(generator.next(hare))
+            steps_to_meet += 1
+        logger.debug("Найдена точка встречи после %s шагов: значение=%s", steps_to_meet, turtle)
 
-        # Find start of cycle
+        # Поиск начала цикла
         turtle = generator.x
+        steps_to_start = 0
         while turtle != hare:
             turtle = generator.next(turtle)
             hare = generator.next(hare)
+            steps_to_start += 1
+        logger.debug("Начало цикла найдено через %s шагов от x0", steps_to_start)
 
-        # Measure period length
+        # Измерение длины периода
         hare = generator.next(turtle)
         period = 1
         while turtle != hare:
             hare = generator.next(hare)
             period += 1
 
+        logger.info("Длина периода последовательности: %s", period)
         return period
 
     @staticmethod
     def get_start_period_index(
         generator: PolynomialCongruentGenerator,
     ) -> int:
-        """Get the index where the period starts.
-
-        Args:
-            generator: The generator entity
-
-        Returns:
-            Index of period start
         """
-        # Floyd's cycle detection algorithm
+        Определить индекс, с которого начинается период последовательности.
+
+        :param generator: объект генератора
+        :return: индекс начала периода
+        """
+        logger.info(
+            "Вычисление индекса начала периода для полиномиального конгруэнтного генератора: %s",
+            generator,
+        )
+
+        # Алгоритм обнаружения цикла Флойда (поиск точки встречи)
         turtle = generator.next(generator.x)
         hare = generator.next(generator.next(generator.x))
 
-        # Find meeting point
         while turtle != hare:
             turtle = generator.next(turtle)
             hare = generator.next(generator.next(hare))
 
-        # Find start of cycle
+        # Поиск начала цикла
         turtle = generator.x
         start = 0
         while turtle != hare:
@@ -179,6 +219,7 @@ class PolynomialCongruentGeneratorService(DomainService):
             hare = generator.next(hare)
             start += 1
 
+        logger.info("Индекс начала периода: %s", start)
         return start
 
 

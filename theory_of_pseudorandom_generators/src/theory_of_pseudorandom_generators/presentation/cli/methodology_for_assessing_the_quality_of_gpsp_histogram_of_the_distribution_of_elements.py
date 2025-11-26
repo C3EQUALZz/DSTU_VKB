@@ -1,8 +1,9 @@
 """CLI commands for NIST tests."""
 
+from pathlib import Path
+
 import click
 from dishka import FromDishka
-from pathlib import Path
 
 from theory_of_pseudorandom_generators.application.commands.methodology_for_assessing_the_quality_of_gpsp_evaluation_tests_checking_unlinked_series import (
     MethodologyForAssessingTheQualityOfGpspEvaluationTestsCheckingUnlinkedSeriesCommand,
@@ -13,7 +14,6 @@ from theory_of_pseudorandom_generators.application.commands.methodology_for_asse
 @click.group(name="methodology_for_assessing_the_quality_of_gpsp_evaluation_tests_checking_unlinked_series")
 def nist_tests_group() -> None:
     """NIST tests commands."""
-    ...
 
 
 @nist_tests_group.command(name="run")

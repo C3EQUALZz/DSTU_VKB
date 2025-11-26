@@ -6,24 +6,24 @@ from typing import Any
 from click import Group
 
 from theory_of_pseudorandom_generators.presentation.cli.fibonacci_pseudorandom_number_generator_on_shift_registers_with_linear_feedback import (
-    fibonacci_generator_group
+    fibonacci_generator_group,
 )
 from theory_of_pseudorandom_generators.presentation.cli.geffey_pseudorandom_number_generator_on_shift_registers_with_linear_feedback import (
-    geffe_generator_group
+    geffe_generator_group,
 )
 from theory_of_pseudorandom_generators.presentation.cli.linear_congruent_pseudorandom_number_generator import (
-    linear_congruent_pseudorandom_number_generator_group
+    linear_congruent_pseudorandom_number_generator_group,
 )
 from theory_of_pseudorandom_generators.presentation.cli.methodology_for_assessing_the_quality_of_gpsp_evaluation_tests_checking_unlinked_series import (
-    plane_distribution_group
+    plane_distribution_group,
 )
 from theory_of_pseudorandom_generators.presentation.cli.methodology_for_assessing_the_quality_of_gpsp_histogram_of_the_distribution_of_elements import (
-    nist_tests_group
+    nist_tests_group,
 )
 from theory_of_pseudorandom_generators.presentation.cli.polynomial_congruent_pseudorandom_number_generator import (
-    polynomial_congruent_pseudorandom_number_generator_group
+    polynomial_congruent_pseudorandom_number_generator_group,
 )
-from theory_of_pseudorandom_generators.setup.config_logger import configure_logging, LoggingConfig
+from theory_of_pseudorandom_generators.setup.config_logger import LoggingConfig, configure_logging
 
 
 def setup_cli_routes(main_group: Group) -> None:
