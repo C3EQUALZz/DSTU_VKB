@@ -51,11 +51,6 @@ def nist_tests_group() -> None:
     type=float,
     help="Significance level (default: 0.01)",
 )
-@click.option(
-    "--desktop",
-    is_flag=True,
-    help="Use Desktop directory for default file paths",
-)
 def cmd_run_handler(
     linear_congruent_file: Path | None,
     square_congruent_file: Path | None,
@@ -63,23 +58,12 @@ def cmd_run_handler(
     geffe_file: Path | None,
     block_size: int,
     alpha: float,
-    desktop: bool,
     interactor: FromDishka[
         MethodologyForAssessingTheQualityOfGpspEvaluationTestsCheckingUnlinkedSeriesCommandHandler
     ],
 ) -> None:
     """Run NIST tests on PRNG sequences."""
     # If desktop flag is set, use default Desktop paths
-    if desktop:
-        desktop_path = Path.home() / "Desktop"
-        if linear_congruent_file is None:
-            linear_congruent_file = desktop_path / "LinearCongruent.txt"
-        if square_congruent_file is None:
-            square_congruent_file = desktop_path / "SquareCongruent.txt"
-        if fibonacci_file is None:
-            fibonacci_file = desktop_path / "Fibonacci.txt"
-        if geffe_file is None:
-            geffe_file = desktop_path / "Geffen.txt"
 
     command = MethodologyForAssessingTheQualityOfGpspEvaluationTestsCheckingUnlinkedSeriesCommand(
         linear_congruent_file=linear_congruent_file,

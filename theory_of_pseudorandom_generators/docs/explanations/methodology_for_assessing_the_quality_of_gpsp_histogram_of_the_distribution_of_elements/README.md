@@ -4,6 +4,9 @@
 > Перейдите в директорию с файлом `cli.py` в терминале. 
 > `cd src/theory_of_pseudorandom_generators`
 
+> [!IMPORTANT]
+> При запуске поменяйте на ваши абсолютные пути для файлов, которые используются для анализа. 
+
 Запустите другие работы, мануал которых описан в директориях (с данных работ нужен будет материал): 
 
 - polynomial_congruent_pseudorandom_number_generator
@@ -16,3 +19,10 @@
 ```bash
 python cli.py methodology_for_assessing_the_quality_of_gpsp_histogram_of_the_distribution_of_elements generate --linear-congruent-file "D:\PycharmProjects\DSTU_VKB\theory_of_pseudorandom_generators\linear_congruent.txt" --square-congruent-file "D:\PycharmProjects\DSTU_VKB\theory_of_pseudorandom_generators\polynomial_congruent.txt" --fibonacci-file "D:\PycharmProjects\DSTU_VKB\theory_of_pseudorandom_generators\Fibonacci.txt" --geffe-file "D:\PycharmProjects\DSTU_VKB\theory_of_pseudorandom_generators\Geffey.txt"
 ```
+
+```bash
+python cli.py methodology_for_assessing_the_quality_of_gpsp_histogram_of_the_distribution_of_elements generate --linear-congruent-file "D:\Progrramming\PycharmProjects\DSTU_VKB\theory_of_pseudorandom_generators\linear_congruent.txt" --square-congruent-file "D:\Progrramming\PycharmProjects\DSTU_VKB\theory_of_pseudorandom_generators\polynomial_congruent.txt" --fibonacci-file "D:\Progrramming\PycharmProjects\DSTU_VKB\theory_of_pseudorandom_generators\Fibonacci.txt" --geffe-file "D:\Progrramming\PycharmProjects\DSTU_VKB\theory_of_pseudorandom_generators\Geffey.txt"
+```
+
+> [!NOTE]
+> После запуска у вас появится директория `histograms`, в которой хранятся изображения

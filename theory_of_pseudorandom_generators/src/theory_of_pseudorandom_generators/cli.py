@@ -24,3 +24,4 @@ def main(context: click.Context) -> None:
 if __name__ == "__main__":
     setup_cli_routes(main)
     main()
+

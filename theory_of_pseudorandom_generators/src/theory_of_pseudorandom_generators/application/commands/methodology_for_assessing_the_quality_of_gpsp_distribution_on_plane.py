@@ -20,7 +20,6 @@ class MethodologyForAssessingTheQualityOfGpspDistributionOnPlaneCommand:
     square_congruent_file: Path | None = None
     fibonacci_file: Path | None = None
     geffe_file: Path | None = None
-    output_path: Path | None = None
     show: bool = True
 
 
@@ -112,14 +111,17 @@ class MethodologyForAssessingTheQualityOfGpspDistributionOnPlaneCommandHandler:
                 logger.info("  Уникальных пар: %s", stats.get("unique_pairs", 0))
 
         # Create distribution plots
+
+        dir_to_save: Path = Path(__file__).parent.parent.parent.parent.parent / "planes"
+
         try:
             self._plane_distribution_service.create_multiple_distributions(
                 sequences=sequences,
-                output_path=command.output_path,
+                output_path=dir_to_save,
                 show=command.show,
             )
-            if command.output_path:
-                logger.info("Распределение сохранено: %s", command.output_path)
+            if dir_to_save:
+                logger.info("Распределение сохранено: %s", dir_to_save)
         except Exception as e:
             logger.error("Ошибка при построении распределения: %s", e)
 

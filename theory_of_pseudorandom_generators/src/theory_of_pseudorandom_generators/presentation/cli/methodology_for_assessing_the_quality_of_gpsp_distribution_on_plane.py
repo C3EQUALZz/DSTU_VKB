@@ -38,53 +38,27 @@ def plane_distribution_group() -> None:
     help="Path to Geffe generator sequence file",
 )
 @click.option(
-    "--output-path",
-    type=click.Path(path_type=Path),
-    help="Path to save the distribution plot",
-)
-@click.option(
     "--show/--no-show",
     default=True,
     help="Whether to display the plot",
 )
-@click.option(
-    "--desktop",
-    is_flag=True,
-    help="Use Desktop directory for default file paths",
-)
 def cmd_generate_handler(
-    linear_congruent_file: Path | None,
-    square_congruent_file: Path | None,
-    fibonacci_file: Path | None,
-    geffe_file: Path | None,
-    output_path: Path | None,
+    linear_congruent_file: Path,
+    square_congruent_file: Path,
+    fibonacci_file: Path,
+    geffe_file: Path,
     show: bool,
-    desktop: bool,
     interactor: FromDishka[
         MethodologyForAssessingTheQualityOfGpspDistributionOnPlaneCommandHandler
     ],
 ) -> None:
     """Generate plane distributions for PRNG sequences."""
-    # If desktop flag is set, use default Desktop paths
-    if desktop:
-        desktop_path = Path.home() / "Desktop"
-        if linear_congruent_file is None:
-            linear_congruent_file = desktop_path / "LinearCongruent.txt"
-        if square_congruent_file is None:
-            square_congruent_file = desktop_path / "SquareCongruent.txt"
-        if fibonacci_file is None:
-            fibonacci_file = desktop_path / "Fibonacci.txt"
-        if geffe_file is None:
-            geffe_file = desktop_path / "Geffen.txt"
-        if output_path is None:
-            output_path = desktop_path / "plane_distribution.png"
 
     command = MethodologyForAssessingTheQualityOfGpspDistributionOnPlaneCommand(
         linear_congruent_file=linear_congruent_file,
         square_congruent_file=square_congruent_file,
         fibonacci_file=fibonacci_file,
         geffe_file=geffe_file,
-        output_path=output_path,
         show=show,
     )
 
