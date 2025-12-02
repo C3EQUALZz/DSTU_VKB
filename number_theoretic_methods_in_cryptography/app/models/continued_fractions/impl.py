@@ -14,8 +14,8 @@ class ContinuedFractionModel(IContinuedFractionModel):
         Решает сравнение ax ≡ b (mod m) с помощью непрерывных дробей
         в соответствии с подходом, показанным на фото
         """
-        self._registry.add_log(f"Решаем сравнение: {a}x ≡ {b} (mod {m})")
-        self._registry.add_log(f"Преобразуем: x ≡ {b}/{a} (mod {m})")
+        self._registry.add_log(f"Решаем сравнение: {a}x = {b} (mod {m})")
+        self._registry.add_log(f"Преобразуем: x = {b}/{a} (mod {m})")
 
         # Шаг 1: Построение цепной дроби для m/a
         continued_fraction: list[int] = self.__get_continued_fraction(m, a)

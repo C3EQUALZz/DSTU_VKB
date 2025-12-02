@@ -109,3 +109,4 @@ class MethodologyForAssessingTheQualityOfGpspEvaluationTestsCheckingUnlinkedSeri
                 logger.error("Ошибка при обработке генератора %s: %s", generator_name, e)
 
 
+

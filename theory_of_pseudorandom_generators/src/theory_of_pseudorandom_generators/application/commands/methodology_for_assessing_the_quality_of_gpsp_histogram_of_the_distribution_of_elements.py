@@ -123,3 +123,4 @@ class MethodologyForAssessingTheQualityOfGpspHistogramOfTheDistributionOfElement
                 logger.error("Ошибка при построении гистограммы для %s: %s", title, e)
 
 
+

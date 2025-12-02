@@ -11,20 +11,11 @@ class ContinuedFractionView(ctk.CTkFrame, IContinuedFractionView):
         super().__init__(master)
 
         self._presenter: IContinuedFractionPresenter | None = None
-        # Входные данные
-        self.entry_a: ctk.CTkEntry = ctk.CTkEntry(self, width=100)
-        self.entry_b: ctk.CTkEntry = ctk.CTkEntry(self, width=100)
-        self.entry_m: ctk.CTkEntry = ctk.CTkEntry(self, width=100)
-
-        # Результат
-        self.solution_text: ctk.CTkTextbox = ctk.CTkTextbox(self, height=40, wrap="word")
-        self.solution_text.configure(state="disabled")
-
-        # Логи
-        self.logs_text: ctk.CTkTextbox = ctk.CTkTextbox(self, wrap="word")
-
-        # Размещение элементов
-        self.__create_layout()
+        
+        # Создание элементов интерфейса
+        self.__create_input_fields()
+        self.__create_solution_field()
+        self.__create_log_box()
 
     @override
     def show(self) -> None:
@@ -39,8 +30,13 @@ class ContinuedFractionView(ctk.CTkFrame, IContinuedFractionView):
     @override
     def attach_presenter(self, presenter: IContinuedFractionPresenter) -> None:
         self._presenter: IContinuedFractionPresenter = presenter
-        button = ctk.CTkButton(self, text="Решить", command=self._presenter.calculate)
-        button.grid(row=2, column=0, columnspan=4, pady=10, sticky="ew")
+        
+        button: ctk.CTkButton = ctk.CTkButton(
+            self,
+            text="Решить",
+            command=self._presenter.calculate
+        )
+        button.pack(pady=10)
 
     @override
     def get_a(self) -> str:
@@ -79,28 +75,41 @@ class ContinuedFractionView(ctk.CTkFrame, IContinuedFractionView):
         self.logs_text.delete("0.0", "end")
         self.logs_text.configure(state="disabled")
 
-    def __create_layout(self) -> None:
-        # Настройка сетки
-        self.grid_columnconfigure((0, 1, 2, 3), weight=1)
-        self.grid_rowconfigure(0, weight=0)
-        self.grid_rowconfigure(1, weight=0)
-        self.grid_rowconfigure(2, weight=0)
-        self.grid_rowconfigure(3, weight=0)
-        self.grid_rowconfigure(4, weight=1)
+    def __create_input_fields(self) -> None:
+        """Создает поля ввода сверху вниз: a, b, m"""
+        input_frame: ctk.CTkFrame = ctk.CTkFrame(self)
+        input_frame.pack(pady=20, padx=20, fill="x")
 
-        # Входные поля
-        ctk.CTkLabel(self, text="a").grid(row=0, column=0, padx=5, pady=5, sticky="e")
-        self.entry_a.grid(row=0, column=1, padx=5, pady=5, sticky="w")
+        # Поле a
+        ctk.CTkLabel(input_frame, text="a").pack(pady=5)
+        self.entry_a: ctk.CTkEntry = ctk.CTkEntry(input_frame, width=150)
+        self.entry_a.pack(pady=5)
 
-        ctk.CTkLabel(self, text="b").grid(row=0, column=2, padx=5, pady=5, sticky="e")
-        self.entry_b.grid(row=0, column=3, padx=5, pady=5, sticky="w")
+        # Поле b
+        ctk.CTkLabel(input_frame, text="b").pack(pady=5)
+        self.entry_b: ctk.CTkEntry = ctk.CTkEntry(input_frame, width=150)
+        self.entry_b.pack(pady=5)
 
-        ctk.CTkLabel(self, text="m").grid(row=1, column=0, padx=5, pady=5, sticky="e")
-        self.entry_m.grid(row=1, column=1, padx=5, pady=5, sticky="w")
+        # Поле m
+        ctk.CTkLabel(input_frame, text="m").pack(pady=5)
+        self.entry_m: ctk.CTkEntry = ctk.CTkEntry(input_frame, width=150)
+        self.entry_m.pack(pady=5)
 
-        # Результат
-        ctk.CTkLabel(self, text="Решение:").grid(row=3, column=0, padx=5, pady=5, sticky="w")
-        self.solution_text.grid(row=3, column=1, columnspan=3, sticky="nsew", padx=5, pady=5)
+    def __create_solution_field(self) -> None:
+        """Создает поле для вывода решения (меньшего размера)"""
+        solution_frame: ctk.CTkFrame = ctk.CTkFrame(self)
+        solution_frame.pack(pady=10, padx=20, fill="x")
 
-        # Логи
-        self.logs_text.grid(row=5, column=0, columnspan=4, sticky="nsew", padx=5, pady=5)
+        ctk.CTkLabel(solution_frame, text="Решение:").pack(pady=5)
+        self.solution_text: ctk.CTkTextbox = ctk.CTkTextbox(solution_frame, height=30, wrap="word")
+        self.solution_text.pack(pady=5, fill="x")
+        self.solution_text.configure(state="disabled")
+
+    def __create_log_box(self) -> None:
+        """Создает область для вывода логов"""
+        log_frame: ctk.CTkFrame = ctk.CTkFrame(self)
+        log_frame.pack(padx=20, pady=10, fill="both", expand=True)
+
+        self.logs_text: ctk.CTkTextbox = ctk.CTkTextbox(log_frame, wrap="word")
+        self.logs_text.pack(fill="both", expand=True)
+        self.logs_text.configure(state="disabled")

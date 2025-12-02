@@ -124,3 +124,4 @@ class MethodologyForAssessingTheQualityOfGpspDistributionOnPlaneCommandHandler:
             logger.error("Ошибка при построении распределения: %s", e)
 
 
+
