@@ -20,6 +20,7 @@ from cryptography_methods.presentation.cli.handlers.affine_system_of_ceaser_subs
 from cryptography_methods.presentation.cli.handlers.ceaser_classic import ceaser_classic_group
 from cryptography_methods.presentation.cli.handlers.ceaser_keyword import ceaser_keyword_group
 from cryptography_methods.presentation.cli.handlers.double_square_whitestone import double_square_whitestone_group
+from cryptography_methods.presentation.cli.handlers.linear_feedback_shift_register import linear_feedback_group
 from cryptography_methods.presentation.cli.handlers.magic_table import magic_table_group
 from cryptography_methods.presentation.cli.handlers.playfair import playfair_group
 from cryptography_methods.presentation.cli.handlers.simple_data_permutation import simple_data_permutation_group
@@ -27,7 +28,7 @@ from cryptography_methods.presentation.cli.handlers.single_key_permutation impor
 from cryptography_methods.presentation.cli.handlers.trithemius import trithemius_group
 from cryptography_methods.presentation.cli.handlers.vigenere import vigenere_group
 from cryptography_methods.setup.logging import configure_logging
-from cryptography_methods.setup.settings import Configs, LoggingConfig, TelegramConfig
+from cryptography_methods.setup.settings import Configs, LoggingConfig
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 
@@ -80,6 +81,7 @@ def setup_cli_routes(main_group: Group) -> None:
     main_group.add_command(vigenere_group)  # type: ignore
     main_group.add_command(magic_table_group)  # type: ignore
     main_group.add_command(double_square_whitestone_group)  # type: ignore
+    main_group.add_command(linear_feedback_group) # type: ignore
 
 
 def setup_logging(logger_config: LoggingConfig) -> None:

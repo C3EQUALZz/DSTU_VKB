@@ -28,8 +28,10 @@ class LinearFeedbackShiftRegister(BaseEntity[RegisterID]):
         if len(self.feedback_positions) == 0:
             raise ValueError("Должна быть указана хотя бы одна позиция обратной связи")
 
-        if max(self.feedback_positions) >= len(self.state):
-            raise ValueError(f"Позиции должны быть меньше длины регистра ({len(self.state)})")
+        if self.feedback_positions and max(self.feedback_positions) >= len(self.state):
+            raise ValueError(
+                f"Максимальная позиция обратной связи ({max(self.feedback_positions)}) должна быть меньше длины регистра ({len(self.state)})"
+            )
 
     def shift(self) -> int:
         """

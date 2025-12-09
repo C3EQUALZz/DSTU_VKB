@@ -1,8 +1,11 @@
+import logging
 from collections import deque
 from dataclasses import dataclass
-from typing import Iterator
+from typing import Iterator, Final
 
 from cryptography_methods.domain.common.values import BaseValueObject
+
+logger: Final[logging.Logger] = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True, unsafe_hash=True)
@@ -36,3 +39,6 @@ class RegisterState(BaseValueObject):
 
     def __str__(self) -> str:
         return ''.join(map(str, self.value))
+
+    def __getitem__(self, item: int) -> int:
+        return self.value[item]

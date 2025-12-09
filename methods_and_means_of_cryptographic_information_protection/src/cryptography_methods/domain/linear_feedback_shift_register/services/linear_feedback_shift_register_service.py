@@ -2,7 +2,7 @@ import logging
 from dataclasses import dataclass
 from typing import Final
 from collections import deque
-from copy import copy
+from copy import deepcopy
 from cryptography_methods.domain.common.services.base import DomainService
 from cryptography_methods.domain.linear_feedback_shift_register.entities.linear_feedback_shift_register import (
     LinearFeedbackShiftRegister
@@ -36,14 +36,12 @@ class LinearFeedbackShiftRegisterService(DomainService):
 
         Returns: LinearFeedbackShiftRegisterSequencePeriodDTO, где есть период и выходная_последовательность
         """
-        # Сохраняем начальное состояние
-        initial_state: RegisterState = copy(register.state)
+        # Сохраняем начальное состояние (глубокая копия deque)
+        initial_state: RegisterState = RegisterState(deepcopy(register.state.value))
         output_sequence: deque[str] = deque()
         iteration: int = 0
 
         max_iterations: int = 2 ** len(register.state) * 2  # Защита от бесконечного цикла
-
-        logger.info(f"{'Итерация':<10}{'Новый бит':<10}{'Состояние':<20}{'Выходной бит'}")
 
         while iteration < max_iterations:
             iteration += 1
@@ -59,6 +57,9 @@ class LinearFeedbackShiftRegisterService(DomainService):
             )
 
             # Проверяем возврат в исходное состояние
+            logger.debug(
+                f"Comparing: current={list(register.state.value)} vs initial={list(initial_state.value)}"
+            )
             if register.state == initial_state:
                 return LinearFeedbackShiftRegisterSequencePeriodDTO(
                     period=iteration,
