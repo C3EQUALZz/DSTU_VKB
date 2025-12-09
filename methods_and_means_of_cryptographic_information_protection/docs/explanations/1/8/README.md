@@ -6,5 +6,5 @@
 Для запуска 11 вариант можно воспользоваться командой:
 
 ```bash
-python cli.py linear-feedback-shift mutate -s "0001010" -p "1100011"
+python cli.py linear-feedback-shift mutate -s "010100" -p "100011"
 ```

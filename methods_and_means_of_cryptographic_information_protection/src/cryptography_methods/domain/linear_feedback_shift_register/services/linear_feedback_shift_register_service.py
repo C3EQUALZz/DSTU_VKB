@@ -39,20 +39,32 @@ class LinearFeedbackShiftRegisterService(DomainService):
         # Сохраняем начальное состояние (глубокая копия deque)
         initial_state: RegisterState = RegisterState(deepcopy(register.state.value))
         output_sequence: deque[str] = deque()
-        iteration: int = 0
+        iteration: int = 1
 
         max_iterations: int = 2 ** len(register.state) * 2  # Защита от бесконечного цикла
+
+        old_register = deepcopy(register)
+
+        out_bit: int = register.shift()
+
+        logger.info(
+            f"Iteration: {iteration:<10}"
+            f"State: {register.state[0]:<10}"
+            f"Register: {str(old_register):<20}"
+            f"Out bit: {out_bit}"
+        )
 
         while iteration < max_iterations:
             iteration += 1
 
+            old_register = deepcopy(register)
             out_bit: int = register.shift()
             output_sequence.append(str(out_bit))
 
             logger.info(
                 f"Iteration: {iteration:<10}"
                 f"State: {register.state[0]:<10}"
-                f"Register: {str(register):<20}"
+                f"Register: {str(old_register):<20}"
                 f"Out bit: {out_bit}"
             )
 
@@ -61,6 +73,12 @@ class LinearFeedbackShiftRegisterService(DomainService):
                 f"Comparing: current={list(register.state.value)} vs initial={list(initial_state.value)}"
             )
             if register.state == initial_state:
+                logger.info(
+                    f"Iteration: {iteration+1:<10}"
+                    f"State: {register.state[0]:<10}"
+                    f"Register: {str(register):<20}"
+                    f"Out bit: {out_bit}"
+                )
                 return LinearFeedbackShiftRegisterSequencePeriodDTO(
                     period=iteration,
                     output_sequence="".join(output_sequence)
