@@ -1,275 +1,173 @@
-from typing import List, Final, Iterable, override
+import math
+from typing import List, Tuple, Final, Iterable
 
 from app.core.registry import LogRegistry
-from app.models.continued_fractions.base import IContinuedFractionModel
+from app.exceptions.models.congruence import NoSolutionSinceGCDDoesNotShareFreeTermError
 
 
-class ContinuedFractionModel(IContinuedFractionModel):
+class ContinuedFractionModel:
+    """
+    Модель для решения сравнения первой степени ax ≡ b (mod m)
+    с использованием непрерывных дробей и подходящих дробей.
+    Алгоритм повторяет логику из лабораторной работы:
+      1. Проверяем существование решения по НОД.
+      2. Упрощаем сравнение, деля на НОД.
+      3. Строим цепную дробь для a/m.
+      4. Считаем подходящие дроби (P_k, Q_k).
+      5. По формуле получаем решение x.
+    """
+
     def __init__(self):
         self._registry: Final[LogRegistry] = LogRegistry()
 
-    @override
     def solve_linear_congruence(self, a: int, b: int, m: int) -> int:
         """
-        Решает сравнение ax ≡ b (mod m) с помощью непрерывных дробей.
-        
-        Алгоритм основан на методе решения сравнения первой степени через:
-        1. Преобразование в уравнение ax + my = b
-        2. Вычисление НОД(a, m) бинарным алгоритмом
-        3. Разложение дроби m/a в непрерывную дробь
-        4. Вычисление подходящих дробей
-        5. Нахождение частного решения по формуле
+        Решает сравнение ax ≡ b (mod m) через непрерывные дроби.
+        Возвращает одно корректное решение x по модулю m.
         """
-        self._registry.add_log(f"Решаем сравнение: {a}x ≡ {b} (mod {m})")
-        
-        # Шаг 1: Преобразование сравнения
-        self._registry.add_log(f"Шаг 1: Преобразование сравнения")
-        self._registry.add_log(f"{a}x = {b} (mod {m}) равносильно {a}x + {m}y = {b}")
-        
-        a_coefficient: int = a
-        b_coefficient: int = m
-        c_value: int = b
-        
-        # Шаг 2: Вычисление НОД(a, m)
-        self._registry.add_log(f"Шаг 2: Вычисление НОД(a, m)")
-        d_value = self.__binary_gcd(a_coefficient, b_coefficient)
-        self._registry.add_log(f"НОД({a_coefficient}, {b_coefficient}) = {d_value}")
-        
-        # Проверка существования решения
-        if c_value % d_value != 0:
-            self._registry.add_log(f"Ошибка: {c_value} не делится на {d_value}")
-            self._registry.add_log(f"Уравнение {a_coefficient}x + {b_coefficient}y = {c_value} не имеет решений")
-            raise ValueError(f"Сравнение {a}x = {b} (mod {m}) не имеет решений")
-        
-        self._registry.add_log(f"{c_value} делится на {d_value}, уравнение имеет решения")
-        
-        # Шаг 3: Разложение дроби в непрерывную дробь
-        self._registry.add_log(f"Шаг 3: Разложение дроби в непрерывную дробь")
-        coefficients = self.__get_continued_fraction_for_rational(a_coefficient, b_coefficient)
-        
-        # Шаг 4: Вычисление подходящих дробей
-        self._registry.add_log(f"Шаг 4: Вычисление подходящих дробей")
-        
-        if len(coefficients) == 1:
-            drob_str = f"[{coefficients[0]}]"
+        self._registry.clear_logs()
+        self._registry.add_log(f"Решаем сравнение: {a}x = {b} (mod {m})")
+
+        # 1. Проверка существования решения
+        gcd_value = math.gcd(a, m)
+        self._registry.add_log(f"НОД({a}, {m}) = {gcd_value}")
+        if b % gcd_value != 0:
+            raise NoSolutionSinceGCDDoesNotShareFreeTermError(
+                "Решение не существует, так как НОД не делит свободный член."
+            )
+
+        # 2. Упрощаем сравнение
+        a_simplified = a // gcd_value
+        b_simplified = b // gcd_value
+        m_simplified = m // gcd_value
+        self._registry.add_log(
+            f"Упрощенное сравнение: {a_simplified}x = {b_simplified} (mod {m_simplified})"
+        )
+
+        # 3. Построение цепной дроби для a_simplified / m_simplified
+        self._registry.add_log("Разлагаем дробь a/m в непрерывную:")
+        coefficients = self.get_continued_fraction(a_simplified, m_simplified)
+        self._registry.add_log(f"Коэффициенты цепной дроби: {coefficients}")
+
+        x_solution: int
+
+        if len(coefficients) < 2:
+            # Для формулы решения нужен хотя бы один подходящий элемент
+            self._registry.add_log(
+                "Цепная дробь имеет длину 1, используем обратный элемент по модулю."
+            )
+            x_solution = (b_simplified * pow(a_simplified, -1, m_simplified)) % m_simplified
         else:
-            main_part = str(coefficients[0])
-            rest_parts = []
-            for i in range(1, len(coefficients)):
-                rest_parts.append(f"1/{coefficients[i]}")
-            drob_str = f"[{main_part}; {', '.join(rest_parts)}]"
-        
-        self._registry.add_log(f"Непрерывная дробь: {drob_str}")
-        
-        table_data = self.__compute_convergent_fractions(coefficients)
-        
-        # Шаг 5: Нахождение общего решения
-        self._registry.add_log(f"Шаг 5: Нахождение общего решения")
-        
-        # Находим максимальный k
-        k = 0
-        for row in table_data[1:]:
-            try:
-                row_k = int(row[0])
-                if row_k > k:
-                    k = row_k
-            except (ValueError, IndexError):
-                continue
-        
-        # Берем предпоследнюю строку (P_{k-1} и Q_{k-1})
-        if len(table_data) >= 3:
-            prev_row = table_data[-2]
-            if len(prev_row) >= 5:
-                try:
-                    P_k_minus_1 = int(prev_row[3])
-                    Q_k_minus_1 = int(prev_row[4])
-                except (ValueError, IndexError):
-                    raise ValueError("Ошибка при чтении значений из таблицы")
-            else:
-                raise ValueError("Недостаточно данных в таблице")
-        else:
-            raise ValueError("Таблица вычислений некорректна")
-        
-        self._registry.add_log(f"k = {k}, P_{k - 1} = {P_k_minus_1}, Q_{k - 1} = {Q_k_minus_1}")
-        
-        sign = (-1) ** (k - 1)
-        multiplier = c_value // d_value
-        
-        self._registry.add_log(f"Формулы общего решения:")
-        self._registry.add_log(f"x = (-1)^{k - 1} × (c/d) × Q_{k - 1} + m × t")
-        self._registry.add_log(f"y = (-1)^{k - 1} × (c/d) × P_{k - 1} + a × t")
-        self._registry.add_log(f"x = {sign} × {multiplier} × {Q_k_minus_1} + {b_coefficient} × t")
-        self._registry.add_log(f"y = {sign} × {multiplier} × {P_k_minus_1} + {a_coefficient} × t")
-        
-        # Вычисляем частное решение (для t = 0)
-        x_solution = sign * multiplier * Q_k_minus_1
-        
-        # Нормализация решения по модулю m
-        x_solution = x_solution % m
+            # 4. Считаем подходящие дроби (convergents)
+            p_table, q_table = self.compute_pq_tables(coefficients)
+
+            # k = последняя строка таблицы (индексация с нуля)
+            k = len(coefficients) - 1
+            q_prev = q_table[k - 1]  # Q_{k-1}
+            self._registry.add_log(f"k = {k}, Q_(k-1) = {q_prev}")
+
+            # 5. Формула решения: x = (-1)^(k-1) * (b/d) * Q_{k-1} (mod m/d)
+            sign = -1 if (k - 1) % 2 else 1
+            x_raw = sign * b_simplified * q_prev
+            x_solution = x_raw % m_simplified
+            self._registry.add_log(
+                f"x = (-1)^({k-1}) * {b_simplified} * {q_prev} (mod {m_simplified}) = {x_solution}"
+            )
+
+        # Возвращаем решение к исходному модулю
+        x_solution %= m_simplified
         if x_solution < 0:
-            x_solution += m
-        
-        self._registry.add_log(f"Частное решение (t = 0): x = {x_solution} (mod {m})")
-        
+            x_solution += m_simplified
+        self._registry.add_log(f"Частное решение: x = {x_solution} (mod {m_simplified})")
+
+        # Если gcd > 1, формируем все решения как в теореме: x0 + k * m1, k=0..d-1
+        if gcd_value > 1:
+            m1 = m_simplified
+            all_solutions = sorted({(x_solution + k * m1) % m for k in range(gcd_value)})
+            self._registry.add_log(
+                f"НОД = {gcd_value} -> всего решений: {gcd_value}. m1 = m/d = {m1}"
+            )
+            for idx, sol in enumerate(all_solutions):
+                self._registry.add_log(f"x_{idx} = {sol} (mod {m})")
+        else:
+            self._registry.add_log("НОД = 1 -> единственное решение.")
+            self._registry.add_log(f"x = {x_solution} (mod {m})")
+
+        # Проверка
+        numerator = a * x_solution - b
+        self._registry.add_log(f"Проверка: (a·x - b) / m = {numerator} / {m}")
+        if numerator % m == 0:
+            self._registry.add_log("✓ Проверка пройдена: делится нацело")
+        else:
+            self._registry.add_log(
+                f"✗ Проверка не пройдена: остаток {numerator % m}"
+            )
+
         return x_solution
 
-    def __binary_gcd(self, a: int, b: int) -> int:
+    def get_continued_fraction(self, numerator: int, denominator: int) -> List[int]:
         """
-        Вычисляет НОД(a, b) бинарным алгоритмом Евклида.
-        
-        Алгоритм:
-        1. Если одно из чисел равно 0, возвращаем другое
-        2. Если числа равны, возвращаем это число
-        3. Убираем общие множители 2, запоминая степень
-        4. Пока числа не равны:
-           - Если оба четные: делим на 2, увеличиваем степень
-           - Если одно четное: делим его на 2
-           - Если оба нечетные: вычитаем меньшее из большего
-        5. Возвращаем результат, умноженный на 2^степень
+        Вычисляет цепную дробь для числа numerator/denominator.
+        Возвращает список коэффициентов [a0, a1, ...].
         """
-        if a == 0:
-            return abs(b)
-        if b == 0:
-            return abs(a)
-        if a == b:
-            return abs(a)
-        
-        a = abs(a)
-        b = abs(b)
-        
-        stepen = 0
-        
-        while a != b:
-            if (a % 2 == 0) and (b % 2 == 0):
-                a //= 2
-                b //= 2
-                stepen += 1
-                continue
-            if (a % 2 == 0) and (b % 2 == 1):
-                a //= 2
-                continue
-            if (a % 2 == 1) and (b % 2 == 0):
-                b //= 2
-                continue
-            if (a % 2 == 1) and (b % 2 == 1):
-                if a > b:
-                    a = a - b
-                else:
-                    b = b - a
-                continue
-        
-        return a * (2 ** stepen)
-
-    def __get_continued_fraction_for_rational(self, chislitel: int, znamenatel: int) -> List[int]:
-        """
-        Разлагает рациональную дробь chislitel/znamenatel в непрерывную дробь.
-        
-        Логика соответствует zadanie_1_ra из lab_7_tchmk.py:
-        - Если дробь отрицательная, выделяем целую часть
-        - Если правильная дробь (|chislitel| < |znamenatel|), добавляем 0
-        - Применяем алгоритм Евклида для получения коэффициентов
-        
-        Возвращает список коэффициентов [a0, a1, a2, ...]
-        """
-        coefficients: list[int] = []
-        
-        # Обрабатываем случай отрицательных чисел
-        if chislitel < 0:
-            celaya_chast = chislitel // znamenatel
-            ostatok = chislitel % znamenatel
-            a = abs(znamenatel)
-            b = abs(ostatok)
-            if celaya_chast != 0:
-                coefficients.append(celaya_chast)
-        else:
-            if abs(chislitel) < abs(znamenatel):
-                # Правильная дробь - добавляем 0 в начало
-                a = abs(znamenatel)
-                b = abs(chislitel)
-                coefficients.append(0)
-            else:
-                # Неправильная дробь
-                a = max(abs(chislitel), abs(znamenatel))
-                b = min(abs(chislitel), abs(znamenatel))
-        
-        # Алгоритм Евклида для получения коэффициентов
-        step = 1
-        while b != 0:
-            quotient = a // b
-            remainder = a % b
+        coefficients: List[int] = []
+        self._registry.add_log(f"{'Числитель':<12} | {'Знаменатель':<12} | {'Частное'}")
+        while denominator != 0:
+            quotient = numerator // denominator
+            remainder = numerator % denominator
+            self._registry.add_log(f"{numerator:<12} | {denominator:<12} | {quotient}")
             coefficients.append(quotient)
-            
-            self._registry.add_log(f"Шаг {step}: {a} = {b} × {quotient} + {remainder}")
-            
-            a, b = b, remainder
-            step += 1
-        
+            numerator, denominator = denominator, remainder
         return coefficients
 
-    def __compute_convergent_fractions(self, coefficients: List[int]) -> List[List[str]]:
-        """
-        Вычисляет подходящие дроби для непрерывной дроби.
-        
-        Возвращает таблицу вида:
-        [["k", "b_k", "a_k", "P_k", "Q_k"], ...]
-        
-        Формулы:
-        P_{-1} = 1, Q_{-1} = 0
-        P_0 = a_0, Q_0 = 1
-        P_k = a_k * P_{k-1} + b_k * P_{k-2}
-        Q_k = a_k * Q_{k-1} + b_k * Q_{k-2}
-        
-        Для обычной непрерывной дроби b_k = 1 для всех k.
-        """
-        table_data: list[list[str]] = [["k", "b_k", "a_k", "P_k", "Q_k"], ["-1", "", "", "1", "0"]]
-
+    def compute_fraction_from_continued_fraction(self, coefficients: List[int]) -> Tuple[int, int]:
+        """Восстанавливает дробь из цепной дроби"""
         if not coefficients:
-            return table_data
-        
-        # Инициализация
-        P_prev2 = 1
-        Q_prev2 = 0
-        
-        P_prev1 = coefficients[0]
-        Q_prev1 = 1
-        
-        table_data.append(["0", "1", str(coefficients[0]), str(P_prev1), str(Q_prev1)])
-        
-        self._registry.add_log(f"Инициализация:")
-        self._registry.add_log(f"P₋₁ = 1, Q₋₁ = 0")
-        self._registry.add_log(f"P₀ = a₀ = {coefficients[0]}, Q₀ = 1")
-        
-        if len(coefficients) == 1:
-            return table_data
-        
-        # Вычисление подходящих дробей
-        for k in range(1, len(coefficients)):
-            b_k = 1  # Для обычной непрерывной дроби b_k всегда 1
-            a_k = coefficients[k]
-            
-            P_k = a_k * P_prev1 + b_k * P_prev2
-            Q_k = a_k * Q_prev1 + b_k * Q_prev2
-            
-            table_data.append([str(k), str(b_k), str(a_k), str(P_k), str(Q_k)])
-            
-            self._registry.add_log(f"Шаг {k} (b_{k} = {b_k}, a_{k} = {a_k}):")
-            self._registry.add_log(f"P_{k} = a_{k} × P_{k - 1} + b_{k} × P_{k - 2} = {a_k} × {P_prev1} + {b_k} × {P_prev2} = {P_k}")
-            self._registry.add_log(f"Q_{k} = a_{k} × Q_{k - 1} + b_{k} × Q_{k - 2} = {a_k} × {Q_prev1} + {b_k} × {Q_prev2} = {Q_k}")
-            self._registry.add_log(f"Подходящая дробь {k}: P_{k}/Q_{k} = {P_k}/{Q_k}")
-            
-            P_prev2, Q_prev2 = P_prev1, Q_prev1
-            P_prev1, Q_prev1 = P_k, Q_k
-        
-        # Логирование таблицы
-        self._registry.add_log("\nТаблица вычислений:")
-        self._registry.add_log(f"{'k':<3} | {'b_k':<5} | {'a_k':<8} | {'P_k':<8} | {'Q_k':<8}")
-        self._registry.add_log("-" * 40)
-        for row in table_data:
-            if len(row) >= 5:
-                self._registry.add_log(f"{row[0]:<3} | {row[1]:<5} | {row[2]:<8} | {row[3]:<8} | {row[4]:<8}")
-        
-        return table_data
+            return 0, 1
 
-    @override
+        num = 1
+        denom = coefficients[-1]
+        for coeff in reversed(coefficients[:-1]):
+            num, denom = denom, coeff * denom + num
+
+        return denom, num
+
+    def compute_pq_tables(self, coefficients: List[int]) -> Tuple[List[int], List[int]]:
+        """
+        Считает подходящие дроби.
+        Возвращает списки P_i и Q_i длины len(coefficients).
+        """
+        n = len(coefficients)
+        p_table: List[int] = [0] * n
+        q_table: List[int] = [0] * n
+
+        # Базовые значения
+        p_prev2, q_prev2 = 1, 0                     # P_-1, Q_-1
+        p_prev1, q_prev1 = coefficients[0], 1       # P_0, Q_0
+
+        p_table[0] = p_prev1
+        q_table[0] = q_prev1
+
+        self._registry.add_log("\nТаблица подходящих дробей:")
+        self._registry.add_log(f"{'k':<3} | {'a_k':<8} | {'P_k':<8} | {'Q_k':<8}")
+        self._registry.add_log(f"{-1:<3} | {'':<8} | {p_prev2:<8} | {q_prev2:<8}")
+        self._registry.add_log(f"{0:<3} | {coefficients[0]:<8} | {p_table[0]:<8} | {q_table[0]:<8}")
+
+        # Рекуррентные расчёты
+        for k in range(1, n):
+            a_k = coefficients[k]
+            p_k = a_k * p_prev1 + p_prev2
+            q_k = a_k * q_prev1 + q_prev2
+
+            p_table[k] = p_k
+            q_table[k] = q_k
+
+            self._registry.add_log(f"{k:<3} | {a_k:<8} | {p_k:<8} | {q_k:<8}")
+
+            p_prev2, q_prev2 = p_prev1, q_prev1
+            p_prev1, q_prev1 = p_k, q_k
+
+        return p_table, q_table
+
     def get_logs(self) -> Iterable[str]:
         return self._registry.logs
