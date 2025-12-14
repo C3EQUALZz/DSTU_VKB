@@ -42,6 +42,9 @@ from cryptography_methods.application.commands.vigenere.decrypt import VigenereD
 from cryptography_methods.application.commands.vigenere.encrypt import VigenereEncryptCommandHandler
 from cryptography_methods.application.commands.gost_28147.decrypt import Gost28147DecryptCommandHandler
 from cryptography_methods.application.commands.gost_28147.encrypt import Gost28147EncryptCommandHandler
+from cryptography_methods.application.commands.zero_knowledge_proof.execute import (
+    ExecuteZeroKnowledgeProofCommandHandler
+)
 from cryptography_methods.domain.atbash.services.atbash_service import AtbashService
 from cryptography_methods.domain.ceaser.services.affine_cipher_service import AffineCipherService
 from cryptography_methods.domain.ceaser.services.ceaser_keyword_service import CeaserKeywordService
@@ -67,6 +70,18 @@ from cryptography_methods.domain.linear_feedback_shift_register.services.linear_
 from cryptography_methods.domain.gost_28147.services.gost_28147_service import Gost28147Service
 from cryptography_methods.domain.playfair.services.playfair_service import PlayfairService
 from cryptography_methods.domain.vigenere.services.vigenere_service import VigenereService
+from cryptography_methods.domain.zero_knowledge_proof.services.modular_arithmetic_service import (
+    ModularArithmeticService
+)
+from cryptography_methods.domain.zero_knowledge_proof.services.prime_number_service import (
+    PrimeNumberService
+)
+from cryptography_methods.domain.zero_knowledge_proof.services.quadratic_residue_service import (
+    QuadraticResidueService
+)
+from cryptography_methods.domain.zero_knowledge_proof.services.zero_knowledge_proof_service import (
+    ZeroKnowledgeProofService
+)
 from cryptography_methods.infrastructure.adapters.uuid_4_cipher_table_id_generator import (
     UUID4CipherTableIdGenerator
 )
@@ -103,7 +118,8 @@ def interactors_provider() -> Provider:
         AtbashDecryptCommandHandler,
         MutateLinearFeedbackShiftRegisterCommandHandler,
         Gost28147EncryptCommandHandler,
-        Gost28147DecryptCommandHandler
+        Gost28147DecryptCommandHandler,
+        ExecuteZeroKnowledgeProofCommandHandler
     )
     return provider
 
@@ -133,7 +149,11 @@ def services_provider() -> Provider:
         DoubleSquareWhitestoneService,
         AtbashService,
         LinearFeedbackShiftRegisterService,
-        Gost28147Service
+        Gost28147Service,
+        ModularArithmeticService,
+        PrimeNumberService,
+        QuadraticResidueService,
+        ZeroKnowledgeProofService
     )
     return provider
 
