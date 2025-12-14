@@ -28,6 +28,7 @@ from cryptography_methods.presentation.cli.handlers.single_key_permutation impor
 from cryptography_methods.presentation.cli.handlers.trithemius import trithemius_group
 from cryptography_methods.presentation.cli.handlers.vigenere import vigenere_group
 from cryptography_methods.presentation.cli.handlers.gost_28147 import gost_28147_group
+from cryptography_methods.presentation.cli.handlers.rsa import rsa_group
 from cryptography_methods.presentation.cli.handlers.zero_knowledge_proof import (
     zero_knowledge_proof_group
 )
@@ -87,6 +88,7 @@ def setup_cli_routes(main_group: Group) -> None:
     main_group.add_command(double_square_whitestone_group)  # type: ignore
     main_group.add_command(linear_feedback_group)  # type: ignore
     main_group.add_command(gost_28147_group)  # type: ignore
+    main_group.add_command(rsa_group)  # type: ignore
     main_group.add_command(zero_knowledge_proof_group)  # type: ignore
 
 

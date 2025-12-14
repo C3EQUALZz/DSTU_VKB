@@ -45,6 +45,11 @@ from cryptography_methods.application.commands.gost_28147.encrypt import Gost281
 from cryptography_methods.application.commands.zero_knowledge_proof.execute import (
     ExecuteZeroKnowledgeProofCommandHandler
 )
+from cryptography_methods.application.commands.rsa.decrypt import RSADecryptCommandHandler
+from cryptography_methods.application.commands.rsa.encrypt import RSAEncryptCommandHandler
+from cryptography_methods.application.commands.rsa.generate_keys import (
+    RSAGenerateKeysCommandHandler
+)
 from cryptography_methods.domain.atbash.services.atbash_service import AtbashService
 from cryptography_methods.domain.ceaser.services.affine_cipher_service import AffineCipherService
 from cryptography_methods.domain.ceaser.services.ceaser_keyword_service import CeaserKeywordService
@@ -82,6 +87,7 @@ from cryptography_methods.domain.zero_knowledge_proof.services.quadratic_residue
 from cryptography_methods.domain.zero_knowledge_proof.services.zero_knowledge_proof_service import (
     ZeroKnowledgeProofService
 )
+from cryptography_methods.domain.rsa.services.rsa_service import RSAService
 from cryptography_methods.infrastructure.adapters.uuid_4_cipher_table_id_generator import (
     UUID4CipherTableIdGenerator
 )
@@ -119,7 +125,10 @@ def interactors_provider() -> Provider:
         MutateLinearFeedbackShiftRegisterCommandHandler,
         Gost28147EncryptCommandHandler,
         Gost28147DecryptCommandHandler,
-        ExecuteZeroKnowledgeProofCommandHandler
+        ExecuteZeroKnowledgeProofCommandHandler,
+        RSAEncryptCommandHandler,
+        RSADecryptCommandHandler,
+        RSAGenerateKeysCommandHandler
     )
     return provider
 
@@ -153,7 +162,8 @@ def services_provider() -> Provider:
         ModularArithmeticService,
         PrimeNumberService,
         QuadraticResidueService,
-        ZeroKnowledgeProofService
+        ZeroKnowledgeProofService,
+        RSAService
     )
     return provider
 
