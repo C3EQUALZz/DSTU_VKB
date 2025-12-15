@@ -42,6 +42,11 @@ from cryptography_methods.application.commands.vigenere.decrypt import VigenereD
 from cryptography_methods.application.commands.vigenere.encrypt import VigenereEncryptCommandHandler
 from cryptography_methods.application.commands.gost_28147.decrypt import Gost28147DecryptCommandHandler
 from cryptography_methods.application.commands.gost_28147.encrypt import Gost28147EncryptCommandHandler
+from cryptography_methods.application.commands.elgamal.decrypt import ElGamalDecryptCommandHandler
+from cryptography_methods.application.commands.elgamal.encrypt import ElGamalEncryptCommandHandler
+from cryptography_methods.application.commands.elgamal.generate_keys import (
+    ElGamalGenerateKeysCommandHandler
+)
 from cryptography_methods.application.commands.zero_knowledge_proof.execute import (
     ExecuteZeroKnowledgeProofCommandHandler
 )
@@ -88,6 +93,7 @@ from cryptography_methods.domain.zero_knowledge_proof.services.zero_knowledge_pr
     ZeroKnowledgeProofService
 )
 from cryptography_methods.domain.rsa.services.rsa_service import RSAService
+from cryptography_methods.domain.elgamal import ElGamalService
 from cryptography_methods.infrastructure.adapters.uuid_4_cipher_table_id_generator import (
     UUID4CipherTableIdGenerator
 )
@@ -128,7 +134,10 @@ def interactors_provider() -> Provider:
         ExecuteZeroKnowledgeProofCommandHandler,
         RSAEncryptCommandHandler,
         RSADecryptCommandHandler,
-        RSAGenerateKeysCommandHandler
+        RSAGenerateKeysCommandHandler,
+        ElGamalEncryptCommandHandler,
+        ElGamalDecryptCommandHandler,
+        ElGamalGenerateKeysCommandHandler
     )
     return provider
 
@@ -163,7 +172,8 @@ def services_provider() -> Provider:
         PrimeNumberService,
         QuadraticResidueService,
         ZeroKnowledgeProofService,
-        RSAService
+        RSAService,
+        ElGamalService
     )
     return provider
 
