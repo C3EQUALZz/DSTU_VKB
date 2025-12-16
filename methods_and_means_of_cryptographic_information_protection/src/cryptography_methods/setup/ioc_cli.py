@@ -55,6 +55,15 @@ from cryptography_methods.application.commands.rsa.encrypt import RSAEncryptComm
 from cryptography_methods.application.commands.rsa.generate_keys import (
     RSAGenerateKeysCommandHandler
 )
+from cryptography_methods.application.commands.rsa_signature.generate_keys import (
+    RSASignatureGenerateKeysCommandHandler
+)
+from cryptography_methods.application.commands.rsa_signature.sign import (
+    RSASignatureSignCommandHandler
+)
+from cryptography_methods.application.commands.rsa_signature.verify import (
+    RSASignatureVerifyCommandHandler
+)
 from cryptography_methods.domain.atbash.services.atbash_service import AtbashService
 from cryptography_methods.domain.ceaser.services.affine_cipher_service import AffineCipherService
 from cryptography_methods.domain.ceaser.services.ceaser_keyword_service import CeaserKeywordService
@@ -93,6 +102,7 @@ from cryptography_methods.domain.zero_knowledge_proof.services.zero_knowledge_pr
     ZeroKnowledgeProofService
 )
 from cryptography_methods.domain.rsa.services.rsa_service import RSAService
+from cryptography_methods.domain.rsa_signature import RSASignatureService
 from cryptography_methods.domain.elgamal import ElGamalService
 from cryptography_methods.infrastructure.adapters.uuid_4_cipher_table_id_generator import (
     UUID4CipherTableIdGenerator
@@ -135,6 +145,9 @@ def interactors_provider() -> Provider:
         RSAEncryptCommandHandler,
         RSADecryptCommandHandler,
         RSAGenerateKeysCommandHandler,
+        RSASignatureGenerateKeysCommandHandler,
+        RSASignatureSignCommandHandler,
+        RSASignatureVerifyCommandHandler,
         ElGamalEncryptCommandHandler,
         ElGamalDecryptCommandHandler,
         ElGamalGenerateKeysCommandHandler
@@ -173,6 +186,7 @@ def services_provider() -> Provider:
         QuadraticResidueService,
         ZeroKnowledgeProofService,
         RSAService,
+        RSASignatureService,
         ElGamalService
     )
     return provider

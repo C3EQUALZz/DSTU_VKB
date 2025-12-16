@@ -28,22 +28,21 @@ class PrimeNumberService(DomainService):
             Простое число
         """
         logger.info(f"Generating large prime number with {bit_length} bits")
-        max_attempts = 1000
         attempt = 0
 
-        while attempt < max_attempts:
+        # Для больших ключей (1024+ бит) ограничение по количеству попыток может
+        # приводить к ложным ошибкам. Поэтому генерируем до тех пор, пока
+        # не найдём подходящий простой, только логируем число попыток.
+        while True:
             candidate = self._generate_random_big_integer(bit_length)
             # Делаем число нечетным (как в C# коде: candidate |= 1)
             candidate |= 1
-            logger.debug(f"Attempt {attempt + 1}: Testing candidate {candidate}")
+            attempt += 1
+            logger.debug(f"Attempt {attempt}: Testing candidate {candidate}")
 
             if self.miller_rabin_test(candidate, k=20):
-                logger.info(f"Found prime number after {attempt + 1} attempts ({bit_length} bits): {candidate}")
+                logger.info(f"Found prime number after {attempt} attempts ({bit_length} bits): {candidate}")
                 return candidate
-
-            attempt += 1
-
-        raise RuntimeError(f"Failed to generate prime number after {max_attempts} attempts")
 
     def miller_rabin_test(self, n: int, k: int = 20) -> bool:
         """Тест Миллера-Рабина для проверки простоты числа.
