@@ -58,6 +58,18 @@ from cryptography_methods.application.commands.rsa.generate_keys import (
 from cryptography_methods.application.commands.rsa_signature.generate_keys import (
     RSASignatureGenerateKeysCommandHandler
 )
+from cryptography_methods.application.commands.gost_3410_94.compare_hashes import (
+    Gost341094CompareHashesCommandHandler
+)
+from cryptography_methods.application.commands.gost_3410_94.generate_keys import (
+    Gost341094GenerateKeysCommandHandler
+)
+from cryptography_methods.application.commands.gost_3410_94.sign import (
+    Gost341094SignCommandHandler
+)
+from cryptography_methods.application.commands.gost_3410_94.verify import (
+    Gost341094VerifyCommandHandler
+)
 from cryptography_methods.application.commands.rsa_signature.sign import (
     RSASignatureSignCommandHandler
 )
@@ -103,6 +115,7 @@ from cryptography_methods.domain.zero_knowledge_proof.services.zero_knowledge_pr
 )
 from cryptography_methods.domain.rsa.services.rsa_service import RSAService
 from cryptography_methods.domain.rsa_signature import RSASignatureService
+from cryptography_methods.domain.gost_3410_94 import Gost341094Service
 from cryptography_methods.domain.elgamal import ElGamalService
 from cryptography_methods.infrastructure.adapters.uuid_4_cipher_table_id_generator import (
     UUID4CipherTableIdGenerator
@@ -148,6 +161,10 @@ def interactors_provider() -> Provider:
         RSASignatureGenerateKeysCommandHandler,
         RSASignatureSignCommandHandler,
         RSASignatureVerifyCommandHandler,
+        Gost341094GenerateKeysCommandHandler,
+        Gost341094SignCommandHandler,
+        Gost341094VerifyCommandHandler,
+        Gost341094CompareHashesCommandHandler,
         ElGamalEncryptCommandHandler,
         ElGamalDecryptCommandHandler,
         ElGamalGenerateKeysCommandHandler
@@ -187,6 +204,7 @@ def services_provider() -> Provider:
         ZeroKnowledgeProofService,
         RSAService,
         RSASignatureService,
+        Gost341094Service,
         ElGamalService
     )
     return provider
