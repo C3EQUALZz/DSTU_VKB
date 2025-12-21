@@ -272,3 +272,4 @@ class Register(BaseAggregateRoot[RegisterID]):
         return "\n".join(lines)
 
 
+

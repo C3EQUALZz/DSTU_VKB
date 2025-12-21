@@ -4,3 +4,4 @@ from theory_of_pseudorandom_generators.domain.common.errors.base import DomainEr
 class WrongParameterValueError(DomainError):
     ...
 
+

@@ -18,3 +18,4 @@ class RegisterIDGenerator(Protocol):
 
 
 
+

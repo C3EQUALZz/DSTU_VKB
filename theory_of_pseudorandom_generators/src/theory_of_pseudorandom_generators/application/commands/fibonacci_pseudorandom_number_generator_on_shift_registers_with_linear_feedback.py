@@ -108,3 +108,4 @@ class FibonacciPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackComm
             logger.error("Ошибка при сохранении файла: %s", e)
 
 
+
