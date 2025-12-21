@@ -1,5 +1,6 @@
 package com.c3equalz.user_service.application.common.query_params;
 
+import com.c3equalz.user_service.application.errors.LimitCantBeNegativeError;
 import com.c3equalz.user_service.application.errors.OffsetCantBeNegativeError;
 import lombok.Getter;
 
@@ -10,11 +11,11 @@ public class Pagination {
 
     public Pagination(int offset, int limit) {
         if (offset < 0) {
-            throw new OffsetCantBeNegativeError("");
+            throw new OffsetCantBeNegativeError("Offset cant be negative, got " + offset);
         }
 
         if (limit < 0) {
-
+            throw new LimitCantBeNegativeError("Limit cant be negative, got " + limit);
         }
 
         this.offset = offset;
