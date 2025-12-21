@@ -54,3 +54,4 @@ class Gost28147SubstitutionTable:
             blocks4b[i] = SBOX[sbox_row][block4b]
             logger.debug(f"S-box[{sbox_row}][{block4b:01X}] = {blocks4b[i]:01X}")
 
+

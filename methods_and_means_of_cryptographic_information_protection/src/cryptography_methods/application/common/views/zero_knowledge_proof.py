@@ -15,3 +15,4 @@ class ZeroKnowledgeProofExecutionView:
     authentication_passed: bool
     iterations: list[dict[str, int | str | bool | None]]
 
+

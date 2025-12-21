@@ -70,3 +70,4 @@ class Gost341094GenerateKeysCommandHandler:
             public_key_file=str(data.public_key_file),
         )
 
+

@@ -47,3 +47,4 @@ class Gost341094CompareHashesView:
     hash_2: str
     are_equal: bool
 
+

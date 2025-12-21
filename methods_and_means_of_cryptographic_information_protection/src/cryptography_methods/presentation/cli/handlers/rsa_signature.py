@@ -315,3 +315,4 @@ def cmd_compare_signatures_handler(signature_file_1: Path, signature_file_2: Pat
                 click.echo(f"Byte {i + 1}: 0x{b1:02X} vs 0x{b2:02X}")
 
 
+

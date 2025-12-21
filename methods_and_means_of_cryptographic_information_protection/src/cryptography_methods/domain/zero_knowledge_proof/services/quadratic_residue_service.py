@@ -239,3 +239,4 @@ class QuadraticResidueService(DomainService):
             if min_value <= candidate < max_value:
                 return candidate
 
+

@@ -136,3 +136,4 @@ class Gost28147BitUtils:
         logger.debug(f"Left shift {l} bits: 0x{x:08X} -> 0x{result:08X}")
         return result
 
+
