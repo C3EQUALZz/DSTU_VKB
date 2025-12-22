@@ -104,3 +104,5 @@ class GCDCalculatorPresenter(IGCDPresenter):
 
 > [!NOTE]
 > Простите за страшный визуал приложения, но нейронки лучше выдают, а вручную такое делать я точно не собираюсь)))
+
+Ссылки на все отчеты: https://drive.google.com/drive/folders/1ZVW_qy5lrDHbeu5LNwTUImXkdVvMPheZ

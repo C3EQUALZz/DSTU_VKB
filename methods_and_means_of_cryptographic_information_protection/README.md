@@ -33,3 +33,6 @@
 > Резко меняется настроение на лету, может условия менять как щелчок пальцев.
 
 ID телеграм канала: 1884473508
+
+Ссылка на все отчеты: https://drive.google.com/drive/folders/1ZVW_qy5lrDHbeu5LNwTUImXkdVvMPheZ
+
