@@ -18,6 +18,9 @@ from theory_of_pseudorandom_generators.domain.geffey_pseudorandom_number_generat
 from theory_of_pseudorandom_generators.domain.geffey_pseudorandom_number_generator_on_shift_registers_with_linear_feedback.services.geffe_generator_service import (
     GeffeGeneratorService,
 )
+from theory_of_pseudorandom_generators.application.views.geffe_generator_view import (
+    GeffeGeneratorView,
+)
 
 logger: logging.Logger = logging.getLogger(__name__)
 
@@ -69,7 +72,7 @@ class GeffeyPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackCommand
     def __call__(
         self,
         command: GeffeyPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackCommand,
-    ) -> None:
+    ) -> GeffeGeneratorView:
         """Handle Geffe generator command.
 
         Args:
@@ -113,29 +116,62 @@ class GeffeyPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackCommand
         logger.info("Создание генератора Геффе успешно!")
         logger.info("%s", generator)
 
-        # Generate and print states
-        logger.info("Промежуточные результаты:")
-        states = list(
-            self._geffe_generator_service.get_states(generator, separator=" -> ")
+        # Get periods
+        max_period1 = register1.max_period
+        max_period2 = register2.max_period
+        max_period3 = register3.max_period
+        theoretical_period = generator.period
+        
+        # Calculate actual sequence period (L)
+        actual_period = generator.get_actual_sequence_period()
+        
+        # Generate decimated sequences for each register
+        # Передаем register_service для создания временных регистров с shift=1
+        seq1, seq2, seq3 = self._geffe_generator_service.get_register_sequences(
+            generator, self._register_service
         )
-        states_output = "\n".join(states)
-        logger.info(states_output)
-
-        # Convert to decimal
-        decimal_sequence = self._geffe_generator_service.get_decimal_sequence(
-            generator, command.number_count
+        
+        # Generate final sequence using Geffe function
+        # Use min length of all sequences (matching Python reference)
+        min_len = min(len(seq1), len(seq2), len(seq3))
+        logger.info("Длины последовательностей: seq1=%s, seq2=%s, seq3=%s, min_len=%s", 
+                   len(seq1), len(seq2), len(seq3), min_len)
+        
+        final_sequence: list[int] = []
+        for i in range(min_len):
+            x1, x2, x3 = seq1[i], seq2[i], seq3[i]
+            result = (x1 & x2) ^ (x2 & x3) ^ x3
+            final_sequence.append(result)
+        
+        # Convert final sequence to decimal
+        final_binary_str = "".join(str(b) for b in final_sequence)
+        logger.info("Длина итоговой двоичной последовательности: %s", len(final_binary_str))
+        final_decimal = str(int(final_binary_str, 2)) if final_binary_str else "0"
+        
+        # Create and return View
+        return GeffeGeneratorView(
+            register1_polynomial=tuple(command.register1_polynomial),
+            register1_start_state=tuple(command.register1_start_state),
+            register1_shift=command.register1_shift,
+            register1_column_index=command.register1_column_index,
+            register1_max_period=max_period1,
+            register2_polynomial=tuple(command.register2_polynomial),
+            register2_start_state=tuple(command.register2_start_state),
+            register2_shift=command.register2_shift,
+            register2_column_index=command.register2_column_index,
+            register2_max_period=max_period2,
+            register3_polynomial=tuple(command.register3_polynomial),
+            register3_start_state=tuple(command.register3_start_state),
+            register3_shift=command.register3_shift,
+            register3_column_index=command.register3_column_index,
+            register3_max_period=max_period3,
+            theoretical_period=theoretical_period,
+            actual_sequence_period=actual_period,
+            register1_sequence=tuple(seq1),
+            register2_sequence=tuple(seq2),
+            register3_sequence=tuple(seq3),
+            final_sequence=tuple(final_sequence),
+            final_decimal=final_decimal,
         )
-        logger.info("Десятичные значения:")
-        logger.info(decimal_sequence)
-
-        # Save to file
-        path_to_save: Path = Path(__file__).parent.parent.parent.parent.parent / "Geffey.txt"
-
-        try:
-            with open(path_to_save, "w", encoding="utf-8") as f:
-                f.write(decimal_sequence)
-            logger.info("Значения сохранены в файл: %s", path_to_save)
-        except OSError as e:
-            logger.error("Ошибка при сохранении файла: %s", e)
 
 

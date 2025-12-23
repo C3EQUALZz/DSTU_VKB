@@ -71,17 +71,26 @@ class GeffeGenerator(BaseAggregateRoot[GeffeGeneratorID]):
         """Initialize Geffe generator after creation."""
         super().__post_init__()
 
-        # Validate that periods are coprime
-        period1 = self.register1.max_period
-        period2 = self.register2.max_period
-        period3 = self.register3.max_period
+        # Get max periods (2^N - 1) for theoretical period calculation
+        # Note: The theoretical period is calculated as S1 * S2 * S3,
+        # where S = 2^N - 1 (max_period), not LCM of actual periods
+        max_period1 = self.register1.max_period
+        max_period2 = self.register2.max_period
+        max_period3 = self.register3.max_period
 
+        # Get actual periods for validation
+        period1 = self.register1.get_period()
+        period2 = self.register2.get_period()
+        period3 = self.register3.get_period()
+
+        # Validate that actual periods are coprime
         if gcd_multiple(period1, period2, period3) != 1:
             msg = "Значения периодов регистров не взаимно простые"
             raise PeriodsNotCoprimeError(msg)
 
-        # Calculate period as LCM of all register periods
-        self._period = lcm_multiple(period1, period2, period3)
+        # Calculate theoretical period as product of max periods (S1 * S2 * S3)
+        # This matches the reference implementation
+        self._period = max_period1 * max_period2 * max_period3
 
         # Set start position
         self._start_position = self._set_start_position()
@@ -121,16 +130,16 @@ class GeffeGenerator(BaseAggregateRoot[GeffeGeneratorID]):
     def next_bit(self) -> int:
         """Generate next bit using Geffe formula.
 
-        Geffe formula: result = ((x1 & x2) + (x2 & x3)) % 2, then result = (result + x3) % 2
+        Geffe formula: f(x1, x2, x3) = (x1 * x2) ^ (x2 * x3) ^ x3
+        In boolean algebra: (x1 & x2) ^ (x2 & x3) ^ x3
 
         Returns:
             Next generated bit
         """
         values = self.next_array()
         x1, x2, x3 = values[0], values[1], values[2]
-        result = ((x1 & x2) + (x2 & x3)) % 2
-        result = (result + x3) % 2
-        return result
+        # f(x1, x2, x3) = (x1 & x2) ^ (x2 & x3) ^ x3
+        return (x1 & x2) ^ (x2 & x3) ^ x3
 
     def next_int(self) -> int:
         """Get next integer value from all three registers combined.
@@ -153,6 +162,52 @@ class GeffeGenerator(BaseAggregateRoot[GeffeGeneratorID]):
         for _ in range(self._period):
             sequence.append(str(self.next_bit()))
         return "".join(sequence)
+
+    def get_actual_sequence_period(self) -> int:
+        """Calculate actual period of output sequence.
+
+        Generates the sequence and finds the minimum period where it repeats.
+        Uses a more efficient approach by generating a limited sequence and
+        checking for cycles.
+
+        Returns:
+            Actual period of output sequence
+        """
+        self.clear()
+        
+        # Generate sequence up to a reasonable limit
+        # For period detection, we don't need the full theoretical period
+        max_length = min(self._period * 2, 2000)  # Reasonable upper bound
+        sequence = []
+        
+        for _ in range(max_length):
+            sequence.append(str(self.next_bit()))
+        
+        sequence_str = "".join(sequence)
+        sequence_len = len(sequence_str)
+        
+        # Find minimum period by checking if sequence repeats
+        # Start from small periods and work up
+        for period in range(1, min(sequence_len // 2 + 1, 500)):
+            # Check if sequence repeats with this period
+            if sequence_len >= period * 2:  # Need at least 2 repetitions to verify
+                # Extract pattern
+                pattern = sequence_str[:period]
+                # Check if it repeats in the sequence
+                matches = True
+                for i in range(period, min(sequence_len, period * 10)):  # Check first 10 repetitions
+                    if sequence_str[i] != pattern[i % period]:
+                        matches = False
+                        break
+                
+                if matches:
+                    # Verify: check if the whole sequence matches
+                    expected_repeats = sequence_len // period
+                    if sequence_str == pattern * expected_repeats:
+                        return period
+        
+        # If no period found in reasonable range, return theoretical period
+        return self._period
 
     @property
     def period(self) -> int:

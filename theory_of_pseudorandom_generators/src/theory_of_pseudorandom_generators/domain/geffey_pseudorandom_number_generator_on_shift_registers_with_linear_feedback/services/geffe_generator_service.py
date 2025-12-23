@@ -10,6 +10,9 @@ logger: Final[logging.Logger] = logging.getLogger(__name__)
 from theory_of_pseudorandom_generators.domain.fibonacci_pseudorandom_number_generator_on_shift_registers_with_linear_feedback.entities.register import (
     Register,
 )
+from theory_of_pseudorandom_generators.domain.fibonacci_pseudorandom_number_generator_on_shift_registers_with_linear_feedback.services.register_service import (
+    RegisterService,
+)
 from theory_of_pseudorandom_generators.domain.geffey_pseudorandom_number_generator_on_shift_registers_with_linear_feedback.entities.geffe_generator import (
     GeffeGenerator,
 )
@@ -54,6 +57,108 @@ class GeffeGeneratorService(DomainService):
         )
 
     @staticmethod
+    def get_register_sequences(
+        generator: GeffeGenerator,
+        register_service: RegisterService,
+    ) -> tuple[list[int], list[int], list[int]]:
+        """Generate sequences and then decimate them, matching Python reference.
+        
+        В l.py логика такая:
+        1. Генерируется полная последовательность с обычным сдвигом (shift=1, т.е. используя T, не T^k)
+        2. Затем применяется декремпозиция seq[::k]
+        
+        Чтобы соответствовать этой логике, создаем временные регистры с shift=1
+        для генерации полной последовательности, затем применяем декремпозицию.
+        
+        Args:
+            generator: Geffe generator to generate from
+            register_service: Register service for creating temporary registers
+            
+        Returns:
+            Tuple of (register1_decimated_sequence, register2_decimated_sequence, register3_decimated_sequence)
+        """
+        # Создаем временные регистры с shift=1 для генерации полной последовательности
+        # Это соответствует логике l.py, где используется обычный сдвиг, а не T^k
+        temp_register1 = register_service.create(
+            polynomial_coefficients=generator.register1.polynomial_coefficients,
+            start_position=generator.register1.start_position,
+            shift=1,  # Обычный сдвиг (T, не T^k)
+            column_index=generator.register1.column_index,
+        )
+        
+        temp_register2 = register_service.create(
+            polynomial_coefficients=generator.register2.polynomial_coefficients,
+            start_position=generator.register2.start_position,
+            shift=1,  # Обычный сдвиг (T, не T^k)
+            column_index=generator.register2.column_index,
+        )
+        
+        temp_register3 = register_service.create(
+            polynomial_coefficients=generator.register3.polynomial_coefficients,
+            start_position=generator.register3.start_position,
+            shift=1,  # Обычный сдвиг (T, не T^k)
+            column_index=generator.register3.column_index,
+        )
+        
+        # Генерируем полные последовательности до цикла комбинированного состояния
+        # Логика соответствует l.py: цикл определяется по комбинированному состоянию всех трех регистров
+        seq1_full: list[int] = []
+        seq2_full: list[int] = []
+        seq3_full: list[int] = []
+        
+        # Отслеживаем комбинированные состояния для обнаружения цикла
+        seen_states: dict[tuple[tuple[int, ...], tuple[int, ...], tuple[int, ...]], int] = {}
+        
+        # Инициализируем регистры
+        temp_register1.clear()
+        temp_register2.clear()
+        temp_register3.clear()
+        
+        # Генерируем последовательности до обнаружения цикла
+        # Логика соответствует l.py: получаем биты из текущего состояния, затем сдвигаем
+        while True:
+            # Получаем текущее комбинированное состояние (полные состояния регистров)
+            state1 = tuple(temp_register1._register[0])
+            state2 = tuple(temp_register2._register[0])
+            state3 = tuple(temp_register3._register[0])
+            combined_state = (state1, state2, state3)
+            
+            # Проверяем, видели ли мы это состояние ранее (обнаружен цикл)
+            if combined_state in seen_states:
+                break
+            
+            # Отмечаем это состояние как виденное
+            seen_states[combined_state] = len(seq1_full)
+            
+            # Получаем выходные биты из текущего состояния (перед сдвигом)
+            # Это соответствует l.py: x1 = state1[col1 - 1] (но у нас 0-based индекс)
+            x1 = temp_register1._register[0][temp_register1.column_index]
+            x2 = temp_register2._register[0][temp_register2.column_index]
+            x3 = temp_register3._register[0][temp_register3.column_index]
+            
+            seq1_full.append(x1)
+            seq2_full.append(x2)
+            seq3_full.append(x3)
+            
+            # Теперь сдвигаем регистры, используя обычный сдвиг (T, не T^k)
+            # Это соответствует l.py, где используется обычный сдвиг, а затем применяется декремпозиция
+            temp_register1.next()
+            temp_register2.next()
+            temp_register3.next()
+        
+        # Применяем декремпозицию, как в l.py: decimated1 = seq1[::k1]
+        # Получаем значения k из исходных регистров генератора
+        k1 = generator.register1.shift
+        k2 = generator.register2.shift
+        k3 = generator.register3.shift
+        
+        decimated1 = seq1_full[::k1]
+        decimated2 = seq2_full[::k2]
+        decimated3 = seq3_full[::k3]
+        
+        return decimated1, decimated2, decimated3
+    
+    @staticmethod
     def get_states(
         generator: GeffeGenerator,
         separator: str = " -> ",
@@ -70,10 +175,9 @@ class GeffeGeneratorService(DomainService):
         generator.clear()
         for i in range(generator.period):
             arr = generator.next_array()
-            # Calculate result using Geffe formula
+            # Calculate result using Geffe formula: f(x1, x2, x3) = (x1 & x2) ^ (x2 & x3) ^ x3
             x1, x2, x3 = arr[0], arr[1], arr[2]
-            result = ((x1 & x2) + (x2 & x3)) % 2
-            result = (result + x3) % 2
+            result = (x1 & x2) ^ (x2 & x3) ^ x3
             state_str = "".join(str(v) for v in arr)
             yield f"{i}. {state_str}{separator}{result}"
 
