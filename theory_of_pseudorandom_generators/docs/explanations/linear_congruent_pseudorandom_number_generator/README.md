@@ -26,5 +26,11 @@ python cli.py linear_congruent_pseudorandom_number_generator generate -a 106 -b 
 python cli.py linear_congruent_pseudorandom_number_generator generate -a 141 -b 28411 -x0 1 -m 134456
 ```
 
+Для 10 варианта:
+
+```bash
+python cli.py linear_congruent_pseudorandom_number_generator generate -a 106 -b 1283 -x0 10 -m 6075 -s 20
+```
+
 > [!IMPORTANT]
 > В некоторых отчетах неизвестно какой x0 вводили

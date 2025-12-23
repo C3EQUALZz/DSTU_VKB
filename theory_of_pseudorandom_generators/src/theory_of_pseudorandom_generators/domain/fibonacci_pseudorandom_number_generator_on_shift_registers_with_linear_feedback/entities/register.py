@@ -20,13 +20,15 @@ def normalize_polynomial(coefficients: Sequence[int]) -> Sequence[int]:
     """Normalize polynomial coefficients to GF(2).
 
     Args:
-        coefficients: Polynomial coefficients
+        coefficients: Polynomial coefficients (from x^0 to x^N, e.g., [1, 0, 0, 1, 0, 1] for 1 + X^2 + X^5)
 
     Returns:
-        Normalized coefficients in GF(2)
+        Normalized coefficients in GF(2) (from x^0 to x^N)
     """
-    # Remove trailing zeros
+    # Input coefficients are from x^0 to x^N (e.g., [1, 0, 0, 1, 0, 1] = 1 + X^2 + X^5)
     coeffs = list(coefficients)
+    
+    # Remove trailing zeros (from the end, which is x^N side)
     while len(coeffs) > 1 and coeffs[-1] == 0:
         coeffs.pop()
 
@@ -144,9 +146,8 @@ class Register(BaseAggregateRoot[RegisterID]):
         matrix = [[0] * degree for _ in range(degree)]
 
         # First row: polynomial coefficients from x^1 to x^degree
-        # In Java: T[0] = Arrays.copyOfRange(polynomial.getCoefficients(), 1, degree + 1)
+        # After normalization, coeffs[0] is x^0, coeffs[1] is x^1, ..., coeffs[degree] is x^degree
         coeffs = self._normalized_polynomial
-        # coeffs[0] is x^0, coeffs[1] is x^1, ..., coeffs[degree] is x^degree
         for i in range(degree):
             if i + 1 < len(coeffs):
                 matrix[0][i] = coeffs[i + 1] % 2

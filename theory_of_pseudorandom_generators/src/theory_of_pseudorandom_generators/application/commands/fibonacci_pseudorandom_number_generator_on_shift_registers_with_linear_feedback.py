@@ -3,9 +3,13 @@
 import logging
 from collections.abc import Sequence
 from dataclasses import dataclass
+from math import gcd
 from pathlib import Path
 from typing import Final, final
 
+from theory_of_pseudorandom_generators.application.views.fibonacci_generator_view import (
+    FibonacciGeneratorView,
+)
 from theory_of_pseudorandom_generators.domain.fibonacci_pseudorandom_number_generator_on_shift_registers_with_linear_feedback.entities.register import (
     Register,
 )
@@ -41,11 +45,12 @@ class FibonacciPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackComm
     def __call__(
         self,
         command: FibonacciPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackCommand,
-    ) -> None:
+    ) -> FibonacciGeneratorView:
         """
         Обработать команду генератора Фибоначчи.
 
         :param command: команда с параметрами генератора
+        :return: View с результатами генерации
         """
         logger.info(
             "Начинается генерация псевдослучайных чисел с помощью генератора Фибоначчи. "
@@ -67,7 +72,8 @@ class FibonacciPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackComm
         logger.info("Создание регистра успешно!")
         logger.info("%s", register)
 
-        # Генерируем последовательность
+        # Генерируем последовательность состояний
+        states_sequence = list(self._register_service.get_sequence(register))
         binary_sequence = list(self._register_service.get_binary_sequence(register))
 
         # Добавляем десятичное представление начального состояния
@@ -98,6 +104,9 @@ class FibonacciPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackComm
             "" if is_max else "не",
         )
 
+        # Вычисляем gcd(S, k) для проверки максимального периода
+        gcd_s_k = gcd(max_period, command.shift)
+
         path_to_save: Path = Path(__file__).parent.parent.parent.parent.parent / "Fibonacci.txt"
 
         try:
@@ -106,6 +115,27 @@ class FibonacciPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackComm
             logger.info("Значения сохранены в файл: %s", path_to_save)
         except OSError as e:
             logger.error("Ошибка при сохранении файла: %s", e)
+
+        # Получаем матрицы
+        matrix_t = register.transition_matrix_t
+        matrix_v = register.transition_matrix_v
+
+        # Создаем View
+        return FibonacciGeneratorView(
+            polynomial_coefficients=tuple(command.polynomial_coefficients),
+            start_state=tuple(command.start_state),
+            shift=command.shift,
+            column_index=command.column_index,
+            transition_matrix_t=tuple(tuple(row) for row in matrix_t),
+            transition_matrix_v=tuple(tuple(row) for row in matrix_v),
+            binary_sequence=tuple(binary_sequence),
+            states_sequence=tuple(tuple(state) for state in states_sequence),
+            decimal_sequence=tuple(decimal_sequence),
+            period=period,
+            max_period=max_period,
+            is_max_period=is_max,
+            gcd_s_k=gcd_s_k,
+        )
 
 
 

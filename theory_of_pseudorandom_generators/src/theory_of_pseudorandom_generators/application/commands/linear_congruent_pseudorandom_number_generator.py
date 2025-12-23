@@ -5,6 +5,10 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Final, final
 
+from theory_of_pseudorandom_generators.application.views.linear_congruent_generator_view import (
+    ConditionCheckResult,
+    LinearCongruentGeneratorView,
+)
 from theory_of_pseudorandom_generators.domain.linear_congruent_pseudorandom_number_generator.entities.linear_congruent_generator import (
     LinearCongruentGenerator,
 )
@@ -32,7 +36,7 @@ class LinearCongruentPseudorandomNumberGeneratorCommandHandler:
     ) -> None:
         self._linear_congruent_service: Final[LinearCongruentGeneratorService] = linear_congruent_generator_service
 
-    def __call__(self, data: LinearCongruentPseudorandomNumberGeneratorCommand) -> None:
+    def __call__(self, data: LinearCongruentPseudorandomNumberGeneratorCommand) -> LinearCongruentGeneratorView:
         logger.info(
             "Начинается генерация псевдослучайных чисел с помощью линейного конгруэнтного генератора."
             "a - %s, b - %s, m - %s, x0 - %s, size - %s",
@@ -73,8 +77,15 @@ class LinearCongruentPseudorandomNumberGeneratorCommandHandler:
 
         logger.info("Продолжительность генерации %s мс", end_time)
 
-        if not self._linear_congruent_service.is_maximized_period(linear_generator):
-            logger.info("Последовательность не имеет период длиной m")
+        # Проверка условий максимального периода с детальной информацией
+        is_max_period, conditions_results = self._linear_congruent_service.check_max_period_conditions_detailed(
+            linear_generator
+        )
+        
+        if is_max_period:
+            logger.info("Условие максимального периода выполнено.")
+        else:
+            logger.info("Условие максимального периода не выполнено.")
 
         start_time = time.perf_counter()
 
@@ -93,4 +104,26 @@ class LinearCongruentPseudorandomNumberGeneratorCommandHandler:
             f.write(' '.join(map(str, sequence)))
 
         logger.info("Файл с параметрами генератора: %s", path_to_save)
+
+        # Создание View с результатами проверки условий
+        condition_results = tuple(
+            ConditionCheckResult(
+                condition_number=cond[0],
+                description=cond[1],
+                is_fulfilled=cond[2],
+                details=cond[3],
+            )
+            for cond in conditions_results
+        )
+
+        return LinearCongruentGeneratorView(
+            a=data.a,
+            b=data.b,
+            m=data.m,
+            x0=data.x0,
+            conditions=condition_results,
+            is_max_period=is_max_period,
+            period=period,
+            start_period_index=start_period_index,
+        )
 

@@ -136,6 +136,106 @@ class LinearCongruentGeneratorService(DomainService):
         logger.info("Все условия максимального периода выполнены")
         return True
 
+    def check_max_period_conditions_detailed(
+        self,
+        generator: LinearCongruentGenerator,
+    ) -> tuple[bool, list[tuple[int, str, bool, str]]]:
+        """
+        Проверить условия максимального периода и вернуть детальную информацию.
+
+        :param generator: объект генератора
+        :return: кортеж (все_условия_выполнены, список_результатов_проверки)
+                 где каждый элемент списка - (номер_условия, описание, выполнено, детали)
+        """
+        conditions_results: list[tuple[int, str, bool, str]] = []
+        all_fulfilled = True
+
+        # Базовая проверка: модуль должен быть больше 1
+        if generator.m <= 1:
+            conditions_results.append((0, "m > 1", False, f"m = {generator.m} <= 1"))
+            return False, conditions_results
+
+        # Проверка диапазона параметров
+        if not (0 <= generator.a < generator.m):
+            conditions_results.append((0, "0 <= a < m", False, f"a = {generator.a} вне диапазона"))
+            return False, conditions_results
+        if not (0 <= generator.b < generator.m):
+            conditions_results.append((0, "0 <= b < m", False, f"b = {generator.b} вне диапазона"))
+            return False, conditions_results
+        if not (0 <= generator.x < generator.m):
+            conditions_results.append((0, "0 <= x0 < m", False, f"x0 = {generator.x} вне диапазона"))
+            return False, conditions_results
+
+        # Условие 1: gcd(b, m) == 1
+        gcd_bm = gcd(generator.b, generator.m)
+        condition1_fulfilled = gcd_bm == 1
+        condition1_details = f"gcd({generator.b}, {generator.m}) = {gcd_bm}"
+        conditions_results.append((1, "gcd(b, m) = 1", condition1_fulfilled, condition1_details))
+        if not condition1_fulfilled:
+            all_fulfilled = False
+
+        # Условие 2: (a - 1) делится на все множители m
+        multipliers = self.__get_multipliers_list(generator.m)
+        condition2_fulfilled = True
+        condition2_failed_multipliers = []
+        
+        for mult in multipliers:
+            if (generator.a - 1) % mult != 0:
+                condition2_fulfilled = False
+                condition2_failed_multipliers.append(mult)
+        
+        if condition2_fulfilled:
+            condition2_details = f"(a - 1) = {generator.a - 1} делится на все множители m: {multipliers}"
+        else:
+            condition2_details = f"(a - 1) = {generator.a - 1} не делится на множители: {condition2_failed_multipliers}"
+        
+        conditions_results.append((
+            2,
+            "(a - 1) делится на все множители m",
+            condition2_fulfilled,
+            condition2_details
+        ))
+        if not condition2_fulfilled:
+            all_fulfilled = False
+
+        # Условие 3: m делится на 4
+        m_mod_4 = generator.m % 4
+        condition3_fulfilled = m_mod_4 == 0
+        condition3_details = f"m mod 4 = {m_mod_4}" + (" (m делится на 4)" if condition3_fulfilled else " (m не делится на 4)")
+        conditions_results.append((
+            3,
+            "m делится на 4",
+            condition3_fulfilled,
+            condition3_details
+        ))
+        if not condition3_fulfilled:
+            all_fulfilled = False
+
+        # Условие 4: для всех множителей выполняется (x - 1) % 4 == 0
+        condition4_fulfilled = True
+        condition4_failed_multipliers = []
+        
+        for mult in multipliers:
+            if (mult - 1) % 4 != 0:
+                condition4_fulfilled = False
+                condition4_failed_multipliers.append(mult)
+        
+        if condition4_fulfilled:
+            condition4_details = f"для всех множителей {multipliers}: (x - 1) % 4 == 0"
+        else:
+            condition4_details = f"для множителей {condition4_failed_multipliers}: (x - 1) % 4 != 0"
+        
+        conditions_results.append((
+            4,
+            "Для всех множителей m: (x - 1) % 4 == 0",
+            condition4_fulfilled,
+            condition4_details
+        ))
+        if not condition4_fulfilled:
+            all_fulfilled = False
+
+        return all_fulfilled, conditions_results
+
     def get_period(
         self,
         generator: LinearCongruentGenerator,
