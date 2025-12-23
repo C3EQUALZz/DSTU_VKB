@@ -5,6 +5,10 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Final, final
 
+from theory_of_pseudorandom_generators.application.views.polynomial_congruent_generator_view import (
+    ConditionCheckResult,
+    PolynomialCongruentGeneratorView,
+)
 from theory_of_pseudorandom_generators.domain.polynomial_congruent_pseudorandom_number_generator.entities.polynomial_congruent_generator import (
     PolynomialCongruentGenerator,
 )
@@ -33,9 +37,9 @@ class PolynomialCongruentPseudorandomNumberGeneratorCommandHandler:
     ) -> None:
         self._polynomial_congruent_service: Final[PolynomialCongruentGeneratorService] = polynomial_congruent_gen
 
-    def __call__(self, data: PolynomialCongruentPseudorandomNumberGeneratorCommand) -> None:
+    def __call__(self, data: PolynomialCongruentPseudorandomNumberGeneratorCommand) -> PolynomialCongruentGeneratorView:
         logger.info(
-            "Начинается генерация псевдослучайных чисел с помощью линейного конгруэнтного генератора."
+            "Начинается генерация псевдослучайных чисел с помощью полиномиального конгруэнтного генератора."
             "a1 - %s, a2 - %s b - %s, m - %s, x0 - %s, size - %s",
             data.a1,
             data.a2,
@@ -76,8 +80,15 @@ class PolynomialCongruentPseudorandomNumberGeneratorCommandHandler:
 
         logger.info("Продолжительность генерации %s мс", end_time)
 
-        if not self._polynomial_congruent_service.is_maximized_period(polynomial_generator):
-            logger.info("Последовательность не имеет период длиной m")
+        # Проверка условий максимального периода с детальной информацией
+        is_max_period, conditions_results = self._polynomial_congruent_service.check_max_period_conditions_detailed(
+            polynomial_generator
+        )
+        
+        if is_max_period:
+            logger.info("Условие максимального периода выполнено.")
+        else:
+            logger.info("Условие максимального периода не выполнено.")
 
         start_time = time.perf_counter()
 
@@ -96,3 +107,28 @@ class PolynomialCongruentPseudorandomNumberGeneratorCommandHandler:
             f.write(" ".join(map(str, sequence)))
 
         logger.info("Файл с параметрами генератора: %s", path_to_save)
+
+        # Создание View с результатами проверки условий
+        condition_results = tuple(
+            ConditionCheckResult(
+                condition_number=cond[0],
+                description=cond[1],
+                is_fulfilled=cond[2],
+                details=cond[3],
+            )
+            for cond in conditions_results
+        )
+
+        return PolynomialCongruentGeneratorView(
+            m=data.m,
+            a1=data.a1,
+            a2=data.a2,
+            b=data.b,
+            x0=data.x0,
+            conditions=condition_results,
+            is_max_period=is_max_period,
+            period=period,
+            start_period_index=start_period_index,
+        )
+
+

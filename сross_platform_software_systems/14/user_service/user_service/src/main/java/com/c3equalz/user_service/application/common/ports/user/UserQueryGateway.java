@@ -12,3 +12,4 @@ public interface UserQueryGateway {
     // For now, this interface serves as a placeholder for separation of concerns
 }
 
+

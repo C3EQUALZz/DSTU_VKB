@@ -16,3 +16,4 @@ public class UserAlreadyExistsError extends ApplicationError {
     }
 }
 
+
