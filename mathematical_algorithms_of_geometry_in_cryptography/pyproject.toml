@@ -29,8 +29,9 @@ classifiers = [
 ]
 dependencies = [
     "bazario==0.4.2",
-    "click>=8.3.1",
+    "click==8.3.1",
     "dishka==1.7.1",
+    "pydantic==2.12.5",
     "structlog==25.4.0",
 ]
 

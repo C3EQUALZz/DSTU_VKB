@@ -20,3 +20,4 @@ class LinearCongruentGeneratorView:
     period: int
     start_period_index: int
 
+
