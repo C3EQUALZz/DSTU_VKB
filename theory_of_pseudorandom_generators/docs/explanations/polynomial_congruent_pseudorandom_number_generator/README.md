@@ -21,3 +21,6 @@ python cli.py polynomial_congruent_pseudorandom_number_generator generate -a1 10
 ```bash
 python cli.py polynomial_congruent_pseudorandom_number_generator generate -a1 5 -a2 8 -b 3 -x0 7 -m 16 -s 10
 ```
+
+> [!NOTE]
+> Для графиков в следующих лабах можно по 200 элементов ставить
