@@ -6,11 +6,13 @@ from typing import Any
 from click import Group
 
 from mathematical_algorithms_of_geometry_in_cryptography.presentation.miller_rabin_test import miller_rabin_test_group
+from mathematical_algorithms_of_geometry_in_cryptography.presentation.pollard_rho_test import pollard_rho_test_group
 from mathematical_algorithms_of_geometry_in_cryptography.setup.config_logger import LoggingConfig, configure_logging
 
 
 def setup_cli_routes(main_group: Group) -> None:
     main_group.add_command(miller_rabin_test_group) # type: ignore
+    main_group.add_command(pollard_rho_test_group) # type: ignore
 
 
 def setup_logging(logger_config: LoggingConfig) -> None:
