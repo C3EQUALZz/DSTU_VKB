@@ -99,3 +99,4 @@ class MillerRabinTest(BaseAggregateRoot[MillerRabinID]):
     def iterations_count(self) -> int:
         """Get the number of completed iterations."""
         return len(self.results)
+

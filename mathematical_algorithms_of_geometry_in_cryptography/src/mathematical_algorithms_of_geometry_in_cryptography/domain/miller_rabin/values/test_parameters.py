@@ -42,3 +42,4 @@ class TestParameters(BaseValueObject):
     def __str__(self) -> str:
         return f"TestParameters(s={self.s}, t={self.t}, a={self.a})"
 
+
