@@ -32,3 +32,4 @@ class Point(BaseValueObject):
             return f"Point(x={self.x}, y={self.y})"
         return f"Point(x={self.x}, y=NaN)"
 
+

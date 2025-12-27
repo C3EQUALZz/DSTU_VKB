@@ -100,3 +100,4 @@ class MillerRabinTest(BaseAggregateRoot[MillerRabinID]):
         """Get the number of completed iterations."""
         return len(self.results)
 
+

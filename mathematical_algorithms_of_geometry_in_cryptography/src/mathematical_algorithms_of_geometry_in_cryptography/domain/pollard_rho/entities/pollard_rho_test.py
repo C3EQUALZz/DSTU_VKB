@@ -78,3 +78,4 @@ class PollardRhoTest(BaseAggregateRoot[PollardRhoID]):
         """Get the number of completed steps."""
         return len(self.steps)
 
+

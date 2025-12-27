@@ -217,3 +217,4 @@ def cmd_generate_handler(
         logger.exception("Ошибка при генерации эллиптической кривой")
         raise
 
+

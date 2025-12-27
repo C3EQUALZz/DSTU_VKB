@@ -61,3 +61,4 @@ class EllipticCurve(BaseAggregateRoot[EllipticCurveID]):
         lower_valid = [p for p in self.lower_branch_points if p.is_valid]
         return upper_valid, lower_valid
 
+

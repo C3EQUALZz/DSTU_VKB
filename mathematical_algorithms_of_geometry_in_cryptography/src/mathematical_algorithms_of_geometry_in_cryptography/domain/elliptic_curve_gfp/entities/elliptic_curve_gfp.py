@@ -49,3 +49,4 @@ class EllipticCurveGFp(BaseAggregateRoot[EllipticCurveGFpID]):
         """
         return point in self.points
 
+

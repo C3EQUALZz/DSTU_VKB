@@ -203,3 +203,4 @@ class EllipticCurveService(DomainService):
             logger.error(msg)
             raise CurveGenerationError(msg) from e
 
+

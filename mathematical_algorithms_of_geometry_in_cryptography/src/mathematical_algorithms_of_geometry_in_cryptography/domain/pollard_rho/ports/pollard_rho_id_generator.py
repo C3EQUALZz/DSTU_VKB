@@ -11,3 +11,4 @@ class PollardRhoIDGenerator(Protocol):
     def __call__(self) -> PollardRhoID:
         ...
 
+

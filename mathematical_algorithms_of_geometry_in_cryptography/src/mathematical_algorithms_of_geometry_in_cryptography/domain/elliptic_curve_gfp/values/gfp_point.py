@@ -38,3 +38,4 @@ class GFpPoint(BaseValueObject):
         """Create the infinity point."""
         return GFpPoint(x=-1, y=-1)
 
+

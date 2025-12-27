@@ -178,3 +178,4 @@ class PollardRhoService(DomainService):
         logger.info("Найден нетривиальный делитель: %s", test.divisor)
         return test
 
+

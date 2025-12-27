@@ -36,3 +36,4 @@ class CurveParametersGFp(BaseValueObject):
     def __str__(self) -> str:
         return f"CurveParametersGFp(a={self.a}, b={self.b}, p={self.p})"
 
+

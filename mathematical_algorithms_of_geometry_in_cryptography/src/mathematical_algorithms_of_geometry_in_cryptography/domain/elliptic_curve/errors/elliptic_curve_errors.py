@@ -12,3 +12,4 @@ class CurveGenerationError(DomainError):
 class PlotGenerationError(DomainError):
     """Raised when plot generation fails."""
 
+

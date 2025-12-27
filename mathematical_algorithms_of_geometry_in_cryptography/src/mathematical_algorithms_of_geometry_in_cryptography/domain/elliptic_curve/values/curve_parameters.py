@@ -24,3 +24,4 @@ class CurveParameters(BaseValueObject):
     def __str__(self) -> str:
         return f"CurveParameters(a={self.a}, b={self.b})"
 
+

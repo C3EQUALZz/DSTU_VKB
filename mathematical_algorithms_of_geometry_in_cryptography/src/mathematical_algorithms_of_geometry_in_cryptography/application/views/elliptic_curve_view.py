@@ -18,3 +18,4 @@ class EllipticCurveView:
     upper_branch_points: tuple[dict[str, Any], ...]
     lower_branch_points: tuple[dict[str, Any], ...]
 
+

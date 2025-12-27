@@ -16,3 +16,4 @@ class UUID4EllipticCurveGFpIDGenerator(EllipticCurveGFpIDGenerator):
     def __call__(self) -> EllipticCurveGFpID:
         return cast(EllipticCurveGFpID, uuid4())
 
+

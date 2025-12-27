@@ -34,3 +34,4 @@ class StepResult(BaseValueObject):
             f"a={self.a}, b={self.b}, d={self.d})"
         )
 
+

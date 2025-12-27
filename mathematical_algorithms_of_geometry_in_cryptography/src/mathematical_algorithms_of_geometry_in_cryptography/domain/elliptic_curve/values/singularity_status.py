@@ -7,3 +7,4 @@ class SingularityStatus(str, Enum):
     NON_SINGULAR = "non_singular"
     SINGULAR = "singular"
 
+

@@ -20,3 +20,4 @@ class DivisorNotFoundError(DomainError):
 class FunctionEvaluationError(DomainError):
     """Raised when function evaluation fails."""
 
+

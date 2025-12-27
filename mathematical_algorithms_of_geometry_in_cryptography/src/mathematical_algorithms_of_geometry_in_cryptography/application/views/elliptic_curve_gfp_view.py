@@ -24,3 +24,4 @@ class PointOperationView:
     result: str
     result_point: GFpPoint
 
+

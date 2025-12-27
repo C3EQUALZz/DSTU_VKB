@@ -262,3 +262,90 @@ class EllipticCurveGFpService(DomainService):
         logger.info("Удвоение точки: 2 * %s", p)
         return self.add_points(curve, p, p)
 
+    def multiply_point(
+        self,
+        curve: EllipticCurveGFp,
+        p: GFpPoint,
+        m: int,
+    ) -> GFpPoint:
+        """
+        Multiply a point P by a scalar m (compute mP) using dynamic programming.
+        
+        Args:
+            curve: The elliptic curve
+            p: Point to multiply
+            m: Scalar multiplier
+            
+        Returns:
+            Result of mP
+            
+        Raises:
+            PointNotOnCurveError: If point doesn't belong to the curve
+            PointOperationError: If point multiplication fails
+        """
+        try:
+            if m <= 0:
+                msg = f"Multiplier must be positive, got {m}"
+                raise ValueError(msg)
+
+            if m == 1:
+                logger.info("m = 1, результат: %s", p)
+                return p
+
+            # Check if point is on the curve
+            if not curve.contains_point(p):
+                msg = f"Point {p} does not belong to the curve"
+                raise PointNotOnCurveError(msg)
+
+            # Initialize array for dynamic programming
+            point_array: list[GFpPoint] = [p] * m
+            point_array[0] = p
+            logger.info("P = %s", point_array[0])
+
+            # Compute mP using dynamic programming
+            for i in range(2, m + 1):
+                logger.info("")
+                if i % 2 == 0:
+                    # Even: iP = 2 * (i/2)P
+                    half_index = i // 2 - 1
+                    point_array[i - 1] = self.double_point(curve, point_array[half_index])
+                    half_str = "" if i // 2 == 1 else f"{i // 2}"
+                    logger.info(
+                        "%sP = 2 * %sP = 2 * %s = %s",
+                        i,
+                        half_str if half_str else "",
+                        point_array[half_index],
+                        point_array[i - 1],
+                    )
+                else:
+                    # Odd: iP = (i/2)P + (i/2+1)P
+                    half_index = i // 2 - 1
+                    next_index = i // 2
+                    point_array[i - 1] = self.add_points(
+                        curve,
+                        point_array[half_index],
+                        point_array[next_index],
+                    )
+                    half_str = "" if i // 2 == 1 else f"{i // 2}"
+                    logger.info(
+                        "%sP = %sP + %sP = %s + %s = %s",
+                        i,
+                        half_str if half_str else "",
+                        i // 2 + 1,
+                        point_array[half_index],
+                        point_array[next_index],
+                        point_array[i - 1],
+                    )
+
+            logger.info("")
+            logger.info("Ответ: %sP = %s", m, point_array[m - 1])
+            return point_array[m - 1]
+
+        except (PointNotOnCurveError, PointOperationError):
+            raise
+        except Exception as e:
+            msg = f"Failed to multiply point: {e}"
+            logger.error(msg)
+            raise PointOperationError(msg) from e
+
+

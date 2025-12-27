@@ -20,3 +20,4 @@ class CurveGenerationError(DomainError):
 class PointOperationError(DomainError):
     """Raised when point operation (addition/doubling) fails."""
 
+

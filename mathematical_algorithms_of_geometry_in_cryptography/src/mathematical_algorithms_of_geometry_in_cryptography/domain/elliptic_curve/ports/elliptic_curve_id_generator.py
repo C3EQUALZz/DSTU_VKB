@@ -11,3 +11,4 @@ class EllipticCurveIDGenerator(Protocol):
     def __call__(self) -> EllipticCurveID:
         ...
 
+

@@ -17,3 +17,4 @@ class MillerRabinTestView:
     is_composite: bool
     results: tuple[dict[str, Any], ...]
 
+

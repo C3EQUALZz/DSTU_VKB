@@ -50,6 +50,16 @@ class DoublePointCommand:
     p_y: int
 
 
+@dataclass(frozen=True, slots=True, kw_only=True)
+class MultiplyPointCommand:
+    """Команда для скалярного умножения точки на эллиптической кривой."""
+
+    curve: EllipticCurveGFp
+    p_x: int
+    p_y: int
+    multiplier: int
+
+
 @final
 class GenerateEllipticCurveGFpCommandHandler:
     """Обработчик команды генерации эллиптической кривой над GF(p)."""
@@ -180,4 +190,49 @@ class DoublePointCommandHandler:
         logger.info("Результат удвоения: %s", result)
 
         return result
+
+
+@final
+class MultiplyPointCommandHandler:
+    """Обработчик команды скалярного умножения точки."""
+
+    def __init__(self, elliptic_curve_gfp_service: EllipticCurveGFpService) -> None:
+        """
+        Инициализировать обработчик сервисом эллиптических кривых над GF(p).
+
+        :param elliptic_curve_gfp_service: сервис для работы с эллиптическими кривыми над GF(p)
+        """
+        self._elliptic_curve_gfp_service: Final[EllipticCurveGFpService] = (
+            elliptic_curve_gfp_service
+        )
+
+    def __call__(
+        self,
+        command: MultiplyPointCommand,
+    ) -> GFpPoint:
+        """
+        Обработать команду скалярного умножения точки.
+
+        :param command: команда с точкой и множителем
+        :return: результат скалярного умножения mP
+        """
+        logger.info(
+            "Начинается скалярное умножение точки. P=(%s, %s), m=%s",
+            command.p_x,
+            command.p_y,
+            command.multiplier,
+        )
+
+        p = GFpPoint(x=command.p_x, y=command.p_y)
+
+        result = self._elliptic_curve_gfp_service.multiply_point(
+            curve=command.curve,
+            p=p,
+            m=command.multiplier,
+        )
+
+        logger.info("Результат скалярного умножения: %sP = %s", command.multiplier, result)
+
+        return result
+
 

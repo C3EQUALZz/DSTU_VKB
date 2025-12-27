@@ -18,3 +18,4 @@ class PollardRhoTestView:
     divisor: Optional[int]
     steps: tuple[dict[str, Any], ...]
 
+

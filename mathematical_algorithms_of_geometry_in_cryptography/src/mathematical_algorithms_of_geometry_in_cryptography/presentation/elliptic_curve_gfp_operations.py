@@ -12,6 +12,8 @@ from mathematical_algorithms_of_geometry_in_cryptography.application.commands.el
     DoublePointCommandHandler,
     GenerateEllipticCurveGFpCommand,
     GenerateEllipticCurveGFpCommandHandler,
+    MultiplyPointCommand,
+    MultiplyPointCommandHandler,
 )
 from mathematical_algorithms_of_geometry_in_cryptography.application.views.elliptic_curve_gfp_view import (
     EllipticCurveGFpView,
@@ -298,4 +300,93 @@ def cmd_double_handler(
         click.echo(f"Ошибка при удвоении точки: {e}", err=True)
         logger.exception("Ошибка при удвоении точки")
         raise
+
+
+@elliptic_curve_gfp_group.command(name="multiply")
+@click.option(
+    "-a",
+    "--a",
+    required=True,
+    help="Коэффициент a",
+    type=int,
+)
+@click.option(
+    "-b",
+    "--b",
+    required=True,
+    help="Коэффициент b",
+    type=int,
+)
+@click.option(
+    "-p",
+    "--p",
+    required=True,
+    help="Простое число p",
+    type=int,
+)
+@click.option(
+    "--px",
+    required=True,
+    help="x-координата точки P",
+    type=int,
+)
+@click.option(
+    "--py",
+    required=True,
+    help="y-координата точки P",
+    type=int,
+)
+@click.option(
+    "-m",
+    "--multiplier",
+    required=True,
+    help="Множитель m (для вычисления mP)",
+    type=int,
+)
+def cmd_multiply_handler(
+    a: int,
+    b: int,
+    p: int,
+    px: int,
+    py: int,
+    multiplier: int,
+    generate_interactor: FromDishka[GenerateEllipticCurveGFpCommandHandler],
+    multiply_interactor: FromDishka[MultiplyPointCommandHandler],
+) -> None:
+    """Вычислить mP (скалярное умножение точки) на эллиптической кривой над GF(p)."""
+    # Валидация входных параметров
+    if multiplier <= 0:
+        click.echo("Множитель должен быть положительным", err=True)
+        return
+
+    try:
+        # Сначала генерируем кривую
+        generate_command = GenerateEllipticCurveGFpCommand(a=a, b=b, p=p)
+        curve: EllipticCurveGFp = generate_interactor(generate_command)
+
+        # Выполняем скалярное умножение
+        multiply_command = MultiplyPointCommand(
+            curve=curve,
+            p_x=px,
+            p_y=py,
+            multiplier=multiplier,
+        )
+        result: GFpPoint = multiply_interactor(multiply_command)
+
+        # Выводим результат
+        click.echo("\n" + "=" * 60)
+        click.echo("Результат скалярного умножения точки")
+        click.echo("=" * 60)
+        click.echo(f"P = ({px}, {py})")
+        click.echo(f"{multiplier}P = {result}")
+        click.echo("=" * 60 + "\n")
+
+    except PointNotOnCurveError as e:
+        click.echo(f"Ошибка: {e}", err=True)
+        raise
+    except Exception as e:
+        click.echo(f"Ошибка при скалярном умножении точки: {e}", err=True)
+        logger.exception("Ошибка при скалярном умножении точки")
+        raise
+
 

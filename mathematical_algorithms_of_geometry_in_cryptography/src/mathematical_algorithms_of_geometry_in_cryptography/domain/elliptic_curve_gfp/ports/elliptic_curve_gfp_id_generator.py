@@ -11,3 +11,4 @@ class EllipticCurveGFpIDGenerator(Protocol):
     def __call__(self) -> EllipticCurveGFpID:
         ...
 
+

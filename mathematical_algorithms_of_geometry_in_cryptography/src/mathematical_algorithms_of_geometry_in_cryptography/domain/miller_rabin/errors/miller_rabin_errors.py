@@ -16,3 +16,4 @@ class TestFailedError(DomainError):
 class CantAddResultError(DomainFieldError):
     ...
 
+

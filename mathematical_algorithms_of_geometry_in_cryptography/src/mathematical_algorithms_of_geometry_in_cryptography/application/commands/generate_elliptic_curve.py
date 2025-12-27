@@ -86,3 +86,4 @@ class GenerateEllipticCurveCommandHandler:
 
         return curve
 
+
