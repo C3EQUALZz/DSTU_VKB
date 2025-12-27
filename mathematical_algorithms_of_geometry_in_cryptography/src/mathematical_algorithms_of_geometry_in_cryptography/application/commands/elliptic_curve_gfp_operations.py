@@ -17,6 +17,9 @@ from mathematical_algorithms_of_geometry_in_cryptography.domain.elliptic_curve_g
 from mathematical_algorithms_of_geometry_in_cryptography.domain.elliptic_curve_gfp.values.gfp_point import (
     GFpPoint,
 )
+from mathematical_algorithms_of_geometry_in_cryptography.domain.elliptic_curve_gfp.values.sequence_result import (
+    SequenceResult,
+)
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 
@@ -67,6 +70,27 @@ class FindPointOrderCommand:
     curve: EllipticCurveGFp
     p_x: int
     p_y: int
+
+
+@dataclass(frozen=True, slots=True, kw_only=True)
+class FindAllOrdersCommand:
+    """Команда для поиска порядков всех точек на эллиптической кривой."""
+
+    curve: EllipticCurveGFp
+
+
+@dataclass(frozen=True, slots=True, kw_only=True)
+class GenerateSequenceCommand:
+    """Команда для генерации псевдослучайной последовательности."""
+
+    curve: EllipticCurveGFp
+    c: int
+    x0_x: int
+    x0_y: int
+    p_x: int
+    p_y: int
+    count: int
+    is_congruent: bool
 
 
 @final
@@ -285,5 +309,107 @@ class FindPointOrderCommandHandler:
         logger.info("Порядок точки найден: %s", order)
 
         return order
+
+
+@final
+class FindAllOrdersCommandHandler:
+    """Обработчик команды поиска порядков всех точек."""
+
+    def __init__(self, elliptic_curve_gfp_service: EllipticCurveGFpService) -> None:
+        """
+        Инициализировать обработчик сервисом эллиптических кривых над GF(p).
+
+        :param elliptic_curve_gfp_service: сервис для работы с эллиптическими кривыми над GF(p)
+        """
+        self._elliptic_curve_gfp_service: Final[EllipticCurveGFpService] = (
+            elliptic_curve_gfp_service
+        )
+
+    def __call__(
+        self,
+        command: FindAllOrdersCommand,
+    ) -> dict[GFpPoint, int]:
+        """
+        Обработать команду поиска порядков всех точек.
+
+        :param command: команда с кривой
+        :return: словарь точек и их порядков
+        """
+        logger.info("Начинается поиск порядков всех точек кривой")
+
+        orders = self._elliptic_curve_gfp_service.find_all_orders(
+            curve=command.curve,
+        )
+
+        logger.info("Найдены порядки всех %s точек", len(orders))
+
+        return orders
+
+
+@final
+class GenerateSequenceCommandHandler:
+    """Обработчик команды генерации псевдослучайной последовательности."""
+
+    def __init__(self, elliptic_curve_gfp_service: EllipticCurveGFpService) -> None:
+        """
+        Инициализировать обработчик сервисом эллиптических кривых над GF(p).
+
+        :param elliptic_curve_gfp_service: сервис для работы с эллиптическими кривыми над GF(p)
+        """
+        self._elliptic_curve_gfp_service: Final[EllipticCurveGFpService] = (
+            elliptic_curve_gfp_service
+        )
+
+    def __call__(
+        self,
+        command: GenerateSequenceCommand,
+    ) -> SequenceResult:
+        """
+        Обработать команду генерации последовательности.
+
+        :param command: команда с параметрами генерации
+        :return: результат генерации последовательности
+        """
+        generator_type = "Конгруэнтный" if command.is_congruent else "Инверсивный"
+        logger.info(
+            "Начинается генерация последовательности (%s генератор). "
+            "c=%s, X0=(%s, %s), P=(%s, %s), итераций=%s",
+            generator_type,
+            command.c,
+            command.x0_x,
+            command.x0_y,
+            command.p_x,
+            command.p_y,
+            command.count,
+        )
+
+        x0 = GFpPoint(x=command.x0_x, y=command.x0_y)
+        p = GFpPoint(x=command.p_x, y=command.p_y)
+
+        sequence, period, binary_sequence = self._elliptic_curve_gfp_service.generate_sequence(
+            curve=command.curve,
+            c=command.c,
+            x0=x0,
+            p=p,
+            count=command.count,
+            is_congruent=command.is_congruent,
+        )
+
+        # Convert sequence to dict format
+        sequence_data = [{"x": pt.x, "y": pt.y, "str": str(pt)} for pt in sequence]
+
+        result = SequenceResult(
+            sequence=tuple(sequence_data),
+            period=period,
+            binary_sequence=binary_sequence,
+        )
+
+        logger.info(
+            "Генерация завершена. Период: %s, Длина двоичной последовательности: %s",
+            period,
+            len(binary_sequence),
+        )
+
+        return result
 
 

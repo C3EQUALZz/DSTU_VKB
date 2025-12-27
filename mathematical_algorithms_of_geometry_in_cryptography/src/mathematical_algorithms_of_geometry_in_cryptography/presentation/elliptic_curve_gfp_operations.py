@@ -10,10 +10,14 @@ from mathematical_algorithms_of_geometry_in_cryptography.application.commands.el
     AddPointsCommandHandler,
     DoublePointCommand,
     DoublePointCommandHandler,
+    FindAllOrdersCommand,
+    FindAllOrdersCommandHandler,
     FindPointOrderCommand,
     FindPointOrderCommandHandler,
     GenerateEllipticCurveGFpCommand,
     GenerateEllipticCurveGFpCommandHandler,
+    GenerateSequenceCommand,
+    GenerateSequenceCommandHandler,
     MultiplyPointCommand,
     MultiplyPointCommandHandler,
 )
@@ -21,11 +25,17 @@ from mathematical_algorithms_of_geometry_in_cryptography.application.views.ellip
     EllipticCurveGFpView,
     PointOperationView,
 )
+from mathematical_algorithms_of_geometry_in_cryptography.domain.elliptic_curve_gfp.values.sequence_result import (
+    SequenceResult,
+)
 from mathematical_algorithms_of_geometry_in_cryptography.domain.elliptic_curve_gfp.entities.elliptic_curve_gfp import (
     EllipticCurveGFp,
 )
 from mathematical_algorithms_of_geometry_in_cryptography.domain.elliptic_curve_gfp.errors.elliptic_curve_gfp_errors import (
     PointNotOnCurveError,
+)
+from mathematical_algorithms_of_geometry_in_cryptography.domain.elliptic_curve_gfp.services.elliptic_curve_gfp_service import (
+    EllipticCurveGFpService,
 )
 from mathematical_algorithms_of_geometry_in_cryptography.domain.elliptic_curve_gfp.values.gfp_point import (
     GFpPoint,
@@ -463,6 +473,244 @@ def cmd_order_handler(
     except Exception as e:
         click.echo(f"Ошибка при поиске порядка точки: {e}", err=True)
         logger.exception("Ошибка при поиске порядка точки")
+        raise
+
+
+@elliptic_curve_gfp_group.command(name="all-orders")
+@click.option(
+    "-a",
+    "--a",
+    required=True,
+    help="Коэффициент a",
+    type=int,
+)
+@click.option(
+    "-b",
+    "--b",
+    required=True,
+    help="Коэффициент b",
+    type=int,
+)
+@click.option(
+    "-p",
+    "--p",
+    required=True,
+    help="Простое число p",
+    type=int,
+)
+def cmd_all_orders_handler(
+    a: int,
+    b: int,
+    p: int,
+    generate_interactor: FromDishka[GenerateEllipticCurveGFpCommandHandler],
+    all_orders_interactor: FromDishka[FindAllOrdersCommandHandler],
+) -> None:
+    """Найти порядки всех точек на эллиптической кривой над GF(p)."""
+    try:
+        # Сначала генерируем кривую
+        generate_command = GenerateEllipticCurveGFpCommand(a=a, b=b, p=p)
+        curve: EllipticCurveGFp = generate_interactor(generate_command)
+
+        # Выполняем поиск порядков
+        all_orders_command = FindAllOrdersCommand(curve=curve)
+        orders: dict[GFpPoint, int] = all_orders_interactor(all_orders_command)
+
+        # Выводим результат
+        click.echo("\n" + "=" * 60)
+        click.echo("Порядки точек ЭК:")
+        click.echo("=" * 60)
+
+        orders_table: PrettyTable = PrettyTable()
+        orders_table.field_names = ["Точка", "Порядок"]
+        for point, order in sorted(orders.items(), key=lambda x: (x[0].x, x[0].y)):
+            orders_table.add_row([str(point), order])
+
+        click.echo(orders_table)
+        click.echo("=" * 60 + "\n")
+
+    except Exception as e:
+        click.echo(f"Ошибка при поиске порядков точек: {e}", err=True)
+        logger.exception("Ошибка при поиске порядков точек")
+        raise
+
+
+@elliptic_curve_gfp_group.command(name="generate-sequence")
+@click.option(
+    "-a",
+    "--a",
+    required=True,
+    help="Коэффициент a",
+    type=int,
+)
+@click.option(
+    "-b",
+    "--b",
+    required=True,
+    help="Коэффициент b",
+    type=int,
+)
+@click.option(
+    "-p",
+    "--p",
+    required=True,
+    help="Простое число p",
+    type=int,
+)
+@click.option(
+    "-c",
+    "--c",
+    required=True,
+    help="Коэффициент c (множитель)",
+    type=int,
+)
+@click.option(
+    "--px",
+    required=True,
+    help="x-координата точки P",
+    type=int,
+)
+@click.option(
+    "--py",
+    required=True,
+    help="y-координата точки P",
+    type=int,
+)
+@click.option(
+    "--x0-x",
+    required=True,
+    help="x-координата начальной точки X0",
+    type=int,
+)
+@click.option(
+    "--x0-y",
+    required=True,
+    help="y-координата начальной точки X0",
+    type=int,
+)
+@click.option(
+    "-n",
+    "--count",
+    required=True,
+    help="Количество итераций",
+    type=int,
+)
+def cmd_generate_sequence_handler(
+    a: int,
+    b: int,
+    p: int,
+    c: int,
+    px: int,
+    py: int,
+    x0_x: int,
+    x0_y: int,
+    count: int,
+    generate_interactor: FromDishka[GenerateEllipticCurveGFpCommandHandler],
+    congruent_interactor: FromDishka[GenerateSequenceCommandHandler],
+    inversive_interactor: FromDishka[GenerateSequenceCommandHandler],
+    service: FromDishka[EllipticCurveGFpService],
+) -> None:
+    """Сгенерировать псевдослучайные последовательности конгруэнтным и инверсивным генераторами."""
+    # Валидация входных параметров
+    if count <= 0:
+        click.echo("Количество итераций должно быть положительным", err=True)
+        return
+
+    try:
+        # Сначала генерируем кривую
+        generate_command = GenerateEllipticCurveGFpCommand(a=a, b=b, p=p)
+        curve: EllipticCurveGFp = generate_interactor(generate_command)
+
+        # Проверяем условия
+        x0 = GFpPoint(x=x0_x, y=x0_y)
+        p_point = GFpPoint(x=px, y=py)
+
+        # Проверка: c * X0 + P != X0
+        c_x0 = service.multiply_point(curve, x0, c)
+        c_x0_plus_p = service.add_points(curve, c_x0, p_point)
+        if c_x0_plus_p == x0:
+            click.echo("Ошибка: должно выполняться условие c * X0 + P != X0", err=True)
+            return
+
+        # Проверка: c * X0^(-1) + P != X0
+        x0_inverse = service.reverse_point(curve, x0)
+        c_x0_inv = service.multiply_point(curve, x0_inverse, c)
+        c_x0_inv_plus_p = service.add_points(curve, c_x0_inv, p_point)
+        if c_x0_inv_plus_p == x0:
+            click.echo("Ошибка: должно выполняться условие c * X0^(-1) + P != X0", err=True)
+            return
+
+        # Генерируем конгруэнтную последовательность
+        click.echo("\n" + "=" * 60)
+        click.echo("Конгруэнтный генератор")
+        click.echo("=" * 60)
+
+        congruent_command = GenerateSequenceCommand(
+            curve=curve,
+            c=c,
+            x0_x=x0_x,
+            x0_y=x0_y,
+            p_x=px,
+            p_y=py,
+            count=count,
+            is_congruent=True,
+        )
+        congruent_result: SequenceResult = congruent_interactor(congruent_command)
+
+        click.echo(f"Период: {congruent_result.period}")
+        click.echo(f"Двоичная последовательность: {congruent_result.binary_sequence}")
+
+        # Генерируем инверсивную последовательность
+        click.echo("\n" + "=" * 60)
+        click.echo("Инверсивный генератор:")
+        click.echo("=" * 60)
+
+        inversive_command = GenerateSequenceCommand(
+            curve=curve,
+            c=c,
+            x0_x=x0_x,
+            x0_y=x0_y,
+            p_x=px,
+            p_y=py,
+            count=count,
+            is_congruent=False,
+        )
+        inversive_result: SequenceResult = inversive_interactor(inversive_command)
+
+        click.echo(f"Период: {inversive_result.period}")
+        click.echo(f"Двоичная последовательность: {inversive_result.binary_sequence}")
+
+        # Выводим таблицу сравнения
+        click.echo("\n" + "=" * 60)
+        click.echo("Таблица сравнения последовательностей")
+        click.echo("=" * 60)
+
+        comparison_table: PrettyTable = PrettyTable()
+        opt_len = len(str(count - 1)) + 2
+        comparison_table.field_names = ["i", "КГ", "ИГ"]
+
+        max_len = max(len(congruent_result.sequence), len(inversive_result.sequence))
+        for i in range(max_len):
+            kg_str = (
+                congruent_result.sequence[i]["str"]
+                if i < len(congruent_result.sequence)
+                else "-"
+            )
+            ig_str = (
+                inversive_result.sequence[i]["str"]
+                if i < len(inversive_result.sequence)
+                else "-"
+            )
+            comparison_table.add_row([i, kg_str, ig_str])
+
+        click.echo(comparison_table)
+        click.echo("=" * 60 + "\n")
+
+    except PointNotOnCurveError as e:
+        click.echo(f"Ошибка: {e}", err=True)
+        raise
+    except Exception as e:
+        click.echo(f"Ошибка при генерации последовательностей: {e}", err=True)
+        logger.exception("Ошибка при генерации последовательностей")
         raise
 
 

@@ -372,6 +372,11 @@ class EllipticCurveGFpService(DomainService):
 
             p_value = int(curve.parameters.p)
 
+            # Special case: order of infinity point is 1
+            if p.is_infinity:
+                logger.info("Точка бесконечности имеет порядок 1")
+                return 1
+
             # Check if point is on the curve
             if not curve.contains_point(p):
                 msg = f"Point {p} does not belong to the curve"
@@ -399,7 +404,11 @@ class EllipticCurveGFpService(DomainService):
             # Calculate Q = mP, then -Q (inverse point)
             q = self.multiply_point(curve, p, m)
             # Inverse point: -Q = (Q.x, -Q.y mod p)
-            q_inverse = GFpPoint(x=q.x, y=(-q.y + p_value) % p_value)
+            # Handle infinity point case
+            if q.is_infinity:
+                q_inverse = GFpPoint.infinity()
+            else:
+                q_inverse = GFpPoint(x=q.x, y=(-q.y + p_value) % p_value)
 
             logger.info("")
             logger.info("Q = %s", q_inverse)
@@ -448,4 +457,237 @@ class EllipticCurveGFpService(DomainService):
             logger.error(msg)
             raise PointOperationError(msg) from e
 
+    def reverse_point(self, curve: EllipticCurveGFp, point: GFpPoint) -> GFpPoint:
+        """
+        Get the inverse point -P = (x, -y mod p).
+        
+        Args:
+            curve: The elliptic curve
+            point: Point to reverse
+            
+        Returns:
+            Inverse point -P
+        """
+        if point.is_infinity:
+            return GFpPoint.infinity()
+        p_value = int(curve.parameters.p)
+        return GFpPoint(x=point.x, y=(-point.y + p_value) % p_value)
+
+    def find_all_orders(self, curve: EllipticCurveGFp) -> dict[GFpPoint, int]:
+        """
+        Find orders of all points on the elliptic curve.
+        
+        Args:
+            curve: The elliptic curve
+            
+        Returns:
+            Dictionary mapping points to their orders
+        """
+        logger.info("Начинается поиск порядков всех точек кривой")
+        orders: dict[GFpPoint, int] = {}
+
+        for point in curve.points:
+            try:
+                order = self.order_of_point(curve, point)
+                orders[point] = order
+                logger.debug("Точка %s: порядок = %s", point, order)
+            except Exception as e:
+                logger.warning("Не удалось найти порядок точки %s: %s", point, e)
+                # Skip points that fail order calculation
+                continue
+
+        logger.info("Найдены порядки всех %s точек", len(orders))
+        return orders
+
+    def generate_sequence(
+        self,
+        curve: EllipticCurveGFp,
+        c: int,
+        x0: GFpPoint,
+        p: GFpPoint,
+        count: int,
+        is_congruent: bool,
+    ) -> tuple[list[GFpPoint], int, str]:
+        """
+        Generate pseudorandom sequence using congruent or inversive generator.
+        
+        Congruent generator: X_i = c * X_{i-1} + P
+        Inversive generator: X_i = c * X_{i-1}^(-1) + P
+        
+        Args:
+            curve: The elliptic curve
+            c: Multiplier coefficient
+            x0: Initial point X0
+            p: Point P
+            count: Number of iterations
+            is_congruent: True for congruent generator, False for inversive
+            
+        Returns:
+            Tuple of (sequence, period, binary_sequence)
+        """
+        try:
+            p_value = int(curve.parameters.p)
+            generator_type = "Конгруэнтный" if is_congruent else "Инверсивный"
+            logger.info(
+                "Начинается генерация последовательности (%s генератор). "
+                "c=%s, X0=%s, P=%s, итераций=%s",
+                generator_type,
+                c,
+                x0,
+                p,
+                count,
+            )
+
+            # Check if points are on the curve
+            if not curve.contains_point(x0):
+                msg = f"Point X0 {x0} does not belong to the curve"
+                raise PointNotOnCurveError(msg)
+
+            if not curve.contains_point(p):
+                msg = f"Point P {p} does not belong to the curve"
+                raise PointNotOnCurveError(msg)
+
+            # Initialize sequence
+            sequence: list[GFpPoint] = [x0]
+            binary_sequence = str(x0.y & 1 if not x0.is_infinity else 0)
+            period = 0
+
+            # Track seen points and their indices for period detection
+            point_indices: dict[GFpPoint, int] = {x0: 0}
+            period_start_point: GFpPoint | None = None
+            period_start_index = -1
+            found_period = False
+
+            logger.info("X₀ = %s", x0)
+
+            # Generate sequence
+            for i in range(1, count):
+                # Compute c * X_{i-1} or c * X_{i-1}^(-1)
+                if is_congruent:
+                    # Congruent: c * X_{i-1}
+                    mp = self.multiply_point(curve, sequence[i - 1], c)
+                    logger.info(
+                        "X%s = %s * %s + %s = %s + %s",
+                        self._subscript(i),
+                        c,
+                        sequence[i - 1],
+                        p,
+                        mp,
+                        p,
+                    )
+                else:
+                    # Inversive: c * X_{i-1}^(-1)
+                    reversed_point = self.reverse_point(curve, sequence[i - 1])
+                    mp = self.multiply_point(curve, reversed_point, c)
+                    logger.info(
+                        "X%s = %s * %s^(-1) + %s = %s * %s + %s = %s + %s",
+                        self._subscript(i),
+                        c,
+                        sequence[i - 1],
+                        p,
+                        c,
+                        reversed_point,
+                        p,
+                        mp,
+                        p,
+                    )
+
+                # X_i = mp + P
+                next_point = self.add_points(curve, mp, p)
+                sequence.append(next_point)
+
+                # Add to binary sequence (least significant bit of y)
+                bit = next_point.y & 1 if not next_point.is_infinity else 0
+                binary_sequence += str(bit)
+
+                logger.info(" = %s", next_point)
+
+                # Period detection
+                if period == 0:
+                    if found_period and next_point == period_start_point:
+                        period = i - period_start_index
+                        logger.info("Период найден: %s", period)
+                    elif not found_period and next_point in point_indices:
+                        found_period = True
+                        period_start_point = next_point
+                        period_start_index = point_indices[next_point]
+                        logger.info(
+                            "Начало периода обнаружено: точка %s повторяется (первый раз на индексе %s, сейчас %s)",
+                            next_point,
+                            period_start_index,
+                            i,
+                        )
+
+                    point_indices[next_point] = i
+
+            # If period not found in initial count, continue searching
+            if period == 0:
+                logger.info("Период не найден в первых %s итерациях, продолжаем поиск", count)
+                current = sequence[-1]
+                iteration = count
+
+                while True:
+                    if is_congruent:
+                        mp = self.multiply_point(curve, current, c)
+                    else:
+                        reversed_point = self.reverse_point(curve, current)
+                        mp = self.multiply_point(curve, reversed_point, c)
+
+                    current = self.add_points(curve, mp, p)
+                    iteration += 1
+
+                    if found_period and current == period_start_point:
+                        period = iteration - period_start_index
+                        logger.info("Период найден: %s", period)
+                        break
+
+                    if not found_period and current in point_indices:
+                        found_period = True
+                        period_start_point = current
+                        period_start_index = point_indices[current]
+                        logger.info(
+                            "Начало периода обнаружено: точка %s повторяется (первый раз на индексе %s, сейчас %s)",
+                            current,
+                            period_start_index,
+                            iteration,
+                        )
+
+                    point_indices[current] = iteration
+
+            logger.info("Период: %s", period)
+            logger.info("Двоичная последовательность: %s", binary_sequence)
+
+            return sequence, period, binary_sequence
+
+        except (PointNotOnCurveError, PointOperationError):
+            raise
+        except Exception as e:
+            msg = f"Failed to generate sequence: {e}"
+            logger.error(msg)
+            raise PointOperationError(msg) from e
+
+    @staticmethod
+    def _subscript(number: int) -> str:
+        """
+        Convert number to subscript string.
+        
+        Args:
+            number: Number to convert
+            
+        Returns:
+            String with subscript digits
+        """
+        subscript_map = {
+            "0": "₀",
+            "1": "₁",
+            "2": "₂",
+            "3": "₃",
+            "4": "₄",
+            "5": "₅",
+            "6": "₆",
+            "7": "₇",
+            "8": "₈",
+            "9": "₉",
+        }
+        return "".join(subscript_map.get(d, d) for d in str(number))
 
