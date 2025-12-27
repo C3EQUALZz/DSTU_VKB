@@ -8,6 +8,7 @@ from mathematical_algorithms_of_geometry_in_cryptography.application.commands.fi
 from mathematical_algorithms_of_geometry_in_cryptography.application.commands.elliptic_curve_gfp_operations import (
     AddPointsCommandHandler,
     DoublePointCommandHandler,
+    FindPointOrderCommandHandler,
     GenerateEllipticCurveGFpCommandHandler,
     MultiplyPointCommandHandler,
 )
@@ -78,6 +79,7 @@ def interactors_provider() -> Provider:
         AddPointsCommandHandler,
         DoublePointCommandHandler,
         MultiplyPointCommandHandler,
+        FindPointOrderCommandHandler,
     )
 
     return provider

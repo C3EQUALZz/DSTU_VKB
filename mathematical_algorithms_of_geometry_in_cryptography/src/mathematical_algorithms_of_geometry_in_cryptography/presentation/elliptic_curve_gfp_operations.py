@@ -10,6 +10,8 @@ from mathematical_algorithms_of_geometry_in_cryptography.application.commands.el
     AddPointsCommandHandler,
     DoublePointCommand,
     DoublePointCommandHandler,
+    FindPointOrderCommand,
+    FindPointOrderCommandHandler,
     GenerateEllipticCurveGFpCommand,
     GenerateEllipticCurveGFpCommandHandler,
     MultiplyPointCommand,
@@ -387,6 +389,80 @@ def cmd_multiply_handler(
     except Exception as e:
         click.echo(f"Ошибка при скалярном умножении точки: {e}", err=True)
         logger.exception("Ошибка при скалярном умножении точки")
+        raise
+
+
+@elliptic_curve_gfp_group.command(name="order")
+@click.option(
+    "-a",
+    "--a",
+    required=True,
+    help="Коэффициент a",
+    type=int,
+)
+@click.option(
+    "-b",
+    "--b",
+    required=True,
+    help="Коэффициент b",
+    type=int,
+)
+@click.option(
+    "-p",
+    "--p",
+    required=True,
+    help="Простое число p",
+    type=int,
+)
+@click.option(
+    "--px",
+    required=True,
+    help="x-координата точки P",
+    type=int,
+)
+@click.option(
+    "--py",
+    required=True,
+    help="y-координата точки P",
+    type=int,
+)
+def cmd_order_handler(
+    a: int,
+    b: int,
+    p: int,
+    px: int,
+    py: int,
+    generate_interactor: FromDishka[GenerateEllipticCurveGFpCommandHandler],
+    order_interactor: FromDishka[FindPointOrderCommandHandler],
+) -> None:
+    """Найти порядок точки P на эллиптической кривой над GF(p)."""
+    try:
+        # Сначала генерируем кривую
+        generate_command = GenerateEllipticCurveGFpCommand(a=a, b=b, p=p)
+        curve: EllipticCurveGFp = generate_interactor(generate_command)
+
+        # Выполняем поиск порядка
+        order_command = FindPointOrderCommand(
+            curve=curve,
+            p_x=px,
+            p_y=py,
+        )
+        order: int = order_interactor(order_command)
+
+        # Выводим результат
+        click.echo("\n" + "=" * 60)
+        click.echo("Результат поиска порядка точки")
+        click.echo("=" * 60)
+        click.echo(f"P = ({px}, {py})")
+        click.echo(f"Порядок точки P: {order}")
+        click.echo("=" * 60 + "\n")
+
+    except PointNotOnCurveError as e:
+        click.echo(f"Ошибка: {e}", err=True)
+        raise
+    except Exception as e:
+        click.echo(f"Ошибка при поиске порядка точки: {e}", err=True)
+        logger.exception("Ошибка при поиске порядка точки")
         raise
 
 

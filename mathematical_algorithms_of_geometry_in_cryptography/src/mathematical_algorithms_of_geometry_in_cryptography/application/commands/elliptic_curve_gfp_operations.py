@@ -60,6 +60,15 @@ class MultiplyPointCommand:
     multiplier: int
 
 
+@dataclass(frozen=True, slots=True, kw_only=True)
+class FindPointOrderCommand:
+    """Команда для поиска порядка точки на эллиптической кривой."""
+
+    curve: EllipticCurveGFp
+    p_x: int
+    p_y: int
+
+
 @final
 class GenerateEllipticCurveGFpCommandHandler:
     """Обработчик команды генерации эллиптической кривой над GF(p)."""
@@ -234,5 +243,47 @@ class MultiplyPointCommandHandler:
         logger.info("Результат скалярного умножения: %sP = %s", command.multiplier, result)
 
         return result
+
+
+@final
+class FindPointOrderCommandHandler:
+    """Обработчик команды поиска порядка точки."""
+
+    def __init__(self, elliptic_curve_gfp_service: EllipticCurveGFpService) -> None:
+        """
+        Инициализировать обработчик сервисом эллиптических кривых над GF(p).
+
+        :param elliptic_curve_gfp_service: сервис для работы с эллиптическими кривыми над GF(p)
+        """
+        self._elliptic_curve_gfp_service: Final[EllipticCurveGFpService] = (
+            elliptic_curve_gfp_service
+        )
+
+    def __call__(
+        self,
+        command: FindPointOrderCommand,
+    ) -> int:
+        """
+        Обработать команду поиска порядка точки.
+
+        :param command: команда с точкой для поиска порядка
+        :return: порядок точки P
+        """
+        logger.info(
+            "Начинается поиск порядка точки. P=(%s, %s)",
+            command.p_x,
+            command.p_y,
+        )
+
+        p = GFpPoint(x=command.p_x, y=command.p_y)
+
+        order = self._elliptic_curve_gfp_service.order_of_point(
+            curve=command.curve,
+            p=p,
+        )
+
+        logger.info("Порядок точки найден: %s", order)
+
+        return order
 
 

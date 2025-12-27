@@ -348,4 +348,104 @@ class EllipticCurveGFpService(DomainService):
             logger.error(msg)
             raise PointOperationError(msg) from e
 
+    def order_of_point(
+        self,
+        curve: EllipticCurveGFp,
+        p: GFpPoint,
+    ) -> int:
+        """
+        Find the order of a point P on the elliptic curve using Baby-step Giant-step algorithm.
+        
+        Args:
+            curve: The elliptic curve
+            p: Point to find order for
+            
+        Returns:
+            Order of point P (smallest n such that nP = O)
+            
+        Raises:
+            PointNotOnCurveError: If point doesn't belong to the curve
+            PointOperationError: If order calculation fails
+        """
+        try:
+            import math
+
+            p_value = int(curve.parameters.p)
+
+            # Check if point is on the curve
+            if not curve.contains_point(p):
+                msg = f"Point {p} does not belong to the curve"
+                raise PointNotOnCurveError(msg)
+
+            # Calculate N1 = p + 1 + 2*sqrt(p)
+            n1 = p_value + 1 + 2 * math.sqrt(p_value)
+            m = math.ceil(math.sqrt(n1))
+
+            logger.info("N1 = %s", n1)
+            logger.info("m = %s", m)
+
+            # Build table: t -> tP for t = 1 to m
+            table: dict[GFpPoint, int] = {}
+            logger.info("")
+            logger.info("t  Pt")
+
+            for t in range(1, m + 1):
+                pt = self.multiply_point(curve, p, t)
+                table[pt] = t
+                logger.info("%-3s %s", t, pt)
+
+            logger.info("")
+
+            # Calculate Q = mP, then -Q (inverse point)
+            q = self.multiply_point(curve, p, m)
+            # Inverse point: -Q = (Q.x, -Q.y mod p)
+            q_inverse = GFpPoint(x=q.x, y=(-q.y + p_value) % p_value)
+
+            logger.info("")
+            logger.info("Q = %s", q_inverse)
+            
+            # Initialize R = O (infinity point)
+            r = GFpPoint.infinity()
+            logger.info("R = %s", r)
+
+            # Baby-step Giant-step algorithm
+            for i in range(m):
+                logger.info("")
+                logger.info("i = %s", i)
+
+                # Check if R is in the table
+                if r in table:
+                    t = table[r]
+                    n = m * i + t
+                    logger.info(
+                        "R содержится в таблице при t = %s",
+                        t,
+                    )
+                    logger.info(
+                        "n = m * i + t = %s * %s + %s = %s",
+                        m,
+                        i,
+                        t,
+                        n,
+                    )
+                    logger.info("")
+                    logger.info("Ответ: порядок точки P равен %s", n)
+                    return n
+
+                # R = R + (-Q)
+                r = self.add_points(curve, r, q_inverse)
+                logger.info("R = R + Q = %s", r)
+
+            # Should not reach here if algorithm is correct
+            msg = "Failed to find point order"
+            logger.error(msg)
+            raise PointOperationError(msg)
+
+        except (PointNotOnCurveError, PointOperationError):
+            raise
+        except Exception as e:
+            msg = f"Failed to find point order: {e}"
+            logger.error(msg)
+            raise PointOperationError(msg) from e
+
 
