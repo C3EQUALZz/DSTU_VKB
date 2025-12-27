@@ -552,12 +552,6 @@ class EllipticCurveGFpService(DomainService):
             binary_sequence = str(x0.y & 1 if not x0.is_infinity else 0)
             period = 0
 
-            # Track seen points and their indices for period detection
-            point_indices: dict[GFpPoint, int] = {x0: 0}
-            period_start_point: GFpPoint | None = None
-            period_start_index = -1
-            found_period = False
-
             logger.info("X₀ = %s", x0)
 
             # Generate sequence
@@ -602,23 +596,10 @@ class EllipticCurveGFpService(DomainService):
 
                 logger.info(" = %s", next_point)
 
-                # Period detection
-                if period == 0:
-                    if found_period and next_point == period_start_point:
-                        period = i - period_start_index
-                        logger.info("Период найден: %s", period)
-                    elif not found_period and next_point in point_indices:
-                        found_period = True
-                        period_start_point = next_point
-                        period_start_index = point_indices[next_point]
-                        logger.info(
-                            "Начало периода обнаружено: точка %s повторяется (первый раз на индексе %s, сейчас %s)",
-                            next_point,
-                            period_start_index,
-                            i,
-                        )
-
-                    point_indices[next_point] = i
+                # Period detection: period is the smallest k > 0 such that X_k == X_0
+                if period == 0 and next_point == x0:
+                    period = i
+                    logger.info("Период найден: %s (X%s = X₀)", period, self._subscript(i))
 
             # If period not found in initial count, continue searching
             if period == 0:
@@ -636,23 +617,11 @@ class EllipticCurveGFpService(DomainService):
                     current = self.add_points(curve, mp, p)
                     iteration += 1
 
-                    if found_period and current == period_start_point:
-                        period = iteration - period_start_index
-                        logger.info("Период найден: %s", period)
+                    # Period detection: period is the smallest k > 0 such that X_k == X_0
+                    if current == x0:
+                        period = iteration
+                        logger.info("Период найден: %s (X%s = X₀)", period, self._subscript(iteration))
                         break
-
-                    if not found_period and current in point_indices:
-                        found_period = True
-                        period_start_point = current
-                        period_start_index = point_indices[current]
-                        logger.info(
-                            "Начало периода обнаружено: точка %s повторяется (первый раз на индексе %s, сейчас %s)",
-                            current,
-                            period_start_index,
-                            iteration,
-                        )
-
-                    point_indices[current] = iteration
 
             logger.info("Период: %s", period)
             logger.info("Двоичная последовательность: %s", binary_sequence)
