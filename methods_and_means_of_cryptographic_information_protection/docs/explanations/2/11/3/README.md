@@ -10,7 +10,7 @@
 Для выполнения задания воспользуемся командой: 
 
 ```bash
-openssl genpkey -algorithm RSA -out D:\Progrramming\PycharmProjects\DSTU_VKB\methods_and_means_of_cryptographic_information_protection\docs\explanations\2\11\3\privateRSA.pem -cipher DES -provider default -provider legacy -pkeyopt rsa_keygen_bits:2048
+openssl genpkey -algorithm RSA -out D:\PycharmProjects\DSTU_VKB\methods_and_means_of_cryptographic_information_protection\docs\explanations\2\11\3\privateRSA.pem -provider-path "D:\tools\openssl\OpenSSL-Win64\bin" -provider default -provider legacy -pkeyopt rsa_keygen_bits:2048
 ```
 
 > [!NOTE]
@@ -19,3 +19,7 @@ openssl genpkey -algorithm RSA -out D:\Progrramming\PycharmProjects\DSTU_VKB\met
 
 > [!IMPORTANT]
 > Пути к файлам могут абсолютно иные, поменяйте на свой. 
+
+![img.png](1.png)
+
+![img.png](2.png)
