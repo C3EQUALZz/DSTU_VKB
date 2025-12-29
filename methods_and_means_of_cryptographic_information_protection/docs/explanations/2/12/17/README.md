@@ -10,7 +10,7 @@
 Получим открытый ключ:
 
 ```bash
-openssl x509 -pubkey -noout -in D:\PycharmProjects\DSTU_VKB\methods_and_means_of_cryptographic_information_protection\docs\explanations\2\12\15\cert.pem > D:\PycharmProjects\DSTU_VKB\methods_and_means_of_cryptographic_information_protection\docs\explanations\2\12\17\pubkey.pem
+openssl x509 -in D:\PycharmProjects\DSTU_VKB\methods_and_means_of_cryptographic_information_protection\docs\explanations\2\12\15\cert.pem -pubkey -noout -out D:\PycharmProjects\DSTU_VKB\methods_and_means_of_cryptographic_information_protection\docs\explanations\2\12\17\public_key.pem
 ```
 
 ![img.png](1.png)
