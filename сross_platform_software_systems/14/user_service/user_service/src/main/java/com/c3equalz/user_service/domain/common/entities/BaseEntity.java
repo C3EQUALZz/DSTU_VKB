@@ -26,7 +26,7 @@ public abstract class BaseEntity<T extends BaseValueObject> {
      * This field is final and cannot be modified after construction.
      */
     protected final T id;
-    protected final Instant createdAt;
+    protected Instant createdAt;
     protected Instant updatedAt;
 
     /**
