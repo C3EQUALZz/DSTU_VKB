@@ -1,7 +1,7 @@
 package com.c3equalz.user_service.application.common.services;
 
 import com.c3equalz.user_service.application.common.ports.TransactionManager;
-import com.c3equalz.user_service.application.errors.AuthenticationError;
+import com.c3equalz.user_service.application.errors.auth.AuthenticationError;
 import com.c3equalz.user_service.domain.user.values.UserID;
 import com.c3equalz.user_service.infrastructure.auth.session.AuthSession;
 import com.c3equalz.user_service.infrastructure.auth.session.AuthSessionIDGenerator;

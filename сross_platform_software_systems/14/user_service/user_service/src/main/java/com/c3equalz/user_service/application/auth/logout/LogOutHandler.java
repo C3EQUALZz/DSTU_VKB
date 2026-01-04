@@ -2,6 +2,7 @@ package com.c3equalz.user_service.application.auth.logout;
 
 import com.c3equalz.user_service.application.common.services.AuthSessionService;
 import com.c3equalz.user_service.application.common.services.CurrentUserService;
+import com.c3equalz.user_service.application.errors.auth.AuthenticationError;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
@@ -24,7 +25,7 @@ public final class LogOutHandler {
      * Executes the logout operation.
      *
      * @return Mono that completes when logout is successful
-     * @throws com.c3equalz.user_service.application.errors.AuthenticationError if authentication fails
+     * @throws AuthenticationError if authentication fails
      * @throws com.c3equalz.user_service.infrastructure.errors.RepoError if repository operation fails
      * @throws com.c3equalz.user_service.domain.user.errors.AuthorizationError if authorization fails
      */

@@ -1,7 +1,7 @@
 package com.c3equalz.user_service.application.common.query_params;
 
-import com.c3equalz.user_service.application.errors.LimitCantBeNegativeError;
-import com.c3equalz.user_service.application.errors.OffsetCantBeNegativeError;
+import com.c3equalz.user_service.application.errors.pagination.LimitCantBeNegativeError;
+import com.c3equalz.user_service.application.errors.pagination.OffsetCantBeNegativeError;
 import lombok.Getter;
 
 @Getter

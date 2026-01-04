@@ -1,4 +1,6 @@
-package com.c3equalz.user_service.application.errors;
+package com.c3equalz.user_service.application.errors.auth;
+
+import com.c3equalz.user_service.application.errors.ApplicationError;
 
 /**
  * Exception thrown when authentication fails.

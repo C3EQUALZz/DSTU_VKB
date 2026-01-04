@@ -1,4 +1,6 @@
-package com.c3equalz.user_service.application.errors;
+package com.c3equalz.user_service.application.errors.pagination;
+
+import com.c3equalz.user_service.application.errors.ApplicationError;
 
 public class LimitCantBeNegativeError extends ApplicationError {
     public LimitCantBeNegativeError(String message) {

@@ -6,8 +6,8 @@ import com.c3equalz.user_service.application.common.ports.user.UserCommandGatewa
 import com.c3equalz.user_service.application.common.services.CurrentUserService;
 import com.c3equalz.user_service.application.common.views.auth.SignUpView;
 import com.c3equalz.user_service.application.constants.AuthConstants;
-import com.c3equalz.user_service.application.errors.AlreadyAuthenticatedError;
-import com.c3equalz.user_service.application.errors.AuthenticationError;
+import com.c3equalz.user_service.application.errors.auth.AlreadyAuthenticatedError;
+import com.c3equalz.user_service.application.errors.auth.AuthenticationError;
 import com.c3equalz.user_service.application.errors.user.UserAlreadyExistsError;
 import com.c3equalz.user_service.domain.user.entities.User;
 import com.c3equalz.user_service.domain.user.services.UserService;
