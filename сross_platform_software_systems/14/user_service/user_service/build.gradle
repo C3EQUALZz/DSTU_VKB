@@ -49,6 +49,10 @@ dependencies {
     implementation 'org.springframework.integration:spring-integration-webflux'
     implementation 'org.springframework.security:spring-security-messaging'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+    implementation 'org.springframework.boot:spring-boot-starter-r2dbc'
+    implementation 'org.springframework.integration:spring-integration-r2dbc'
+    testImplementation 'org.testcontainers:db2'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'io.micrometer:micrometer-registry-otlp'
@@ -74,6 +78,7 @@ dependencies {
     testImplementation 'org.testcontainers:testcontainers-junit-jupiter'
     testImplementation 'org.testcontainers:testcontainers-postgresql'
     testImplementation 'org.testcontainers:testcontainers-rabbitmq'
+    runtimeOnly 'org.postgresql:r2dbc-postgresql'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
