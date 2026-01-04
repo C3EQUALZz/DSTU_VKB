@@ -46,7 +46,7 @@ public final class SignUpHandler {
      * @throws UserAlreadyExistsError if a user with the given email already exists
      */
     public Mono<SignUpView> run(SignUpData data) {
-        log.info("Sign up: started. Username: '{}'.", data.getName());
+        log.info("Sign up: started. Username: '{}'.", data.name());
 
         // Check if user is already authenticated
         // If getCurrentUser() succeeds, it means user is authenticated
@@ -54,10 +54,10 @@ public final class SignUpHandler {
                 .flatMap(user -> Mono.<SignUpView>error(new AlreadyAuthenticatedError(AuthConstants.AUTH_ALREADY_AUTHENTICATED)))
                 .onErrorResume(AuthenticationError.class, _ -> {
                     // User is not authenticated, continue with sign up process
-                    UserEmail email = new UserEmail(data.getEmail());
-                    Username name = new Username(data.getName());
-                    RawPassword rawPassword = new RawPassword(data.getPassword());
-                    UserRole role = data.getRole();
+                    UserEmail email = new UserEmail(data.email());
+                    Username name = new Username(data.name());
+                    RawPassword rawPassword = new RawPassword(data.password());
+                    UserRole role = data.role();
 
                     // Create user domain entity
                     User newUser = userService.create(email, name, rawPassword, role);

@@ -43,7 +43,7 @@ public class LoginHandler {
      * @throws AuthenticationError       if the password is invalid or the account is inactive
      */
     public Mono<Void> run(LoginData data) {
-        log.info("Log in: started. Email: '{}'.", data.getEmail());
+        log.info("Log in: started. Email: '{}'.", data.email());
 
         // Check if user is already authenticated
         // If getCurrentUser() succeeds, it means user is authenticated
@@ -51,8 +51,8 @@ public class LoginHandler {
                 .flatMap(user -> Mono.<Void>error(new AlreadyAuthenticatedError(AuthConstants.AUTH_ALREADY_AUTHENTICATED)))
                 .onErrorResume(AuthenticationError.class, error -> {
                     // User is not authenticated, continue with login process
-                    UserEmail email = new UserEmail(data.getEmail());
-                    RawPassword password = new RawPassword(data.getPassword());
+                    UserEmail email = new UserEmail(data.email());
+                    RawPassword password = new RawPassword(data.password());
 
                     return userCommandGateway.readByEmail(email)
                             .flatMap(optionalUser -> {
