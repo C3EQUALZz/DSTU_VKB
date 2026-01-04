@@ -1,0 +1,35 @@
+# Cross-platform shell configuration
+# Use PowerShell on Windows (higher precedence than shell setting)
+set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
+# Use sh on Unix-like systems
+set shell := ["sh", "-c"]
+
+DOCKER_COMPOSE_DEV := "docker-compose.dev.yaml"
+DOCKER_COMPOSE_PROD := "docker-compose.prod.yaml"
+
+[doc("All command information")]
+[private]
+default:
+  @just --list --unsorted --list-heading $'User service commands…\n'
+
+[doc("Run all containers in dev version")]
+[group("infra")]
+@up-dev:
+  docker compose -f {{ DOCKER_COMPOSE_DEV }} up -d --wait
+
+[doc("Down all dev containers")]
+[group("infra")]
+@down-dev:
+  docker compose -f {{ DOCKER_COMPOSE_DEV }} down
+  docker image prune -f
+
+[doc("Run all containers in production version")]
+[group("infra")]
+@up:
+  docker compose -f {{ DOCKER_COMPOSE_PROD }} --profile api --profile grafana up --build -d
+
+[doc("Down all production containers")]
+[group("infra")]
+@down:
+  docker compose -f {{ DOCKER_COMPOSE_PROD }} --profile api --profile grafana down
+  docker image prune -f
