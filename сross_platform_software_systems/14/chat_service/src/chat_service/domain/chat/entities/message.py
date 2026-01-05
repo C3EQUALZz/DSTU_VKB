@@ -1,5 +1,4 @@
 from dataclasses import dataclass, field
-from datetime import datetime, UTC
 
 from chat_service.domain.chat.values.message_content import MessageContent
 from chat_service.domain.chat.values.message_id import MessageID
@@ -20,16 +19,6 @@ class Message(BaseEntity[MessageID]):
     role: MessageRole = MessageRole.USER
     status: MessageStatus = field(default=MessageStatus.PENDING)
 
-    def mark_as_sent(self) -> None:
-        """Mark the message as successfully sent."""
-        self.status = MessageStatus.SENT
-        self.updated_at = datetime.now(UTC)
-
-    def mark_as_failed(self) -> None:
-        """Mark the message as failed."""
-        self.status = MessageStatus.FAILED
-        self.updated_at = datetime.now(UTC)
-
     def is_sent(self) -> bool:
         """Check if the message has been sent."""
         return self.status == MessageStatus.SENT
@@ -37,3 +26,6 @@ class Message(BaseEntity[MessageID]):
     def is_pending(self) -> bool:
         """Check if the message is pending."""
         return self.status == MessageStatus.PENDING
+
+    def is_failed(self) -> bool:
+        return self.status == MessageStatus.FAILED
