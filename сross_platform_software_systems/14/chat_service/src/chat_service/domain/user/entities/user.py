@@ -1,0 +1,19 @@
+from dataclasses import dataclass, field
+
+from chat_service.domain.common.entities.base_entity import BaseEntity
+from chat_service.domain.user.values.open_router_api_key import OpenRouterAPIKey
+from chat_service.domain.user.values.user_id import UserID
+from chat_service.domain.user.values.user_name import UserName
+
+
+@dataclass(eq=False, kw_only=True)
+class User(BaseEntity[UserID]):
+    """User entity in chat service context.
+
+    This is a minimal representation of a user, containing only
+    the information needed for the chat service to function.
+    The full user data is managed in the user_service.
+    """
+
+    name: UserName
+    openrouter_api_key: OpenRouterAPIKey | None = field(default=None)
