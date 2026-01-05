@@ -17,3 +17,7 @@ class UserCommandGateway(Protocol):
     @abstractmethod
     async def delete_by_id(self, user_id: UserID) -> None:
         ...
+
+    @abstractmethod
+    async def update(self, user: User) -> None:
+        ...
