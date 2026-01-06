@@ -35,6 +35,9 @@ dependencies = [
     "bazario==0.4.2",
     "alembic==1.16.5",
     "uvloop==0.21.0; sys_platform != 'win32'",
+    "faststream[rabbit]==0.6.5",
+    "dishka-faststream==0.6.0",
+    "openai>=2.14.0",
 ]
 
 [project.optional-dependencies]

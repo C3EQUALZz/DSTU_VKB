@@ -4,6 +4,7 @@ from chat_service.domain.common.entities.base_entity import BaseEntity
 from chat_service.domain.user.values.open_router_api_key import OpenRouterAPIKey
 from chat_service.domain.user.values.user_id import UserID
 from chat_service.domain.user.values.user_name import UserName
+from chat_service.domain.user.values.user_role import UserRole
 
 
 @dataclass(eq=False, kw_only=True)
@@ -17,3 +18,5 @@ class User(BaseEntity[UserID]):
 
     name: UserName
     openrouter_api_key: OpenRouterAPIKey | None = field(default=None)
+    role: UserRole = field(default_factory=lambda: UserRole.USER)
+    is_active: bool = field(default_factory=lambda: True)
