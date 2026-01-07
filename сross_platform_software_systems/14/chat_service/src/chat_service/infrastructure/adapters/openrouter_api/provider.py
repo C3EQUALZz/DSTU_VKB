@@ -1,10 +1,10 @@
-import os
-
 from openai import AsyncOpenAI
 
+from chat_service.setup.config.openrouter import OpenRouterConfig
 
-async def get_openrouter_client() -> AsyncOpenAI:
+
+async def get_openrouter_client(config: OpenRouterConfig) -> AsyncOpenAI:
     return AsyncOpenAI(
-        api_key=os.environ["OPENROUTER_API_KEY"],
-        base_url="https://api.proxyapi.ru/openrouter/v1",
+        api_key=config.api_key,
+        base_url=config.base_url,
     )

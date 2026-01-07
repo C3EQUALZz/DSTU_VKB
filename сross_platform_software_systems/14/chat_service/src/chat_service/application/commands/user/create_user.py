@@ -9,7 +9,6 @@ from chat_service.application.common.ports.user.user_command_gateway import User
 from chat_service.application.common.views.user.create_user_view import CreateUserView
 from chat_service.domain.user.entities.user import User
 from chat_service.domain.user.services.user_service import UserService
-from chat_service.domain.user.values.open_router_api_key import OpenRouterAPIKey
 from chat_service.domain.user.values.user_id import UserID
 from chat_service.domain.user.values.user_name import UserName
 
@@ -20,7 +19,6 @@ logger: Final[logging.Logger] = logging.getLogger(__name__)
 class CreateUserCommand:
     user_id: UUID
     user_name: str
-    openrouter_api_key: str | None = None
 
 
 @final
@@ -43,21 +41,10 @@ class CreateUserCommandHandler:
         user_id: UserID = UserID(data.user_id)
         user_name: UserName = UserName(data.user_name)
 
-        new_user: User
-
-        if data.openrouter_api_key is None:
-            logger.info("Open router api key is None, user with id: %s has empty key", user_id)
-            new_user = self._user_service.create(
-                user_id=user_id,
-                name=user_name,
-            )
-        else:
-            logger.info("Open router api key is provided for user with id: %s", user_id)
-            new_user = self._user_service.create(
-                user_id=user_id,
-                name=user_name,
-                openrouter_api_key=OpenRouterAPIKey(data.openrouter_api_key),
-            )
+        new_user: User = self._user_service.create(
+            user_id=user_id,
+            name=user_name,
+        )
 
         logger.info("Started saving user with id: %s in persistence storage", user_id)
         await self._user_command_gateway.add(user=new_user)

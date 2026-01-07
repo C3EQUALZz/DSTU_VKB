@@ -2,9 +2,10 @@ from functools import lru_cache
 
 from fastapi import FastAPI, APIRouter
 
+from chat_service.infrastructure.persistence.models.chat import map_chats_table, map_messages_table
+from chat_service.infrastructure.persistence.models.user import map_users_table
 from chat_service.presentation.http.v1.common.routes import index, healthcheck
 from chat_service.presentation.http.v1.routes.chat import chat_router
-from chat_service.presentation.http.v1.routes.user import user_router
 from chat_service.setup.config.asgi import ASGIConfig
 from chat_service.setup.config.settings import AppConfig
 
@@ -37,7 +38,9 @@ def setup_map_tables() -> None:
     in `env.py` for Alembic migrations to ensure all models are available
     during database migrations.
     """
-    ...
+    map_users_table()
+    map_chats_table()
+    map_messages_table()
 
 
 def setup_http_middlewares(app: FastAPI, /, api_config: ASGIConfig) -> None:
@@ -81,10 +84,6 @@ def setup_http_routes(app: FastAPI, /) -> None:
     app.include_router(healthcheck.router)
 
     router_v1: APIRouter = APIRouter(prefix="/v1")
-    router_v1.include_router(user_router)
     router_v1.include_router(chat_router)
 
     app.include_router(router_v1)
-
-
-
