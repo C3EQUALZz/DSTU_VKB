@@ -3,13 +3,14 @@ from uuid import UUID
 
 from dishka import FromDishka
 from dishka.integrations.fastapi import DishkaRoute
-from fastapi import APIRouter, Path
+from fastapi import APIRouter, Path, Depends
 from starlette import status
 
 from chat_service.application.commands.chat.change_chat_llm_provider import (
     ChangeLLMProviderCommandHandler,
     ChangeLLMProviderCommand
 )
+from chat_service.infrastructure.auth.headers_params import header_params
 from chat_service.presentation.http.v1.routes.chat.change_chat_llm_provider.schemas import (
     ChangeChatLLMProviderRequestSchema
 )
@@ -29,6 +30,7 @@ ChatIDPathParameter = Path(
 @change_chat_llm_provider_router.patch(
     "/llm_provider/{chat_id}/",
     status_code=status.HTTP_204_NO_CONTENT,
+    dependencies=[Depends(header_params)]
 )
 async def change_chat_llm_provider_handler(
         chat_id: Annotated[UUID, ChatIDPathParameter],

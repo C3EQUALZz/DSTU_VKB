@@ -1,7 +1,6 @@
 import logging
 from typing import TYPE_CHECKING, Final
 
-from chat_service.application.common.ports.access_revoker import AccessRevoker
 from chat_service.application.common.ports.identity_provider import IdentityProvider
 from chat_service.application.common.ports.user.user_command_gateway import UserCommandGateway
 from chat_service.domain.user.entities.user import User
@@ -18,11 +17,9 @@ class CurrentUserService:
         self,
         identity_provider: IdentityProvider,
         user_command_gateway: UserCommandGateway,
-        access_revoker: AccessRevoker,
     ) -> None:
         self._identity_provider: Final[IdentityProvider] = identity_provider
         self._user_command_gateway: Final[UserCommandGateway] = user_command_gateway
-        self._access_revoker: Final[AccessRevoker] = access_revoker
         self._cached_current_user: User | None = None
 
     async def get_current_user(self) -> User:
@@ -35,7 +32,6 @@ class CurrentUserService:
         if user is None:
             logger.warning("Failed to retrieve current user. Removing all access. ID: %s.", current_user_id)
 
-            await self._access_revoker.remove_all_user_access(current_user_id)
             msg = "Not authorized."
             raise AuthorizationError(msg)
 

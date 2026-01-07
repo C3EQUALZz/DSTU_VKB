@@ -29,3 +29,4 @@ class Message(BaseEntity[MessageID]):
 
     def is_failed(self) -> bool:
         return self.status == MessageStatus.FAILED
+
