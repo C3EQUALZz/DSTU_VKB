@@ -3,6 +3,7 @@ from pydantic import BaseModel, Field
 
 from chat_service.setup.config.asgi import ASGIConfig
 from chat_service.setup.config.database import PostgresConfig, SQLAlchemyConfig
+from chat_service.setup.config.openrouter import OpenRouterConfig
 from chat_service.setup.config.rabbit import RabbitConfig
 
 
@@ -24,4 +25,8 @@ class AppConfig(BaseModel):
     asgi: ASGIConfig = Field(
         default_factory=lambda: ASGIConfig(**os.environ),
         description="ASGI settings",
+    )
+    openrouter: OpenRouterConfig = Field(
+        default_factory=lambda: OpenRouterConfig(**os.environ),
+        description="OpenRouter settings",
     )

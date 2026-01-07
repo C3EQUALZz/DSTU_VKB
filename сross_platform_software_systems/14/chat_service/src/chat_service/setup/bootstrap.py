@@ -4,6 +4,7 @@ from fastapi import FastAPI, APIRouter
 
 from chat_service.infrastructure.persistence.models.chat import map_chats_table, map_messages_table
 from chat_service.infrastructure.persistence.models.user import map_users_table
+from chat_service.presentation.http.v1.common.exception_handler import ExceptionHandler
 from chat_service.presentation.http.v1.common.routes import index, healthcheck
 from chat_service.presentation.http.v1.routes.chat import chat_router
 from chat_service.setup.config.asgi import ASGIConfig
@@ -87,3 +88,14 @@ def setup_http_routes(app: FastAPI, /) -> None:
     router_v1.include_router(chat_router)
 
     app.include_router(router_v1)
+
+
+def setup_http_exc_handlers(app: FastAPI, /) -> None:
+    """
+    Registers exception handlers for the FastAPI application.
+
+    Args:
+        app: FastAPI application instance to configure
+    """
+    exception_handler: ExceptionHandler = ExceptionHandler(app)
+    exception_handler.setup_handlers()
