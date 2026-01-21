@@ -1,0 +1,87 @@
+[build-system]
+requires = ["setuptools>=66.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.dynamic]
+version = { attr = "vulnfinder.__version__" }
+
+[project]
+name = "vulnfinder"
+dynamic = ["version"]
+description = "CLI tool for searching cve vulnerability in code"
+readme = "README.md"
+license-files = ["LICENSE"]
+
+authors = [
+    { name = "Danil Kovalev", email = "dan.kovalev2013@gmail.com" },
+]
+
+classifiers = [
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Software Development :: Libraries",
+    "Typing :: Typed",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+]
+
+requires-python = ">=3.11"
+dependencies = []
+
+[project.urls]
+Source = "https://github.com/C3EQUALZz/DSTU_VKB"
+Homepage = "https://github.com/C3EQUALZz/DSTU_VKB"
+Tracker = "https://github.com/C3EQUALZz/DSTU_VKB/issues"
+
+[dependency-groups]
+dev = [
+    {include-group = "lint"},
+    {include-group = "test"},
+    "prek>=0.2.5",
+]
+lint = [
+    "bandit>=1.8.6",
+    "codespell>=2.4.1",
+    "mypy>=1.18.2",
+    "ruff>=0.14.0",
+    "semgrep>=1.139.0",
+    "zizmor>=1.14.2",
+]
+test = [
+    "nox>=2025.5.1",
+    "pytest>=8.4.2",
+    "pytest-asyncio>=1.2.0",
+    "pytest-cov>=7.0.0",
+]
+
+[tool.mypy]
+files = ["src", "tests"]
+strict = true
+python_version = "3.11"
+strict_bytes = true
+local_partial_types = true
+ignore_missing_imports = true
+
+# from https://blog.wolt.com/engineering/2021/09/30/professional-grade-mypy-configuration/
+disallow_untyped_defs = true
+no_implicit_optional = true
+check_untyped_defs = true
+warn_return_any = true
+show_error_codes = true
+warn_unused_ignores = true
+
+disallow_incomplete_defs = true
+disallow_untyped_decorators = true
+disallow_any_unimported = false
+
+[tool.bandit]
+skips = ["B101"]
