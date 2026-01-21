@@ -58,6 +58,15 @@ wheels = [
 ]
 
 [[package]]
+name = "bazario"
+version = "0.4.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/39/2d/fba167e1e2cdcb7a37a46047e5b43e5152ce6b86402eda4db938f4b45375/bazario-0.4.2.tar.gz", hash = "sha256:207dd745eba63f35bea8204f438f830538eaba59a0533ee3f8c42bbf698e11da", size = 9355, upload-time = "2025-01-30T00:50:42.871Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/97/57/f5bfbafda1d4d4174c39fbdd45851e3caa2276b1047e88f6a5cec45d0e42/bazario-0.4.2-py3-none-any.whl", hash = "sha256:156805fb7fa5ecdf07b713d87413af48753ccbda8b363567e31beef2c43e9b9d", size = 14248, upload-time = "2025-01-30T00:50:41.684Z" },
+]
+
+[[package]]
 name = "boltons"
 version = "21.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1694,6 +1703,7 @@ wheels = [
 name = "vulnfinder"
 source = { editable = "." }
 dependencies = [
+    { name = "bazario" },
     { name = "click" },
     { name = "dishka" },
 ]
@@ -1729,6 +1739,7 @@ test = [
 
 [package.metadata]
 requires-dist = [
+    { name = "bazario", specifier = ">=0.4.2" },
     { name = "click", specifier = "==8.1.8" },
     { name = "dishka", specifier = "==1.7.2" },
 ]
