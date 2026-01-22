@@ -42,4 +42,3 @@ class ReportSummary(BaseValueObject):
 
     def __str__(self) -> str:
         return f"total={self.total}"
-

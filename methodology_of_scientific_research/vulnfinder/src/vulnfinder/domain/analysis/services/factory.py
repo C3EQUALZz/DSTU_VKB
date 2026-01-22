@@ -1,10 +1,18 @@
-from vulnfinder.domain.analysis.entities.core import AnalysisRun, AnalysisTarget, AnalysisTask
+from vulnfinder.domain.analysis.entities.core import (
+    AnalysisRun,
+    AnalysisTarget,
+    AnalysisTask,
+)
 from vulnfinder.domain.analysis.value_objects.identifiers import (
     AnalysisRunId,
     AnalysisTargetId,
     AnalysisTaskId,
 )
-from vulnfinder.domain.analysis.value_objects.types import AnalysisConfig, AnalysisStatus, AnalysisTargetType
+from vulnfinder.domain.analysis.value_objects.types import (
+    AnalysisConfig,
+    AnalysisStatus,
+    AnalysisTargetType,
+)
 from vulnfinder.domain.codebase.value_objects.types import FilePath, ProgrammingLanguage
 from vulnfinder.domain.common.ports.uuid_provider import UUIDProvider
 from vulnfinder.domain.common.services.base import BaseDomainService
@@ -41,4 +49,3 @@ class AnalysisFactory(BaseDomainService):
             target_id=target_id,
             status=AnalysisStatus(value="CREATED"),
         )
-

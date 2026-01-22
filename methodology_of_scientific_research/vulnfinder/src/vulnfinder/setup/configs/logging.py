@@ -1,5 +1,4 @@
 import logging
-import logging.config
 from collections.abc import Callable
 from pathlib import Path
 from typing import Final, Literal
@@ -24,7 +23,7 @@ class LoggingConfig(BaseModel):
         validate_default=True,
         description="Path to save JSON logs.",
     )
-    level: Literal["DEBUG", "INFO", "ERROR", "WARNING", "ERROR", "CRITICAL"] = Field(
+    level: Literal["DEBUG", "INFO", "ERROR", "WARNING", "CRITICAL"] = Field(
         default="DEBUG",
         alias="LOG_LEVEL",
         validate_default=True,

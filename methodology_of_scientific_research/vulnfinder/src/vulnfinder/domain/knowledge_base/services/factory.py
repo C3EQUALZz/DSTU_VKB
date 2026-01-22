@@ -1,13 +1,19 @@
+from typing import Final
+
 from vulnfinder.domain.common.ports.uuid_provider import UUIDProvider
 from vulnfinder.domain.common.services.base import BaseDomainService
 from vulnfinder.domain.knowledge_base.entities.core import CVE, CWE, KnowledgeEntry
-from vulnfinder.domain.knowledge_base.value_objects.identifiers import CVEId, CWEId, KnowledgeEntryId
+from vulnfinder.domain.knowledge_base.value_objects.identifiers import (
+    CVEId,
+    CWEId,
+    KnowledgeEntryId,
+)
 
 
 class KnowledgeBaseFactory(BaseDomainService):
     def __init__(self, uuid_provider: UUIDProvider) -> None:
         super().__init__()
-        self._uuid_provider = uuid_provider
+        self._uuid_provider: Final[UUIDProvider] = uuid_provider
 
     def create_cve(self, cve_id: CVEId, summary: str, severity: str | None = None) -> CVE:
         return CVE(
@@ -43,4 +49,3 @@ class KnowledgeBaseFactory(BaseDomainService):
             cve=cve,
             cwe=cwe,
         )
-

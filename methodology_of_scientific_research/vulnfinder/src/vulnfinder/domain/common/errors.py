@@ -17,8 +17,7 @@ class DomainError(AppError):
 
 
 class DomainFieldError(DomainError):
-    """
-    Exception raised when domain field validation fails.
+    """Exception raised when domain field validation fails.
 
     Indicates that a value assigned to a domain object's field violates
     business rules or invariants.

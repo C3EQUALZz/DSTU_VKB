@@ -61,4 +61,3 @@ class AnalysisRun(BaseAggregateRoot[AnalysisRunId]):
 
     def _touch(self) -> None:
         self.updated_at = datetime.now(UTC)
-

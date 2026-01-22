@@ -34,4 +34,3 @@ class QueryEmbedding(BaseValueObject):
 
     def __str__(self) -> str:
         return f"embedding[{len(self.vector)}]"
-

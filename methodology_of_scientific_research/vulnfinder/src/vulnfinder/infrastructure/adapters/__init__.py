@@ -11,8 +11,7 @@ __all__ = [
     "ChromaVectorStoreGateway",
     "JsonKnowledgeBaseMetadataStore",
     "JsonlKnowledgeSource",
-    "NvdKnowledgeBaseUpdater",
     "LangChainLlmClient",
+    "NvdKnowledgeBaseUpdater",
     "Uuid4Provider",
 ]
-

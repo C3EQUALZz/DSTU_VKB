@@ -1,11 +1,13 @@
 import os
+
+from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 
 from vulnfinder.setup.configs.knowledge_base_config import KnowledgeBaseConfig
 from vulnfinder.setup.configs.logging import LoggingConfig
 from vulnfinder.setup.configs.open_router_config import OpenRouterConfig
 from vulnfinder.setup.configs.vector_store_config import ChromaDBVectorStoreConfig
-from dotenv import load_dotenv
+
 
 class ApplicationConfig(BaseModel):
     load_dotenv(r"D:\Progrramming\PycharmProjects\DSTU_VKB\methodology_of_scientific_research\vulnfinder\.env")

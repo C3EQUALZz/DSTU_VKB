@@ -2,7 +2,11 @@ from dataclasses import dataclass
 
 from vulnfinder.domain.common.entities.base_aggregate import BaseAggregateRoot
 from vulnfinder.domain.common.entities.base_entity import BaseEntity
-from vulnfinder.domain.knowledge_base.value_objects.identifiers import CVEId, CWEId, KnowledgeEntryId
+from vulnfinder.domain.knowledge_base.value_objects.identifiers import (
+    CVEId,
+    CWEId,
+    KnowledgeEntryId,
+)
 
 
 @dataclass(eq=False, kw_only=True)
@@ -27,4 +31,3 @@ class KnowledgeEntry(BaseAggregateRoot[KnowledgeEntryId]):
     aliases: tuple[str, ...] = ()
     cve: CVE | None = None
     cwe: CWE | None = None
-

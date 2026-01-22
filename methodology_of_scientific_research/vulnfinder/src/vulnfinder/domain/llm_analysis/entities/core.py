@@ -7,7 +7,12 @@ from vulnfinder.domain.llm_analysis.value_objects.identifiers import (
     ModelResponseId,
     ModelSessionId,
 )
-from vulnfinder.domain.llm_analysis.value_objects.types import ModelName, Prompt, Temperature, TokenUsage
+from vulnfinder.domain.llm_analysis.value_objects.types import (
+    ModelName,
+    Prompt,
+    Temperature,
+    TokenUsage,
+)
 
 
 @dataclass(eq=False, kw_only=True)
@@ -33,4 +38,3 @@ class ModelSession(BaseAggregateRoot[ModelSessionId]):
 
     def add_response(self, response: ModelResponse) -> None:
         self.responses.append(response)
-

@@ -10,8 +10,7 @@ from bazario import Notification
 
 @dataclass(frozen=True, slots=True, eq=False)
 class BaseDomainEvent(Notification):
-    """
-    Base event, from which any domain event should be inherited.
+    """Base event, from which any domain event should be inherited.
     Events represents internal operations, which may be executed.
     """
 
@@ -38,7 +37,6 @@ class BaseDomainEvent(Notification):
             exclude: set of model fields, which should be excluded from.
             include: set of model fields, which should be included into.
         """
-
         data: dict[str, Any] = asdict(self)
         if exclude:
             for key in exclude:

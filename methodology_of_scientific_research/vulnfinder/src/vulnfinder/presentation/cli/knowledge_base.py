@@ -34,4 +34,3 @@ def kb_ingest(
     command = IngestDocumentsCommand(source_path=Path(source_path))
     count = interactor(command)
     click.echo(f"Ingested {count} documents.")
-

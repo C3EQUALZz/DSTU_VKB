@@ -32,4 +32,3 @@ class ReportingFactory(BaseDomainService):
 
     def create_summary(self, total: int, critical: int, high: int, medium: int, low: int) -> ReportSummary:
         return ReportSummary(total=total, critical=critical, high=high, medium=medium, low=low)
-

@@ -26,4 +26,3 @@ class KnowledgeBaseConfig(BaseModel):
         description="Timeout in seconds for downloading feeds",
         alias="NVD_REQUEST_TIMEOUT",
     )
-

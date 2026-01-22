@@ -2,7 +2,7 @@ import click
 from dishka import Container, make_container
 from dishka.integrations.click import setup_dishka
 
-from vulnfinder.setup.bootstrap import setup_logging, setup_configs, setup_cli_routes
+from vulnfinder.setup.bootstrap import setup_cli_routes, setup_configs, setup_logging
 from vulnfinder.setup.configs.app_config import ApplicationConfig
 from vulnfinder.setup.configs.knowledge_base_config import KnowledgeBaseConfig
 from vulnfinder.setup.configs.open_router_config import OpenRouterConfig
@@ -29,6 +29,7 @@ def main(context: click.Context) -> None:
     )
 
     setup_dishka(container, context=context, auto_inject=True)
+
 
 setup_cli_routes(main)
 

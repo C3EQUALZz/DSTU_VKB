@@ -22,4 +22,3 @@ class Report(BaseAggregateRoot[ReportId]):
 
     def add_item(self, item: ReportItem) -> None:
         self.items.append(item)
-

@@ -18,4 +18,3 @@ class SearchKnowledgeBaseQueryHandler:
 
     def __call__(self, data: SearchKnowledgeBaseQuery) -> list[KnowledgeDocument]:
         return self._vector_store.similarity_search(data.query, data.top_k)
-

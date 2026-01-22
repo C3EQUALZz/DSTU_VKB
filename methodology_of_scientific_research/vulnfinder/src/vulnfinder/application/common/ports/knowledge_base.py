@@ -18,4 +18,3 @@ class KnowledgeBaseUpdater(Protocol):
     @abstractmethod
     def update(self) -> KnowledgeBaseState:
         raise NotImplementedError
-

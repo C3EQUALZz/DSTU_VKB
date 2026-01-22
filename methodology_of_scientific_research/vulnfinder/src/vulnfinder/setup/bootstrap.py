@@ -2,13 +2,13 @@ import logging
 import sys
 from functools import lru_cache
 from types import TracebackType
-from typing import Final, Any
+from typing import Any, Final
 
 from click import Group
 
+from vulnfinder.presentation.cli import analysis_group, knowledge_base_group
 from vulnfinder.setup.configs.app_config import ApplicationConfig
 from vulnfinder.setup.configs.logging import LoggingConfig, configure_logging
-from vulnfinder.presentation.cli import analysis_group, knowledge_base_group
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 
@@ -40,7 +40,7 @@ def global_exception_handler_with_traceback(
         exc_type: type[BaseException],
         value: BaseException,
         traceback: TracebackType | None,
-) -> Any:  # noqa: ANN401
+) -> Any:
     root_logger: logging.Logger = logging.getLogger()
     root_logger.exception("Error", exc_info=(exc_type, value, traceback))
 
@@ -49,6 +49,6 @@ def global_exception_handler_without_traceback(
         exc_type: type[BaseException],
         value: BaseException,
         traceback: TracebackType | None,
-) -> Any:  # noqa: ANN401
+) -> Any:
     root_logger: logging.Logger = logging.getLogger()
     root_logger.error("Error: %s %s", exc_type.__name__, value)

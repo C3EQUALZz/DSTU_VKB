@@ -2,4 +2,3 @@ from vulnfinder.application.common.models.knowledge_base_state import KnowledgeB
 from vulnfinder.application.common.models.knowledge_document import KnowledgeDocument
 
 __all__ = ["KnowledgeBaseState", "KnowledgeDocument"]
-

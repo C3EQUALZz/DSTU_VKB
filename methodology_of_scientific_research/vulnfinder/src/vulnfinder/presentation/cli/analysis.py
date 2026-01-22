@@ -4,7 +4,10 @@ from pathlib import Path
 import click
 from dishka.integrations.click import FromDishka
 
-from vulnfinder.application.commands.analysis import AnalyzeCodeCommand, AnalyzeCodeCommandHandler
+from vulnfinder.application.commands.analysis import (
+    AnalyzeCodeCommand,
+    AnalyzeCodeCommandHandler,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -70,4 +73,3 @@ def _collect_files(path: Path, recursive: bool, extensions: tuple[str, ...]) -> 
 
 def _read_text(path: Path) -> str:
     return path.read_text(encoding="utf-8", errors="ignore")
-

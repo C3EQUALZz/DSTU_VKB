@@ -4,7 +4,10 @@ from datetime import UTC, datetime, timedelta
 from typing import Final, final
 
 from vulnfinder.application.common.models.knowledge_base_state import KnowledgeBaseState
-from vulnfinder.application.common.ports.knowledge_base import KnowledgeBaseMetadataStore, KnowledgeBaseUpdater
+from vulnfinder.application.common.ports.knowledge_base import (
+    KnowledgeBaseMetadataStore,
+    KnowledgeBaseUpdater,
+)
 from vulnfinder.application.common.ports.vector_store import VectorStoreGateway
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
@@ -53,4 +56,3 @@ class EnsureKnowledgeBaseCommandHandler:
             return True
         threshold = datetime.now(UTC) - timedelta(days=max_age_days)
         return state.last_updated < threshold
-

@@ -1,2 +1,1 @@
 """Common application abstractions."""
-

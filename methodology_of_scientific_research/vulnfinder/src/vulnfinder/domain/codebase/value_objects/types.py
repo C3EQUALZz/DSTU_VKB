@@ -56,4 +56,3 @@ class LineRange(BaseValueObject):
 
     def __str__(self) -> str:
         return f"{self.start_line}:{self.end_line}"
-

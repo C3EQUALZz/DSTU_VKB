@@ -58,4 +58,3 @@ class AnalysisConfig(BaseValueObject):
         flags = "recursive" if self.recursive else "non-recursive"
         rag = "rag" if self.enable_rag else "no-rag"
         return f"{flags}, {rag}"
-

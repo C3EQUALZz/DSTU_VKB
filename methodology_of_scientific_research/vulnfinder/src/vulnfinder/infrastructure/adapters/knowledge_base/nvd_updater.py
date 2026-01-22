@@ -6,6 +6,8 @@ from collections.abc import Iterable
 from datetime import UTC, datetime
 from typing import Any, Final
 
+from typing_extensions import override
+
 from vulnfinder.application.common.models.knowledge_base_state import KnowledgeBaseState
 from vulnfinder.application.common.models.knowledge_document import KnowledgeDocument
 from vulnfinder.application.common.ports.knowledge_base import KnowledgeBaseUpdater
@@ -20,6 +22,7 @@ class NvdKnowledgeBaseUpdater(KnowledgeBaseUpdater):
         self._config = config
         self._vector_store = vector_store
 
+    @override
     def update(self) -> KnowledgeBaseState:
         feeds = list(self._config.feeds)
         if self._vector_store.get_document_count() == 0 and self._config.bootstrap_from_year:
@@ -131,4 +134,3 @@ class NvdKnowledgeBaseUpdater(KnowledgeBaseUpdater):
                 if value:
                     return str(value)
         return None
-

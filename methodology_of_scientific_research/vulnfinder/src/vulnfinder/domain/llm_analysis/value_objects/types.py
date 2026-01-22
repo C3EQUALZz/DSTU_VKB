@@ -60,4 +60,3 @@ class TokenUsage(BaseValueObject):
 
     def __str__(self) -> str:
         return f"total={self.total_tokens}"
-

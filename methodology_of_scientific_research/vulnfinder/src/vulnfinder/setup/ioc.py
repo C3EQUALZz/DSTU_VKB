@@ -1,11 +1,12 @@
-from typing import Final, Iterable
+from collections.abc import Iterable
+from typing import Final
 
 from dishka import Provider, Scope
 
 from vulnfinder.application.commands.analysis import AnalyzeCodeCommandHandler
 from vulnfinder.application.commands.knowledge_base import (
     EnsureKnowledgeBaseCommandHandler,
-    IngestDocumentsCommandHandler
+    IngestDocumentsCommandHandler,
 )
 from vulnfinder.application.common.ports import (
     KnowledgeBaseMetadataStore,
@@ -23,16 +24,16 @@ from vulnfinder.domain.rag.services import RagFactory
 from vulnfinder.domain.reporting.services import ReportingFactory
 from vulnfinder.domain.vulnerability.services import VulnerabilityFactory
 from vulnfinder.infrastructure.adapters import (
-    Uuid4Provider,
-    JsonlKnowledgeSource,
-    JsonKnowledgeBaseMetadataStore,
-    NvdKnowledgeBaseUpdater,
     ChromaVectorStoreGateway,
+    JsonKnowledgeBaseMetadataStore,
+    JsonlKnowledgeSource,
+    NvdKnowledgeBaseUpdater,
+    Uuid4Provider,
 )
 from vulnfinder.infrastructure.adapters.providers import (
-    create_embedding_function,
     create_chromadb_vector_store,
-    create_llm_client
+    create_embedding_function,
+    create_llm_client,
 )
 from vulnfinder.setup.configs.knowledge_base_config import KnowledgeBaseConfig
 from vulnfinder.setup.configs.open_router_config import OpenRouterConfig

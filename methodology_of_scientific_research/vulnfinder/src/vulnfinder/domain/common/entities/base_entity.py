@@ -1,9 +1,8 @@
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
-from typing import Any, TypeVar, Generic
+from typing import Any, Generic, TypeVar
 
-from vulnfinder.domain.common.errors import DomainError
-from vulnfinder.domain.common.errors import InconsistentTimeError
+from vulnfinder.domain.common.errors import DomainError, InconsistentTimeError
 
 OIDType = TypeVar("OIDType")
 
@@ -61,9 +60,8 @@ class BaseEntity(Generic[OIDType]):
                 msg,
             )
 
-    def __setattr__(self, name: str, value: Any) -> None:  # noqa: ANN401
-        """
-        Prevents modifying the `id` after it's set.
+    def __setattr__(self, name: str, value: Any) -> None:
+        """Prevents modifying the `id` after it's set.
         Other attributes can be changed as usual.
         """
         if name == "id" and getattr(self, "id", None) is not None:
@@ -84,8 +82,7 @@ class BaseEntity(Generic[OIDType]):
         return False
 
     def __hash__(self) -> int:
-        """
-        Generate a hash based on entity type and the immutable `id`.
+        """Generate a hash based on entity type and the immutable `id`.
         This allows entities to be used in hash-based collections and
         reduces the risk of hash collisions between different entity types.
         """

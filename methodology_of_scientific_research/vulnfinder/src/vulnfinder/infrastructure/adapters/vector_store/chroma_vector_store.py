@@ -1,9 +1,15 @@
 from collections.abc import Sequence
-from typing import Any
+from typing import Any, Final
 
 from langchain_core.documents import Document
 from langchain_core.vectorstores import VectorStore
-from tenacity import retry, retry_if_exception, stop_after_attempt, wait_exponential_jitter
+from tenacity import (
+    retry,
+    retry_if_exception,
+    stop_after_attempt,
+    wait_exponential_jitter,
+)
+from typing_extensions import override
 
 from vulnfinder.application.common.models.knowledge_document import KnowledgeDocument
 from vulnfinder.application.common.ports.vector_store import VectorStoreGateway
@@ -11,8 +17,9 @@ from vulnfinder.application.common.ports.vector_store import VectorStoreGateway
 
 class ChromaVectorStoreGateway(VectorStoreGateway):
     def __init__(self, vector_store: VectorStore) -> None:
-        self._vector_store = vector_store
+        self._vector_store: Final[VectorStore] = vector_store
 
+    @override
     def add_documents(self, documents: list[KnowledgeDocument]) -> None:
         langchain_docs = [
             Document(page_content=doc.content, metadata=dict(doc.metadata)) for doc in documents
@@ -24,7 +31,7 @@ class ChromaVectorStoreGateway(VectorStoreGateway):
 
     def _add_in_batches(self, docs: list[Document], batch_size: int) -> None:
         for start in range(0, len(docs), batch_size):
-            chunk = docs[start : start + batch_size]
+            chunk = docs[start: start + batch_size]
             try:
                 self._add_with_retry(chunk)
             except ValueError as exc:
@@ -44,6 +51,7 @@ class ChromaVectorStoreGateway(VectorStoreGateway):
     def _add_with_retry(self, chunk: list[Document]) -> None:
         self._vector_store.add_documents(chunk)
 
+    @override
     def similarity_search(self, query: str, k: int) -> list[KnowledgeDocument]:
         results: Sequence[Document] = self._vector_store.similarity_search(query, k=k)
         return [
@@ -51,6 +59,7 @@ class ChromaVectorStoreGateway(VectorStoreGateway):
             for doc in results
         ]
 
+    @override
     def get_document_count(self) -> int:
         collection: Any = getattr(self._vector_store, "_collection", None)
         if collection is None:
@@ -60,4 +69,3 @@ class ChromaVectorStoreGateway(VectorStoreGateway):
     @staticmethod
     def _normalize_metadata(metadata: dict[str, object]) -> dict[str, str]:
         return {key: str(value) for key, value in metadata.items()}
-

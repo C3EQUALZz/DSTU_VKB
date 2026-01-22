@@ -4,4 +4,3 @@ from vulnfinder.application.queries.knowledge_base.search import (
 )
 
 __all__ = ["SearchKnowledgeBaseQuery", "SearchKnowledgeBaseQueryHandler"]
-

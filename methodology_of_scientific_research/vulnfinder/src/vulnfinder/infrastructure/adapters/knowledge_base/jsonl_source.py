@@ -1,11 +1,14 @@
 import json
 from pathlib import Path
 
+from typing_extensions import override
+
 from vulnfinder.application.common.models.knowledge_document import KnowledgeDocument
 from vulnfinder.application.common.ports.knowledge_source import KnowledgeSource
 
 
 class JsonlKnowledgeSource(KnowledgeSource):
+    @override
     def load(self, path: Path) -> list[KnowledgeDocument]:
         documents: list[KnowledgeDocument] = []
         with path.open("r", encoding="utf-8") as handle:
@@ -26,4 +29,3 @@ class JsonlKnowledgeSource(KnowledgeSource):
                     ),
                 )
         return documents
-

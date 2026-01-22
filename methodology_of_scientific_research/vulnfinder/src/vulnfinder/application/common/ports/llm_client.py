@@ -6,4 +6,3 @@ class LlmClient(Protocol):
     @abstractmethod
     def invoke(self, prompt: str) -> str:
         raise NotImplementedError
-

@@ -7,4 +7,3 @@ class UUIDProvider(Protocol):
     @abstractmethod
     def __call__(self) -> UUID:
         raise NotImplementedError
-

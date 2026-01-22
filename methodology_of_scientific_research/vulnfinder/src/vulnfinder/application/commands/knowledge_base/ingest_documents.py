@@ -25,4 +25,3 @@ class IngestDocumentsCommandHandler:
         documents = self._knowledge_source.load(data.source_path)
         self._vector_store.add_documents(documents)
         return len(documents)
-

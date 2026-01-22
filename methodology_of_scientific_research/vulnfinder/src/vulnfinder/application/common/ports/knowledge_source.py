@@ -9,4 +9,3 @@ class KnowledgeSource(Protocol):
     @abstractmethod
     def load(self, path: Path) -> list[KnowledgeDocument]:
         raise NotImplementedError
-

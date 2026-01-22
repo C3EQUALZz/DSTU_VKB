@@ -16,4 +16,3 @@ class VectorStoreGateway(Protocol):
     @abstractmethod
     def get_document_count(self) -> int:
         raise NotImplementedError
-

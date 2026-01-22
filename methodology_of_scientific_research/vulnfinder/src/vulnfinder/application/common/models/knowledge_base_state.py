@@ -6,4 +6,3 @@ from datetime import datetime
 class KnowledgeBaseState:
     document_count: int
     last_updated: datetime | None
-

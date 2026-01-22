@@ -5,4 +5,3 @@ from dataclasses import dataclass
 class AnalysisResultView:
     raw_response: str
     context_used: list[str]
-

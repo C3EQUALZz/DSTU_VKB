@@ -1,7 +1,10 @@
 from vulnfinder.domain.common.ports.uuid_provider import UUIDProvider
 from vulnfinder.domain.common.services.base import BaseDomainService
 from vulnfinder.domain.rag.entities.core import ContextBundle, RetrievedDocument
-from vulnfinder.domain.rag.value_objects.identifiers import ContextBundleId, RetrievedDocumentId
+from vulnfinder.domain.rag.value_objects.identifiers import (
+    ContextBundleId,
+    RetrievedDocumentId,
+)
 from vulnfinder.domain.rag.value_objects.types import QueryEmbedding, SimilarityScore
 
 
@@ -27,4 +30,3 @@ class RagFactory(BaseDomainService):
             content=content,
             score=score,
         )
-

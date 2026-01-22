@@ -26,8 +26,8 @@ class AnalyzeCodeCommandHandler:
         ensure_kb: EnsureKnowledgeBaseCommandHandler,
     ) -> None:
         self._llm_client: Final[LlmClient] = llm_client
-        self._vector_store: Final[VectorStoreGateway | None] = vector_store
-        self._ensure_kb: Final[EnsureKnowledgeBaseCommandHandler | None] = ensure_kb
+        self._vector_store: Final[VectorStoreGateway] = vector_store
+        self._ensure_kb: Final[EnsureKnowledgeBaseCommandHandler] = ensure_kb
         self._kb_max_age_days: Final[int] = 7
 
     def __call__(self, data: AnalyzeCodeCommand) -> AnalysisResultView:
@@ -54,4 +54,3 @@ class AnalyzeCodeCommandHandler:
             f"Context:\n{joined_context}\n\n"
             f"Code:\n{code}"
         )
-
