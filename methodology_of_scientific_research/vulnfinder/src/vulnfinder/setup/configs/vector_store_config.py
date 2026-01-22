@@ -10,6 +10,7 @@ class ChromaDBVectorStoreConfig(BaseModel):
         default="default_collection",
     )
     persist_directory: Path = Field(
+        default=Path(".data/chromadb"),
         description="The directory to persist the data into",
         alias="CHROMA_PERSIST_DIRECTORY",
     )

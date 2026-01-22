@@ -1,0 +1,2 @@
+"""Application commands package."""
+

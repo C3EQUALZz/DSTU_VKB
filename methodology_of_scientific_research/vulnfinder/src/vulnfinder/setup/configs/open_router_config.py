@@ -12,5 +12,12 @@ class OpenRouterConfig(BaseModel):
         alias="OPENROUTER_API_KEY"
     )
     default_model: str = Field(
-
+        default="gpt-4o-mini",
+        description="Default LLM model",
+        alias="OPENROUTER_DEFAULT_MODEL",
+    )
+    embedding_model: str = Field(
+        default="text-embedding-3-small",
+        description="Embedding model name",
+        alias="OPENROUTER_EMBEDDING_MODEL",
     )

@@ -43,7 +43,13 @@ dependencies = [
     "langchain-chroma>=1.1.0",
     "langchain-openai>=1.1.7",
     "pydantic>=2.12.5",
+    "python-dotenv>=1.2.1",
+    "structlog>=25.5.0",
+    "tenacity>=8.2.3",
 ]
+
+[project.scripts]
+vulnfinder = "vulnfinder.cli:main"
 
 [project.urls]
 Source = "https://github.com/C3EQUALZz/DSTU_VKB"
