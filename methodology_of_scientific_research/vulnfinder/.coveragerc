@@ -1,0 +1,14 @@
+[run]
+parallel = True
+data_file = .coverage
+source = src
+omit =
+    tests/*
+    src/vulnfinder/__init__.py
+
+[report]
+show_missing = True
+skip_covered = True
+exclude_lines =
+    pragma: no cover
+    pragma: no coverage
