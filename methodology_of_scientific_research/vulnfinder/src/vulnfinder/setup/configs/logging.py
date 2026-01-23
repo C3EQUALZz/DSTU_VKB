@@ -24,7 +24,7 @@ class LoggingConfig(BaseModel):
         description="Path to save JSON logs.",
     )
     level: Literal["DEBUG", "INFO", "ERROR", "WARNING", "CRITICAL"] = Field(
-        default="DEBUG",
+        default="INFO",
         alias="LOG_LEVEL",
         validate_default=True,
         description="Logging level.",

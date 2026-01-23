@@ -14,6 +14,11 @@ from vulnfinder.application.common.ports import (
     KnowledgeSource,
     VectorStoreGateway,
 )
+from vulnfinder.application.queries.analysis import (
+    CollectFilesQueryHandler,
+    ParseExtensionsQueryHandler,
+    ReadTextQueryHandler,
+)
 from vulnfinder.application.queries.knowledge_base import SearchKnowledgeBaseQueryHandler
 from vulnfinder.domain.analysis.services import AnalysisFactory
 from vulnfinder.domain.codebase.services import CodebaseFactory
@@ -87,6 +92,9 @@ def interactors_provider() -> Provider:
         EnsureKnowledgeBaseCommandHandler,
         IngestDocumentsCommandHandler,
         SearchKnowledgeBaseQueryHandler,
+        ParseExtensionsQueryHandler,
+        CollectFilesQueryHandler,
+        ReadTextQueryHandler,
     )
     return provider
 

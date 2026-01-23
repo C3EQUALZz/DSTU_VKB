@@ -8,6 +8,14 @@ from vulnfinder.application.commands.analysis import (
     AnalyzeCodeCommand,
     AnalyzeCodeCommandHandler,
 )
+from vulnfinder.application.queries.analysis import (
+    CollectFilesQuery,
+    CollectFilesQueryHandler,
+    ParseExtensionsQuery,
+    ParseExtensionsQueryHandler,
+    ReadTextQuery,
+    ReadTextQueryHandler,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -33,53 +41,39 @@ def analyze_command(  # noqa: PLR0913
     path: Path,
     context_query: str | None,
     top_k: int,
-    interactor: FromDishka[AnalyzeCodeCommandHandler],
     *,
+    interactor: FromDishka[AnalyzeCodeCommandHandler],
+    parse_extensions: FromDishka[ParseExtensionsQueryHandler],
+    collect_files: FromDishka[CollectFilesQueryHandler],
+    read_text: FromDishka[ReadTextQueryHandler],
     recursive: bool | None = None,
     extensions: str = ".py,.c,.cpp,.java",
 ) -> None:
-    files = _collect_files(
-        path,
-        recursive=recursive,
-        extensions=_parse_extensions(extensions),
+    parsed_extensions = parse_extensions(
+        ParseExtensionsQuery(extensions=extensions),
+    )
+    files = collect_files(
+        CollectFilesQuery(
+            path=path,
+            recursive=recursive,
+            extensions=parsed_extensions,
+        ),
     )
     if not files:
         logger.warning("No files found for analysis.")
         return
 
     for file_path in files:
-        code = _read_text(file_path)
+        code = read_text(ReadTextQuery(path=file_path))
         logger.info("Analyzing file: %s", file_path)
         result = interactor(
             AnalyzeCodeCommand(
                 code=code,
                 context_query=context_query,
                 top_k=top_k,
+                source_path=file_path,
+                recursive=bool(recursive),
             ),
         )
         click.echo(f"\n# {file_path}\n")
         click.echo(result.raw_response)
-
-
-def _parse_extensions(extensions: str) -> tuple[str, ...]:
-    return tuple(ext.strip().lower() for ext in extensions.split(",") if ext.strip())
-
-
-def _collect_files(
-    path: Path,
-    *,
-    recursive: bool | None = None,
-    extensions: tuple[str, ...] = (),
-) -> list[Path]:
-    if path.is_file():
-        return [path]
-
-    pattern = "**/*" if recursive else "*"
-    results = [entry for entry in path.glob(pattern) if entry.is_file()]
-    if extensions:
-        results = [entry for entry in results if entry.suffix.lower() in extensions]
-    return results
-
-
-def _read_text(path: Path) -> str:
-    return path.read_text(encoding="utf-8", errors="ignore")
