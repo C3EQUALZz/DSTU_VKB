@@ -1,8 +1,7 @@
-from __future__ import annotations
-
 from typing import TYPE_CHECKING, Any, Final
 
 from langchain_core.documents import Document
+from langchain_core.vectorstores import VectorStore
 from tenacity import (
     retry,
     retry_if_exception,
@@ -12,12 +11,12 @@ from tenacity import (
 from typing_extensions import override
 
 from vulnfinder.application.common.models.knowledge_document import KnowledgeDocument
-from vulnfinder.application.common.ports.vector_store import VectorStoreGateway
+from vulnfinder.application.common.ports.vector_store import (
+    VectorStoreGateway,
+)
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
-
-    from langchain_core.vectorstores import VectorStore
 
 
 class ChromaVectorStoreGateway(VectorStoreGateway):

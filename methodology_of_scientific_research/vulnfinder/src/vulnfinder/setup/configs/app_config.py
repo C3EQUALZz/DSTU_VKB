@@ -13,6 +13,9 @@ class ApplicationConfig(BaseModel):
     load_dotenv(
         r"D:\Progrramming\PycharmProjects\DSTU_VKB\methodology_of_scientific_research\vulnfinder\.env"
     )
+    load_dotenv(
+        r"D:\PycharmProjects\DSTU_VKB\methodology_of_scientific_research\vulnfinder\.env"
+    )
 
     chromadb_vector_store: ChromaDBVectorStoreConfig = Field(
         default_factory=lambda: ChromaDBVectorStoreConfig(**os.environ),

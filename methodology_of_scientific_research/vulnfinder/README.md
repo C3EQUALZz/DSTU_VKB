@@ -135,16 +135,16 @@ pip install -e ".[dev]"
 
 ```bash
 # Analyze a single file
-vulnfinder analyze path/to/file.py
+vulnfinder analysis analyze path/to/file.py
 
 # Analyze a directory
-vulnfinder analyze path/to/project/ --recursive
+vulnfinder analysis analyze path/to/project/ --recursive
 
 # Output as JSON
-vulnfinder analyze app.py --output json
+vulnfinder analysis analyze app.py --output json
 
 # Specify output format (text, json, sarif)
-vulnfinder analyze app.py --format json
+vulnfinder analysis analyze app.py --format json
 ```
 
 ### Example Output
