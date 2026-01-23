@@ -79,6 +79,8 @@ test = [
 
 [tool.mypy]
 files = ["src", "tests"]
+plugins = "pydantic.mypy"
+exclude = ["src/vulnfinder/setup/config/"]
 strict = true
 python_version = "3.11"
 strict_bytes = true

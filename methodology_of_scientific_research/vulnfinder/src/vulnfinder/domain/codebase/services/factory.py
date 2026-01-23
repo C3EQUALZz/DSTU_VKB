@@ -26,10 +26,11 @@ class CodebaseFactory(BaseDomainService):
         is_directory: bool | None = None,
         language: ProgrammingLanguage | None = None,
     ) -> CodeArtifact:
+        resolved_is_directory = False if is_directory is None else is_directory
         return CodeArtifact(
             id=CodeArtifactId(value=self._uuid_provider()),
             path=path,
-            is_directory=is_directory,
+            is_directory=resolved_is_directory,
             language=language,
         )
 

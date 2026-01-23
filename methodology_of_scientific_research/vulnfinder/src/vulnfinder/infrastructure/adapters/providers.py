@@ -13,8 +13,8 @@ def create_embedding_function(
     config: OpenRouterConfig,
 ) -> Embeddings:
     return OpenAIEmbeddings(
-        api_key=config.api_key,
-        base_url=config.url,
+        api_key=config.api_key,  # type: ignore[arg-type,unused-ignore,call-arg]
+        base_url=config.url,  # type: ignore[call-arg,unused-ignore]
         model=config.embedding_model,
         chunk_size=100,
     )
@@ -32,7 +32,7 @@ def create_chromadb_vector_store(
 
 def create_llm_client(config: OpenRouterConfig) -> LlmClient:
     chat_model: ChatOpenAI = ChatOpenAI(
-        api_key=config.api_key,
+        api_key=config.api_key,  # type: ignore[arg-type,unused-ignore]
         base_url=config.url,
         model=config.default_model,
     )

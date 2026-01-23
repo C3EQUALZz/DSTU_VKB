@@ -88,7 +88,7 @@ def configure_logging(cfg: LoggingConfig) -> None:
     handler.set_name("default")
     handler.setLevel(cfg.level)
     console_formatter = structlog.stdlib.ProcessorFormatter(
-        foreign_pre_chain=common_processors,  # type: ignore[arg-type]
+        foreign_pre_chain=common_processors,  # type: ignore[arg-type,unused-ignore]
         processors=logging_console_processors,
     )
     handler.setFormatter(console_formatter)
@@ -102,7 +102,7 @@ def configure_logging(cfg: LoggingConfig) -> None:
         file_handler.set_name("file")
         file_handler.setLevel(cfg.level)
         file_formatter = structlog.stdlib.ProcessorFormatter(
-            foreign_pre_chain=common_processors,  # type: ignore[arg-type]
+            foreign_pre_chain=common_processors,  # type: ignore[arg-type,unused-ignore]
             processors=logging_file_processors,
         )
         file_handler.setFormatter(file_formatter)
@@ -111,8 +111,8 @@ def configure_logging(cfg: LoggingConfig) -> None:
     logging.basicConfig(handlers=handlers, level=cfg.level)
     logging.raiseExceptions = False
     structlog.configure(
-        processors=common_processors + structlog_processors,  # type: ignore[arg-type]
+        processors=common_processors + structlog_processors,  # type: ignore[arg-type,unused-ignore]
         logger_factory=structlog.stdlib.LoggerFactory(),
-        wrapper_class=structlog.stdlib.BoundLogger,  # type: ignore[arg-type]
+        wrapper_class=structlog.stdlib.BoundLogger,  # type: ignore[arg-type,unused-ignore]
         cache_logger_on_first_use=True,
     )

@@ -13,4 +13,7 @@ class LangChainLlmClient(LlmClient):
     @override
     def invoke(self, prompt: str) -> str:
         response = self._client.invoke(prompt)
-        return response.content
+        content = response.content
+        if isinstance(content, str):
+            return content
+        return str(content)

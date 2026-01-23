@@ -19,8 +19,8 @@ def setup_configs() -> ApplicationConfig:
 
 
 def setup_cli_routes(main_group: Group) -> None:
-    main_group.add_command(analysis_group)  # type: ignore[arg-type]
-    main_group.add_command(knowledge_base_group)  # type: ignore[arg-type]
+    main_group.add_command(analysis_group)  # type: ignore[arg-type,unused-ignore]
+    main_group.add_command(knowledge_base_group)  # type: ignore[arg-type,unused-ignore]
 
 
 def setup_logging(logger_config: LoggingConfig) -> None:
