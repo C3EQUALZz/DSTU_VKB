@@ -10,7 +10,7 @@ from vulnfinder.setup.configs.vector_store_config import ChromaDBVectorStoreConf
 
 
 def create_embedding_function(
-        config: OpenRouterConfig,
+    config: OpenRouterConfig,
 ) -> Embeddings:
     return OpenAIEmbeddings(
         api_key=config.api_key,
@@ -21,8 +21,7 @@ def create_embedding_function(
 
 
 def create_chromadb_vector_store(
-        config: ChromaDBVectorStoreConfig,
-        embedding_function: Embeddings
+    config: ChromaDBVectorStoreConfig, embedding_function: Embeddings
 ) -> VectorStore:
     return Chroma(
         collection_name=config.collection_name,
@@ -31,9 +30,7 @@ def create_chromadb_vector_store(
     )
 
 
-def create_llm_client(
-        config: OpenRouterConfig
-) -> LlmClient:
+def create_llm_client(config: OpenRouterConfig) -> LlmClient:
     chat_model: ChatOpenAI = ChatOpenAI(
         api_key=config.api_key,
         base_url=config.url,

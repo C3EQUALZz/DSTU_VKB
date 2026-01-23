@@ -29,7 +29,7 @@ class KnowledgeBaseFactory(BaseDomainService):
             description=description,
         )
 
-    def create_entry(
+    def create_entry(  # noqa: PLR0913, PLR0917
         self,
         title: str,
         description: str,

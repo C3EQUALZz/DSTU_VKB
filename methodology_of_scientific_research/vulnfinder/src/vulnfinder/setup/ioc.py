@@ -58,7 +58,7 @@ def domain_ports_provider() -> Provider:
         LlmAnalysisFactory,
         RagFactory,
         ReportingFactory,
-        VulnerabilityFactory
+        VulnerabilityFactory,
     )
     return provider
 
@@ -72,7 +72,10 @@ def application_ports_provider() -> Provider:
     )
     provider.provide(source=ChromaVectorStoreGateway, provides=VectorStoreGateway)
     provider.provide(source=JsonlKnowledgeSource, provides=KnowledgeSource)
-    provider.provide(source=JsonKnowledgeBaseMetadataStore, provides=KnowledgeBaseMetadataStore)
+    provider.provide(
+        source=JsonKnowledgeBaseMetadataStore,
+        provides=KnowledgeBaseMetadataStore,
+    )
     provider.provide(source=NvdKnowledgeBaseUpdater, provides=KnowledgeBaseUpdater)
     return provider
 
@@ -83,7 +86,7 @@ def interactors_provider() -> Provider:
         AnalyzeCodeCommandHandler,
         EnsureKnowledgeBaseCommandHandler,
         IngestDocumentsCommandHandler,
-        SearchKnowledgeBaseQueryHandler
+        SearchKnowledgeBaseQueryHandler,
     )
     return provider
 

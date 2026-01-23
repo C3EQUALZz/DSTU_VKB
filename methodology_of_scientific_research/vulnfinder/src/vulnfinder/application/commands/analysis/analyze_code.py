@@ -32,7 +32,9 @@ class AnalyzeCodeCommandHandler:
 
     def __call__(self, data: AnalyzeCodeCommand) -> AnalysisResultView:
         if self._ensure_kb is not None and self._vector_store is not None:
-            self._ensure_kb(EnsureKnowledgeBaseCommand(max_age_days=self._kb_max_age_days))
+            self._ensure_kb(
+                EnsureKnowledgeBaseCommand(max_age_days=self._kb_max_age_days)
+            )
 
         context_texts: list[str] = []
         if self._vector_store is not None and data.context_query:

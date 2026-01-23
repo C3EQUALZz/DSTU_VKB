@@ -3,6 +3,8 @@ from dataclasses import dataclass
 from vulnfinder.domain.common.errors import DomainFieldError
 from vulnfinder.domain.common.values.base import BaseValueObject
 
+MAX_TEMPERATURE: float = 2.0
+
 
 @dataclass(frozen=True, eq=True)
 class ModelName(BaseValueObject):
@@ -35,8 +37,8 @@ class Temperature(BaseValueObject):
     value: float
 
     def _validate(self) -> None:
-        if not 0.0 <= self.value <= 2.0:
-            msg = "Temperature must be between 0 and 2."
+        if not 0.0 <= self.value <= MAX_TEMPERATURE:
+            msg = f"Temperature must be between 0 and {MAX_TEMPERATURE:g}."
             raise DomainFieldError(msg)
 
     def __str__(self) -> str:

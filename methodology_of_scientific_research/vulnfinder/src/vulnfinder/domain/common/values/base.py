@@ -7,6 +7,7 @@ from vulnfinder.domain.common.errors import DomainFieldError
 @dataclass(frozen=True, eq=True, unsafe_hash=True)
 class BaseValueObject(ABC):
     """Base class for immutable value objects (VO) in the domain.
+
     - Defined by its attributes, which must also be immutable.
 
     For simple cases where immutability and additional behavior aren't required,
@@ -25,12 +26,10 @@ class BaseValueObject(ABC):
 
     @abstractmethod
     def _validate(self) -> None:
-        """Check that a value is valid to create this value object.
-        """
+        """Check that a value is valid to create this value object."""
         raise NotImplementedError
 
     @abstractmethod
     def __str__(self) -> str:
-        """:return: returns a string representation of this value object.
-        """
+        """:return: returns a string representation of this value object."""
         raise NotImplementedError

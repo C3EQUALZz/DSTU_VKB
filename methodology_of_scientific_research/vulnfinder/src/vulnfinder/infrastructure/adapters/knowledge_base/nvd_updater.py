@@ -5,6 +5,7 @@ import urllib.request
 from collections.abc import Iterable
 from datetime import UTC, datetime
 from typing import Any, Final
+from urllib.parse import urlparse
 
 from typing_extensions import override
 
@@ -18,14 +19,21 @@ logger: Final[logging.Logger] = logging.getLogger(__name__)
 
 
 class NvdKnowledgeBaseUpdater(KnowledgeBaseUpdater):
-    def __init__(self, config: KnowledgeBaseConfig, vector_store: VectorStoreGateway) -> None:
+    def __init__(
+        self,
+        config: KnowledgeBaseConfig,
+        vector_store: VectorStoreGateway,
+    ) -> None:
         self._config = config
         self._vector_store = vector_store
 
     @override
     def update(self) -> KnowledgeBaseState:
         feeds = list(self._config.feeds)
-        if self._vector_store.get_document_count() == 0 and self._config.bootstrap_from_year:
+        if (
+            self._vector_store.get_document_count() == 0
+            and self._config.bootstrap_from_year
+        ):
             current_year = datetime.now(UTC).year
             bootstrap_feeds = [
                 f"nvdcve-2.0-{year}.json.gz"
@@ -35,12 +43,11 @@ class NvdKnowledgeBaseUpdater(KnowledgeBaseUpdater):
 
         documents: list[KnowledgeDocument] = []
         for feed in feeds:
-            try:
-                feed_docs = self._download_feed(feed)
-                logger.info("Parsed %s documents from %s.", len(feed_docs), feed)
-                documents.extend(feed_docs)
-            except Exception as exc:  # noqa: BLE001
-                logger.warning("Failed to process feed %s: %s", feed, exc)
+            feed_docs = self._download_feed_safe(feed)
+            if not feed_docs:
+                continue
+            logger.info("Parsed %s documents from %s.", len(feed_docs), feed)
+            documents.extend(feed_docs)
 
         if documents:
             self._vector_store.add_documents(documents)
@@ -49,8 +56,15 @@ class NvdKnowledgeBaseUpdater(KnowledgeBaseUpdater):
 
     def _download_feed(self, feed_name: str) -> list[KnowledgeDocument]:
         url = f"{self._config.nvd_base_url}/{feed_name}"
+        parsed_url = urlparse(url)
+        if parsed_url.scheme not in {"http", "https"}:
+            msg = f"Unsupported URL scheme: {parsed_url.scheme}"
+            raise ValueError(msg)
         logger.info("Downloading NVD feed: %s", url)
-        with urllib.request.urlopen(url, timeout=self._config.request_timeout_seconds) as response:
+        with urllib.request.urlopen(  # noqa: S310
+            url,
+            timeout=self._config.request_timeout_seconds,
+        ) as response:
             payload = response.read()
 
         if feed_name.endswith(".gz"):
@@ -96,7 +110,9 @@ class NvdKnowledgeBaseUpdater(KnowledgeBaseUpdater):
             if not cve_id or not description:
                 continue
 
-            cwe_id = self._extract_cwe_v1(cve.get("problemtype", {}).get("problemtype_data", []))
+            cwe_id = self._extract_cwe_v1(
+                cve.get("problemtype", {}).get("problemtype_data", []),
+            )
             content = f"{cve_id}: {description}"
             metadata = {
                 "cve_id": str(cve_id),
@@ -134,3 +150,10 @@ class NvdKnowledgeBaseUpdater(KnowledgeBaseUpdater):
                 if value:
                     return str(value)
         return None
+
+    def _download_feed_safe(self, feed_name: str) -> list[KnowledgeDocument]:
+        try:
+            return self._download_feed(feed_name)
+        except Exception as exc:  # noqa: BLE001
+            logger.warning("Failed to process feed %s: %s", feed_name, exc)
+            return []

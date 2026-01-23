@@ -8,4 +8,8 @@ from vulnfinder.infrastructure.adapters.knowledge_base.nvd_updater import (
     NvdKnowledgeBaseUpdater,
 )
 
-__all__ = ["JsonKnowledgeBaseMetadataStore", "JsonlKnowledgeSource", "NvdKnowledgeBaseUpdater"]
+__all__ = [
+    "JsonKnowledgeBaseMetadataStore",
+    "JsonlKnowledgeSource",
+    "NvdKnowledgeBaseUpdater",
+]

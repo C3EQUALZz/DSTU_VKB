@@ -42,12 +42,13 @@ ProcessorType = Callable[
 
 
 def get_render_processor(
-        render_json_logs: bool = False,
-        colors: bool = True,
+    *,
+    render_json_logs: bool | None = None,
+    colors: bool | None = None,
 ) -> ProcessorType:
     if render_json_logs:
         return structlog.processors.JSONRenderer()
-    return structlog.dev.ConsoleRenderer(colors=colors)
+    return structlog.dev.ConsoleRenderer(colors=True if colors is None else colors)
 
 
 def configure_logging(cfg: LoggingConfig) -> None:
@@ -87,7 +88,7 @@ def configure_logging(cfg: LoggingConfig) -> None:
     handler.set_name("default")
     handler.setLevel(cfg.level)
     console_formatter = structlog.stdlib.ProcessorFormatter(
-        foreign_pre_chain=common_processors,  # type: ignore
+        foreign_pre_chain=common_processors,  # type: ignore[arg-type]
         processors=logging_console_processors,
     )
     handler.setFormatter(console_formatter)
@@ -101,7 +102,7 @@ def configure_logging(cfg: LoggingConfig) -> None:
         file_handler.set_name("file")
         file_handler.setLevel(cfg.level)
         file_formatter = structlog.stdlib.ProcessorFormatter(
-            foreign_pre_chain=common_processors,  # type: ignore
+            foreign_pre_chain=common_processors,  # type: ignore[arg-type]
             processors=logging_file_processors,
         )
         file_handler.setFormatter(file_formatter)
@@ -110,9 +111,8 @@ def configure_logging(cfg: LoggingConfig) -> None:
     logging.basicConfig(handlers=handlers, level=cfg.level)
     logging.raiseExceptions = False
     structlog.configure(
-        processors=common_processors + structlog_processors,  # type: ignore # noqa
+        processors=common_processors + structlog_processors,  # type: ignore[arg-type]
         logger_factory=structlog.stdlib.LoggerFactory(),
-        # wrapper_class=structlog.stdlib.AsyncBoundLoggerd,  # type: ignore  # noqa
-        wrapper_class=structlog.stdlib.BoundLogger,  # type: ignore
+        wrapper_class=structlog.stdlib.BoundLogger,  # type: ignore[arg-type]
         cache_logger_on_first_use=True,
     )

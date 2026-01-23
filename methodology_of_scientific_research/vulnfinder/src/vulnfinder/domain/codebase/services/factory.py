@@ -20,10 +20,11 @@ class CodebaseFactory(BaseDomainService):
         self._uuid_provider: Final[UUIDProvider] = uuid_provider
 
     def create_artifact(
-            self,
-            path: FilePath,
-            is_directory: bool,
-            language: ProgrammingLanguage | None = None,
+        self,
+        path: FilePath,
+        *,
+        is_directory: bool | None = None,
+        language: ProgrammingLanguage | None = None,
     ) -> CodeArtifact:
         return CodeArtifact(
             id=CodeArtifactId(value=self._uuid_provider()),
@@ -33,10 +34,10 @@ class CodebaseFactory(BaseDomainService):
         )
 
     def create_snippet(
-            self,
-            artifact_id: CodeArtifactId,
-            content: str,
-            location: LineRange,
+        self,
+        artifact_id: CodeArtifactId,
+        content: str,
+        location: LineRange,
     ) -> CodeSnippet:
         return CodeSnippet(
             id=CodeSnippetId(value=self._uuid_provider()),

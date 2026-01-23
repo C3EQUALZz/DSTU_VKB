@@ -2,6 +2,7 @@ import contextlib
 import uuid
 from dataclasses import asdict, dataclass, field
 from datetime import UTC, datetime
+from functools import partial
 from typing import Any
 from uuid import UUID
 
@@ -11,19 +12,20 @@ from bazario import Notification
 @dataclass(frozen=True, slots=True, eq=False)
 class BaseDomainEvent(Notification):
     """Base event, from which any domain event should be inherited.
+
     Events represents internal operations, which may be executed.
     """
 
     event_id: UUID = field(
         init=False,
         kw_only=True,
-        default_factory=lambda: uuid.uuid4(),
+        default_factory=uuid.uuid4,
     )
 
     event_timestamp: datetime = field(
         init=False,
         kw_only=True,
-        default_factory=lambda: datetime.now(UTC),
+        default_factory=partial(datetime.now, UTC),
     )
 
     def to_dict(

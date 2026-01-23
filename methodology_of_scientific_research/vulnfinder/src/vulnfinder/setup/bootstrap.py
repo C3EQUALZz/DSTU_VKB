@@ -37,18 +37,18 @@ def setup_logging(logger_config: LoggingConfig) -> None:
 
 
 def global_exception_handler_with_traceback(
-        exc_type: type[BaseException],
-        value: BaseException,
-        traceback: TracebackType | None,
+    exc_type: type[BaseException],
+    value: BaseException,
+    traceback: TracebackType | None,
 ) -> Any:
     root_logger: logging.Logger = logging.getLogger()
-    root_logger.exception("Error", exc_info=(exc_type, value, traceback))
+    root_logger.error("Error", exc_info=(exc_type, value, traceback))
 
 
 def global_exception_handler_without_traceback(
-        exc_type: type[BaseException],
-        value: BaseException,
-        traceback: TracebackType | None,
+    exc_type: type[BaseException],
+    value: BaseException,
+    _traceback: TracebackType | None,
 ) -> Any:
     root_logger: logging.Logger = logging.getLogger()
     root_logger.error("Error: %s %s", exc_type.__name__, value)

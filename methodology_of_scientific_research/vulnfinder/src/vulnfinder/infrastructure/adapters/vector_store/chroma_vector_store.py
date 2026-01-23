@@ -1,8 +1,8 @@
-from collections.abc import Sequence
-from typing import Any, Final
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Any, Final
 
 from langchain_core.documents import Document
-from langchain_core.vectorstores import VectorStore
 from tenacity import (
     retry,
     retry_if_exception,
@@ -14,6 +14,11 @@ from typing_extensions import override
 from vulnfinder.application.common.models.knowledge_document import KnowledgeDocument
 from vulnfinder.application.common.ports.vector_store import VectorStoreGateway
 
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
+    from langchain_core.vectorstores import VectorStore
+
 
 class ChromaVectorStoreGateway(VectorStoreGateway):
     def __init__(self, vector_store: VectorStore) -> None:
@@ -22,7 +27,8 @@ class ChromaVectorStoreGateway(VectorStoreGateway):
     @override
     def add_documents(self, documents: list[KnowledgeDocument]) -> None:
         langchain_docs = [
-            Document(page_content=doc.content, metadata=dict(doc.metadata)) for doc in documents
+            Document(page_content=doc.content, metadata=dict(doc.metadata))
+            for doc in documents
         ]
         if not langchain_docs:
             return
@@ -31,7 +37,7 @@ class ChromaVectorStoreGateway(VectorStoreGateway):
 
     def _add_in_batches(self, docs: list[Document], batch_size: int) -> None:
         for start in range(0, len(docs), batch_size):
-            chunk = docs[start: start + batch_size]
+            chunk = docs[start : start + batch_size]
             try:
                 self._add_with_retry(chunk)
             except ValueError as exc:
@@ -55,7 +61,10 @@ class ChromaVectorStoreGateway(VectorStoreGateway):
     def similarity_search(self, query: str, k: int) -> list[KnowledgeDocument]:
         results: Sequence[Document] = self._vector_store.similarity_search(query, k=k)
         return [
-            KnowledgeDocument(content=doc.page_content, metadata=self._normalize_metadata(doc.metadata))
+            KnowledgeDocument(
+                content=doc.page_content,
+                metadata=self._normalize_metadata(doc.metadata),
+            )
             for doc in results
         ]
 

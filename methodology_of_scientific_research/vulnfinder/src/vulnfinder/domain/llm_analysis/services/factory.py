@@ -43,7 +43,11 @@ class LlmAnalysisFactory(BaseDomainService):
             temperature=temperature,
         )
 
-    def create_response(self, content: str, usage: TokenUsage | None = None) -> ModelResponse:
+    def create_response(
+        self,
+        content: str,
+        usage: TokenUsage | None = None,
+    ) -> ModelResponse:
         return ModelResponse(
             id=ModelResponseId(value=self._uuid_provider()),
             content=content,

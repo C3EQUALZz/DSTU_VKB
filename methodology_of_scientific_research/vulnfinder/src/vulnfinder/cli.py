@@ -1,13 +1,19 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 import click
 from dishka import Container, make_container
 from dishka.integrations.click import setup_dishka
 
 from vulnfinder.setup.bootstrap import setup_cli_routes, setup_configs, setup_logging
-from vulnfinder.setup.configs.app_config import ApplicationConfig
 from vulnfinder.setup.configs.knowledge_base_config import KnowledgeBaseConfig
 from vulnfinder.setup.configs.open_router_config import OpenRouterConfig
 from vulnfinder.setup.configs.vector_store_config import ChromaDBVectorStoreConfig
 from vulnfinder.setup.ioc import setup_providers
+
+if TYPE_CHECKING:
+    from vulnfinder.setup.configs.app_config import ApplicationConfig
 
 
 @click.group()

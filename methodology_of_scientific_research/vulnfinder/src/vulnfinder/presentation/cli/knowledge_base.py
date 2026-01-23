@@ -19,10 +19,11 @@ def knowledge_base_group() -> None:
 @knowledge_base_group.command("update")
 @click.option("--force", is_flag=True, default=False, show_default=True)
 def kb_update(
-    force: bool,
     interactor: FromDishka[EnsureKnowledgeBaseCommandHandler],
+    *,
+    force: bool | None = None,
 ) -> None:
-    interactor(EnsureKnowledgeBaseCommand(force_refresh=force))
+    interactor(EnsureKnowledgeBaseCommand(force_refresh=bool(force)))
 
 
 @knowledge_base_group.command("ingest")

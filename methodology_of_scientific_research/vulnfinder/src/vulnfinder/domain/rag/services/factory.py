@@ -13,7 +13,11 @@ class RagFactory(BaseDomainService):
         super().__init__()
         self._uuid_provider = uuid_provider
 
-    def create_bundle(self, query: str, embedding: QueryEmbedding | None = None) -> ContextBundle:
+    def create_bundle(
+        self,
+        query: str,
+        embedding: QueryEmbedding | None = None,
+    ) -> ContextBundle:
         return ContextBundle(
             id=ContextBundleId(value=self._uuid_provider()),
             query=query,

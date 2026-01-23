@@ -35,14 +35,25 @@ class EnsureKnowledgeBaseCommandHandler:
         state = self._metadata_store.load()
         actual_count = self._vector_store.get_document_count()
         if actual_count != state.document_count:
-            state = KnowledgeBaseState(document_count=actual_count, last_updated=state.last_updated)
+            state = KnowledgeBaseState(
+                document_count=actual_count,
+                last_updated=state.last_updated,
+            )
 
-        should_refresh = data.force_refresh or actual_count == 0 or self._is_stale(state, data.max_age_days)
+        should_refresh = (
+            data.force_refresh
+            or actual_count == 0
+            or self._is_stale(state, data.max_age_days)
+        )
         if should_refresh:
             if actual_count == 0:
-                logger.info("Knowledge base is empty. Downloading CVE data and building index.")
+                logger.info(
+                    "Knowledge base is empty. Downloading CVE data and building index.",
+                )
             else:
-                logger.info("Knowledge base is stale. Updating CVE data and rebuilding index.")
+                logger.info(
+                    "Knowledge base is stale. Updating CVE data and rebuilding index.",
+                )
             updated_state = self._updater.update()
             self._metadata_store.save(updated_state)
             return updated_state

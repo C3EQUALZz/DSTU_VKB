@@ -29,15 +29,20 @@ def analysis_group() -> None:
     show_default=True,
     help="Comma-separated extensions for directory scan.",
 )
-def analyze_command(
+def analyze_command(  # noqa: PLR0913
     path: Path,
     context_query: str | None,
     top_k: int,
-    recursive: bool,
-    extensions: str,
     interactor: FromDishka[AnalyzeCodeCommandHandler],
+    *,
+    recursive: bool | None = None,
+    extensions: str = ".py,.c,.cpp,.java",
 ) -> None:
-    files = _collect_files(path, recursive=recursive, extensions=_parse_extensions(extensions))
+    files = _collect_files(
+        path,
+        recursive=recursive,
+        extensions=_parse_extensions(extensions),
+    )
     if not files:
         logger.warning("No files found for analysis.")
         return
@@ -60,7 +65,12 @@ def _parse_extensions(extensions: str) -> tuple[str, ...]:
     return tuple(ext.strip().lower() for ext in extensions.split(",") if ext.strip())
 
 
-def _collect_files(path: Path, recursive: bool, extensions: tuple[str, ...]) -> list[Path]:
+def _collect_files(
+    path: Path,
+    *,
+    recursive: bool | None = None,
+    extensions: tuple[str, ...] = (),
+) -> list[Path]:
     if path.is_file():
         return [path]
 
