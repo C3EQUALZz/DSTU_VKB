@@ -3,9 +3,11 @@
 import logging
 from collections.abc import Sequence
 from dataclasses import dataclass
-from pathlib import Path
 from typing import final
 
+from theory_of_pseudorandom_generators.application.views.geffe_generator_view import (
+    GeffeGeneratorView,
+)
 from theory_of_pseudorandom_generators.domain.fibonacci_pseudorandom_number_generator_on_shift_registers_with_linear_feedback.entities.register import (
     Register,
 )
@@ -17,9 +19,6 @@ from theory_of_pseudorandom_generators.domain.geffey_pseudorandom_number_generat
 )
 from theory_of_pseudorandom_generators.domain.geffey_pseudorandom_number_generator_on_shift_registers_with_linear_feedback.services.geffe_generator_service import (
     GeffeGeneratorService,
-)
-from theory_of_pseudorandom_generators.application.views.geffe_generator_view import (
-    GeffeGeneratorView,
 )
 
 logger: logging.Logger = logging.getLogger(__name__)
