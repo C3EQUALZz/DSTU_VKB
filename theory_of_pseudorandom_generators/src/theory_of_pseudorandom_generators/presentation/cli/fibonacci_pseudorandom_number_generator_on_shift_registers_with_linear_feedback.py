@@ -109,42 +109,23 @@ def cmd_generate_handler(
         print(v_table)
         
         # Таблица состояний
-        num_states_to_show = min(20, len(view.states_sequence) + 1)
-        print(f"\nТаблица состояний (первые {num_states_to_show} состояний):")
+        total_states = len(view.states_sequence)
+        print(f"\nТаблица состояний (всего {total_states} состояний):")
         states_table = PrettyTable(["№"] + [f"q{i+1}" for i in range(len(start_state_values))])
         states_table.align = "c"
-        
-        # Начальное состояние
-        states_table.add_row([1] + list(start_state_values))
-        
-        # Состояния из последовательности
-        for idx, state in enumerate(view.states_sequence[:num_states_to_show - 1], 2):
+        for idx, state in enumerate(view.states_sequence, 1):
             states_table.add_row([idx] + list(state))
-        
         print(states_table)
-        if len(view.states_sequence) + 1 > num_states_to_show:
-            print(f"... (всего {len(view.states_sequence) + 1} состояний за период)")
         
         # Двоичная последовательность
         binary_str = "".join(view.binary_sequence)
         print(f"\nДвоичная последовательность (выходные биты):")
-        if len(binary_str) <= 100:
-            print(binary_str)
-        else:
-            # Для длинных последовательностей показываем начало и конец
-            print(binary_str[:50] + "..." + binary_str[-50:])
-            print(f"(полная последовательность: {len(binary_str)} бит)")
+        print(binary_str)
         
         # Десятичная последовательность
         print(f"\nДесятичные значения:")
-        if len(view.decimal_sequence) <= 20:
-            decimal_str = " ".join(str(d) for d in view.decimal_sequence)
-            print(decimal_str)
-        else:
-            decimal_str_start = " ".join(str(d) for d in view.decimal_sequence[:10])
-            decimal_str_end = " ".join(str(d) for d in view.decimal_sequence[-10:])
-            print(f"{decimal_str_start} ... {decimal_str_end}")
-            print(f"(всего {len(view.decimal_sequence)} значений)")
+        decimal_str = " ".join(str(d) for d in view.decimal_sequence)
+        print(decimal_str)
         
         # Период
         print(f"\nПериод генератора: δ = {view.period}")

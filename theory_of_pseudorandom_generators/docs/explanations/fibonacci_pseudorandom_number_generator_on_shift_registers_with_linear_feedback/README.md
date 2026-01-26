@@ -19,5 +19,5 @@ python cli.py fibonacci_pseudorandom_number_generator_on_shift_registers_with_li
 Для варианта 11:
 
 ```bash
-python cli.py fibonacci_pseudorandom_number_generator_on_shift_registers_with_linear_feedback generate -p "1 0 1 1 1 1" -k 4 -s "0 1 0 0 0"
+python cli.py fibonacci_pseudorandom_number_generator_on_shift_registers_with_linear_feedback generate -p "1 1 1 0 1 1" -k 3 -s "0 1 0 0 0"
 ```

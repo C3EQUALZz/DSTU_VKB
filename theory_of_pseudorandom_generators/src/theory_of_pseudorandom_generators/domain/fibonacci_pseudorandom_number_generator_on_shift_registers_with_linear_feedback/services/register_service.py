@@ -80,17 +80,14 @@ class RegisterService(DomainService):
 
         register.clear()
         if count is None:
-            # Генерируем полный период (логика согласована с Java-реализацией)
-            # Начинаем с первого next() (не с начального состояния)
+            # Генерируем полный период, включая начальное состояние,
+            # и останавливаемся перед повтором.
             start_state = list(register.start_position)
-            current = register.next()
-            yield current
-            current = register.next()
-            while list(register._register[0]) != start_state:
-                yield current
+            while True:
                 current = register.next()
-            # Последнее состояние (равное start_state) здесь не возвращается;
-            # оно будет преобразовано в десятичный вид в get_decimal_sequence
+                yield current
+                if list(register._register[0]) == start_state:
+                    break
         else:
             for _ in range(count):
                 yield register.next()
