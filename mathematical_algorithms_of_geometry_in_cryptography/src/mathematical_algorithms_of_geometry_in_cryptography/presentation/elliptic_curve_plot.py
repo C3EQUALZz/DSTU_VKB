@@ -60,8 +60,8 @@ def _plot_curve(view: EllipticCurveView, output_path: str | None = None) -> None
     lower_x = [p["x"] for p in view.lower_branch_points]
     lower_y = [p["y"] for p in view.lower_branch_points]
 
-    # Create figure
-    fig: Figure = plt.figure(figsize=(10, 10))
+    # Create figure with square aspect
+    fig: Figure = plt.figure(figsize=(12, 10))
     ax = fig.add_subplot(111)
 
     # Determine title based on singularity
@@ -102,8 +102,33 @@ def _plot_curve(view: EllipticCurveView, output_path: str | None = None) -> None
         va="top",
     )
 
-    # Set equal aspect ratio
-    ax.set_aspect("equal", adjustable="box")
+    # Set axis limits with minimum ranges
+    # Определяем диапазоны на основе данных
+    all_x = upper_x + lower_x
+    all_y = upper_y + lower_y
+    
+    # Фильтруем NaN значения
+    valid_x = [x for x in all_x if not isnan(x)]
+    valid_y = [y for y in all_y if not isnan(y)]
+    
+    if valid_x and valid_y:
+        x_min_data = min(valid_x)
+        x_max_data = max(valid_x)
+        y_min_data = min(valid_y)
+        y_max_data = max(valid_y)
+        
+        # Устанавливаем минимальные диапазоны: x от 0 до 10, y от -30 до 30
+        # Но если данные требуют больше - расширяем
+        x_min_limit = min(x_min_data - 0.5, -1.0)
+        x_max_limit = max(x_max_data + 0.5, 10.0)
+        y_min_limit = min(y_min_data - 1, -30)
+        y_max_limit = max(y_max_data + 1, 30)
+        
+        ax.set_xlim(x_min_limit, x_max_limit)
+        ax.set_ylim(y_min_limit, y_max_limit)
+    
+    # Не используем set_aspect("equal"), чтобы график был более квадратным по форме окна
+    # Это позволит лучше видеть кривую без искажений
 
     # Add legend
     ax.legend(loc="best")
@@ -136,14 +161,14 @@ def _plot_curve(view: EllipticCurveView, output_path: str | None = None) -> None
 )
 @click.option(
     "--x-min",
-    default=-2.0,
-    help="Минимальное значение x (по умолчанию: -2.0)",
+    default=-1.0,
+    help="Минимальное значение x (по умолчанию: -1.0)",
     type=float,
 )
 @click.option(
     "--x-max",
-    default=2.0,
-    help="Максимальное значение x (по умолчанию: 2.0)",
+    default=10.0,
+    help="Максимальное значение x (по умолчанию: 10.0)",
     type=float,
 )
 @click.option(
