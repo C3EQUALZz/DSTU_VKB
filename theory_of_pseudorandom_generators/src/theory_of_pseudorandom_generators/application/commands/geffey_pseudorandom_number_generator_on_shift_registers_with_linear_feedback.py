@@ -1,6 +1,7 @@
 """Command handler for Geffe generator."""
 
 import logging
+from pathlib import Path
 from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import final
@@ -48,6 +49,8 @@ class GeffeyPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackCommand
 
     # Output parameters
     number_count: int = 200
+    show_steps: bool = False
+    steps_limit: int = 0
 
 
 @final
@@ -130,22 +133,47 @@ class GeffeyPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackCommand
             generator, self._register_service
         )
         
-        # Generate final sequence using Geffe function
-        # Use min length of all sequences (matching Python reference)
-        min_len = min(len(seq1), len(seq2), len(seq3))
-        logger.info("Длины последовательностей: seq1=%s, seq2=%s, seq3=%s, min_len=%s", 
-                   len(seq1), len(seq2), len(seq3), min_len)
+        # Generate final sequence using Geffe function in service
+        final_sequence = self._geffe_generator_service.get_final_sequence(seq1, seq2, seq3)
+        logger.info(
+            "Длины последовательностей: seq1=%s, seq2=%s, seq3=%s, min_len=%s",
+            len(seq1),
+            len(seq2),
+            len(seq3),
+            len(final_sequence),
+        )
         
-        final_sequence: list[int] = []
-        for i in range(min_len):
-            x1, x2, x3 = seq1[i], seq2[i], seq3[i]
-            result = (x1 & x2) ^ (x2 & x3) ^ x3
-            final_sequence.append(result)
-        
-        # Convert final sequence to decimal
+        # Convert final sequence to decimal (whole number)
         final_binary_str = "".join(str(b) for b in final_sequence)
         logger.info("Длина итоговой двоичной последовательности: %s", len(final_binary_str))
-        final_decimal = str(int(final_binary_str, 2)) if final_binary_str else "0"
+        final_decimal = self._geffe_generator_service.binary_to_decimal_str(final_sequence)
+
+        # Generate decimal numbers sequence from the final sequence
+        decimal_sequence = self._geffe_generator_service.get_decimal_sequence_from_bits(
+            final_sequence,
+            command.number_count,
+        )
+
+        steps: tuple[str, ...] = ()
+        if command.show_steps:
+            steps_limit = None if command.steps_limit <= 0 else command.steps_limit
+            steps = tuple(
+                self._geffe_generator_service.get_steps(
+                    generator,
+                    self._register_service,
+                    steps_limit,
+                )
+            )
+
+        path_to_save: Path = (
+            Path(__file__).parent.parent.parent.parent.parent / "Geffe.txt"
+        )
+        try:
+            with open(path_to_save, "w", encoding="utf-8") as f:
+                f.write(decimal_sequence)
+            logger.info("Значения сохранены в файл: %s", path_to_save)
+        except OSError as e:
+            logger.error("Ошибка при сохранении файла: %s", e)
         
         # Create and return View
         return GeffeGeneratorView(
@@ -171,6 +199,8 @@ class GeffeyPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackCommand
             register3_sequence=tuple(seq3),
             final_sequence=tuple(final_sequence),
             final_decimal=final_decimal,
+            decimal_sequence=decimal_sequence,
+            steps=steps,
         )
 
 

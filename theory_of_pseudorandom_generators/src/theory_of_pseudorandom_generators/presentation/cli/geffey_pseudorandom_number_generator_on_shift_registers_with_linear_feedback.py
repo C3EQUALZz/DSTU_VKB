@@ -110,6 +110,17 @@ def geffe_generator_group() -> None:
     help="Number of decimal numbers to generate",
     type=int,
 )
+@click.option(
+    "--show-steps/--no-show-steps",
+    default=True,
+    help="Print step-by-step register states",
+)
+@click.option(
+    "--steps-limit",
+    default=0,
+    help="Limit number of printed steps (0 = all)",
+    type=int,
+)
 def cmd_generate_handler(
     register1_polynomial: str,
     register1_start_state: str,
@@ -124,6 +135,8 @@ def cmd_generate_handler(
     register3_shift: int,
     register3_column_index: int,
     number_count: int,
+    show_steps: bool,
+    steps_limit: int,
     interactor: FromDishka[
         GeffeyPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackCommandHandler
     ],
@@ -151,6 +164,8 @@ def cmd_generate_handler(
             register3_shift=register3_shift,
             register3_column_index=register3_column_index,
             number_count=number_count,
+            show_steps=show_steps,
+            steps_limit=steps_limit,
         )
 
         view = interactor(command)
@@ -178,10 +193,21 @@ def cmd_generate_handler(
             print(f"Первые 50 бит: {final_seq_str[:50]}")
             print(f"Последние 50 бит: {final_seq_str[-50:]}")
         
-        # Десятичное представление
+        # Десятичная последовательность (по 16 бит)
+        print("\nДесятичная последовательность (по 16 бит):")
+        print(view.decimal_sequence)
+        decimal_count = len(view.decimal_sequence.split()) if view.decimal_sequence else 0
+        print(f"Количество чисел: {decimal_count}")
+
+        # Цельное десятичное число
         print("\nДесятичное представление итоговой последовательности:")
         print(view.final_decimal)
-        print(f"Длина десятичного числа: {len(view.final_decimal)} цифр")
+
+        if view.steps:
+            print("\nШаги генерации:")
+            for step in view.steps:
+                print(step)
+                print()
         
     except ValueError as e:
         click.echo(f"Ошибка ввода: {e}", err=True)

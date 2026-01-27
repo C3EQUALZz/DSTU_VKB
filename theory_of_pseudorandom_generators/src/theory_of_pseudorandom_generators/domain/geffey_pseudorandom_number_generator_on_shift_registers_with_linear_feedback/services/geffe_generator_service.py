@@ -1,7 +1,7 @@
 """Service for working with Geffe generator."""
 
 import logging
-from collections.abc import Iterable
+from collections.abc import Iterable, Sequence
 from typing import Final
 
 from theory_of_pseudorandom_generators.domain.common.services.base import DomainService
@@ -61,102 +61,184 @@ class GeffeGeneratorService(DomainService):
         generator: GeffeGenerator,
         register_service: RegisterService,
     ) -> tuple[list[int], list[int], list[int]]:
-        """Generate sequences and then decimate them, matching Python reference.
-        
-        В l.py логика такая:
-        1. Генерируется полная последовательность с обычным сдвигом (shift=1, т.е. используя T, не T^k)
-        2. Затем применяется декремпозиция seq[::k]
-        
-        Чтобы соответствовать этой логике, создаем временные регистры с shift=1
-        для генерации полной последовательности, затем применяем декремпозицию.
-        
-        Args:
-            generator: Geffe generator to generate from
-            register_service: Register service for creating temporary registers
-            
-        Returns:
-            Tuple of (register1_decimated_sequence, register2_decimated_sequence, register3_decimated_sequence)
+        """Generate sequences and then decimate them (classic Geffe setup).
+
+        Steps:
+        1. Generate sequences using ordinary shift (k=1) for all registers
+           until the combined state repeats.
+        2. Apply decimation seq[::k] for each register's k.
         """
-        # Создаем временные регистры с shift=1 для генерации полной последовательности
-        # Это соответствует логике l.py, где используется обычный сдвиг, а не T^k
-        temp_register1 = register_service.create(
-            polynomial_coefficients=generator.register1.polynomial_coefficients,
-            start_position=generator.register1.start_position,
-            shift=1,  # Обычный сдвиг (T, не T^k)
-            column_index=generator.register1.column_index,
-        )
-        
-        temp_register2 = register_service.create(
-            polynomial_coefficients=generator.register2.polynomial_coefficients,
-            start_position=generator.register2.start_position,
-            shift=1,  # Обычный сдвиг (T, не T^k)
-            column_index=generator.register2.column_index,
-        )
-        
-        temp_register3 = register_service.create(
-            polynomial_coefficients=generator.register3.polynomial_coefficients,
-            start_position=generator.register3.start_position,
-            shift=1,  # Обычный сдвиг (T, не T^k)
-            column_index=generator.register3.column_index,
-        )
-        
-        # Генерируем полные последовательности до цикла комбинированного состояния
-        # Логика соответствует l.py: цикл определяется по комбинированному состоянию всех трех регистров
         seq1_full: list[int] = []
         seq2_full: list[int] = []
         seq3_full: list[int] = []
-        
-        # Отслеживаем комбинированные состояния для обнаружения цикла
-        seen_states: dict[tuple[tuple[int, ...], tuple[int, ...], tuple[int, ...]], int] = {}
-        
-        # Инициализируем регистры
-        temp_register1.clear()
-        temp_register2.clear()
-        temp_register3.clear()
-        
-        # Генерируем последовательности до обнаружения цикла
-        # Логика соответствует l.py: получаем биты из текущего состояния, затем сдвигаем
-        while True:
-            # Получаем текущее комбинированное состояние (полные состояния регистров)
-            state1 = tuple(temp_register1._register[0])
-            state2 = tuple(temp_register2._register[0])
-            state3 = tuple(temp_register3._register[0])
-            combined_state = (state1, state2, state3)
-            
-            # Проверяем, видели ли мы это состояние ранее (обнаружен цикл)
-            if combined_state in seen_states:
-                break
-            
-            # Отмечаем это состояние как виденное
-            seen_states[combined_state] = len(seq1_full)
-            
-            # Получаем выходные биты из текущего состояния (перед сдвигом)
-            # Это соответствует l.py: x1 = state1[col1 - 1] (но у нас 0-based индекс)
-            x1 = temp_register1._register[0][temp_register1.column_index]
-            x2 = temp_register2._register[0][temp_register2.column_index]
-            x3 = temp_register3._register[0][temp_register3.column_index]
-            
-            seq1_full.append(x1)
-            seq2_full.append(x2)
-            seq3_full.append(x3)
-            
-            # Теперь сдвигаем регистры, используя обычный сдвиг (T, не T^k)
-            # Это соответствует l.py, где используется обычный сдвиг, а затем применяется декремпозиция
-            temp_register1.next()
-            temp_register2.next()
-            temp_register3.next()
-        
-        # Применяем декремпозицию, как в l.py: decimated1 = seq1[::k1]
-        # Получаем значения k из исходных регистров генератора
+        col1 = generator.register1.column_index
+        col2 = generator.register2.column_index
+        col3 = generator.register3.column_index
+        for _, state1, state2, state3 in GeffeGeneratorService._iter_combined_states(
+            generator, register_service
+        ):
+            seq1_full.append(state1[col1])
+            seq2_full.append(state2[col2])
+            seq3_full.append(state3[col3])
+
         k1 = generator.register1.shift
         k2 = generator.register2.shift
         k3 = generator.register3.shift
-        
+
         decimated1 = seq1_full[::k1]
         decimated2 = seq2_full[::k2]
         decimated3 = seq3_full[::k3]
-        
+
         return decimated1, decimated2, decimated3
+
+    @staticmethod
+    def get_steps(
+        generator: GeffeGenerator,
+        register_service: RegisterService,
+        steps_limit: int | None = None,
+    ) -> list[str]:
+        """Generate step-by-step output strings for combined states."""
+        steps: list[str] = []
+        col1 = generator.register1.column_index
+        col2 = generator.register2.column_index
+        col3 = generator.register3.column_index
+        for step, state1, state2, state3 in GeffeGeneratorService._iter_combined_states(
+            generator, register_service
+        ):
+            x1 = state1[col1]
+            x2 = state2[col2]
+            x3 = state3[col3]
+            step_lines = [
+                f"Шаг {step}:",
+                (
+                    f"  LFSR1: {''.join(str(b) for b in state1)} -> "
+                    f"выбранный бит (столбец {col1 + 1}): {x1}"
+                ),
+                (
+                    f"  LFSR2: {''.join(str(b) for b in state2)} -> "
+                    f"выбранный бит (столбец {col2 + 1}): {x2}"
+                ),
+                (
+                    f"  LFSR3: {''.join(str(b) for b in state3)} -> "
+                    f"выбранный бит (столбец {col3 + 1}): {x3}"
+                ),
+                f"  f(x1,x2,x3) = {GeffeGeneratorService._geffe_bit(x1, x2, x3)}",
+            ]
+            steps.append("\n".join(step_lines))
+            if steps_limit is not None and steps_limit > 0 and step + 1 >= steps_limit:
+                break
+        return steps
+
+    @staticmethod
+    def get_final_sequence(
+        seq1: Sequence[int],
+        seq2: Sequence[int],
+        seq3: Sequence[int],
+        length: int | None = None,
+    ) -> list[int]:
+        """Combine three sequences using Geffe formula.
+
+        If length is provided, sequences are repeated to match that length.
+        Otherwise, the minimum length is used.
+        """
+        if not seq1 or not seq2 or not seq3:
+            return []
+        if length is None:
+            length = min(len(seq1), len(seq2), len(seq3))
+        final_sequence: list[int] = []
+        for i in range(length):
+            x1 = seq1[i % len(seq1)]
+            x2 = seq2[i % len(seq2)]
+            x3 = seq3[i % len(seq3)]
+            result = GeffeGeneratorService._geffe_bit(x1, x2, x3)
+            final_sequence.append(result)
+        return final_sequence
+
+    @staticmethod
+    def get_decimal_sequence_from_bits(
+        bit_sequence: Sequence[int],
+        number_count: int,
+        bit_block_size: int = 16,
+    ) -> str:
+        """Convert bit sequence into decimal numbers using fixed-size blocks."""
+        if number_count <= 0 or not bit_sequence:
+            return ""
+        required_bits = number_count * bit_block_size
+        bits = [str(bit_sequence[i % len(bit_sequence)]) for i in range(required_bits)]
+        sequence = "".join(bits)
+        decimal_numbers = [
+            str(int(sequence[i : i + bit_block_size], 2))
+            for i in range(0, required_bits, bit_block_size)
+        ]
+        return "\t".join(decimal_numbers)
+
+    @staticmethod
+    def binary_to_decimal_str(bit_sequence: Sequence[int]) -> str:
+        """Convert a binary bit sequence to a decimal string."""
+        if not bit_sequence:
+            return "0"
+        base = 1_000_000_000
+        digits = [0]
+        for bit in bit_sequence:
+            carry = bit
+            for i in range(len(digits)):
+                value = digits[i] * 2 + carry
+                digits[i] = value % base
+                carry = value // base
+            if carry:
+                digits.append(carry)
+        parts = [str(digits[-1])]
+        for digit in reversed(digits[:-1]):
+            parts.append(f"{digit:09d}")
+        return "".join(parts)
+
+    @staticmethod
+    def _geffe_bit(x1: int, x2: int, x3: int) -> int:
+        """Calculate one Geffe output bit."""
+        return (x1 & x2) ^ (x2 & x3) ^ x3
+
+    @staticmethod
+    def _iter_combined_states(
+        generator: GeffeGenerator,
+        register_service: RegisterService,
+    ) -> Iterable[tuple[int, tuple[int, ...], tuple[int, ...], tuple[int, ...]]]:
+        """Yield combined register states using shift=1 until repetition."""
+        temp_register1 = register_service.create(
+            polynomial_coefficients=generator.register1.polynomial_coefficients,
+            start_position=generator.register1.start_position,
+            shift=1,
+            column_index=generator.register1.column_index,
+        )
+        temp_register2 = register_service.create(
+            polynomial_coefficients=generator.register2.polynomial_coefficients,
+            start_position=generator.register2.start_position,
+            shift=1,
+            column_index=generator.register2.column_index,
+        )
+        temp_register3 = register_service.create(
+            polynomial_coefficients=generator.register3.polynomial_coefficients,
+            start_position=generator.register3.start_position,
+            shift=1,
+            column_index=generator.register3.column_index,
+        )
+
+        seen_states: set[tuple[tuple[int, ...], tuple[int, ...], tuple[int, ...]]] = set()
+
+        temp_register1.clear()
+        temp_register2.clear()
+        temp_register3.clear()
+
+        step = 0
+        while True:
+            state1 = tuple(temp_register1.next())
+            state2 = tuple(temp_register2.next())
+            state3 = tuple(temp_register3.next())
+            combined_state = (state1, state2, state3)
+            if combined_state in seen_states:
+                break
+            seen_states.add(combined_state)
+            yield step, state1, state2, state3
+            step += 1
     
     @staticmethod
     def get_states(
@@ -175,9 +257,8 @@ class GeffeGeneratorService(DomainService):
         generator.clear()
         for i in range(generator.period):
             arr = generator.next_array()
-            # Calculate result using Geffe formula: f(x1, x2, x3) = (x1 & x2) ^ (x2 & x3) ^ x3
             x1, x2, x3 = arr[0], arr[1], arr[2]
-            result = (x1 & x2) ^ (x2 & x3) ^ x3
+            result = GeffeGeneratorService._geffe_bit(x1, x2, x3)
             state_str = "".join(str(v) for v in arr)
             yield f"{i}. {state_str}{separator}{result}"
 
@@ -202,8 +283,8 @@ class GeffeGeneratorService(DomainService):
         logger.info("Запрошено чисел для перевода в 10-ную систему: %s", number_count)
         logger.info("Период генератора: %s", generator.period)
         
-        # Используем фиксированный размер блока 9 бит (максимальное значение 511)
-        bit_block_size = 9
+        # Используем фиксированный размер блока 16 бит (максимальное значение 65535)
+        bit_block_size = 16
         required_bits = number_count * bit_block_size
         
         # Генерируем биты циклически, пока не наберется нужное количество

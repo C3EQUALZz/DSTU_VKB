@@ -25,3 +25,5 @@ class GeffeGeneratorView:
     register3_sequence: tuple[int, ...]
     final_sequence: tuple[int, ...]
     final_decimal: str
+    decimal_sequence: str
+    steps: tuple[str, ...]

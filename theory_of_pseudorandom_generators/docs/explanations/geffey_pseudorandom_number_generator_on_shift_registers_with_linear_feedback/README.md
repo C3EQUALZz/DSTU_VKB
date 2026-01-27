@@ -25,5 +25,15 @@ python cli.py geffey_pseudorandom_number_generator_on_shift_registers_with_linea
 Для варианта 11:
 
 ```bash
-python cli.py geffey_pseudorandom_number_generator_on_shift_registers_with_linear_feedback generate -p1 "1 1 1 0 1 1" -k1 3 -c1 0 -s1 "1 0 0 0 0" -p2 "1 1 0 1" -k2 4 -c2 0 -s2 "1 0 0" -p3 "1 1 1 0 0 1 1" -k3 2 -c3 0 -s3 "1 0 0 0 0 0"
+python cli.py geffey_pseudorandom_number_generator_on_shift_registers_with_linear_feedback generate -p1 "1 1 1 0 1 1" -k1 3 -c1 0 -s1 "1 0 0 0 0" -p2 "1 1 0 1" -k2 4 -c2 0 -s2 "1 0 0" -p3 "1 1 1 0 0 1 1" -k3 2 -c3 0 -s3 "1 0 0 0 0 0" --no-show-steps
+```
+
+Для варианта 6:
+
+```bash
+python cli.py geffey_pseudorandom_number_generator_on_shift_registers_with_linear_feedback generate -p1 "1 0 0 1 0 1" -k1 4 -c1 0 -s1 "1 1 1 1 1" -p2 "1 1 0 0 1"   -k2 1 -c2 0 -s2 "1 1 1 1" -p3 "1 1 0 1 1 0 1" -k3 4 -c3 0 -s3 "1 1 1 1 1 1"
+```
+
+```
+python cli.py geffey_pseudorandom_number_generator_on_shift_registers_with_linear_feedback generate -p1 "1 0 1 1 1 1" -k1 4 -c1 0 -s1 "1 0 0 0 0" -p2 "1 1 1" -k2 2 -c2 0 -s2 "1 0" -p3 "1 1 0 0 1 1 1" -k3 5 -c3 1 -s3 "1 1 0 0 0 0"
 ```
