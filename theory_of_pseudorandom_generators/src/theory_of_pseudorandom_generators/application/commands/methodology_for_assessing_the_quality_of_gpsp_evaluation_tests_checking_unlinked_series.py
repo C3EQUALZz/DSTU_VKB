@@ -5,6 +5,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import final
 
+from prettytable import PrettyTable
+
 from theory_of_pseudorandom_generators.domain.methodology_for_assessing_the_quality_of_gpsp_evaluation_tests_checking_unlinked_series.services.nist_test_service import (
     NISTTestService,
 )
@@ -22,6 +24,7 @@ class MethodologyForAssessingTheQualityOfGpspEvaluationTestsCheckingUnlinkedSeri
     geffe_file: Path | None = None
     block_size: int
     alpha: float = 0.01
+    max_bits: int = 0
 
 
 @final
@@ -76,6 +79,8 @@ class MethodologyForAssessingTheQualityOfGpspEvaluationTestsCheckingUnlinkedSeri
                 sequence = self._nist_test_service.get_binary_sequence_from_file(
                     file_path
                 )
+                if command.max_bits and command.max_bits > 0:
+                    sequence = sequence[: command.max_bits]
                 logger.info(
                     "Последовательность (%s бит): %s", len(sequence), sequence[:100] + ("..." if len(sequence) > 100 else "")
                 )
@@ -95,15 +100,45 @@ class MethodologyForAssessingTheQualityOfGpspEvaluationTestsCheckingUnlinkedSeri
                     alpha=command.alpha,
                 )
 
-                # Print results
-                for result in results:
-                    logger.info("\n%s", result["test_name"])
+                # Detailed per-test output
+                for idx, result in enumerate(results, start=1):
+                    logger.info("\nТест %s: %s", idx, result["test_name"])
                     if "error" in result:
-                        logger.info("Ошибка: %s", result["error"])
+                        logger.info("  Ошибка: %s", result["error"])
                     else:
-                        logger.info("PValue = %s", result["p_value"])
+                        logger.info("  p-value: %s", result["p_value"])
+                        logger.info("  alpha : %s", result.get("alpha", command.alpha))
                         status = "success" if result["is_success"] else "failure"
-                        logger.info("test result: %s", status)
+                        logger.info("  Результат: %s", status)
+
+                # Summary table using PrettyTable
+                table = PrettyTable(["№", "Тест", "p-value", "alpha", "Результат"])
+                table.align["Тест"] = "l"
+                table.align["p-value"] = "r"
+                table.align["alpha"] = "r"
+                table.align["Результат"] = "l"
+
+                for idx, result in enumerate(results, start=1):
+                    name = str(result["test_name"])
+                    if "error" in result:
+                        p_val = "-"
+                        alpha = (
+                            f"{result.get('alpha', command.alpha):.2g}"
+                            if result.get("alpha")
+                            else "-"
+                        )
+                        status = f"error: {result['error']}"
+                    else:
+                        p_val = (
+                            f"{result['p_value']:.8f}"
+                            if isinstance(result["p_value"], (int, float))
+                            else str(result["p_value"])
+                        )
+                        alpha = f"{result.get('alpha', command.alpha):.2g}"
+                        status = "success" if result["is_success"] else "failure"
+                    table.add_row([idx, name, p_val, alpha, status])
+
+                logger.info("\nСводная таблица результатов для %s:\n%s", generator_name, table)
 
             except Exception as e:
                 logger.error("Ошибка при обработке генератора %s: %s", generator_name, e)

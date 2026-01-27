@@ -51,6 +51,12 @@ def nist_tests_group() -> None:
     type=float,
     help="Significance level (default: 0.01)",
 )
+@click.option(
+    "--max-bits",
+    default=0,
+    type=int,
+    help="Limit sequence length in bits (0 = full sequence)",
+)
 def cmd_run_handler(
     linear_congruent_file: Path | None,
     square_congruent_file: Path | None,
@@ -58,6 +64,7 @@ def cmd_run_handler(
     geffe_file: Path | None,
     block_size: int,
     alpha: float,
+    max_bits: int,
     interactor: FromDishka[
         MethodologyForAssessingTheQualityOfGpspEvaluationTestsCheckingUnlinkedSeriesCommandHandler
     ],
@@ -72,6 +79,7 @@ def cmd_run_handler(
         geffe_file=geffe_file,
         block_size=block_size,
         alpha=alpha,
+        max_bits=max_bits,
     )
 
     try:

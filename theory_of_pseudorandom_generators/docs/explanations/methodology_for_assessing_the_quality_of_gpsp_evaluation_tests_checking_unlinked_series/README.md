@@ -17,7 +17,7 @@
 Для запуска лабораторной работы используем команду, которая представлена ниже: 
 
 ```bash
-python cli.py methodology_for_assessing_the_quality_of_gpsp_evaluation_tests_checking_unlinked_series run --linear-congruent-file "D:\PycharmProjects\DSTU_VKB\theory_of_pseudorandom_generators\linear_congruent.txt" --square-congruent-file "D:\PycharmProjects\DSTU_VKB\theory_of_pseudorandom_generators\polynomial_congruent.txt" --fibonacci-file "D:\PycharmProjects\DSTU_VKB\theory_of_pseudorandom_generators\Fibonacci.txt" --geffe-file "D:\PycharmProjects\DSTU_VKB\theory_of_pseudorandom_generators\Geffey.txt" -m 24
+python cli.py methodology_for_assessing_the_quality_of_gpsp_evaluation_tests_checking_unlinked_series run --linear-congruent-file "D:\PycharmProjects\DSTU_VKB\theory_of_pseudorandom_generators\linear_congruent.txt" --square-congruent-file "D:\PycharmProjects\DSTU_VKB\theory_of_pseudorandom_generators\polynomial_congruent.txt" --fibonacci-file "D:\PycharmProjects\DSTU_VKB\theory_of_pseudorandom_generators\Fibonacci.txt" --geffe-file "D:\PycharmProjects\DSTU_VKB\theory_of_pseudorandom_generators\Geffe.txt" -m 24 --max-bits 2300
 ```
 
 ```bash
