@@ -8,3 +8,9 @@
 ```bash
 python cli.py pollard-rho find-divisor --number 5989 --initial-value 2 --function "x^2+1"
 ```
+
+Пример для запуска варианта 11:
+
+```bash
+python cli.py pollard-rho find-divisor --number 5777 --initial-value 2 --function "x^2+1"
+```

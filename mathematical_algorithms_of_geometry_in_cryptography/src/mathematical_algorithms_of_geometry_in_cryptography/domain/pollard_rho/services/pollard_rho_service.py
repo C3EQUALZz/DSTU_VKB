@@ -141,21 +141,50 @@ class PollardRhoService(DomainService):
         # Main loop
         while d == 1:
             step_count += 1
-            logger.info("Шаг %s", step_count)
+            logger.info("Итерация %s", step_count)
+            logger.info("1) Текущие значения: a = %s, b = %s", a, b)
 
             # Compute a = f(a) mod n
-            a = self._evaluate_function(function, a, n_value)
-            logger.info("a = %s", a)
+            a_before = a
+            a = self._evaluate_function(function, a_before, n_value)
+            logger.info(
+                "2) Вычисляем a = f(a) (mod n): f(%s) mod %s = %s",
+                a_before,
+                n_value,
+                a,
+            )
 
             # Compute b = f(f(b)) mod n
-            b_temp = self._evaluate_function(function, b, n_value)
-            b = self._evaluate_function(function, b_temp, n_value)
-            logger.info("b = %s", b)
+            b_before = b
+            b_first = self._evaluate_function(function, b_before, n_value)
+            logger.info(
+                "   Сначала вычисляем f(b) (mod n): f(%s) mod %s = %s",
+                b_before,
+                n_value,
+                b_first,
+            )
+            b = self._evaluate_function(function, b_first, n_value)
+            logger.info(
+                "   Затем b = f(f(b)) (mod n): f(%s) mod %s = %s",
+                b_first,
+                n_value,
+                b,
+            )
 
             # Compute d = gcd(a - b, n)
-            d = math.gcd(abs(a - b), n_value)
+            diff = abs(a - b)
+            d = math.gcd(diff, n_value)
+            logger.info(
+                "3) Вычисляем d = НОД(|a - b|, n): НОД(|%s - %s|, %s) = НОД(%s, %s) = %s",
+                a,
+                b,
+                n_value,
+                diff,
+                n_value,
+                d,
+            )
             logger.info("d = %s", d)
-            logger.info("")
+            logger.info("========================================")
 
             # Create step result
             step = StepResult(
@@ -175,7 +204,11 @@ class PollardRhoService(DomainService):
                 )
 
         # Found a divisor
-        logger.info("Найден нетривиальный делитель: %s", test.divisor)
+        logger.info(
+            "Найден нетривиальный делитель числа %s: %s",
+            n_value,
+            test.divisor,
+        )
         return test
 
 
