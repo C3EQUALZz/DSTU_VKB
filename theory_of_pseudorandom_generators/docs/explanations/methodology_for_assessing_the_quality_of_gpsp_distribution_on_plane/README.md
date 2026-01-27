@@ -17,7 +17,7 @@
 Для запуска лабораторной работы используем команду, которая представлена ниже: 
 
 ```bash
-python cli.py methodology_for_assessing_the_quality_of_gpsp_distribution_on_plane generate --linear-congruent-file "D:\PycharmProjects\DSTU_VKB\theory_of_pseudorandom_generators\linear_congruent.txt" --square-congruent-file "D:\PycharmProjects\DSTU_VKB\theory_of_pseudorandom_generators\polynomial_congruent.txt" --fibonacci-file "D:\PycharmProjects\DSTU_VKB\theory_of_pseudorandom_generators\Fibonacci.txt" --geffe-file "D:\PycharmProjects\DSTU_VKB\theory_of_pseudorandom_generators\Geffey.txt"
+python cli.py methodology_for_assessing_the_quality_of_gpsp_distribution_on_plane generate --linear-congruent-file "D:\PycharmProjects\DSTU_VKB\theory_of_pseudorandom_generators\linear_congruent.txt" --square-congruent-file "D:\PycharmProjects\DSTU_VKB\theory_of_pseudorandom_generators\polynomial_congruent.txt" --fibonacci-file "D:\PycharmProjects\DSTU_VKB\theory_of_pseudorandom_generators\Fibonacci.txt" --geffe-file "D:\PycharmProjects\DSTU_VKB\theory_of_pseudorandom_generators\Geffe.txt"
 ```
 
 ```bash
@@ -25,4 +25,4 @@ python cli.py methodology_for_assessing_the_quality_of_gpsp_distribution_on_plan
 ```
 
 > [!NOTE]
-> После запуска у вас появится директория `histograms`, в которой хранятся изображения
+> После запуска у вас появится файл `planes.png`
