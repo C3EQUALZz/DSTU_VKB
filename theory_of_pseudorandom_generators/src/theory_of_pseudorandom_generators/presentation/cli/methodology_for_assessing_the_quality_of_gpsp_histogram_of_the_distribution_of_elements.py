@@ -44,12 +44,26 @@ def histogram_group() -> None:
     default=True,
     help="Показывать ли гистограммы на экране",
 )
+@click.option(
+    "--limit-count",
+    default=0,
+    type=int,
+    help="Сколько чисел брать из каждого файла (0 = все)",
+)
+@click.option(
+    "--bins",
+    default=0,
+    type=int,
+    help="Количество интервалов (бинов) для гистограммы (0 = по значениям)",
+)
 def cmd_generate_handler(
     linear_congruent_file: Path,
     square_congruent_file: Path,
     fibonacci_file: Path,
     geffe_file: Path,
     show: bool,
+    limit_count: int,
+    bins: int,
     interactor: FromDishka[
         MethodologyForAssessingTheQualityOfGpspHistogramOfTheDistributionOfElementsCommandHandler
     ],
@@ -62,6 +76,8 @@ def cmd_generate_handler(
         fibonacci_file=fibonacci_file,
         geffe_file=geffe_file,
         show=show,
+        limit_count=limit_count,
+        bins=bins,
     )
 
     try:

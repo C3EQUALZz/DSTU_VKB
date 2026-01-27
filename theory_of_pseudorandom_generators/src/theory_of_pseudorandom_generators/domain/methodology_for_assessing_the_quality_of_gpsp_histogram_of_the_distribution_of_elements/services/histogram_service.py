@@ -143,6 +143,7 @@ class HistogramService(DomainService):
         title: str,
         output_path: Path | None = None,
         show: bool = True,
+        bins: int | None = None,
     ) -> None:
         """Create histogram from data.
 
@@ -151,15 +152,44 @@ class HistogramService(DomainService):
             title: Chart title
             output_path: Optional path to save the histogram
             show: Whether to display the histogram
+            bins: Optional number of bins (use Matplotlib hist)
         """
         if not data:
             msg = "Данные для построения гистограммы пусты"
             raise ValueError(msg)
+        total = len(data)
+
+        if bins is not None and bins > 0:
+            fig_width = 12 if bins <= 50 else 16
+            fig_height = 6
+            fig, ax = plt.subplots(figsize=(fig_width, fig_height))
+            ax.hist(
+                data,
+                bins=bins,
+                weights=[1 / total] * total,
+                color="blue",
+                edgecolor="black",
+                alpha=0.7,
+            )
+            ax.set_xlabel("Значение", fontsize=12)
+            ax.set_ylabel("Частота", fontsize=12)
+            ax.set_title(title, fontsize=14, fontweight="bold")
+            ax.grid(axis="y", alpha=0.3)
+            plt.tight_layout()
+
+            if output_path:
+                plt.savefig(output_path, dpi=300, bbox_inches="tight")
+
+            if show:
+                plt.show()
+            else:
+                plt.close(fig)
+            return
 
         # Count frequency of each value
         counter = Counter(data)
         unique_values = sorted(counter.keys())
-        frequencies = [counter[val] for val in unique_values]
+        frequencies = [counter[val] / total for val in unique_values]
 
         # Определяем размер фигуры в зависимости от количества уникальных значений
         num_unique = len(unique_values)
@@ -191,12 +221,9 @@ class HistogramService(DomainService):
         )
 
         ax.set_xlabel("Значение", fontsize=12)
-        ax.set_ylabel("Количество", fontsize=12)
+        ax.set_ylabel("Частота", fontsize=12)
         ax.set_title(title, fontsize=14, fontweight="bold")
         ax.grid(axis="y", alpha=0.3)
-
-        # Set integer ticks on y-axis
-        ax.yaxis.set_major_locator(plt.MaxNLocator(integer=True))
 
         # Add value labels on bars (только если не слишком много значений)
         if num_unique <= 100:
@@ -205,7 +232,7 @@ class HistogramService(DomainService):
                 ax.text(
                     bar.get_x() + bar.get_width() / 2.0,
                     height,
-                    f"{int(height)}",
+                    f"{height:.3f}",
                     ha="center",
                     va="bottom",
                     fontsize=font_size,

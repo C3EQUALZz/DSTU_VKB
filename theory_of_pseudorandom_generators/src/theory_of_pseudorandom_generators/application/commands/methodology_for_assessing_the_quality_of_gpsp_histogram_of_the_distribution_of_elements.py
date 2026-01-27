@@ -21,6 +21,8 @@ class MethodologyForAssessingTheQualityOfGpspHistogramOfTheDistributionOfElement
     fibonacci_file: Path
     geffe_file: Path
     show: bool = True
+    limit_count: int = 0
+    bins: int = 0
 
 
 @final
@@ -96,6 +98,8 @@ class MethodologyForAssessingTheQualityOfGpspHistogramOfTheDistributionOfElement
 
         # Generate histograms
         for title, data, name in generators:
+            if command.limit_count and command.limit_count > 0:
+                data = data[: command.limit_count]
             logger.info("Построение гистограммы для: %s", title)
             logger.info("Количество элементов: %s", len(data))
 
@@ -116,6 +120,7 @@ class MethodologyForAssessingTheQualityOfGpspHistogramOfTheDistributionOfElement
                     title=title,
                     output_path=output_path,
                     show=command.show,
+                    bins=command.bins if command.bins > 0 else None,
                 )
                 if output_path:
                     logger.info("Гистограмма сохранена: %s", output_path)
