@@ -128,13 +128,69 @@ def cmd_test_handler(
             iteration_table: PrettyTable = PrettyTable()
             iteration_table.title = f"Итерация {result['iteration']}"
             iteration_table.field_names = ["Параметр", "Значение"]
-            iteration_table.add_row(["Статус", result["status"]])
-            iteration_table.add_row(["s", result["s"]])
-            iteration_table.add_row(["t", result["t"]])
-            iteration_table.add_row(["a", result["a"]])
 
-            # Добавляем промежуточные значения
-            for key, value in result["intermediate_values"].items():
-                iteration_table.add_row([key, value])
+            # Человеко-понятное представление статуса
+            status_map = {
+                "probably_prime": "вероятно простое",
+                "composite": "составное",
+            }
+            status_ru = status_map.get(result["status"], result["status"])
+            iteration_table.add_row(["Статус числа", status_ru])
+
+            # Основные параметры разложения
+            iteration_table.add_row(["s (степень двойки в n-1)", result["s"]])
+            iteration_table.add_row(["t (нечетный множитель в n-1)", result["t"]])
+            iteration_table.add_row(
+                ["a (случайное основание теста)", result["a"]],
+            )
+
+            # Добавляем промежуточные значения с более понятными названиями
+            intermediate_values = result["intermediate_values"]
+
+            for key, value in intermediate_values.items():
+                # Пропускаем дублирующие s, t, a
+                if key in {"s", "t", "a"}:
+                    continue
+
+                readable_key = key
+
+                if key == "gcd":
+                    readable_key = "НОД(a, n)"
+                elif key.startswith("b_k"):
+                    # b_k0 -> b при k = 0
+                    k_index = key.removeprefix("b_k")
+                    readable_key = f"b при k = {k_index}"
+                elif key.startswith("b_squared_k"):
+                    # b_squared_k0 -> b^2 (mod n) при k = 0
+                    k_index = key.removeprefix("b_squared_k")
+                    readable_key = f"b² (mod n) при k = {k_index}"
+                elif key == "reason":
+                    readable_key = "Причина завершения итерации"
+
+                    # Переводим машинно-читабельную причину на русский
+                    if isinstance(value, str):
+                        if value == "gcd_not_one":
+                            value = "НОД(a, n) > 1 — найден нетривиальный делитель числа n."
+                        elif value == "no_witness_found":
+                            value = (
+                                "После всех шагов не найдено значение b, удовлетворяющее "
+                                "условиям простоты — число считается составным."
+                            )
+                        elif value.startswith("b_equals_one_or_n_minus_one_at_k"):
+                            k_index = value.split("k")[-1]
+                            value = (
+                                "На шаге k = "
+                                f"{k_index} получено b = 1 или b = n-1 — "
+                                "итерация не нашла свидетель сложности, число считается вероятно простым."
+                            )
+                        elif value.startswith("b_squared_equals_n_minus_one_at_k"):
+                            k_index = value.split("k")[-1]
+                            value = (
+                                "На шаге k = "
+                                f"{k_index} при возведении b в квадрат получено b = n-1 — "
+                                "итерация не нашла свидетель сложности, число считается вероятно простым."
+                            )
+
+                iteration_table.add_row([readable_key, value])
 
             click.echo(iteration_table)

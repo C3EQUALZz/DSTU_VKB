@@ -87,20 +87,34 @@ class MillerRabinService(DomainService):
         intermediate_values["s"] = s
         intermediate_values["t"] = t
         intermediate_values["a"] = a
-
-        logger.info("s = %s", s)
-        logger.info("t = %s", t)
-        logger.info("a = %s", a)
+        # Логируем понятными комментариями на русском,
+        # чтобы студенту было проще сопоставлять шаги алгоритма
+        logger.info(
+            "Шаг 1. Разложение n-1: %s - 1 = 2^s * t, где s = %s, t = %s",
+            n_value,
+            s,
+            t,
+        )
+        logger.info(
+            "Шаг 2. Выбор случайного основания a в диапазоне [2, n-2]: a = %s",
+            a,
+        )
 
         # Check GCD(a, n)
         nod = math.gcd(a, n_value)
         intermediate_values["gcd"] = nod
-
-        logger.info(f"НОД(a, n) = {nod}")
+        logger.info(
+            "Шаг 3. Вычисляем НОД(a, n). Если НОД(a, n) > 1, найден нетривиальный делитель n."
+        )
+        logger.info("       НОД(a, n) = %s", nod)
 
 
         if nod != 1:
-            logger.info("Число %s составное", n_value)
+            logger.info(
+                "Так как НОД(a, n) = %s > 1, число %s составное (обнаружен делитель).",
+                nod,
+                n_value,
+            )
 
             intermediate_values["reason"] = "gcd_not_one"
             return TestResult(
@@ -112,18 +126,36 @@ class MillerRabinService(DomainService):
 
         # Perform the test
         for k in range(s):
-            logger.info("k = %s", k)
+            logger.info(
+                "Шаг 4.%s. Проводим k‑ый цикл возведения в квадрат (k = %s из 0..s-1).",
+                k,
+                k,
+            )
 
             # Compute b = a^t mod n
             b = pow(a, t, n_value)
             intermediate_values[f"b_k{k}"] = b
-
-            logger.info("b = %s", b)
+            logger.info(
+                "   4.%s.1. Вычисляем b = a^t (mod n) = %s^%s (mod %s) = %s",
+                k,
+                a,
+                t,
+                n_value,
+                b,
+            )
 
 
             # Check if b == 1 or b == n-1
             if b == 1 or b == n_value - 1:
-                logger.info("Число %s вероятно простое", n_value)
+                logger.info(
+                    "   Так как b = %s и выполняется условие (b == 1) или (b == n-1 = %s),",
+                    b,
+                    n_value - 1,
+                )
+                logger.info(
+                    "   данная итерация не нашла свидетель сложности. Число %s считается вероятно простым.",
+                    n_value,
+                )
 
                 intermediate_values["reason"] = f"b_equals_one_or_n_minus_one_at_k{k}"
                 return TestResult(
@@ -136,13 +168,23 @@ class MillerRabinService(DomainService):
             # Square b
             b = pow(b, 2, n_value)
             intermediate_values[f"b_squared_k{k}"] = b
-
-            logger.info("b = %s", b)
+            logger.info(
+                "   4.%s.2. Возводим b в квадрат по модулю n: b = b^2 (mod n) = %s",
+                k,
+                b,
+            )
 
 
             # Check if b == n-1
             if b == n_value - 1:
-                logger.info("Число %s вероятно простое", n_value)
+                logger.info(
+                    "   Так как b = n-1 = %s, найдено значение, при котором условие теста выполняется.",
+                    n_value - 1,
+                )
+                logger.info(
+                    "   На данной итерации свидетель сложности не найден. Число %s считается вероятно простым.",
+                    n_value,
+                )
 
                 intermediate_values["reason"] = f"b_squared_equals_n_minus_one_at_k{k}"
                 return TestResult(
@@ -153,7 +195,11 @@ class MillerRabinService(DomainService):
                 )
 
         # If we reach here, the number is composite
-        logger.info("Число %s составное", n_value)
+        logger.info(
+            "После выполнения всех %s шагов не найдено значение b, удовлетворяющее условиям простоты.",
+            s,
+        )
+        logger.info("Делаем вывод: число %s составное.", n_value)
 
         intermediate_values["reason"] = "no_witness_found"
         return TestResult(
