@@ -6,5 +6,5 @@
 Пример для запуска варианта 1:
 
 ```bash
-python cli.py elliptic-curve-gfp multiply -a 1 -b 2 -p 17 --px 5 --py 8 -m 7
+python cli.py elliptic-curve-gfp multiply -a 2 -b 2 -p 17 --px 3 --py 1 -m 7
 ```
