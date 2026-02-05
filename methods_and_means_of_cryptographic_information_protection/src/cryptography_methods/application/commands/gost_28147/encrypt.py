@@ -29,9 +29,11 @@ class Gost28147EncryptCommandHandler:
             if len(key_bytes) < 32:
                 # Дополняем пробелами до 32 байт
                 key_bytes = key_bytes + b' ' * (32 - len(key_bytes))
+                logger.info("Padding key: %s", key_bytes)
             elif len(key_bytes) > 32:
                 # Обрезаем до 32 байт
                 key_bytes = key_bytes[:32]
+                logger.info("Stripped key: %s", key_bytes)
         except UnicodeEncodeError as e:
             raise ValueError(f"Key contains characters that cannot be encoded in UTF-8: {e}") from e
 

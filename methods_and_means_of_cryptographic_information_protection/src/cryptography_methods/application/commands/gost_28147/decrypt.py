@@ -25,19 +25,20 @@ class Gost28147DecryptCommandHandler:
         # Преобразуем ключ в байты (UTF-8 кодировка)
         try:
             key_bytes = data.key.encode('utf-8')
+            logger.info("Key bytes: %s", key_bytes)
             # Нормализуем ключ до 32 байт
             if len(key_bytes) < 32:
                 # Дополняем пробелами до 32 байт
                 key_bytes = key_bytes + b' ' * (32 - len(key_bytes))
+                logger.info("Key bytes length was lower than 32 bytes: %s", key_bytes)
             elif len(key_bytes) > 32:
                 # Обрезаем до 32 байт
                 key_bytes = key_bytes[:32]
+                logger.info("Key bytes length was greater than 32 bytes: %s", key_bytes)
         except UnicodeEncodeError as e:
             raise ValueError(f"Key contains characters that cannot be encoded in UTF-8: {e}") from e
 
-        # Преобразуем зашифрованный текст из hex-строки в байты
         try:
-            # Убираем пробелы и другие разделители из hex-строки
             hex_text = data.text.replace(' ', '').replace('-', '').replace(':', '')
             text_bytes = bytes.fromhex(hex_text)
         except ValueError as e:
@@ -45,14 +46,10 @@ class Gost28147DecryptCommandHandler:
 
         logger.info("Key bytes length: %d, Text bytes length: %d", len(key_bytes), len(text_bytes))
 
-        # Дешифруем данные
         decrypted_bytes = self._gost_28147_service.decrypt(text_bytes, key_bytes)
 
-        # Удаляем дополняющие пробелы в конце (если они были добавлены при шифровании)
-        # При шифровании текст дополняется пробелами до кратного 8 байтам
         decrypted_bytes = decrypted_bytes.rstrip(b' ')
 
-        # Преобразуем расшифрованные данные обратно в строку UTF-8
         decrypted_text = decrypted_bytes.decode('utf-8', errors='replace')
 
         logger.info("Decryption completed successfully")
