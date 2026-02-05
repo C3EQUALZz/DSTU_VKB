@@ -1,88 +1,64 @@
-<mxfile host="app.diagrams.net">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:147.0) Gecko/20100101 Firefox/147.0" version="29.3.6">
   <diagram name="RAG Process" id="rag-process">
-    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827">
+    <mxGraphModel dx="1408" dy="811" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        
-        <!-- Start -->
-        <mxCell id="start" value="Начало" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="80" y="40" width="120" height="60" as="geometry" />
+        <mxCell id="start" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Начало" vertex="1">
+          <mxGeometry height="60" width="120" x="160" y="40" as="geometry" />
         </mxCell>
-        
-        <!-- Input Code -->
-        <mxCell id="input-code" value="Анализируемый&#xa;фрагмент кода c" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="80" y="140" width="200" height="60" as="geometry" />
+        <mxCell id="input-code" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Анализируемый&#xa;фрагмент кода c" vertex="1">
+          <mxGeometry height="60" width="200" x="370" y="40" as="geometry" />
         </mxCell>
-        
-        <!-- Embedding Generation for Code -->
-        <mxCell id="embed-code" value="Генерация векторного&#xa;представления кода&#xa;e_c = E(c)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="80" y="240" width="200" height="80" as="geometry" />
+        <mxCell id="embed-code" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Генерация векторного&#xa;представления кода&#xa;e_c = E(c)" vertex="1">
+          <mxGeometry height="60" width="200" x="640" y="40" as="geometry" />
         </mxCell>
-        
-        <!-- Knowledge Base -->
-        <mxCell id="kb" value="База знаний CVE/CWE&#xa;D = {d₁, d₂, ..., dₙ}&#xa;(документы в векторном виде)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
-          <mxGeometry x="400" y="140" width="280" height="80" as="geometry" />
+        <mxCell id="kb" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Запрос к векторной базе знаний CVE/CWE&lt;br&gt;D = {d₁, d₂, ..., dₙ}&lt;br&gt;(документы в векторном виде)" vertex="1">
+          <mxGeometry height="80" width="200" x="640" y="140" as="geometry" />
         </mxCell>
-        
-        <!-- Similarity Calculation -->
-        <mxCell id="similarity" value="Вычисление косинусного&#xa;сходства&#xa;sim(e_c, e_i) = (e_c · e_i) / (||e_c|| · ||e_i||)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
-          <mxGeometry x="80" y="360" width="280" height="100" as="geometry" />
+        <mxCell id="similarity" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Вычисление косинусного&#xa;сходства&#xa;sim(e_c, e_i) = (e_c · e_i) / (||e_c|| · ||e_i||)" vertex="1">
+          <mxGeometry height="80" width="230" x="370" y="140" as="geometry" />
         </mxCell>
-        
-        <!-- Top K Selection -->
-        <mxCell id="topk" value="Выбор k наиболее&#xa;релевантных документов&#xa;R_k = argmax sim(e_c, e_i)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
-          <mxGeometry x="80" y="500" width="280" height="100" as="geometry" />
+        <mxCell id="topk" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Выбор k наиболее&#xa;релевантных документов&#xa;R_k = argmax sim(e_c, e_i)" vertex="1">
+          <mxGeometry height="100" width="280" x="50" y="130" as="geometry" />
         </mxCell>
-        
-        <!-- Context Augmentation -->
-        <mxCell id="augment" value="Обогащение контекста&#xa;C_aug = concat(c, d_i₁, d_i₂, ..., d_iₖ)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="80" y="640" width="280" height="80" as="geometry" />
+        <mxCell id="augment" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Обогащение контекста&#xa;C_aug = concat(c, d_i₁, d_i₂, ..., d_iₖ)" vertex="1">
+          <mxGeometry height="80" width="280" x="50" y="260" as="geometry" />
         </mxCell>
-        
-        <!-- LLM Generation -->
-        <mxCell id="llm" value="Генерация ответа LLM&#xa;y = LLM(C_aug, P)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cdeb8b;strokeColor=#36393d;" vertex="1" parent="1">
-          <mxGeometry x="80" y="760" width="280" height="60" as="geometry" />
+        <mxCell id="llm" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Генерация ответа LLM&#xa;y = LLM(C_aug, P)" vertex="1">
+          <mxGeometry height="60" width="280" x="370" y="270" as="geometry" />
         </mxCell>
-        
-        <!-- End -->
-        <mxCell id="end" value="Конец" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="80" y="860" width="120" height="60" as="geometry" />
+        <mxCell id="end" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Конец" vertex="1">
+          <mxGeometry height="60" width="120" x="710" y="270" as="geometry" />
         </mxCell>
-        
-        <!-- Arrows -->
-        <mxCell id="arrow1" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="start" target="input-code">
-          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        <mxCell id="arrow1" edge="1" parent="1" source="start" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="input-code" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
         </mxCell>
-        
-        <mxCell id="arrow2" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="input-code" target="embed-code">
-          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        <mxCell id="arrow2" edge="1" parent="1" source="input-code" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="embed-code" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
         </mxCell>
-        
-        <mxCell id="arrow3" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="embed-code" target="similarity">
-          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        <mxCell id="arrow3" edge="1" parent="1" source="embed-code" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="kb" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="220" y="355" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
-        
-        <mxCell id="arrow4" value="Векторные&#xa;представления" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="kb" target="similarity">
-          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        <mxCell id="arrow5" edge="1" parent="1" source="kb" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="similarity" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="220" y="375" as="sourcePoint" />
+          </mxGeometry>
         </mxCell>
-        
-        <mxCell id="arrow5" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="similarity" target="topk">
-          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        <mxCell id="arrow6" edge="1" parent="1" source="similarity" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="topk" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
         </mxCell>
-        
-        <mxCell id="arrow6" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="topk" target="augment">
-          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        <mxCell id="arrow7" edge="1" parent="1" source="topk" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="augment" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
         </mxCell>
-        
-        <mxCell id="arrow7" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="augment" target="llm">
-          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        <mxCell id="arrow8" edge="1" parent="1" source="augment" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="llm" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
         </mxCell>
-        
-        <mxCell id="arrow8" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="llm" target="end">
-          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        <mxCell id="arrow9" edge="1" parent="1" source="llm" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="end" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
         </mxCell>
-        
       </root>
     </mxGraphModel>
   </diagram>

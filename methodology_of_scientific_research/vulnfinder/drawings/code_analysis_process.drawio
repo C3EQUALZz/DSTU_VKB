@@ -1,104 +1,73 @@
-<mxfile host="app.diagrams.net">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:147.0) Gecko/20100101 Firefox/147.0" version="29.3.7">
   <diagram name="Code Analysis Process" id="code-analysis">
-    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1200">
+    <mxGraphModel dx="1408" dy="811" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1200" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        
-        <!-- Start -->
-        <mxCell id="start" value="Начало" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="80" y="40" width="120" height="60" as="geometry" />
+        <mxCell id="start" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Начало" vertex="1">
+          <mxGeometry height="60" width="120" x="180" y="40" as="geometry" />
         </mxCell>
-        
-        <!-- Step 1: Knowledge Base Preparation -->
-        <mxCell id="kb-prep" value="1. Подготовка базы знаний&#xa;Загрузка и индексация информации&#xa;об уязвимостях (CVE) из NVD&#xa;в векторную базу данных" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="80" y="140" width="320" height="100" as="geometry" />
+        <mxCell id="kb-prep" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="1. Подготовка базы знаний&#xa;Загрузка и индексация информации&#xa;об уязвимостях (CVE) из NVD&#xa;в векторную базу данных" vertex="1">
+          <mxGeometry height="100" width="320" x="380" y="20" as="geometry" />
         </mxCell>
-        
-        <!-- Step 2: Code Analysis -->
-        <mxCell id="code-parse" value="2. Анализ исходного кода&#xa;Парсинг файлов проекта&#xa;(поддержка множественных языков)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="80" y="280" width="320" height="80" as="geometry" />
+        <mxCell id="code-parse" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="2. Анализ исходного кода&#xa;Парсинг файлов проекта&#xa;(поддержка множественных языков)" vertex="1">
+          <mxGeometry height="80" width="320" x="750" y="30" as="geometry" />
         </mxCell>
-        
-        <mxCell id="code-extract" value="Извлечение релевантных&#xa;фрагментов кода для анализа" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="80" y="400" width="320" height="60" as="geometry" />
+        <mxCell id="code-extract" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Извлечение релевантных&#xa;фрагментов кода для анализа" vertex="1">
+          <mxGeometry height="60" width="320" x="750" y="160" as="geometry" />
         </mxCell>
-        
-        <!-- Step 3: RAG Search -->
-        <mxCell id="rag-query" value="3. Контекстно-зависимый поиск (RAG)&#xa;Формирование запроса&#xa;на основе анализируемого кода" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
-          <mxGeometry x="80" y="500" width="320" height="80" as="geometry" />
+        <mxCell id="rag-query" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="3. Контекстно-зависимый поиск (RAG)&#xa;Формирование запроса&#xa;на основе анализируемого кода" vertex="1">
+          <mxGeometry height="70" width="310" x="380" y="160" as="geometry" />
         </mxCell>
-        
-        <mxCell id="rag-search" value="Поиск релевантных записей&#xa;из базы знаний CVE/CWE&#xa;(семантический поиск)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
-          <mxGeometry x="80" y="620" width="320" height="80" as="geometry" />
+        <mxCell id="rag-search" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Поиск релевантных записей&#xa;из базы знаний CVE/CWE&#xa;(семантический поиск)" vertex="1">
+          <mxGeometry height="80" width="320" x="375" y="270" as="geometry" />
         </mxCell>
-        
-        <mxCell id="rag-augment" value="Обогащение контекста для LLM&#xa;найденной информацией" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
-          <mxGeometry x="80" y="740" width="320" height="60" as="geometry" />
+        <mxCell id="rag-augment" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Обогащение контекста для LLM&#xa;найденной информацией" vertex="1">
+          <mxGeometry height="60" width="320" x="750" y="280" as="geometry" />
         </mxCell>
-        
-        <!-- Step 4: LLM Analysis -->
-        <mxCell id="llm-send" value="4. Анализ с использованием LLM&#xa;Передача кода и контекста&#xa;в большую языковую модель" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
-          <mxGeometry x="80" y="840" width="320" height="80" as="geometry" />
+        <mxCell id="llm-send" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="4. Анализ с использованием LLM&#xa;Передача кода и контекста&#xa;в большую языковую модель" vertex="1">
+          <mxGeometry height="80" width="320" x="750" y="400" as="geometry" />
         </mxCell>
-        
-        <mxCell id="llm-generate" value="Генерация анализа:&#xa;- Потенциальные уязвимости&#xa;- Типы, серьезность&#xa;- Соответствие CWE/CVE" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
-          <mxGeometry x="80" y="960" width="320" height="100" as="geometry" />
+        <mxCell id="llm-generate" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Генерация анализа:&#xa;- Потенциальные уязвимости&#xa;- Типы, серьезность&#xa;- Соответствие CWE/CVE" vertex="1">
+          <mxGeometry height="100" width="320" x="375" y="390" as="geometry" />
         </mxCell>
-        
-        <!-- Step 5: Report Generation -->
-        <mxCell id="report" value="5. Формирование отчета&#xa;Структурированный вывод результатов:&#xa;- Местоположение уязвимостей&#xa;- Описание&#xa;- Рекомендации по исправлению" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="80" y="1100" width="320" height="100" as="geometry" />
+        <mxCell id="report" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="5. Формирование отчета&#xa;Структурированный вывод результатов:&#xa;- Местоположение уязвимостей&#xa;- Описание&#xa;- Рекомендации по исправлению" vertex="1">
+          <mxGeometry height="100" width="320" x="375" y="530" as="geometry" />
         </mxCell>
-        
-        <!-- End -->
-        <mxCell id="end" value="Конец" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="80" y="1240" width="120" height="60" as="geometry" />
+        <mxCell id="end" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Конец" vertex="1">
+          <mxGeometry height="60" width="120" x="830" y="550" as="geometry" />
         </mxCell>
-        
-        <!-- Arrows -->
-        <mxCell id="arrow1" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="start" target="kb-prep">
-          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        <mxCell id="arrow1" edge="1" parent="1" source="start" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="kb-prep" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
         </mxCell>
-        
-        <mxCell id="arrow2" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="kb-prep" target="code-parse">
-          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        <mxCell id="arrow2" edge="1" parent="1" source="kb-prep" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="code-parse" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
         </mxCell>
-        
-        <mxCell id="arrow3" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="code-parse" target="code-extract">
-          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        <mxCell id="arrow3" edge="1" parent="1" source="code-parse" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="code-extract" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
         </mxCell>
-        
-        <mxCell id="arrow4" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="code-extract" target="rag-query">
-          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        <mxCell id="arrow4" edge="1" parent="1" source="code-extract" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1.003;entryY=0.425;entryDx=0;entryDy=0;entryPerimeter=0;" target="rag-query" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
         </mxCell>
-        
-        <mxCell id="arrow5" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="rag-query" target="rag-search">
-          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        <mxCell id="arrow5" edge="1" parent="1" source="rag-query" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="rag-search" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
         </mxCell>
-        
-        <mxCell id="arrow6" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="rag-search" target="rag-augment">
-          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        <mxCell id="arrow6" edge="1" parent="1" source="rag-search" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="rag-augment" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
         </mxCell>
-        
-        <mxCell id="arrow7" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="rag-augment" target="llm-send">
-          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        <mxCell id="arrow7" edge="1" parent="1" source="rag-augment" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="llm-send" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
         </mxCell>
-        
-        <mxCell id="arrow8" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="llm-send" target="llm-generate">
-          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        <mxCell id="arrow8" edge="1" parent="1" source="llm-send" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="llm-generate" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
         </mxCell>
-        
-        <mxCell id="arrow9" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="llm-generate" target="report">
-          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        <mxCell id="arrow9" edge="1" parent="1" source="llm-generate" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="report" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
         </mxCell>
-        
-        <mxCell id="arrow10" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="report" target="end">
-          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        <mxCell id="arrow10" edge="1" parent="1" source="report" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="end" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
         </mxCell>
-        
       </root>
     </mxGraphModel>
   </diagram>
 </mxfile>
-
