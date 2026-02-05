@@ -87,8 +87,6 @@ class MillerRabinService(DomainService):
         intermediate_values["s"] = s
         intermediate_values["t"] = t
         intermediate_values["a"] = a
-        # Логируем понятными комментариями на русском,
-        # чтобы студенту было проще сопоставлять шаги алгоритма
         logger.info(
             "Шаг 1. Разложение n-1: %s - 1 = 2^s * t, где s = %s, t = %s",
             n_value,
