@@ -10,7 +10,6 @@ logger: Final[logging.Logger] = logging.getLogger(__name__)
 
 
 class Gost28147Service(DomainService):
-
     def __init__(self) -> None:
         super().__init__()
         self._bit_utils: Final[Gost28147BitUtils] = Gost28147BitUtils()
