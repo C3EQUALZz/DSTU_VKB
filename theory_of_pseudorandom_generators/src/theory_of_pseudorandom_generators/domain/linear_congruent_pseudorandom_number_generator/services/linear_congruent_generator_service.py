@@ -200,7 +200,7 @@ class LinearCongruentGeneratorService(DomainService):
 
         # Условие 3: m делится на 4 and a-1 % 4 == 0
         condition3_fulfilled = (generator.m % 4 == 0 and (generator.a-1 % 4 == 0)) or generator.m % 4 != 0
-        condition3_details = f"m mod 4 = 0 ({generator.m % 4 == 0}) a-1 % 4 == 0 ({generator.a-1 % 4 == 0})" + (" (m делится на 4)" if condition3_fulfilled else " (m не делится на 4)")
+        condition3_details = f"m mod 4 == 0 ({generator.m % 4 == 0}) a-1 % 4 == 0 ({generator.a-1 % 4 == 0})"
         conditions_results.append((
             3,
             "m делится на 4 и a-1 % 4 == 0",
