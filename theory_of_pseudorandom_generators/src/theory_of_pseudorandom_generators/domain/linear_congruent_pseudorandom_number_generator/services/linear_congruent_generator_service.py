@@ -198,40 +198,16 @@ class LinearCongruentGeneratorService(DomainService):
         if not condition2_fulfilled:
             all_fulfilled = False
 
-        # Условие 3: m делится на 4
-        m_mod_4 = generator.m % 4
-        condition3_fulfilled = m_mod_4 == 0
-        condition3_details = f"m mod 4 = {m_mod_4}" + (" (m делится на 4)" if condition3_fulfilled else " (m не делится на 4)")
+        # Условие 3: m делится на 4 and a-1 % 4 == 0
+        condition3_fulfilled = (generator.m % 4 == 0 and (generator.a-1 % 4 == 0)) or generator.m % 4 != 0
+        condition3_details = f"m mod 4 = 0 ({generator.m % 4 == 0}) a-1 % 4 == 0 ({generator.a-1 % 4 == 0})" + (" (m делится на 4)" if condition3_fulfilled else " (m не делится на 4)")
         conditions_results.append((
             3,
-            "m делится на 4",
+            "m делится на 4 и a-1 % 4 == 0",
             condition3_fulfilled,
             condition3_details
         ))
         if not condition3_fulfilled:
-            all_fulfilled = False
-
-        # Условие 4: для всех множителей выполняется (x - 1) % 4 == 0
-        condition4_fulfilled = True
-        condition4_failed_multipliers = []
-        
-        for mult in multipliers:
-            if (mult - 1) % 4 != 0:
-                condition4_fulfilled = False
-                condition4_failed_multipliers.append(mult)
-        
-        if condition4_fulfilled:
-            condition4_details = f"для всех множителей {multipliers}: (x - 1) % 4 == 0"
-        else:
-            condition4_details = f"для множителей {condition4_failed_multipliers}: (x - 1) % 4 != 0"
-        
-        conditions_results.append((
-            4,
-            "Для всех множителей m: (x - 1) % 4 == 0",
-            condition4_fulfilled,
-            condition4_details
-        ))
-        if not condition4_fulfilled:
             all_fulfilled = False
 
         return all_fulfilled, conditions_results
