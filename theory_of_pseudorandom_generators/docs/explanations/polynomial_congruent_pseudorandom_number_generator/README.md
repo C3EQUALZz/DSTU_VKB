@@ -32,8 +32,7 @@ python cli.py polynomial_congruent_pseudorandom_number_generator generate -a1 5 
 Пример набора параметров, дающего предсказуемо длинный период и удобный для NIST‑тестов:
 
 ```bash
-python cli.py polynomial_congruent_pseudorandom_number_generator generate \
-  -a1 25 -a2 106 -b 1075 -x0 1 -m 6075 -s 5000
+python cli.py polynomial_congruent_pseudorandom_number_generator generate -a1 68 -a2 105 -b 175 -x0 1 -m 6075 -s 200
 ```
 
 - **Назначение:** подготовка данных для команды  

@@ -32,6 +32,12 @@ python cli.py linear_congruent_pseudorandom_number_generator generate -a 141 -b 
 python cli.py linear_congruent_pseudorandom_number_generator generate -a 1366 -b 1283 -x0 1 -m 6075
 ```
 
+Для сохранения в файл, чтобы смотреть на графики: 
+
+```bash
+python cli.py linear_congruent_pseudorandom_number_generator generate -a 1466 -b 1283 -x0 1 -m 6075
+```
+
 Для 10 варианта:
 
 ```bash
