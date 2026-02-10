@@ -17,3 +17,4 @@ class RegressionResultPresenter(Protocol):
     def show_results(self, results: Sequence[RegressionResult]) -> None:
         raise NotImplementedError
 
+

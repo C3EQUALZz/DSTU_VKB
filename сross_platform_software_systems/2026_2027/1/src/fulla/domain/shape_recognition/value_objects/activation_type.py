@@ -8,3 +8,4 @@ class ActivationType(StrEnum):
     RELU = "relu"
     LINEAR = "linear"
 
+

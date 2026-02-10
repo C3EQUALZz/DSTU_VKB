@@ -174,3 +174,4 @@ class MatplotlibResultPresenter:
         print(f"    Batch size: {best.hyper_parameters.batch_size}")  # noqa: T201
         print(f"    Точность:   {best.accuracy_percent:.2f}%")  # noqa: T201
 
+

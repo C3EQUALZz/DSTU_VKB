@@ -9,3 +9,4 @@ class RegressionActivationType(StrEnum):
     TANH = "tanh"
     LEAKY_RELU = "leaky_relu"
 
+

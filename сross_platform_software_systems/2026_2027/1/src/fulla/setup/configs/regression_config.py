@@ -31,3 +31,4 @@ class RegressionConfig(BaseModel):
         description="Learning rates to test",
     )
 
+

@@ -17,3 +17,4 @@ class RegressionModelTrainer(Protocol):
     ) -> RegressionResult:
         raise NotImplementedError
 
+

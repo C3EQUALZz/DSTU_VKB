@@ -11,3 +11,4 @@ class DatasetGateway(Protocol):
     def load(self) -> PreparedDataset:
         raise NotImplementedError
 
+

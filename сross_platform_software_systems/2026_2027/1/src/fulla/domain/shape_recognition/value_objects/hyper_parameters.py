@@ -24,3 +24,4 @@ class HyperParameters(BaseValueObject):
     def __str__(self) -> str:
         return f"neurons={self.hidden_neurons}, activation={self.activation.value}, batch_size={self.batch_size}"
 
+

@@ -28,3 +28,4 @@ class ShapeClassifier(nn.Module):
             x = torch.relu(x)
         return self.fc2(x)
 
+

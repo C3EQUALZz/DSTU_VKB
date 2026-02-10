@@ -22,3 +22,4 @@ class ExperimentResult(BaseValueObject):
     def __str__(self) -> str:
         return f"{self.hyper_parameters} → accuracy={self.accuracy_percent:.2f}%"
 
+

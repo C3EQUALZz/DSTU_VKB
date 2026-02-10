@@ -22,3 +22,4 @@ class RegressionResult(BaseValueObject):
             f"{self.hyper_parameters} → MSE={self.mse:.4f}, MAE={self.mae:.4f}, R²={self.r2_score:.4f}"
         )
 
+

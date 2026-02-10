@@ -17,3 +17,4 @@ class ResultPresenter(Protocol):
     def show_results(self, results: Sequence[ExperimentResult]) -> None:
         raise NotImplementedError
 
+

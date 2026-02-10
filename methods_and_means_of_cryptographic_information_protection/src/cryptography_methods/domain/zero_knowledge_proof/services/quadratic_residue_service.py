@@ -181,7 +181,10 @@ class QuadraticResidueService(DomainService):
         return x
 
     def find_square_root_mod_n(self, a: int, n: int, p: int, q: int) -> int | None:
-        """Находит квадратный корень по модулю n = p * q используя китайскую теорему об остатках.
+        """Находит наименьший квадратный корень по модулю n = p * q используя китайскую теорему об остатках.
+
+        Существует 4 возможных корня (комбинации ±sqrt_p, ±sqrt_q).
+        Возвращается наименьший положительный корень.
 
         Args:
             a: Число
@@ -190,7 +193,7 @@ class QuadraticResidueService(DomainService):
             q: Второе простое число
 
         Returns:
-            Квадратный корень или None, если не существует
+            Наименьший квадратный корень или None, если не существует
         """
         logger.debug(f"Finding square root of {a} mod {n} using CRT")
         sqrt_p = self.tonelli_shanks(a, p)
@@ -211,11 +214,21 @@ class QuadraticResidueService(DomainService):
 
         logger.debug(f"inv({q}) mod {p} = {inv_p}, inv({p}) mod {q} = {inv_q}")
 
-        # Китайская теорема об остатках
-        result = (sqrt_p * q * inv_p + sqrt_q * p * inv_q) % n
-        result = (result + n) % n
+        # Перебираем все 4 комбинации (±sqrt_p, ±sqrt_q) и выбираем наименьший корень
+        candidates: list[int] = []
+        for sp in [sqrt_p, p - sqrt_p]:
+            for sq in [sqrt_q, q - sqrt_q]:
+                root = (sp * q * inv_p + sq * p * inv_q) % n
+                root = (root + n) % n
+                if root > 0:
+                    candidates.append(root)
 
-        logger.debug(f"Square root mod {n}: {result}")
+        if not candidates:
+            logger.error("No valid square roots found")
+            return None
+
+        result = min(candidates)
+        logger.debug(f"Smallest square root mod {n}: {result} (all candidates: {candidates})")
         return result
 
     def _generate_random_in_range(self, min_value: int, max_value: int) -> int:

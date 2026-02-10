@@ -5,3 +5,4 @@ class DomainError(Exception):
 class DomainFieldError(DomainError):
     """Raised when a domain field constraint is violated."""
 
+

@@ -56,3 +56,4 @@ class Gost28147SubstitutionTable:
 
 
 
+

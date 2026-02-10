@@ -11,3 +11,4 @@ class RegressionDatasetGateway(Protocol):
     def load(self) -> RegressionDataset:
         raise NotImplementedError
 
+

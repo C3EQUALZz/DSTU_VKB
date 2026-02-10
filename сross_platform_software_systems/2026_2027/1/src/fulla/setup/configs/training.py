@@ -24,3 +24,4 @@ class TrainingConfig(BaseModel):
     )
     batch_sizes: tuple[int, ...] = Field(default=(10, 100, 1000), description="Batch sizes to test")
 
+

@@ -35,3 +35,4 @@ class RegressionHyperParameters(BaseValueObject):
             f"act={self.activation.value}, bs={self.batch_size}, lr={self.learning_rate}"
         )
 
+

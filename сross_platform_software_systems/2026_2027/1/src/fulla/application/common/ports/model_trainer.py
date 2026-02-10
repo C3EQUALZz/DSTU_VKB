@@ -17,3 +17,4 @@ class ModelTrainer(Protocol):
     ) -> ExperimentResult:
         raise NotImplementedError
 
+
