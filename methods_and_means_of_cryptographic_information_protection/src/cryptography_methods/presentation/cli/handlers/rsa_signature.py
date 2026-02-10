@@ -316,3 +316,4 @@ def cmd_compare_signatures_handler(signature_file_1: Path, signature_file_2: Pat
 
 
 
+
