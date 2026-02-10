@@ -36,7 +36,8 @@ dependencies = [
     "gdown==5.2.1",
     "tabulate==0.9.0",
     "bazario==0.4.2",
-    "dishka==1.7.2"
+    "dishka==1.7.2",
+    "structlog==25.5.0"
 ]
 
 [project.optional-dependencies]
