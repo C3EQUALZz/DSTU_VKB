@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, fields
 
-from pix_erase.domain.common.errors.base import DomainFieldError
+from fulla.domain.common.errors.base import DomainFieldError
 
 
 @dataclass(frozen=True, eq=True, unsafe_hash=True)

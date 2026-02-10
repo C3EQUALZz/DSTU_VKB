@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
-from typing import Any, TypeVar, Generic
+from typing import Any, Generic, TypeVar
 
 from fulla.domain.common.errors.base import DomainError
 from fulla.domain.common.errors.time_errors import InconsistentTimeError

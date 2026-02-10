@@ -37,7 +37,8 @@ dependencies = [
     "tabulate==0.9.0",
     "bazario==0.4.2",
     "dishka==1.7.2",
-    "structlog==25.5.0"
+    "structlog==25.5.0",
+    "pydantic>=2.12.5",
 ]
 
 [project.optional-dependencies]
@@ -112,7 +113,7 @@ fix = true
 
 [tool.ruff.lint]
 select = ["ALL"]
-ignore = ["D", "CPY001", "A005", "TRY003", "COM812", "FBT001", "FBT003", "PLR0913"]
+ignore = ["D", "CPY001", "RUF002", "RUF001", "A005", "TRY003", "COM812", "FBT001", "FBT003", "PLR0913"]
 
 [tool.ruff.format]
 docstring-code-format = true
