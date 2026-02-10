@@ -14,7 +14,7 @@ from fulla.domain.shape_recognition.value_objects.dataset import PreparedDataset
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 
 # Mapping: folder name → class index
-#   '0' → 0 (triangle), '3' → 1 (circle), else → 2 (square)
+#   '0' → 0 (circle), '3' → 1 (circle), else → 2 (square)
 _CLASS_NAMES: Final[dict[int, str]] = {0: "Круг", 1: "Треугольник", 2: "Квадрат"}
 
 

@@ -13,7 +13,7 @@ from fulla.domain.shape_recognition.value_objects.experiment_result import Exper
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 
-CLASS_NAMES: Final[tuple[str, ...]] = ("Треугольник", "Круг", "Квадрат")
+CLASS_NAMES: Final[tuple[str, ...]] = ("Круг", "Треугольник", "Квадрат")
 IMG_HEIGHT: Final[int] = 20
 IMG_WIDTH: Final[int] = 20
 
