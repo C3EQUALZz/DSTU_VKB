@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
-from typing import Any, TypeVar
+from typing import Any, TypeVar, Generic
 
 from fulla.domain.common.errors.base import DomainError
 from fulla.domain.common.errors.time_errors import InconsistentTimeError
@@ -9,7 +9,7 @@ OIDType = TypeVar("OIDType")
 
 
 @dataclass(eq=False, kw_only=True)
-class BaseEntity[OIDType]:
+class BaseEntity(Generic[OIDType]):
     """Abstract base class for all domain entities.
 
     What is domain entity:
