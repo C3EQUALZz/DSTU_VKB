@@ -16,5 +16,19 @@ class ZeroKnowledgeProofExecutionView:
     iterations: list[dict[str, int | str | bool | None]]
 
 
+@dataclass(frozen=True, slots=True)
+class ParallelZeroKnowledgeProofExecutionView:
+    p: str
+    q: str
+    n: str
+    k: int
+    public_keys: list[str]   # V1, V2, ..., VK
+    secret_keys: list[str]   # S1, S2, ..., SK
+    total_iterations: int
+    failed_attempts: int
+    failure_rate: float
+    cheat_probability: float  # (1/2)^(K*t)
+    authentication_passed: bool
+    iterations: list[dict[str, int | str | bool | None]]
 
 

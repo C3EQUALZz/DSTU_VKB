@@ -50,6 +50,9 @@ from cryptography_methods.application.commands.elgamal.generate_keys import (
 from cryptography_methods.application.commands.zero_knowledge_proof.execute import (
     ExecuteZeroKnowledgeProofCommandHandler
 )
+from cryptography_methods.application.commands.zero_knowledge_proof.execute_parallel import (
+    ExecuteParallelZeroKnowledgeProofCommandHandler
+)
 from cryptography_methods.application.commands.rsa.decrypt import RSADecryptCommandHandler
 from cryptography_methods.application.commands.rsa.encrypt import RSAEncryptCommandHandler
 from cryptography_methods.application.commands.rsa.generate_keys import (
@@ -113,6 +116,9 @@ from cryptography_methods.domain.zero_knowledge_proof.services.quadratic_residue
 from cryptography_methods.domain.zero_knowledge_proof.services.zero_knowledge_proof_service import (
     ZeroKnowledgeProofService
 )
+from cryptography_methods.domain.zero_knowledge_proof.services.parallel_zero_knowledge_proof_service import (
+    ParallelZeroKnowledgeProofService
+)
 from cryptography_methods.domain.rsa.services.rsa_service import RSAService
 from cryptography_methods.domain.rsa_signature import RSASignatureService
 from cryptography_methods.domain.gost_3410_94 import Gost341094Service
@@ -155,6 +161,7 @@ def interactors_provider() -> Provider:
         Gost28147EncryptCommandHandler,
         Gost28147DecryptCommandHandler,
         ExecuteZeroKnowledgeProofCommandHandler,
+        ExecuteParallelZeroKnowledgeProofCommandHandler,
         RSAEncryptCommandHandler,
         RSADecryptCommandHandler,
         RSAGenerateKeysCommandHandler,
@@ -202,6 +209,7 @@ def services_provider() -> Provider:
         PrimeNumberService,
         QuadraticResidueService,
         ZeroKnowledgeProofService,
+        ParallelZeroKnowledgeProofService,
         RSAService,
         RSASignatureService,
         Gost341094Service,
