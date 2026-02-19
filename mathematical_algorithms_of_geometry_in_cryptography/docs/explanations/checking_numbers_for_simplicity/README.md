@@ -6,5 +6,5 @@
 Пример запуска выглядит следующим образом:
 
 ```bash
-python cli.py miller-rabin test --number 99601
+python cli.py miller-rabin test --number 99733
 ```
