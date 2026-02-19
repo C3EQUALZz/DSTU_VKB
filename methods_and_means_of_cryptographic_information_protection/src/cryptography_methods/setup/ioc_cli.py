@@ -47,6 +47,9 @@ from cryptography_methods.application.commands.elgamal.encrypt import ElGamalEnc
 from cryptography_methods.application.commands.elgamal.generate_keys import (
     ElGamalGenerateKeysCommandHandler
 )
+from cryptography_methods.application.commands.primality_check.check import (
+    PrimalityCheckCommandHandler,
+)
 from cryptography_methods.application.commands.zero_knowledge_proof.execute import (
     ExecuteZeroKnowledgeProofCommandHandler
 )
@@ -174,7 +177,8 @@ def interactors_provider() -> Provider:
         Gost341094CompareHashesCommandHandler,
         ElGamalEncryptCommandHandler,
         ElGamalDecryptCommandHandler,
-        ElGamalGenerateKeysCommandHandler
+        ElGamalGenerateKeysCommandHandler,
+        PrimalityCheckCommandHandler,
     )
     return provider
 

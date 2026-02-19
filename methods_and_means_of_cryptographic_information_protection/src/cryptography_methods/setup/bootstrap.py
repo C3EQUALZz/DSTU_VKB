@@ -32,6 +32,9 @@ from cryptography_methods.presentation.cli.handlers.rsa import rsa_group
 from cryptography_methods.presentation.cli.handlers.rsa_signature import rsa_sign_group
 from cryptography_methods.presentation.cli.handlers.gost_3410_94 import gost_3410_94_group
 from cryptography_methods.presentation.cli.handlers.elgamal import elgamal_group
+from cryptography_methods.presentation.cli.handlers.primality_check import (
+    primality_check_group,
+)
 from cryptography_methods.presentation.cli.handlers.zero_knowledge_proof import (
     zero_knowledge_proof_group
 )
@@ -96,6 +99,7 @@ def setup_cli_routes(main_group: Group) -> None:
     main_group.add_command(gost_3410_94_group)  # type: ignore
     main_group.add_command(elgamal_group)  # type: ignore
     main_group.add_command(zero_knowledge_proof_group)  # type: ignore
+    main_group.add_command(primality_check_group)  # type: ignore
 
 
 def setup_logging(logger_config: LoggingConfig) -> None:
