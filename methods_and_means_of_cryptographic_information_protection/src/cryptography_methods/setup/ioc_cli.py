@@ -50,6 +50,9 @@ from cryptography_methods.application.commands.elgamal.generate_keys import (
 from cryptography_methods.application.commands.primality_check.check import (
     PrimalityCheckCommandHandler,
 )
+from cryptography_methods.application.commands.primality_check.find_in_interval import (
+    FindPrimesInIntervalCommandHandler,
+)
 from cryptography_methods.application.commands.zero_knowledge_proof.execute import (
     ExecuteZeroKnowledgeProofCommandHandler
 )
@@ -179,6 +182,7 @@ def interactors_provider() -> Provider:
         ElGamalDecryptCommandHandler,
         ElGamalGenerateKeysCommandHandler,
         PrimalityCheckCommandHandler,
+        FindPrimesInIntervalCommandHandler,
     )
     return provider
 

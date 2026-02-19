@@ -14,9 +14,58 @@ logger: Final[logging.Logger] = logging.getLogger(__name__)
 class PrimeNumberService(DomainService):
     """Сервис для генерации и проверки простых чисел."""
 
+    _FIRST_PRIMES: Final[tuple[int, ...]] = (
+        2, 3, 5, 7, 11, 13, 17, 19, 23, 29,
+        31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
+    )
+
     def __init__(self, modular_arithmetic_service: ModularArithmeticService) -> None:
         super().__init__()
         self._modular_arithmetic: Final[ModularArithmeticService] = modular_arithmetic_service
+
+    def trial_division_test(
+        self, n: int, num_primes: int = 10,
+    ) -> bool:
+        """Тест простоты пробными делениями.
+
+        Args:
+            n: Число для проверки
+            num_primes: Количество первых простых для деления
+
+        Returns:
+            True если число вероятно простое, False если составное
+        """
+        if n < 2:  # noqa: PLR2004
+            return False
+        primes = self._FIRST_PRIMES[:num_primes]
+        for p in primes:
+            if n == p:
+                return True
+            if n % p == 0:
+                return False
+        return True
+
+    def fermat_test(
+        self, n: int, num_bases: int = 2,
+    ) -> bool:
+        """Тест Ферма для проверки простоты числа.
+
+        Args:
+            n: Число для проверки
+            num_bases: Количество случайных оснований
+
+        Returns:
+            True если число вероятно простое, False если составное
+        """
+        if n < 2:  # noqa: PLR2004
+            return False
+        if n <= 3:  # noqa: PLR2004
+            return True
+        for _ in range(num_bases):
+            a = self._generate_random_big_integer_in_range(2, n - 1)
+            if self._modular_arithmetic.mod_pow(a, n - 1, n) != 1:
+                return False
+        return True
 
     def generate_large_prime(self, bit_length: int) -> int:
         """Генерирует большое простое число заданной битовой длины.
