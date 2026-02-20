@@ -53,6 +53,12 @@ from cryptography_methods.application.commands.primality_check.check import (
 from cryptography_methods.application.commands.primality_check.find_in_interval import (
     FindPrimesInIntervalCommandHandler,
 )
+from cryptography_methods.application.commands.primality_check.sieve_eratosthenes import (
+    SieveEratosthenesCommandHandler,
+)
+from cryptography_methods.application.commands.primality_check.carmichael import (
+    FindCarmichaelCommandHandler,
+)
 from cryptography_methods.application.commands.zero_knowledge_proof.execute import (
     ExecuteZeroKnowledgeProofCommandHandler
 )
@@ -183,6 +189,8 @@ def interactors_provider() -> Provider:
         ElGamalGenerateKeysCommandHandler,
         PrimalityCheckCommandHandler,
         FindPrimesInIntervalCommandHandler,
+        SieveEratosthenesCommandHandler,
+        FindCarmichaelCommandHandler,
     )
     return provider
 

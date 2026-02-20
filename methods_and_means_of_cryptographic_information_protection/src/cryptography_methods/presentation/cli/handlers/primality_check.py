@@ -8,16 +8,30 @@ from cryptography_methods.application.commands.primality_check.check import (
     PrimalityCheckCommand,
     PrimalityCheckCommandHandler,
 )
+from cryptography_methods.application.commands.primality_check.carmichael import (
+    FindCarmichaelCommand,
+    FindCarmichaelCommandHandler,
+)
 from cryptography_methods.application.commands.primality_check.find_in_interval import (
     FindPrimesInIntervalCommand,
     FindPrimesInIntervalCommandHandler,
+)
+from cryptography_methods.application.commands.primality_check.sieve_eratosthenes import (
+    SieveEratosthenesCommand,
+    SieveEratosthenesCommandHandler,
 )
 from cryptography_methods.application.common.views.find_primes_in_interval import (
     FindPrimesInIntervalView,
     PrimeResultPerMethod,
 )
+from cryptography_methods.application.common.views.carmichael import (
+    FindCarmichaelView,
+)
 from cryptography_methods.application.common.views.primality_check import (
     PrimalityCheckView,
+)
+from cryptography_methods.application.common.views.sieve_eratosthenes import (
+    SieveEratosthenesView,
 )
 
 
@@ -223,3 +237,159 @@ def cmd_find_in_interval_handler(
         ],
     ])
     click.echo(stats_table)
+
+
+@primality_check_group.command("sieve")
+@click.option(
+    "-s", "--start",
+    default=500,
+    help="Начало интервала",
+    type=int,
+)
+@click.option(
+    "-e", "--end",
+    default=700,
+    help="Конец интервала",
+    type=int,
+)
+@click.option(
+    "-mk", "--max-k",
+    default=10,
+    help="Максимальное k (1-20)",
+    type=click.IntRange(1, 20),
+)
+def cmd_sieve_handler(
+    start: int,
+    end: int,
+    max_k: int,
+    interactor: FromDishka[SieveEratosthenesCommandHandler],
+) -> None:
+    if start >= end:
+        click.echo("Начало интервала должно быть меньше конца")
+        return
+
+    command = SieveEratosthenesCommand(
+        start=start,
+        end=end,
+        max_k=max_k,
+    )
+
+    view: SieveEratosthenesView = asyncio.run(
+        interactor(command),
+    )
+
+    # 1. Параметры
+    params_table = PrettyTable()
+    params_table.title = "Параметры решета Эратосфена"
+    params_table.field_names = ["Параметр", "Значение"]
+    params_table.align["Параметр"] = "l"
+    params_table.align["Значение"] = "r"
+    params_table.add_rows([
+        [
+            "Интервал",
+            f"({view.interval_start}, {view.interval_end})",
+        ],
+        ["Максимальное k", max_k],
+    ])
+    click.echo(params_table)
+    click.echo()
+
+    # 2. Таблица результатов
+    results_table = PrettyTable()
+    results_table.title = "Результаты решета"
+    results_table.field_names = [
+        "k", "Простые", "Прошло", "Всего", "Доля",
+    ]
+    results_table.align["Простые"] = "l"
+    results_table.align["Доля"] = "r"
+    for row in view.rows:
+        primes_str = ",".join(str(p) for p in row.primes_used)
+        results_table.add_row([
+            row.k,
+            primes_str,
+            row.passing_count,
+            row.total_count,
+            f"{row.relative_count:.4f}",
+        ])
+    click.echo(results_table)
+    click.echo()
+
+    # 3. ASCII-график
+    click.echo("График относительного количества:")
+    max_bar = 40
+    for row in view.rows:
+        primes_str = ",".join(str(p) for p in row.primes_used)
+        label = f"k = {row.k:<2} ({primes_str})"
+        bar_len = max(1, int(row.relative_count * max_bar))
+        bar = "#" * bar_len
+        click.echo(
+            f"  {label:<30} | {bar} "
+            f"({row.relative_count:.4f})",
+        )
+
+
+@primality_check_group.command("carmichael")
+@click.option(
+    "-s", "--start",
+    default=1,
+    help="Начало интервала",
+    type=int,
+)
+@click.option(
+    "-e", "--end",
+    default=10000,
+    help="Конец интервала",
+    type=int,
+)
+def cmd_carmichael_handler(
+    start: int,
+    end: int,
+    interactor: FromDishka[FindCarmichaelCommandHandler],
+) -> None:
+    if start >= end:
+        click.echo("Начало интервала должно быть меньше конца")
+        return
+
+    command = FindCarmichaelCommand(start=start, end=end)
+
+    view: FindCarmichaelView = asyncio.run(
+        interactor(command),
+    )
+
+    # 1. Параметры
+    params_table = PrettyTable()
+    params_table.title = "Поиск чисел Кармайкла"
+    params_table.field_names = ["Параметр", "Значение"]
+    params_table.align["Параметр"] = "l"
+    params_table.align["Значение"] = "r"
+    params_table.add_rows([
+        [
+            "Интервал",
+            f"({view.interval_start}, {view.interval_end})",
+        ],
+        ["Проверено чисел", view.total_checked],
+        ["Найдено", len(view.carmichael_numbers)],
+    ])
+    click.echo(params_table)
+    click.echo()
+
+    if not view.carmichael_numbers:
+        click.echo("Числа Кармайкла не найдены.")
+        return
+
+    # 2. Таблица результатов
+    results_table = PrettyTable()
+    results_table.title = "Числа Кармайкла"
+    results_table.field_names = [
+        "Число", "Разложение", "Ферма (5 осн.)",
+    ]
+    results_table.align["Число"] = "r"
+    results_table.align["Разложение"] = "l"
+    for c in view.carmichael_numbers:
+        factored = " x ".join(str(p) for p in c.prime_factors)
+        results_table.add_row([
+            c.number,
+            factored,
+            "Да" if c.passes_fermat else "Нет",
+        ])
+    click.echo(results_table)
