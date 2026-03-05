@@ -146,7 +146,7 @@ class GeffeyPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackCommand
         # Convert final sequence to decimal (whole number)
         final_binary_str = "".join(str(b) for b in final_sequence)
         logger.info("Длина итоговой двоичной последовательности: %s", len(final_binary_str))
-        final_decimal = self._geffe_generator_service.binary_to_decimal_str(final_sequence)
+        final_decimal = str(int(final_binary_str, 2)) if final_binary_str else "0"
 
         # Generate decimal numbers sequence from the final sequence
         decimal_sequence = self._geffe_generator_service.get_decimal_sequence_from_bits(
