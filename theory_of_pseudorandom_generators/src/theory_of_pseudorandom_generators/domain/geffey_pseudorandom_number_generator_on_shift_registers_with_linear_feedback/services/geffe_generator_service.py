@@ -61,35 +61,26 @@ class GeffeGeneratorService(DomainService):
         generator: GeffeGenerator,
         register_service: RegisterService,
     ) -> tuple[list[int], list[int], list[int]]:
-        """Generate sequences and then decimate them (classic Geffe setup).
+        """Generate sequences for each register using original shifts.
 
-        Steps:
-        1. Generate sequences using ordinary shift (k=1) for all registers
-           until the combined state repeats.
-        2. Apply decimation seq[::k] for each register's k.
+        Temporary registers are created with the original shift values,
+        so each call to next() already advances by shift positions.
+        No decimation is needed.
         """
-        seq1_full: list[int] = []
-        seq2_full: list[int] = []
-        seq3_full: list[int] = []
+        seq1: list[int] = []
+        seq2: list[int] = []
+        seq3: list[int] = []
         col1 = generator.register1.column_index
         col2 = generator.register2.column_index
         col3 = generator.register3.column_index
         for _, state1, state2, state3 in GeffeGeneratorService._iter_combined_states(
             generator, register_service
         ):
-            seq1_full.append(state1[col1])
-            seq2_full.append(state2[col2])
-            seq3_full.append(state3[col3])
+            seq1.append(state1[col1])
+            seq2.append(state2[col2])
+            seq3.append(state3[col3])
 
-        k1 = generator.register1.shift
-        k2 = generator.register2.shift
-        k3 = generator.register3.shift
-
-        decimated1 = seq1_full[::k1]
-        decimated2 = seq2_full[::k2]
-        decimated3 = seq3_full[::k3]
-
-        return decimated1, decimated2, decimated3
+        return seq1, seq2, seq3
 
     @staticmethod
     def get_steps(
@@ -182,23 +173,23 @@ class GeffeGeneratorService(DomainService):
         generator: GeffeGenerator,
         register_service: RegisterService,
     ) -> Iterable[tuple[int, tuple[int, ...], tuple[int, ...], tuple[int, ...]]]:
-        """Yield combined register states using shift=1 until repetition."""
+        """Yield combined register states using original shifts until repetition."""
         temp_register1 = register_service.create(
             polynomial_coefficients=generator.register1.polynomial_coefficients,
             start_position=generator.register1.start_position,
-            shift=1,
+            shift=generator.register1.shift,
             column_index=generator.register1.column_index,
         )
         temp_register2 = register_service.create(
             polynomial_coefficients=generator.register2.polynomial_coefficients,
             start_position=generator.register2.start_position,
-            shift=1,
+            shift=generator.register2.shift,
             column_index=generator.register2.column_index,
         )
         temp_register3 = register_service.create(
             polynomial_coefficients=generator.register3.polynomial_coefficients,
             start_position=generator.register3.start_position,
-            shift=1,
+            shift=generator.register3.shift,
             column_index=generator.register3.column_index,
         )
 
@@ -241,9 +232,4 @@ class GeffeGeneratorService(DomainService):
             result = GeffeGeneratorService._geffe_bit(x1, x2, x3)
             state_str = "".join(str(v) for v in arr)
             yield f"{i}. {state_str}{separator}{result}"
-
-    @staticmethod
-    def _geffe_bit(x1: int, x2: int, x3: int) -> int:
-        """Calculate one Geffe output bit."""
-        return (x1 & x2) ^ (x2 & x3) ^ x3
 

@@ -1,5 +1,6 @@
 """Geffe generator entity."""
 
+import logging
 import math
 from collections.abc import Sequence
 from dataclasses import dataclass, field
@@ -10,31 +11,11 @@ from theory_of_pseudorandom_generators.domain.common.entities.base_aggregate imp
 from theory_of_pseudorandom_generators.domain.fibonacci_pseudorandom_number_generator_on_shift_registers_with_linear_feedback.entities.register import (
     Register,
 )
-from theory_of_pseudorandom_generators.domain.geffey_pseudorandom_number_generator_on_shift_registers_with_linear_feedback.errors import (
-    PeriodsNotCoprimeError,
-)
 from theory_of_pseudorandom_generators.domain.geffey_pseudorandom_number_generator_on_shift_registers_with_linear_feedback.values.geffe_generator_id import (
     GeffeGeneratorID,
 )
 
-
-def gcd_multiple(*numbers: int) -> int:
-    """Calculate GCD of multiple numbers.
-
-    Args:
-        *numbers: Numbers to calculate GCD for
-
-    Returns:
-        GCD of all numbers
-    """
-    if not numbers:
-        return 0
-    if len(numbers) == 1:
-        return abs(numbers[0])
-    result = numbers[0]
-    for num in numbers[1:]:
-        result = math.gcd(result, num)
-    return result
+logger = logging.getLogger(__name__)
 
 
 def lcm_multiple(*numbers: int) -> int:
@@ -65,6 +46,7 @@ class GeffeGenerator(BaseAggregateRoot[GeffeGeneratorID]):
     register3: Register
 
     _period: int = field(init=False, repr=False)
+    _linear_complexity: int = field(init=False, repr=False)
     _start_position: Sequence[int] = field(init=False, repr=False)
 
     def __post_init__(self) -> None:
@@ -72,25 +54,37 @@ class GeffeGenerator(BaseAggregateRoot[GeffeGeneratorID]):
         super().__post_init__()
 
         # Get max periods (2^N - 1) for theoretical period calculation
-        # Note: The theoretical period is calculated as S1 * S2 * S3,
-        # where S = 2^N - 1 (max_period), not LCM of actual periods
         max_period1 = self.register1.max_period
         max_period2 = self.register2.max_period
         max_period3 = self.register3.max_period
 
-        # Get actual periods for validation
+        # Get actual periods for pairwise coprimality validation
         period1 = self.register1.get_period()
         period2 = self.register2.get_period()
         period3 = self.register3.get_period()
 
-        # Validate that actual periods are coprime
-        if gcd_multiple(period1, period2, period3) != 1:
-            msg = "Значения периодов регистров не взаимно простые"
-            raise PeriodsNotCoprimeError(msg)
+        # Validate pairwise coprimality of actual periods
+        if (
+            math.gcd(period1, period2) != 1
+            or math.gcd(period1, period3) != 1
+            or math.gcd(period2, period3) != 1
+        ):
+            logger.warning(
+                "Периоды регистров не попарно взаимно просты: "
+                "gcd(%d,%d)=%d, gcd(%d,%d)=%d, gcd(%d,%d)=%d",
+                period1, period2, math.gcd(period1, period2),
+                period1, period3, math.gcd(period1, period3),
+                period2, period3, math.gcd(period2, period3),
+            )
 
         # Calculate theoretical period as product of max periods (S1 * S2 * S3)
-        # This matches the reference implementation
         self._period = max_period1 * max_period2 * max_period3
+
+        # Calculate linear complexity: L = n1*n2 + n2*n3 + n3
+        n1 = len(self.register1.start_position)
+        n2 = len(self.register2.start_position)
+        n3 = len(self.register3.start_position)
+        self._linear_complexity = n1 * n2 + n2 * n3 + n3
 
         # Set start position
         self._start_position = self._set_start_position()
@@ -164,50 +158,33 @@ class GeffeGenerator(BaseAggregateRoot[GeffeGeneratorID]):
         return "".join(sequence)
 
     def get_actual_sequence_period(self) -> int:
-        """Calculate actual period of output sequence.
+        """Calculate actual period of the combined output sequence.
 
-        Generates the sequence and finds the minimum period where it repeats.
-        Uses a more efficient approach by generating a limited sequence and
-        checking for cycles.
+        Tracks the combined state of all three registers and counts
+        the number of steps until the state repeats.
 
         Returns:
             Actual period of output sequence
         """
         self.clear()
-        
-        # Generate sequence up to a reasonable limit
-        # For period detection, we don't need the full theoretical period
-        max_length = min(self._period * 2, 2000)  # Reasonable upper bound
-        sequence = []
-        
-        for _ in range(max_length):
-            sequence.append(str(self.next_bit()))
-        
-        sequence_str = "".join(sequence)
-        sequence_len = len(sequence_str)
-        
-        # Find minimum period by checking if sequence repeats
-        # Start from small periods and work up
-        for period in range(1, min(sequence_len // 2 + 1, 500)):
-            # Check if sequence repeats with this period
-            if sequence_len >= period * 2:  # Need at least 2 repetitions to verify
-                # Extract pattern
-                pattern = sequence_str[:period]
-                # Check if it repeats in the sequence
-                matches = True
-                for i in range(period, min(sequence_len, period * 10)):  # Check first 10 repetitions
-                    if sequence_str[i] != pattern[i % period]:
-                        matches = False
-                        break
-                
-                if matches:
-                    # Verify: check if the whole sequence matches
-                    expected_repeats = sequence_len // period
-                    if sequence_str == pattern * expected_repeats:
-                        return period
-        
-        # If no period found in reasonable range, return theoretical period
-        return self._period
+
+        seen_states: set[
+            tuple[tuple[int, ...], tuple[int, ...], tuple[int, ...]]
+        ] = set()
+
+        step = 0
+        while True:
+            state1 = tuple(self.register1.next())
+            state2 = tuple(self.register2.next())
+            state3 = tuple(self.register3.next())
+            combined = (state1, state2, state3)
+            if combined in seen_states:
+                break
+            seen_states.add(combined)
+            step += 1
+
+        self.clear()
+        return step
 
     @property
     def period(self) -> int:
@@ -217,6 +194,17 @@ class GeffeGenerator(BaseAggregateRoot[GeffeGeneratorID]):
             Period length
         """
         return self._period
+
+    @property
+    def linear_complexity(self) -> int:
+        """Get linear complexity of the Geffe generator.
+
+        Formula: L = n1*n2 + n2*n3 + n3
+
+        Returns:
+            Linear complexity value
+        """
+        return self._linear_complexity
 
     @property
     def start_position(self) -> Sequence[int]:

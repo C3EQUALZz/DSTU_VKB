@@ -194,6 +194,7 @@ class GeffeyPseudorandomNumberGeneratorOnShiftRegistersWithLinearFeedbackCommand
             register3_max_period=max_period3,
             theoretical_period=theoretical_period,
             actual_sequence_period=actual_period,
+            linear_complexity=generator.linear_complexity,
             register1_sequence=tuple(seq1),
             register2_sequence=tuple(seq2),
             register3_sequence=tuple(seq3),
