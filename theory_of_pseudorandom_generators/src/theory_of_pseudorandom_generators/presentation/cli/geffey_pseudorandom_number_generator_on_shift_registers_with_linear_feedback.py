@@ -173,7 +173,9 @@ def cmd_generate_handler(
         # Отображение результатов с помощью PrettyTable
         print("\nГенератор Геффе псевдослучайных чисел на регистрах сдвига с линейной обратной связью")
         print(f"Теоретически максимальный период: {view.theoretical_period}")
-        
+        print(f"Фактический период: {view.actual_sequence_period}")
+        print(f"Линейная сложность: {view.linear_complexity}")
+
         # Последовательности регистров
         seq1_str = "".join(str(b) for b in view.register1_sequence)
         seq2_str = "".join(str(b) for b in view.register2_sequence)

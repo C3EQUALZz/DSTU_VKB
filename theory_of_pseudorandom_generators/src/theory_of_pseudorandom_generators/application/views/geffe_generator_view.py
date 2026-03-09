@@ -20,6 +20,7 @@ class GeffeGeneratorView:
     register3_max_period: int
     theoretical_period: int
     actual_sequence_period: int
+    linear_complexity: int
     register1_sequence: tuple[int, ...]
     register2_sequence: tuple[int, ...]
     register3_sequence: tuple[int, ...]
