@@ -43,7 +43,7 @@ cd src/cryptography_methods
 Для генерации ключей можно использовать код, который представлен ниже:
 
 ```bash
-python cli.py elgamal generate-keys -p "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/public_elgamal.txt" -pr "D:\PycharmProjects\DSTU_VKB\methods_and_means_of_cryptographic_information_protection\private_elgamal.txt" -s 1024 -c 10
+python cli.py elgamal generate-keys -p "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/public_elgamal.txt" -pr "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/private_elgamal.txt" -s 1024 -c 10
 ```
 
 Чтобы зашифровать используем данную команду:
