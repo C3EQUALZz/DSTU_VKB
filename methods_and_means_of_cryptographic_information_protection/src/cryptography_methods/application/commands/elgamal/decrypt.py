@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Final, final
 
 from cryptography_methods.application.common.views.elgamal import ElGamalDecryptionView
-from cryptography_methods.domain.elgamal import ElGamalService, ElGamalCiphertext
+from cryptography_methods.domain.elgamal import ElGamalService, ElGamalCiphertext, ElGamalPublicKey
 
 logger: Final[logging.Logger] = logging.getLogger(__name__)
 
@@ -15,6 +15,7 @@ class ElGamalDecryptCommand:
     """Command for ElGamal decryption."""
 
     private_key_file: Path
+    public_key_file: Path
     input_file: Path
 
 
@@ -33,14 +34,17 @@ class ElGamalDecryptCommandHandler:
     async def __call__(self, data: ElGamalDecryptCommand) -> ElGamalDecryptionView:
         """Execute ElGamal decryption command."""
         logger.info(
-            "Starting ElGamal decryption. Private key file: %s, input file: %s",
+            "Starting ElGamal decryption. Private key file: %s, public key file: %s, input file: %s",
             data.private_key_file,
+            data.public_key_file,
             data.input_file,
         )
 
-        p, private_key = self._service.load_private_key(data.private_key_file)
+        public_key: ElGamalPublicKey = self._service.load_public_key(data.public_key_file)
+        private_key = self._service.load_private_key(data.private_key_file)
         original_message, ciphertext = self._load_ciphertext(data.input_file)
 
+        p = public_key.p
         logger.info("Loaded ElGamal data: p_bits=%s, ciphertext_pairs=%s", p.bit_length(), len(ciphertext))
 
         logger.info("Decrypting ElGamal ciphertext...")

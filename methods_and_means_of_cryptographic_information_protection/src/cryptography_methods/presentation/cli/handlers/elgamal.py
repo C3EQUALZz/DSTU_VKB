@@ -184,21 +184,30 @@ def cmd_encrypt_handler(
     required=True,
 )
 @click.option(
+    "-p",
+    "--public-key-file",
+    help="Path to ElGamal public key file (used to read modulus p)",
+    type=click.Path(exists=True, path_type=Path),
+    required=True,
+)
+@click.option(
     "-i",
     "--input-file",
-    help="Path to ElGamal data file (p, x, message, ciphertext). Default: ./elgamal.txt",
+    help="Path to ElGamal data file (ciphertext pairs). Default: ./elgamal.txt",
     type=click.Path(exists=True, path_type=Path),
     default=Path("elgamal.txt"),
     show_default=True,
 )
 def cmd_decrypt_handler(
     private_key_file: Path,
+    public_key_file: Path,
     input_file: Path,
     interactor: FromDishka[ElGamalDecryptCommandHandler],
 ) -> None:
     """Decrypt a message from file using ElGamal algorithm."""
     command: ElGamalDecryptCommand = ElGamalDecryptCommand(
         private_key_file=private_key_file,
+        public_key_file=public_key_file,
         input_file=input_file,
     )
 

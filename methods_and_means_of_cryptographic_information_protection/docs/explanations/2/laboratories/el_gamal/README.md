@@ -49,13 +49,13 @@ python cli.py elgamal generate-keys -p "/Users/arti/PycharmProjects/DSTU_VKB/met
 Чтобы зашифровать используем данную команду:
 
 ```bash
-python cli.py elgamal encrypt -m "Сообщение" -k "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/public_elgamal.txt" -o "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/elgamal_cipher.txt"
+python cli.py elgamal encrypt -m "Ковалев Данил" -k "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/public_elgamal.txt" -o "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/elgamal_cipher.txt"
 ```
 
 Чтобы дешифровать используем данную команду:
 
 ```bash
-python cli.py elgamal decrypt -k "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/private_elgamal.txt" -i "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/elgamal_cipher.txt"
+python cli.py elgamal decrypt -k "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/private_elgamal.txt" -p "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/public_elgamal.txt" -i "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/elgamal_cipher.txt"
 ```
 
 > [!IMPORTANT]

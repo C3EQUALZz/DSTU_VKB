@@ -66,7 +66,7 @@ class ElGamalGenerateKeysCommandHandler:
 
         # Save keys to files
         self._service.save_public_key(public_key, data.public_key_file)
-        self._service.save_private_key(public_key.p, private_key, data.private_key_file)
+        self._service.save_private_key(private_key, data.private_key_file)
 
         logger.info("ElGamal keys saved successfully")
 

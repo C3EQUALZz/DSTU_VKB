@@ -222,23 +222,20 @@ class ElGamalService(DomainService):
         )
 
     @staticmethod
-    def save_private_key(p: int, private_key: ElGamalPrivateKey, file_path: Path) -> None:
+    def save_private_key(private_key: ElGamalPrivateKey, file_path: Path) -> None:
         """Save ElGamal private key to file.
 
         Формат файла:
-            p
             x
         """
         logger.info("Saving ElGamal private key to file: %s", file_path)
         file_path.parent.mkdir(parents=True, exist_ok=True)
 
         with file_path.open("w", encoding="utf-8") as f:
-            f.write(f"{p}\n")
             f.write(f"{private_key.x}\n")
 
         logger.debug(
-            "ElGamal private key saved (p_bits=%s, x_bits=%s)",
-            p.bit_length(),
+            "ElGamal private key saved (x_bits=%s)",
             private_key.x.bit_length(),
         )
 
@@ -268,11 +265,11 @@ class ElGamalService(DomainService):
         return ElGamalPublicKey(p=p, g=g, y=y)
 
     @staticmethod
-    def load_private_key(file_path: Path) -> tuple[int, ElGamalPrivateKey]:
+    def load_private_key(file_path: Path) -> ElGamalPrivateKey:
         """Load ElGamal private key from file.
 
         Returns:
-            (p, private_key)
+            private_key
         """
         logger.info("Loading ElGamal private key from file: %s", file_path)
         if not file_path.exists():
@@ -281,18 +278,16 @@ class ElGamalService(DomainService):
         with file_path.open("r", encoding="utf-8") as f:
             lines = [line.strip() for line in f.readlines()]
 
-        if len(lines) < 2:
-            raise ValueError("Invalid ElGamal private key file format: expected 2 lines (p, x)")
+        if len(lines) < 1:
+            raise ValueError("Invalid ElGamal private key file format: expected 1 line (x)")
 
-        p = int(lines[0])
-        x = int(lines[1])
+        x = int(lines[0])
 
         logger.debug(
-            "ElGamal private key loaded (p_bits=%s, x_bits=%s)",
-            p.bit_length(),
+            "ElGamal private key loaded (x_bits=%s)",
             x.bit_length(),
         )
-        return p, ElGamalPrivateKey(x=x)
+        return ElGamalPrivateKey(x=x)
 
     # ======================
     #  Внутренние методы
