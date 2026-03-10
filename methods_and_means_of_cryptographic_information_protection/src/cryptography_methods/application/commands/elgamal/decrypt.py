@@ -100,8 +100,6 @@ class ElGamalDecryptCommandHandler:
             logger.error(msg)
             raise ValueError(msg)
 
-        # В текущей версии файл содержит только пары a b, без исходного сообщения.
-        # Оставляем original_message пустой строкой для обратной совместимости View.
         original_message = ""
 
         ciphertext: list[ElGamalCiphertext] = []

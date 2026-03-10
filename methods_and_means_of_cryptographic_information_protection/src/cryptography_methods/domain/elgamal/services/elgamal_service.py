@@ -4,7 +4,7 @@
 * генерацию большого простого числа p;
 * поиск (быстрого) первообразного корня g по модулю p;
 * генерацию закрытого/открытого ключей (x, y = g^x mod p);
-* шифрование и расшифрование байтовых сообщений (как в примере на C#).
+* шифрование и расшифрование байтовых сообщений.
 """
 
 import logging
@@ -124,25 +124,19 @@ class ElGamalService(DomainService):
         encrypted: list[ElGamalCiphertext] = []
 
         for index, m in enumerate(message):
-            if m >= p:
-                # В нормальном случае p намного больше 256, но оставим защиту.
-                raise ValueError("Plaintext byte is greater than or equal to modulus p")
-
             k = self._random_in_range(2, p - 2)
             a = pow(g, k, p)
             b = (pow(y, k, p) * m) % p
             encrypted.append(ElGamalCiphertext(a=a, b=b))
 
-            # Логируем только первые несколько байтов, чтобы не зашумлять лог.
-            if index < 5:
-                logger.debug(
-                    "Encrypted byte #%d: m=%d, k=%s, a=%s, b=%s",
-                    index,
-                    m,
-                    k,
-                    a,
-                    b,
-                )
+            logger.debug(
+                "Encrypted byte #%d: m=%d, k=%s, a=%s, b=%s",
+                index,
+                m,
+                k,
+                a,
+                b,
+            )
 
         logger.info("Encryption finished, produced %d ciphertext pairs", len(encrypted))
         return encrypted
@@ -166,7 +160,6 @@ class ElGamalService(DomainService):
             len(list(ciphertext)) if not isinstance(ciphertext, list) else len(ciphertext),
         )
 
-        # Если ciphertext — не список (Iterable), материализуем его один раз.
         if not isinstance(ciphertext, list):
             ciphertext = list(ciphertext)
 
@@ -362,9 +355,7 @@ class ElGamalService(DomainService):
     def _find_primitive_root_fast(self, p: int) -> int:
         """Поиск первообразного корня по модулю p.
 
-        Логика упрощена по сравнению с C#-версией: вместо полного
-        факторизации p-1 используем несколько эвристик.
-        Для учебных задач этого достаточно.
+        Вместо полного факторизации p-1 используем несколько эвристик.
         """
         p_minus_1 = p - 1
 
@@ -415,24 +406,19 @@ class ElGamalService(DomainService):
 
     @staticmethod
     def _random_in_range(min_value: int, max_value: int) -> int:
-        """Случайное число в диапазоне [min_value, max_value]."""
+        """Случайное криптографически стойкое число в диапазоне [min_value, max_value].
+
+        Используется secrets, а не random.randint, который основан на
+        Mersenne Twister и непригоден для криптографии.
+        """
         if min_value > max_value:
             raise ValueError("min_value must be <= max_value")
-        if min_value == max_value:
-            return min_value
-
-        # Аналог NextBigInteger из C#, но через secrets
-        range_size = max_value - min_value + 1
-        num_bits = range_size.bit_length()
-        while True:
-            candidate = secrets.randbits(num_bits)
-            if candidate < range_size:
-                value = min_value + candidate
-                logger.debug(
-                    "Generated random integer in range [%s, %s]: %s (bits=%s)",
-                    min_value,
-                    max_value,
-                    value,
-                    value.bit_length(),
-                )
-                return value
+        value = min_value + secrets.randbelow(max_value - min_value + 1)
+        logger.debug(
+            "Generated random integer in range [%s, %s]: %s (bits=%s)",
+            min_value,
+            max_value,
+            value,
+            value.bit_length(),
+        )
+        return value
