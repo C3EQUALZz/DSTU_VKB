@@ -73,11 +73,16 @@ class ElGamalEncryptCommandHandler:
         )
         logger.info("ElGamal ciphertext saved successfully")
 
+        first_pair = ciphertext[0] if ciphertext else None
         return ElGamalEncryptionView(
             original_message=data.message,
             ciphertext_pairs_count=len(ciphertext),
             output_file=str(data.output_file),
             p_bits=public_key.p.bit_length(),
+            g=public_key.g,
+            y_bits=public_key.y.bit_length(),
+            sample_a=first_pair.a if first_pair else None,
+            sample_b=first_pair.b if first_pair else None,
         )
 
     def _save_ciphertext(

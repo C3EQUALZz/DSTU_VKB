@@ -72,8 +72,11 @@ class ElGamalGenerateKeysCommandHandler:
 
         return ElGamalKeyGenerationView(
             p_bits=public_key.p.bit_length(),
+            p=public_key.p,
             g=public_key.g,
             y_bits=public_key.y.bit_length(),
+            y=public_key.y,
+            x_bits=private_key.x.bit_length(),
             public_key_file=str(data.public_key_file),
             private_key_file=str(data.private_key_file),
             key_size=data.key_size,

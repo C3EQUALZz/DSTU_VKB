@@ -86,19 +86,30 @@ def cmd_generate_keys_handler(
     try:
         view: ElGamalKeyGenerationView = asyncio.run(interactor(command))
 
+        def _truncate(n: int, max_digits: int = 40) -> str:
+            s = str(n)
+            if len(s) <= max_digits:
+                return s
+            half = max_digits // 2
+            return f"{s[:half]}...{s[-half:]}"
+
         table: PrettyTable = PrettyTable()
         table.title = "ElGamal Key Generation Result"
-        table.field_names = [
-            "Parameter",
-            "Value",
-        ]
+        table.field_names = ["Parameter", "Value"]
         table.align = "l"
-        table.max_width = 120
+        table.max_width = 100
 
-        table.add_row(["Key Size", f"{view.key_size} bits"])
-        table.add_row(["Prime p (bits)", str(view.p_bits)])
-        table.add_row(["Generator g", str(view.g)])
-        table.add_row(["y (bits)", str(view.y_bits)])
+        table.add_row(["Key Size (requested)", f"{view.key_size} bits"])
+        table.add_row(["Miller–Rabin rounds", str(view.prime_certainty)])
+        table.add_row(["── Public Key ──", ""])
+        table.add_row(["p (bits)", str(view.p_bits)])
+        table.add_row(["p (value)", _truncate(view.p)])
+        table.add_row(["g (generator)", str(view.g)])
+        table.add_row(["y = g^x mod p (bits)", str(view.y_bits)])
+        table.add_row(["y (value)", _truncate(view.y)])
+        table.add_row(["── Private Key ──", ""])
+        table.add_row(["x (bits)", str(view.x_bits)])
+        table.add_row(["── Files ──", ""])
         table.add_row(["Public Key File", view.public_key_file])
         table.add_row(["Private Key File", view.private_key_file])
 
@@ -153,18 +164,29 @@ def cmd_encrypt_handler(
     try:
         view: ElGamalEncryptionView = asyncio.run(interactor(command))
 
+        def _truncate(n: int, max_digits: int = 40) -> str:
+            s = str(n)
+            if len(s) <= max_digits:
+                return s
+            half = max_digits // 2
+            return f"{s[:half]}...{s[-half:]}"
+
         table: PrettyTable = PrettyTable()
         table.title = "ElGamal Encryption Result"
-        table.field_names = [
-            "Parameter",
-            "Value",
-        ]
+        table.field_names = ["Parameter", "Value"]
         table.align = "l"
-        table.max_width = 120
+        table.max_width = 100
 
         table.add_row(["Original Message", view.original_message])
-        table.add_row(["Prime p (bits)", str(view.p_bits)])
-        table.add_row(["Ciphertext Pairs Count", str(view.ciphertext_pairs_count)])
+        table.add_row(["── Public Key Info ──", ""])
+        table.add_row(["p (bits)", str(view.p_bits)])
+        table.add_row(["g (generator)", str(view.g)])
+        table.add_row(["y = g^x mod p (bits)", str(view.y_bits)])
+        table.add_row(["── Ciphertext ──", ""])
+        table.add_row(["Pairs count (bytes encrypted)", str(view.ciphertext_pairs_count)])
+        if view.sample_a is not None:
+            table.add_row(["Sample pair [0] a", _truncate(view.sample_a)])
+            table.add_row(["Sample pair [0] b", _truncate(view.sample_b)])
         table.add_row(["Output File", view.output_file])
 
         click.echo(table)
@@ -216,16 +238,18 @@ def cmd_decrypt_handler(
 
         table: PrettyTable = PrettyTable()
         table.title = "ElGamal Decryption Result"
-        table.field_names = [
-            "Parameter",
-            "Value",
-        ]
+        table.field_names = ["Parameter", "Value"]
         table.align = "l"
-        table.max_width = 120
+        table.max_width = 100
 
-        table.add_row(["Decrypted Message", view.decrypted_message])
-        table.add_row(["Original Message (from file)", view.original_message_from_file])
+        table.add_row(["── Key Info ──", ""])
+        table.add_row(["p (bits)", str(view.p_bits)])
+        table.add_row(["x / private key (bits)", str(view.x_bits)])
+        table.add_row(["── Result ──", ""])
         table.add_row(["Ciphertext Pairs Count", str(view.ciphertext_pairs_count)])
+        table.add_row(["Decrypted Message", view.decrypted_message])
+        if view.original_message_from_file:
+            table.add_row(["Original Message (from file)", view.original_message_from_file])
         table.add_row(["Input File", view.input_file])
 
         click.echo(table)

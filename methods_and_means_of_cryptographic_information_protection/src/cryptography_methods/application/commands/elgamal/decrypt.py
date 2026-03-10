@@ -72,6 +72,8 @@ class ElGamalDecryptCommandHandler:
             original_message_from_file=original_message,
             ciphertext_pairs_count=len(ciphertext),
             input_file=str(data.input_file),
+            p_bits=p.bit_length(),
+            x_bits=private_key.x.bit_length(),
         )
 
     def _load_ciphertext(
