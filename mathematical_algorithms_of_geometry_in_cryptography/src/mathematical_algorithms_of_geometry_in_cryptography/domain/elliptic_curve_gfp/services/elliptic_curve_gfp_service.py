@@ -551,6 +551,8 @@ class EllipticCurveGFpService(DomainService):
             sequence: list[GFpPoint] = [x0]
             binary_sequence = str(x0.y & 1 if not x0.is_infinity else 0)
             period = 0
+            # Track first occurrence index of each point for cycle detection
+            seen: dict[GFpPoint, int] = {x0: 0}
 
             logger.info("X₀ = %s", x0)
 
@@ -596,10 +598,20 @@ class EllipticCurveGFpService(DomainService):
 
                 logger.info(" = %s", next_point)
 
-                # Period detection: period is the smallest k > 0 such that X_k == X_0
-                if period == 0 and next_point == x0:
-                    period = i
-                    logger.info("Период найден: %s (X%s = X₀)", period, self._subscript(i))
+                # Period detection: cycle length when any point repeats
+                if period == 0 and next_point in seen:
+                    period = i - seen[next_point]
+                    if next_point == x0:
+                        logger.info("Период найден: %s (X%s = X₀)", period, self._subscript(i))
+                    else:
+                        logger.info(
+                            "Период найден: %s (X%s = X%s, ρ-образная форма)",
+                            period,
+                            self._subscript(i),
+                            self._subscript(seen[next_point]),
+                        )
+                else:
+                    seen[next_point] = i
 
             # If period not found in initial count, continue searching
             if period == 0:
@@ -617,11 +629,23 @@ class EllipticCurveGFpService(DomainService):
                     current = self.add_points(curve, mp, p)
                     iteration += 1
 
-                    # Period detection: period is the smallest k > 0 such that X_k == X_0
-                    if current == x0:
-                        period = iteration
-                        logger.info("Период найден: %s (X%s = X₀)", period, self._subscript(iteration))
+                    # Cycle found: current was already seen
+                    if current in seen:
+                        period = iteration - seen[current]
+                        if current == x0:
+                            logger.info(
+                                "Период найден: %s (X%s = X₀)", period, self._subscript(iteration)
+                            )
+                        else:
+                            logger.info(
+                                "Период найден: %s (X%s = X%s, ρ-образная форма)",
+                                period,
+                                self._subscript(iteration),
+                                self._subscript(seen[current]),
+                            )
                         break
+
+                    seen[current] = iteration
 
             logger.info("Период: %s", period)
             logger.info("Двоичная последовательность: %s", binary_sequence)

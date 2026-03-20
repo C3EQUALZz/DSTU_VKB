@@ -294,9 +294,10 @@ class ElGamalService(DomainService):
             candidate = self._random_odd_of_bit_length(bits)
             attempts += 1
             logger.debug(
-                "ElGamal prime generation attempt #%d, candidate bit_length=%s",
+                "ElGamal prime generation attempt #%d, candidate bit_length=%s, candidate=%d",
                 attempts,
                 candidate.bit_length(),
+                candidate,
             )
             if self._is_probable_prime(candidate, certainty):
                 logger.info("Prime found after %d attempts (%d bits)", attempts, bits)
