@@ -4,6 +4,7 @@ from dishka import Container, Provider, Scope, make_container, provide
 
 from text_analyzer.application.commands.download_dataset import DownloadDatasetCommandHandler
 from text_analyzer.application.commands.evaluate_model import EvaluateModelCommandHandler
+from text_analyzer.application.commands.predict import PredictCommandHandler
 from text_analyzer.application.commands.train_model import TrainModelCommandHandler
 from text_analyzer.application.commands.visualize import VisualizeCommandHandler
 from text_analyzer.application.ports.classifier import SentimentClassifier
@@ -73,6 +74,17 @@ class ApplicationProvider(Provider):
     ) -> EvaluateModelCommandHandler:
         return EvaluateModelCommandHandler(
             dataset_loader=loader,
+            text_preprocessor=preprocessor,
+            classifier=classifier,
+        )
+
+    @provide
+    def predict_handler(
+        self,
+        preprocessor: TextPreprocessor,
+        classifier: SentimentClassifier,
+    ) -> PredictCommandHandler:
+        return PredictCommandHandler(
             text_preprocessor=preprocessor,
             classifier=classifier,
         )

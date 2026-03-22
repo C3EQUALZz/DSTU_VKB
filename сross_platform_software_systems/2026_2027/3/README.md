@@ -173,19 +173,19 @@ text-analyzer train --epochs 30
 
 ### Итоговые метрики
 
-| Метрика | Значение |
-|---------|----------|
-| **Accuracy** | **87.80%** |
-| **Best epoch** | 5 / 30 |
-| **Train loss (final)** | 0.004 |
-| **Val loss (best)** | 0.359 |
+| Метрика                | Значение   |
+|------------------------|------------|
+| **Accuracy**           | **87.80%** |
+| **Best epoch**         | 5 / 30     |
+| **Train loss (final)** | 0.004      |
+| **Val loss (best)**    | 0.359      |
 
 ### Confusion Matrix
 
-| | Predicted Negative | Predicted Positive |
-|---|---|---|
-| **True Negative** | 393 (44.8%) | 45 (5.1%) |
-| **True Positive** | 62 (7.1%) | 377 (43.0%) |
+|                   | Predicted Negative | Predicted Positive |
+|-------------------|--------------------|--------------------|
+| **True Negative** | 393 (44.8%)        | 45 (5.1%)          |
+| **True Positive** | 62 (7.1%)          | 377 (43.0%)        |
 
 - **Precision** (Positive): 377 / (377+45) = 89.3%
 - **Recall** (Positive): 377 / (377+62) = 85.9%

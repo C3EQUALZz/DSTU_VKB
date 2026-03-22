@@ -14,6 +14,10 @@ from text_analyzer.application.commands.evaluate_model import (
     EvaluateModelCommand,
     EvaluateModelCommandHandler,
 )
+from text_analyzer.application.commands.predict import (
+    PredictCommand,
+    PredictCommandHandler,
+)
 from text_analyzer.application.commands.train_model import (
     TrainModelCommand,
     TrainModelCommandHandler,
@@ -130,6 +134,28 @@ def evaluate(
     click.echo(f"Accuracy: {result.accuracy * 100:.2f}%")
     click.echo(f"Loss: {result.loss:.4f}")
     click.echo(f"Correct: {result.correct_predictions}/{result.total_samples}")
+
+
+@cli.command()
+@click.option("--text", "-t", required=True, help="Review text to classify.")
+@click.option("--model-dir", "-m", default=_DEFAULT_MODEL_DIR, help="Model directory.")
+@inject
+def predict(
+    text: str,
+    model_dir: str,
+    handler: FromDishka[PredictCommandHandler],
+) -> None:
+    """Classify a single review as positive or negative."""
+    config = TrainingConfig()
+    result = handler(PredictCommand(
+        text=text,
+        model_dir=Path(model_dir),
+        config=config,
+    ))
+
+    label = "Позитивный" if result.sentiment.value == "positive" else "Негативный"
+    click.echo(f"\nТекст: {result.text}")
+    click.echo(f"Результат: {label} ({result.sentiment.value})")
 
 
 @cli.command()
