@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=66.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.dynamic]
+version = { attr = "text_analyzer.__version__" }
+
+[project]
+name = "text_analyzer"
+dynamic = ["version"]
+description = "3rd laboratory for cross platform systems"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [
+    { name = "Danil Kovalev", email = "dan.kovalev2013@gmail.com" },
+]
+classifiers = [
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Typing :: Typed",
+]
+dependencies = [
+    "torch>=2.10.0",
+    "numpy>=2.0.0",
+    "click>=8.1.0",
+    "dishka>=1.0.0",
+    "httpx>=0.27.0",
+    "matplotlib>=3.9.0",
+]
+
+[project.scripts]
+text-analyzer = "text_analyzer.presentation.cli:cli"
