@@ -149,7 +149,7 @@ class ElGamalService(DomainService):
     ) -> bytes:
         """Расшифровывает последовательность пар (a, b) в байты.
 
-        Повторяет DecryptMode из C#: используется a^(p-1-x) mod p как обратный элемент.
+        Повторяет: используется a^(p-1-x) mod p как обратный элемент.
         """
         p = public_modulus_p
         x = private_key.x
@@ -172,16 +172,16 @@ class ElGamalService(DomainService):
                 raise ValueError(f"Decrypted value {m} is not a valid byte")
             result.append(int(m))
 
-            if index < 5:
-                logger.debug(
-                    "Decrypted pair #%d: a=%s, b=%s, exponent=%s, a_inv=%s, m=%s",
-                    index,
-                    pair.a,
-                    pair.b,
-                    exponent,
-                    a_inv,
-                    m,
-                )
+            logger.debug(
+                "Decrypted pair #%d: a=%s, b=%s, exponent=%s, a_inv=%s, m=%s",
+                index,
+                pair.a,
+                pair.b,
+                exponent,
+                a_inv,
+                m,
+            )
+
 
         logger.info("Decryption finished, recovered %d bytes", len(result))
         return bytes(result)
