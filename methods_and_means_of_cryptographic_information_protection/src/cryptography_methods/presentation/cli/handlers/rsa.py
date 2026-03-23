@@ -72,7 +72,7 @@ def cmd_generate_keys_handler(
         click.echo("Error: Key size must be positive", err=True)
         raise click.Abort()
 
-    if key_size < 512:
+    if key_size < 2048:
         click.echo("Warning: Key size less than 512 bits is not recommended for security", err=True)
 
     if min_prime_diff_bits <= 0:
