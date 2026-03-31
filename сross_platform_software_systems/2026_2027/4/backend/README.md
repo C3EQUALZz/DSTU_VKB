@@ -18,21 +18,14 @@ Backend is built around a simple PyTorch classifier that learns once from a data
 
 ## Training
 
-If you want to train using the dataset from the previous laboratory, the backend can auto-detect:
-
-- `../../1/src/fulla/hw_light`
-
-Or pass it explicitly:
-
 ```bash
-cd backend
-python -m image_analyzer.cli train --data-dir ../../1/src/fulla/hw_light
+python -m image_analyzer.cli train --data-dir /Users/arti/PycharmProjects/DSTU_VKB/сross_platform_software_systems/2026_2027/4/backend/hw_light
 ```
 
 If the package is installed, the same command is available as:
 
 ```bash
-image-analyzer train --data-dir ../../1/src/fulla/hw_light
+image-analyzer train --data-dir python -m image_analyzer.cli train --data-dir /Users/arti/PycharmProjects/DSTU_VKB/сross_platform_software_systems/2026_2027/4/backend/hw_light
 ```
 
 Default artifact path:

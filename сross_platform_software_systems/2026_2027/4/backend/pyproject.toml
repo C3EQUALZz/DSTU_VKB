@@ -29,7 +29,7 @@ classifiers = [
 ]
 dependencies = [
     "torch==2.11.0",
-    "numpy==2.4.0",
+    "numpy==2.4.4",
     "click==8.1.0",
     "dishka==1.9.1",
     "fastapi==0.135.2",
