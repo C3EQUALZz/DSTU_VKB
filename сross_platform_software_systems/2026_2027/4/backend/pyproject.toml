@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=66.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.dynamic]
+version = { attr = "image_analyzer.__version__" }
+
+[project]
+name = "image_analyzer"
+dynamic = ["version"]
+description = "4th laboratory for cross platform systems"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [
+    { name = "Danil Kovalev", email = "dan.kovalev2013@gmail.com" },
+]
+classifiers = [
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Typing :: Typed",
+]
+dependencies = [
+    "torch==2.11.0",
+    "numpy==2.4.0",
+    "click==8.1.0",
+    "dishka==1.9.1",
+    "fastapi==0.135.2",
+    "Pillow>=10.0.0",
+    "python-multipart>=0.0.9",
+    "uvicorn>=0.29.0",
+]
+
+[project.scripts]
+image-analyzer = "image_analyzer.cli:main"
