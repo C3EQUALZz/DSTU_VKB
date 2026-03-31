@@ -25,7 +25,7 @@ python -m image_analyzer.cli train --data-dir /Users/arti/PycharmProjects/DSTU_V
 If the package is installed, the same command is available as:
 
 ```bash
-image-analyzer train --data-dir python -m image_analyzer.cli train --data-dir /Users/arti/PycharmProjects/DSTU_VKB/сross_platform_software_systems/2026_2027/4/backend/hw_light
+image-analyzer train --data-dir /Users/arti/PycharmProjects/DSTU_VKB/сross_platform_software_systems/2026_2027/4/backend/hw_light
 ```
 
 Default artifact path:

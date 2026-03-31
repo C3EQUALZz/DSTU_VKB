@@ -1,0 +1,40 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: deploy/backend.Dockerfile
+    container_name: ${BACKEND_CONTAINER_NAME}
+    environment:
+      IMAGE_ANALYZER_MODEL_PATH: ${IMAGE_ANALYZER_MODEL_PATH}
+      IMAGE_ANALYZER_DATA_DIR: ${IMAGE_ANALYZER_DATA_DIR}
+      IMAGE_ANALYZER_ALLOW_ORIGINS: ${IMAGE_ANALYZER_ALLOW_ORIGINS}
+    volumes:
+      - ${BACKEND_ARTIFACTS_DIR}:/app/artifacts
+    ports:
+      - "${BACKEND_PORT}:8000"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=5).read()",
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+  frontend:
+    build:
+      context: .
+      dockerfile: deploy/frontend.Dockerfile
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL}
+        VITE_HEALTH_URL: ${VITE_HEALTH_URL}
+    container_name: ${FRONTEND_CONTAINER_NAME}
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "${FRONTEND_PORT}:80"

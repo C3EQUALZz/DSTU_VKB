@@ -1,0 +1,13 @@
+.git
+.gitignore
+.DS_Store
+.idea
+**/.idea
+**/.DS_Store
+backend/.venv
+backend/.ruff_cache
+backend/src/image_analyzer.egg-info
+backend/artifacts
+frontend/node_modules
+frontend/dist
+Лабораторная работа №4КПП.pdf
