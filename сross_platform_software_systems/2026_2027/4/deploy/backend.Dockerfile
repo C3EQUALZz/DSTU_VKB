@@ -14,6 +14,8 @@ RUN pip install --no-cache-dir --upgrade pip uv
 COPY backend/pyproject.toml /app/pyproject.toml
 COPY backend/uv.lock /app/uv.lock
 COPY backend/README.md /app/README.md
+COPY backend/alembic.ini /app/alembic.ini
+COPY backend/alembic /app/alembic
 COPY backend/src /app/src
 COPY backend/hw_light /app/hw_light
 
@@ -24,6 +26,7 @@ RUN chmod +x /usr/local/bin/backend-entrypoint.sh
 
 ENV IMAGE_ANALYZER_DATA_DIR=/app/hw_light \
     IMAGE_ANALYZER_MODEL_PATH=/app/artifacts/shape_classifier.pt \
+    IMAGE_ANALYZER_DB_URL=sqlite:////app/artifacts/image_analyzer.db \
     IMAGE_ANALYZER_ALLOW_ORIGINS=http://localhost:8080
 
 EXPOSE 8000

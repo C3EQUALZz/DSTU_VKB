@@ -24,6 +24,7 @@ cp .env.example .env
 - `BACKEND_PORT`: порт FastAPI на хосте
 - `FRONTEND_PORT`: порт React/Nginx на хосте
 - `BACKEND_ARTIFACTS_DIR`: куда на хосте сохранять обученную модель
+- `IMAGE_ANALYZER_DB_URL`: адрес БД backend, по умолчанию SQLite-файл в `backend/artifacts`
 - `IMAGE_ANALYZER_ALLOW_ORIGINS`: CORS origin для frontend
 
 Если меняешь `FRONTEND_PORT`, не забудь поставить такой же адрес в `IMAGE_ANALYZER_ALLOW_ORIGINS`.
@@ -39,6 +40,12 @@ docker compose up --build
 - frontend: `http://localhost:8080`
 - backend API: `http://localhost:8000`
 - backend docs: `http://localhost:8000/docs`
+
+При старте backend теперь автоматически:
+
+- при необходимости обучает модель
+- применяет миграции Alembic
+- открывает SQLite-базу в `backend/artifacts/image_analyzer.db`
 
 При повторных запусках достаточно:
 
@@ -67,6 +74,12 @@ backend/hw_light
 ```bash
 rm -f backend/artifacts/shape_classifier.pt backend/artifacts/shape_classifier.json
 docker compose up --build
+```
+
+История запросов к распознаванию сохраняется в БД и доступна через:
+
+```text
+GET /api/v1/predictions
 ```
 
 ## Структура

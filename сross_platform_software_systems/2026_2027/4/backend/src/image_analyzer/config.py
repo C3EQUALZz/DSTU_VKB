@@ -10,6 +10,10 @@ def default_artifact_path() -> Path:
     return backend_root() / "artifacts" / "shape_classifier.pt"
 
 
+def default_database_path() -> Path:
+    return backend_root() / "artifacts" / "image_analyzer.db"
+
+
 def candidate_dataset_dirs() -> tuple[Path, ...]:
     project_root = backend_root().parent
     course_root = project_root.parent
@@ -48,6 +52,13 @@ def model_path_from_env() -> Path:
     if raw_path:
         return Path(raw_path).expanduser().resolve()
     return default_artifact_path()
+
+
+def database_url_from_env() -> str:
+    raw_value = os.getenv("IMAGE_ANALYZER_DB_URL")
+    if raw_value:
+        return raw_value.strip()
+    return f"sqlite:///{default_database_path()}"
 
 
 def allowed_origins_from_env() -> list[str]:

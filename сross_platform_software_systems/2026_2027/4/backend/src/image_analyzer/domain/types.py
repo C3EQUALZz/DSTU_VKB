@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
 
 import numpy as np
@@ -67,3 +68,15 @@ class PredictionResult:
     label: str
     confidence: float
     probabilities: dict[str, float]
+
+
+@dataclass(frozen=True, slots=True)
+class PredictionHistoryEntry:
+    id: int
+    filename: str | None
+    content_type: str | None
+    file_size_bytes: int
+    label: str
+    confidence: float
+    probabilities: dict[str, float]
+    created_at: datetime
