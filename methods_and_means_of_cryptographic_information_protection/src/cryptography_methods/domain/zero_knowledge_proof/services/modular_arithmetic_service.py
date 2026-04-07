@@ -55,9 +55,6 @@ class ModularArithmeticService(DomainService):
         x0, x1 = 1, 0
         y0, y1 = 0, 1
         
-        # Сохраняем исходные значения для корректного вычисления коэффициентов
-        a0, b0 = a, b
-        
         while b != 0:
             q = a // b
             a, b = b, a % b

@@ -3,6 +3,7 @@ import logging
 import secrets
 from pathlib import Path
 from typing import Final
+from uuid import uuid4
 
 from cryptography_methods.domain.common.services.base import DomainService
 from cryptography_methods.domain.rsa.entities.rsa_key_pair import RSAKeyPair
@@ -91,7 +92,6 @@ class RSAService(DomainService):
         private_key = RSAPrivateKey(d=d, n=n)
 
         # Generate UUID for key pair
-        from uuid import uuid4
         key_pair = RSAKeyPair(
             id=uuid4(),
             public_key=public_key,
@@ -215,11 +215,9 @@ class RSAService(DomainService):
 
         while attempt < max_attempts:
             # Generate random number of key_size bits, then take modulo m
-            # (as in C# code: d = RandomBigInteger(KEY_SIZE, rand); d = d % m)
             d = self._generate_random_big_integer(key_size)
             d = d % m
 
-            # Ensure d > 1 (as in C# code: while (d <= 1 || ...))
             if d <= 1:
                 attempt += 1
                 continue

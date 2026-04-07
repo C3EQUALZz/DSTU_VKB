@@ -84,7 +84,7 @@ class PrimeNumberService(DomainService):
         # не найдём подходящий простой, только логируем число попыток.
         while True:
             candidate = self._generate_random_big_integer(bit_length)
-            # Делаем число нечетным (как в C# коде: candidate |= 1)
+            # Делаем число нечетным (побитовое ИЛИ) (ставит последний бит в 1. Если после бит 1, то число нечет).
             candidate |= 1
             attempt += 1
             logger.debug(f"Attempt {attempt}: Testing candidate {candidate}")
@@ -156,8 +156,6 @@ class PrimeNumberService(DomainService):
 
     def _generate_random_big_integer(self, bit_length: int) -> int:
         """Генерирует случайное большое число заданной битовой длины.
-        
-        Соответствует C# коду: RandomBigInteger(int bits, Random rand)
 
         Args:
             bit_length: Длина числа в битах
@@ -165,11 +163,12 @@ class PrimeNumberService(DomainService):
         Returns:
             Случайное число заданной битовой длины
         """
+        # Вихрь Мерсенна
         num_bytes = (bit_length + 7) // 8
         random_bytes = bytearray(secrets.token_bytes(num_bytes))
         
         # Маскируем последний байт, чтобы получить правильную битовую длину
-        # (как в C# коде: bytes[^1] &= (byte)(0xFF >> (8 - bits % 8)))
+        # (bytes[^1] &= (byte)(0xFF >> (8 - bits % 8)))
         if bit_length % 8 != 0:
             mask = 0xFF >> (8 - (bit_length % 8))
             random_bytes[-1] &= mask
