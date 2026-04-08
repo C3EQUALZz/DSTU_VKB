@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || "/api/v1").replace(/\/$/, "");
 const healthUrl = import.meta.env.VITE_HEALTH_URL || "/health";
+const predictionHistoryLimit = 10;
 
 const emptyState = {
   label: "",
@@ -13,10 +14,13 @@ function App() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState("");
   const [prediction, setPrediction] = useState(emptyState);
+  const [predictionHistory, setPredictionHistory] = useState([]);
   const [serviceStatus, setServiceStatus] = useState("checking");
   const [isDragging, setIsDragging] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isHistoryLoading, setIsHistoryLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  const [historyErrorMessage, setHistoryErrorMessage] = useState("");
 
   useEffect(() => {
     let active = true;
@@ -34,6 +38,32 @@ function App() {
       .catch(() => {
         if (active) {
           setServiceStatus("offline");
+        }
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+
+    fetchPredictionHistory(predictionHistoryLimit)
+      .then((payload) => {
+        if (active) {
+          setPredictionHistory(payload);
+          setHistoryErrorMessage("");
+        }
+      })
+      .catch((error) => {
+        if (active) {
+          setHistoryErrorMessage(error.message || "Не удалось загрузить историю запросов.");
+        }
+      })
+      .finally(() => {
+        if (active) {
+          setIsHistoryLoading(false);
         }
       });
 
@@ -66,6 +96,20 @@ function App() {
     setSelectedFile(file);
   }
 
+  async function refreshPredictionHistory() {
+    setIsHistoryLoading(true);
+
+    try {
+      const payload = await fetchPredictionHistory(predictionHistoryLimit);
+      setPredictionHistory(payload);
+      setHistoryErrorMessage("");
+    } catch (error) {
+      setHistoryErrorMessage(error.message || "Не удалось обновить историю запросов.");
+    } finally {
+      setIsHistoryLoading(false);
+    }
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -92,6 +136,7 @@ function App() {
       }
 
       setPrediction(payload);
+      await refreshPredictionHistory();
     } catch (error) {
       setPrediction(emptyState);
       setErrorMessage(error.message || "Ошибка запроса.");
@@ -139,11 +184,15 @@ function App() {
             </article>
             <article>
               <span>Flow</span>
-              <strong>Upload -&gt; Predict -&gt; Confidence</strong>
+              <strong>Upload -&gt; Predict -&gt; Store</strong>
             </article>
             <article>
-              <span>Mode</span>
-              <strong>FastAPI + React + Docker</strong>
+              <span>Storage</span>
+              <strong>SQLite + Alembic</strong>
+            </article>
+            <article>
+              <span>Records</span>
+              <strong>{isHistoryLoading ? "Loading..." : `${predictionHistory.length} latest rows`}</strong>
             </article>
           </div>
         </section>
@@ -221,10 +270,84 @@ function App() {
               </p>
             )}
           </section>
+
+          <section className="history-card">
+            <div className="history-header">
+              <div>
+                <span className="eyebrow">Database</span>
+                <h2>История запросов</h2>
+              </div>
+
+              <div className="history-meta">
+                <strong>{predictionHistory.length}</strong>
+                <span>последних записей</span>
+              </div>
+            </div>
+
+            <p className="history-copy">
+              Таблица показывает последние сохранённые записи из базы данных: файл, результат распознавания, уверенность
+              модели и время запроса.
+            </p>
+
+            {historyErrorMessage ? <p className="error-banner">{historyErrorMessage}</p> : null}
+
+            <div className="table-shell">
+              {isHistoryLoading ? (
+                <p className="history-placeholder">Загрузка истории из базы данных...</p>
+              ) : predictionHistory.length > 0 ? (
+                <table className="history-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Дата</th>
+                      <th>Файл</th>
+                      <th>Фигура</th>
+                      <th>Уверенность</th>
+                      <th>Размер</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {predictionHistory.map((entry) => (
+                      <tr key={entry.id}>
+                        <td>#{entry.id}</td>
+                        <td>{formatDateTime(entry.created_at)}</td>
+                        <td>
+                          <div className="file-cell">
+                            <strong>{entry.filename || "unknown"}</strong>
+                            <span>{entry.content_type || "n/a"}</span>
+                          </div>
+                        </td>
+                        <td>
+                          <span className="result-badge">{humanizeLabel(entry.label)}</span>
+                        </td>
+                        <td>{formatPercent(entry.confidence)}</td>
+                        <td>{formatFileSize(entry.file_size_bytes)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <p className="history-placeholder">
+                  База пока пустая. Отправь изображение, и первая запись сразу появится в таблице.
+                </p>
+              )}
+            </div>
+          </section>
         </section>
       </main>
     </div>
   );
+}
+
+async function fetchPredictionHistory(limit) {
+  const response = await fetch(`${apiBaseUrl}/predictions?limit=${limit}`);
+  const payload = await response.json();
+
+  if (!response.ok) {
+    throw new Error(payload.detail || "Не удалось получить историю из базы данных.");
+  }
+
+  return payload;
 }
 
 function humanizeLabel(label) {
@@ -250,6 +373,27 @@ function statusLabel(status) {
 
 function formatPercent(value) {
   return `${(value * 100).toFixed(1)}%`;
+}
+
+function formatFileSize(bytes) {
+  if (bytes < 1024) {
+    return `${bytes} B`;
+  }
+
+  return `${(bytes / 1024).toFixed(1)} KB`;
+}
+
+function formatDateTime(value) {
+  const parsed = new Date(value);
+
+  if (Number.isNaN(parsed.getTime())) {
+    return value;
+  }
+
+  return new Intl.DateTimeFormat("ru-RU", {
+    dateStyle: "short",
+    timeStyle: "short",
+  }).format(parsed);
 }
 
 export default App;
