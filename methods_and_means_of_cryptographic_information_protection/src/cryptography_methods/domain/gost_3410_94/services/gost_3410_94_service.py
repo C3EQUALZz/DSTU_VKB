@@ -1,6 +1,5 @@
 """ГОСТ Р 34.10-94 digital signature service."""
 
-import hashlib
 import logging
 import secrets
 from dataclasses import dataclass
@@ -8,6 +7,7 @@ from pathlib import Path
 from typing import Final
 
 from cryptography_methods.domain.common.services.base import DomainService
+from cryptography_methods.domain.gost_3411_94 import Gost341194HashService
 from cryptography_methods.domain.zero_knowledge_proof.services.modular_arithmetic_service import (
     ModularArithmeticService,
 )
@@ -77,7 +77,12 @@ class Gost341094Service(DomainService):
         """
         super().__init__()
         self._prime_service: Final[PrimeNumberService] = prime_number_service
-        self._modular_arithmetic: Final[ModularArithmeticService] = modular_arithmetic_service
+        self._modular_arithmetic: Final[ModularArithmeticService] = (
+            modular_arithmetic_service
+        )
+        self._hash_service: Final[Gost341194HashService] = (
+            Gost341194HashService()
+        )
         logger.info("Initialized Gost341094Service")
 
     def generate_parameters_and_keys(
@@ -93,13 +98,17 @@ class Gost341094Service(DomainService):
             Пара ключей с параметрами схемы
         """
         if key_size not in (512, 1024):
-            raise ValueError("Недопустимый размер ключа. Используйте 512 или 1024 бит.")
+            raise ValueError(
+                "Недопустимый размер ключа. Используйте 512 или 1024 бит.",
+            )
 
         logger.info("=== Генерация параметров ГОСТ Р 34.10-94 ===")
         logger.info("Размер ключа: %s бит", key_size)
 
         # 1. Генерация простого числа q (256 бит)
-        logger.info("[1] Генерация простого числа q (%s бит)...", self._Q_BIT_LENGTH)
+        logger.info(
+            "[1] Генерация простого числа q (%s бит)...", self._Q_BIT_LENGTH,
+        )
         q = self._prime_service.generate_large_prime(self._Q_BIT_LENGTH)
         logger.info("q (%s бит): %s", q.bit_length(), q)
 
@@ -107,7 +116,9 @@ class Gost341094Service(DomainService):
         logger.info("[2] Генерация простого числа p = k*q + 1...")
         k_bits = key_size - self._Q_BIT_LENGTH
         p, attempts = self._generate_p_from_q(q, k_bits)
-        logger.info("Найдено p (%s бит) за %s попыток", p.bit_length(), attempts)
+        logger.info(
+            "Найдено p (%s бит) за %s попыток", p.bit_length(), attempts,
+        )
 
         # 3. Поиск генератора a
         logger.info("[3] Поиск генератора a...")
@@ -131,7 +142,9 @@ class Gost341094Service(DomainService):
         logger.info("a: %s", a)
         logger.info("Открытый ключ y: %s", y)
         logger.info("q делитель (p-1): %s", (p - 1) % q == 0)
-        logger.info("a^q mod p = 1: %s", self._modular_arithmetic.mod_pow(a, q, p) == 1)
+        logger.info(
+            "a^q mod p = 1: %s", self._modular_arithmetic.mod_pow(a, q, p) == 1,
+        )
 
         return Gost341094KeyPair(
             parameters=parameters,
@@ -154,7 +167,11 @@ class Gost341094Service(DomainService):
             attempts += 1
             k = self._generate_random_big_integer(k_bits)
             p = k * q + 1
-            logger.debug("Попытка %s: генерация p = k*q + 1, k_bits=%s", attempts, k_bits)
+            logger.debug(
+                "Попытка %s: генерация p = k*q + 1, k_bits=%s",
+                attempts,
+                k_bits,
+            )
 
             if self._prime_service.miller_rabin_test(p, k=20):
                 return p, attempts
@@ -187,7 +204,8 @@ class Gost341094Service(DomainService):
     def compute_hash(self, data: bytes, q: int) -> int:
         """Вычисление хеша данных по ГОСТ Р 34.10-94.
 
-        Используется SHA-256, результат берётся по модулю q.
+        Для ГОСТ Р 34.10-94 используется хеш ГОСТ Р 34.11-94.
+        Результат приводится по модулю q.
 
         Args:
             data: Данные для хеширования
@@ -196,12 +214,9 @@ class Gost341094Service(DomainService):
         Returns:
             Хеш по модулю q
         """
-        logger.info("Вычисление хеша файла (SHA-256)...")
-        hash_bytes = hashlib.sha256(data).digest()
-        hash_int = int.from_bytes(hash_bytes, byteorder="big", signed=False)
+        hash_int = self._hash_service.digest_int(data)
         hash_mod_q = hash_int % q
         logger.info("Полученный хеш: %s", hash_mod_q)
-        logger.debug("SHA-256 (hex): %s", hash_bytes.hex())
         return hash_mod_q
 
     def create_signature(
@@ -297,7 +312,9 @@ class Gost341094Service(DomainService):
         logger.info("Вычислено u = (a^z1 * y^z2 mod p) mod q: %s", u)
 
         is_valid = u == r
-        logger.info("Результат проверки: %s", "ВАЛИДНА" if is_valid else "НЕВАЛИДНА")
+        logger.info(
+            "Результат проверки: %s", "ВАЛИДНА" if is_valid else "НЕВАЛИДНА",
+        )
         return is_valid
 
     def _generate_random_big_integer(self, bit_length: int) -> int:
@@ -351,7 +368,9 @@ class Gost341094Service(DomainService):
 
         while True:
             random_bytes = secrets.token_bytes(num_bytes)
-            candidate = int.from_bytes(random_bytes, byteorder="big", signed=False)
+            candidate = int.from_bytes(
+                random_bytes, byteorder="big", signed=False,
+            )
             candidate = min_value + (candidate % range_size)
 
             if min_value <= candidate < max_value:
@@ -416,13 +435,19 @@ class Gost341094Service(DomainService):
             lines = [line.strip() for line in f.readlines()]
 
         if len(lines) < 3:
-            raise ValueError("Неверный формат файла параметров: ожидается 3 строки (p, q, a)")
+            raise ValueError(
+                "Неверный формат файла параметров: ожидается 3 строки (p, q, a)",
+            )
 
         p = int(lines[0])
         q = int(lines[1])
         a = int(lines[2])
 
-        logger.info("Параметры загружены: p (%s бит), q (%s бит), a", p.bit_length(), q.bit_length())
+        logger.info(
+            "Параметры загружены: p (%s бит), q (%s бит), a",
+            p.bit_length(),
+            q.bit_length(),
+        )
         return Gost341094Parameters(p=p, q=q, a=a)
 
     @staticmethod
@@ -437,13 +462,17 @@ class Gost341094Service(DomainService):
         """
         logger.info("Загрузка закрытого ключа из файла: %s", file_path)
         if not file_path.exists():
-            raise FileNotFoundError(f"Файл закрытого ключа не найден: {file_path}")
+            raise FileNotFoundError(
+                f"Файл закрытого ключа не найден: {file_path}",
+            )
 
         with file_path.open("r", encoding="utf-8") as f:
             lines = [line.strip() for line in f.readlines()]
 
         if len(lines) < 1:
-            raise ValueError("Неверный формат файла закрытого ключа: ожидается 1 строка (x)")
+            raise ValueError(
+                "Неверный формат файла закрытого ключа: ожидается 1 строка (x)",
+            )
 
         x = int(lines[0])
         logger.info("Закрытый ключ загружен: x")
@@ -461,20 +490,26 @@ class Gost341094Service(DomainService):
         """
         logger.info("Загрузка открытого ключа из файла: %s", file_path)
         if not file_path.exists():
-            raise FileNotFoundError(f"Файл открытого ключа не найден: {file_path}")
+            raise FileNotFoundError(
+                f"Файл открытого ключа не найден: {file_path}",
+            )
 
         with file_path.open("r", encoding="utf-8") as f:
             lines = [line.strip() for line in f.readlines()]
 
         if len(lines) < 1:
-            raise ValueError("Неверный формат файла открытого ключа: ожидается 1 строка (y)")
+            raise ValueError(
+                "Неверный формат файла открытого ключа: ожидается 1 строка (y)",
+            )
 
         y = int(lines[0])
         logger.info("Открытый ключ загружен: y")
         return Gost341094PublicKey(y=y)
 
     @staticmethod
-    def save_signature(signature: Gost341094Signature, q: int, file_path: Path) -> None:
+    def save_signature(
+        signature: Gost341094Signature, q: int, file_path: Path,
+    ) -> None:
         """Сохранение подписи в файл.
 
         Формат: q\nr\ns
@@ -514,7 +549,9 @@ class Gost341094Service(DomainService):
             lines = [line.strip() for line in f.readlines()]
 
         if len(lines) < 3:
-            raise ValueError("Неверный формат файла подписи: ожидается 3 строки (q, r, s)")
+            raise ValueError(
+                "Неверный формат файла подписи: ожидается 3 строки (q, r, s)",
+            )
 
         q = int(lines[0])
         r = int(lines[1])
@@ -522,7 +559,3 @@ class Gost341094Service(DomainService):
 
         logger.info("Подпись загружена: q=%s, r=%s, s=%s", q, r, s)
         return q, Gost341094Signature(r=r, s=s)
-
-
-
-
