@@ -69,7 +69,7 @@ python cli.py gost-3410-94 generate-keys -p "/Users/arti/PycharmProjects/DSTU_VK
 Подписание документа (`Оригинал`):
 
 ```bash
-python cli.py gost-3410-94 sign -d "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/resources/gost_sign/Лабораторная_9.docx" -p "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/gost_params.txt" -k "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/gost_private.txt" -s "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/resources/gost_sign/Лабораторная_9.txt" -h "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/resources/gost_sign/Лабораторная_9_hash.txt"
+python cli.py gost-3410-94 sign -d "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/resources/gost_sign/laba_test.txt" -p "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/gost_params.txt" -k "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/gost_private.txt" -s "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/resources/gost_sign/laba_test.sig" -h "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/resources/gost_sign/laba_test_hash.txt"
 ```
 
 Подписание документа (`Модификация`):
@@ -81,7 +81,7 @@ python cli.py gost-3410-94 sign -d "/Users/arti/PycharmProjects/DSTU_VKB/methods
 Проверка подписи (`Оригинал`):
 
 ```bash
-python cli.py gost-3410-94 verify -d "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/resources/gost_sign/Лабораторная_9.docx" -s "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/resources/gost_sign/Лабораторная_9.txt" -p "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/gost_params.txt" -k "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/gost_public.txt"
+python cli.py gost-3410-94 verify -d "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/resources/gost_sign/laba_test.txt" -s "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/resources/gost_sign/laba_test.sig" -p "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/gost_params.txt" -k "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/gost_public.txt"
 ```
 
 Проверка подписи (`Модификация`):

@@ -194,10 +194,10 @@ class Gost341094Service(DomainService):
         p_minus_1 = p - 1
         for i in range(100):
             h = self._generate_random_in_range(2, p - 2)
-            g = self._modular_arithmetic.mod_pow(h, p_minus_1 // q, p)
-            if g != 1 and self._modular_arithmetic.mod_pow(g, q, p) == 1:
+            a = self._modular_arithmetic.mod_pow(h, p_minus_1 // q, p)
+            if a != 1 and self._modular_arithmetic.mod_pow(a, q, p) == 1:
                 logger.debug("Найден генератор за %s попыток", i + 1)
-                return g
+                return a
 
         raise RuntimeError("Генератор не найден за 100 попыток")
 
@@ -235,9 +235,6 @@ class Gost341094Service(DomainService):
         Returns:
             Цифровая подпись (r, s)
         """
-        if hash_value == 0:
-            hash_value = 1
-            logger.debug("Хеш равен 0, заменён на 1")
 
         logger.info("--- Процесс создания подписи ---")
         p = parameters.p

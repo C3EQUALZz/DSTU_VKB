@@ -113,19 +113,25 @@ python cli.py rsa-sign sign -d "/Users/arti/PycharmProjects/DSTU_VKB/methods_and
 Подписать документ (war and piece modified - 2):
 
 ```bash
-python cli.py rsa-sign sign -d "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/resources/rsa_sign/warandpeace2.txt" -k "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/resources/rsa_sign/rsa_priv.txt" -s "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/resources/rsa_sign/document2.sig" -h "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/resources/rsa_sign/hash_document2.sha256.txt"
+python cli.py rsa-sign sign -d "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/resources/rsa_sign/warandpeace2.txt" -k "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/rsa_priv.txt" -s "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/resources/rsa_sign/document2.sig" -h "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/resources/rsa_sign/hash_document2.sha256.txt"
 ```
 
 Сравнить хеши:
 
 ```bash
-python cli.py rsa-sign compare-hashes -h1 "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/hash_document.sha256.txt" -h2 "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/hash_document2.sha256.txt"
+python cli.py rsa-sign compare-hashes -h1 "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/hash_document.sha256.txt" -h2 "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/resources/rsa_sigh/hash_document2.sha256.txt"
 ```
 
 Сравнить подписи:
 
 ```bash
 python cli.py rsa-sign compare-signatures -s1 "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/document.sig" -s2 "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/document2.sig"
+```
+
+Проверить:
+
+```bash
+python cli.py rsa-sign verify -d "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/resources/rsa_sign/warandpeace.txt" -s "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/document.sig" -k "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/rsa_pub.txt"
 ```
 
 ### Взаимодействие с `docx`
@@ -158,4 +164,8 @@ python cli.py rsa-sign compare-hashes -h1 "/Users/arti/PycharmProjects/DSTU_VKB/
 
 ```bash
 python cli.py rsa-sign compare-signatures -s1 "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/Лабораторная_8.sig" -s2 "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/Лабораторная_8_1.sig"
+```
+
+```bash
+python cli.py rsa-sign verify -d "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/resources/rsa_sign/Лабораторная_8.docx" -s "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/Лабораторная_8.sig" -k "/Users/arti/PycharmProjects/DSTU_VKB/methods_and_means_of_cryptographic_information_protection/rsa_pub.txt"
 ```
