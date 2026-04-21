@@ -1,9 +1,11 @@
-from datetime import datetime
+from datetime import date, datetime
 from functools import lru_cache
+from typing import Any
 
 from fastapi import Depends, FastAPI, File, HTTPException, Query, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from sqlalchemy import MetaData, Table, func, inspect, select
 from sqlalchemy.orm import Session
 
 from image_analyzer.application.predictor import ShapePredictor
@@ -36,6 +38,20 @@ class PredictionHistoryResponse(BaseModel):
     confidence: float
     probabilities: dict[str, float]
     created_at: datetime
+
+
+class DatabaseColumnResponse(BaseModel):
+    name: str
+    type: str
+    nullable: bool
+    primary_key: bool
+
+
+class DatabaseTableResponse(BaseModel):
+    name: str
+    row_count: int
+    columns: list[DatabaseColumnResponse]
+    rows: list[dict[str, Any]]
 
 
 app = FastAPI(
@@ -128,6 +144,54 @@ def read_prediction_history(
     ]
 
 
+@app.get("/api/v1/database/tables", response_model=list[DatabaseTableResponse])
+def read_database_tables(
+    row_limit: int = Query(default=20, ge=1, le=100),
+    session: Session = Depends(get_session),
+) -> list[DatabaseTableResponse]:
+    bind = session.get_bind()
+    inspector = inspect(bind)
+    metadata = MetaData()
+    tables: list[DatabaseTableResponse] = []
+
+    for table_name in inspector.get_table_names():
+        table = Table(table_name, metadata, autoload_with=bind)
+        row_count = session.scalar(select(func.count()).select_from(table)) or 0
+        rows = session.execute(select(table).limit(row_limit)).mappings().all()
+
+        tables.append(
+            DatabaseTableResponse(
+                name=table_name,
+                row_count=row_count,
+                columns=[
+                    DatabaseColumnResponse(
+                        name=column["name"],
+                        type=str(column["type"]),
+                        nullable=bool(column["nullable"]),
+                        primary_key=bool(column.get("primary_key", False)),
+                    )
+                    for column in inspector.get_columns(table_name)
+                ],
+                rows=[
+                    {str(column_name): _serialize_database_value(value) for column_name, value in row.items()}
+                    for row in rows
+                ],
+            )
+        )
+
+    return tables
+
+
+def _serialize_database_value(value: Any) -> Any:
+    if value is None or isinstance(value, (bool, int, float, str)):
+        return value
+    if isinstance(value, (date, datetime)):
+        return value.isoformat()
+    if isinstance(value, bytes):
+        return f"<binary {len(value)} bytes>"
+    return str(value)
+
+
 @app.get("/")
 def root() -> dict[str, str]:
     return {
@@ -136,4 +200,5 @@ def root() -> dict[str, str]:
         "health": "/health",
         "predict": "/api/v1/predict",
         "predictions": "/api/v1/predictions",
+        "database_tables": "/api/v1/database/tables",
     }

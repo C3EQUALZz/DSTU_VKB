@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || "/api/v1").replace(/\/$/, "");
 const healthUrl = import.meta.env.VITE_HEALTH_URL || "/health";
 const predictionHistoryLimit = 10;
+const databaseRowsLimit = 10;
 
 const emptyState = {
   label: "",
@@ -15,12 +16,15 @@ function App() {
   const [previewUrl, setPreviewUrl] = useState("");
   const [prediction, setPrediction] = useState(emptyState);
   const [predictionHistory, setPredictionHistory] = useState([]);
+  const [databaseTables, setDatabaseTables] = useState([]);
   const [serviceStatus, setServiceStatus] = useState("checking");
   const [isDragging, setIsDragging] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isHistoryLoading, setIsHistoryLoading] = useState(true);
+  const [isDatabaseLoading, setIsDatabaseLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [historyErrorMessage, setHistoryErrorMessage] = useState("");
+  const [databaseErrorMessage, setDatabaseErrorMessage] = useState("");
 
   useEffect(() => {
     let active = true;
@@ -38,6 +42,32 @@ function App() {
       .catch(() => {
         if (active) {
           setServiceStatus("offline");
+        }
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+
+    fetchDatabaseTables(databaseRowsLimit)
+      .then((payload) => {
+        if (active) {
+          setDatabaseTables(payload);
+          setDatabaseErrorMessage("");
+        }
+      })
+      .catch((error) => {
+        if (active) {
+          setDatabaseErrorMessage(error.message || "Не удалось загрузить таблицы базы данных.");
+        }
+      })
+      .finally(() => {
+        if (active) {
+          setIsDatabaseLoading(false);
         }
       });
 
@@ -110,6 +140,20 @@ function App() {
     }
   }
 
+  async function refreshDatabaseTables() {
+    setIsDatabaseLoading(true);
+
+    try {
+      const payload = await fetchDatabaseTables(databaseRowsLimit);
+      setDatabaseTables(payload);
+      setDatabaseErrorMessage("");
+    } catch (error) {
+      setDatabaseErrorMessage(error.message || "Не удалось обновить таблицы базы данных.");
+    } finally {
+      setIsDatabaseLoading(false);
+    }
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -137,6 +181,7 @@ function App() {
 
       setPrediction(payload);
       await refreshPredictionHistory();
+      await refreshDatabaseTables();
     } catch (error) {
       setPrediction(emptyState);
       setErrorMessage(error.message || "Ошибка запроса.");
@@ -193,6 +238,10 @@ function App() {
             <article>
               <span>Records</span>
               <strong>{isHistoryLoading ? "Loading..." : `${predictionHistory.length} latest rows`}</strong>
+            </article>
+            <article>
+              <span>Tables</span>
+              <strong>{isDatabaseLoading ? "Loading..." : `${databaseTables.length} database tables`}</strong>
             </article>
           </div>
         </section>
@@ -333,6 +382,83 @@ function App() {
               )}
             </div>
           </section>
+
+          <section className="database-card">
+            <div className="history-header">
+              <div>
+                <span className="eyebrow">Inspector</span>
+                <h2>Таблицы базы данных</h2>
+              </div>
+
+              <div className="history-meta">
+                <strong>{databaseTables.length}</strong>
+                <span>таблиц найдено</span>
+              </div>
+            </div>
+
+            <p className="history-copy">
+              Раздел показывает все таблицы SQLite: структуру колонок, количество строк и первые записи каждой таблицы.
+            </p>
+
+            {databaseErrorMessage ? <p className="error-banner">{databaseErrorMessage}</p> : null}
+
+            {isDatabaseLoading ? (
+              <p className="history-placeholder">Загрузка структуры базы данных...</p>
+            ) : databaseTables.length > 0 ? (
+              <div className="database-table-list">
+                {databaseTables.map((table) => (
+                  <article className="database-table-card" key={table.name}>
+                    <div className="database-table-title">
+                      <div>
+                        <h3>{table.name}</h3>
+                        <span>{table.columns.length} колонок</span>
+                      </div>
+                      <strong>{table.row_count} строк</strong>
+                    </div>
+
+                    <div className="column-chip-list">
+                      {table.columns.map((column) => (
+                        <span className="column-chip" key={`${table.name}-${column.name}`}>
+                          {column.primary_key ? "PK " : ""}
+                          {column.name}: {column.type}
+                          {column.nullable ? "" : " *"}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="table-shell">
+                      {table.rows.length > 0 ? (
+                        <table className="history-table database-table">
+                          <thead>
+                            <tr>
+                              {table.columns.map((column) => (
+                                <th key={`${table.name}-head-${column.name}`}>{column.name}</th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {table.rows.map((row, rowIndex) => (
+                              <tr key={`${table.name}-row-${rowIndex}`}>
+                                {table.columns.map((column) => (
+                                  <td key={`${table.name}-${rowIndex}-${column.name}`}>
+                                    {formatDatabaseValue(row[column.name])}
+                                  </td>
+                                ))}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      ) : (
+                        <p className="history-placeholder">В таблице пока нет строк.</p>
+                      )}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <p className="history-placeholder">В базе данных не найдено таблиц.</p>
+            )}
+          </section>
         </section>
       </main>
     </div>
@@ -345,6 +471,17 @@ async function fetchPredictionHistory(limit) {
 
   if (!response.ok) {
     throw new Error(payload.detail || "Не удалось получить историю из базы данных.");
+  }
+
+  return payload;
+}
+
+async function fetchDatabaseTables(rowLimit) {
+  const response = await fetch(`${apiBaseUrl}/database/tables?row_limit=${rowLimit}`);
+  const payload = await response.json();
+
+  if (!response.ok) {
+    throw new Error(payload.detail || "Не удалось получить таблицы базы данных.");
   }
 
   return payload;
@@ -394,6 +531,18 @@ function formatDateTime(value) {
     dateStyle: "short",
     timeStyle: "short",
   }).format(parsed);
+}
+
+function formatDatabaseValue(value) {
+  if (value === null || value === undefined) {
+    return "NULL";
+  }
+
+  if (typeof value === "object") {
+    return JSON.stringify(value);
+  }
+
+  return String(value);
 }
 
 export default App;

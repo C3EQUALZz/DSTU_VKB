@@ -245,7 +245,8 @@ h1 {
 
 .upload-form,
 .result-card,
-.history-card {
+.history-card,
+.database-card {
   background: var(--surface-strong);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 24px;
@@ -253,7 +254,8 @@ h1 {
 }
 
 .upload-form,
-.history-card {
+.history-card,
+.database-card {
   display: grid;
   gap: 1rem;
 }
@@ -435,6 +437,66 @@ h1 {
   color: var(--accent-soft);
   font-size: 0.84rem;
   white-space: nowrap;
+}
+
+.database-table-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.database-table-card {
+  display: grid;
+  gap: 0.85rem;
+  padding: 1rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.database-table-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.database-table-title h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.database-table-title span,
+.database-table-title strong {
+  color: var(--text-muted);
+  font-size: 0.86rem;
+}
+
+.column-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.column-chip {
+  display: inline-flex;
+  max-width: 100%;
+  padding: 0.38rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(126, 200, 255, 0.08);
+  border: 1px solid rgba(126, 200, 255, 0.14);
+  color: #b9ddff;
+  font-size: 0.76rem;
+  overflow-wrap: anywhere;
+}
+
+.database-table {
+  min-width: 620px;
+}
+
+.database-table td {
+  max-width: 16rem;
+  overflow-wrap: anywhere;
+  color: rgba(248, 247, 244, 0.88);
 }
 
 .confidence-meter {
