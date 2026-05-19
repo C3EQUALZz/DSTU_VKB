@@ -1,0 +1,55 @@
+/* Задание 1: CSS Grid с тремя брейкпоинтами */
+
+.hint { color: var(--color-muted); margin-bottom: 1.5em; }
+
+.products {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 20px;
+    /* Mobile-first: 2 в строке (для <768px) */
+    grid-template-columns: repeat(2, 1fr);
+}
+
+@media (min-width: 768px) {
+    .products { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 1200px) {
+    .products { grid-template-columns: repeat(4, 1fr); }
+}
+
+.product {
+    position: relative;
+    background: var(--color-card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1em 1em 1.2em;
+    transition: transform .2s, box-shadow .2s;
+}
+.product:hover { transform: translateY(-3px); box-shadow: var(--shadow-strong); }
+
+.product__image {
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(135deg, #d1fae5, #99f6e4);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3em;
+    margin-bottom: .7em;
+}
+
+.product__sale {
+    position: absolute;
+    top: 12px; right: 12px;
+    background: var(--color-accent);
+    color: #fff;
+    font-size: .8em;
+    font-weight: 700;
+    padding: .15em .55em;
+    border-radius: 4px;
+}
+
+.product h3 { margin: .2em 0 .3em; font-size: 1.05em; }
+.product p { color: var(--color-muted); margin: 0; font-size: .9em; }

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Задание 6. Адаптивные фильтры (CSS-only)</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/06-filters.css">
+</head>
+<body>
+<div class="container">
+    <h1>Результаты поиска</h1>
+    <p>На экранах &lt;800&nbsp;px фильтры скрываются под кнопкой «Фильтры». Раскрытие — <strong>только CSS</strong>, через <code>&lt;input type="checkbox"&gt;</code> + <code>:checked</code>.</p>
+
+    <input type="checkbox" id="filters-toggle" class="filters-toggle" hidden>
+    <label for="filters-toggle" class="filters-toggle-btn">
+        <span class="filters-toggle-btn__open">▼ Показать фильтры</span>
+        <span class="filters-toggle-btn__close">▲ Скрыть фильтры</span>
+    </label>
+
+    <div class="results">
+        <aside class="filters">
+            <fieldset>
+                <legend>Категории</legend>
+                <label><input type="checkbox"> Электроника</label>
+                <label><input type="checkbox"> Одежда</label>
+                <label><input type="checkbox"> Книги</label>
+                <label><input type="checkbox"> Дом и сад</label>
+            </fieldset>
+
+            <fieldset>
+                <legend>Цена</legend>
+                <label>
+                    <input type="range" min="0" max="50000" step="500" value="15000">
+                    <span class="range-hint">до 50&nbsp;000&nbsp;₽</span>
+                </label>
+            </fieldset>
+
+            <fieldset>
+                <legend>Рейтинг</legend>
+                <label><input type="radio" name="rate"> Любой</label>
+                <label><input type="radio" name="rate"> ★★★★ и выше</label>
+                <label><input type="radio" name="rate"> ★★★★★</label>
+            </fieldset>
+        </aside>
+
+        <section class="items">
+            <h2>Найдено 12 товаров</h2>
+            <ul>
+                <li>Беспроводные наушники — 4 990 ₽</li>
+                <li>Кофемашина капсульная — 12 990 ₽</li>
+                <li>Книга «Высоконагруженные приложения» — 1 290 ₽</li>
+                <li>Кроссовки для бега — 6 490 ₽</li>
+                <li>Умные часы — 8 990 ₽</li>
+                <li>Робот-пылесос — 19 990 ₽</li>
+                <li>Электросамокат — 28 990 ₽</li>
+                <li>Электрочайник — 2 490 ₽</li>
+                <li>Микрофон для подкаста — 7 290 ₽</li>
+                <li>Внешний SSD 1 ТБ — 5 990 ₽</li>
+                <li>Книга «Безопасность веб-приложений» — 1 590 ₽</li>
+                <li>Газонокосилка ручная — 9 490 ₽</li>
+            </ul>
+        </section>
+    </div>
+
+    <a class="back-link" href="index.html">&larr; Назад к содержанию</a>
+</div>
+</body>
+</html>

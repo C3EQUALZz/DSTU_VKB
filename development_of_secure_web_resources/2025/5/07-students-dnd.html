@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Задание 7. Drag &amp; Drop списков студентов</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/07-students-dnd.css">
+</head>
+<body>
+<div class="container">
+    <h1>Группа ВИ-31 и Задолжники</h1>
+    <p>Перетаскивайте карточки между списками. Правый клик по карточке — меню «Удалить»/«Закрыть».
+       Карточки автоматически сортируются по алфавиту. Если бросить карточку вне списка — увидите анимацию ошибки.</p>
+
+    <div class="lists">
+        <section class="list" data-list-id="group">
+            <header class="list-head">
+                <h2 class="list-title">Группа ВИ-31</h2>
+                <span class="list-count">Всего <span data-count>0</span></span>
+            </header>
+            <form class="add-form" id="add-form">
+                <input type="text" id="new-student" placeholder="Введите ФИО (например, Иванов И.И.)" autocomplete="off">
+                <button type="submit" class="btn">Добавить</button>
+            </form>
+            <ul class="cards" data-zone></ul>
+        </section>
+
+        <section class="list" data-list-id="debt">
+            <header class="list-head">
+                <h2 class="list-title">Задолжники</h2>
+                <span class="list-count">Всего <span data-count>0</span></span>
+            </header>
+            <ul class="cards" data-zone>
+                <li class="placeholder">Перетяни сюда</li>
+            </ul>
+        </section>
+    </div>
+
+    <a class="back-link" href="index.html">&larr; К содержанию</a>
+</div>
+
+<!-- Контекстное меню (JS позиционирует его, в CSS только базовый стиль) -->
+<ul id="ctx-menu" class="ctx-menu" hidden></ul>
+
+<script src="js/07-students-dnd.js" defer></script>
+</body>
+</html>

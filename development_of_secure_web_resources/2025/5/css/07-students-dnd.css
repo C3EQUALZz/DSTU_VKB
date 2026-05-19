@@ -1,0 +1,126 @@
+/* Задание 7: drag-and-drop списков.
+   ВАЖНО по условию задания:
+       - запрещены псевдоклассы :hover, :active, :focus и т.п.
+       - запрещены псевдоэлементы ::before и ::after
+   Все hover/error/success-эффекты — через JS (добавлением классов
+   .is-hover, .is-error, .is-success). */
+
+.lists {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: 1fr;
+    margin: 1.4em 0;
+}
+@media (min-width: 720px) { .lists { grid-template-columns: 1fr 1fr; } }
+
+.list {
+    background: #e0f2fe;
+    border: 2px solid #7dd3fc;
+    border-radius: var(--radius);
+    padding: 1em 1em 1.2em;
+    min-height: 280px;
+    transition: background .2s, border-color .2s, box-shadow .2s;
+}
+.list.is-dragover {
+    background: #dbeafe;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, .15);
+}
+
+.list-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: .6em;
+}
+.list-title { margin: 0; color: #075985; font-size: 1.15em; }
+.list-count { color: #0369a1; font-weight: 600; font-size: .95em; }
+
+.add-form {
+    display: flex;
+    gap: .5em;
+    margin-bottom: .8em;
+}
+.add-form input {
+    flex-grow: 1;
+    padding: .55em .8em;
+    border: 1px solid #7dd3fc;
+    border-radius: 8px;
+    font: inherit;
+}
+.add-form .btn {
+    background: var(--color-primary);
+    color: #fff;
+    border: 0;
+    padding: .55em 1em;
+    border-radius: 8px;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+    transition: background .2s;
+}
+.add-form .btn.is-pressed { background: var(--color-primary-hover); transform: translateY(1px); }
+
+.cards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 140px;
+}
+.card {
+    background: #fff;
+    border: 1px solid #bae6fd;
+    border-radius: 8px;
+    padding: .55em .9em;
+    cursor: grab;
+    user-select: none;
+    transition: background .15s, transform .15s, box-shadow .15s, border-color .15s;
+}
+.card.is-hover { background: #f0f9ff; border-color: var(--color-primary); }
+.card.is-dragging { opacity: .35; cursor: grabbing; }
+.card.is-success { animation: card-success .6s ease; }
+.card.is-error { animation: card-shake .35s ease; border-color: var(--color-error); background: #fef2f2; }
+
+@keyframes card-success {
+    0% { background: #d1fae5; transform: scale(1.03); }
+    100% { background: #ffffff; transform: scale(1); }
+}
+@keyframes card-shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    50% { transform: translateX(6px); }
+    75% { transform: translateX(-3px); }
+}
+
+.placeholder {
+    color: #0369a1;
+    font-style: italic;
+    text-align: center;
+    padding: 1em;
+    border: 2px dashed #7dd3fc;
+    border-radius: 8px;
+}
+
+/* Контекстное меню — без :hover, эффект включает JS через .is-active */
+.ctx-menu {
+    position: fixed;
+    z-index: 200;
+    margin: 0;
+    padding: 4px 0;
+    list-style: none;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: var(--shadow-strong);
+    min-width: 160px;
+}
+.ctx-menu[hidden] { display: none; }
+.ctx-menu li {
+    padding: .5em 1em;
+    cursor: pointer;
+    color: #334155;
+    transition: background .15s;
+}
+.ctx-menu li.is-active { background: #eef2ff; color: var(--color-primary-hover); }

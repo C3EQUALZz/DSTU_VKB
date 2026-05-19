@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Задание 10. Аудио и видео</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; max-width: 760px; margin: 30px auto; padding: 0 20px; line-height: 1.55; }
+        section { padding: 1em 0; border-bottom: 1px dashed #ddd; }
+        h2 { margin-bottom: .3em; }
+        iframe { width: 100%; max-width: 560px; aspect-ratio: 16/9; border: 0; }
+    </style>
+</head>
+<body>
+<h1>Аудио и видео в HTML</h1>
+
+<section>
+    <h2>Локальный аудио-файл</h2>
+    <p>Тег <code>&lt;audio&gt;</code> с атрибутом <code>controls</code>:</p>
+    <audio controls>
+        <source src="assets/sample.ogg" type="audio/ogg">
+        <source src="assets/sample.mp3" type="audio/mpeg">
+        Ваш браузер не поддерживает тег audio.
+    </audio>
+    <p><small>Если файлы <code>assets/sample.*</code> не приложены — браузер покажет заглушку плеера. Это не ошибка лабы.</small></p>
+</section>
+
+<section>
+    <h2>Локальный видео-файл</h2>
+    <p>Тег <code>&lt;video&gt;</code> с атрибутами <code>controls</code>, <code>width</code>, <code>height</code>:</p>
+    <video controls width="480" height="270" poster="assets/chrome.svg">
+        <source src="assets/sample.mp4" type="video/mp4">
+        <source src="assets/sample.webm" type="video/webm">
+        Ваш браузер не поддерживает тег video.
+    </video>
+</section>
+
+<section>
+    <h2>Видео с YouTube (пример)</h2>
+    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video" allowfullscreen></iframe>
+</section>
+
+<section>
+    <h2>Видео с Vimeo (пример)</h2>
+    <iframe src="https://player.vimeo.com/video/76979871" title="Vimeo video" allow="autoplay; fullscreen" allowfullscreen></iframe>
+</section>
+
+<p><a href="index.html">&larr; Назад к содержанию</a></p>
+</body>
+</html>

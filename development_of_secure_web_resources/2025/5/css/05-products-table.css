@@ -1,0 +1,76 @@
+/* Задание 5: интерактивная таблица товаров */
+
+.products {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--color-card);
+    box-shadow: var(--shadow);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+.products th, .products td {
+    padding: .8em 1em;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+}
+.products th {
+    background: #eef2ff;
+    color: #312e81;
+    font-weight: 700;
+}
+.products tbody tr {
+    cursor: grab;
+    transition: background .15s;
+}
+.products tbody tr:hover { background: #f8fafc; }
+.products tbody tr:last-child td { border-bottom: 0; }
+.products [data-field="qty"] {
+    cursor: text;
+    background: #fefce8;
+    border-radius: 4px;
+    outline: none;
+}
+.products [data-field="qty"]:focus { background: #fef9c3; box-shadow: 0 0 0 2px rgba(245,158,11,.25); }
+.products [data-field="price"] { cursor: pointer; }
+.products [data-field="price"]:hover { color: var(--color-primary); text-decoration: underline; }
+.products tbody tr.is-dragging { opacity: .4; }
+.products tbody tr.drag-over    { background: #fef3c7; }
+
+/* Контекстное меню */
+.context-menu {
+    position: fixed;
+    margin: 0;
+    padding: 4px 0;
+    list-style: none;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: var(--shadow-strong);
+    z-index: 200;
+    min-width: 180px;
+}
+.context-menu[hidden] { display: none; }
+.context-menu li {
+    padding: .55em 1em;
+    cursor: pointer;
+    color: #334155;
+    transition: background .15s;
+}
+.context-menu li:hover { background: #eef2ff; color: var(--color-primary-hover); }
+
+/* Модальное «Изменить цену» */
+.modal { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 150; }
+.modal[hidden] { display: none; }
+.modal__backdrop { position: absolute; inset: 0; background: rgba(15,23,42,.55); }
+.modal__dialog { position: relative; background: #fff; border-radius: var(--radius); padding: 1.4em 1.6em; width: min(100%, 380px); box-shadow: var(--shadow-strong); }
+.modal label { display: flex; flex-direction: column; gap: .25em; margin: .8em 0; }
+.modal input { padding: .55em .8em; border: 1px solid var(--color-border); border-radius: 8px; font: inherit; }
+.modal__actions { display: flex; gap: .5em; justify-content: flex-end; }
+
+.btn {
+    background: var(--color-primary); color: #fff; border: 0;
+    padding: .55em 1.1em; border-radius: 8px; cursor: pointer;
+    font: inherit; font-weight: 600; transition: background .2s;
+}
+.btn:hover { background: var(--color-primary-hover); }
+.btn--ghost { background: transparent; color: var(--color-primary); border: 1px solid var(--color-primary); }
+.btn--ghost:hover { background: var(--color-primary); color: #fff; }

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Задание 8. Формы</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; max-width: 560px; margin: 30px auto; padding: 0 20px; line-height: 1.55; }
+        fieldset { border: 1px solid #aaa; border-radius: 6px; padding: 1em 1.2em; margin: 1em 0; }
+        legend { padding: 0 .4em; color: #444; }
+        label { display: block; margin: .4em 0 .2em; }
+        input[type=text], input[type=email], input[type=password], input[type=date], textarea, select {
+            width: 100%; padding: .5em; box-sizing: border-box;
+            border: 1px solid #bbb; border-radius: 4px;
+        }
+        textarea { resize: vertical; min-height: 70px; }
+        .row-buttons button { padding: .5em 1em; margin-right: .5em; }
+        .checkbox-row label, .radio-row label { display: inline-block; margin-right: .8em; }
+    </style>
+</head>
+<body>
+<h1>Формы в HTML</h1>
+
+<form action="#" method="post">
+    <fieldset>
+        <legend>Основная информация</legend>
+
+        <label for="name">Имя:</label>
+        <input id="name" name="name" type="text" placeholder="Введите ваше имя" required>
+
+        <label for="email">Email:</label>
+        <input id="email" name="email" type="email" placeholder="Введите ваш email" required>
+
+        <label for="msg">Сообщение:</label>
+        <textarea id="msg" name="message" placeholder="Введите ваше сообщение"></textarea>
+    </fieldset>
+
+    <fieldset>
+        <legend>Дополнительная информация</legend>
+
+        <label for="country">Страна:</label>
+        <select id="country" name="country">
+            <option value="">-- Выберите страну --</option>
+            <option value="ru">Россия</option>
+            <option value="by">Беларусь</option>
+            <option value="kz">Казахстан</option>
+            <option value="other">Другое</option>
+        </select>
+
+        <p>Выберите ваши интересы:</p>
+        <div class="checkbox-row">
+            <label><input type="checkbox" name="interest" value="dev"> Программирование</label>
+            <label><input type="checkbox" name="interest" value="design"> Дизайн</label>
+            <label><input type="checkbox" name="interest" value="music"> Музыка</label>
+        </div>
+
+        <p>Выберите ваш пол:</p>
+        <div class="radio-row">
+            <label><input type="radio" name="gender" value="m"> Мужской</label>
+            <label><input type="radio" name="gender" value="f"> Женский</label>
+            <label><input type="radio" name="gender" value="o"> Другое</label>
+        </div>
+
+        <label for="bd">Дата рождения:</label>
+        <input id="bd" name="birthday" type="date">
+
+        <label for="pwd">Пароль:</label>
+        <input id="pwd" name="password" type="password">
+
+        <label for="rate">Оценка (от 1 до 10):</label>
+        <input id="rate" name="rate" type="range" min="1" max="10">
+    </fieldset>
+
+    <div class="row-buttons">
+        <button type="submit">Отправить</button>
+        <button type="reset">Сбросить</button>
+    </div>
+</form>
+
+<p><a href="index.html">&larr; Назад к содержанию</a></p>
+</body>
+</html>

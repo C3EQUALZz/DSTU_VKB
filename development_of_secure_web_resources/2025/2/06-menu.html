@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Задание 6. Меню навигации</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/06-menu.css">
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="sidebar__logo">DSTU</div>
+    <nav class="sidebar__nav">
+        <a href="#main" class="sidebar__link sidebar__link--active">Главная</a>
+        <a href="#about" class="sidebar__link">О факультете</a>
+        <a href="https://edu.donstu.ru" class="sidebar__link" target="_blank">Расписание</a>
+        <a href="https://edu.donstu.ru" class="sidebar__link" target="_blank">Электронные курсы</a>
+        <a href="https://donstu.ru/news/" class="sidebar__link" target="_blank">Новости</a>
+        <a href="#contacts" class="sidebar__link">Контакты</a>
+    </nav>
+</aside>
+
+<div class="page">
+    <header class="topbar">
+        <a href="#main" class="topbar__link">Главная</a>
+        <a href="#about" class="topbar__link">О нас</a>
+        <a href="https://edu.donstu.ru" class="topbar__link" target="_blank">Расписание</a>
+        <a href="#contacts" class="topbar__link">Контакты</a>
+        <a href="https://donstu.ru" class="topbar__link topbar__link--cta" target="_blank">На сайт ДГТУ</a>
+    </header>
+
+    <main class="content">
+        <h1 id="main">Меню навигации</h1>
+        <p>Слева — <strong>вертикальное</strong> меню фиксированной ширины 200px,
+           прижатое к левому краю экрана. Сверху — <strong>горизонтальное</strong>
+           меню с CTA-кнопкой.</p>
+
+        <section id="about">
+            <h2>О факультете</h2>
+            <p>Демонстрационный контент для проверки прокрутки и фиксированного меню.
+               При прокрутке этой страницы вертикальное меню остаётся на месте
+               (<code>position: fixed</code>), а горизонтальное прокручивается вместе со страницей.</p>
+        </section>
+
+        <section>
+            <h2>Подсветка активного пункта</h2>
+            <p>Наведите курсор на любой пункт меню — он подсвечивается:
+               меняется фон, цвет текста и появляется лёгкая контурная подсветка.
+               Активный пункт «Главная» выделен заранее.</p>
+        </section>
+
+        <section id="contacts">
+            <h2>Контакты</h2>
+            <p>Ростов-на-Дону, площадь Гагарина, 1.<br>
+               Телефон приёмной комиссии — на сайте университета.</p>
+        </section>
+
+        <p style="height: 60vh;">(простор для прокрутки — чтобы было видно фиксацию меню)</p>
+
+        <a class="back-link" href="index.html">&larr; Назад к содержанию</a>
+    </main>
+</div>
+
+</body>
+</html>

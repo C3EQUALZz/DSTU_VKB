@@ -1,0 +1,51 @@
+/* Задание 5: адаптивная таблица данных */
+
+.stack-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--color-card);
+    box-shadow: var(--shadow);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+.stack-table th, .stack-table td {
+    padding: .8em 1em;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+}
+.stack-table th {
+    background: #ecfdf5;
+    color: #065f46;
+    font-weight: 700;
+}
+.stack-table tbody tr:last-child td { border-bottom: 0; }
+
+/* На <768px — Stack Table */
+@media (max-width: 767px) {
+    .stack-table thead { display: none; }
+    .stack-table, .stack-table tbody, .stack-table tr, .stack-table td {
+        display: block;
+        width: 100%;
+    }
+    .stack-table tr {
+        background: var(--color-card);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        margin-bottom: 1em;
+        padding: .6em .9em;
+    }
+    .stack-table td {
+        display: flex;
+        justify-content: space-between;
+        padding: .55em 0;
+        border-bottom: 1px dashed var(--color-border);
+        gap: 1em;
+    }
+    .stack-table td:last-child { border-bottom: 0; }
+    .stack-table td::before {
+        content: attr(data-label);
+        font-weight: 700;
+        color: #065f46;
+        flex-shrink: 0;
+    }
+}

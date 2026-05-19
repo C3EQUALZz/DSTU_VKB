@@ -1,0 +1,79 @@
+/* Задание 4 — страница статьи */
+
+body { background: #fbfaf7; }
+
+.article {
+    max-width: 720px;
+    margin: 40px auto;
+    padding: 0 24px;
+    font-size: 1.08em;
+    line-height: 1.75;
+    color: #1f2937;
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+.article__header { margin-bottom: 2em; border-bottom: 1px solid #e5e7eb; padding-bottom: 1.2em; }
+
+.article__kicker {
+    color: var(--color-primary);
+    text-transform: uppercase;
+    font-size: .82em;
+    letter-spacing: .12em;
+    margin: 0 0 .8em;
+    font-family: var(--font-sans);
+    font-weight: 600;
+}
+
+.article h1 {
+    font-size: 2.2em;
+    line-height: 1.15;
+    margin: 0 0 .4em;
+    color: #0f172a;
+}
+
+.article__lead {
+    color: #475569;
+    font-size: 1.1em;
+    margin: 0 0 1.2em;
+}
+
+.article__meta {
+    display: flex;
+    align-items: center;
+    gap: .8em;
+    font-family: var(--font-sans);
+    font-size: .92em;
+}
+.avatar {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: #fde047;
+    color: #78350f;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.author { font-weight: 600; color: #111827; }
+.date   { color: #6b7280; font-size: .9em; }
+
+.article h2 {
+    font-size: 1.4em;
+    margin: 1.6em 0 .4em;
+    color: #0f172a;
+    font-family: var(--font-sans);
+}
+
+.article p { margin: 0 0 1em; }
+
+.article p::first-line { font-weight: 500; }
+
+.article__quote {
+    border-left: 4px solid var(--color-primary);
+    padding: .8em 1.2em;
+    background: #eef2ff;
+    color: #312e81;
+    font-style: italic;
+    border-radius: 0 6px 6px 0;
+    margin: 1.5em 0;
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Задание 5. Интерактивная таблица товаров</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/05-products-table.css">
+</head>
+<body>
+<div class="container">
+    <h1>Интерактивная таблица товаров</h1>
+    <p>Поддерживаются: <strong>одиночный клик</strong> по «Количество» — inline-редактирование с пересчётом
+       суммы, <strong>двойной клик</strong> по «Цене за единицу» — модальное окно, <strong>правый клик</strong> по
+       строке — контекстное меню, <strong>drag &amp; drop</strong> для перестановки строк.</p>
+
+    <table class="products" id="products">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Цена за единицу</th>
+                <th>Количество</th>
+                <th>Общая стоимость</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr draggable="true" data-id="1">
+                <td data-field="name">Ноутбук</td>
+                <td data-field="price">85000</td>
+                <td data-field="qty" contenteditable="true">2</td>
+                <td data-field="total">—</td>
+            </tr>
+            <tr draggable="true" data-id="2">
+                <td data-field="name">Монитор</td>
+                <td data-field="price">28000</td>
+                <td data-field="qty" contenteditable="true">3</td>
+                <td data-field="total">—</td>
+            </tr>
+            <tr draggable="true" data-id="3">
+                <td data-field="name">Клавиатура</td>
+                <td data-field="price">7500</td>
+                <td data-field="qty" contenteditable="true">5</td>
+                <td data-field="total">—</td>
+            </tr>
+            <tr draggable="true" data-id="4">
+                <td data-field="name">Мышь</td>
+                <td data-field="price">2200</td>
+                <td data-field="qty" contenteditable="true">10</td>
+                <td data-field="total">—</td>
+            </tr>
+            <tr draggable="true" data-id="5">
+                <td data-field="name">Гарнитура</td>
+                <td data-field="price">5900</td>
+                <td data-field="qty" contenteditable="true">4</td>
+                <td data-field="total">—</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="back-link" href="index.html">&larr; К содержанию</a>
+</div>
+
+<!-- Контекстное меню (создаётся JS, но шаблон тут) -->
+<ul id="context-menu" class="context-menu" hidden></ul>
+
+<!-- Модальное окно «Изменить цену» -->
+<div id="price-modal" class="modal" hidden>
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__dialog">
+        <h2>Изменить цену</h2>
+        <p>Товар: <strong id="price-modal-name">—</strong></p>
+        <label>
+            <span>Новая цена за единицу</span>
+            <input type="number" id="price-modal-input" min="0" step="0.01">
+        </label>
+        <div class="modal__actions">
+            <button class="btn" id="price-modal-save">Сохранить</button>
+            <button class="btn btn--ghost" data-close>Отмена</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/05-products-table.js" defer></script>
+</body>
+</html>

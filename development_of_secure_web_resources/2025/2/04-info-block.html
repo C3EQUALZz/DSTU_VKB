@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Задание 4. Информационный блок (Дзен-стиль)</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/04-info-block.css">
+</head>
+<body>
+<div class="container">
+    <h1>Информационный блок платформы публикации контента</h1>
+
+    <article class="zen-card">
+        <a href="04-article.html" class="zen-card__image" aria-label="Открыть статью">
+            <svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0" stop-color="#7dd3fc"/>
+                        <stop offset="1" stop-color="#bae6fd"/>
+                    </linearGradient>
+                </defs>
+                <rect width="800" height="450" fill="url(#sky)"/>
+                <polygon points="0,450 200,260 380,330 520,200 700,300 800,260 800,450" fill="#1e3a8a"/>
+                <polygon points="0,450 150,300 320,360 500,250 660,330 800,290 800,450" fill="#312e81" opacity=".7"/>
+                <circle cx="640" cy="110" r="40" fill="#fde68a"/>
+                <path d="M0 380 Q400 360 800 390 L800 450 L0 450 Z" fill="#0c4a6e" opacity=".6"/>
+            </svg>
+        </a>
+
+        <div class="zen-card__body">
+            <div class="zen-card__meta">
+                <span class="zen-card__avatar" aria-hidden="true">Я</span>
+                <span class="zen-card__author">Яндекс Путешествия</span>
+            </div>
+            <h2 class="zen-card__title">
+                <a href="04-article.html">Куда поехать осенью 2025 года: пять идей для уик-энда</a>
+            </h2>
+            <p class="zen-card__lead">
+                Подобрали направления, где осень особенно красива: горы Кавказа,
+                озёра Карелии, виноградники Краснодарского края и не только.
+                Самое время паковать рюкзак.
+            </p>
+            <a href="04-article.html" class="zen-card__more">Читать полностью &rarr;</a>
+        </div>
+    </article>
+
+    <a class="back-link" href="index.html">&larr; Назад к содержанию</a>
+</div>
+</body>
+</html>

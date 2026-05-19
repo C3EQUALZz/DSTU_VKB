@@ -1,0 +1,65 @@
+/* Задание 3: стилизация таблицы 7×4 */
+
+.data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, .08);
+    background: #fff;
+    margin: 1em 0;
+}
+
+.data-table caption {
+    caption-side: top;
+    font-weight: 700;
+    font-size: 1.1em;
+    padding: .8em 0;
+    color: var(--color-text);
+}
+
+/* Заголовки столбцов */
+.data-table thead th {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
+    color: #fff;
+    font-weight: 600;
+    text-align: left;
+    padding: 1em;
+    letter-spacing: .03em;
+}
+
+/* Заголовки строк (первый <th> в <tbody> tr) */
+.data-table tbody th {
+    background: #eef2ff;
+    color: var(--color-primary-hover);
+    font-weight: 700;
+    text-align: center;
+    width: 3em;
+    border-right: 2px solid #c7d2fe;
+}
+
+/* Базовое оформление ячеек */
+.data-table td, .data-table th {
+    padding: .8em 1em;
+    border-bottom: 1px solid var(--color-border);
+}
+
+/* Стилизованные разделители столбцов */
+.data-table td + td { border-left: 1px dashed #d1d5db; }
+
+/* Чередующиеся строки */
+.data-table tbody tr:nth-child(odd) td { background: #ffffff; }
+.data-table tbody tr:nth-child(even) td { background: #f9fafb; }
+
+/* Hover на строке: курсор-палец и подсветка */
+.data-table tbody tr { cursor: pointer; transition: background .2s; }
+.data-table tbody tr:hover td { background: #fef3c7; }
+.data-table tbody tr:hover th { background: #fde68a; color: #92400e; }
+
+/* Скругление крайних ячеек */
+.data-table thead th:first-child { border-top-left-radius: 12px; }
+.data-table thead th:last-child  { border-top-right-radius: 12px; }
+.data-table tbody tr:last-child td:last-child { border-bottom-right-radius: 12px; }
+.data-table tbody tr:last-child th:first-child { border-bottom-left-radius: 12px; }
+.data-table tbody tr:last-child td, .data-table tbody tr:last-child th { border-bottom: 0; }

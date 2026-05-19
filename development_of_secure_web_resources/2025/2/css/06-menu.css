@@ -1,0 +1,101 @@
+/* Задание 6 — вертикальное (fixed) + горизонтальное меню */
+
+body { margin: 0; }
+
+/* ---------- Вертикальное меню ---------- */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 200px;
+    height: 100vh;
+    background: #111827;
+    color: #e5e7eb;
+    padding: 1.6em 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2em;
+    z-index: 10;
+}
+.sidebar__logo {
+    text-align: center;
+    font-weight: 800;
+    font-size: 1.4em;
+    letter-spacing: .1em;
+    color: var(--color-accent);
+    padding: 0 1em;
+}
+.sidebar__nav { display: flex; flex-direction: column; }
+.sidebar__link {
+    display: block;
+    padding: .8em 1.4em;
+    color: #d1d5db;
+    text-decoration: none;
+    border-left: 4px solid transparent;
+    transition: background .2s, color .2s, border-color .2s, padding-left .2s;
+}
+.sidebar__link:hover {
+    background: rgba(255, 255, 255, .07);
+    color: #fff;
+    border-left-color: var(--color-accent);
+    padding-left: 1.7em;
+}
+.sidebar__link--active {
+    background: rgba(245, 158, 11, .15);
+    color: #fff;
+    border-left-color: var(--color-accent);
+}
+
+/* ---------- Содержимое страницы ---------- */
+.page { margin-left: 200px; min-height: 100vh; background: var(--color-bg); }
+
+/* ---------- Горизонтальное меню ---------- */
+.topbar {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    box-shadow: 0 1px 0 var(--color-border);
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    padding: .8em 1.2em;
+    z-index: 5;
+}
+.topbar__link {
+    color: #374151;
+    text-decoration: none;
+    padding: .4em .8em;
+    border-radius: 6px;
+    transition: background .2s, color .2s;
+}
+.topbar__link:hover { background: #eef2ff; color: var(--color-primary); }
+.topbar__link--cta {
+    margin-left: auto;
+    background: var(--color-primary);
+    color: #fff;
+    font-weight: 600;
+}
+.topbar__link--cta:hover { background: var(--color-primary-hover); color: #fff; }
+
+.content { padding: 2em 2.5em; max-width: 760px; }
+.content h1 { margin-top: 0; color: #111827; }
+.content h2 { margin-top: 1.6em; color: var(--color-primary); }
+
+/* На очень узких экранах сайдбар уезжает наверх */
+@media (max-width: 720px) {
+    .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0;
+    }
+    .sidebar__logo { width: 100%; text-align: left; }
+    .sidebar__nav { flex-direction: row; flex-wrap: wrap; width: 100%; }
+    .sidebar__link { padding: .6em 1em; border-left: 0; border-bottom: 3px solid transparent; }
+    .sidebar__link:hover { border-bottom-color: var(--color-accent); padding-left: 1em; }
+    .page { margin-left: 0; }
+    .content { padding: 1em; }
+}

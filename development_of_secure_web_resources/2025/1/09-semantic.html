@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Задание 9. Семантическая структура</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; margin: 0; line-height: 1.55; color: #222; background: #f7f7f7; }
+        header, footer { background: #2b2b2b; color: #f5f5f5; text-align: center; padding: 1.2em 1em; }
+        header h1 { margin: 0; }
+        nav { background: #3a3a3a; padding: .6em 0; }
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; justify-content: center; gap: 1.5em; }
+        nav a { color: #f5f5f5; text-decoration: none; }
+        nav a:hover { text-decoration: underline; }
+        main { max-width: 760px; margin: 24px auto; padding: 0 16px; display: grid; grid-template-columns: 1fr; gap: 16px; }
+        article, aside { background: white; border-radius: 8px; padding: 1em 1.3em; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+        @media (min-width: 720px) { main { grid-template-columns: 2fr 1fr; } header h1 ~ p { margin: 0; } }
+        footer { font-size: .9em; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Моя страница</h1>
+    <p>Описание страницы</p>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="#">Главная</a></li>
+        <li><a href="#">О нас</a></li>
+        <li><a href="#">Услуги</a></li>
+        <li><a href="#">Контакты</a></li>
+    </ul>
+</nav>
+
+<main>
+    <article>
+        <h2>Форма обратной связи</h2>
+        <p>Пожалуйста, заполните форму ниже:</p>
+        <form action="#" method="post">
+            <fieldset>
+                <legend>Основная информация</legend>
+                <label>Имя: <input type="text" placeholder="Введите ваше имя"></label><br>
+                <label>Email: <input type="email" placeholder="Введите ваш email"></label><br>
+                <label>Сообщение: <textarea placeholder="Введите ваше сообщение" rows="4" cols="40"></textarea></label>
+            </fieldset>
+            <p><button type="submit">Отправить</button> <button type="reset">Сбросить</button></p>
+        </form>
+    </article>
+
+    <aside>
+        <h2>Полезные ссылки</h2>
+        <ul>
+            <li><a href="#">Статья 1</a></li>
+            <li><a href="#">Статья 2</a></li>
+            <li><a href="#">Статья 3</a></li>
+        </ul>
+    </aside>
+</main>
+
+<footer>
+    &copy; 2025 Все права защищены.
+</footer>
+
+<p style="text-align: center; padding-bottom: 16px;"><a href="index.html">&larr; Назад к содержанию</a></p>
+</body>
+</html>

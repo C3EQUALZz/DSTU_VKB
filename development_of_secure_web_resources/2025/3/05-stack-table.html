@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Задание 5. Адаптивная таблица (Stack Table)</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/05-stack-table.css">
+</head>
+<body>
+<div class="container">
+    <h1>Сотрудники</h1>
+    <p>На десктопе — обычная таблица. При ширине &lt;768&nbsp;px каждая строка превращается в карточку с подписями полей (Stack Table) через <code>data-label</code> + <code>::before</code>.</p>
+
+    <table class="stack-table">
+        <thead>
+            <tr>
+                <th>Имя</th><th>Возраст</th><th>Должность</th><th>Компания</th><th>Город</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td data-label="Имя">Иван Иванов</td>
+                <td data-label="Возраст">29</td>
+                <td data-label="Должность">Frontend-разработчик</td>
+                <td data-label="Компания">WebRes</td>
+                <td data-label="Город">Ростов-на-Дону</td>
+            </tr>
+            <tr>
+                <td data-label="Имя">Мария Петрова</td>
+                <td data-label="Возраст">34</td>
+                <td data-label="Должность">UX-дизайнер</td>
+                <td data-label="Компания">Pixel&Pen</td>
+                <td data-label="Город">Москва</td>
+            </tr>
+            <tr>
+                <td data-label="Имя">Никита Смирнов</td>
+                <td data-label="Возраст">41</td>
+                <td data-label="Должность">CTO</td>
+                <td data-label="Компания">CloudStack</td>
+                <td data-label="Город">Санкт-Петербург</td>
+            </tr>
+            <tr>
+                <td data-label="Имя">Елена Козлова</td>
+                <td data-label="Возраст">27</td>
+                <td data-label="Должность">QA-инженер</td>
+                <td data-label="Компания">WebRes</td>
+                <td data-label="Город">Краснодар</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="back-link" href="index.html">&larr; Назад к содержанию</a>
+</div>
+</body>
+</html>

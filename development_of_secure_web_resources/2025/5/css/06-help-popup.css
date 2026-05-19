@@ -1,0 +1,37 @@
+/* Задание 6: всплывающее окно помощи */
+
+.help { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 100; }
+.help[hidden] { display: none; }
+.help__backdrop { position: absolute; inset: 0; background: rgba(15, 23, 42, .55); }
+.help__dialog {
+    position: relative;
+    background: var(--color-card);
+    width: min(100%, 420px);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-strong);
+    padding: 1.6em 1.8em 1.4em;
+    animation: help-in .25s ease-out;
+}
+@keyframes help-in { from { opacity: 0; transform: translateY(8px);} to { opacity: 1; transform: none;} }
+.help__close { position: absolute; top: .3em; right: .55em; background: transparent; border: 0; font-size: 1.6em; cursor: pointer; color: var(--color-muted); }
+.help__close:hover { color: var(--color-text); }
+
+.help label { display: flex; flex-direction: column; gap: .25em; margin-bottom: .8em; font-size: .9em; color: #334155; }
+.help textarea { padding: .6em .8em; border: 1px solid var(--color-border); border-radius: 8px; font: inherit; resize: vertical; }
+.help textarea:focus { outline: none; border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(99,102,241,.2); }
+
+.help .btn {
+    background: var(--color-primary);
+    color: #fff;
+    border: 0;
+    padding: .65em 1.2em;
+    border-radius: 8px;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+    transition: background .2s, transform .15s;
+}
+.help .btn:hover { background: var(--color-primary-hover); }
+
+.help__actions { display: flex; justify-content: flex-end; }
+.help__thanks { margin-top: .6em; color: var(--color-success); font-weight: 600; }

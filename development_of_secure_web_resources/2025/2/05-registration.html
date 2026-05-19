@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Задание 5. Форма регистрации</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/05-registration.css">
+</head>
+<body>
+<main class="auth">
+    <form class="auth-form" action="#" method="post">
+        <h1>Создать аккаунт</h1>
+        <p class="auth-form__hint">Поля, отмеченные <span class="req">*</span>, обязательны.</p>
+
+        <div class="row two-cols">
+            <label>
+                <span>Имя <span class="req">*</span></span>
+                <input type="text" name="first_name" required placeholder="Иван">
+            </label>
+            <label>
+                <span>Фамилия <span class="req">*</span></span>
+                <input type="text" name="last_name" required placeholder="Иванов">
+            </label>
+        </div>
+
+        <label>
+            <span>Email <span class="req">*</span></span>
+            <input type="email" name="email" required placeholder="you@example.com">
+        </label>
+
+        <div class="row two-cols">
+            <label>
+                <span>Пароль <span class="req">*</span></span>
+                <input type="password" name="password" required minlength="8">
+            </label>
+            <label>
+                <span>Подтвердите <span class="req">*</span></span>
+                <input type="password" name="password_confirm" required minlength="8">
+            </label>
+        </div>
+
+        <button type="submit" class="btn-primary">Регистрация</button>
+
+        <div class="auth-form__links">
+            <a href="#">Войти</a>
+            <a href="#">Забыли пароль?</a>
+        </div>
+    </form>
+
+    <p class="back-row"><a class="back-link" href="index.html">&larr; Назад к содержанию</a></p>
+</main>
+</body>
+</html>

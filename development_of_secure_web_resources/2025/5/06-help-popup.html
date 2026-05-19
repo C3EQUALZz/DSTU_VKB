@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Задание 6. Всплывающее окно помощи</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/06-help-popup.css">
+</head>
+<body>
+<div class="container">
+    <h1>Всплывающее окно помощи</h1>
+    <p>Окно появляется автоматически через <strong>5 секунд</strong> после загрузки страницы.
+       Закрытие — крестиком, кнопкой «Отправить» (с очисткой формы) или кликом по затемнённому фону.</p>
+    <p>Чтобы посмотреть ещё раз — обновите страницу.</p>
+
+    <a class="back-link" href="index.html">&larr; К содержанию</a>
+</div>
+
+<div id="help" class="help" hidden role="dialog" aria-labelledby="help-title">
+    <div class="help__backdrop" data-close></div>
+    <div class="help__dialog">
+        <button class="help__close" type="button" data-close aria-label="Закрыть">×</button>
+        <h2 id="help-title">Как я могу вам помочь?</h2>
+        <form id="help-form">
+            <label>
+                <span>Ваш вопрос</span>
+                <textarea name="question" rows="3" placeholder="Например: как сбросить пароль?" required></textarea>
+            </label>
+            <div class="help__actions">
+                <button type="submit" class="btn">Отправить</button>
+            </div>
+            <p id="help-thanks" class="help__thanks" hidden>Спасибо! Мы свяжемся с вами.</p>
+        </form>
+    </div>
+</div>
+
+<script src="js/06-help-popup.js" defer></script>
+</body>
+</html>

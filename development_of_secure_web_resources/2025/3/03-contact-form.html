@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Задание 3. Адаптивная форма «Обратная связь»</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/03-contact-form.css">
+</head>
+<body>
+<div class="container">
+    <h1>Обратная связь</h1>
+    <p>Заполните форму ниже — мы свяжемся с вами. На экранах ≥768&nbsp;px поля «Имя» и «Email» расположены в одной строке.</p>
+
+    <form class="contact" action="#" method="post" novalidate>
+        <div class="contact__row">
+            <label>
+                <span>Имя</span>
+                <input type="text" name="name" placeholder="Иван" required minlength="2">
+            </label>
+            <label>
+                <span>Email</span>
+                <input type="email" name="email" placeholder="you@example.com" required>
+            </label>
+        </div>
+
+        <label>
+            <span>Тема</span>
+            <input type="text" name="subject" placeholder="Кратко о причине обращения" required>
+        </label>
+
+        <label>
+            <span>Сообщение</span>
+            <textarea name="message" rows="5" placeholder="Расскажите подробнее..." required></textarea>
+        </label>
+
+        <button type="submit" class="contact__submit">Отправить</button>
+    </form>
+
+    <a class="back-link" href="index.html">&larr; Назад к содержанию</a>
+</div>
+</body>
+</html>

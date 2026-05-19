@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Задание 7. Landing Page</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/07-landing.css">
+</head>
+<body>
+
+<header class="lp-header">
+    <div class="lp-header__inner">
+        <a class="lp-logo" href="#">SecureWeb</a>
+        <nav class="lp-nav">
+            <a href="#features">Возможности</a>
+            <a href="#pricing">Тарифы</a>
+            <a href="#reviews">Отзывы</a>
+            <a href="#contact">Контакты</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="hero__content">
+            <h1>Уникальный продукт для вашего успеха</h1>
+            <p>Платформа для разработки и защиты веб-ресурсов: безопасные шаблоны,
+               автоматический аудит, готовая инфраструктура.</p>
+            <a href="#features" class="btn btn--cta">Узнать больше &rarr;</a>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <h2>Почему мы</h2>
+        <div class="features__grid">
+            <div class="feature"><div class="feature__icon">⚡</div><h3>Эффективность</h3><p>Запуск нового проекта за день вместо недели — готовые блоки и шаблоны.</p></div>
+            <div class="feature"><div class="feature__icon">🪶</div><h3>Простота</h3><p>Минимум магии, понятная документация, прозрачная архитектура.</p></div>
+            <div class="feature"><div class="feature__icon">🔒</div><h3>Надёжность</h3><p>Стандарты OWASP, регулярные проверки, шифрование на всех уровнях.</p></div>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <h2>Тарифные планы</h2>
+        <div class="pricing__grid">
+            <div class="plan">
+                <h3>Базовый</h3>
+                <p class="plan__price">0&nbsp;₽<span>/мес</span></p>
+                <ul>
+                    <li>1 проект</li>
+                    <li>Базовая аналитика</li>
+                    <li>Email-поддержка</li>
+                </ul>
+                <a href="#" class="btn">Выбрать</a>
+            </div>
+            <div class="plan plan--featured">
+                <h3>Стандартный</h3>
+                <p class="plan__price">990&nbsp;₽<span>/мес</span></p>
+                <ul>
+                    <li>До 10 проектов</li>
+                    <li>Расширенная аналитика</li>
+                    <li>Приоритетная поддержка</li>
+                </ul>
+                <a href="#" class="btn btn--cta">Выбрать</a>
+            </div>
+            <div class="plan">
+                <h3>Премиум</h3>
+                <p class="plan__price">2&nbsp;490&nbsp;₽<span>/мес</span></p>
+                <ul>
+                    <li>Безлимит проектов</li>
+                    <li>Полный аудит безопасности</li>
+                    <li>Персональный менеджер</li>
+                </ul>
+                <a href="#" class="btn">Выбрать</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="reviews" id="reviews">
+        <h2>Отзывы клиентов</h2>
+        <div class="reviews__row">
+            <blockquote class="review"><p>«Запустили продакшен за выходные. Очень довольны качеством шаблонов.»</p><cite>— Анна Г., CTO стартапа</cite></blockquote>
+            <blockquote class="review"><p>«Аудит выявил три критичные уязвимости — без сервиса мы бы их пропустили.»</p><cite>— Денис К., тимлид backend</cite></blockquote>
+            <blockquote class="review"><p>«Удобный личный кабинет, чёткие отчёты — рекомендую коллегам.»</p><cite>— Полина С., менеджер проекта</cite></blockquote>
+        </div>
+    </section>
+
+    <section class="cta-form" id="contact">
+        <h2>Связаться с нами</h2>
+        <form action="#" method="post">
+            <input type="email" placeholder="Ваш email" required>
+            <button type="submit" class="btn btn--cta">Отправить</button>
+        </form>
+    </section>
+</main>
+
+<footer class="lp-footer">
+    <div class="lp-header__inner">
+        <p>&copy; 2025 SecureWeb. Все права защищены.</p>
+        <p><a href="index.html" style="color:#cbd5e1;">&larr; К содержанию ЛР</a></p>
+    </div>
+</footer>
+
+</body>
+</html>

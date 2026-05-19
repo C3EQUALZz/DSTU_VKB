@@ -1,0 +1,65 @@
+/* Задание 3: адаптивная форма обратной связи */
+
+.contact {
+    background: var(--color-card);
+    padding: 1.6em 1.8em;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.contact label {
+    display: flex;
+    flex-direction: column;
+    gap: .35em;
+    font-size: .9em;
+    color: #334155;
+}
+
+.contact input, .contact textarea {
+    padding: .7em .9em;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    font: inherit;
+    transition: border-color .2s, box-shadow .2s;
+    background: #fff;
+    width: 100%;
+}
+.contact input:focus, .contact textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, .2);
+}
+.contact input:required:invalid:not(:placeholder-shown),
+.contact textarea:required:invalid:not(:placeholder-shown) {
+    border-color: #ef4444;
+}
+
+/* Mobile-first: один столбец */
+.contact__row {
+    display: grid;
+    gap: 1em;
+    grid-template-columns: 1fr;
+}
+
+/* На экранах ≥768px — две колонки */
+@media (min-width: 768px) {
+    .contact__row { grid-template-columns: 1fr 1fr; }
+}
+
+.contact__submit {
+    background: var(--color-primary);
+    color: #fff;
+    border: 0;
+    padding: .85em 1.4em;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background .2s, transform .15s;
+}
+.contact__submit:hover  { background: var(--color-primary-hover); }
+.contact__submit:active { transform: translateY(1px); }

@@ -1,0 +1,77 @@
+/* Задание 2: три ссылки-кнопки */
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    margin: 1.5em 0;
+}
+
+.btn {
+    display: inline-block;
+    padding: .8em 1.6em;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    font-family: var(--font-sans);
+    transition: background .2s, color .2s, transform .15s, box-shadow .2s;
+    cursor: pointer;
+}
+
+/* --- 1. Основная: контрастный фон, hover, active --- */
+.btn-primary {
+    background: var(--color-primary);
+    color: #fff;
+}
+.btn-primary:hover { background: var(--color-primary-hover); }
+.btn-primary:active { transform: translateY(2px); }
+
+/* --- 2. С тенью и увеличением + декоративная стрелка через ::after --- */
+.btn-shadow {
+    background: linear-gradient(135deg, #fb923c, #f97316);
+    color: #fff;
+    box-shadow: 2px 2px 15px 0 rgba(255, 151, 32, .863);
+    position: relative;
+}
+.btn-shadow::after {
+    content: "";
+    display: inline-block;
+    width: .6em;
+    height: .6em;
+    margin-left: .3em;
+    border-top: 2px solid #fff;
+    border-right: 2px solid #fff;
+    transform: rotate(45deg);
+    transition: margin-left .2s;
+}
+.btn-shadow:hover {
+    transform: scale(1.05);
+    box-shadow: 4px 4px 22px 2px rgba(255, 151, 32, .9);
+}
+.btn-shadow:hover::after { margin-left: .7em; }
+.btn-shadow:active { transform: scale(0.97); }
+
+/* --- 3. Контурная: подчёркивание через ::before --- */
+.btn-ghost {
+    background: transparent;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+    position: relative;
+    overflow: hidden;
+}
+.btn-ghost::before {
+    content: "";
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 100%; height: 2px;
+    background: var(--color-primary);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform .25s;
+}
+.btn-ghost:hover {
+    background: var(--color-primary);
+    color: #fff;
+}
+.btn-ghost:hover::before { transform: scaleX(1); transform-origin: left; }
+.btn-ghost:active { background: var(--color-primary-hover); }

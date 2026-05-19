@@ -1,0 +1,165 @@
+/* Задания 1, 2, 3 */
+
+/* ---------- Топ-навигация ---------- */
+.topnav { background: #1e293b; }
+.topnav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 10px 20px;
+}
+
+.topnav__link {
+    display: inline-block;
+    color: #f1f5f9;
+    text-decoration: none;
+    font-weight: 500;
+    padding: .7em 1.2em;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, .04);
+    /* Плавный hover: rule for Задания 1 */
+    transition: transform .25s ease, background-color .25s ease, color .25s ease;
+    transform-origin: center;
+    min-width: 140px;
+    text-align: center;
+}
+.topnav__link:hover {
+    transform: scale(1.2);
+    background: var(--color-primary);
+    color: #fff;
+    z-index: 1;
+    position: relative;
+}
+.topnav__link--cta { background: var(--color-accent); color: #1f2937; }
+.topnav__link--cta:hover { background: var(--color-primary-hover); color: #fff; }
+
+/* ---------- Кнопки и общая typography ---------- */
+.btn {
+    background: var(--color-primary);
+    color: #fff;
+    border: 0;
+    padding: .65em 1.2em;
+    border-radius: 8px;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+    transition: background .2s, transform .15s;
+}
+.btn:hover { background: var(--color-primary-hover); }
+.btn:active { transform: translateY(1px); }
+.btn--ghost {
+    background: transparent;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+}
+.btn--ghost:hover { background: var(--color-primary); color: #fff; }
+
+/* ---------- Таймер ---------- */
+.timer {
+    background: var(--color-card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1.2em 1.6em;
+    max-width: 360px;
+}
+.timer__row { display: flex; align-items: center; justify-content: space-between; gap: 1em; margin-bottom: 1em; }
+.timer__row input {
+    width: 80px;
+    padding: .4em .6em;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    font: inherit;
+}
+.timer__row input:disabled { background: #f1f5f9; color: var(--color-muted); }
+.timer__display {
+    font-size: 2.6em;
+    font-weight: 700;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-primary-hover);
+    margin: .2em 0;
+}
+.timer__display.is-done { color: var(--color-error); }
+.timer__buttons { display: flex; gap: .5em; flex-wrap: wrap; }
+.timer__message { margin-top: .8em; color: var(--color-muted); font-size: .95em; }
+.timer__message.is-done { color: var(--color-error); font-weight: 600; }
+
+/* ---------- Модальное окно ---------- */
+.modal {
+    position: fixed; inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 100;
+}
+.modal[hidden] { display: none; }
+.modal__backdrop {
+    position: absolute; inset: 0;
+    background: rgba(15, 23, 42, .55);
+    backdrop-filter: blur(2px);
+}
+.modal__dialog {
+    position: relative;
+    background: var(--color-card);
+    width: min(100%, 440px);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-strong);
+    padding: 1.6em 1.8em 1.4em;
+    animation: modal-in .2s ease-out;
+}
+@keyframes modal-in { from { transform: scale(.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+.modal__close {
+    position: absolute;
+    top: .4em; right: .6em;
+    background: transparent;
+    border: 0;
+    font-size: 1.6em;
+    cursor: pointer;
+    color: var(--color-muted);
+}
+.modal__close:hover { color: var(--color-text); }
+
+#register-form label {
+    display: flex;
+    flex-direction: column;
+    gap: .25em;
+    margin-bottom: .9em;
+    font-size: .9em;
+    color: #334155;
+}
+#register-form input {
+    padding: .6em .8em;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    font: inherit;
+    transition: border-color .2s, box-shadow .2s;
+}
+#register-form input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, .2);
+}
+#register-form input.is-invalid {
+    border-color: var(--color-error);
+    background: #fef2f2;
+}
+
+.field-error {
+    color: var(--color-error);
+    font-size: .8em;
+    min-height: 1.2em;
+}
+
+.modal__actions { display: flex; gap: .6em; justify-content: flex-end; margin-top: .5em; }
+.modal__success {
+    margin-top: .8em;
+    color: var(--color-success);
+    font-weight: 600;
+}

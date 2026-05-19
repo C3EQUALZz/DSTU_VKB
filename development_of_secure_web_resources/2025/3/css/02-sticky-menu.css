@@ -1,0 +1,86 @@
+/* Задание 2: sticky-header + чисто CSS гамбургер */
+
+.header {
+    position: sticky;
+    top: 0;
+    background: #d1fae5;
+    box-shadow: 0 1px 0 transparent;
+    transition: background .25s, box-shadow .25s;
+    z-index: 10;
+}
+/* Эффект «прилипания»: имитируем через scroll-shadow */
+.header::after {
+    content: "";
+    position: absolute; left: 0; bottom: -8px;
+    height: 8px; width: 100%;
+    background: linear-gradient(rgba(15,23,42,.07), transparent);
+    opacity: 0; transition: opacity .25s;
+    pointer-events: none;
+}
+.header:hover::after { opacity: 1; }
+
+.header__inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 1em 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 1.2em;
+    text-decoration: none;
+    color: #047857;
+}
+
+/* ---------- Десктоп: горизонтальные ссылки ---------- */
+.nav { display: flex; gap: 1.4em; }
+.nav__link {
+    color: #064e3b;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color .2s;
+}
+.nav__link:hover { color: var(--color-primary-hover); }
+
+/* ---------- Бургер скрыт на десктопе ---------- */
+.burger { display: none; cursor: pointer; }
+.burger span {
+    display: block;
+    width: 26px;
+    height: 3px;
+    background: #064e3b;
+    margin: 5px 0;
+    border-radius: 2px;
+    transition: transform .25s, opacity .25s;
+}
+
+/* ---------- Мобильные: гамбургер + раскрытие через :checked ---------- */
+@media (max-width: 767px) {
+    .burger { display: inline-block; }
+
+    .nav {
+        position: absolute;
+        top: 100%; left: 0;
+        width: 100%;
+        background: #ecfdf5;
+        flex-direction: column;
+        gap: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height .3s ease;
+    }
+    .nav__link {
+        padding: 1em 1.2em;
+        border-top: 1px solid #d1fae5;
+    }
+
+    /* Раскрытие меню без JavaScript: :checked + соседний селектор */
+    .menu-toggle:checked ~ .header .nav { max-height: 400px; }
+    .menu-toggle:checked ~ .header .burger span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .menu-toggle:checked ~ .header .burger span:nth-child(2) { opacity: 0; }
+    .menu-toggle:checked ~ .header .burger span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+}

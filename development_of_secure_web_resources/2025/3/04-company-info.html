@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Задание 4. О компании</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/04-company-info.css">
+</head>
+<body>
+<div class="container">
+    <h1>О компании</h1>
+
+    <section class="company">
+        <div class="company__logo" aria-hidden="true">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0" stop-color="#10b981"/>
+                        <stop offset="1" stop-color="#0ea5e9"/>
+                    </linearGradient>
+                </defs>
+                <circle cx="50" cy="50" r="48" fill="url(#grad)"/>
+                <text x="50" y="62" text-anchor="middle" font-family="Inter, sans-serif"
+                      font-weight="700" font-size="36" fill="#ffffff">WR</text>
+            </svg>
+        </div>
+
+        <div class="company__body">
+            <h2>WebRes Studio</h2>
+            <p>Мы — небольшая команда, которая делает безопасные веб-ресурсы для
+               образовательных учреждений и среднего бизнеса с 2018&nbsp;года.</p>
+            <ul class="company__contacts">
+                <li><strong>Телефон:</strong> +7&nbsp;(863)&nbsp;123-45-67</li>
+                <li><strong>Email:</strong> hello@webres.example</li>
+                <li><strong>Адрес:</strong> Ростов-на-Дону, пл.&nbsp;Гагарина, 1</li>
+            </ul>
+        </div>
+    </section>
+
+    <a class="back-link" href="index.html">&larr; Назад к содержанию</a>
+</div>
+</body>
+</html>

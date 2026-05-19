@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Задание 7. Тег input — все типы</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; max-width: 920px; margin: 30px auto; padding: 0 20px; line-height: 1.4; }
+        table { border-collapse: collapse; width: 100%; }
+        caption { font-weight: 700; padding-bottom: .5em; }
+        th, td { border: 1px solid #999; padding: 8px 10px; vertical-align: top; }
+        th { background: #f3f3f3; }
+        td:nth-child(2) { white-space: nowrap; }
+    </style>
+</head>
+<body>
+<h1>Возможные типы элемента <code>input</code></h1>
+
+<form>
+<table>
+    <caption>Возможные типы элемента input</caption>
+    <thead>
+        <tr><th>type</th><th>Вид в браузере</th><th>Описание</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>button</td><td><input type="button" value="Это кнопка"></td><td>Кнопка.</td></tr>
+        <tr><td>checkbox</td><td><input type="checkbox" checked></td><td>Флажки. Позволяют выбрать более одного варианта из предложенных.</td></tr>
+        <tr><td>file</td><td><input type="file"></td><td>Поле для ввода имени файла, который пересылается на сервер.</td></tr>
+        <tr><td>hidden</td><td><input type="hidden" value="скрытое значение"> <small>(не отображается)</small></td><td>Скрытое поле. Никак не отображается на веб-странице.</td></tr>
+        <tr><td>image</td><td><input type="image" src="assets/chrome.svg" alt="Отправить" width="48" height="48"></td><td>Поле с изображением. При нажатии на рисунок данные формы отправляются на сервер.</td></tr>
+        <tr><td>password</td><td><input type="password" placeholder="пароль"></td><td>Обычное текстовое поле, но отличается тем, что все символы показываются звёздочками.</td></tr>
+        <tr><td>radio</td><td><label><input type="radio" name="drink"> "Чай"</label> <label><input type="radio" name="drink" checked> "Вода"</label> <label><input type="radio" name="drink"> "Кофе"</label></td><td>Переключатели. Один вариант из нескольких.</td></tr>
+        <tr><td>reset</td><td><input type="reset" value="Сбросить"></td><td>Кнопка для возврата данных формы в первоначальное значение.</td></tr>
+        <tr><td>submit</td><td><input type="submit" value="Отправить"></td><td>Кнопка для отправки данных формы на сервер.</td></tr>
+        <tr><td>text</td><td><input type="text"></td><td>Текстовое поле. Ввод символов с помощью клавиатуры.</td></tr>
+        <tr><td>color</td><td><input type="color" value="#a04040"></td><td>Виджет для выбора цвета.</td></tr>
+        <tr><td>date</td><td><input type="date"></td><td>Поле для выбора календарной даты.</td></tr>
+        <tr><td>datetime</td><td><input type="datetime"></td><td>Указание даты и времени.</td></tr>
+        <tr><td>datetime-local</td><td><input type="datetime-local"></td><td>Указание местной даты и времени.</td></tr>
+        <tr><td>email</td><td><input type="email" placeholder="user@example.com"></td><td>Для адресов электронной почты.</td></tr>
+        <tr><td>number</td><td><input type="number"></td><td>Ввод чисел.</td></tr>
+        <tr><td>range</td><td><input type="range"></td><td>Ползунок для выбора чисел в указанном диапазоне.</td></tr>
+        <tr><td>search</td><td><input type="search"></td><td>Поле для поиска.</td></tr>
+        <tr><td>tel</td><td><input type="tel" placeholder="+7..."></td><td>Для телефонных номеров.</td></tr>
+        <tr><td>time</td><td><input type="time"></td><td>Для времени.</td></tr>
+        <tr><td>url</td><td><input type="url" placeholder="https://"></td><td>Для веб-адресов.</td></tr>
+        <tr><td>month</td><td><input type="month"></td><td>Выбор месяца.</td></tr>
+        <tr><td>week</td><td><input type="week"></td><td>Выбор недели.</td></tr>
+    </tbody>
+</table>
+</form>
+
+<p><a href="index.html">&larr; Назад к содержанию</a></p>
+</body>
+</html>

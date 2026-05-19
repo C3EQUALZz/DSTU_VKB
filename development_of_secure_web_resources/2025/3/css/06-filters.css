@@ -1,0 +1,69 @@
+/* Задание 6: адаптивные фильтры — без JS */
+
+.results {
+    display: grid;
+    gap: 1.4em;
+    grid-template-columns: 260px 1fr;       /* десктоп: фильтры слева */
+}
+
+.filters {
+    background: var(--color-card);
+    padding: 1em 1.2em;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    height: fit-content;
+}
+.filters fieldset {
+    border: 0;
+    padding: 0;
+    margin: 0 0 1.2em;
+}
+.filters legend {
+    font-weight: 700;
+    color: #065f46;
+    margin-bottom: .4em;
+    padding: 0;
+}
+.filters label { display: block; padding: .25em 0; color: #334155; font-size: .95em; }
+.filters input[type="range"] { width: 100%; }
+.range-hint { color: var(--color-muted); font-size: .85em; }
+
+.items {
+    background: var(--color-card);
+    border-radius: var(--radius);
+    padding: 1.2em 1.4em;
+    box-shadow: var(--shadow);
+}
+.items h2 { margin: 0 0 .8em; color: var(--color-primary-hover); }
+.items ul { list-style: none; padding: 0; margin: 0; }
+.items li { padding: .55em 0; border-bottom: 1px solid var(--color-border); }
+.items li:last-child { border-bottom: 0; }
+
+/* Кнопка «Фильтры» скрыта на десктопе */
+.filters-toggle-btn { display: none; }
+
+/* ---------- Мобильные: <800px ---------- */
+@media (max-width: 799px) {
+    .results { grid-template-columns: 1fr; }
+
+    .filters-toggle-btn {
+        display: inline-block;
+        background: var(--color-primary);
+        color: #fff;
+        padding: .6em 1em;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        user-select: none;
+        margin-bottom: 1em;
+    }
+    .filters-toggle-btn__close { display: none; }
+
+    /* По умолчанию фильтры скрыты */
+    .filters { display: none; }
+
+    /* :checked раскрывает фильтры */
+    .filters-toggle:checked ~ .results .filters { display: block; }
+    .filters-toggle:checked ~ .filters-toggle-btn .filters-toggle-btn__open  { display: none; }
+    .filters-toggle:checked ~ .filters-toggle-btn .filters-toggle-btn__close { display: inline; }
+}

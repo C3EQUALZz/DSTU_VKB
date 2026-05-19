@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Задание 2. Кнопки-ссылки</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/02-buttons.css">
+</head>
+<body>
+<div class="container">
+    <h1>Стилизованные ссылки-кнопки</h1>
+
+    <p>Ниже представлены три варианта ссылок, стилизованных под кнопки.
+       Наведите курсор и попробуйте кликнуть, чтобы увидеть эффекты
+       <code>:hover</code> и <code>:active</code>.</p>
+
+    <div class="row">
+        <a href="#" class="btn btn-primary">Основная кнопка</a>
+        <a href="#" class="btn btn-shadow">С тенью и подъёмом &rarr;</a>
+        <a href="#" class="btn btn-ghost">Контурная кнопка</a>
+    </div>
+
+    <h2>Описание эффектов</h2>
+    <ul>
+        <li><strong>Основная</strong>: фиолетовый фон, белый текст, скруглённые углы. При <code>:hover</code> темнеет фон, при <code>:active</code> «вдавливается» (translateY).</li>
+        <li><strong>С тенью</strong>: box-shadow + увеличение масштаба при наведении, после стрелки декоративный элемент через <code>::after</code>.</li>
+        <li><strong>Контурная</strong>: прозрачный фон, граница, при наведении окрашивается. Имеет подчёркивание через <code>::before</code>.</li>
+    </ul>
+
+    <a class="back-link" href="index.html">&larr; Назад к содержанию</a>
+</div>
+</body>
+</html>

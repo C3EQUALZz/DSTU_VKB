@@ -1,0 +1,13 @@
+{
+  "name": "dswr-labs-smoke",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "smoke": "playwright test --reporter=list"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0"
+  }
+}

@@ -1,0 +1,109 @@
+/* Общие стили для ЛР4 */
+:root {
+    --color-bg: #f7f8fb;
+    --color-text: #0f172a;
+    --color-muted: #64748b;
+    --color-primary: #2563eb;
+    --color-primary-hover: #1d4ed8;
+    --color-card: #ffffff;
+    --color-border: #e2e8f0;
+    --radius: 10px;
+    --shadow: 0 4px 14px rgba(15, 23, 42, .08);
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: var(--font-sans);
+    color: var(--color-text);
+    background: var(--color-bg);
+    line-height: 1.6;
+}
+
+.container { max-width: 900px; margin: 0 auto; padding: 32px 20px; }
+
+h1, h2 { color: var(--color-text); margin-top: 0; }
+
+a { color: var(--color-primary); }
+
+.back-link {
+    display: inline-block;
+    margin-top: 1.5em;
+    color: var(--color-muted);
+    text-decoration: none;
+}
+.back-link:hover { color: var(--color-primary); }
+
+/* Сетка списка задач */
+.tasks {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: 1fr;
+    margin: 1em 0;
+    padding: 0;
+    list-style: none;
+}
+@media (min-width: 720px) {
+    .tasks { grid-template-columns: 1fr 1fr; }
+}
+
+.task-card {
+    background: var(--color-card);
+    border-radius: var(--radius);
+    padding: 1em 1.2em;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: .35em;
+    transition: transform .15s;
+}
+.task-card:hover { transform: translateY(-2px); }
+.task-card a { text-decoration: none; color: var(--color-primary); font-weight: 600; }
+.task-card a:hover { text-decoration: underline; }
+.task-card p { margin: 0; color: var(--color-muted); font-size: .92em; }
+
+/* Страницы задач */
+.task-page {
+    background: var(--color-card);
+    padding: 1.4em 1.6em;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+.task-page h1 { font-size: 1.3em; margin-bottom: .4em; }
+.task-page p.task-desc { color: var(--color-muted); margin-top: 0; }
+
+.btn {
+    display: inline-block;
+    background: var(--color-primary);
+    color: #fff;
+    padding: .65em 1.2em;
+    border-radius: 8px;
+    border: 0;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+    transition: background .2s, transform .15s;
+}
+.btn:hover { background: var(--color-primary-hover); }
+.btn:active { transform: translateY(1px); }
+
+.output {
+    margin-top: 1.2em;
+    background: #f1f5f9;
+    border: 1px dashed var(--color-border);
+    border-radius: 8px;
+    padding: 1em 1.2em;
+    min-height: 3em;
+    color: #0f172a;
+    font-family: ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace;
+    font-size: .95em;
+    white-space: pre-wrap;
+}
+.output:empty::before {
+    content: "Нажмите «Запустить» и введите данные в окно prompt.";
+    color: var(--color-muted);
+    font-family: var(--font-sans);
+}
+.output.is-error { background: #fef2f2; border-color: #fecaca; color: #991b1b; }

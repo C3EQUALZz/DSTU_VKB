@@ -1,0 +1,34 @@
+/* Задание 4: «О компании» через Flexbox */
+
+.company {
+    background: var(--color-card);
+    border-radius: var(--radius);
+    padding: 1.6em;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;       /* mobile-first: лого сверху */
+    align-items: center;
+    text-align: center;
+    gap: 1.4em;
+}
+
+.company__logo {
+    width: 140px;
+    height: 140px;
+    flex-shrink: 0;
+}
+
+.company__body h2 { margin: 0 0 .3em; font-size: 1.4em; color: var(--color-primary-hover); }
+.company__contacts { list-style: none; padding: 0; margin: 1em 0 0; color: var(--color-muted); }
+.company__contacts li { margin: .3em 0; }
+.company__contacts strong { color: #1f2937; }
+
+/* Десктоп: логотип слева, текст справа */
+@media (min-width: 768px) {
+    .company {
+        flex-direction: row;
+        text-align: left;
+        align-items: flex-start;
+        gap: 2em;
+    }
+}

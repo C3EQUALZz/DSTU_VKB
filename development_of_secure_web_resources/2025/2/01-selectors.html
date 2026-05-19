@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Задание 1. CSS-селекторы</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/01-selectors.css">
+</head>
+<body>
+<div class="container">
+    <h1>Все основные типы CSS-селекторов</h1>
+
+    <p class="lead">Эта страница демонстрирует разом <strong>селектор элемента</strong>,
+        <strong>класса</strong>, <strong>идентификатора</strong>, <strong>потомка</strong>,
+        <strong>атрибута</strong>, <strong>псевдокласса</strong> и <strong>псевдоэлемента</strong>.</p>
+
+    <article id="article" class="card">
+        <h2>Селектор идентификатора (#article)</h2>
+        <p>Этот блок имеет уникальный <code>id="article"</code>. К нему применён
+            селектор <code>#article</code> — он добавил рамку и цвет фона.</p>
+
+        <p class="hint">Это абзац с классом <code>.hint</code>. К нему применён
+            селектор класса.</p>
+
+        <div class="links">
+            <h3>Селектор атрибута и потомка</h3>
+            <p>Ссылки ниже отличаются <em>по атрибуту</em> <code>target</code>:</p>
+            <p>
+                <a href="https://example.com">Обычная ссылка</a> —
+                <a href="https://example.com" target="_blank">внешняя (target=_blank)</a> —
+                <a href="mailto:test@example.com">по почте (href^=mailto:)</a>.
+            </p>
+        </div>
+
+        <h3>Псевдокласс и псевдоэлемент</h3>
+        <p>Псевдокласс <code>:hover</code> применён к ссылкам выше — наведите
+            курсор. К абзацу ниже применён псевдоэлемент <code>::first-letter</code>:</p>
+        <p class="dropcap">Первая буква этого абзаца увеличена и окрашена с помощью
+            псевдоэлемента <code>::first-letter</code>, без какого-либо дополнительного HTML.</p>
+
+        <h3>Псевдокласс :nth-child</h3>
+        <ul class="items">
+            <li>Пункт 1</li>
+            <li>Пункт 2</li>
+            <li>Пункт 3</li>
+            <li>Пункт 4</li>
+            <li>Пункт 5</li>
+        </ul>
+    </article>
+
+    <a class="back-link" href="index.html">&larr; Назад к содержанию</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Задание 5. Изображения</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; max-width: 760px; margin: 30px auto; padding: 0 20px; line-height: 1.55; }
+        section { padding: 1em 0; border-bottom: 1px dashed #ddd; }
+        img { display: block; margin: .5em 0; }
+    </style>
+</head>
+<body>
+<h1>Изображения в HTML</h1>
+
+<section>
+    <p>Простое добавление изображения:</p>
+    <img src="assets/chrome.svg" alt="Логотип браузера Chrome">
+</section>
+
+<section>
+    <p>Изображение с указанием размеров (width / height):</p>
+    <img src="assets/chrome.svg" alt="Логотип Chrome увеличенный" width="240" height="240">
+</section>
+
+<section>
+    <p>Изображение с относительным путём (та же папка <code>assets/</code>):</p>
+    <img src="./assets/chrome.svg" alt="Chrome" width="120" height="120">
+</section>
+
+<section>
+    <p>Изображение, используемое как ссылка:</p>
+    <a href="https://www.google.com/chrome/" target="_blank" rel="noopener noreferrer">
+        <img src="assets/chrome.svg" alt="Перейти на сайт Chrome" width="80" height="80">
+    </a>
+</section>
+
+<section>
+    <p>Изображение с использованием атрибута <code>title</code> (всплывающая подсказка):</p>
+    <img src="assets/chrome.svg" alt="Логотип Chrome" title="Это логотип Google Chrome" width="120" height="120">
+</section>
+
+<p><a href="index.html">&larr; Назад к содержанию</a></p>
+</body>
+</html>
