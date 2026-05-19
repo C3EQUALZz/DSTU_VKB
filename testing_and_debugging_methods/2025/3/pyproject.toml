@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=66.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.dynamic]
+version = { attr = "third_laboratory.__version__" }
+
+[project]
+name = "third_laboratory"
+dynamic = ["version"]
+description = "Third laboratory — Equivalence Class Testing для next_day"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+addopts = "-ra -q --strict-markers"
+pythonpath = ["src"]
