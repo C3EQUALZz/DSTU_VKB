@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=66.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.dynamic]
+version = { attr = "fourth_laboratory.__version__" }
+
+[project]
+name = "fourth_laboratory"
+dynamic = ["version"]
+description = "Fourth laboratory — Полносвязная нейросеть для классификации геометрических фигур (PyTorch)"
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+    "torch>=2.4",
+    "numpy>=1.26",
+    "pillow>=10.0",
+]
+
+[project.scripts]
+fourth-lab-experiments = "fourth_laboratory.__main__:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+addopts = "-ra -q --strict-markers"
+pythonpath = ["src"]

@@ -1,0 +1,200 @@
+[
+  {
+    "hidden_dim": 10,
+    "activation": "relu",
+    "batch_size": 10,
+    "accuracy": 0.7966666666666666,
+    "mse": 0.10014408747355143,
+    "mae": 0.1917121336195204,
+    "final_train_loss": 0.30920776495089136,
+    "num_parameters": 7883,
+    "elapsed_seconds": 5.31783420802094
+  },
+  {
+    "hidden_dim": 10,
+    "activation": "relu",
+    "batch_size": 100,
+    "accuracy": 0.7516666666666667,
+    "mse": 0.12150973002115885,
+    "mae": 0.2524370829264323,
+    "final_train_loss": 0.5389813284079233,
+    "num_parameters": 7883,
+    "elapsed_seconds": 0.5106387080159038
+  },
+  {
+    "hidden_dim": 10,
+    "activation": "relu",
+    "batch_size": 1000,
+    "accuracy": 0.64,
+    "mse": 0.16871875762939453,
+    "mae": 0.3529508887396918,
+    "final_train_loss": 0.8291112780570984,
+    "num_parameters": 7883,
+    "elapsed_seconds": 0.46828379202634096
+  },
+  {
+    "hidden_dim": 10,
+    "activation": "linear",
+    "batch_size": 10,
+    "accuracy": 0.7483333333333333,
+    "mse": 0.12319025039672851,
+    "mae": 0.21630101097954643,
+    "final_train_loss": 0.41422414664799967,
+    "num_parameters": 7883,
+    "elapsed_seconds": 2.7197361669968814
+  },
+  {
+    "hidden_dim": 10,
+    "activation": "linear",
+    "batch_size": 100,
+    "accuracy": 0.745,
+    "mse": 0.12665956285264757,
+    "mae": 0.2568798489040799,
+    "final_train_loss": 0.5590218429764112,
+    "num_parameters": 7883,
+    "elapsed_seconds": 0.3277784999809228
+  },
+  {
+    "hidden_dim": 10,
+    "activation": "linear",
+    "batch_size": 1000,
+    "accuracy": 0.6266666666666667,
+    "mse": 0.16438964419894747,
+    "mae": 0.3385869132147895,
+    "final_train_loss": 0.781788190205892,
+    "num_parameters": 7883,
+    "elapsed_seconds": 0.08751683298032731
+  },
+  {
+    "hidden_dim": 100,
+    "activation": "relu",
+    "batch_size": 10,
+    "accuracy": 0.85,
+    "mse": 0.07527717590332031,
+    "mae": 0.12207951651679146,
+    "final_train_loss": 0.07938744033065935,
+    "num_parameters": 78803,
+    "elapsed_seconds": 2.991691457980778
+  },
+  {
+    "hidden_dim": 100,
+    "activation": "relu",
+    "batch_size": 100,
+    "accuracy": 0.8116666666666666,
+    "mse": 0.09425714280870226,
+    "mae": 0.1932140604654948,
+    "final_train_loss": 0.3149252285559972,
+    "num_parameters": 78803,
+    "elapsed_seconds": 0.3552096250350587
+  },
+  {
+    "hidden_dim": 100,
+    "activation": "relu",
+    "batch_size": 1000,
+    "accuracy": 0.71,
+    "mse": 0.14131093343098958,
+    "mae": 0.2893477291531033,
+    "final_train_loss": 0.6690312822659811,
+    "num_parameters": 78803,
+    "elapsed_seconds": 0.28075262502534315
+  },
+  {
+    "hidden_dim": 100,
+    "activation": "linear",
+    "batch_size": 10,
+    "accuracy": 0.7383333333333333,
+    "mse": 0.13090943442450628,
+    "mae": 0.21245140923394099,
+    "final_train_loss": 0.4018308162689209,
+    "num_parameters": 78803,
+    "elapsed_seconds": 2.697349875001237
+  },
+  {
+    "hidden_dim": 100,
+    "activation": "linear",
+    "batch_size": 100,
+    "accuracy": 0.7533333333333333,
+    "mse": 0.11873130374484592,
+    "mae": 0.21516608344184027,
+    "final_train_loss": 0.43572063992420834,
+    "num_parameters": 78803,
+    "elapsed_seconds": 0.31170945800840855
+  },
+  {
+    "hidden_dim": 100,
+    "activation": "linear",
+    "batch_size": 1000,
+    "accuracy": 0.6766666666666666,
+    "mse": 0.14770819769965277,
+    "mae": 0.2959296417236328,
+    "final_train_loss": 0.6936432917912801,
+    "num_parameters": 78803,
+    "elapsed_seconds": 0.08088099997257814
+  },
+  {
+    "hidden_dim": 5000,
+    "activation": "relu",
+    "batch_size": 10,
+    "accuracy": 0.8266666666666667,
+    "mse": 0.09792677349514431,
+    "mae": 0.12555794609917534,
+    "final_train_loss": 0.06928470331040444,
+    "num_parameters": 3940003,
+    "elapsed_seconds": 5.793481124972459
+  },
+  {
+    "hidden_dim": 5000,
+    "activation": "relu",
+    "batch_size": 100,
+    "accuracy": 0.8583333333333333,
+    "mse": 0.06926037470499674,
+    "mae": 0.10717203776041667,
+    "final_train_loss": 0.018669154960662127,
+    "num_parameters": 3940003,
+    "elapsed_seconds": 0.9001620829803869
+  },
+  {
+    "hidden_dim": 5000,
+    "activation": "relu",
+    "batch_size": 1000,
+    "accuracy": 0.8083333333333333,
+    "mse": 0.09838551627265082,
+    "mae": 0.2062101003858778,
+    "final_train_loss": 0.3947220941384633,
+    "num_parameters": 3940003,
+    "elapsed_seconds": 0.3755648340447806
+  },
+  {
+    "hidden_dim": 5000,
+    "activation": "linear",
+    "batch_size": 10,
+    "accuracy": 0.6533333333333333,
+    "mse": 0.1707211642795139,
+    "mae": 0.2468779839409722,
+    "final_train_loss": 0.5275053561742727,
+    "num_parameters": 3940003,
+    "elapsed_seconds": 5.075614583038259
+  },
+  {
+    "hidden_dim": 5000,
+    "activation": "linear",
+    "batch_size": 100,
+    "accuracy": 0.7516666666666667,
+    "mse": 0.12545500649346245,
+    "mae": 0.2071491601732042,
+    "final_train_loss": 0.38501549512147903,
+    "num_parameters": 3940003,
+    "elapsed_seconds": 0.5786945000290871
+  },
+  {
+    "hidden_dim": 5000,
+    "activation": "linear",
+    "batch_size": 1000,
+    "accuracy": 0.66,
+    "mse": 0.15222680833604602,
+    "mae": 0.2969093322753906,
+    "final_train_loss": 0.6798603932062784,
+    "num_parameters": 3940003,
+    "elapsed_seconds": 0.17527725000400096
+  }
+]
