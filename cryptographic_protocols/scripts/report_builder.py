@@ -69,6 +69,8 @@ def _add_centered(
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.first_line_indent = Cm(0)
     p.paragraph_format.space_after = Pt(0)
+    # На титульнике — одинарный интервал, чтобы блок поместился на одну страницу.
+    p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.SINGLE
     run = p.add_run(text)
     run.bold = bold
     if size is not None:
@@ -81,9 +83,18 @@ def _add_right(doc: _Document, text: str, *, bold: bool = False) -> None:
     p.alignment = WD_ALIGN_PARAGRAPH.RIGHT
     p.paragraph_format.first_line_indent = Cm(0)
     p.paragraph_format.space_after = Pt(0)
+    p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.SINGLE
     run = p.add_run(text)
     run.bold = bold
     run.font.name = BODY_FONT
+
+
+def _add_blank_single(doc: _Document) -> None:
+    """Пустой параграф с single-интервалом — для титульника."""
+    p = doc.add_paragraph()
+    p.paragraph_format.first_line_indent = Cm(0)
+    p.paragraph_format.space_after = Pt(0)
+    p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.SINGLE
 
 
 def _add_logo(doc: _Document) -> None:
@@ -94,6 +105,7 @@ def _add_logo(doc: _Document) -> None:
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.first_line_indent = Cm(0)
     p.paragraph_format.space_after = Pt(6)
+    p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.SINGLE
     run = p.add_run()
     run.add_picture(str(LOGO_PATH), width=Inches(0.8))
 
@@ -106,29 +118,28 @@ def add_title_page(doc: _Document, meta: LabMeta) -> None:
     _add_centered(doc, "ОБРАЗОВАТЕЛЬНОЕ УЧРЕЖДЕНИЕ ВЫСШЕГО ОБРАЗОВАНИЯ", bold=True)
     _add_centered(doc, "«ДОНСКОЙ ГОСУДАРСТВЕННЫЙ ТЕХНИЧЕСКИЙ УНИВЕРСИТЕТ»", bold=True)
     _add_centered(doc, "(ДГТУ)", bold=True)
-    doc.add_paragraph()
+    _add_blank_single(doc)
     _add_centered(doc, "Факультет «Информатика и вычислительная техника»")
     _add_centered(doc, "Кафедра «Кибербезопасность информационных систем»")
-    for _ in range(3):
-        doc.add_paragraph()
+    for _ in range(4):
+        _add_blank_single(doc)
     _add_centered(doc, f"Лабораторная работа №{meta.number}", bold=True, size=Pt(16))
     _add_centered(doc, f"по дисциплине: «{DISCIPLINE}»")
     variant_suffix = (
         f" (вариант №{meta.variant})" if meta.variant is not None else ""
     )
     _add_centered(doc, f"На тему «{meta.title}»{variant_suffix}", bold=True)
-    for _ in range(3):
-        doc.add_paragraph()
+    for _ in range(5):
+        _add_blank_single(doc)
     _add_right(doc, f"Выполнил обучающийся гр. {STUDENT_GROUP}")
     _add_right(doc, STUDENT_NAME)
-    doc.add_paragraph()
+    _add_blank_single(doc)
     _add_right(doc, "Проверила:")
     _add_right(doc, TEACHER)
-    # Город и год — внизу титульника. При интервале 1.5 семь пустых параграфов уже
-    # выталкивают строки на следующую страницу, поэтому ограничиваемся одним и
-    # полагаемся на page break в самом скрипте лабы, который ставится после
-    # add_title_page().
-    doc.add_paragraph()
+    # Город и год — внизу титульника. При single-интервале параграфы низкие,
+    # поэтому отжатие ~9-ю пустыми строками не выталкивает их на 2-ю страницу.
+    for _ in range(9):
+        _add_blank_single(doc)
     _add_centered(doc, CITY)
     _add_centered(doc, YEAR)
 

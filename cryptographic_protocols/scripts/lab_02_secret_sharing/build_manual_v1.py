@@ -106,6 +106,13 @@ def main() -> None:
     add_heading(doc, "Задание варианта №1")
     add_para(
         doc,
+        "Упражнение 1 (Блэкли, пример 1). Используя исходные данные примера 1 из "
+        "методички (Q = (5, 1, 2), p = 7), восстановить секретное значение x₀ "
+        "по тройкам долей: а) Боба, Дейва и Кэрол; б) Алисы, Боба и Кэрол; "
+        "в) Боба, Дейва и Кэрол.",
+    )
+    add_para(
+        doc,
         "Упражнение 2 (Шамир). По заданным долям восстановить секрет f(0), коэффициенты "
         "полинома и долю Дейва с x = 2:",
     )
@@ -127,6 +134,77 @@ def main() -> None:
         "• правая колонка: p = 31, Q = (11, 10, 25), пары "
         "A = (1, 0), B = (30, 0), D = (15, 11), C = (10, 0).",
         indent=False,
+    )
+
+    # =========================================
+    add_heading(doc, "Упражнение 1 — Блэкли (пример 1 методички), p = 7")
+    add_para(
+        doc,
+        "Из примера 1 методички известны 4 доли (плоскости в Z₇³), все они "
+        "пересекаются в точке Q = (5, 1, 2):",
+    )
+    add_para(doc, "• Алиса: z = 5x + 2y + 3 (a = 5, b = 2, c = 3);", indent=False)
+    add_para(doc, "• Боб: z = −5x − 2y + 1, то есть z = 2x + 5y + 1 (mod 7);", indent=False)
+    add_para(doc, "• Кэрол: z = 2x − 6y + 5, то есть z = 2x + y + 5 (mod 7);", indent=False)
+    add_para(doc, "• Дейв: z = 4x + 2y + 1.", indent=False)
+
+    def solve_blakley_z7(planes: list[tuple[int, int, int]]) -> tuple[int, int, int]:
+        """Решение системы из трёх плоскостей a·x + b·y + c = z (mod 7) → (x, y, z)."""
+
+        def norm(v: int) -> int:
+            return v % 7
+
+        def inv(a: int) -> int:
+            for k in range(1, 7):
+                if (a * k) % 7 == 1:
+                    return k
+            raise ValueError(f"no inverse for {a} mod 7")
+
+        # Преобразуем к ax + by - z = -c.
+        mat = [[norm(a), norm(b), 6, norm(-c)] for (a, b, c) in planes]
+        # Гаусс в Z_7.
+        for col in range(3):
+            piv = next(r for r in range(col, 3) if mat[r][col] != 0)
+            mat[col], mat[piv] = mat[piv], mat[col]
+            ip = inv(mat[col][col])
+            for j in range(4):
+                mat[col][j] = (mat[col][j] * ip) % 7
+            for r in range(3):
+                if r == col or mat[r][col] == 0:
+                    continue
+                f = mat[r][col]
+                for j in range(4):
+                    mat[r][j] = (mat[r][j] - f * mat[col][j]) % 7
+        return mat[0][3], mat[1][3], mat[2][3]
+
+    cases = [
+        ("а", "Боб, Дейв, Кэрол", [(2, 5, 1), (4, 2, 1), (2, 1, 5)]),
+        ("б", "Алиса, Боб, Кэрол", [(5, 2, 3), (2, 5, 1), (2, 1, 5)]),
+        ("в", "Боб, Дейв, Кэрол", [(2, 5, 1), (4, 2, 1), (2, 1, 5)]),
+    ]
+    for tag, names, planes in cases:
+        x, y, z = solve_blakley_z7(planes)
+        add_para(
+            doc,
+            f"Случай {tag}) {names}. Система:",
+            indent=False,
+        )
+        for a, b, c in planes:
+            add_math(
+                doc,
+                omml_display([
+                    m_op(f"{a} x + {b} y − z ≡ {(-c) % 7} (mod 7)"),
+                ]),
+            )
+        add_para(
+            doc,
+            f"Метод Гаусса в Z₇ даёт (x, y, z) = ({x}, {y}, {z}). Секрет x₀ = {x}.",
+            indent=False,
+        )
+    add_para(
+        doc,
+        "Во всех трёх случаях секрет x₀ = 5, что подтверждает корректность схемы "
+        "Блэкли: любая тройка легальных долей восстанавливает один и тот же секрет.",
     )
 
     # =========================================
