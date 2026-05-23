@@ -54,6 +54,31 @@ def _setup_default_style(doc: _Document) -> None:
     pf.space_after = Pt(0)
 
 
+def _set_first_page_footer_with_city_year(doc: _Document) -> None:
+    """Прибивает «Ростов-на-Дону / 2026» к низу титульника через footer первой страницы."""
+    section = doc.sections[0]
+    section.different_first_page_header_footer = True
+    footer = section.first_page_footer
+    # У footer всегда есть один параграф; используем его + добавим второй.
+    paragraphs = list(footer.paragraphs) or [footer.add_paragraph()]
+    first = paragraphs[0]
+    first.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    first.paragraph_format.first_line_indent = Cm(0)
+    first.paragraph_format.line_spacing_rule = WD_LINE_SPACING.SINGLE
+    first.clear()
+    run1 = first.add_run(CITY)
+    run1.font.name = BODY_FONT
+    run1.font.size = BODY_SIZE
+
+    second = footer.add_paragraph()
+    second.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    second.paragraph_format.first_line_indent = Cm(0)
+    second.paragraph_format.line_spacing_rule = WD_LINE_SPACING.SINGLE
+    run2 = second.add_run(YEAR)
+    run2.font.name = BODY_FONT
+    run2.font.size = BODY_SIZE
+
+
 def _set_margins(doc: _Document) -> None:
     for section in doc.sections:
         section.top_margin = Cm(2)
@@ -136,12 +161,8 @@ def add_title_page(doc: _Document, meta: LabMeta) -> None:
     _add_blank_single(doc)
     _add_right(doc, "Проверила:")
     _add_right(doc, TEACHER)
-    # Город и год — внизу титульника. При single-интервале параграфы низкие,
-    # поэтому отжатие ~9-ю пустыми строками не выталкивает их на 2-ю страницу.
-    for _ in range(9):
-        _add_blank_single(doc)
-    _add_centered(doc, CITY)
-    _add_centered(doc, YEAR)
+    # Город и год — в footer первой страницы (гарантировано прибиты к низу).
+    _set_first_page_footer_with_city_year(doc)
 
 
 def add_heading(doc: _Document, text: str, *, level: int = 1) -> None:
