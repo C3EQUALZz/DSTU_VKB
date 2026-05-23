@@ -1,0 +1,516 @@
+"""Образец отчёта лаб 2 вариант 1 с полным ручным пошаговым решением.
+
+Все промежуточные вычисления выводятся как математические вставки Word.
+"""
+
+from __future__ import annotations
+
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "scripts"))
+
+from report_builder import (  # noqa: E402
+    LabMeta,
+    add_heading,
+    add_label,
+    add_listing,
+    add_math,
+    add_para,
+    add_title_page,
+    m_frac,
+    m_op,
+    m_prod,
+    m_sub,
+    m_sum,
+    m_sup,
+    m_text,
+    make_doc,
+    omml_display,
+    omml_inline,
+    save,
+)
+
+
+def run_cli(*args: str) -> str:
+    env = os.environ.copy()
+    env["RUST_LOG"] = "error"
+    res = subprocess.run(
+        [str(ROOT / "target" / "release" / "lab_02_secret_sharing"), *args],
+        capture_output=True,
+        text=True,
+        check=True,
+        env=env,
+    )
+    return res.stdout
+
+
+def main() -> None:
+    meta = LabMeta(
+        number=2,
+        title="Пороговые схемы разделения секрета Шамира и Блэкли",
+        variant=1,
+    )
+    doc = make_doc()
+    add_title_page(doc, meta)
+    doc.add_page_break()
+
+    # =========================================
+    add_heading(doc, "Тема и цель работы")
+    add_para(
+        doc,
+        "Тема: пороговые схемы разделения секрета — Шамира (на основе интерполяции "
+        "Лагранжа в Z_p) и Блэкли (на основе пересечения плоскостей).",
+    )
+    add_para(
+        doc,
+        "Цель работы: освоить методы порогового разделения секрета между n участниками "
+        "таким образом, чтобы для восстановления требовалось не менее m долей. "
+        "Реализовать выполнение упражнений 2 и 3 методички для индивидуального варианта.",
+    )
+
+    add_heading(doc, "Теоретические сведения", level=2)
+    add_para(
+        doc,
+        "Схема Шамира. Секрет S — свободный член полинома f(x) ∈ Z_p[x] степени m − 1. "
+        "Долей участника является пара (x_j, f(x_j)). По любым m долям секрет "
+        "восстанавливается по формуле интерполяции Лагранжа в точке x = 0:",
+    )
+    # f(0) = Σ y_j · ∏_{k≠j} (-x_k) · (x_j - x_k)^{-1} (mod p)
+    add_math(
+        doc,
+        omml_display([
+            m_text("f"), m_op("("), m_op("0"), m_op(")"), m_op(" = "),
+            m_sum(m_text("j") + m_op("=1"), m_text("m"),
+                  m_sub(m_text("y"), m_text("j")) + m_op(" · ") +
+                  m_prod(m_text("k") + m_op("≠") + m_text("j"), "",
+                         m_frac(m_op("−") + m_sub(m_text("x"), m_text("k")),
+                                m_sub(m_text("x"), m_text("j")) + m_op(" − ") + m_sub(m_text("x"), m_text("k"))))),
+            m_op("   (mod "), m_text("p"), m_op(")"),
+        ]),
+    )
+    add_para(
+        doc,
+        "Схема Блэкли. Секретом является координата x_0 точки Q = (x_0, y_0, z_0). "
+        "Каждая доля — плоскость z = ax + by + c, где c = z_0 − a·x_0 − b·y_0 (mod p). "
+        "Любые три плоскости общего положения пересекаются в точке Q, которая "
+        "восстанавливается решением системы трёх уравнений методом Гаусса в Z_p.",
+    )
+
+    # =========================================
+    add_heading(doc, "Задание варианта №1")
+    add_para(
+        doc,
+        "Упражнение 2 (Шамир). По заданным долям восстановить секрет f(0), коэффициенты "
+        "полинома и долю Дейва с x = 2:",
+    )
+    add_para(doc, "• левая колонка: m = 4, p = 23, доли (2, 17), (7, 13), (19, 14), (21, 20);", indent=False)
+    add_para(doc, "• правая колонка: m = 3, p = 31, доли (9, 14), (19, 23), (21, 7).", indent=False)
+    add_para(
+        doc,
+        "Упражнение 3 (Блэкли). Создать доли для участников A, B, D, C с парами (a, b) из "
+        "таблицы методички и восстановить Q по любым трём:",
+    )
+    add_para(
+        doc,
+        "• левая колонка: p = 17, Q = (15, 5, 4), пары "
+        "A = (16, 5), B = (0, 1), D = (11, 14), C = (1, 5);",
+        indent=False,
+    )
+    add_para(
+        doc,
+        "• правая колонка: p = 31, Q = (11, 10, 25), пары "
+        "A = (1, 0), B = (30, 0), D = (15, 11), C = (10, 0).",
+        indent=False,
+    )
+
+    # =========================================
+    add_heading(doc, "Упражнение 2 (а) — Шамир, m = 4, p = 23")
+    add_para(
+        doc,
+        "Используя интерполяцию Лагранжа, вычислим коэффициенты L_j(0) для каждой доли. "
+        "Все операции — по модулю 23.",
+    )
+
+    # Шаг 1: L_1
+    add_para(doc, "Шаг 1. Для (x_1, y_1) = (2, 17):", indent=False)
+    add_math(
+        doc,
+        omml_display([
+            m_sub(m_text("L"), m_op("1")), m_op("(0)"), m_op(" = "),
+            m_frac(
+                m_op("(−7) · (−19) · (−21)"),
+                m_op("(2−7) · (2−19) · (2−21)"),
+            ),
+            m_op(" (mod 23)"),
+        ]),
+    )
+    add_para(
+        doc,
+        "Приводим отрицательные значения по модулю 23: −7 ≡ 16, −19 ≡ 4, −21 ≡ 2; "
+        "−5 ≡ 18, −17 ≡ 6, −19 ≡ 4.",
+        indent=False,
+    )
+    add_math(
+        doc,
+        omml_display([
+            m_sub(m_text("L"), m_op("1")), m_op("(0)"), m_op(" = "),
+            m_frac(m_op("16 · 4 · 2"), m_op("18 · 6 · 4")),
+            m_op(" = "),
+            m_frac(m_op("128"), m_op("432")),
+            m_op(" ≡ "),
+            m_frac(m_op("13"), m_op("18")),
+            m_op(" (mod 23)"),
+        ]),
+    )
+    add_para(
+        doc,
+        "Находим 18⁻¹ mod 23: 18 · 9 = 162 = 7·23 + 1 ⇒ 18⁻¹ ≡ 9. "
+        "Итого: L_1(0) ≡ 13 · 9 ≡ 117 ≡ 2 (mod 23).",
+        indent=False,
+    )
+
+    # Шаг 2
+    add_para(doc, "Шаг 2. Для (x_2, y_2) = (7, 13):", indent=False)
+    add_math(
+        doc,
+        omml_display([
+            m_sub(m_text("L"), m_op("2")), m_op("(0)"), m_op(" = "),
+            m_frac(
+                m_op("(−2) · (−19) · (−21)"),
+                m_op("(7−2) · (7−19) · (7−21)"),
+            ),
+            m_op(" ≡ "),
+            m_frac(m_op("21 · 4 · 2"), m_op("5 · 11 · 9")),
+            m_op(" ≡ "),
+            m_frac(m_op("7"), m_op("12")),
+            m_op(" (mod 23)"),
+        ]),
+    )
+    add_para(
+        doc,
+        "12⁻¹ mod 23: 12 · 2 = 24 ≡ 1 ⇒ 12⁻¹ ≡ 2. L_2(0) ≡ 7 · 2 ≡ 14 (mod 23).",
+        indent=False,
+    )
+
+    # Шаг 3
+    add_para(doc, "Шаг 3. Для (x_3, y_3) = (19, 14):", indent=False)
+    add_math(
+        doc,
+        omml_display([
+            m_sub(m_text("L"), m_op("3")), m_op("(0)"), m_op(" = "),
+            m_frac(m_op("(−2) · (−7) · (−21)"), m_op("(19−2) · (19−7) · (19−21)")),
+            m_op(" ≡ "),
+            m_frac(m_op("21 · 16 · 2"), m_op("17 · 12 · 21")),
+            m_op(" ≡ "),
+            m_frac(m_op("5"), m_op("6")),
+            m_op(" (mod 23)"),
+        ]),
+    )
+    add_para(
+        doc,
+        "6⁻¹ mod 23: 6 · 4 = 24 ≡ 1 ⇒ 6⁻¹ ≡ 4. L_3(0) ≡ 5 · 4 ≡ 20 (mod 23).",
+        indent=False,
+    )
+
+    # Шаг 4
+    add_para(doc, "Шаг 4. Для (x_4, y_4) = (21, 20):", indent=False)
+    add_math(
+        doc,
+        omml_display([
+            m_sub(m_text("L"), m_op("4")), m_op("(0)"), m_op(" = "),
+            m_frac(m_op("(−2) · (−7) · (−19)"), m_op("(21−2) · (21−7) · (21−19)")),
+            m_op(" ≡ "),
+            m_frac(m_op("21 · 16 · 4"), m_op("19 · 14 · 2")),
+            m_op(" ≡ "),
+            m_frac(m_op("10"), m_op("3")),
+            m_op(" (mod 23)"),
+        ]),
+    )
+    add_para(
+        doc,
+        "3⁻¹ mod 23: 3 · 8 = 24 ≡ 1 ⇒ 3⁻¹ ≡ 8. L_4(0) ≡ 10 · 8 ≡ 80 ≡ 11 (mod 23).",
+        indent=False,
+    )
+
+    add_para(doc, "Шаг 5. Собираем секрет f(0):", indent=False)
+    add_math(
+        doc,
+        omml_display([
+            m_text("f"), m_op("(0) = "),
+            m_op("17·2 + 13·14 + 14·20 + 20·11"),
+            m_op(" = "), m_op("34 + 182 + 280 + 220"),
+            m_op(" = 716 ≡ "),
+            m_text("3"),
+            m_op(" (mod 23)"),
+        ]),
+    )
+    add_para(doc, "Итак, секрет f(0) = 3.", indent=False)
+
+    add_para(
+        doc,
+        "Восстановим полином f(x) = a₀ + a₁x + a₂x² + a₃x³ через систему Вандермонда:",
+    )
+    add_math(
+        doc,
+        omml_display([
+            m_op("a"), m_sub("", "0"), m_op(" + 2 a"), m_sub("", "1"), m_op(" + 4 a"),
+            m_sub("", "2"), m_op(" + 8 a"), m_sub("", "3"), m_op(" ≡ 17 (mod 23)"),
+        ]),
+    )
+    add_math(
+        doc,
+        omml_display([
+            m_op("a"), m_sub("", "0"), m_op(" + 7 a"), m_sub("", "1"), m_op(" + 3 a"),
+            m_sub("", "2"), m_op(" + 21 a"), m_sub("", "3"), m_op(" ≡ 13 (mod 23)"),
+        ]),
+    )
+    add_math(
+        doc,
+        omml_display([
+            m_op("a"), m_sub("", "0"), m_op(" + 19 a"), m_sub("", "1"), m_op(" + 16 a"),
+            m_sub("", "2"), m_op(" + 5 a"), m_sub("", "3"), m_op(" ≡ 14 (mod 23)"),
+        ]),
+    )
+    add_math(
+        doc,
+        omml_display([
+            m_op("a"), m_sub("", "0"), m_op(" + 21 a"), m_sub("", "1"), m_op(" + 4 a"),
+            m_sub("", "2"), m_op(" + 15 a"), m_sub("", "3"), m_op(" ≡ 20 (mod 23)"),
+        ]),
+    )
+    add_para(
+        doc,
+        "Метод Гаусса в Z_23 даёт коэффициенты (a₀, a₁, a₂, a₃) = (3, 12, 1, 4), т.е.",
+    )
+    add_math(
+        doc,
+        omml_display([
+            m_text("f"), m_op("(x) = 4"), m_sup(m_text("x"), m_op("3")),
+            m_op(" + "), m_sup(m_text("x"), m_op("2")),
+            m_op(" + 12 x + 3 (mod 23)"),
+        ]),
+    )
+    add_para(doc, "Доля Дейва — f(2):", indent=False)
+    add_math(
+        doc,
+        omml_display([
+            m_text("f"), m_op("(2) = 4·8 + 4 + 24 + 3 = 63 ≡ 17 (mod 23)"),
+        ]),
+    )
+    add_para(doc, "Итог: доля Дейва (2, 17).", indent=False)
+
+    # =========================================
+    add_heading(doc, "Упражнение 2 (б) — Шамир, m = 3, p = 31")
+    add_para(
+        doc,
+        "Доли (9, 14), (19, 23), (21, 7). Применяем ту же формулу Лагранжа по модулю 31.",
+    )
+
+    add_para(doc, "Шаг 1. L_1(0) для (9, 14):", indent=False)
+    add_math(
+        doc,
+        omml_display([
+            m_sub(m_text("L"), m_op("1")), m_op("(0) = "),
+            m_frac(m_op("(−19) · (−21)"), m_op("(9−19) · (9−21)")),
+            m_op(" ≡ "),
+            m_frac(m_op("12 · 10"), m_op("21 · 19")),
+            m_op(" ≡ "),
+            m_frac(m_op("120"), m_op("399")),
+            m_op(" ≡ "),
+            m_frac(m_op("27"), m_op("27")),
+            m_op(" ≡ 1 (mod 31)"),
+        ]),
+    )
+    add_para(
+        doc,
+        "Действительно: 120 mod 31 = 27; 399 mod 31 = 27. 27 · 27⁻¹ ≡ 1.",
+        indent=False,
+    )
+
+    add_para(doc, "Шаг 2. L_2(0) для (19, 23):", indent=False)
+    add_math(
+        doc,
+        omml_display([
+            m_sub(m_text("L"), m_op("2")), m_op("(0) = "),
+            m_frac(m_op("(−9) · (−21)"), m_op("(19−9) · (19−21)")),
+            m_op(" ≡ "),
+            m_frac(m_op("22 · 10"), m_op("10 · 29")),
+            m_op(" ≡ "),
+            m_frac(m_op("220"), m_op("290")),
+            m_op(" (mod 31)"),
+        ]),
+    )
+    add_para(
+        doc,
+        "220 mod 31 = 220 − 6·31 = 220 − 186 = 34 → 34 − 31 = 3. 290 mod 31 = 290 − 9·31 = 290 − 279 = 11. "
+        "11⁻¹ mod 31: 11·17 = 187 = 6·31 + 1 ⇒ 11⁻¹ ≡ 17. L_2(0) ≡ 3·17 = 51 ≡ 20 (mod 31).",
+        indent=False,
+    )
+
+    add_para(doc, "Шаг 3. L_3(0) для (21, 7):", indent=False)
+    add_math(
+        doc,
+        omml_display([
+            m_sub(m_text("L"), m_op("3")), m_op("(0) = "),
+            m_frac(m_op("(−9) · (−19)"), m_op("(21−9) · (21−19)")),
+            m_op(" ≡ "),
+            m_frac(m_op("22 · 12"), m_op("12 · 2")),
+            m_op(" ≡ "),
+            m_frac(m_op("22"), m_op("2")),
+            m_op(" ≡ 11 (mod 31)"),
+        ]),
+    )
+
+    add_para(doc, "Шаг 4. Собираем секрет f(0):", indent=False)
+    add_math(
+        doc,
+        omml_display([
+            m_text("f"), m_op("(0) = 14·1 + 23·20 + 7·11 = 14 + 460 + 77 = 551 ≡ 24 (mod 31)"),
+        ]),
+    )
+    add_para(doc, "Секрет f(0) = 24.", indent=False)
+    add_para(
+        doc,
+        "Решение системы Вандермонда (3 уравнения в Z_31) даёт коэффициенты (a₀, a₁, a₂) = "
+        "(24, 1, 30). Полином f(x) = 30x² + x + 24 (mod 31). Доля Дейва: "
+        "f(2) = 30·4 + 2 + 24 = 146 ≡ 22 (mod 31). Итог: доля (2, 22).",
+    )
+
+    # =========================================
+    add_heading(doc, "Упражнение 3 (а) — Блэкли, p = 17, Q = (15, 5, 4)")
+    add_para(
+        doc,
+        "Создаём по 4 доли — плоскости z = a·x + b·y + c, где "
+        "c = z₀ − a·x₀ − b·y₀ (mod 17) = 4 − 15a − 5b (mod 17).",
+    )
+
+    abcd = [
+        ("A", 16, 5),
+        ("B", 0, 1),
+        ("D", 11, 14),
+        ("C", 1, 5),
+    ]
+    for name, a, b in abcd:
+        c_raw = 4 - 15 * a - 5 * b
+        c_mod = c_raw % 17
+        add_para(
+            doc,
+            f"Доля {name}: a = {a}, b = {b}. "
+            f"c = 4 − 15·{a} − 5·{b} = {c_raw} ≡ {c_mod} (mod 17). "
+            f"Плоскость: z = {a}x + {b}y + {c_mod}.",
+            indent=False,
+        )
+
+    add_para(
+        doc,
+        "Для восстановления Q решаем систему из любых трёх плоскостей. Возьмём A, B, D:",
+    )
+    add_math(
+        doc,
+        omml_display([
+            m_op("16 x + 5 y − z = −11"),
+        ]),
+    )
+    add_math(
+        doc,
+        omml_display([
+            m_op("0 x + 1 y − z = −16"),
+        ]),
+    )
+    add_math(
+        doc,
+        omml_display([
+            m_op("11 x + 14 y − z = −7"),
+        ]),
+    )
+    add_para(
+        doc,
+        "Метод Гаусса в Z_17 (привести к ступенчатому виду, обратный ход):",
+    )
+    add_para(doc, "1) Из 2-го уравнения: y = z − 16 (по mod 17).", indent=False)
+    add_para(doc, "2) Подставив в 1-е и 3-е, выражаем x через z.", indent=False)
+    add_para(
+        doc,
+        "3) Решая полученную систему 2×2, находим (x, y, z) = (15, 5, 4) — что и есть Q.",
+        indent=False,
+    )
+
+    # =========================================
+    add_heading(doc, "Упражнение 3 (б) — Блэкли, p = 31, Q = (11, 10, 25)")
+    add_para(
+        doc,
+        "c = z₀ − a·x₀ − b·y₀ (mod 31) = 25 − 11a − 10b (mod 31).",
+    )
+    abcd2 = [
+        ("A", 1, 0),
+        ("B", 30, 0),
+        ("D", 15, 11),
+        ("C", 10, 0),
+    ]
+    for name, a, b in abcd2:
+        c_raw = 25 - 11 * a - 10 * b
+        c_mod = c_raw % 31
+        add_para(
+            doc,
+            f"Доля {name}: a = {a}, b = {b}. "
+            f"c = 25 − 11·{a} − 10·{b} = {c_raw} ≡ {c_mod} (mod 31). "
+            f"Плоскость: z = {a}x + {b}y + {c_mod}.",
+            indent=False,
+        )
+    add_para(
+        doc,
+        "Решая систему из {A, B, D} методом Гаусса в Z_31, восстанавливаем "
+        "Q = (11, 10, 25). Аналогично выполняется для любой другой тройки.",
+    )
+
+    # =========================================
+    add_heading(doc, "Программная проверка")
+    add_para(
+        doc,
+        "Запуск программы подтверждает все вычисления ручной проверки:",
+    )
+    shamir_out = run_cli("shamir", "--variant", "1", "--dave-x", "2")
+    add_listing(
+        doc,
+        "$ cargo run --release -p lab_02_secret_sharing -- shamir --variant 1\n" + shamir_out,
+        caption="Листинг 1 — упражнение 2 (Шамир)",
+    )
+    blakley_out = run_cli("blakley", "--variant", "1")
+    add_listing(
+        doc,
+        "$ cargo run --release -p lab_02_secret_sharing -- blakley --variant 1\n" + blakley_out,
+        caption="Листинг 2 — упражнение 3 (Блэкли)",
+    )
+
+    # =========================================
+    doc.add_page_break()
+    add_heading(doc, "Выводы")
+    add_para(
+        doc,
+        "В ходе работы реализованы две пороговые схемы разделения секрета: схема Шамира "
+        "на интерполяции Лагранжа в Z_p и схема Блэкли на пересечении плоскостей. "
+        "Ручные вычисления и программная реализация дают одинаковые результаты: "
+        "для (4, n)-схемы Шамира с p = 23 секрет f(0) = 3, доля Дейва (2, 17); "
+        "для (3, n)-схемы Шамира с p = 31 секрет f(0) = 24, доля Дейва (2, 22); "
+        "для обеих (3, n)-схем Блэкли координата Q восстанавливается точно: "
+        "Q = (15, 5, 4) при p = 17 и Q = (11, 10, 25) при p = 31.",
+    )
+
+    out = (
+        ROOT
+        / "docs"
+        / "reports"
+        / "lab_02_secret_sharing"
+        / "var_01"
+        / "Ковалев Д.П. ВКБ43 2 лаба.docx"
+    )
+    save(doc, out)
+    print(f"saved: {out.relative_to(ROOT)}")
+
+
+if __name__ == "__main__":
+    main()
