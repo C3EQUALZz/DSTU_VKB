@@ -1,0 +1,85 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/shared",
+    "crates/lab_01_dh",
+    "crates/lab_02_secret_sharing",
+    "crates/lab_03_substitution",
+    "crates/lab_04_vigenere",
+    "crates/lab_05_xor",
+    "crates/lab_06_crt_sharing",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+authors = ["Danil Kovalev"]
+license = "MIT"
+repository = "https://github.com/C3EQUALZz/DSTU_VKB"
+rust-version = "1.85"
+
+[workspace.dependencies]
+shared = { path = "crates/shared" }
+
+# Logging / observability
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt", "ansi"] }
+color-eyre = "0.6"
+
+# CLI
+clap = { version = "4", features = ["derive"] }
+
+# Errors
+thiserror = "2"
+
+# Случайность для генерации простых чисел / ключей
+rand = "0.8"
+rand_chacha = "0.3"
+
+# Сериализация артефактов (ключи, доли секрета) — в Лаб 1/2/6
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Длинная арифметика для Диффи-Хеллмана / СОК / Шамира (условие требует чисел > 2^64,
+# но не запрещает готовую реализацию BigUint — в отличие от курса PSIA).
+num-bigint = { version = "0.4", features = ["rand", "serde"] }
+num-integer = "0.1"
+num-traits = "0.2"
+
+# Testing
+proptest = "1"
+
+[workspace.lints.clippy]
+# Применяется ко всем крейтам workspace через `[lints] workspace = true`.
+# Принципы те же, что в PSIA: pedantic on, nursery off, шумные правила allow.
+pedantic = { level = "warn", priority = -1 }
+panic = "warn"
+todo = "warn"
+unimplemented = "warn"
+
+# Шумные pedantic-правила, отключённые осознанно:
+cast_possible_truncation = "allow"
+cast_possible_wrap = "allow"
+cast_sign_loss = "allow"
+cast_precision_loss = "allow"
+items_after_statements = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+must_use_candidate = "allow"
+module_name_repetitions = "allow"
+needless_range_loop = "allow"
+option_if_let_else = "allow"
+return_self_not_must_use = "allow"
+similar_names = "allow"
+many_single_char_names = "allow"
+unwrap_used = "allow"
+expect_used = "allow"
+unnecessary_debug_formatting = "allow"
+doc_markdown = "allow"
+cast_lossless = "allow"
+format_collect = "allow"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = "symbols"

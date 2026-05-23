@@ -1,0 +1,17 @@
+[package]
+name = "shared"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+rust-version.workspace = true
+description = "Общая инфраструктура для лабораторных по криптографическим протоколам: логи, ошибки, утилиты алфавита."
+
+[dependencies]
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+color-eyre = { workspace = true }
+thiserror = { workspace = true }
+
+[lints]
+workspace = true

@@ -1,0 +1,16 @@
+[package]
+name = "lab_03_substitution"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+shared = { workspace = true }
+tracing = { workspace = true }
+color-eyre = { workspace = true }
+clap = { workspace = true }
+
+[lints]
+workspace = true

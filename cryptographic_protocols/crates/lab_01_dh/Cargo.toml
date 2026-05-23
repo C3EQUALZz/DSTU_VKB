@@ -1,0 +1,26 @@
+[package]
+name = "lab_01_dh"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+rust-version.workspace = true
+description = "Лаб 1: обмен ключами по схеме Диффи-Хеллмана с собственной реализацией Рабина-Миллера, генерацией простых > 2^64 и поиском первообразных корней."
+
+[dependencies]
+shared = { workspace = true }
+tracing = { workspace = true }
+color-eyre = { workspace = true }
+thiserror = { workspace = true }
+clap = { workspace = true }
+rand = { workspace = true }
+rand_chacha = { workspace = true }
+num-bigint = { workspace = true }
+num-integer = { workspace = true }
+num-traits = { workspace = true }
+
+[dev-dependencies]
+proptest = { workspace = true }
+
+[lints]
+workspace = true

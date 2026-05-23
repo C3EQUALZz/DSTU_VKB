@@ -1,0 +1,62 @@
+set shell := ["bash", "-cu"]
+set dotenv-load := true
+
+default:
+    @just --list
+
+# ===== Качество кода =====
+
+fmt-check:
+    cargo fmt --all -- --check
+
+fmt:
+    cargo fmt --all
+
+lint:
+    cargo clippy --workspace --all-targets --all-features -- -D warnings
+
+test:
+    cargo test --workspace --all-features
+
+build:
+    cargo build --workspace --release
+
+precommit: fmt-check lint test
+ci: fmt-check lint test
+
+# ===== Хуки =====
+
+install-hooks:
+    @echo '#!/usr/bin/env bash'           >  .git/hooks/pre-commit
+    @echo 'set -euo pipefail'             >> .git/hooks/pre-commit
+    @echo 'echo "→ just precommit"'       >> .git/hooks/pre-commit
+    @echo 'just precommit'                >> .git/hooks/pre-commit
+    @chmod +x .git/hooks/pre-commit
+    @echo "✓ pre-commit hook установлен"
+
+install-prek:
+    pip3 install --user pre-commit
+    pre-commit install
+
+# ===== Запуск работ =====
+
+lab-01 *args="":
+    cargo run -p lab_01_dh -- {{args}}
+
+lab-02 *args="":
+    cargo run -p lab_02_secret_sharing -- {{args}}
+
+lab-03 *args="":
+    cargo run -p lab_03_substitution -- {{args}}
+
+lab-04 *args="":
+    cargo run -p lab_04_vigenere -- {{args}}
+
+lab-05 *args="":
+    cargo run -p lab_05_xor -- {{args}}
+
+lab-06 *args="":
+    cargo run -p lab_06_crt_sharing -- {{args}}
+
+docs:
+    cargo doc --workspace --no-deps --open
