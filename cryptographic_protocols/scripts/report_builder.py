@@ -49,7 +49,7 @@ def _setup_default_style(doc: _Document) -> None:
     style.font.name = BODY_FONT
     style.font.size = BODY_SIZE
     pf = style.paragraph_format
-    pf.line_spacing_rule = WD_LINE_SPACING.SINGLE
+    pf.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
     pf.first_line_indent = Cm(1.25)
     pf.space_after = Pt(0)
 
@@ -109,22 +109,24 @@ def add_title_page(doc: _Document, meta: LabMeta) -> None:
     doc.add_paragraph()
     _add_centered(doc, "Факультет «Информатика и вычислительная техника»")
     _add_centered(doc, "Кафедра «Кибербезопасность информационных систем»")
-    doc.add_paragraph()
+    for _ in range(3):
+        doc.add_paragraph()
     _add_centered(doc, f"Лабораторная работа №{meta.number}", bold=True, size=Pt(16))
     _add_centered(doc, f"по дисциплине: «{DISCIPLINE}»")
     variant_suffix = (
         f" (вариант №{meta.variant})" if meta.variant is not None else ""
     )
     _add_centered(doc, f"На тему «{meta.title}»{variant_suffix}", bold=True)
-    doc.add_paragraph()
-    doc.add_paragraph()
+    for _ in range(3):
+        doc.add_paragraph()
     _add_right(doc, f"Выполнил обучающийся гр. {STUDENT_GROUP}")
     _add_right(doc, STUDENT_NAME)
     doc.add_paragraph()
     _add_right(doc, "Проверила:")
     _add_right(doc, TEACHER)
-    doc.add_paragraph()
-    doc.add_paragraph()
+    # Прижимаем "город / год" к низу страницы пустыми параграфами.
+    for _ in range(7):
+        doc.add_paragraph()
     _add_centered(doc, CITY)
     _add_centered(doc, YEAR)
 
@@ -165,7 +167,7 @@ def add_label(doc: _Document, text: str) -> None:
 
 
 def add_listing(doc: _Document, code: str, caption: str | None = None) -> None:
-    """Листинг кода/вывода — моноширинный, single line spacing."""
+    """Листинг кода/вывода — моноширинный, single line spacing (исключение из правила 1.5)."""
     for line in code.rstrip("\n").splitlines():
         p = doc.add_paragraph()
         p.paragraph_format.first_line_indent = Cm(0)
@@ -186,6 +188,29 @@ def add_bullets(doc: _Document, items: list[str]) -> None:
         run = p.add_run(item)
         run.font.name = BODY_FONT
         run.font.size = BODY_SIZE
+
+
+def add_page_break(doc: _Document) -> None:
+    """Удобная обёртка для разрыва страницы."""
+    doc.add_page_break()
+
+
+def add_qa(doc: _Document, n: int, question: str, answer: str) -> None:
+    """Контрольный вопрос + ответ. Вопрос жирный, ответ — обычный."""
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+    p.paragraph_format.space_before = Pt(6)
+    p.paragraph_format.space_after = Pt(2)
+    run_q = p.add_run(f"Вопрос {n}. {question}")
+    run_q.bold = True
+    run_q.font.name = BODY_FONT
+    run_q.font.size = BODY_SIZE
+
+    pa = doc.add_paragraph()
+    pa.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+    run_a = pa.add_run(f"Ответ. {answer}")
+    run_a.font.name = BODY_FONT
+    run_a.font.size = BODY_SIZE
 
 
 def add_math(doc: _Document, omml_xml: str, *, centered: bool = True) -> None:
