@@ -254,32 +254,44 @@ def main() -> None:
         doc,
         "Восстановим полином f(x) = a₀ + a₁x + a₂x² + a₃x³ через систему Вандермонда:",
     )
+
+    def a_sub(idx: str) -> str:
+        return m_sub(m_text("a"), m_text(idx))
+
     add_math(
         doc,
         omml_display([
-            m_op("a"), m_sub("", "0"), m_op(" + 2 a"), m_sub("", "1"), m_op(" + 4 a"),
-            m_sub("", "2"), m_op(" + 8 a"), m_sub("", "3"), m_op(" ≡ 17 (mod 23)"),
+            a_sub("0"), m_op(" + 2 · "), a_sub("1"),
+            m_op(" + 4 · "), a_sub("2"),
+            m_op(" + 8 · "), a_sub("3"),
+            m_op(" ≡ 17 (mod 23)"),
         ]),
     )
     add_math(
         doc,
         omml_display([
-            m_op("a"), m_sub("", "0"), m_op(" + 7 a"), m_sub("", "1"), m_op(" + 3 a"),
-            m_sub("", "2"), m_op(" + 21 a"), m_sub("", "3"), m_op(" ≡ 13 (mod 23)"),
+            a_sub("0"), m_op(" + 7 · "), a_sub("1"),
+            m_op(" + 3 · "), a_sub("2"),
+            m_op(" + 21 · "), a_sub("3"),
+            m_op(" ≡ 13 (mod 23)"),
         ]),
     )
     add_math(
         doc,
         omml_display([
-            m_op("a"), m_sub("", "0"), m_op(" + 19 a"), m_sub("", "1"), m_op(" + 16 a"),
-            m_sub("", "2"), m_op(" + 5 a"), m_sub("", "3"), m_op(" ≡ 14 (mod 23)"),
+            a_sub("0"), m_op(" + 19 · "), a_sub("1"),
+            m_op(" + 16 · "), a_sub("2"),
+            m_op(" + 5 · "), a_sub("3"),
+            m_op(" ≡ 14 (mod 23)"),
         ]),
     )
     add_math(
         doc,
         omml_display([
-            m_op("a"), m_sub("", "0"), m_op(" + 21 a"), m_sub("", "1"), m_op(" + 4 a"),
-            m_sub("", "2"), m_op(" + 15 a"), m_sub("", "3"), m_op(" ≡ 20 (mod 23)"),
+            a_sub("0"), m_op(" + 21 · "), a_sub("1"),
+            m_op(" + 4 · "), a_sub("2"),
+            m_op(" + 15 · "), a_sub("3"),
+            m_op(" ≡ 20 (mod 23)"),
         ]),
     )
     add_para(
@@ -289,8 +301,8 @@ def main() -> None:
     add_math(
         doc,
         omml_display([
-            m_text("f"), m_op("(x) = 4"), m_sup(m_text("x"), m_op("3")),
-            m_op(" + "), m_sup(m_text("x"), m_op("2")),
+            m_text("f"), m_op("(x) = 4"), m_sup(m_text("x"), m_text("3")),
+            m_op(" + "), m_sup(m_text("x"), m_text("2")),
             m_op(" + 12 x + 3 (mod 23)"),
         ]),
     )
