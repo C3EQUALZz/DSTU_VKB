@@ -14,9 +14,17 @@ from report_builder import (  # noqa: E402
     LabMeta,
     add_heading,
     add_listing,
+    add_math,
     add_para,
     add_title_page,
+    m_frac,
+    m_op,
+    m_prod,
+    m_sub,
+    m_sum,
+    m_text,
     make_doc,
+    omml_display,
     save,
 )
 
@@ -75,10 +83,18 @@ def build_variant(variant: int) -> None:
         "Долей участника является пара (x_j, f(x_j)). По любым m долям секрет "
         "восстанавливается по формуле интерполяции Лагранжа в точке x = 0:",
     )
-    add_para(
+    # f(0) = Σ_{j=1}^{m} f(x_j) · ∏_{k≠j} (-x_k) / (x_j - x_k)  (mod p)
+    add_math(
         doc,
-        "f(0) = Σ_{j=1..m} f(x_j) · Π_{k≠j} (−x_k) · (x_j − x_k)^{-1}   (mod p)",
-        indent=False,
+        omml_display([
+            m_text("f"), m_op("("), m_op("0"), m_op(")"), m_op(" = "),
+            m_sum(m_text("j") + m_op("=1"), m_text("m"),
+                  m_text("f") + m_op("(") + m_sub(m_text("x"), m_text("j")) + m_op(")") + m_op(" · ") +
+                  m_prod(m_text("k") + m_op("≠") + m_text("j"), "",
+                         m_frac(m_op("−") + m_sub(m_text("x"), m_text("k")),
+                                m_sub(m_text("x"), m_text("j")) + m_op(" − ") + m_sub(m_text("x"), m_text("k"))))),
+            m_op("   (mod "), m_text("p"), m_op(")"),
+        ]),
     )
     add_para(
         doc,

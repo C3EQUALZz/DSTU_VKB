@@ -2,6 +2,9 @@
 
 Шаблон титульного листа повторяет эталон из методов и средств защиты информации.
 Преподаватель — Дубровина А.С., год — 2026, студент — Ковалев Д.П. ВКБ43.
+
+Формулы вставляются как OMML-объекты Word (математическая вставка), а не как
+тексты — функция `add_math` принимает OMML-XML и инжектит его прямо в параграф.
 """
 
 from __future__ import annotations
@@ -12,7 +15,9 @@ from pathlib import Path
 from docx import Document
 from docx.document import Document as _Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_LINE_SPACING
+from docx.oxml.ns import qn
 from docx.shared import Cm, Pt, RGBColor
+from lxml import etree
 
 STUDENT_NAME = "Ковалев Данил Петрович"
 STUDENT_GROUP = "ВКБ43"
@@ -25,6 +30,9 @@ BODY_FONT = "Times New Roman"
 BODY_SIZE = Pt(14)
 MONO_FONT = "Courier New"
 MONO_SIZE = Pt(10)
+
+M_NS = "http://schemas.openxmlformats.org/officeDocument/2006/math"
+NSMAP = {"m": M_NS}
 
 
 @dataclass
@@ -39,7 +47,7 @@ def _setup_default_style(doc: _Document) -> None:
     style.font.name = BODY_FONT
     style.font.size = BODY_SIZE
     pf = style.paragraph_format
-    pf.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
+    pf.line_spacing_rule = WD_LINE_SPACING.SINGLE
     pf.first_line_indent = Cm(1.25)
     pf.space_after = Pt(0)
 
@@ -58,6 +66,7 @@ def _add_centered(
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.first_line_indent = Cm(0)
+    p.paragraph_format.space_after = Pt(0)
     run = p.add_run(text)
     run.bold = bold
     if size is not None:
@@ -69,22 +78,14 @@ def _add_right(doc: _Document, text: str, *, bold: bool = False) -> None:
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.RIGHT
     p.paragraph_format.first_line_indent = Cm(0)
-    run = p.add_run(text)
-    run.bold = bold
-    run.font.name = BODY_FONT
-
-
-def _add_left(doc: _Document, text: str, *, bold: bool = False) -> None:
-    p = doc.add_paragraph()
-    p.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    p.paragraph_format.first_line_indent = Cm(0)
+    p.paragraph_format.space_after = Pt(0)
     run = p.add_run(text)
     run.bold = bold
     run.font.name = BODY_FONT
 
 
 def add_title_page(doc: _Document, meta: LabMeta) -> None:
-    """Добавляет стандартный титульник ДГТУ."""
+    """Добавляет стандартный титульник ДГТУ. Помещается на одну страницу A4."""
     _add_centered(doc, "МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ", bold=True)
     _add_centered(doc, "ФЕДЕРАЛЬНОЕ ГОСУДАРСТВЕННОЕ БЮДЖЕТНОЕ", bold=True)
     _add_centered(doc, "ОБРАЗОВАТЕЛЬНОЕ УЧРЕЖДЕНИЕ ВЫСШЕГО ОБРАЗОВАНИЯ", bold=True)
@@ -93,23 +94,25 @@ def add_title_page(doc: _Document, meta: LabMeta) -> None:
     doc.add_paragraph()
     _add_centered(doc, "Факультет «Информатика и вычислительная техника»")
     _add_centered(doc, "Кафедра «Кибербезопасность информационных систем»")
-    for _ in range(5):
-        doc.add_paragraph()
+    doc.add_paragraph()
+    doc.add_paragraph()
     _add_centered(doc, f"Лабораторная работа №{meta.number}", bold=True, size=Pt(16))
     _add_centered(doc, f"по дисциплине: «{DISCIPLINE}»")
     variant_suffix = (
         f" (вариант №{meta.variant})" if meta.variant is not None else ""
     )
     _add_centered(doc, f"На тему «{meta.title}»{variant_suffix}", bold=True)
-    for _ in range(6):
-        doc.add_paragraph()
+    doc.add_paragraph()
+    doc.add_paragraph()
+    doc.add_paragraph()
     _add_right(doc, f"Выполнил обучающийся гр. {STUDENT_GROUP}")
     _add_right(doc, STUDENT_NAME)
     doc.add_paragraph()
     _add_right(doc, "Проверила:")
     _add_right(doc, TEACHER)
-    for _ in range(6):
-        doc.add_paragraph()
+    doc.add_paragraph()
+    doc.add_paragraph()
+    doc.add_paragraph()
     _add_centered(doc, CITY)
     _add_centered(doc, YEAR)
 
@@ -137,7 +140,7 @@ def add_para(doc: _Document, text: str, *, indent: bool = True) -> None:
 
 
 def add_label(doc: _Document, text: str) -> None:
-    """Подпись к рисунку/листингу — по центру, с отступом."""
+    """Подпись к рисунку/листингу — по центру."""
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.first_line_indent = Cm(0)
@@ -150,15 +153,14 @@ def add_label(doc: _Document, text: str) -> None:
 
 
 def add_listing(doc: _Document, code: str, caption: str | None = None) -> None:
-    """Листинг кода/вывода — моноширинный, рамка имитируется отступом и заливкой нельзя
-    через python-docx без XML-хака, поэтому делаем просто сменой шрифта."""
+    """Листинг кода/вывода — моноширинный, single line spacing."""
     for line in code.rstrip("\n").splitlines():
         p = doc.add_paragraph()
         p.paragraph_format.first_line_indent = Cm(0)
         p.paragraph_format.left_indent = Cm(0.5)
         p.paragraph_format.space_after = Pt(0)
         p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.SINGLE
-        run = p.add_run(line if line else " ")
+        run = p.add_run(line if line else " ")
         run.font.name = MONO_FONT
         run.font.size = MONO_SIZE
         run.font.color.rgb = RGBColor(0x10, 0x10, 0x10)
@@ -172,6 +174,109 @@ def add_bullets(doc: _Document, items: list[str]) -> None:
         run = p.add_run(item)
         run.font.name = BODY_FONT
         run.font.size = BODY_SIZE
+
+
+def add_math(doc: _Document, omml_xml: str, *, centered: bool = True) -> None:
+    """Вставить математическую формулу как OMML-объект.
+
+    `omml_xml` должен быть полным <m:oMath>...</m:oMath> или <m:oMathPara>...</m:oMathPara>.
+    Word отрисует это как формулу, не как простой текст.
+    """
+    p = doc.add_paragraph()
+    if centered:
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.paragraph_format.first_line_indent = Cm(0)
+    p.paragraph_format.space_before = Pt(6)
+    p.paragraph_format.space_after = Pt(6)
+    elem = etree.fromstring(omml_xml)
+    p._p.append(elem)
+
+
+def _omml_r(text: str, *, italic: bool = False) -> str:
+    """OMML <m:r> с текстом."""
+    style = '<m:rPr><m:sty m:val="i"/></m:rPr>' if italic else ""
+    # Текст экранируем минимально (для нашего случая опасных символов нет).
+    safe = text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+    return f'<m:r xmlns:m="{M_NS}">{style}<m:t xml:space="preserve">{safe}</m:t></m:r>'
+
+
+def omml_inline(parts: list[str]) -> str:
+    """Собрать inline-математическую вставку из готовых OMML-кусков (одна формула)."""
+    body = "".join(parts)
+    return f'<m:oMath xmlns:m="{M_NS}">{body}</m:oMath>'
+
+
+def omml_display(parts: list[str]) -> str:
+    """Display-форма (на отдельной строке)."""
+    body = "".join(parts)
+    return (
+        f'<m:oMathPara xmlns:m="{M_NS}">'
+        f"<m:oMathParaPr><m:jc m:val=\"center\"/></m:oMathParaPr>"
+        f"<m:oMath>{body}</m:oMath></m:oMathPara>"
+    )
+
+
+# ----- удобные конструкторы для часто встречающихся формул -----
+
+
+def m_text(text: str, *, italic: bool = True) -> str:
+    return _omml_r(text, italic=italic)
+
+
+def m_op(symbol: str) -> str:
+    """Бинарный/унарный оператор: +, −, =, ≡, ·, и т.п. — не курсивный."""
+    return _omml_r(symbol, italic=False)
+
+
+def m_sup(base: str, exp: str) -> str:
+    return (
+        f'<m:sSup xmlns:m="{M_NS}">'
+        f"<m:e>{base}</m:e>"
+        f"<m:sup>{exp}</m:sup>"
+        f"</m:sSup>"
+    )
+
+
+def m_sub(base: str, sub: str) -> str:
+    return (
+        f'<m:sSub xmlns:m="{M_NS}">'
+        f"<m:e>{base}</m:e>"
+        f"<m:sub>{sub}</m:sub>"
+        f"</m:sSub>"
+    )
+
+
+def m_frac(num: str, den: str) -> str:
+    return (
+        f'<m:f xmlns:m="{M_NS}">'
+        f"<m:num>{num}</m:num>"
+        f"<m:den>{den}</m:den>"
+        f"</m:f>"
+    )
+
+
+def m_sum(lower: str, upper: str, body: str) -> str:
+    """∑_{lower}^{upper} body — большой сумматор."""
+    return (
+        f'<m:nary xmlns:m="{M_NS}">'
+        f'<m:naryPr><m:chr m:val="∑"/><m:limLoc m:val="undOvr"/></m:naryPr>'
+        f"<m:sub>{lower}</m:sub>"
+        f"<m:sup>{upper}</m:sup>"
+        f"<m:e>{body}</m:e>"
+        f"</m:nary>"
+    )
+
+
+def m_prod(lower: str, upper: str, body: str) -> str:
+    """∏_{lower}^{upper} body."""
+    return (
+        f'<m:nary xmlns:m="{M_NS}">'
+        f'<m:naryPr><m:chr m:val="∏"/><m:limLoc m:val="undOvr"/></m:naryPr>'
+        f"<m:sub>{lower}</m:sub>"
+        f"<m:sup>{upper}</m:sup>"
+        f"<m:e>{body}</m:e>"
+        f"</m:nary>"
+    )
 
 
 def make_doc() -> _Document:
