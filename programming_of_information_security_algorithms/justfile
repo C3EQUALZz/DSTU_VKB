@@ -96,10 +96,17 @@ sonar-down:
 # Прогнать сканирование одного крейта. Пример: `just sonar-scan lab_01_rsa`.
 sonar-scan crate:
     cd crates/{{crate}} && sonar-scanner \
-        -Dsonar.projectKey={{crate}} \
-        -Dsonar.sources=src \
-        -Dsonar.host.url=http://localhost:9000 \
+        -Dsonar.host.url=${SONAR_HOST_URL:-http://localhost:9000} \
         -Dsonar.token=$SONAR_TOKEN
+
+# Прогнать все 4 лабы по очереди (с генерацией clippy.json на каждом).
+sonar-scan-all:
+    ./scripts/sonar-scan-all.sh
+
+# Проверить, что compose.yaml валидный.
+sonar-validate:
+    docker compose -f docker/sonarqube/compose.yaml config --quiet
+    @echo "✓ compose.yaml валиден"
 
 # ===== Документация =====
 
