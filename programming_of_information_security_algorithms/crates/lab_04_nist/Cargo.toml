@@ -1,0 +1,28 @@
+[package]
+name = "lab_04_nist"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+rust-version.workspace = true
+description = "Лабораторная № 4: собственная реализация Monobit Frequency Test (и Runs) из NIST SP 800-22."
+
+[dependencies]
+shared = { workspace = true }
+tracing = { workspace = true }
+color-eyre = { workspace = true }
+thiserror = { workspace = true }
+clap = { workspace = true }
+
+[dev-dependencies]
+proptest = { workspace = true }
+# E2E-тест: подаём на вход последовательность из лаб 3 и проверяем,
+# что наш Monobit/Runs её принимают.
+lab_03_prng = { path = "../lab_03_prng" }
+
+[lints]
+workspace = true
+
+[[bin]]
+name = "lab_04_nist"
+path = "src/main.rs"

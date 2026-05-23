@@ -6,6 +6,7 @@ members = [
     "crates/lab_01_rsa",
     "crates/lab_02_sha256",
     "crates/lab_03_prng",
+    "crates/lab_04_nist",
 ]
 
 [workspace.package]
