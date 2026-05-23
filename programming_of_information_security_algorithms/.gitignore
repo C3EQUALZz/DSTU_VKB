@@ -1,0 +1,21 @@
+/target
+Cargo.lock.bak
+**/*.rs.bk
+
+# IDE
+.idea/
+.vscode/
+
+# Артефакты лабораторных
+/artifacts
+*.tmp
+sonar-scanner-*/
+
+# SonarQube data volumes (создаются docker compose'ом)
+/docker/sonarqube/data/
+/docker/sonarqube/extensions/
+/docker/sonarqube/logs/
+/docker/sonarqube/postgres/
+
+# Word lock-файлы
+~$*.docx

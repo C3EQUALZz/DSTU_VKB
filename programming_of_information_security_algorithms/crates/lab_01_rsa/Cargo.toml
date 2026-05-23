@@ -1,0 +1,25 @@
+[package]
+name = "lab_01_rsa"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+rust-version.workspace = true
+description = "Лабораторная № 1: учебная реализация RSA с нуля (генерация ключей, шифрование/расшифрование) без сторонних криптографических библиотек."
+
+[dependencies]
+shared = { workspace = true }
+tracing = { workspace = true }
+color-eyre = { workspace = true }
+thiserror = { workspace = true }
+clap = { workspace = true }
+
+[dev-dependencies]
+proptest = { workspace = true }
+
+[lints]
+workspace = true
+
+[[bin]]
+name = "lab_01_rsa"
+path = "src/main.rs"

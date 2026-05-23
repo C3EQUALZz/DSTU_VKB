@@ -1,0 +1,85 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/shared",
+    "crates/practice_01",
+    "crates/lab_01_rsa",
+    "crates/lab_02_sha256",
+    "crates/lab_03_prng",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+authors = ["Danil Kovalev"]
+license = "MIT"
+repository = "https://github.com/C3EQUALZz/DSTU_VKB"
+rust-version = "1.85"
+
+[workspace.dependencies]
+shared = { path = "crates/shared" }
+
+# Logging / observability
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt", "ansi"] }
+color-eyre = "0.6"
+
+# CLI
+clap = { version = "4", features = ["derive"] }
+
+# Errors
+thiserror = "2"
+
+# Testing
+proptest = "1"
+
+# DI-контейнер
+froodi = "1.0.0-beta.18"
+
+# macOS Security framework (для лаб 6, 7)
+security-framework = "3"
+
+[workspace.lints.clippy]
+# Применяется ко всем крейтам workspace через `[lints] workspace = true`.
+# Принципы:
+#   • `pedantic` включён — он ловит реально полезные вещи (errors_doc, lossless casts, etc.).
+#   • `nursery` НЕ включён — слишком сырой, много ложных срабатываний.
+#   • Касты `u64 -> u32` и `i64 -> u32` в длинной арифметике / битовых операциях —
+#     нормальный паттерн, поэтому соответствующие линты отключены.
+#   • `unwrap_used` / `expect_used` разрешены: в тестах они идиоматичны;
+#     в проде мы и так стараемся использовать `?`.
+pedantic = { level = "warn", priority = -1 }
+panic = "warn"
+todo = "warn"
+unimplemented = "warn"
+
+# Шумные pedantic-правила, отключённые осознанно:
+cast_possible_truncation = "allow"
+cast_possible_wrap = "allow"
+cast_sign_loss = "allow"
+cast_precision_loss = "allow"
+items_after_statements = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+must_use_candidate = "allow"
+module_name_repetitions = "allow"
+needless_range_loop = "allow"
+option_if_let_else = "allow"
+return_self_not_must_use = "allow"
+similar_names = "allow"
+many_single_char_names = "allow"
+unwrap_used = "allow"
+expect_used = "allow"
+# `path:?` для типа PathBuf — идиоматично, чтобы видеть кавычки и эскейпы.
+unnecessary_debug_formatting = "allow"
+# В domain/bigint.rs у нас комментарий с BigUint — это название типа, не текст.
+doc_markdown = "allow"
+# Касты `u32 as u64` распространены в битовых операциях; from'ы только усложняют.
+cast_lossless = "allow"
+# Принимаем `format!()` обычно в hot-path; для `to_hex` чиним вручную.
+format_collect = "allow"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = "symbols"

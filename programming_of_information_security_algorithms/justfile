@@ -1,0 +1,122 @@
+# justfile — команды для курса PSIA. Установить just: `brew install just` (macOS).
+# Любая цель: `just <name>`. Просто список: `just --list`.
+
+set shell := ["bash", "-cu"]
+set dotenv-load := true
+
+# По умолчанию — показать список
+default:
+    @just --list
+
+# ===== Качество кода =====
+
+# Проверка форматирования (CI-режим: только check, без правок).
+fmt-check:
+    cargo fmt --all -- --check
+
+# Применить форматирование.
+fmt:
+    cargo fmt --all
+
+# Clippy для всего workspace с включёнными warnings = errors.
+lint:
+    cargo clippy --workspace --all-targets --all-features -- -D warnings
+
+# Полный прогон тестов.
+test:
+    cargo test --workspace --all-features
+
+# Сборка всех крейтов в release.
+build:
+    cargo build --workspace --release
+
+# Pre-commit: то, что должно проходить перед коммитом.
+precommit: fmt-check lint test
+
+# Полный gate: то, что должно проходить перед "готово".
+ci: fmt-check lint test
+
+# ===== Установка хука =====
+
+# Поставить git pre-commit hook (запускает `just precommit`).
+install-hooks:
+    @echo '#!/usr/bin/env bash'           >  .git/hooks/pre-commit
+    @echo 'set -euo pipefail'             >> .git/hooks/pre-commit
+    @echo 'echo "→ just precommit"'       >> .git/hooks/pre-commit
+    @echo 'just precommit'                >> .git/hooks/pre-commit
+    @chmod +x .git/hooks/pre-commit
+    @echo "✓ pre-commit hook установлен"
+
+# Поставить pre-commit от Python (если предпочитаешь). Требует pip3.
+install-prek:
+    pip3 install --user pre-commit
+    pre-commit install
+
+# ===== Запуск работ =====
+
+# Практика 1: длинная арифметика. Аргументы — два числа в hex/dec.
+practice-01 *args="":
+    cargo run -p practice_01 -- {{args}}
+
+# Лаб 1: RSA. Подкоманды генерируются в самом CLI.
+lab-01 *args="":
+    cargo run -p lab_01_rsa -- {{args}}
+
+# Лаб 2: SHA-256.
+lab-02 *args="":
+    cargo run -p lab_02_sha256 -- {{args}}
+
+# Лаб 3: ПДСЧ.
+lab-03 *args="":
+    cargo run -p lab_03_prng -- {{args}}
+
+# Лаб 4: тест NIST.
+lab-04 *args="":
+    cargo run -p lab_04_nist -- {{args}}
+
+# Лаб 6: симметричное шифрование (macOS Security FW).
+lab-06 *args="":
+    cargo run -p lab_06_sym -- {{args}}
+
+# Лаб 7: асимметричное (macOS Security FW).
+lab-07 *args="":
+    cargo run -p lab_07_asym -- {{args}}
+
+# ===== Лаб 5 — SonarQube =====
+
+# Поднять SonarQube + Postgres.
+sonar-up:
+    docker compose -f docker/sonarqube/compose.yaml up -d
+    @echo "SonarQube будет доступен на http://localhost:9000 (~1 минута на инициализацию)"
+
+# Остановить SonarQube.
+sonar-down:
+    docker compose -f docker/sonarqube/compose.yaml down
+
+# Прогнать сканирование одного крейта. Пример: `just sonar-scan lab_01_rsa`.
+sonar-scan crate:
+    cd crates/{{crate}} && sonar-scanner \
+        -Dsonar.projectKey={{crate}} \
+        -Dsonar.sources=src \
+        -Dsonar.host.url=http://localhost:9000 \
+        -Dsonar.token=$SONAR_TOKEN
+
+# ===== Документация =====
+
+# Сгенерировать и открыть rustdoc для всего workspace.
+docs:
+    cargo doc --workspace --no-deps --open
+
+# Извлечь текст из docx условий (для быстрого reference).
+read-conditions:
+    @python3 -c '
+    import sys, zipfile, xml.etree.ElementTree as ET
+    ns = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}"
+    for f in ["docs/conditions/1 Практика.docx", "docs/conditions/Laboratornye_po_kursu_Programmirovanie_algoritmov_zaschity_informatsii.docx"]:
+        print(f"\n===== {f} =====")
+        with zipfile.ZipFile(f) as z:
+            with z.open("word/document.xml") as fh:
+                root = ET.fromstring(fh.read())
+                for p in root.iter(ns+"p"):
+                    print("".join(t.text or "" for t in p.iter(ns+"t")))
+    '
