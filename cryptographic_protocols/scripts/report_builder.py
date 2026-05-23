@@ -124,9 +124,11 @@ def add_title_page(doc: _Document, meta: LabMeta) -> None:
     doc.add_paragraph()
     _add_right(doc, "Проверила:")
     _add_right(doc, TEACHER)
-    # Прижимаем "город / год" к низу страницы пустыми параграфами.
-    for _ in range(7):
-        doc.add_paragraph()
+    # Город и год — внизу титульника. При интервале 1.5 семь пустых параграфов уже
+    # выталкивают строки на следующую страницу, поэтому ограничиваемся одним и
+    # полагаемся на page break в самом скрипте лабы, который ставится после
+    # add_title_page().
+    doc.add_paragraph()
     _add_centered(doc, CITY)
     _add_centered(doc, YEAR)
 
