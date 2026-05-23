@@ -16,8 +16,10 @@ from docx import Document
 from docx.document import Document as _Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_LINE_SPACING
 from docx.oxml.ns import qn
-from docx.shared import Cm, Pt, RGBColor
+from docx.shared import Cm, Inches, Pt, RGBColor
 from lxml import etree
+
+LOGO_PATH = Path(__file__).resolve().parents[1] / "docs" / "assets" / "dstu_logo.png"
 
 STUDENT_NAME = "Ковалев Данил Петрович"
 STUDENT_GROUP = "ВКБ43"
@@ -84,8 +86,21 @@ def _add_right(doc: _Document, text: str, *, bold: bool = False) -> None:
     run.font.name = BODY_FONT
 
 
+def _add_logo(doc: _Document) -> None:
+    """Логотип ДГТУ по центру в начале титульника."""
+    if not LOGO_PATH.exists():
+        return
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.paragraph_format.first_line_indent = Cm(0)
+    p.paragraph_format.space_after = Pt(6)
+    run = p.add_run()
+    run.add_picture(str(LOGO_PATH), width=Inches(0.8))
+
+
 def add_title_page(doc: _Document, meta: LabMeta) -> None:
     """Добавляет стандартный титульник ДГТУ. Помещается на одну страницу A4."""
+    _add_logo(doc)
     _add_centered(doc, "МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ", bold=True)
     _add_centered(doc, "ФЕДЕРАЛЬНОЕ ГОСУДАРСТВЕННОЕ БЮДЖЕТНОЕ", bold=True)
     _add_centered(doc, "ОБРАЗОВАТЕЛЬНОЕ УЧРЕЖДЕНИЕ ВЫСШЕГО ОБРАЗОВАНИЯ", bold=True)
@@ -95,7 +110,6 @@ def add_title_page(doc: _Document, meta: LabMeta) -> None:
     _add_centered(doc, "Факультет «Информатика и вычислительная техника»")
     _add_centered(doc, "Кафедра «Кибербезопасность информационных систем»")
     doc.add_paragraph()
-    doc.add_paragraph()
     _add_centered(doc, f"Лабораторная работа №{meta.number}", bold=True, size=Pt(16))
     _add_centered(doc, f"по дисциплине: «{DISCIPLINE}»")
     variant_suffix = (
@@ -104,13 +118,11 @@ def add_title_page(doc: _Document, meta: LabMeta) -> None:
     _add_centered(doc, f"На тему «{meta.title}»{variant_suffix}", bold=True)
     doc.add_paragraph()
     doc.add_paragraph()
-    doc.add_paragraph()
     _add_right(doc, f"Выполнил обучающийся гр. {STUDENT_GROUP}")
     _add_right(doc, STUDENT_NAME)
     doc.add_paragraph()
     _add_right(doc, "Проверила:")
     _add_right(doc, TEACHER)
-    doc.add_paragraph()
     doc.add_paragraph()
     doc.add_paragraph()
     _add_centered(doc, CITY)
