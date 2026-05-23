@@ -1,0 +1,44 @@
+[package]
+name = "lab_07_asym"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+rust-version.workspace = true
+description = "Лабораторная № 7: асимметричное RSA-OAEP-2048 (SHA-256) через системный криптопровайдер. Cross-platform: macOS / Linux / Windows. Strategy pattern."
+
+[dependencies]
+shared = { workspace = true }
+tracing = { workspace = true }
+color-eyre = { workspace = true }
+thiserror = { workspace = true }
+clap = { workspace = true }
+
+[dev-dependencies]
+proptest = { workspace = true }
+
+# Системные криптопровайдеры — выбираются по target.
+# На macOS и Linux используется один и тот же крейт `openssl`, который
+# является тонкой обёрткой над системным libcrypto:
+# - macOS: /usr/local/opt/openssl@3/lib/libcrypto.dylib (Homebrew, системное место)
+# - Linux: /usr/lib/x86_64-linux-gnu/libcrypto.so (часть дистрибутива)
+#
+# Apple официально deprecated низкоуровневые `SecKey*` API для импорта raw RSA
+# и предлагает уходить в CryptoKit (Swift). Поэтому для лаб 7 на macOS
+# берём системный OpenSSL, а не Security framework.
+[target.'cfg(target_os = "macos")'.dependencies]
+openssl = "0.10"
+
+[target.'cfg(target_os = "linux")'.dependencies]
+openssl = "0.10"
+
+[target.'cfg(target_os = "windows")'.dependencies]
+# CNG/NCrypt — каркас, см. windows.rs.
+# windows-sys = { version = "0.59", features = [...] }
+
+[lints]
+workspace = true
+
+[[bin]]
+name = "lab_07_asym"
+path = "src/main.rs"

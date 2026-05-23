@@ -8,6 +8,7 @@ members = [
     "crates/lab_03_prng",
     "crates/lab_04_nist",
     "crates/lab_06_sym",
+    "crates/lab_07_asym",
 ]
 
 [workspace.package]
