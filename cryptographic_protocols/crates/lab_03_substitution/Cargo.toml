@@ -5,12 +5,17 @@ edition.workspace = true
 authors.workspace = true
 license.workspace = true
 rust-version.workspace = true
+description = "Лаб 3: шифр простой замены с автоматическим частотным анализом."
 
 [dependencies]
 shared = { workspace = true }
 tracing = { workspace = true }
 color-eyre = { workspace = true }
+thiserror = { workspace = true }
 clap = { workspace = true }
+
+[dev-dependencies]
+proptest = { workspace = true }
 
 [lints]
 workspace = true

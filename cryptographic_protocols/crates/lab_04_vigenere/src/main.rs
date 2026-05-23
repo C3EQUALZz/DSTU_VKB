@@ -1,6 +1,6 @@
-//! Заглушка — будет наполнена в соответствующей задаче.
-fn main() -> color_eyre::Result<()> {
+use color_eyre::Result;
+
+fn main() -> Result<()> {
     shared::logging::init()?;
-    tracing::warn!("crate ещё не реализован");
-    Ok(())
+    lab_04_vigenere::presentation::cli::run()
 }

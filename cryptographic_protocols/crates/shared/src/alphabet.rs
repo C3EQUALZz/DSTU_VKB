@@ -51,8 +51,20 @@ pub const FREQUENCIES: [f64; 33] = [
     0.175, // _ пробел
 ];
 
-/// Возвращает индекс символа в алфавите (с приведением регистра, Ё→Е, Ъ→Ь).
+/// Возвращает индекс символа в алфавите (с приведением регистра, Ё→Е).
+///
+/// Ъ и Ь сохраняются как разные символы (что нужно для шифров Виженера/простой замены).
+/// Если нужна нормализация Ъ→Ь для частотного анализа — используйте `index_for_freq`.
 pub fn index_of(c: char) -> Option<usize> {
+    let up = match c {
+        'ё' | 'Ё' => 'Е',
+        other => other.to_uppercase().next().unwrap_or(other),
+    };
+    ALPHABET.iter().position(|&x| x == up)
+}
+
+/// Индекс символа с дополнительной нормализацией Ъ→Ь (для частотного анализа).
+pub fn index_for_freq(c: char) -> Option<usize> {
     let up = match c {
         'ё' | 'Ё' => 'Е',
         'ъ' | 'Ъ' => 'Ь',
@@ -106,10 +118,13 @@ mod tests {
         assert_eq!(index_of('Е'), Some(5));
         assert_eq!(index_of('Ё'), Some(5));
         assert_eq!(index_of('ё'), Some(5));
-        assert_eq!(index_of('Ъ'), Some(28));
+        assert_eq!(index_of('Ъ'), Some(26));
         assert_eq!(index_of('Ь'), Some(28));
         assert_eq!(index_of('_'), Some(32));
         assert_eq!(index_of('?'), None);
+        // Для частотного анализа Ъ нормализуется в Ь.
+        assert_eq!(index_for_freq('Ъ'), Some(28));
+        assert_eq!(index_for_freq('Ь'), Some(28));
     }
 
     #[test]
