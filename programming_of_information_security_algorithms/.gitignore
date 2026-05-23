@@ -19,3 +19,9 @@ sonar-scanner-*/
 
 # Word lock-файлы
 ~$*.docx
+
+# Локальные секреты — токен SonarQube
+.env
+
+# Сгенерированные clippy-отчёты для sonar-scanner
+crates/*/clippy.json

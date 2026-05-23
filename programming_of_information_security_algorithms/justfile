@@ -99,6 +99,14 @@ sonar-scan crate:
         -Dsonar.host.url=${SONAR_HOST_URL:-http://localhost:9000} \
         -Dsonar.token=$SONAR_TOKEN
 
+# Автонастройка SonarQube: сменить пароль admin, сгенерировать токен,
+# создать 4 проекта, записать .env. Идемпотентно.
+sonar-bootstrap:
+    ./scripts/sonar-bootstrap.sh
+
+# Поднять контейнеры и сразу прогнать bootstrap.
+sonar-init: sonar-up sonar-bootstrap
+
 # Прогнать все 4 лабы по очереди (с генерацией clippy.json на каждом).
 sonar-scan-all:
     ./scripts/sonar-scan-all.sh

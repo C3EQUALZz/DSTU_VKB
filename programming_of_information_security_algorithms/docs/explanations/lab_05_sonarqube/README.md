@@ -31,53 +31,28 @@
 | Linux (Ubuntu) | `sudo apt install docker.io docker-compose-plugin && # sonar-scanner — см. ссылку ниже` |
 | Любая | [`sonar-scanner` бинарь](https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/scanners/sonarscanner/) |
 
-### 1. Поднять SonarQube
+### 1. Поднять SonarQube и инициализировать его
+
+**Быстрый путь — одной командой** (рекомендуется):
 
 ```bash
-just sonar-up
-# Эквивалент: docker compose -f docker/sonarqube/compose.yaml up -d
+just sonar-init
+# = sonar-up + sonar-bootstrap
 ```
 
-Ждать ~1-2 минуты, пока контейнер прогреется (Java + Elasticsearch). Можно следить:
+`sonar-init` сделает всё за вас:
+1. Поднимет контейнеры (compose up -d).
+2. Подождёт пока SonarQube ответит `api/system/status = UP` (до ~3 минут).
+3. Сменит пароль `admin/admin` → `admin/psia-admin-2026` (можно переопределить через `SONAR_ADMIN_PASSWORD=…`).
+4. Сгенерирует пользовательский токен `psia-scan`.
+5. Создаст 4 проекта: `lab_01_rsa`, `lab_02_sha256`, `lab_03_prng`, `lab_04_nist`.
+6. Запишет `SONAR_HOST_URL` / `SONAR_TOKEN` / `SONAR_ADMIN_PASSWORD` в `.env` (с `chmod 600`).
 
-```bash
-docker logs -f psia-sonarqube
-```
+Идемпотентно — повторный запуск ничего не сломает.
 
-или просто открыть `http://localhost:9000` — после инициализации показывается экран логина.
+> **Ручной путь** (только если автонастройка не подходит): см. конец документа, [«Ручная настройка»](#ручная-настройка-если-не-нравится-bootstrap).
 
-### 2. Завести токен
-
-1. Логин `admin / admin`, сменить пароль.
-2. Profile (правый верх) → **My Account → Security → Generate Tokens** → имя `psia-scan` → **Generate**.
-3. Скопировать значение токена (показывается один раз).
-4. Положить в `.env`:
-
-```bash
-cp docker/sonarqube/.env.example .env
-# в .env прописать SONAR_TOKEN=<скопированное>
-```
-
-### 3. Создать 4 проекта (один раз)
-
-Из UI: **Projects → Create Project → Manually**, по одному для каждого `projectKey`:
-- `lab_01_rsa`
-- `lab_02_sha256`
-- `lab_03_prng`
-- `lab_04_nist`
-
-Или одной командой через API:
-
-```bash
-source .env
-for KEY in lab_01_rsa lab_02_sha256 lab_03_prng lab_04_nist; do
-  curl -sS -u "$SONAR_TOKEN:" -X POST \
-    "$SONAR_HOST_URL/api/projects/create?name=$KEY&project=$KEY"
-  echo
-done
-```
-
-### 4. Запустить сканирование
+### 2. Запустить сканирование
 
 ```bash
 just sonar-scan-all
@@ -93,7 +68,7 @@ just sonar-scan-all
 - метрики Quality Gate (bugs / vulnerabilities / code smells / coverage);
 - список замечаний с тяжестью BLOCKER / CRITICAL / MAJOR / MINOR / INFO.
 
-### 5. Остановить
+### 3. Остановить
 
 ```bash
 just sonar-down
@@ -115,6 +90,29 @@ just sonar-down
 
 - Реальный CI-прогон в облаке (SonarCloud / GitHub Actions). Если потребуется — добавить workflow с `sonarqube-scan-action`.
 - Code coverage (`sonar.community.rust.lcov.reportPaths`). Подключить через `cargo-llvm-cov` или `cargo-tarpaulin`, если этого захочет преподаватель.
+
+## Ручная настройка (если не нравится bootstrap)
+
+1. `just sonar-up`, подождать пока UI ответит на `http://localhost:9000`.
+2. Логин `admin / admin`, при первом входе сменить пароль.
+3. Profile → **My Account → Security → Generate Tokens** → имя `psia-scan` → **Generate**. Скопировать.
+4. Создать `.env` в корне:
+   ```bash
+   cat > .env <<EOF
+   SONAR_HOST_URL=http://localhost:9000
+   SONAR_TOKEN=<вставить токен>
+   EOF
+   chmod 600 .env
+   ```
+5. Создать 4 проекта вручную через **Projects → Create Project → Manually** или через API:
+   ```bash
+   source .env
+   for KEY in lab_01_rsa lab_02_sha256 lab_03_prng lab_04_nist; do
+     curl -sS -u "$SONAR_TOKEN:" -X POST \
+       "$SONAR_HOST_URL/api/projects/create?name=$KEY&project=$KEY"
+     echo
+   done
+   ```
 
 ## Полезное
 
