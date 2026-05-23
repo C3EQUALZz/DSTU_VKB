@@ -1,0 +1,42 @@
+[package]
+name = "lab_06_sym"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+rust-version.workspace = true
+description = "Лабораторная № 6: симметричное шифрование (AES-256-CBC + HMAC-SHA-256) через встроенные в ОС криптопровайдеры. Cross-platform: macOS (CommonCrypto) / Linux (OpenSSL) / Windows (CNG). Strategy pattern."
+
+[dependencies]
+shared = { workspace = true }
+tracing = { workspace = true }
+color-eyre = { workspace = true }
+thiserror = { workspace = true }
+clap = { workspace = true }
+
+[dev-dependencies]
+proptest = { workspace = true }
+
+# Системные криптопровайдеры — выбираются по target.
+[target.'cfg(target_os = "macos")'.dependencies]
+# CommonCrypto — часть системной libSystem на macOS. FFI не требует крейта,
+# подключаем через `extern "C"`. `core-foundation-sys` нужен только если
+# понадобятся CF-типы (нам — нет).
+
+[target.'cfg(target_os = "linux")'.dependencies]
+# Системный libcrypto через openssl-крейт. Это обёртка над `libcrypto.so`
+# дистрибутива — для условия «встроенный функционал ОС» подходит.
+openssl = "0.10"
+
+[target.'cfg(target_os = "windows")'.dependencies]
+# CNG (Cryptography API: Next Generation) — современная криптография Windows.
+# Скелет в src/infrastructure/providers/windows.rs ещё не использует крейт;
+# раскомментировать при доработке FFI к BCrypt.
+# windows-sys = { version = "0.59", features = ["Win32_Foundation", "Win32_Security_Cryptography"] }
+
+[lints]
+workspace = true
+
+[[bin]]
+name = "lab_06_sym"
+path = "src/main.rs"
