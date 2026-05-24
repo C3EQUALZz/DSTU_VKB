@@ -25,3 +25,13 @@ sonar-scanner-*/
 
 # Сгенерированные clippy-отчёты для sonar-scanner
 crates/*/clippy.json
+
+# SonarScanner кеш
+crates/*/.scannerwork/
+
+# Локальные данные Claude и Playwright
+/.claude/
+/.playwright-mcp/
+
+# .log-файлы захвата CLI для отчётов
+docs/screenshots/**/*.log
