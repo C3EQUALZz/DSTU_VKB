@@ -79,6 +79,8 @@ impl SymmetricCryptoProvider for CngProvider {
         _key: &[u8; HMAC_KEY_BYTES],
         _data: &[u8],
     ) -> Result<[u8; HMAC_TAG_BYTES], CryptoError> {
-        Err(todo_native("BCryptCreateHash/BCryptHashData/BCryptFinishHash"))
+        Err(todo_native(
+            "BCryptCreateHash/BCryptHashData/BCryptFinishHash",
+        ))
     }
 }
