@@ -17,12 +17,14 @@ from report_builder import (  # noqa: E402
     add_para,
     add_qa,
     add_title_page,
+    m_frac,
     m_op,
     m_sub,
     m_sup,
     m_text,
     make_doc,
     omml_display,
+    omml_inline,
     save,
 )
 
@@ -42,53 +44,163 @@ def mod_pow(base: int, exp: int, mod: int) -> int:
     return pow(base, exp, mod)
 
 
-def lab1_methodichka_dh() -> str:
-    """Текстовая пошаговая проверка: n=97, g=5, X_A=36, X_B=58, K=75."""
-    return (
-        "Шаг 1. Y_A = 5^36 mod 97. Считаем степенями: 5² = 25; 5⁴ = 25² = 625 mod 97 = 43; "
-        "5⁸ = 43² = 1849 mod 97 = 6; 5¹⁶ = 6² = 36; 5³² = 36² = 1296 mod 97 = 35. "
-        "5³⁶ = 5³² · 5⁴ = 35 · 43 = 1505 mod 97 = 50. Итог: Y_A = 50.\n"
-        "Шаг 2. Y_B = 5^58 mod 97. 5⁵⁸ = 5³² · 5¹⁶ · 5⁸ · 5² = 35 · 36 · 6 · 25 = "
-        "189000 mod 97 = 44. Итог: Y_B = 44.\n"
-        "Шаг 3. Общий ключ. K_A = Y_B^X_A = 44^36 mod 97. Аналогичной серией возведения "
-        "в квадрат: 44² mod 97 = 51; 44⁴ = 51² mod 97 = 2601 mod 97 = 75; 44⁸ = 75² mod 97 = "
-        "5625 mod 97 = 96; 44¹⁶ = 96² mod 97 = 1; 44³² = 1. Тогда 44³⁶ = 44³² · 44⁴ = 1 · 75 = 75.\n"
-        "Шаг 4. K_B = Y_A^X_B = 50^58 mod 97. 50² mod 97 = 2500 mod 97 = 75; 50⁴ = 75² mod 97 = 5625 mod 97 = 96; "
-        "50⁸ = 96² mod 97 = 1; следовательно 50¹⁶ = 50³² = 1, и 50⁵⁸ = 50³² · 50¹⁶ · 50⁸ · 50² = "
-        "1 · 1 · 1 · 75 = 75. K_B = 75 = K_A ✓."
+def m_pow(base: str, exp: str) -> str:
+    return m_sup(m_text(base), m_text(exp))
+
+
+def m_eq_line(parts: list[str]) -> str:
+    return omml_display(parts)
+
+
+def add_dh_steps(doc) -> None:
+    """Пошаговая проверка DH (n=97, g=5, X_A=36, X_B=58, K=75) через OMML."""
+    add_para(doc, "Шаг 1. Вычисляем открытый ключ Алисы:", indent=False)
+    add_math(doc, m_eq_line([
+        m_sub(m_text("Y"), m_text("A")), m_op(" = "),
+        m_pow("5", "36"), m_op(" mod 97"),
+    ]))
+    add_para(
+        doc,
+        "Используя метод последовательного возведения в квадрат (square-and-multiply):",
+        indent=False,
+    )
+    add_math(doc, m_eq_line([m_pow("5", "2"), m_op(" = 25")]))
+    add_math(doc, m_eq_line([m_pow("5", "4"), m_op(" = "), m_pow("25", "2"), m_op(" = 625 ≡ 43 (mod 97)")]))
+    add_math(doc, m_eq_line([m_pow("5", "8"), m_op(" = "), m_pow("43", "2"), m_op(" = 1849 ≡ 6 (mod 97)")]))
+    add_math(doc, m_eq_line([m_pow("5", "16"), m_op(" = "), m_pow("6", "2"), m_op(" = 36 (mod 97)")]))
+    add_math(doc, m_eq_line([m_pow("5", "32"), m_op(" = "), m_pow("36", "2"), m_op(" = 1296 ≡ 35 (mod 97)")]))
+    add_math(doc, m_eq_line([
+        m_pow("5", "36"), m_op(" = "), m_pow("5", "32"), m_op(" · "), m_pow("5", "4"),
+        m_op(" = 35 · 43 = 1505 ≡ 50 (mod 97)"),
+    ]))
+    add_math(doc, m_eq_line([m_sub(m_text("Y"), m_text("A")), m_op(" = 50")]))
+
+    add_para(doc, "Шаг 2. Вычисляем открытый ключ Боба:", indent=False)
+    add_math(doc, m_eq_line([
+        m_sub(m_text("Y"), m_text("B")), m_op(" = "), m_pow("5", "58"), m_op(" mod 97"),
+    ]))
+    add_math(doc, m_eq_line([
+        m_pow("5", "58"), m_op(" = "), m_pow("5", "32"), m_op(" · "), m_pow("5", "16"),
+        m_op(" · "), m_pow("5", "8"), m_op(" · "), m_pow("5", "2"),
+        m_op(" = 35 · 36 · 6 · 25 = 189000 ≡ 44 (mod 97)"),
+    ]))
+    add_math(doc, m_eq_line([m_sub(m_text("Y"), m_text("B")), m_op(" = 44")]))
+
+    add_para(doc, "Шаг 3. Алиса вычисляет общий ключ:", indent=False)
+    add_math(doc, m_eq_line([
+        m_sub(m_text("K"), m_text("A")), m_op(" = "),
+        m_sup(m_sub(m_text("Y"), m_text("B")), m_sub(m_text("X"), m_text("A"))),
+        m_op(" = "), m_pow("44", "36"), m_op(" mod 97"),
+    ]))
+    add_math(doc, m_eq_line([m_pow("44", "2"), m_op(" ≡ 51 (mod 97)")]))
+    add_math(doc, m_eq_line([m_pow("44", "4"), m_op(" = "), m_pow("51", "2"), m_op(" = 2601 ≡ 75 (mod 97)")]))
+    add_math(doc, m_eq_line([m_pow("44", "8"), m_op(" = "), m_pow("75", "2"), m_op(" = 5625 ≡ 96 (mod 97)")]))
+    add_math(doc, m_eq_line([m_pow("44", "16"), m_op(" = "), m_pow("96", "2"), m_op(" ≡ 1 (mod 97)")]))
+    add_math(doc, m_eq_line([m_pow("44", "32"), m_op(" = 1 (mod 97)")]))
+    add_math(doc, m_eq_line([
+        m_pow("44", "36"), m_op(" = "), m_pow("44", "32"), m_op(" · "), m_pow("44", "4"),
+        m_op(" = 1 · 75 = 75 (mod 97)"),
+    ]))
+
+    add_para(doc, "Шаг 4. Боб вычисляет общий ключ:", indent=False)
+    add_math(doc, m_eq_line([
+        m_sub(m_text("K"), m_text("B")), m_op(" = "),
+        m_sup(m_sub(m_text("Y"), m_text("A")), m_sub(m_text("X"), m_text("B"))),
+        m_op(" = "), m_pow("50", "58"), m_op(" mod 97"),
+    ]))
+    add_math(doc, m_eq_line([m_pow("50", "2"), m_op(" = 2500 ≡ 75 (mod 97)")]))
+    add_math(doc, m_eq_line([m_pow("50", "4"), m_op(" = "), m_pow("75", "2"), m_op(" = 5625 ≡ 96 (mod 97)")]))
+    add_math(doc, m_eq_line([m_pow("50", "8"), m_op(" = "), m_pow("96", "2"), m_op(" ≡ 1 (mod 97)")]))
+    add_math(doc, m_eq_line([m_pow("50", "16"), m_op(" = "), m_pow("50", "32"), m_op(" = 1 (mod 97)")]))
+    add_math(doc, m_eq_line([
+        m_pow("50", "58"), m_op(" = "), m_pow("50", "32"), m_op(" · "), m_pow("50", "16"),
+        m_op(" · "), m_pow("50", "8"), m_op(" · "), m_pow("50", "2"),
+        m_op(" = 1 · 1 · 1 · 75 = 75 (mod 97)"),
+    ]))
+    add_math(doc, m_eq_line([
+        m_sub(m_text("K"), m_text("B")), m_op(" = 75 = "),
+        m_sub(m_text("K"), m_text("A")), m_op(" ✓"),
+    ]))
+
+
+def add_primitive_root_steps(doc) -> None:
+    add_para(
+        doc,
+        "Дано p = 41. Функция Эйлера: φ(p) = 40 = 2³ · 5. Простые делители числа 40: "
+        "q₁ = 2, q₂ = 5. По свойству 5 методички число a является первообразным корнем "
+        "по модулю 41 тогда и только тогда, когда:",
+        indent=False,
+    )
+    add_math(doc, m_eq_line([
+        m_pow("a", "40/2"), m_op(" = "), m_pow("a", "20"), m_op(" ≢ 1 (mod 41), и "),
+        m_pow("a", "40/5"), m_op(" = "), m_pow("a", "8"), m_op(" ≢ 1 (mod 41)"),
+    ]))
+    add_para(doc, "Перебираем кандидаты:", indent=False)
+    add_math(doc, m_eq_line([
+        m_text("a = 2:  "), m_pow("2", "8"), m_op(" = 256 ≡ 10 (mod 41); "),
+        m_pow("2", "20"), m_op(" ≡ 1 (mod 41)  → отвергаем"),
+    ]))
+    add_math(doc, m_eq_line([
+        m_text("a = 3:  "), m_pow("3", "8"), m_op(" = 6561 ≡ 1 (mod 41)  → отвергаем"),
+    ]))
+    add_math(doc, m_eq_line([
+        m_text("a = 4:  "), m_pow("4", "8"), m_op(" ≡ 18 ≠ 1; "),
+        m_pow("4", "20"), m_op(" ≡ 1  → отвергаем"),
+    ]))
+    add_math(doc, m_eq_line([
+        m_text("a = 5:  "), m_pow("5", "8"), m_op(" ≡ 18 ≠ 1; "),
+        m_pow("5", "20"), m_op(" ≡ 1  → отвергаем"),
+    ]))
+    add_math(doc, m_eq_line([
+        m_text("a = 6:  "), m_pow("6", "8"), m_op(" ≡ 10 ≠ 1; "),
+        m_pow("6", "20"), m_op(" ≡ 40 ≠ 1  → принимаем"),
+    ]))
+    add_para(
+        doc,
+        "Итог: g = 6 — наименьший первообразный корень по модулю 41. ✓",
+        indent=False,
     )
 
 
-def lab1_primitive_root_41() -> str:
-    """Пошаговая проверка первообразного корня по mod 41 (из методички)."""
-    return (
-        "p = 41, φ(p) = 40 = 2³ · 5. Простые делители: q₁ = 2, q₂ = 5. По свойству 5 число a "
-        "является первообразным корнем по модулю 41 ⇔ a^(40/2) ≢ 1 (mod 41) и "
-        "a^(40/5) ≢ 1 (mod 41), т.е. a²⁰ ≢ 1 и a⁸ ≢ 1.\n"
-        "a = 2: 2⁸ mod 41 = 256 mod 41 = 10; 2²⁰ mod 41 = 1 → отвергаем.\n"
-        "a = 3: 3⁸ mod 41 = 6561 mod 41 = 1 → отвергаем.\n"
-        "a = 4: 4⁸ mod 41 = (2⁸)² mod 41 = 10² mod 41 = 18 ≠ 1; 4²⁰ mod 41 = 1 → отвергаем.\n"
-        "a = 5: 5⁸ mod 41 = 390625 mod 41 = 18 ≠ 1; 5²⁰ mod 41 = 1 → отвергаем.\n"
-        "a = 6: 6⁸ mod 41 = (2·3)⁸ = 2⁸·3⁸ mod 41 = 10 · 1 = 10 ≠ 1; "
-        "6²⁰ mod 41 = (10)·… ≠ 1 (проверяется аналогично). Итог: 6 — наименьший "
-        "первообразный корень по mod 41 ✓."
-    )
+def add_miller_rabin_steps(doc) -> None:
+    add_para(doc, "Проверим простоту p = 23 тестом Рабина-Миллера.", indent=False)
+    add_math(doc, m_eq_line([
+        m_text("p − 1 = 22 = "), m_pow("2", "1"), m_op(" · 11"),
+        m_op(",   откуда b = 1, m = 11"),
+    ]))
+    add_para(doc, "Раунд 1: случайный свидетель a = 5.", indent=False)
+    add_math(doc, m_eq_line([
+        m_text("z = "), m_pow("a", "m"), m_op(" mod p = "),
+        m_pow("5", "11"), m_op(" mod 23"),
+    ]))
+    add_math(doc, m_eq_line([m_pow("5", "2"), m_op(" = 25 ≡ 2 (mod 23)")]))
+    add_math(doc, m_eq_line([m_pow("5", "4"), m_op(" ≡ 4 (mod 23)")]))
+    add_math(doc, m_eq_line([m_pow("5", "8"), m_op(" ≡ 16 (mod 23)")]))
+    add_math(doc, m_eq_line([
+        m_pow("5", "11"), m_op(" = "), m_pow("5", "8"), m_op(" · "),
+        m_pow("5", "2"), m_op(" · 5 = 16 · 2 · 5 = 160 ≡ 22 ≡ p − 1 (mod 23)"),
+    ]))
+    add_para(doc, "z = p − 1 ⇒ тест пройден.", indent=False)
 
-
-def lab1_miller_rabin_demo() -> str:
-    """Пошаговая проверка p = 23 тестом Рабина-Миллера."""
-    return (
-        "Проверяем p = 23. p − 1 = 22 = 2¹ · 11, то есть b = 1, m = 11. Возьмём "
-        "случайного свидетеля a = 5.\n"
-        "z = a^m mod p = 5¹¹ mod 23. Считаем: 5² = 25 mod 23 = 2; 5⁴ = 4; 5⁸ = 16; "
-        "5¹¹ = 5⁸ · 5² · 5 = 16 · 2 · 5 = 160 mod 23 = 22. Получили z = 22 = p − 1 ⇒ "
-        "тест с этим свидетелем пройден.\n"
-        "Возьмём ещё свидетеля a = 7. z = 7¹¹ mod 23 = ? 7² = 49 mod 23 = 3; 7⁴ = 9; "
-        "7⁸ = 81 mod 23 = 12; 7¹¹ = 7⁸ · 7² · 7 = 12 · 3 · 7 = 252 mod 23 = 22 = p − 1 ⇒ "
-        "тест пройден.\n"
-        "После t = 8 успешных раундов с разными a вероятность ошибки ≤ (1/4)⁸ ≈ 1.5·10⁻⁵, "
-        "поэтому считаем p = 23 простым (что верно — 23 действительно простое)."
+    add_para(doc, "Раунд 2: случайный свидетель a = 7.", indent=False)
+    add_math(doc, m_eq_line([m_pow("7", "2"), m_op(" = 49 ≡ 3 (mod 23)")]))
+    add_math(doc, m_eq_line([m_pow("7", "4"), m_op(" ≡ 9 (mod 23)")]))
+    add_math(doc, m_eq_line([m_pow("7", "8"), m_op(" = 81 ≡ 12 (mod 23)")]))
+    add_math(doc, m_eq_line([
+        m_pow("7", "11"), m_op(" = "), m_pow("7", "8"), m_op(" · "),
+        m_pow("7", "2"), m_op(" · 7 = 12 · 3 · 7 = 252 ≡ 22 ≡ p − 1 (mod 23)"),
+    ]))
+    add_para(doc, "z = p − 1 ⇒ тест пройден.", indent=False)
+    add_para(
+        doc,
+        "После t = 8 успешных раундов с различными свидетелями вероятность принять "
+        "составное за простое не превышает:",
     )
+    add_math(doc, m_eq_line([
+        m_sup(m_text("(1/4)"), m_text("8")), m_op(" ≈ 1.5 · "),
+        m_sup(m_text("10"), m_text("−5")),
+    ]))
+    add_para(doc, "Следовательно, p = 23 считается простым (что верно).", indent=False)
 
 
 CONTROL_QA = [
@@ -181,18 +293,17 @@ def main() -> None:
     add_heading(doc, "Ручное решение примера методички")
     add_para(
         doc,
-        "Параметры: n = 97, g = 5, X_A = 36, X_B = 58. Ожидаемый общий ключ K = 75.",
+        "Параметры протокола Диффи-Хеллмана из примера методички: n = 97 (большое "
+        "простое), g = 5 (первообразный корень по модулю 97), X_A = 36 (секрет Алисы), "
+        "X_B = 58 (секрет Боба). Ожидаемый общий ключ K = 75.",
     )
-    for line in lab1_methodichka_dh().split("\n"):
-        add_para(doc, line, indent=False)
+    add_dh_steps(doc)
 
     add_heading(doc, "Ручная проверка первообразного корня по mod 41")
-    for line in lab1_primitive_root_41().split("\n"):
-        add_para(doc, line, indent=False)
+    add_primitive_root_steps(doc)
 
     add_heading(doc, "Ручная проверка теста Рабина-Миллера")
-    for line in lab1_miller_rabin_demo().split("\n"):
-        add_para(doc, line, indent=False)
+    add_miller_rabin_steps(doc)
 
     add_page_break(doc)
     add_heading(doc, "Программная проверка")
