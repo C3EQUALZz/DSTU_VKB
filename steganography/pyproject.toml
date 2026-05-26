@@ -32,6 +32,10 @@ dependencies = [
     "click>=8.4.1",
     "dishka>=1.10.1",
     "structlog>=25.5.0",
+    "python-docx>=1.1.2",
+    "lxml>=5.3.0",
+    "pillow>=11.0.0",
+    "prettytable>=3.11.0",
 ]
 
 [project.optional-dependencies]
@@ -42,9 +46,16 @@ lint = [
     "mypy==1.16.0",
     "basedpyright==1.29.2",
 ]
-dev = [
-    "steganography[lint]",
+test = [
+    "pytest>=8.3.0",
+    "pytest-cov>=6.0.0",
 ]
+dev = [
+    "steganography[lint,test]",
+]
+
+[project.scripts]
+steganography = "steganography.cli:cli_entry"
 
 [tool.basedpyright]
 include = ["src", "tests"]
@@ -84,12 +95,24 @@ ignore_missing_imports = true
 src = ["src"]
 include = ["src/**.py"]
 target-version = "py314"
-line-length = 79
+line-length = 120
 fix = true
 
 [tool.ruff.lint]
 select = ["ALL"]
-ignore = ["D", "CPY001", "A005"]
+ignore = [
+    "D",
+    "CPY001",
+    "A005",
+    "RUF001",
+    "RUF002",
+    "RUF003",
+    "S101",
+    "TC001",
+    "TC002",
+    "TC003",
+    "PLR2004",
+]
 
 [tool.ruff.format]
 docstring-code-format = true
