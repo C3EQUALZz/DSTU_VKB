@@ -147,6 +147,10 @@ omit = [
 paths = ["src"]
 include = ["src"]
 
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
 [tool.bandit]
 targets = "src"
 
