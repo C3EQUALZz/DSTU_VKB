@@ -7,6 +7,9 @@ from typing import Final
 
 from click import Group
 
+from steganography.presentation.cli.handlers.linguistic_bit_in_string import (
+    linguistic_bit_in_string_group,
+)
 from steganography.presentation.cli.handlers.text_format_decode import (
     text_format_decode_group,
 )
@@ -23,6 +26,7 @@ def setup_cli_routes(main_group: Group) -> None:
     """Регистрирует все click-группы лабораторных в корневой команде."""
     main_group.add_command(text_format_decode_group)
     main_group.add_command(text_format_encode_group)
+    main_group.add_command(linguistic_bit_in_string_group)
 
 
 def setup_logging(logger_config: LoggingConfig) -> None:

@@ -5,6 +5,9 @@ from typing import Final
 
 from dishka import Provider, Scope, provide
 
+from steganography.application.commands.linguistic_bit_in_string.classify import (
+    ClassifyStringsCommandHandler,
+)
 from steganography.application.commands.text_format_decode.decode import (
     DetectSecretCommandHandler,
 )
@@ -13,6 +16,18 @@ from steganography.application.commands.text_format_encode.encode import (
 )
 from steganography.domain.common.encodings.encoding_registry import (
     EncodingRegistry,
+)
+from steganography.domain.linguistic_bit_in_string.ports.classification_writer import (
+    ClassificationWriter,
+)
+from steganography.domain.linguistic_bit_in_string.ports.string_reader import (
+    StringReader,
+)
+from steganography.domain.linguistic_bit_in_string.services.parity_classifier import (
+    ParityClassifier,
+)
+from steganography.domain.linguistic_bit_in_string.services.vowel_counter import (
+    VowelCounter,
 )
 from steganography.domain.text_format_decode.language.russian_language_statistics import (
     RussianLanguageStatistics,
@@ -38,6 +53,12 @@ from steganography.domain.text_format_encode.services.container_plan_builder imp
 from steganography.domain.text_format_encode.services.hiding_value_defaults import (
     HidingValueDefaults,
 )
+from steganography.infrastructure.linguistic_bit_in_string.file_classification_writer import (
+    FileClassificationWriter,
+)
+from steganography.infrastructure.linguistic_bit_in_string.file_string_reader import (
+    FileStringReader,
+)
 from steganography.infrastructure.text_format_decode.docx_reader import (
     DocxFormattingReaderImpl,
 )
@@ -46,6 +67,9 @@ from steganography.infrastructure.text_format_encode.docx_container_writer impor
 )
 from steganography.infrastructure.text_format_encode.docx_cover_text_reader import (
     DocxCoverTextReaderImpl,
+)
+from steganography.presentation.cli.presenters.classification_result_presenter import (
+    ClassificationResultPresenter,
 )
 from steganography.presentation.cli.presenters.detect_result_presenter import (
     DetectResultPresenter,
@@ -91,6 +115,16 @@ class DomainProvider(Provider):
     def hiding_value_defaults(self) -> HidingValueDefaults:
         return HidingValueDefaults()
 
+    @provide
+    def vowel_counter(self) -> VowelCounter:
+        return VowelCounter()
+
+    @provide
+    def parity_classifier(
+        self, vowel_counter: VowelCounter,
+    ) -> ParityClassifier:
+        return ParityClassifier(vowel_counter=vowel_counter)
+
 
 class AdaptersProvider(Provider):
     """Инфраструктурные адаптеры — реализации портов."""
@@ -108,6 +142,14 @@ class AdaptersProvider(Provider):
     @provide
     def container_writer(self) -> ContainerWriter:
         return DocxContainerWriterImpl()
+
+    @provide
+    def string_reader(self) -> StringReader:
+        return FileStringReader()
+
+    @provide
+    def classification_writer(self) -> ClassificationWriter:
+        return FileClassificationWriter()
 
 
 class InteractorsProvider(Provider):
@@ -135,6 +177,17 @@ class InteractorsProvider(Provider):
             registry=registry, plan_builder=plan_builder, writer=writer,
         )
 
+    @provide
+    def classify_handler(
+        self,
+        reader: StringReader,
+        classifier: ParityClassifier,
+        writer: ClassificationWriter,
+    ) -> ClassifyStringsCommandHandler:
+        return ClassifyStringsCommandHandler(
+            reader=reader, classifier=classifier, writer=writer,
+        )
+
 
 class PresentersProvider(Provider):
     """Презентеры для CLI — табличное представление результатов."""
@@ -152,6 +205,10 @@ class PresentersProvider(Provider):
     @provide
     def encode_result_presenter(self) -> EncodeResultPresenter:
         return EncodeResultPresenter()
+
+    @provide
+    def classification_result_presenter(self) -> ClassificationResultPresenter:
+        return ClassificationResultPresenter()
 
 
 def setup_providers() -> Iterable[Provider]:
