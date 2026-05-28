@@ -28,13 +28,15 @@ STEGANOGRAPHY_LOG_JSON=1 ./.venv/bin/steganography text-format-decode detect-all
     -d resources/steganographic_concealment/variants/
 ```
 
-## Сборка docx-отчёта
+## Сборка docx-отчётов по всем 25 вариантам
 
 ```bash
 ./.venv/bin/python scripts/text_format_decode/build.py
 ```
 
-Результат: `docs/reports/text_format_decode/ПР1_декодирование.docx`.
+Результат: `docs/reports/2025/1/<N>/ПР1.docx` для каждого варианта N = 1..25.
+В каждом отчёте — реальный прогон детектора по соответствующему
+`generated/variantNN.docx`.
 
 ## Тесты
 

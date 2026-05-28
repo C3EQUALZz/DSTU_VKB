@@ -51,13 +51,15 @@ uv sync --extra dev
 `variant25.docx` — по таблице пословиц/методов/кодировок, циклически
 переиспользуя cover-стихи из `covers/`.
 
-## Сборка docx-отчёта
+## Сборка docx-отчётов по всем 25 вариантам
 
 ```bash
 ./.venv/bin/python scripts/text_format_encode/build.py
 ```
 
-Результат: `docs/reports/text_format_encode/ПР2_встраивание.docx`.
+Результат: `docs/reports/2025/2/<N>/ПР2.docx` для каждого варианта N = 1..25.
+В каждом отчёте — реальный прогон встраивания заданной пословицы в
+cover-стих covers/<cover_index>.docx.
 
 ## Тесты (включая encode → decode roundtrip)
 

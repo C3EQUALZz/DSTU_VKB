@@ -1,5 +1,11 @@
-"""Сборка docx-отчёта по ПР2 «Встраивание стег-сокрытия в текст»."""
+"""Сборка docx-отчётов по ПР2 для всех 25 вариантов.
 
+Каждый отчёт сохраняется в docs/reports/2025/2/<вариант>/ПР2.docx и содержит
+персонализированный титульный лист (Вариант №N) + реальный результат
+встраивания заданной пословицы в cover-стих.
+"""
+
+import asyncio
 import sys
 from pathlib import Path
 
@@ -18,42 +24,57 @@ from report_builder import (  # noqa: E402
     make_doc,
     save,
 )
+from variants_data import VARIANTS, VariantSpec  # noqa: E402
 
-_OUTPUT = _ROOT / "docs" / "reports" / "text_format_encode" / "ПР2_встраивание.docx"
-
-
-_META = LabMeta(
-    number=2,
-    title="Встраивание секретного сообщения в текстовый docx-контейнер",
-    work_kind="Практическая работа",
-    variant=15,
+from steganography.application.commands.text_format_encode.encode import (  # noqa: E402
+    EncodeSecretCommand,
+    EncodeSecretCommandHandler,
 )
+from steganography.application.common.views.text_format_encode import (  # noqa: E402
+    EncodeSecretView,
+)
+from steganography.domain.common.encodings.encoding_registry import (  # noqa: E402
+    EncodingRegistry,
+)
+from steganography.domain.text_format_encode.services.container_plan_builder import (  # noqa: E402
+    ContainerPlanBuilder,
+)
+from steganography.domain.text_format_encode.services.hiding_value_defaults import (  # noqa: E402
+    HidingValueDefaults,
+)
+from steganography.infrastructure.text_format_encode.docx_container_writer import (  # noqa: E402
+    DocxContainerWriterImpl,
+)
+from steganography.infrastructure.text_format_encode.docx_cover_text_reader import (  # noqa: E402
+    DocxCoverTextReaderImpl,
+)
+
+_COVERS_DIR = _ROOT / "resources" / "steganographic_concealment" / "covers"
+_GENERATED_DIR = _ROOT / "resources" / "steganographic_concealment" / "generated"
+_REPORTS_ROOT = _ROOT / "docs" / "reports" / "2025" / "2"
 
 
 _GOAL = (
-    "Изучить методы встраивания информации в текстовый контейнер для "
+    "Изучить методы встраивания информации в текстовый docx-контейнер для "
     "скрытой передачи данных. Реализовать программное средство, которое "
     "по заданному cover-тексту, секретному сообщению и выбранным методу "
     "форматирования и кодировке формирует новый docx-файл со встроенным "
-    "сообщением, а также массово генерирует 25 вариантов задания "
-    "преподавателя."
+    "сообщением."
 )
 
 
 _THEORY = (
     "ПР2 решает обратную задачу относительно ПР1. Секретное сообщение "
-    "кодируется в битовую строку выбранной кодировкой (МТК-2, КОИ-8R, "
-    "cp866, Windows-1251 или ASCII). Для каждого бита назначается одно из "
-    "двух значений выбранного параметра форматирования: «незаметное» — для "
-    "нуля и «слегка изменённое» — для единицы (например, размер шрифта "
-    "14 пт vs 14,5 пт, цвет RGB(0,0,0) vs RGB(1,0,0)). Каждый символ "
-    "cover-текста получает соответствующий run в docx с этими значениями, "
-    "и итоговый документ визуально не отличается от исходного, но "
-    "корректно декодируется обратно."
+    "кодируется в битовую строку выбранной кодировкой. Для каждого бита "
+    "назначается одно из двух значений выбранного параметра форматирования: "
+    "«незаметное» — для нуля и «слегка изменённое» — для единицы. Каждый "
+    "символ cover-текста получает соответствующий run в docx с этими "
+    "значениями, и итоговый документ визуально не отличается от исходного, "
+    "но корректно декодируется обратно программой ПР1."
 )
 
 
-_TASK_ITEMS = [
+_TASK_ITEMS = (
     "программно закодировать секретное сообщение (пословицу) с использованием "
     "выбранного метода стеганографического сокрытия и кодировки;",
     "сохранить полученный контейнер в новый docx-файл для последующего "
@@ -64,33 +85,28 @@ _TASK_ITEMS = [
     "ASCII;",
     "уметь использовать в качестве cover-текста как существующий docx, так "
     "и произвольную строку.",
-]
+)
 
 
-_ARCH_BULLETS = [
-    "domain/common/encodings/ — общие кодировки, у каждой два метода: "
-    "encode(text) → bits и decode(bits) → text. Используется и в ПР1, и в "
-    "ПР2 без перекрёстных зависимостей.",
+_ARCH_BULLETS = (
+    "domain/common/encodings/ — общие кодировки с методами encode/decode.",
     "domain/text_format_encode/services/container_plan_builder.py — берёт "
-    "SecretPayload (текст + кодировка + метод) и cover-текст, кодирует "
-    "сообщение в биты и сопоставляет каждому символу cover значение "
-    "параметра форматирования.",
-    "domain/text_format_encode/services/hiding_value_defaults.py — «незаметные» "
-    "пары значений по умолчанию для каждого параметра.",
-    "domain/text_format_encode/errors/ — доменные ошибки "
-    "ContainerTooSmallError и UnencodableSecretError.",
+    "секретный текст, кодирует его в биты и сопоставляет каждому символу "
+    "cover значение параметра форматирования.",
+    "domain/text_format_encode/services/hiding_value_defaults.py — "
+    "«незаметные» пары значений по умолчанию для каждого параметра.",
+    "domain/text_format_encode/errors/ — ContainerTooSmallError и "
+    "UnencodableSecretError.",
     "infrastructure/text_format_encode/docx_container_writer.py — пишет "
-    "docx через python-docx, добавляя соответствующие OOXML-элементы "
-    "(w:color, w:sz, w:w, w:spacing, ...) с значениями плана.",
+    "docx через python-docx и прямые OOXML-элементы (w:color, w:sz, w:w, "
+    "w:spacing, ...).",
     "infrastructure/text_format_encode/docx_cover_text_reader.py — читает "
     "плоский cover-текст из существующего docx.",
     "application/commands/text_format_encode/encode.py — async Command "
     "Handler EncodeSecretCommandHandler.",
     "presentation/cli/handlers/text_format_encode.py — click-команда "
     "encode с инжектом через dishka.",
-    "scripts/text_format_encode/generate_variants.py — массовая генерация "
-    "25 вариантов из таблицы пословиц/методов/кодировок.",
-]
+)
 
 
 _PLAN_BUILDER_LISTING = '''\
@@ -142,64 +158,50 @@ class DocxContainerWriterImpl(ContainerWriter):
 '''
 
 
-_CLI_RUN_LISTING = """\
-$ steganography text-format-encode encode \\
-    -s "Без труда не вытащишь и рыбку из пруда." \\
-    --cover-file resources/steganographic_concealment/covers/1.docx \\
-    -e cp866 -p size -o /tmp/encoded.docx
-
-+-----------------------+-----------------------------------------+
-|              Встраивание в encoded.docx                         |
-+-----------------------+-----------------------------------------+
-| Поле                  | Значение                                |
-+-----------------------+-----------------------------------------+
-| Файл-результат        | /tmp/encoded.docx                       |
-| Сообщение             | Без труда не вытащишь и рыбку из пруда. |
-| Кодировка             | cp866                                   |
-| Параметр              | размер шрифта                           |
-| Значение для 0        | 28                                      |
-| Значение для 1        | 29                                      |
-| Полезных бит          | 312                                     |
-| Символов в контейнере | 1798                                    |
-| Статус                | успешно                                 |
-+-----------------------+-----------------------------------------+
-"""
+def _make_handler() -> EncodeSecretCommandHandler:
+    return EncodeSecretCommandHandler(
+        registry=EncodingRegistry(),
+        plan_builder=ContainerPlanBuilder(),
+        writer=DocxContainerWriterImpl(),
+    )
 
 
-# Сводка по 25 сгенерированным вариантам (encode → roundtrip → decode 25/25).
-_GENERATION_HEADER = ["Файл", "Кодировка", "Параметр", "Бит", "Символов в cover"]
-_GENERATION_ROWS: list[list[str]] = [
-    ["variant01.docx", "КОИ-8R",       "цвет символов",            "248", "1798"],
-    ["variant02.docx", "Windows-1251", "межсимвольный интервал",   "280",  "865"],
-    ["variant03.docx", "Windows-1251", "размер шрифта",            "232", "1442"],
-    ["variant04.docx", "cp866",        "межсимвольный интервал",   "328",  "517"],
-    ["variant05.docx", "Windows-1251", "масштаб шрифта",           "184",  "425"],
-    ["variant06.docx", "cp866",        "цвет символов",            "272",  "471"],
-    ["variant07.docx", "cp866",        "масштаб шрифта",           "288", "1671"],
-    ["variant08.docx", "Windows-1251", "цвет символов",            "424", "1235"],
-    ["variant09.docx", "КОИ-8R",       "размер шрифта",            "312", "1425"],
-    ["variant10.docx", "cp866",        "размер шрифта",            "288", "1211"],
-    ["variant11.docx", "КОИ-8R",       "масштаб шрифта",           "224", "1798"],
-    ["variant12.docx", "Windows-1251", "размер шрифта",            "320",  "865"],
-    ["variant13.docx", "КОИ-8R",       "размер шрифта",            "264", "1442"],
-    ["variant14.docx", "КОИ-8R",       "цвет символов",            "200",  "517"],
-    ["variant15.docx", "cp866",        "размер шрифта",            "264",  "425"],
-    ["variant16.docx", "КОИ-8R",       "межсимвольный интервал",   "168",  "471"],
-    ["variant17.docx", "Windows-1251", "размер шрифта",            "256", "1671"],
-    ["variant18.docx", "cp866",        "межсимвольный интервал",   "200", "1235"],
-    ["variant19.docx", "Windows-1251", "масштаб шрифта",           "216", "1425"],
-    ["variant20.docx", "cp866",        "цвет символов",            "368", "1211"],
-    ["variant21.docx", "КОИ-8R",       "межсимвольный интервал",   "232", "1798"],
-    ["variant22.docx", "Windows-1251", "цвет символов",            "168",  "865"],
-    ["variant23.docx", "КОИ-8R",       "масштаб шрифта",           "296", "1442"],
-    ["variant24.docx", "Windows-1251", "межсимвольный интервал",   "296",  "517"],
-    ["variant25.docx", "Windows-1251", "цвет символов",            "272",  "425"],
-]
+def _cli_listing(variant: VariantSpec, view: EncodeSecretView) -> str:
+    if view.method is None:
+        return f"ошибка: {view.error}"
+    return (
+        f"$ steganography text-format-encode encode \\\n"
+        f"    -s \"{variant.secret}\" \\\n"
+        f"    --cover-file resources/steganographic_concealment/covers/"
+        f"{variant.cover_index}.docx \\\n"
+        f"    -e {variant.encoding_name} -p {variant.param.value} \\\n"
+        f"    -o resources/steganographic_concealment/generated/"
+        f"variant{variant.number:02d}.docx\n"
+        f"\n"
+        f"+-----------------------+--------------------------------+\n"
+        f"|       Встраивание в variant{variant.number:02d}.docx           |\n"
+        f"+-----------------------+--------------------------------+\n"
+        f"| Сообщение             | {view.secret_text}\n"
+        f"| Кодировка             | {view.encoding_name}\n"
+        f"| Параметр              | {view.method.param.human_name}\n"
+        f"| Значение для 0        | {view.method.zero_value}\n"
+        f"| Значение для 1        | {view.method.one_value}\n"
+        f"| Полезных бит          | {view.payload_bits}\n"
+        f"| Символов в контейнере | {view.container_chars}\n"
+        f"| Статус                | {'успешно' if view.success else 'ошибка'}\n"
+        f"+-----------------------+--------------------------------+\n"
+    )
 
 
-def _build() -> None:
+def _build_one(variant: VariantSpec, view: EncodeSecretView) -> Path:
+    meta = LabMeta(
+        number=2,
+        title="Встраивание секретного сообщения в текстовый docx-контейнер",
+        work_kind="Практическая работа",
+        variant=variant.number,
+    )
     doc = make_doc()
-    add_title_page(doc, _META)
+    add_title_page(doc, meta)
     add_page_break(doc)
 
     add_heading(doc, "1. Цель работы")
@@ -230,51 +232,94 @@ def _build() -> None:
     add_listing(doc, _WRITER_LISTING)
 
     add_page_break(doc)
-    add_heading(doc, "6. Демонстрация работы CLI", level=2)
-    add_listing(doc, _CLI_RUN_LISTING, caption="Листинг 3 — пример встраивания")
-
-    add_heading(doc, "7. Массовая генерация 25 вариантов", level=2)
+    add_heading(doc, f"6. Индивидуальный вариант №{variant.number}", level=2)
     add_para(
         doc,
-        "Скрипт scripts/text_format_encode/generate_variants.py собирает "
-        "все 25 контейнеров по таблице задания (одна пословица на каждый "
-        "вариант). Cover-стихи Барто берутся циклически из covers/. Сводка "
-        "приведена в таблице ниже.",
+        f"Для варианта {variant.number} требуется встроить пословицу "
+        f"«{variant.secret}» в стих-контейнер covers/{variant.cover_index}.docx, "
+        f"используя параметр форматирования «{variant.param.human_name}» и "
+        f"кодировку «{variant.encoding_name}».",
     )
+
+    success = view.success and view.method is not None
     add_table_simple(
         doc,
-        [_GENERATION_HEADER, *_GENERATION_ROWS],
+        rows=[
+            ["Поле", "Значение"],
+            ["Cover-контейнер", f"covers/{variant.cover_index}.docx"],
+            ["Файл-результат", f"variant{variant.number:02d}.docx"],
+            ["Сообщение", variant.secret],
+            ["Кодировка", view.encoding_name],
+            ["Параметр", view.method.param.human_name if success else "—"],
+            ["Значение для 0", view.method.zero_value if success else "—"],
+            ["Значение для 1", view.method.one_value if success else "—"],
+            ["Полезных бит", str(view.payload_bits)],
+            ["Символов в cover", str(view.container_chars)],
+            ["Статус", "успешно" if success else f"ошибка: {view.error}"],
+        ],
         caption=(
-            "Таблица 1 — параметры 25 сгенерированных контейнеров"
+            f"Таблица 1 — Параметры встраивания для варианта №{variant.number}"
         ),
     )
 
-    add_heading(doc, "8. Проверка roundtrip encode → decode")
-    add_para(
-        doc,
-        "Все 25 сгенерированных контейнеров прогнаны через программу ПР1 "
-        "(text-format-decode detect-all): для каждого файла восстановлены "
-        "то же сообщение, тот же метод форматирования и та же кодировка. "
-        "Таким образом, encode/decode-пара работает строго обратимо. "
-        "Это также подтверждается интеграционным тестом "
-        "tests/integration/text_format_encode/test_encode_decode_roundtrip.py.",
-    )
+    add_label(doc, "Листинг 3 — вывод CLI-программы")
+    add_listing(doc, _cli_listing(variant, view))
 
-    add_heading(doc, "9. Вывод")
-    add_para(
-        doc,
-        "В рамках ПР2 реализован построитель docx-контейнеров со скрытым "
-        "сообщением, поддерживающий пять параметров форматирования и пять "
-        "кодировок. Общее ядро кодировок (domain/common) переиспользовано "
-        "из ПР1, что соответствует принципам Clean Architecture и "
-        "Open-Closed. Реализована массовая генерация 25 вариантов "
-        "преподавателя; полный roundtrip encode → decode подтверждён "
-        "автоматическими тестами и ручным прогоном CLI.",
-    )
+    add_heading(doc, "7. Вывод")
+    if success:
+        conclusion = (
+            f"Для индивидуального варианта №{variant.number} реализованной "
+            f"программой ПР2 пословица «{variant.secret}» успешно встроена в "
+            f"стих-контейнер covers/{variant.cover_index}.docx через "
+            f"«{view.method.param.human_name}» с кодировкой "
+            f"«{view.encoding_name}» ({view.payload_bits} полезных бит на "
+            f"{view.container_chars} символов контейнера). Полученный файл "
+            f"variant{variant.number:02d}.docx может быть расшифрован "
+            f"программой ПР1 без потери данных."
+        )
+    else:
+        conclusion = (
+            f"Для варианта №{variant.number} встраивание не удалось: "
+            f"{view.error}."
+        )
+    add_para(doc, conclusion)
 
-    save(doc, _OUTPUT)
-    print(f"Отчёт сохранён: {_OUTPUT}")
+    output = _REPORTS_ROOT / str(variant.number) / "ПР2.docx"
+    save(doc, output)
+    return output
+
+
+async def _run() -> list[tuple[VariantSpec, EncodeSecretView]]:
+    handler = _make_handler()
+    cover_reader = DocxCoverTextReaderImpl()
+    defaults = HidingValueDefaults()
+    pairs: list[tuple[VariantSpec, EncodeSecretView]] = []
+    for variant in VARIANTS:
+        cover_text = cover_reader.read(
+            _COVERS_DIR / f"{variant.cover_index}.docx",
+        )
+        zero_value, one_value = defaults.for_param(variant.param)
+        command = EncodeSecretCommand(
+            secret_text=variant.secret,
+            cover_text=cover_text,
+            encoding_name=variant.encoding_name,
+            param=variant.param,
+            zero_value=zero_value,
+            one_value=one_value,
+            output_path=_GENERATED_DIR / f"variant{variant.number:02d}.docx",
+        )
+        view = await handler(command)
+        pairs.append((variant, view))
+    return pairs
+
+
+def main() -> None:
+    pairs = asyncio.run(_run())
+    for variant, view in pairs:
+        path = _build_one(variant, view)
+        status = "OK" if view.success else f"FAIL: {view.error}"
+        print(f"  variant {variant.number:02d}: {status} → {path}")
 
 
 if __name__ == "__main__":
-    _build()
+    main()
