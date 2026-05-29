@@ -5,6 +5,12 @@ from typing import Final
 
 from dishka import Provider, Scope, provide
 
+from steganography.application.commands.kutter_jordan_bossen.embed import (
+    EmbedKjbCommandHandler,
+)
+from steganography.application.commands.kutter_jordan_bossen.extract import (
+    ExtractKjbCommandHandler,
+)
 from steganography.application.commands.linguistic_bit_in_string.classify import (
     ClassifyStringsCommandHandler,
 )
@@ -30,6 +36,15 @@ from steganography.domain.common.bmp.bmp_reader import BmpReader
 from steganography.domain.common.bmp.bmp_writer import BmpWriter
 from steganography.domain.common.encodings.encoding_registry import (
     EncodingRegistry,
+)
+from steganography.domain.kutter_jordan_bossen.services.kjb_embedder import (
+    KjbEmbedder,
+)
+from steganography.domain.kutter_jordan_bossen.services.kjb_extractor import (
+    KjbExtractor,
+)
+from steganography.domain.kutter_jordan_bossen.services.luminance_calculator import (
+    LuminanceCalculator,
 )
 from steganography.domain.linguistic_bit_in_string.ports.classification_writer import (
     ClassificationWriter,
@@ -123,6 +138,9 @@ from steganography.presentation.cli.presenters.detect_result_presenter import (
 from steganography.presentation.cli.presenters.detect_summary_presenter import (
     DetectSummaryPresenter,
 )
+from steganography.presentation.cli.presenters.embed_kjb_presenter import (
+    EmbedKjbPresenter,
+)
 from steganography.presentation.cli.presenters.embed_lsb_bmp_presenter import (
     EmbedLsbBmpPresenter,
 )
@@ -131,6 +149,9 @@ from steganography.presentation.cli.presenters.embed_lsb_hamming_presenter impor
 )
 from steganography.presentation.cli.presenters.encode_result_presenter import (
     EncodeResultPresenter,
+)
+from steganography.presentation.cli.presenters.extract_kjb_presenter import (
+    ExtractKjbPresenter,
 )
 from steganography.presentation.cli.presenters.extract_lsb_bmp_presenter import (
     ExtractLsbBmpPresenter,
@@ -240,6 +261,20 @@ class DomainProvider(Provider):
         self, channel_stream: ChannelStream,
     ) -> Hamming15_11Method:
         return Hamming15_11Method(channel_stream=channel_stream)
+
+    @provide
+    def luminance_calculator(self) -> LuminanceCalculator:
+        return LuminanceCalculator()
+
+    @provide
+    def kjb_embedder(
+        self, luminance: LuminanceCalculator,
+    ) -> KjbEmbedder:
+        return KjbEmbedder(luminance=luminance)
+
+    @provide
+    def kjb_extractor(self) -> KjbExtractor:
+        return KjbExtractor()
 
 
 class AdaptersProvider(Provider):
@@ -359,6 +394,27 @@ class InteractorsProvider(Provider):
             reader=reader, lsb_r=lsb_r, lsb_m=lsb_m, hamming=hamming,
         )
 
+    @provide
+    def kjb_embed_handler(
+        self,
+        reader: BmpReader,
+        writer: BmpWriter,
+        embedder: KjbEmbedder,
+    ) -> EmbedKjbCommandHandler:
+        return EmbedKjbCommandHandler(
+            reader=reader, writer=writer, embedder=embedder,
+        )
+
+    @provide
+    def kjb_extract_handler(
+        self,
+        reader: BmpReader,
+        extractor: KjbExtractor,
+    ) -> ExtractKjbCommandHandler:
+        return ExtractKjbCommandHandler(
+            reader=reader, extractor=extractor,
+        )
+
 
 class PresentersProvider(Provider):
     """Презентеры для CLI — табличное представление результатов."""
@@ -396,6 +452,14 @@ class PresentersProvider(Provider):
     @provide
     def extract_lsb_hamming_presenter(self) -> ExtractLsbHammingPresenter:
         return ExtractLsbHammingPresenter()
+
+    @provide
+    def embed_kjb_presenter(self) -> EmbedKjbPresenter:
+        return EmbedKjbPresenter()
+
+    @provide
+    def extract_kjb_presenter(self) -> ExtractKjbPresenter:
+        return ExtractKjbPresenter()
 
 
 def setup_providers() -> Iterable[Provider]:

@@ -7,6 +7,9 @@ from typing import Final
 
 from click import Group
 
+from steganography.presentation.cli.handlers.kutter_jordan_bossen import (
+    kutter_jordan_bossen_group,
+)
 from steganography.presentation.cli.handlers.linguistic_bit_in_string import (
     linguistic_bit_in_string_group,
 )
@@ -35,6 +38,7 @@ def setup_cli_routes(main_group: Group) -> None:
     main_group.add_command(linguistic_bit_in_string_group)
     main_group.add_command(lsb_bmp_vigenere_group)
     main_group.add_command(lsb_hamming_bmp_group)
+    main_group.add_command(kutter_jordan_bossen_group)
 
 
 def setup_logging(logger_config: LoggingConfig) -> None:
