@@ -8,12 +8,26 @@ from dishka import Provider, Scope, provide
 from steganography.application.commands.linguistic_bit_in_string.classify import (
     ClassifyStringsCommandHandler,
 )
+from steganography.application.commands.lsb_bmp_vigenere.embed import (
+    EmbedLsbBmpCommandHandler,
+)
+from steganography.application.commands.lsb_bmp_vigenere.extract import (
+    ExtractLsbBmpCommandHandler,
+)
+from steganography.application.commands.lsb_hamming_bmp.embed import (
+    EmbedLsbHammingCommandHandler,
+)
+from steganography.application.commands.lsb_hamming_bmp.extract import (
+    ExtractLsbHammingCommandHandler,
+)
 from steganography.application.commands.text_format_decode.decode import (
     DetectSecretCommandHandler,
 )
 from steganography.application.commands.text_format_encode.encode import (
     EncodeSecretCommandHandler,
 )
+from steganography.domain.common.bmp.bmp_reader import BmpReader
+from steganography.domain.common.bmp.bmp_writer import BmpWriter
 from steganography.domain.common.encodings.encoding_registry import (
     EncodingRegistry,
 )
@@ -28,6 +42,36 @@ from steganography.domain.linguistic_bit_in_string.services.parity_classifier im
 )
 from steganography.domain.linguistic_bit_in_string.services.vowel_counter import (
     VowelCounter,
+)
+from steganography.domain.lsb_bmp_vigenere.services.lsb_embedder import (
+    LsbEmbedder,
+)
+from steganography.domain.lsb_bmp_vigenere.services.lsb_extractor import (
+    LsbExtractor,
+)
+from steganography.domain.lsb_bmp_vigenere.services.marker_packager import (
+    MarkerPackager,
+)
+from steganography.domain.lsb_bmp_vigenere.services.secret_embedder import (
+    SecretEmbedder,
+)
+from steganography.domain.lsb_bmp_vigenere.services.secret_extractor import (
+    SecretExtractor,
+)
+from steganography.domain.lsb_bmp_vigenere.services.vigenere_cipher import (
+    VigenereCipher,
+)
+from steganography.domain.lsb_hamming_bmp.services.channel_stream import (
+    ChannelStream,
+)
+from steganography.domain.lsb_hamming_bmp.services.hamming_15_11_method import (
+    Hamming15_11Method,
+)
+from steganography.domain.lsb_hamming_bmp.services.lsb_matching_method import (
+    LsbMatchingMethod,
+)
+from steganography.domain.lsb_hamming_bmp.services.lsb_replacement_method import (
+    LsbReplacementMethod,
 )
 from steganography.domain.text_format_decode.language.russian_language_statistics import (
     RussianLanguageStatistics,
@@ -53,6 +97,8 @@ from steganography.domain.text_format_encode.services.container_plan_builder imp
 from steganography.domain.text_format_encode.services.hiding_value_defaults import (
     HidingValueDefaults,
 )
+from steganography.infrastructure.bmp.pillow_bmp_reader import PillowBmpReader
+from steganography.infrastructure.bmp.pillow_bmp_writer import PillowBmpWriter
 from steganography.infrastructure.linguistic_bit_in_string.file_classification_writer import (
     FileClassificationWriter,
 )
@@ -77,8 +123,20 @@ from steganography.presentation.cli.presenters.detect_result_presenter import (
 from steganography.presentation.cli.presenters.detect_summary_presenter import (
     DetectSummaryPresenter,
 )
+from steganography.presentation.cli.presenters.embed_lsb_bmp_presenter import (
+    EmbedLsbBmpPresenter,
+)
+from steganography.presentation.cli.presenters.embed_lsb_hamming_presenter import (
+    EmbedLsbHammingPresenter,
+)
 from steganography.presentation.cli.presenters.encode_result_presenter import (
     EncodeResultPresenter,
+)
+from steganography.presentation.cli.presenters.extract_lsb_bmp_presenter import (
+    ExtractLsbBmpPresenter,
+)
+from steganography.presentation.cli.presenters.extract_lsb_hamming_presenter import (
+    ExtractLsbHammingPresenter,
 )
 
 
@@ -125,6 +183,64 @@ class DomainProvider(Provider):
     ) -> ParityClassifier:
         return ParityClassifier(vowel_counter=vowel_counter)
 
+    @provide
+    def vigenere_cipher(self) -> VigenereCipher:
+        return VigenereCipher()
+
+    @provide
+    def marker_packager(self) -> MarkerPackager:
+        return MarkerPackager()
+
+    @provide
+    def lsb_embedder(self) -> LsbEmbedder:
+        return LsbEmbedder()
+
+    @provide
+    def lsb_extractor(self) -> LsbExtractor:
+        return LsbExtractor()
+
+    @provide
+    def secret_embedder(
+        self,
+        cipher: VigenereCipher,
+        packager: MarkerPackager,
+        embedder: LsbEmbedder,
+    ) -> SecretEmbedder:
+        return SecretEmbedder(cipher=cipher, packager=packager, embedder=embedder)
+
+    @provide
+    def secret_extractor(
+        self,
+        cipher: VigenereCipher,
+        packager: MarkerPackager,
+        extractor: LsbExtractor,
+    ) -> SecretExtractor:
+        return SecretExtractor(
+            cipher=cipher, packager=packager, extractor=extractor,
+        )
+
+    @provide
+    def channel_stream(self) -> ChannelStream:
+        return ChannelStream()
+
+    @provide
+    def lsb_replacement_method(
+        self, channel_stream: ChannelStream,
+    ) -> LsbReplacementMethod:
+        return LsbReplacementMethod(channel_stream=channel_stream)
+
+    @provide
+    def lsb_matching_method(
+        self, channel_stream: ChannelStream,
+    ) -> LsbMatchingMethod:
+        return LsbMatchingMethod(channel_stream=channel_stream, seed=42)
+
+    @provide
+    def hamming_method(
+        self, channel_stream: ChannelStream,
+    ) -> Hamming15_11Method:
+        return Hamming15_11Method(channel_stream=channel_stream)
+
 
 class AdaptersProvider(Provider):
     """Инфраструктурные адаптеры — реализации портов."""
@@ -150,6 +266,14 @@ class AdaptersProvider(Provider):
     @provide
     def classification_writer(self) -> ClassificationWriter:
         return FileClassificationWriter()
+
+    @provide
+    def bmp_reader(self) -> BmpReader:
+        return PillowBmpReader()
+
+    @provide
+    def bmp_writer(self) -> BmpWriter:
+        return PillowBmpWriter()
 
 
 class InteractorsProvider(Provider):
@@ -188,6 +312,53 @@ class InteractorsProvider(Provider):
             reader=reader, classifier=classifier, writer=writer,
         )
 
+    @provide
+    def lsb_bmp_embed_handler(
+        self,
+        reader: BmpReader,
+        writer: BmpWriter,
+        embedder: SecretEmbedder,
+    ) -> EmbedLsbBmpCommandHandler:
+        return EmbedLsbBmpCommandHandler(
+            reader=reader, writer=writer, embedder=embedder,
+        )
+
+    @provide
+    def lsb_bmp_extract_handler(
+        self,
+        reader: BmpReader,
+        extractor: SecretExtractor,
+    ) -> ExtractLsbBmpCommandHandler:
+        return ExtractLsbBmpCommandHandler(
+            reader=reader, extractor=extractor,
+        )
+
+    @provide
+    def lsb_hamming_embed_handler(
+        self,
+        reader: BmpReader,
+        writer: BmpWriter,
+        lsb_r: LsbReplacementMethod,
+        lsb_m: LsbMatchingMethod,
+        hamming: Hamming15_11Method,
+    ) -> EmbedLsbHammingCommandHandler:
+        return EmbedLsbHammingCommandHandler(
+            reader=reader, writer=writer,
+            lsb_r=lsb_r, lsb_m=lsb_m, hamming=hamming,
+        )
+
+    @provide
+    def lsb_hamming_extract_handler(
+        self,
+        reader: BmpReader,
+        lsb_r: LsbReplacementMethod,
+        lsb_m: LsbMatchingMethod,
+        hamming: Hamming15_11Method,
+    ) -> ExtractLsbHammingCommandHandler:
+        return ExtractLsbHammingCommandHandler(
+            reader=reader, lsb_r=lsb_r, lsb_m=lsb_m, hamming=hamming,
+        )
+
 
 class PresentersProvider(Provider):
     """Презентеры для CLI — табличное представление результатов."""
@@ -209,6 +380,22 @@ class PresentersProvider(Provider):
     @provide
     def classification_result_presenter(self) -> ClassificationResultPresenter:
         return ClassificationResultPresenter()
+
+    @provide
+    def embed_lsb_bmp_presenter(self) -> EmbedLsbBmpPresenter:
+        return EmbedLsbBmpPresenter()
+
+    @provide
+    def extract_lsb_bmp_presenter(self) -> ExtractLsbBmpPresenter:
+        return ExtractLsbBmpPresenter()
+
+    @provide
+    def embed_lsb_hamming_presenter(self) -> EmbedLsbHammingPresenter:
+        return EmbedLsbHammingPresenter()
+
+    @provide
+    def extract_lsb_hamming_presenter(self) -> ExtractLsbHammingPresenter:
+        return ExtractLsbHammingPresenter()
 
 
 def setup_providers() -> Iterable[Provider]:

@@ -10,6 +10,12 @@ from click import Group
 from steganography.presentation.cli.handlers.linguistic_bit_in_string import (
     linguistic_bit_in_string_group,
 )
+from steganography.presentation.cli.handlers.lsb_bmp_vigenere import (
+    lsb_bmp_vigenere_group,
+)
+from steganography.presentation.cli.handlers.lsb_hamming_bmp import (
+    lsb_hamming_bmp_group,
+)
 from steganography.presentation.cli.handlers.text_format_decode import (
     text_format_decode_group,
 )
@@ -27,6 +33,8 @@ def setup_cli_routes(main_group: Group) -> None:
     main_group.add_command(text_format_decode_group)
     main_group.add_command(text_format_encode_group)
     main_group.add_command(linguistic_bit_in_string_group)
+    main_group.add_command(lsb_bmp_vigenere_group)
+    main_group.add_command(lsb_hamming_bmp_group)
 
 
 def setup_logging(logger_config: LoggingConfig) -> None:
