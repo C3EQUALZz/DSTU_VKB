@@ -1,0 +1,73 @@
+services:
+  kdc:
+    build:
+      context: .
+      dockerfile: Dockerfile.kdc
+    image: dstu-lab-kerberos-kdc:latest
+    container_name: lab_krb_kdc
+    hostname: kdc.lab.local
+    networks:
+      lab_net:
+        ipv4_address: 172.29.0.10
+    volumes:
+      - krb5_db:/var/lib/krb5kdc
+      - keytabs:/etc/krb5_shared
+    extra_hosts:
+      - "kdc.lab.local:172.29.0.10"
+      - "client.lab.local:172.29.0.20"
+      - "target.lab.local:172.29.0.30"
+    restart: "no"
+
+  target:
+    build:
+      context: .
+      dockerfile: Dockerfile.target
+    image: dstu-lab-kerberos-target:latest
+    container_name: lab_krb_target
+    hostname: target.lab.local
+    networks:
+      lab_net:
+        ipv4_address: 172.29.0.30
+    volumes:
+      - keytabs:/etc/krb5_shared:ro
+    extra_hosts:
+      - "kdc.lab.local:172.29.0.10"
+      - "client.lab.local:172.29.0.20"
+      - "target.lab.local:172.29.0.30"
+    depends_on:
+      - kdc
+    restart: "no"
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    image: dstu-lab-kerberos-client:latest
+    container_name: lab_krb_client
+    hostname: client.lab.local
+    networks:
+      lab_net:
+        ipv4_address: 172.29.0.20
+    extra_hosts:
+      - "kdc.lab.local:172.29.0.10"
+      - "client.lab.local:172.29.0.20"
+      - "target.lab.local:172.29.0.30"
+    depends_on:
+      - kdc
+      - target
+    restart: "no"
+
+networks:
+  lab_net:
+    name: lab_krb_net
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.29.0.0/24
+
+volumes:
+  krb5_db:
+    name: lab_krb_db
+  keytabs:
+    name: lab_krb_keytabs

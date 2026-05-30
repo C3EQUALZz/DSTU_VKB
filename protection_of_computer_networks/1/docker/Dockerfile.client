@@ -1,0 +1,20 @@
+FROM debian:bookworm-slim
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        krb5-user \
+        openssh-client \
+        ca-certificates \
+        iproute2 \
+        iputils-ping \
+        dnsutils \
+        procps \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY krb5.conf /etc/krb5.conf
+# По умолчанию ssh не отправляет креды без явного флага -K, поэтому
+# заранее включаем GSSAPI и forwarding в ssh_config.
+RUN printf 'GSSAPIAuthentication yes\nGSSAPIDelegateCredentials yes\nStrictHostKeyChecking no\nUserKnownHostsFile /dev/null\nLogLevel ERROR\n' \
+        >> /etc/ssh/ssh_config
+
+CMD ["sleep", "infinity"]

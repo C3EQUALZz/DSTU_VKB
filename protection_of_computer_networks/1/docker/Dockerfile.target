@@ -1,0 +1,23 @@
+FROM debian:bookworm-slim
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        openssh-server \
+        krb5-user \
+        iproute2 \
+        iputils-ping \
+        procps \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /run/sshd \
+    && useradd -m -s /bin/bash labuser \
+    && echo 'labuser:labpass' | chpasswd
+
+COPY krb5.conf       /etc/krb5.conf
+COPY sshd_config     /etc/ssh/sshd_config
+COPY entrypoint-target.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+EXPOSE 22
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

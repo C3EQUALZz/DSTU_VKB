@@ -1,0 +1,15 @@
+Port 22
+PermitRootLogin no
+PasswordAuthentication yes
+PubkeyAuthentication yes
+
+# Включаем Kerberos / GSSAPI — пункт 4.3 методички.
+GSSAPIAuthentication yes
+GSSAPICleanupCredentials yes
+KerberosAuthentication yes
+
+UsePAM yes
+X11Forwarding no
+PrintMotd no
+AcceptEnv LANG LC_*
+Subsystem sftp /usr/lib/openssh/sftp-server
