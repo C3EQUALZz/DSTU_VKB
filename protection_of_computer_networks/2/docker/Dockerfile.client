@@ -1,0 +1,15 @@
+FROM debian:bookworm-slim
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        openssh-client \
+        sshpass \
+        curl \
+        ca-certificates \
+        iproute2 \
+        iputils-ping \
+        net-tools \
+        dnsutils \
+    && rm -rf /var/lib/apt/lists/*
+
+CMD ["sleep", "infinity"]

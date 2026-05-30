@@ -1,0 +1,44 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    image: dstu-lab-firewall-server:latest
+    container_name: lab_firewall_server
+    hostname: lab-server
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    networks:
+      lab_net:
+        ipv4_address: 172.28.0.10
+    volumes:
+      - firewall_rules:/etc/iptables
+    restart: "no"
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    image: dstu-lab-firewall-client:latest
+    container_name: lab_firewall_client
+    hostname: lab-client
+    networks:
+      lab_net:
+        ipv4_address: 172.28.0.20
+    depends_on:
+      - server
+    restart: "no"
+
+networks:
+  lab_net:
+    name: lab_net
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/24
+
+volumes:
+  firewall_rules:
+    name: lab_firewall_rules

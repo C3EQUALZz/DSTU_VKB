@@ -1,0 +1,39 @@
+FROM debian:bookworm-slim
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        ufw \
+        iptables \
+        openssh-server \
+        nginx \
+        openssl \
+        ca-certificates \
+        iproute2 \
+        iputils-ping \
+        net-tools \
+        curl \
+        procps \
+        sudo \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /run/sshd \
+    && useradd -m -s /bin/bash -G sudo labuser \
+    && echo 'labuser:lab' | chpasswd \
+    && echo 'root:lab' | chpasswd \
+    && sed -ri 's/^#?PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config \
+    && sed -ri 's/^#?PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
+
+RUN mkdir -p /etc/nginx/ssl \
+    && openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+        -keyout /etc/nginx/ssl/lab.key \
+        -out /etc/nginx/ssl/lab.crt \
+        -subj "/C=RU/ST=Rostov/L=Rostov-on-Don/O=DSTU/OU=KBIS/CN=lab-server"
+
+COPY default-site.conf /etc/nginx/sites-available/default
+COPY index.html /var/www/html/index.html
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+EXPOSE 22 80 443
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
