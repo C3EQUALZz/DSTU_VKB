@@ -1,0 +1,39 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    image: dstu-lab-fileserver-server:latest
+    container_name: lab_fs_server
+    hostname: fs-server
+    cap_add:
+      - AUDIT_CONTROL
+      - AUDIT_WRITE
+      - AUDIT_READ
+    networks:
+      lab_net:
+        ipv4_address: 172.31.0.10
+    restart: "no"
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    image: dstu-lab-fileserver-client:latest
+    container_name: lab_fs_client
+    hostname: fs-client
+    networks:
+      lab_net:
+        ipv4_address: 172.31.0.20
+    depends_on:
+      - server
+    restart: "no"
+
+networks:
+  lab_net:
+    name: lab_fs_net
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.31.0.0/24

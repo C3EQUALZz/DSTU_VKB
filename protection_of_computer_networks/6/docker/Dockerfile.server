@@ -1,0 +1,25 @@
+FROM debian:bookworm-slim
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        openssh-server \
+        acl \
+        auditd \
+        audispd-plugins \
+        sudo \
+        passwd \
+        iproute2 \
+        iputils-ping \
+        procps \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /run/sshd /var/log/audit \
+    && sed -ri 's/^#?PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
+
+COPY audit.rules        /etc/audit/rules.d/ftp.rules
+COPY entrypoint-server.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+EXPOSE 22
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
