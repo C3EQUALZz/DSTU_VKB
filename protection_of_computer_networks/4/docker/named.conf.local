@@ -1,0 +1,13 @@
+// Локальные зоны: прямая example.local и обратная для 172.30.0.0/24.
+
+zone "example.local" {
+    type master;
+    file "/etc/bind/db.example.local";
+    allow-transfer { none; };
+};
+
+zone "0.30.172.in-addr.arpa" {
+    type master;
+    file "/etc/bind/db.192.168.local";
+    allow-transfer { none; };
+};

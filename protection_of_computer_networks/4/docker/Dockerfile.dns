@@ -1,0 +1,25 @@
+FROM debian:bookworm-slim
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        bind9 \
+        bind9utils \
+        bind9-doc \
+        dnsutils \
+        iproute2 \
+        iputils-ping \
+        procps \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY named.conf.options /etc/bind/named.conf.options
+COPY named.conf.local   /etc/bind/named.conf.local
+COPY db.example.local   /etc/bind/db.example.local
+COPY db.192.168.local   /etc/bind/db.192.168.local
+COPY entrypoint-dns.sh  /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh \
+    && chown -R bind:bind /etc/bind \
+    && chown -R bind:bind /var/cache/bind
+
+EXPOSE 53/udp 53/tcp
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

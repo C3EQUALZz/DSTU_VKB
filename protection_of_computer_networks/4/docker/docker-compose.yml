@@ -1,0 +1,39 @@
+services:
+  dns:
+    build:
+      context: .
+      dockerfile: Dockerfile.dns
+    image: dstu-lab-dns-server:latest
+    container_name: lab_dns_server
+    hostname: ns.example.local
+    networks:
+      lab_net:
+        ipv4_address: 172.30.0.10
+    restart: "no"
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    image: dstu-lab-dns-client:latest
+    container_name: lab_dns_client
+    hostname: client.example.local
+    networks:
+      lab_net:
+        ipv4_address: 172.30.0.20
+    # Клиент использует наш BIND как единственный резолвер — пункт 10
+    # контрольного вопроса методички «как настроить клиент».
+    dns:
+      - 172.30.0.10
+    depends_on:
+      - dns
+    restart: "no"
+
+networks:
+  lab_net:
+    name: lab_dns_net
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.30.0.0/24

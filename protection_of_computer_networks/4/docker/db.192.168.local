@@ -1,0 +1,18 @@
+;
+; Reverse zone for 172.30.0.0/24
+;
+$TTL    604800
+@       IN      SOA     ns.example.local. admin.example.local. (
+                              1          ; Serial
+                         604800          ; Refresh
+                          86400          ; Retry
+                        2419200          ; Expire
+                         604800 )        ; Negative Cache TTL
+;
+@       IN      NS      ns.example.local.
+
+10      IN      PTR     ns.example.local.
+10      IN      PTR     www.example.local.
+10      IN      PTR     mail.example.local.
+11      IN      PTR     db.example.local.
+20      IN      PTR     client.example.local.

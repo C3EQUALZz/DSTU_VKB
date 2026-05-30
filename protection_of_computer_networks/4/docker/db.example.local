@@ -1,0 +1,29 @@
+;
+; BIND zone file for example.local
+;
+$TTL    604800
+@       IN      SOA     ns.example.local. admin.example.local. (
+                              2          ; Serial
+                         604800          ; Refresh
+                          86400          ; Retry
+                        2419200          ; Expire
+                         604800 )        ; Negative Cache TTL
+;
+; NS records
+@       IN      NS      ns.example.local.
+
+; A records
+ns      IN      A       172.30.0.10
+www     IN      A       172.30.0.10
+mail    IN      A       172.30.0.10
+db      IN      A       172.30.0.11
+client  IN      A       172.30.0.20
+
+; CNAME (псевдоним web → www)
+web     IN      CNAME   www.example.local.
+
+; MX (mail exchanger с приоритетом 10)
+@       IN      MX      10 mail.example.local.
+
+; TXT (демонстрационная SPF-запись)
+@       IN      TXT     "v=spf1 mx ~all"

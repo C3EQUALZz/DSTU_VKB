@@ -1,0 +1,32 @@
+// Конфигурация ограничивает доступ к DNS-серверу: запросы принимаются
+// только из сети 172.30.0.0/24 (стенд) и от localhost, рекурсия включена
+// для пересылки внешних запросов на Google DNS.
+
+acl "trusted" {
+    127.0.0.0/8;
+    172.30.0.0/24;
+};
+
+options {
+    directory "/var/cache/bind";
+
+    listen-on { any; };
+    listen-on-v6 { none; };
+
+    // Слушаем только нашу подсеть и loopback — пункт «улучшение безопасности»
+    // из методички.
+    allow-query     { trusted; };
+    allow-recursion { trusted; };
+    allow-transfer  { none; };
+
+    recursion yes;
+    forwarders {
+        8.8.8.8;
+        8.8.4.4;
+    };
+
+    // Отключаем DNSSEC validation — нет цепочки доверия для example.local.
+    dnssec-validation no;
+
+    auth-nxdomain no;
+};
