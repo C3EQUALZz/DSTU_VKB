@@ -29,14 +29,17 @@ pub fn parse_codes(text: &str) -> Result<Vec<u32>, DomainError> {
     text.split_whitespace()
         .filter(|t| !t.is_empty())
         .filter_map(|t| {
-            let cleaned = t.trim_end_matches(&[',', '.', ';', ':', '!', '?'][..]);
+            // Тире и знаки препинания как разделители — пропускаем.
+            let cleaned = t.trim_matches(&[',', '.', ';', ':', '!', '?', '-', '(', ')'][..]);
             if cleaned.is_empty() {
                 return None;
             }
             Some(
                 cleaned
                     .parse::<u32>()
-                    .map_err(|_| DomainError::InvalidToken { token: t.to_string() }),
+                    .map_err(|_| DomainError::InvalidToken {
+                        token: t.to_string(),
+                    }),
             )
         })
         .collect()
