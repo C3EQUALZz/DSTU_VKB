@@ -41,17 +41,26 @@ def to_bits(n: int) -> str:
     return f"{n:08b}"
 
 
-def manual_xor_first_letters(stanza: str, n: int = 6) -> str:
-    """Подробная таблица XOR для первых n символов."""
-    codes = encode_win1251(stanza)[:n]
-    lines = [f"Ключ K = {KEY} = {to_bits(KEY)} (1 байт).", ""]
-    lines.append("Шифрование c_i = p_i ⊕ K:")
-    for i, c in enumerate(codes):
-        sym = stanza[i]
+def manual_xor_table(text: str) -> str:
+    """Полная таблица XOR (аналог таблиц 3.2–3.6 методички).
+
+    Колонки: Символ | ASCII код | Двоичный код | Ключ (бин.) | XOR (бин.) | XOR (дес.)
+    """
+    chars = [c for c in text if c.encode("cp1251", errors="ignore")]
+    codes = encode_win1251(text)
+    key_bin = to_bits(KEY)
+    lines = [
+        f"Ключ K = {KEY} (дес.) = {key_bin} (бин.)",
+        "",
+        f"{'Сим':^4} | {'Код (cp1251)':^12} | {'Открытый (бин.)':^17} | "
+        f"{'Ключ (бин.)':^12} | {'XOR (бин.)':^12} | {'XOR (дес.)':^10}",
+        "-" * 80,
+    ]
+    for i, (sym, c) in enumerate(zip(text, codes)):
         xor = c ^ KEY
         lines.append(
-            f"  i={i:>2}  '{sym}' = {c:>3} = {to_bits(c)}  ⊕  {to_bits(KEY)}  =  "
-            f"{to_bits(xor)} = {xor:>3}"
+            f"  {sym:^2}  | {c:^12} | {to_bits(c):^17} | "
+            f"{key_bin:^12} | {to_bits(xor):^12} | {xor:^10}"
         )
     return "\n".join(lines)
 
@@ -137,16 +146,22 @@ def main() -> None:
         "Живи ещё хоть четверть века —\n"
         "Всё будет так. Исхода нет."
     )
-    add_para(doc, "Исходный текст (четверостишие А. Блока):")
+    first_line = "Ночь, улица, фонарь, аптека,"
+    add_para(doc, "Исходный текст (четверостишие А. Блока, пример из методички):")
     for line in stanza.split("\n"):
         add_para(doc, line, indent=False)
-    add_para(doc, "Ключ: K = 70 (десятичное), что в двоичной записи 01000110.")
     add_para(
         doc,
-        "Покажем шаги XOR-шифрования для первых 6 символов первой строки. Кодировка — "
-        "Windows-1251 (1 байт на букву кириллицы):",
+        "Ключ: K = 70 (десятичное) = 01000110 (двоичное), 1 байт. Кодировка символов — "
+        "Windows-1251 (1 байт на символ кириллицы), аналог таблиц ASCII из методички. "
+        "Ниже приведена таблица XOR-шифрования для первой строки стиха "
+        "(Таблица 3.2–3.4 методички в объединённом виде):",
     )
-    add_listing(doc, manual_xor_first_letters(stanza, n=6))
+    add_listing(
+        doc,
+        manual_xor_table(first_line),
+        caption="Таблица 1 — пошаговое XOR-шифрование первой строки (KEY=70)",
+    )
     add_para(
         doc,
         "Аналогично шифруются остальные байты. Для дешифрования применяется та же операция "
