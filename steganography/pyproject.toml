@@ -29,14 +29,14 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
-    "click>=8.4.1",
-    "dishka>=1.10.1",
-    "structlog>=25.5.0",
-    "python-docx>=1.1.2",
-    "lxml>=5.3.0",
-    "pillow>=11.0.0",
-    "prettytable>=3.11.0",
-    "numpy>=2.5.0",
+    "click==8.4.2",
+    "dishka==1.10.1",
+    "structlog==26.1.0",
+    "python-docx==1.1.2",
+    "lxml==5.3.0",
+    "pillow==11.0.0",
+    "prettytable==3.11.0",
+    "numpy==2.5.0",
 ]
 
 [project.optional-dependencies]
