@@ -13,6 +13,9 @@ from steganography.domain.text_format_encode.errors.encode_errors import (
 from steganography.domain.text_format_encode.value_objects.char_formatting import (
     CharFormatting,
 )
+from steganography.domain.text_format_encode.value_objects.cover_text import (
+    CoverText,
+)
 from steganography.domain.text_format_encode.value_objects.formatting_plan import (
     FormattingPlan,
 )
@@ -24,7 +27,8 @@ from steganography.domain.text_format_encode.value_objects.secret_payload import
 class ContainerPlanBuilder:
     """Доменный сервис построения плана встраивания."""
 
-    def build(self, payload: SecretPayload, cover_text: str) -> FormattingPlan:
+    def build(self, payload: SecretPayload, cover: CoverText) -> FormattingPlan:
+        cover_text = cover.text
         bits = payload.encoding.encode(payload.secret_text)
         if bits is None:
             raise UnencodableSecretError(payload.encoding.name)
@@ -46,4 +50,10 @@ class ContainerPlanBuilder:
                     is_one=is_one,
                 ),
             )
-        return FormattingPlan(chars=tuple(chars), payload_bits=len(bits))
+        return FormattingPlan(
+            chars=tuple(chars),
+            payload_bits=len(bits),
+            line_lengths=cover.line_lengths,
+            font_name=cover.font_name,
+            font_size=cover.font_size,
+        )

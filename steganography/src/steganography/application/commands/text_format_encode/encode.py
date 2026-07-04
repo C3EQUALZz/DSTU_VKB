@@ -26,6 +26,9 @@ from steganography.domain.text_format_encode.ports.container_writer import (
 from steganography.domain.text_format_encode.services.container_plan_builder import (
     ContainerPlanBuilder,
 )
+from steganography.domain.text_format_encode.value_objects.cover_text import (
+    CoverText,
+)
 from steganography.domain.text_format_encode.value_objects.secret_payload import (
     SecretPayload,
 )
@@ -38,7 +41,7 @@ class EncodeSecretCommand:
     """Встроить секретный текст в контейнер и сохранить новый docx."""
 
     secret_text: str
-    cover_text: str
+    cover: CoverText
     encoding_name: str
     param: FormattingParam
     zero_value: str
@@ -81,7 +84,7 @@ class EncodeSecretCommandHandler:
         )
 
         try:
-            plan = self._plan_builder.build(payload, data.cover_text)
+            plan = self._plan_builder.build(payload, data.cover)
         except EncodeError as error:
             logger.warning("Энкод docx: ошибка встраивания — %s", error)
             return self._failure(data, str(error), method=method)
@@ -114,6 +117,6 @@ class EncodeSecretCommandHandler:
             encoding_name=data.encoding_name,
             method=method,
             payload_bits=0,
-            container_chars=len(data.cover_text),
+            container_chars=len(data.cover.text),
             error=error,
         )

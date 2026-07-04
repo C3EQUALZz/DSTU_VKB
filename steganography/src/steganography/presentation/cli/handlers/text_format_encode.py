@@ -22,6 +22,9 @@ from steganography.domain.text_format_encode.ports.cover_text_reader import (
 from steganography.domain.text_format_encode.services.hiding_value_defaults import (
     HidingValueDefaults,
 )
+from steganography.domain.text_format_encode.value_objects.cover_text import (
+    CoverText,
+)
 from steganography.presentation.cli.presenters.encode_result_presenter import (
     EncodeResultPresenter,
 )
@@ -96,7 +99,7 @@ def cmd_encode(  # noqa: PLR0913
     default_zero, default_one = defaults.for_param(formatting_param)
     command = EncodeSecretCommand(
         secret_text=secret,
-        cover_text=resolved_cover,
+        cover=resolved_cover,
         encoding_name=encoding_name,
         param=formatting_param,
         zero_value=zero_value or default_zero,
@@ -111,9 +114,9 @@ def _resolve_cover(
     cover_file: Path | None,
     cover_text: str | None,
     cover_reader: CoverTextReader,
-) -> str | None:
+) -> CoverText | None:
     if cover_text is not None:
-        return cover_text.replace("\n", " ")
+        return CoverText.from_plain(cover_text)
     if cover_file is not None:
         return cover_reader.read(cover_file)
     return None

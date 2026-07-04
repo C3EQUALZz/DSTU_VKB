@@ -31,6 +31,9 @@ from steganography.domain.text_format_decode.services.formatting_detector import
 from steganography.domain.text_format_encode.services.container_plan_builder import (
     ContainerPlanBuilder,
 )
+from steganography.domain.text_format_encode.value_objects.cover_text import (
+    CoverText,
+)
 from steganography.infrastructure.text_format_decode.docx_reader import (
     DocxFormattingReaderImpl,
 )
@@ -89,7 +92,7 @@ def test_encode_then_decode_recovers_secret(
         _encode_handler()(
             EncodeSecretCommand(
                 secret_text=secret,
-                cover_text=_COVER,
+                cover=CoverText.from_plain(_COVER),
                 encoding_name=encoding_name,
                 param=param,
                 zero_value=zero_value,

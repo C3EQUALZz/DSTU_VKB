@@ -3,10 +3,14 @@
 from pathlib import Path
 from typing import Protocol, runtime_checkable
 
+from steganography.domain.text_format_encode.value_objects.cover_text import (
+    CoverText,
+)
+
 
 @runtime_checkable
 class CoverTextReader(Protocol):
-    """Возвращает «голый» текст контейнера для последующего встраивания."""
+    """Возвращает текст контейнера с сохранённой построчной структурой."""
 
-    def read(self, path: Path) -> str:
+    def read(self, path: Path) -> CoverText:
         ...
