@@ -273,41 +273,41 @@ docker compose -f docker/docker-compose.yml down -v
 
 ## Шпаргалка команд Kerberos
 
-| Команда                             | Назначение                                       |
-|-------------------------------------|--------------------------------------------------|
-| `kinit user@REALM`                  | получить TGT                                     |
-| `kinit -f -l 1h -r 12h user@REALM`  | forwardable, время жизни 1ч, продление до 12ч    |
-| `kinit -R`                          | обновить существующий TGT                        |
-| `klist`                             | список билетов в кеше                            |
-| `klist -f`                          | + флаги (F/R/I/D/...)                            |
-| `klist -e`                          | + алгоритмы шифрования                           |
-| `klist -k /etc/krb5.keytab`         | посмотреть содержимое keytab                     |
-| `kdestroy [-A]`                     | удалить билет(ы) из кеша                         |
-| `kvno SERVICE/host@REALM`           | получить версию ключа сервиса                    |
-| `kpasswd user@REALM`                | сменить пароль principal'а                       |
-| `kadmin.local -q 'listprincs'`      | список principal'ов (локально на KDC)            |
-| `kadmin -p admin/admin -q 'addprinc -pw P user'` | создать principal через сеть         |
-| `ssh -K user@host`                  | SSH с GSSAPI-аутентификацией (passwordless)      |
+| Команда                                          | Назначение                                    |
+|--------------------------------------------------|-----------------------------------------------|
+| `kinit user@REALM`                               | получить TGT                                  |
+| `kinit -f -l 1h -r 12h user@REALM`               | forwardable, время жизни 1ч, продление до 12ч |
+| `kinit -R`                                       | обновить существующий TGT                     |
+| `klist`                                          | список билетов в кеше                         |
+| `klist -f`                                       | + флаги (F/R/I/D/...)                         |
+| `klist -e`                                       | + алгоритмы шифрования                        |
+| `klist -k /etc/krb5.keytab`                      | посмотреть содержимое keytab                  |
+| `kdestroy [-A]`                                  | удалить билет(ы) из кеша                      |
+| `kvno SERVICE/host@REALM`                        | получить версию ключа сервиса                 |
+| `kpasswd user@REALM`                             | сменить пароль principal'а                    |
+| `kadmin.local -q 'listprincs'`                   | список principal'ов (локально на KDC)         |
+| `kadmin -p admin/admin -q 'addprinc -pw P user'` | создать principal через сеть                  |
+| `ssh -K user@host`                               | SSH с GSSAPI-аутентификацией (passwordless)   |
 
 ## Соответствие пунктам методички
 
-| Пункт методички | Где реализовано в стенде                        |
-|-----------------|-------------------------------------------------|
-| 2.1–2.7 KDC     | `Dockerfile.kdc` + `entrypoint-kdc.sh`          |
-| 3.1–3.4 клиент  | `Dockerfile.client` + `krb5.conf`               |
+| Пункт методички | Где реализовано в стенде                         |
+|-----------------|--------------------------------------------------|
+| 2.1–2.7 KDC     | `Dockerfile.kdc` + `entrypoint-kdc.sh`           |
+| 3.1–3.4 клиент  | `Dockerfile.client` + `krb5.conf`                |
 | 4.1–4.6 target  | `Dockerfile.target` + `sshd_config` + entrypoint |
-| 5. Тестирование | шаги 13–14 в `run_lab.sh`                       |
-| 6.1–6.6         | шаги 7–18 в `run_lab.sh` (klist, kvno, logs)    |
-| Задание 1       | этап 1 (KDC поднят, realm создан)               |
-| Задание 2       | kinit admin/admin                               |
-| Задание 3       | klist / klist -f / klist -e                     |
-| Задание 4       | `ssh -K labuser@target.lab.local`               |
-| Задание 5       | `kadmin -p admin/admin -q 'addprinc testuser'`  |
-| Задание 6       | время хоста shared в Docker; NTP не требуется   |
-| Задание 7       | grep AS_REQ/TGS_REQ в krb5kdc.log               |
-| Задание 8       | Wireshark — не входит в стенд (вручную)         |
-| Задание 9       | `kinit -f -l 1h -r 12h` + `kinit -R`            |
-| Задание 10      | bash-скрипт /tmp/krb_check.sh                   |
+| 5. Тестирование | шаги 13–14 в `run_lab.sh`                        |
+| 6.1–6.6         | шаги 7–18 в `run_lab.sh` (klist, kvno, logs)     |
+| Задание 1       | этап 1 (KDC поднят, realm создан)                |
+| Задание 2       | kinit admin/admin                                |
+| Задание 3       | klist / klist -f / klist -e                      |
+| Задание 4       | `ssh -K labuser@target.lab.local`                |
+| Задание 5       | `kadmin -p admin/admin -q 'addprinc testuser'`   |
+| Задание 6       | время хоста shared в Docker; NTP не требуется    |
+| Задание 7       | grep AS_REQ/TGS_REQ в krb5kdc.log                |
+| Задание 8       | Wireshark — не входит в стенд (вручную)          |
+| Задание 9       | `kinit -f -l 1h -r 12h` + `kinit -R`             |
+| Задание 10      | bash-скрипт /tmp/krb_check.sh                    |
 
 ## Особенности и известные проблемы
 
