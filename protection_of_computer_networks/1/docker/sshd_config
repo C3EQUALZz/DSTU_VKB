@@ -3,7 +3,7 @@ PermitRootLogin no
 PasswordAuthentication yes
 PubkeyAuthentication yes
 
-# Включаем Kerberos / GSSAPI — пункт 4.3 методички.
+# Включаем Kerberos / GSSAPI — раздел 4.7 методических указаний.
 GSSAPIAuthentication yes
 GSSAPICleanupCredentials yes
 KerberosAuthentication yes
