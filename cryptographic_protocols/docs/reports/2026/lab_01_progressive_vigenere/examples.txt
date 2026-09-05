@@ -1,0 +1,11 @@
+$ cargo run --quiet -p lab_01_progressive_vigenere -- encrypt --alphabet en --key MODE --text CRYPTOGRAPHY
+OFBTGDKWOFME
+
+$ cargo run --quiet -p lab_01_progressive_vigenere -- decrypt --alphabet en --key MODE --text OFBTGDKWOFME
+CRYPTOGRAPHY
+
+$ cargo run --quiet -p lab_01_progressive_vigenere -- encrypt --alphabet ru --key 'КЛЮЧ' --text 'КРИПТОГРАФИЯ'
+ХЬЖЖЮЫВИМВИШ
+
+$ cargo run --quiet -p lab_01_progressive_vigenere -- decrypt --alphabet ru --key 'КЛЮЧ' --text 'ХЬЖЖЮЫВИМВИШ'
+КРИПТОГРАФИЯ
