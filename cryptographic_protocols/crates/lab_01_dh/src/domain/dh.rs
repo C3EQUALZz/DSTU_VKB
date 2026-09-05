@@ -2,7 +2,7 @@
 
 use num_bigint::BigUint;
 use num_traits::One;
-use tracing::debug;
+use tracing::info;
 
 use super::errors::DomainError;
 use super::rng::RandomSource;
@@ -35,6 +35,7 @@ impl Party {
             });
         }
         let y = params.g.modpow(&x, &params.n);
+        info!(modulus = %params.n, generator = %params.g, public_value = %y, "Y = g^X mod n; приватный X скрыт");
         Ok(Self { x, y })
     }
 
@@ -44,7 +45,8 @@ impl Party {
         let upper = &params.n - BigUint::one();
         let x = rng.random_range(&two, &upper);
         let y = params.g.modpow(&x, &params.n);
-        debug!(
+        info!(modulus = %params.n, generator = %params.g, public_value = %y, "Y = g^X mod n; приватный X скрыт");
+        info!(
             x_bits = x.bits(),
             y_bits = y.bits(),
             "сгенерирована сторона DH"
@@ -57,7 +59,10 @@ impl Party {
 ///
 /// K = Y_other^X_self mod n.
 pub fn shared_secret(self_x: &BigUint, other_y: &BigUint, n: &BigUint) -> BigUint {
-    other_y.modpow(self_x, n)
+    info!(peer_public = %other_y, modulus = %n, "K = Y_контрагента^X mod n; X и K скрыты");
+    let key = other_y.modpow(self_x, n);
+    info!("общий секрет вычислен");
+    key
 }
 
 #[cfg(test)]

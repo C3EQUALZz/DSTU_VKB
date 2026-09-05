@@ -6,8 +6,6 @@
 //!
 //! f(0) = Σ_j f(x_j) · Π_{k≠j} x_k / (x_k − x_j)   (по модулю p)
 
-use tracing::debug;
-
 use super::errors::DomainError;
 use super::modular::{inv, norm};
 
@@ -34,8 +32,19 @@ impl Polynomial {
     pub fn evaluate(&self, x: i64) -> i64 {
         // Горнер: f(x) = a0 + x(a1 + x(a2 + ...))
         let mut acc = 0i64;
-        for &c in self.coeffs.iter().rev() {
+        for (degree, &c) in self.coeffs.iter().enumerate().rev() {
+            let previous = acc;
             acc = norm(acc * x + c, self.p);
+            tracing::info!(
+                step = "shamir.horner",
+                degree = degree,
+                x = x,
+                previous = previous,
+                coefficient = c,
+                modulus = self.p,
+                acc = acc,
+                "шаг Горнера: acc = (previous * x + coefficient) mod p"
+            );
         }
         acc
     }
@@ -77,10 +86,30 @@ pub fn reconstruct(shares: &[Share], p: i64) -> Result<i64, DomainError> {
             // но проще: L_j(0) = Π (−x_k) / (x_j − x_k).
             num = norm(num * norm(-sk.x, p), p);
             den = norm(den * norm(sj.x - sk.x, p), p);
+            tracing::info!(
+                step = "shamir.lagrange_factor",
+                share = j + 1,
+                other = k + 1,
+                x_j = sj.x,
+                x_k = sk.x,
+                num = num,
+                den = den,
+                p = p,
+                "обновлены числитель и знаменатель базиса Лагранжа"
+            );
         }
         let lj0 = norm(num * inv(den, p)?, p);
         total = norm(total + sj.y * lj0, p);
-        debug!(j, x = sj.x, y = sj.y, lj0, total, "interpolation step");
+        tracing::info!(
+            step = "shamir.lagrange_term",
+            share = j + 1,
+            x = sj.x,
+            y = sj.y,
+            lj0 = lj0,
+            total = total,
+            p = p,
+            "добавлен вклад доли в f(0)"
+        );
     }
     Ok(total)
 }
@@ -109,6 +138,7 @@ pub fn reconstruct_polynomial(shares: &[Share], p: i64) -> Result<Polynomial, Do
             xk = norm(xk * s.x, p);
         }
         mat[i][m] = norm(s.y, p);
+        tracing::info!(step = "shamir.vandermonde_row", row = i+1, values = ?mat[i], "составлена строка системы V * coefficients = shares");
     }
 
     // Прямой ход.
@@ -125,6 +155,13 @@ pub fn reconstruct_polynomial(shares: &[Share], p: i64) -> Result<Polynomial, Do
         mat.swap(col, pivot);
         // Нормализовать строку col: умножить на inv(pivot_value).
         let pv_inv = inv(mat[col][col], p)?;
+        tracing::info!(
+            step = "shamir.gauss_pivot",
+            column = col + 1,
+            pivot_row = pivot + 1,
+            pv_inv = pv_inv,
+            "выбран ведущий элемент матрицы Вандермонда"
+        );
         for j in col..=m {
             mat[col][j] = norm(mat[col][j] * pv_inv, p);
         }
@@ -140,10 +177,20 @@ pub fn reconstruct_polynomial(shares: &[Share], p: i64) -> Result<Polynomial, Do
             for j in col..=m {
                 let sub = norm(factor * mat[col][j], p);
                 mat[row][j] = norm(mat[row][j] - sub, p);
+                tracing::info!(
+                    step = "shamir.gauss_cell",
+                    pivot_column = col + 1,
+                    row = row + 1,
+                    column = j + 1,
+                    sub = sub,
+                    result = mat[row][j],
+                    "обнуление столбца: cell = (cell − factor * pivot_cell) mod p"
+                );
             }
         }
     }
 
+    tracing::info!(step = "shamir.gauss_done", mat = ?mat, "система Вандермонда приведена к единичной матрице");
     let coeffs: Vec<i64> = (0..m).map(|i| mat[i][m]).collect();
     Ok(Polynomial::new(coeffs, p))
 }

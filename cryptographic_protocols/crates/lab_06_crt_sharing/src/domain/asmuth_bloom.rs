@@ -35,13 +35,14 @@ pub fn split(secret: &BigUint, params: &Params, r: &BigUint) -> Result<Vec<Share
         return Err(DomainError::InvalidThreshold { k: params.k, n });
     }
     let s_prime = secret + r * &params.q;
+    tracing::info!(step = "asmuth.mask", secret = %secret, r = %r, q = %params.q, s_prime = %s_prime, "вычислено замаскированное значение S_prime = S + r*q");
     let shares = params
         .basis
         .iter()
-        .map(|p| Share {
-            modulus: p.clone(),
-            value: &s_prime % p,
-            q: params.q.clone(),
+        .enumerate().map(|(i,p)| {
+            let value = &s_prime % p;
+            tracing::info!(step = "asmuth.share", participant = %i+1, s_prime = %s_prime, p = %p, value = %value, "доля Асмут-Блума = S_prime mod modulus");
+            Share { modulus: p.clone(), value, q: params.q.clone() }
         })
         .collect();
     Ok(shares)
@@ -59,7 +60,9 @@ pub fn reconstruct(shares: &[Share]) -> Result<BigUint, DomainError> {
     let values: Vec<BigUint> = shares.iter().map(|s| s.value.clone()).collect();
     let s_prime = crt(&values, &moduli)?;
     let q = &shares[0].q;
-    Ok(s_prime % q)
+    let secret = &s_prime % q;
+    tracing::info!(step = "asmuth.unmask", s_prime = %s_prime, q = %q, result = %secret, "восстановлен секрет S = S_prime mod q");
+    Ok(secret)
 }
 
 /// Подобрать параметры (q, basis) по заданному секрету и порогам, перебирая список простых.
@@ -90,7 +93,9 @@ pub fn find_params(
         let alpha: BigUint = basis.iter().take(k).product();
         let beta: BigUint = basis.iter().skip(n - (k - 1)).take(k - 1).product();
         // условие: α > q · β  ⇔  ∏ p_1..p_k > q · ∏ p_{n-k+2}..p_n
+        tracing::info!(step = "asmuth.basis_candidate", q = %q, alpha = %alpha, beta = %beta, accepted = %alpha > &q*&beta, "проверка alpha > q * beta");
         if alpha > &q * &beta {
+            tracing::info!(step = "asmuth.basis_selected", q = %q, basis = ?basis, "выбраны параметры Асмут-Блума");
             return Ok(Params { q, basis, k });
         }
     }

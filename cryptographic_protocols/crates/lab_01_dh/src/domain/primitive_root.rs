@@ -11,13 +11,14 @@
 use num_bigint::BigUint;
 use num_integer::Integer;
 use num_traits::{One, Zero};
-use tracing::trace;
+use tracing::info;
 
 /// Простая факторизация методом пробных делителей.
 ///
 /// Для p − 1 при 65-битном p размер ≈ 64 бита, что вполне ловится trial division
 /// до √n за разумное время на демо-данных. Для боевого кода нужен Pollard ρ.
 pub fn factorize(mut n: BigUint) -> Vec<BigUint> {
+    info!(number = %n, "начата факторизация пробными делителями");
     let mut factors = Vec::new();
     if n < BigUint::from(2u32) {
         return factors;
@@ -28,6 +29,7 @@ pub fn factorize(mut n: BigUint) -> Vec<BigUint> {
             factors.push(two.clone());
         }
         n >>= 1;
+        info!(factor = 2, remaining = %n, "выделен простой множитель");
     }
     let mut d = BigUint::from(3u32);
     while &d * &d <= n {
@@ -36,6 +38,7 @@ pub fn factorize(mut n: BigUint) -> Vec<BigUint> {
                 factors.push(d.clone());
             }
             n /= &d;
+            info!(factor = %d, remaining = %n, "выделен простой множитель");
         } else {
             d += 2u32;
         }
@@ -58,8 +61,10 @@ pub fn is_primitive_root(a: &BigUint, p: &BigUint, c_factors: &[BigUint]) -> boo
     let c = p - &one;
     for q in c_factors {
         let exp = &c / q;
-        if a.modpow(&exp, p) == one {
-            trace!(%a, %q, "не первообразный: a^(c/q) ≡ 1");
+        let residue = a.modpow(&exp, p);
+        info!(candidate = %a, factor = %q, exponent = %exp, modulus = %p, residue = %residue, "проверка a^((p−1)/q) mod p");
+        if residue == one {
+            info!(%a, %q, "не первообразный: a^(c/q) ≡ 1");
             return false;
         }
     }
@@ -69,12 +74,13 @@ pub fn is_primitive_root(a: &BigUint, p: &BigUint, c_factors: &[BigUint]) -> boo
 /// Найти первые `count` первообразных корней по модулю простого `p`, перебирая a = 2, 3, …
 pub fn first_primitive_roots(p: &BigUint, count: usize) -> Vec<BigUint> {
     let factors = factorize(p - BigUint::one());
-    trace!(?factors, %p, "факторизация p-1");
+    info!(?factors, %p, "факторизация p-1");
     let mut roots = Vec::with_capacity(count);
     let mut a = BigUint::from(2u32);
     while roots.len() < count && a < *p {
         if is_primitive_root(&a, p, &factors) {
             roots.push(a.clone());
+            info!(root = %a, found = roots.len(), requested = count, "первообразный корень найден");
         }
         a += 1u32;
     }

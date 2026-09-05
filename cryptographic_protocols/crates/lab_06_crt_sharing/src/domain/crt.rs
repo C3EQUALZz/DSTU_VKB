@@ -10,6 +10,7 @@ pub fn ext_gcd(a: &BigInt, b: &BigInt) -> (BigInt, BigInt, BigInt) {
     if b.is_zero() {
         (a.clone(), BigInt::one(), BigInt::zero())
     } else {
+        tracing::info!(step = "crt.euclid", a = %a, b = %b, quotient = %a/b, remainder = %a%b, "деление с остатком в алгоритме Евклида");
         let (g, x1, y1) = ext_gcd(b, &(a % b));
         (g, y1.clone(), x1 - (a / b) * y1)
     }
@@ -27,7 +28,11 @@ pub fn mod_inv(a: &BigUint, m: &BigUint) -> Result<BigUint, DomainError> {
         });
     }
     let r = ((x % &mi) + &mi) % &mi;
-    Ok(r.to_biguint().expect("non-negative after mod"))
+    tracing::info!(step = "crt.inverse", a = %a, m = %m, r = %r, "вычислен обратный элемент CRT");
+    r.to_biguint().ok_or_else(|| DomainError::NoModularInverse {
+        a: a.to_string(),
+        p: m.to_string(),
+    })
 }
 
 /// Восстановить число S, такое что S ≡ a_i (mod m_i) для всех i, через CRT
@@ -40,11 +45,15 @@ pub fn crt(remainders: &[BigUint], moduli: &[BigUint]) -> Result<BigUint, Domain
         });
     }
     let big_p: BigUint = moduli.iter().product();
+    tracing::info!(step = "crt.product", moduli = ?moduli, big_p = %big_p, "вычислен общий модуль M = произведение модулей");
     let mut result = BigUint::zero();
-    for (a, m) in remainders.iter().zip(moduli.iter()) {
+    for (i, (a, m)) in remainders.iter().zip(moduli.iter()).enumerate() {
         let pi = &big_p / m;
         let inv = mod_inv(&(pi.clone() % m), m)?;
-        result = (result + a * &pi * &inv) % &big_p;
+        let term = a * &pi * &inv;
+        tracing::info!(step = "crt.term", share = %i+1, a = %a, m = %m, partial_modulus = %pi, inverse = %inv, term = %term, "слагаемое CRT = residue * M_i * inverse");
+        result = (result + term) % &big_p;
+        tracing::info!(step = "crt.accumulate", share = %i+1, result = %result, big_p = %big_p, "накоплена сумма CRT по модулю M");
     }
     Ok(result)
 }

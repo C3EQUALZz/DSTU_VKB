@@ -8,7 +8,6 @@
 
 use num_bigint::BigUint;
 use num_traits::{One, Zero};
-use tracing::debug;
 
 use super::crt::crt;
 use super::errors::DomainError;
@@ -30,6 +29,7 @@ pub fn split(secret: &BigUint, basis: &[BigUint], k: usize) -> Result<Vec<Share>
     }
     let alpha: BigUint = basis.iter().take(k).product();
     let beta: BigUint = basis.iter().skip(n - (k - 1)).take(k - 1).product();
+    tracing::info!(step = "mignotte.bounds", alpha = %alpha, beta = %beta, "проверка beta < S < alpha");
     if !(secret > &beta && secret < &alpha) {
         return Err(DomainError::SequenceNotFound {
             k,
@@ -39,9 +39,10 @@ pub fn split(secret: &BigUint, basis: &[BigUint], k: usize) -> Result<Vec<Share>
     }
     let shares = basis
         .iter()
-        .map(|p| Share {
-            modulus: p.clone(),
-            value: secret % p,
+        .enumerate().map(|(i,p)| {
+            let value = secret % p;
+            tracing::info!(step = "mignotte.share", participant = %i+1, secret = %secret, p = %p, value = %value, "доля Миньотта = S mod modulus");
+            Share { modulus: p.clone(), value }
         })
         .collect();
     Ok(shares)
@@ -75,8 +76,9 @@ pub fn find_basis(
             .collect();
         let alpha: BigUint = candidate.iter().take(k).product();
         let beta: BigUint = candidate.iter().skip(n - (k - 1)).take(k - 1).product();
-        debug!(start, %alpha, %beta, "проверяем кандидата");
+        tracing::info!(step = "mignotte.basis_candidate", start = %start, alpha = %alpha, beta = %beta, accepted_interval = %&beta < secret && secret < &alpha, "проверка кандидата базиса Миньотта");
         if &beta < secret && secret < &alpha && is_pairwise_coprime(&candidate) {
+            tracing::info!(step = "mignotte.basis_selected", candidate = ?candidate, "выбран базис Миньотта");
             return Ok(candidate);
         }
     }

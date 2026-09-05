@@ -89,8 +89,21 @@ pub fn index_of_coincidence(text: &[usize]) -> f64 {
     for &i in text {
         counts[i] += 1;
     }
+    for (i, &f) in counts.iter().enumerate() {
+        tracing::info!(step = "alphabet.ic_term", letter = %ALPHABET[i], letter_index = i, count = f, contribution = f*f.saturating_sub(1), "частота буквы и её вклад n * (n−1) в числитель IC");
+    }
     let numerator: u64 = counts.iter().map(|&f| f * f.saturating_sub(1)).sum();
-    numerator as f64 / (n as u64 * (n as u64 - 1)) as f64
+    let denominator = n as u64 * (n as u64 - 1);
+    let ic = numerator as f64 / denominator as f64;
+    tracing::info!(
+        step = "alphabet.ic",
+        size = n,
+        numerator = numerator,
+        denominator = denominator,
+        ic = ic,
+        "IC = numerator / (N * (N−1))"
+    );
+    ic
 }
 
 #[cfg(test)]

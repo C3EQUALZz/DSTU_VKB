@@ -69,25 +69,138 @@ fn full_fitness(bigrams: &Bigrams, letters: &[usize]) -> f64 {
         .sum()
 }
 
-/// Взломать шифртекст. `rounds` — число рестартов, `iters` — итераций отжига на рестарт.
-pub fn solve(codes: &[u32], rounds: usize, iters: usize) -> Solution {
-    let uniq = unique_sorted(codes);
-    let pos: HashMap<u32, usize> = uniq.iter().enumerate().map(|(i, &c)| (c, i)).collect();
-    let bigrams = code_bigrams(codes, &pos);
-
-    // Биграммы, сгруппированные по индексу — для быстрой дельты.
-    let mut by_idx: Vec<Vec<(usize, usize, f64)>> = vec![Vec::new(); uniq.len()];
-    for &(a, b, cnt) in &bigrams {
+fn index_bigrams(bigrams: &Bigrams, unique_count: usize) -> Vec<Bigrams> {
+    let mut by_idx: Vec<Vec<(usize, usize, f64)>> = vec![Vec::new(); unique_count];
+    for &(a, b, cnt) in bigrams {
         by_idx[a].push((a, b, cnt));
         if b != a {
             by_idx[b].push((a, b, cnt));
         }
     }
 
+    by_idx
+}
+
+fn anneal_restart(
+    r: usize,
+    iters: usize,
+    mut letters: Vec<usize>,
+    swap_pool: &[usize],
+    by_idx: &[Bigrams],
+    bigrams: &Bigrams,
+    uniq: &[u32],
+) -> (Vec<usize>, f64) {
+    let mut rng = StdRng::seed_from_u64(1000 + r as u64);
+    if r > 0 {
+        // случайная перестановка букв для непробельных кодов
+        let mut vals: Vec<usize> = swap_pool.iter().map(|&i| letters[i]).collect();
+        vals.shuffle(&mut rng);
+        for (k, &i) in swap_pool.iter().enumerate() {
+            letters[i] = vals[k];
+        }
+    }
+    let mut cur_fit = full_fitness(bigrams, &letters);
+    let mut best = letters.clone();
+    let mut best_fit = cur_fit;
+    tracing::info!(
+        step = "substitution.restart",
+        restart = r + 1,
+        iters = iters,
+        cur_fit = cur_fit,
+        "начат рестарт отжига"
+    );
+
+    for it in 0..iters {
+        let t = (3.0 * (1.0 - it as f64 / iters as f64)).max(0.05);
+        let a = *swap_pool.choose(&mut rng).unwrap();
+        let mut b = *swap_pool.choose(&mut rng).unwrap();
+        while b == a {
+            b = *swap_pool.choose(&mut rng).unwrap();
+        }
+        // дельта только по затронутым биграммам
+        let affected: Vec<(usize, usize, f64)> = by_idx[a]
+            .iter()
+            .copied()
+            .chain(
+                by_idx[b]
+                    .iter()
+                    .copied()
+                    .filter(|&(ci, cj, _)| ci != a && cj != a),
+            )
+            .collect();
+        let before: f64 = affected
+            .iter()
+            .map(|&(ci, cj, cnt)| cnt * BIGRAM_LOGP[letters[ci]][letters[cj]])
+            .sum();
+        letters.swap(a, b);
+        let after: f64 = affected
+            .iter()
+            .map(|&(ci, cj, cnt)| cnt * BIGRAM_LOGP[letters[ci]][letters[cj]])
+            .sum();
+        let d = after - before;
+        let accept = d >= 0.0 || rng.next_u64() as f64 / (u64::MAX as f64) < (d / t).exp();
+        tracing::info!(
+            step = "substitution.swap",
+            restart = r + 1,
+            iteration = it + 1,
+            code_a = uniq[a],
+            code_b = uniq[b],
+            t = t,
+            before = before,
+            after = after,
+            d = d,
+            accept = accept,
+            "решение о перестановке двух кодов"
+        );
+        if accept {
+            cur_fit += d;
+            if cur_fit > best_fit {
+                best_fit = cur_fit;
+                best.clone_from(&letters);
+            }
+        } else {
+            letters.swap(a, b); // откат
+        }
+    }
+    tracing::info!(
+        step = "substitution.restart_done",
+        restart = r + 1,
+        best_fit = best_fit,
+        "рестарт отжига завершён"
+    );
+    (best, best_fit)
+}
+
+/// Взломать шифртекст. `rounds` — число рестартов, `iters` — итераций отжига на рестарт.
+pub fn solve(codes: &[u32], rounds: usize, iters: usize) -> Solution {
+    let uniq = unique_sorted(codes);
+    let pos: HashMap<u32, usize> = uniq.iter().enumerate().map(|(i, &c)| (c, i)).collect();
+    let bigrams = code_bigrams(codes, &pos);
+    tracing::info!(
+        step = "substitution.bigrams",
+        symbols = codes.len(),
+        unique = uniq.len(),
+        bigrams = bigrams.len(),
+        "построена таблица биграмм шифртекста"
+    );
+    for &(a, b, count) in &bigrams {
+        tracing::info!(
+            step = "substitution.bigram",
+            left = uniq[a],
+            right = uniq[b],
+            count = count,
+            "частота пары кодов"
+        );
+    }
+
+    // Биграммы, сгруппированные по индексу — для быстрой дельты.
+    let by_idx = index_bigrams(&bigrams, uniq.len());
+
     // Самый частый код → пробел (индекс 32). Его фиксируем.
     let freq = frequency_order(codes);
     let space_code = freq[0];
     let space_idx = pos[&space_code];
+    tracing::info!(step = "substitution.space", space_code = space_code, freq = ?freq, "самый частый код закреплён за пробелом");
 
     // Стартовая раскладка: частотная затравка.
     let seed_letters = |order: &[u32]| -> Vec<usize> {
@@ -111,66 +224,27 @@ pub fn solve(codes: &[u32], rounds: usize, iters: usize) -> Solution {
     let mut best_global_fit = full_fitness(&bigrams, &best_global);
 
     for r in 0..rounds {
-        let mut rng = StdRng::seed_from_u64(1000 + r as u64);
-        let mut letters = seed_letters(&freq);
-        if r > 0 {
-            // случайная перестановка букв для непробельных кодов
-            let mut vals: Vec<usize> = swap_pool.iter().map(|&i| letters[i]).collect();
-            vals.shuffle(&mut rng);
-            for (k, &i) in swap_pool.iter().enumerate() {
-                letters[i] = vals[k];
-            }
-            letters[space_idx] = 32;
-        }
-        let mut cur_fit = full_fitness(&bigrams, &letters);
-        let mut best = letters.clone();
-        let mut best_fit = cur_fit;
-
-        for it in 0..iters {
-            let t = (3.0 * (1.0 - it as f64 / iters as f64)).max(0.05);
-            let a = *swap_pool.choose(&mut rng).unwrap();
-            let mut b = *swap_pool.choose(&mut rng).unwrap();
-            while b == a {
-                b = *swap_pool.choose(&mut rng).unwrap();
-            }
-            // дельта только по затронутым биграммам
-            let affected: Vec<(usize, usize, f64)> = by_idx[a]
-                .iter()
-                .copied()
-                .chain(
-                    by_idx[b]
-                        .iter()
-                        .copied()
-                        .filter(|&(ci, cj, _)| ci != a && cj != a),
-                )
-                .collect();
-            let before: f64 = affected
-                .iter()
-                .map(|&(ci, cj, cnt)| cnt * BIGRAM_LOGP[letters[ci]][letters[cj]])
-                .sum();
-            letters.swap(a, b);
-            let after: f64 = affected
-                .iter()
-                .map(|&(ci, cj, cnt)| cnt * BIGRAM_LOGP[letters[ci]][letters[cj]])
-                .sum();
-            let d = after - before;
-            let accept = d >= 0.0 || rng.next_u64() as f64 / (u64::MAX as f64) < (d / t).exp();
-            if accept {
-                cur_fit += d;
-                if cur_fit > best_fit {
-                    best_fit = cur_fit;
-                    best.clone_from(&letters);
-                }
-            } else {
-                letters.swap(a, b); // откат
-            }
-        }
+        let (best, best_fit) = anneal_restart(
+            r,
+            iters,
+            seed_letters(&freq),
+            &swap_pool,
+            &by_idx,
+            &bigrams,
+            &uniq,
+        );
         if best_fit > best_global_fit {
             best_global_fit = best_fit;
             best_global = best;
         }
     }
 
+    tracing::info!(
+        step = "substitution.done",
+        best_global_fit = best_global_fit,
+        rounds = rounds,
+        "выбран лучший результат отжига"
+    );
     let map: HashMap<u32, usize> = uniq.iter().map(|&c| (c, best_global[pos[&c]])).collect();
     Solution {
         map,

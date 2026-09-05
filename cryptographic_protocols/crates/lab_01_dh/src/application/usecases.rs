@@ -4,7 +4,7 @@ use std::time::{Duration, Instant};
 
 use num_bigint::BigUint;
 use num_traits::One;
-use tracing::{debug, info};
+use tracing::info;
 
 use crate::domain::dh::{Party, PublicParameters, shared_secret};
 use crate::domain::errors::DomainError;
@@ -24,6 +24,7 @@ pub struct GenPrimeReport {
 }
 
 /// Сценарий: сгенерировать одно простое число длиной `bits` бит.
+#[tracing::instrument(skip_all)]
 pub fn generate_prime_uc<R: RandomSource>(
     bits: u32,
     rounds: u32,
@@ -50,6 +51,7 @@ pub fn generate_prime_uc<R: RandomSource>(
 }
 
 /// Все простые в диапазоне [from; to). Возвращает список и общее время.
+#[tracing::instrument(skip_all)]
 pub fn range_primes_uc<R: RandomSource>(
     from: BigUint,
     to: &BigUint,
@@ -58,21 +60,25 @@ pub fn range_primes_uc<R: RandomSource>(
 ) -> (Vec<BigUint>, Duration) {
     let started = Instant::now();
     let mut out = Vec::new();
+    info!(start = %from, end_exclusive = %to, rounds, "поиск простых в диапазоне");
     let mut n = from;
     while n < *to {
         if !divisible_by_small_prime(&n) && is_probably_prime(&n, rounds, rng) {
+            info!(prime = %n, "простое в диапазоне найдено");
             out.push(n.clone());
         }
         n += BigUint::one();
     }
     let elapsed = started.elapsed();
-    debug!(found = out.len(), ?elapsed, "диапазон обработан");
+    info!(found = out.len(), ?elapsed, "диапазон обработан");
     (out, elapsed)
 }
 
 /// Первые `count` первообразных корней по простому `p` и время на их поиск.
+#[tracing::instrument(skip_all)]
 pub fn primitive_roots_uc(p: &BigUint, count: usize) -> (Vec<BigUint>, Duration) {
     let started = Instant::now();
+    info!(modulus = %p, count, "поиск первообразных корней");
     let roots = first_primitive_roots(p, count);
     let elapsed = started.elapsed();
     info!(found = roots.len(), ?elapsed, "первообразные корни найдены");
@@ -96,15 +102,21 @@ impl DhExchangeReport {
 }
 
 /// Сценарий «полный обмен»: оба секрета X_A, X_B заданы заранее.
+#[tracing::instrument(skip_all)]
 pub fn dh_exchange_fixed(
     params: PublicParameters,
     x_alice: BigUint,
     x_bob: BigUint,
 ) -> Result<DhExchangeReport, DomainError> {
+    info!("начат DH с заданными приватными параметрами");
     let alice = Party::from_private(x_alice, &params)?;
     let bob = Party::from_private(x_bob, &params)?;
     let shared_alice = shared_secret(&alice.x, &bob.y, &params.n);
     let shared_bob = shared_secret(&bob.x, &alice.y, &params.n);
+    info!(
+        keys_match = shared_alice == shared_bob,
+        "проверка совпадения общих секретов DH"
+    );
     Ok(DhExchangeReport {
         params,
         alice,
@@ -115,14 +127,20 @@ pub fn dh_exchange_fixed(
 }
 
 /// Сценарий «полный обмен»: секреты выбираются случайно.
+#[tracing::instrument(skip_all)]
 pub fn dh_exchange_random<R: RandomSource>(
     params: PublicParameters,
     rng: &mut R,
 ) -> DhExchangeReport {
+    info!("начат DH со случайными приватными параметрами");
     let alice = Party::random(&params, rng);
     let bob = Party::random(&params, rng);
     let shared_alice = shared_secret(&alice.x, &bob.y, &params.n);
     let shared_bob = shared_secret(&bob.x, &alice.y, &params.n);
+    info!(
+        keys_match = shared_alice == shared_bob,
+        "проверка совпадения общих секретов DH"
+    );
     DhExchangeReport {
         params,
         alice,

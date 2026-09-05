@@ -19,11 +19,17 @@ pub struct ShamirExerciseReport {
 /// Восстановить секрет/полином/долю Дейва для упражнения 2.
 ///
 /// `dave_x` — x-координата, по которой генерируется новая «легальная» доля Дейва.
+#[tracing::instrument(skip_all)]
 pub fn shamir_exercise2(
     shares: &[Share],
     p: i64,
     dave_x: i64,
 ) -> Result<ShamirExerciseReport, DomainError> {
+    info!(
+        shares = shares.len(),
+        modulus = p,
+        "начато восстановление Шамира"
+    );
     let secret = reconstruct(shares, p)?;
     let polynomial = reconstruct_polynomial(shares, p)?;
     let dave_share = polynomial.share(dave_x);
@@ -54,11 +60,13 @@ pub struct BlakleyExerciseReport {
 ///
 /// Если первая тройка (A, B, D) даёт вырожденную систему — перебираем
 /// все 4 комбинации по 3.
+#[tracing::instrument(skip_all)]
 pub fn blakley_exercise3(
     q: SecretPoint,
     p: i64,
     abcd_pairs: [(i64, i64); 4],
 ) -> Result<BlakleyExerciseReport, DomainError> {
+    info!(modulus = p, "начато построение долей Блэкли");
     let [pa, pb, pd, pc] = abcd_pairs;
     let shares = [
         share_from_ab(pa.0, pa.1, q, p),
@@ -70,6 +78,7 @@ pub fn blakley_exercise3(
     let combos: [[usize; 3]; 4] = [[0, 1, 2], [0, 1, 3], [0, 2, 3], [1, 2, 3]];
     let mut last_err: Option<DomainError> = None;
     for combo in combos {
+        tracing::info!(?combo, "пробуем тройку плоскостей");
         let trio = [shares[combo[0]], shares[combo[1]], shares[combo[2]]];
         match blakley_reconstruct(&trio, p) {
             Ok(recovered_q) => {
@@ -80,7 +89,10 @@ pub fn blakley_exercise3(
                     recovered_q,
                 });
             }
-            Err(e) => last_err = Some(e),
+            Err(e) => {
+                tracing::info!(?combo, error = %e, "тройка не позволила восстановить точку");
+                last_err = Some(e);
+            }
         }
     }
     Err(last_err.unwrap_or(DomainError::SingularSystem))

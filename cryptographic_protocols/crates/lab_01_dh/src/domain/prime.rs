@@ -9,7 +9,7 @@
 use num_bigint::BigUint;
 use num_integer::Integer;
 use num_traits::{One, Zero};
-use tracing::{debug, trace, warn};
+use tracing::{info, warn};
 
 use super::errors::DomainError;
 use super::rng::RandomSource;
@@ -43,6 +43,7 @@ pub fn divisible_by_small_prime(n: &BigUint) -> bool {
             return false;
         }
         if (n % &p_big).is_zero() {
+            info!(candidate = %n, divisor = p, "найден малый делитель");
             return true;
         }
     }
@@ -59,6 +60,7 @@ pub fn divisible_by_small_prime(n: &BigUint) -> bool {
 ///   Иначе возводим z в квадрат до b−1 раз; если получаем p−1 — возможно простое,
 ///   если 1 при j>0 — составное.
 pub fn is_probably_prime<R: RandomSource>(p: &BigUint, t: u32, rng: &mut R) -> bool {
+    info!(candidate = %p, rounds = t, "проверка Рабина–Миллера");
     if *p < BigUint::from(2u32) {
         return false;
     }
@@ -73,28 +75,35 @@ pub fn is_probably_prime<R: RandomSource>(p: &BigUint, t: u32, rng: &mut R) -> b
     let one = BigUint::one();
     let p_minus_1 = p - &one;
     let (b, m) = decompose(&p_minus_1);
-    trace!(b, m = %m, "Рабин-Миллер: разложение p-1 = 2^b · m");
+    info!(b, m = %m, "Рабин-Миллер: разложение p-1 = 2^b · m");
 
     let two = BigUint::from(2u32);
     'witness: for round in 0..t {
         let a = rng.random_range(&two, &p_minus_1);
-        trace!(round, a = %a, "новый свидетель");
+        info!(round = round + 1, a = %a, "новый свидетель");
         let mut z = a.modpow(&m, p);
+        info!(round = round+1, base = %a, exponent = %m, modulus = %p, result = %z, "z = a^m mod p");
         if z == one || z == p_minus_1 {
+            info!(round = round + 1, "раунд пройден: z = 1 или p−1");
             continue 'witness;
         }
-        for _ in 0..b - 1 {
+        for square in 0..b - 1 {
             z = z.modpow(&two, p);
+            info!(round = round+1, square = square+1, result = %z, "z = z² mod p");
             if z == one {
-                trace!(round, "z=1 при j>0 ⇒ составное");
+                info!(round = round + 1, "z=1 при j>0 ⇒ составное");
                 return false;
             }
             if z == p_minus_1 {
+                info!(
+                    round = round + 1,
+                    "раунд пройден после возведения в квадрат"
+                );
                 continue 'witness;
             }
         }
         // Не достигли ни 1, ни p-1 → составное.
-        trace!(round, "z ≠ p-1 после b шагов ⇒ составное");
+        info!(round = round + 1, "z ≠ p-1 после b шагов ⇒ составное");
         return false;
     }
     true
@@ -155,16 +164,16 @@ pub fn generate_prime<R: RandomSource>(
         // Старший и младший биты = 1 (по методичке).
         p.set_bit(u64::from(bits - 1), true);
         p.set_bit(0, true);
-        debug!(tries, bits, "сгенерирован кандидат p");
+        info!(tries, bits, candidate = %p, "сгенерирован кандидат p");
 
         if divisible_by_small_prime(&p) {
             stats.rejected_by_small_primes += 1;
-            trace!(%p, "отсеян по малым простым");
+            info!(%p, "отсеян по малым простым");
             continue;
         }
         if !is_probably_prime(&p, t, rng) {
             stats.rejected_by_miller_rabin += 1;
-            trace!(%p, "отсеян Рабином-Миллером");
+            info!(%p, "отсеян Рабином-Миллером");
             continue;
         }
         return Ok((p, stats));

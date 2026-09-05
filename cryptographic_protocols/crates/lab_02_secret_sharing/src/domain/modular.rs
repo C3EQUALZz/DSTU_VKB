@@ -15,6 +15,14 @@ pub fn ext_gcd(a: i64, b: i64) -> (i64, i64, i64) {
     if b == 0 {
         (a, 1, 0)
     } else {
+        tracing::info!(
+            step = "modular.euclid",
+            a = a,
+            b = b,
+            quotient = a / b,
+            remainder = a % b,
+            "деление с остатком в алгоритме Евклида"
+        );
         let (g, x1, y1) = ext_gcd(b, a % b);
         (g, y1, x1 - (a / b) * y1)
     }
@@ -29,6 +37,14 @@ pub fn inv(a: i64, p: i64) -> Result<i64, DomainError> {
     if g != 1 {
         return Err(DomainError::NoModularInverse { a, p, gcd: g });
     }
+    tracing::info!(
+        step = "modular.inverse",
+        a = a,
+        p = p,
+        g = g,
+        inverse = norm(x, p),
+        "вычислен обратный элемент по модулю"
+    );
     Ok(norm(x, p))
 }
 

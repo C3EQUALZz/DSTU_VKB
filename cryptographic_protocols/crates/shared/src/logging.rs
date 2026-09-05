@@ -20,6 +20,8 @@ pub fn init_with_default(default_level: Level) -> Result<()> {
         .unwrap_or_else(|_| EnvFilter::new(default_level.to_string()));
 
     let fmt_layer = fmt::layer()
+        .with_writer(std::io::stderr)
+        .with_ansi(std::io::IsTerminal::is_terminal(&std::io::stderr()))
         .with_target(true)
         .with_thread_ids(false)
         .with_thread_names(false)

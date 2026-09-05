@@ -3,20 +3,32 @@
 //! Шифрование и дешифрование — одна и та же операция (симметричный шифр,
 //! инволюция): `encrypt(encrypt(p)) == p`.
 
-use tracing::debug;
-
 /// Поток-в-поток XOR с ключом `key` (повторяется циклически).
 ///
 /// Если `key.is_empty()` — поведение бесполезное, поэтому в CLI всегда
 /// гарантируется хотя бы один байт ключа.
 pub fn xor_stream(data: &[u8], key: &[u8]) -> Vec<u8> {
     if key.is_empty() {
-        debug!("ключ пуст — возвращаем данные без изменений");
+        tracing::info!(
+            step = "xor.empty_key",
+            "пустой ключ: данные возвращены без изменений"
+        );
         return data.to_vec();
     }
     data.iter()
         .zip(key.iter().cycle())
-        .map(|(d, k)| d ^ k)
+        .enumerate()
+        .map(|(i, (d, k))| {
+            let output = d ^ k;
+            tracing::info!(
+                step = "xor.byte",
+                position = i + 1,
+                key_position = i % key.len() + 1,
+                output = output,
+                "вычислено output = input XOR key; байт ключа скрыт"
+            );
+            output
+        })
         .collect()
 }
 

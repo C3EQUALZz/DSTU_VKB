@@ -27,7 +27,19 @@ pub fn encrypt(plain_idx: &[usize], key_idx: &[usize]) -> Result<Vec<usize>, Dom
     Ok(plain_idx
         .iter()
         .enumerate()
-        .map(|(i, &p)| (p + key_idx[i % key_idx.len()]) % ALPHABET_SIZE)
+        .map(|(i, &p)| {
+            let c = (p + key_idx[i % key_idx.len()]) % ALPHABET_SIZE;
+            tracing::info!(
+                step = "vigenere.encrypt_symbol",
+                position = i + 1,
+                key_position = i % key_idx.len() + 1,
+                plain_index = p,
+                cipher_index = c,
+                alphabet_size = ALPHABET_SIZE,
+                "cipher_index = (p + k) mod 33"
+            );
+            c
+        })
         .collect())
 }
 
@@ -39,7 +51,19 @@ pub fn decrypt(cipher_idx: &[usize], key_idx: &[usize]) -> Result<Vec<usize>, Do
     Ok(cipher_idx
         .iter()
         .enumerate()
-        .map(|(i, &c)| (c + ALPHABET_SIZE - key_idx[i % key_idx.len()]) % ALPHABET_SIZE)
+        .map(|(i, &c)| {
+            let p = (c + ALPHABET_SIZE - key_idx[i % key_idx.len()]) % ALPHABET_SIZE;
+            tracing::info!(
+                step = "vigenere.decrypt_symbol",
+                position = i + 1,
+                key_position = i % key_idx.len() + 1,
+                cipher_index = c,
+                plain_index = p,
+                alphabet_size = ALPHABET_SIZE,
+                "plain_index = (c − k + 33) mod 33"
+            );
+            p
+        })
         .collect())
 }
 

@@ -77,6 +77,7 @@ impl WordReport {
     }
 }
 
+#[tracing::instrument(skip_all)]
 pub fn process_word(word: &str, k: usize, n: usize, r: u64) -> Result<WordReport, DomainError> {
     let codes = encode_word(word).ok_or_else(|| DomainError::SequenceNotFound {
         k,
@@ -94,6 +95,8 @@ pub fn process_word(word: &str, k: usize, n: usize, r: u64) -> Result<WordReport
 
     let mut letters = Vec::with_capacity(codes.len());
     for (idx, (&c, &secret)) in chars.iter().zip(codes.iter()).enumerate() {
+        let _letter_span =
+            tracing::info_span!("letter", position = idx+1, letter = %c, code = secret).entered();
         let s_big = BigUint::from(secret);
         // Миньотта.
         let m_basis = mignotte::find_basis(&s_big, k, n, SMALL_PRIMES)?;
@@ -107,6 +110,13 @@ pub fn process_word(word: &str, k: usize, n: usize, r: u64) -> Result<WordReport
         let ab_by_k = asmuth_bloom::reconstruct(&ab_shares[..k])?;
         let ab_by_n = asmuth_bloom::reconstruct(&ab_shares)?;
 
+        tracing::info!(
+            mignotte_k = m_by_k == s_big,
+            mignotte_n = m_by_n == s_big,
+            asmuth_k = ab_by_k == s_big,
+            asmuth_n = ab_by_n == s_big,
+            "проверка восстановления буквы по k и n долям"
+        );
         letters.push(LetterReport {
             letter_index: idx,
             letter: c,
@@ -135,6 +145,10 @@ pub fn process_word(word: &str, k: usize, n: usize, r: u64) -> Result<WordReport
         });
     }
 
+    info!(
+        letters = letters.len(),
+        "разделение и восстановление слова завершены"
+    );
     Ok(WordReport {
         word: word.to_string(),
         k,

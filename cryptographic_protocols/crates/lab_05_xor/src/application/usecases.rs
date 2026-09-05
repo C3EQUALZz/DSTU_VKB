@@ -31,7 +31,13 @@ impl XorReport {
 }
 
 /// Применить XOR. Возвращает байтовый поток. Шифр и дешифр — одно и то же.
+#[tracing::instrument(skip_all)]
 pub fn xor_apply(input: &[u8], key: &[u8]) -> XorReport {
+    info!(
+        input_len = input.len(),
+        key_len = key.len(),
+        "начато побайтовое XOR-преобразование"
+    );
     let output = xor_stream(input, key);
     info!(input_len = input.len(), key_len = key.len(), "XOR применён");
     XorReport {

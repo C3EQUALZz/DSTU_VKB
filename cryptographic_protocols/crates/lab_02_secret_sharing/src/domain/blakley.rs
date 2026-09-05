@@ -26,6 +26,19 @@ pub struct PlaneShare {
 /// Создать долю из (a, b) и секретной точки Q. c = z_0 − a·x_0 − b·y_0.
 pub fn share_from_ab(a: i64, b: i64, q: SecretPoint, p: i64) -> PlaneShare {
     let c = norm(q.z0 - a * q.x0 - b * q.y0, p);
+    tracing::info!(
+        step = "blakley.plane",
+        a = a,
+        b = b,
+        z0 = q.z0,
+        a_factor = a,
+        x0 = q.x0,
+        b_factor = b,
+        y0 = q.y0,
+        p = p,
+        c = c,
+        "построена плоскость: c = (z0 − a*x0 − b*y0) mod p"
+    );
     PlaneShare {
         a: norm(a, p),
         b: norm(b, p),
@@ -54,6 +67,7 @@ pub fn reconstruct(shares: &[PlaneShare], p: i64) -> Result<SecretPoint, DomainE
         mat[i][2] = norm(-1, p);
         mat[i][3] = norm(-s.c, p);
     }
+    tracing::info!(step = "blakley.matrix", mat = ?mat, p = p, "составлена система пересечения плоскостей");
     gauss_3x4(&mut mat, p)?;
     Ok(SecretPoint {
         x0: mat[0][3],
@@ -75,6 +89,13 @@ fn gauss_3x4(mat: &mut [[i64; 4]; 3], p: i64) -> Result<(), DomainError> {
         let pivot = pivot.ok_or(DomainError::SingularSystem)?;
         mat.swap(col, pivot);
         let pv_inv = inv(mat[col][col], p)?;
+        tracing::info!(
+            step = "blakley.gauss_pivot",
+            column = col + 1,
+            pivot_row = pivot + 1,
+            pv_inv = pv_inv,
+            "выбран ведущий элемент системы плоскостей"
+        );
         for j in 0..4 {
             mat[col][j] = norm(mat[col][j] * pv_inv, p);
         }
@@ -89,9 +110,19 @@ fn gauss_3x4(mat: &mut [[i64; 4]; 3], p: i64) -> Result<(), DomainError> {
             for j in 0..4 {
                 let sub = norm(factor * mat[col][j], p);
                 mat[row][j] = norm(mat[row][j] - sub, p);
+                tracing::info!(
+                    step = "blakley.gauss_cell",
+                    pivot_column = col + 1,
+                    row = row + 1,
+                    column = j + 1,
+                    sub = sub,
+                    result = mat[row][j],
+                    "шаг исключения Гаусса по модулю p"
+                );
             }
         }
     }
+    tracing::info!(step = "blakley.gauss_done", mat = ?mat, "точка пересечения восстановлена");
     Ok(())
 }
 

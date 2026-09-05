@@ -1,7 +1,6 @@
 //! Криптоанализ Виженера: индекс совпадения и подбор ключа.
 
 use shared::alphabet::{ALPHABET_SIZE, FREQUENCIES, index_of_coincidence};
-use tracing::debug;
 
 use super::cipher::decrypt;
 use super::errors::DomainError;
@@ -14,9 +13,22 @@ pub const UNIFORM_IC: f64 = 0.0303_03;
 
 /// Разделить текст на L подстрок (i-я содержит символы с позициями i, i+L, i+2L, ...).
 pub fn columns(text: &[usize], key_len: usize) -> Vec<Vec<usize>> {
+    tracing::info!(
+        step = "vigenere.columns",
+        length = text.len(),
+        key_len = key_len,
+        "разбиение шифртекста на столбцы"
+    );
     let mut cols = vec![Vec::new(); key_len];
     for (i, &c) in text.iter().enumerate() {
         cols[i % key_len].push(c);
+        tracing::info!(
+            step = "vigenere.column",
+            position = i + 1,
+            column = i % key_len + 1,
+            symbol_index = c,
+            "символ распределён в столбец"
+        );
     }
     cols
 }
@@ -31,9 +43,28 @@ pub fn key_length_scores(
     let mut out = Vec::new();
     for l in range {
         let cols = columns(text, l);
-        let avg: f64 = cols.iter().map(|c| index_of_coincidence(c)).sum::<f64>() / l as f64;
+        let avg: f64 = cols
+            .iter()
+            .enumerate()
+            .map(|(j, c)| {
+                tracing::info!(
+                    step = "vigenere.ic_column",
+                    key_length = l,
+                    column = j + 1,
+                    size = c.len(),
+                    "расчёт IC столбца"
+                );
+                index_of_coincidence(c)
+            })
+            .sum::<f64>()
+            / l as f64;
         out.push((l, avg));
-        debug!(key_len = l, avg_ic = avg, "key length candidate");
+        tracing::info!(
+            step = "vigenere.ic_average",
+            key_length = l,
+            average_ic = avg,
+            "средний IC для предполагаемой длины ключа"
+        );
     }
     out
 }
@@ -57,10 +88,19 @@ pub fn best_key_length(text: &[usize], range: std::ops::RangeInclusive<usize>) -
         return 1;
     };
     let cutoff = max_ic * IC_PEAK_RATIO;
-    scores
+    let selected = scores
         .iter()
         .find(|(_, ic)| *ic >= cutoff)
-        .map_or(1, |(l, _)| *l)
+        .map_or(1, |(l, _)| *l);
+    tracing::info!(
+        step = "vigenere.key_length",
+        max_ic = max_ic,
+        ic_peak_ratio = IC_PEAK_RATIO,
+        cutoff = cutoff,
+        selected = selected,
+        "выбор наименьшей длины выше порога IC"
+    );
+    selected
 }
 
 /// Для столбца ciphertext подобрать сдвиг (буквы ключа), при котором χ² с эталонной
@@ -84,15 +124,37 @@ pub fn best_shift_for_column(column: &[usize]) -> usize {
                 if expected.abs() < 1e-9 {
                     0.0
                 } else {
-                    (observed - expected).powi(2) / expected
+                    let contribution = (observed - expected).powi(2) / expected;
+                    tracing::info!(
+                        step = "vigenere.chi_term",
+                        shift = s,
+                        letter_index = i,
+                        observed = observed,
+                        expected = expected,
+                        contribution = contribution,
+                        "слагаемое χ² = (observed − expected)² / expected"
+                    );
+                    contribution
                 }
             })
             .sum();
+        tracing::info!(
+            step = "vigenere.chi_candidate",
+            shift = s,
+            chi_squared = chi,
+            "проверен сдвиг столбца"
+        );
         if chi < best_chi {
             best_chi = chi;
             best_shift = s;
         }
     }
+    tracing::info!(
+        step = "vigenere.best_shift",
+        best_shift = best_shift,
+        chi_squared = best_chi,
+        "найден минимум χ²"
+    );
     best_shift
 }
 
@@ -110,7 +172,16 @@ pub fn recover_key(
     let key_len = best_key_length(cipher, range);
     let key = columns(cipher, key_len)
         .iter()
-        .map(|col| best_shift_for_column(col))
+        .enumerate()
+        .map(|(j, col)| {
+            let _span = tracing::info_span!("key_column", column = j + 1).entered();
+            tracing::info!(
+                step = "vigenere.recover_column",
+                column = j + 1,
+                "подбор буквы ключа для столбца"
+            );
+            best_shift_for_column(col)
+        })
         .collect::<Vec<_>>();
     Ok(key)
 }
