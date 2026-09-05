@@ -9,3 +9,19 @@ $ cargo run --quiet -p lab_01_progressive_vigenere -- encrypt --alphabet ru --ke
 
 $ cargo run --quiet -p lab_01_progressive_vigenere -- decrypt --alphabet ru --key 'КЛЮЧ' --text 'ХЬЖЖЮЫВИМВИШ'
 КРИПТОГРАФИЯ
+
+$ cargo run --quiet -p lab_04_vigenere -- encrypt 'КРИПТОГРАФИЯ' --key 'КЛЮЧ' --alphabet ru-yo
+Открытый текст: КРИПТОГРАФИЯ
+Ключ: КЛЮЧ
+Шифртекст: ХЬЖЖЭЪБЗКАЖЦ
+
+$ cargo run --quiet -p lab_04_vigenere -- decrypt 'ХЬЖЖЭЪБЗКАЖЦ' --key 'КЛЮЧ' --alphabet ru-yo
+Шифртекст: ХЬЖЖЭЪБЗКАЖЦ
+Ключ: КЛЮЧ
+Открытый текст: КРИПТОГРАФИЯ
+
+$ cargo run --quiet -p lab_01_autokey_vigenere -- encrypt --alphabet ru --key 'КЛЮЧ' --text 'КРИПТОГРАФИЯ'
+ХЬЖЖЭЯЛАТГЛП
+
+$ cargo run --quiet -p lab_01_autokey_vigenere -- decrypt --alphabet ru --key 'КЛЮЧ' --text 'ХЬЖЖЭЯЛАТГЛП'
+КРИПТОГРАФИЯ

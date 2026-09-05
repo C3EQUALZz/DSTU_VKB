@@ -7,6 +7,42 @@ use shared::alphabet::{ALPHABET, ALPHABET_SIZE, index_of};
 
 use super::errors::DomainError;
 
+/// Два алфавита по 33 символа: методичка лаб 4 и русский с отдельной Ё.
+#[derive(Clone, Copy, Debug)]
+pub enum Alphabet {
+    Lab04,
+    RussianWithYo,
+}
+
+impl Alphabet {
+    pub fn to_indices(self, text: &str) -> Result<Vec<usize>, DomainError> {
+        match self {
+            Self::Lab04 => to_indices(text),
+            Self::RussianWithYo => text
+                .chars()
+                .map(|c| {
+                    "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+                        .chars()
+                        .position(|letter| {
+                            letter == c || letter.to_lowercase().eq(std::iter::once(c))
+                        })
+                        .ok_or(DomainError::OutOfAlphabet { c })
+                })
+                .collect(),
+        }
+    }
+
+    pub fn render(self, indices: &[usize]) -> String {
+        match self {
+            Self::Lab04 => from_indices(indices),
+            Self::RussianWithYo => {
+                let letters: Vec<_> = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ".chars().collect();
+                indices.iter().map(|i| letters[i % letters.len()]).collect()
+            }
+        }
+    }
+}
+
 /// Перевести строку в массив индексов 0..33. Символы вне алфавита приводят к ошибке.
 pub fn to_indices(text: &str) -> Result<Vec<usize>, DomainError> {
     text.chars()

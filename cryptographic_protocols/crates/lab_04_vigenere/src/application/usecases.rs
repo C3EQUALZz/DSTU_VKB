@@ -1,6 +1,6 @@
 //! Сценарии лаб 4.
 
-use crate::domain::cipher::{decrypt, encrypt, from_indices, to_indices};
+use crate::domain::cipher::{Alphabet, decrypt, encrypt, from_indices, to_indices};
 use crate::domain::cryptanalysis::{break_cipher, key_length_scores};
 use crate::domain::errors::DomainError;
 
@@ -28,35 +28,51 @@ pub struct CryptanalysisReport {
 
 #[tracing::instrument(skip_all)]
 pub fn run_encrypt(plain: &str, key: &str) -> Result<EncryptReport, DomainError> {
+    run_encrypt_with_alphabet(plain, key, Alphabet::Lab04)
+}
+
+pub fn run_encrypt_with_alphabet(
+    plain: &str,
+    key: &str,
+    alphabet: Alphabet,
+) -> Result<EncryptReport, DomainError> {
     tracing::info!(
         symbols = plain.chars().count(),
         "начато шифрование Виженера"
     );
-    let p = to_indices(plain)?;
-    let k = to_indices(key)?;
+    let p = alphabet.to_indices(plain)?;
+    let k = alphabet.to_indices(key)?;
     let c = encrypt(&p, &k)?;
     tracing::info!(symbols = c.len(), "шифрование Виженера завершено");
     Ok(EncryptReport {
         plain: plain.to_string(),
         key: key.to_string(),
-        cipher: from_indices(&c),
+        cipher: alphabet.render(&c),
     })
 }
 
 #[tracing::instrument(skip_all)]
 pub fn run_decrypt(cipher: &str, key: &str) -> Result<DecryptReport, DomainError> {
+    run_decrypt_with_alphabet(cipher, key, Alphabet::Lab04)
+}
+
+pub fn run_decrypt_with_alphabet(
+    cipher: &str,
+    key: &str,
+    alphabet: Alphabet,
+) -> Result<DecryptReport, DomainError> {
     tracing::info!(
         symbols = cipher.chars().count(),
         "подготовка шифртекста Виженера"
     );
-    let c = to_indices(cipher)?;
-    let k = to_indices(key)?;
+    let c = alphabet.to_indices(cipher)?;
+    let k = alphabet.to_indices(key)?;
     let p = decrypt(&c, &k)?;
     tracing::info!(symbols = p.len(), "расшифровка Виженера завершена");
     Ok(DecryptReport {
         cipher: cipher.to_string(),
         key: key.to_string(),
-        plain: from_indices(&p),
+        plain: alphabet.render(&p),
     })
 }
 
@@ -100,5 +116,42 @@ mod tests {
         assert_eq!(r.cipher, "ЬЮЪВТ_СМХЮ");
         let d = run_decrypt(&r.cipher, "НОТА").unwrap();
         assert_eq!(d.plain, "ПРИВЕТ_МИР");
+    }
+}
+
+#[cfg(test)]
+mod russian_yo_tests {
+    use super::*;
+
+    #[test]
+    fn report_example_and_yo() {
+        let alphabet = Alphabet::RussianWithYo;
+        let result = run_encrypt_with_alphabet("КРИПТОГРАФИЯ", "КЛЮЧ", alphabet).unwrap();
+        assert_eq!(result.cipher, "ХЬЖЖЭЪБЗКАЖЦ");
+        assert_eq!(
+            run_decrypt_with_alphabet(&result.cipher, "КЛЮЧ", alphabet)
+                .unwrap()
+                .plain,
+            "КРИПТОГРАФИЯ"
+        );
+        assert_eq!(
+            run_encrypt_with_alphabet("ЕЁЯ", "Б", alphabet)
+                .unwrap()
+                .cipher,
+            "ЁЖА"
+        );
+        assert_eq!(
+            run_decrypt_with_alphabet("ЁЖА", "Б", alphabet)
+                .unwrap()
+                .plain,
+            "ЕЁЯ"
+        );
+        assert!(run_encrypt_with_alphabet("А_", "Б", alphabet).is_err());
+        assert!(run_encrypt_with_alphabet("А", "", alphabet).is_err());
+        assert!(run_encrypt_with_alphabet("А", "_", alphabet).is_err());
+        assert_eq!(
+            run_encrypt_with_alphabet("", "Б", alphabet).unwrap().cipher,
+            ""
+        );
     }
 }

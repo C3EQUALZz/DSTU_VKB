@@ -3,6 +3,7 @@ resolver = "2"
 members = [
     "crates/shared",
     "crates/lab_01_progressive_vigenere",
+    "crates/lab_01_autokey_vigenere",
     "crates/lab_01_dh",
     "crates/lab_02_secret_sharing",
     "crates/lab_03_substitution",
