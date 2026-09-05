@@ -89,6 +89,12 @@ CONTROL_QA = [
 
 
 def build_variant(n: int) -> None:
+    if n == 11:
+        from detailed_variant_11 import build_report
+
+        build_report()
+        return
+
     cipher = read_cipher(n)
     idx = to_indices(cipher)
     scores = key_length_scores(idx, 2, 8)
