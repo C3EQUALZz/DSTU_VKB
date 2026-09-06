@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html class="client-nojs vector-feature-language-in-header-enabled vector-feature-language-in-main-menu-disabled vector-feature-language-in-main-page-header-disabled vector-feature-page-tools-pinned-disabled vector-feature-toc-pinned-clientpref-1 vector-feature-main-menu-pinned-disabled vector-feature-limited-width-clientpref-1 vector-feature-limited-width-content-enabled vector-feature-custom-font-size-clientpref-1 vector-feature-appearance-pinned-clientpref-1 skin-theme-clientpref-day vector-sticky-header-enabled vector-toc-available skin-thumbsize-clientpref-standard" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Twists of elliptic curves - Wikipedia</title>
+<script>(function(){var className="client-js vector-feature-language-in-header-enabled vector-feature-language-in-main-menu-disabled vector-feature-language-in-main-page-header-disabled vector-feature-page-tools-pinned-disabled vector-feature-toc-pinned-clientpref-1 vector-feature-main-menu-pinned-disabled vector-feature-limited-width-clientpref-1 vector-feature-limited-width-content-enabled vector-feature-custom-font-size-clientpref-1 vector-feature-appearance-pinned-clientpref-1 skin-theme-clientpref-day vector-sticky-header-enabled vector-toc-available skin-thumbsize-clientpref-standard";var cookie=document.cookie.match(/(?:^|; )enwikimwclientpreferences=([^;]+)/);if(cookie){cookie[1].split('%2C').forEach(function(pref){className=className.replace(new RegExp('(^| )'+pref.replace(/-clientpref-\w+$|[^\w-]+/g,'')+'-clientpref-\\w+( |$)'),'$1'+pref+'$2');});}document.documentElement.className=className;}());RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"96e7688d-d572-4dbb-a7d8-5f04a707b7c8","wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Twists_of_elliptic_curves","wgTitle":"Twists of elliptic curves","wgCurRevisionId":1336152727,"wgRevisionId":1336152727,"wgArticleId":25572033,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Articles with short description","Short description matches Wikidata","Elliptic curves","Elliptic curve cryptography"],"wgPageViewLanguage":"en","wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Twists_of_elliptic_curves","wgRelevantArticleId":25572033,"wgTempUserName":null,"wgIsProbablyEditable":true,"wgRelevantPageIsProbablyEditable":true,"wgRestrictionEdit":[],"wgRestrictionMove":[],"wgNoticeProject":"wikipedia","wgFlaggedRevsParams":{"tags":{"status":{"levels":1}},"namespaces":[0,4]},"wgConfirmEditCaptchaNeededForGenericEdit":"hcaptcha","wgConfirmEditForceShowCaptcha":false,"wgConfirmEditHCaptchaSiteKey":"5d0c670e-a5f4-4258-ad16-1f42792c9c62","wgMediaViewerOnClick":true,"wgMediaViewerEnabledByDefault":true,"wgMediaViewerMobileBeta":false,"wgPopupsFlags":0,"wgVisualEditor":{"pageLanguageCode":"en","pageLanguageDir":"ltr","pageVariantFallbacks":"en"},"wgMFDisplayWikibaseDescriptions":{"search":true,"watchlist":true,"tagline":false,"nearby":true},"wgWMESchemaEditAttemptStepOversample":false,"wgWMEPageLength":8000,"wgParsoidHtmlVersion":"2.8.0","parsermigration-parsoid":true,"wgPageAssessments":{"Cryptography":{"class":"Start","importance":"Low"},"Cryptography/WikiProject Computer science":{"class":"Start","importance":"Low"},"Mathematics":{"class":"Start","importance":"Low"},"Project-independent assessment":{"class":"Start","importance":""}},"wgTestKitchenUserExperiments":{"overrides":[],"enrolled":[],"assigned":[],"subject_ids":[]},"wgEditSubmitButtonLabelPublish":true,"wgVisualEditorPageIsDisambiguation":false,"wgULSPosition":"interlanguage","wgULSisCompactLinksEnabled":false,"wgVector2022LanguageInHeader":true,"wgULSisLanguageSelectorEmpty":false,"wgULSLanguageSelectorV2Enabled":true,"wgWikibaseItemId":"Q7858596","wgCheckUserClientHintsHeadersJsApi":["brands","architecture","bitness","fullVersionList","mobile","model","platform","platformVersion"],"wgPersonalDashboardMenuVisible":false};
+RLSTATE={"ext.globalCssJs.user.styles":"ready","site.styles":"ready","user.styles":"ready","ext.globalCssJs.user":"ready","user":"ready","user.options":"loading","ext.math.styles":"ready","ext.cite.parsoid.styles":"ready","ext.cite.styles":"ready","mediawiki.skinning.content.parsoid":"ready","ext.wikimediamessages.styles":"ready","skins.vector.search.codex.styles":"ready","skins.vector.styles":"ready","skins.vector.icons":"ready","ext.visualEditor.desktopArticleTarget.noscript":"ready","ext.uls.interlanguage":"ready","wikibase.client.init":"ready"};RLPAGEMODULES=["ext.math.polyfills","ext.cite.ux-enhancements","site","mediawiki.page.ready","mediawiki.toc","skins.vector.js","ext.centralNotice.geoIP","ext.centralNotice.startUp","ext.gadget.ReferenceTooltips","ext.gadget.switcher","ext.urlShortener.toolbar","ext.centralauth.centralautologin","ext.testKitchen","mmv.bootstrap","ext.popups","ext.visualEditor.desktopArticleTarget.init","ext.echo.centralauth","ext.eventLogging","ext.wikimediaEvents","ext.navigationTiming","ext.uls.interface","ext.cx.eventlogging.campaigns","ext.cx.uls.quick.actions","wikibase.client.vector-2022","wikibase.databox.fromWikidata","ext.checkUser.clientHints","ext.quicksurveys.init"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.impl(function(){return["user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});
+}];});});</script>
+<link rel="stylesheet" href="/w/load.php?lang=en&amp;modules=ext.cite.parsoid.styles%7Cext.cite.styles%7Cext.math.styles%7Cext.uls.interlanguage%7Cext.visualEditor.desktopArticleTarget.noscript%7Cext.wikimediamessages.styles%7Cmediawiki.skinning.content.parsoid%7Cskins.vector.icons%2Cstyles%7Cskins.vector.search.codex.styles%7Cwikibase.client.init&amp;only=styles&amp;skin=vector-2022">
+<script async="" src="/w/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=vector-2022"></script>
+<meta name="ResourceLoaderDynamicStyles" content="">
+<link rel="stylesheet" href="/w/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=vector-2022">
+<meta name="generator" content="MediaWiki 1.47.0-wmf.17">
+<meta name="referrer" content="origin">
+<meta name="referrer" content="origin-when-cross-origin">
+<meta name="robots" content="max-image-preview:standard">
+<meta name="format-detection" content="telephone=no">
+<meta name="viewport" content="width=1120">
+<meta property="og:title" content="Twists of elliptic curves - Wikipedia">
+<meta property="og:type" content="website">
+<link rel="alternate" type="application/x-wiki" title="Edit this page" href="/w/index.php?title=Twists_of_elliptic_curves&amp;action=edit">
+<link rel="apple-touch-icon" href="/static/apple-touch/wikipedia.png">
+<link rel="icon" href="/static/favicon/wikipedia.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="/w/rest.php/v1/search" title="Wikipedia (en)">
+<link rel="EditURI" type="application/rsd+xml" href="//en.wikipedia.org/w/api.php?action=rsd">
+<link rel="canonical" href="https://en.wikipedia.org/wiki/Twists_of_elliptic_curves">
+<link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/deed.en">
+<link rel="alternate" type="application/atom+xml" title="Wikipedia Atom feed" href="/w/index.php?title=Special:RecentChanges&amp;feed=atom">
+<link rel="dns-prefetch" href="//meta.wikimedia.org" />
+<link rel="dns-prefetch" href="auth.wikimedia.org">
+</head>
+<body class="skin--responsive skin-vector skin-vector-search-vue mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject mw-editable page-Twists_of_elliptic_curves rootpage-Twists_of_elliptic_curves skin-vector-2022 action-view">
+<div id="mw-aria-live-region" class="mw-aria-live-region" aria-live="polite"></div><a class="mw-jump-link" href="#bodyContent">Jump to content</a>
+<div class="vector-header-container">
+	<header class="vector-header mw-header no-font-mode-scale">
+		<div class="vector-header-start">
+			<nav class="vector-main-menu-landmark" aria-label="Site">
+				
+<div id="vector-main-menu-dropdown" class="vector-dropdown vector-main-menu-dropdown vector-button-flush-left vector-button-flush-right"  title="Main menu" >
+	<input type="checkbox" id="vector-main-menu-dropdown-checkbox" role="button" aria-haspopup="true" data-event-name="ui.dropdown-vector-main-menu-dropdown" class="vector-dropdown-checkbox "  aria-label="Main menu"   >
+	<label id="vector-main-menu-dropdown-label" for="vector-main-menu-dropdown-checkbox" class="vector-dropdown-label cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--icon-only " aria-hidden="true"  ><span class="vector-icon mw-ui-icon-menu mw-ui-icon-wikimedia-menu cdx-button__icon"></span>
+
+<span class="vector-dropdown-label-text">Main menu</span>
+	</label>
+	<div class="vector-dropdown-content">
+
+
+				<div id="vector-main-menu-unpinned-container" class="vector-unpinned-container">
+		
+<div id="vector-main-menu" class="vector-main-menu vector-pinnable-element">
+	<div
+	class="vector-pinnable-header vector-main-menu-pinnable-header vector-pinnable-header-unpinned"
+	data-feature-name="main-menu-pinned"
+	data-pinnable-element-id="vector-main-menu"
+	data-pinned-container-id="vector-main-menu-pinned-container"
+	data-unpinned-container-id="vector-main-menu-unpinned-container"
+>
+	<div class="vector-pinnable-header-label">Main menu</div>
+	<button class="vector-pinnable-header-toggle-button vector-pinnable-header-pin-button" data-event-name="pinnable-header.vector-main-menu.pin" aria-label="Move Main menu to sidebar">move to sidebar</button>
+	<button class="vector-pinnable-header-toggle-button vector-pinnable-header-unpin-button" data-event-name="pinnable-header.vector-main-menu.unpin" aria-label="Hide Main menu">hide</button>
+</div>
+
+	
+<div id="p-navigation" class="vector-menu mw-portlet mw-portlet-navigation"  >
+	<div class="vector-menu-heading">
+		Navigation
+	</div>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			
+			<li id="n-mainpage-description" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z"><span>Main page</span></a></li><li id="n-contents" class="mw-list-item"><a href="/wiki/Wikipedia:Contents" title="Guides to browsing Wikipedia"><span>Contents</span></a></li><li id="n-currentevents" class="mw-list-item"><a href="/wiki/Portal:Current_events" title="Articles related to current events"><span>Current events</span></a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Visit a randomly selected article [x]" accesskey="x"><span>Random article</span></a></li><li id="n-aboutsite" class="mw-list-item"><a href="/wiki/Wikipedia:About" title="Learn about Wikipedia and how it works"><span>About Wikipedia</span></a></li><li id="n-contactpage" class="mw-list-item"><a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us" title="How to contact Wikipedia"><span>Contact us</span></a></li>
+		</ul>
+		
+	</div>
+</div>
+
+	
+<div id="p-interaction" class="vector-menu mw-portlet mw-portlet-interaction"  >
+	<div class="vector-menu-heading">
+		Contribute
+	</div>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			
+			<li id="n-help" class="mw-list-item"><a href="/wiki/Help:Contents" title="Guidance on how to use and edit Wikipedia"><span>Help</span></a></li><li id="n-introduction" class="mw-list-item"><a href="/wiki/Help:Introduction" title="Learn how to edit Wikipedia"><span>Learn to edit</span></a></li><li id="n-portal" class="mw-list-item"><a href="/wiki/Wikipedia:Community_portal" title="The hub for editors"><span>Community portal</span></a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes to Wikipedia [r]" accesskey="r"><span>Recent changes</span></a></li><li id="n-upload" class="mw-list-item"><a href="/wiki/Wikipedia:File_upload_wizard" title="Add images or other media for use on Wikipedia"><span>Upload file</span></a></li><li id="n-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q"><span>Special pages</span></a></li>
+		</ul>
+		
+	</div>
+</div>
+
+</div>
+
+				</div>
+
+	</div>
+</div>
+
+		</nav>
+			
+<a href="/wiki/Main_Page" class="mw-logo">
+	<img class="mw-logo-icon" src="/static/images/icons/enwiki-25.svg" alt="" aria-hidden="true" height="50" width="50">
+	<span class="mw-logo-container skin-invert">
+		<img class="mw-logo-wordmark" alt="Wikipedia" src="/static/images/mobile/copyright/wikipedia-wordmark-en-25.svg" style="width: 8.75em; height: 1.375em;">
+		<img class="mw-logo-tagline" alt="The Free Encyclopedia" src="/static/images/mobile/copyright/wikipedia-tagline-en-25.svg" width="140" height="11" style="width: 8.75em; height: 0.6875em;">
+	</span>
+</a>
+
+		</div>
+		<div class="vector-header-end">
+			
+<div id="p-search" role="search" class="vector-search-box-vue  vector-search-box-collapses vector-search-box-show-thumbnail vector-search-box-auto-expand-width vector-search-box">
+	<a href="/wiki/Special:Search" class="cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--icon-only search-toggle" title="Search Wikipedia [f]" accesskey="f"><span class="vector-icon mw-ui-icon-search mw-ui-icon-wikimedia-search cdx-button__icon"></span>
+
+<span>Search</span>
+	</a>
+	<div class="vector-typeahead-search-container">
+		<div class="cdx-typeahead-search cdx-typeahead-search--show-thumbnail cdx-typeahead-search--auto-expand-width">
+			<form action="/w/index.php" id="searchform" class="cdx-search-input cdx-search-input--has-end-button">
+				<div id="simpleSearch" class="cdx-search-input__input-wrapper"  data-search-loc="header-moved">
+					<div class="cdx-text-input cdx-text-input--has-start-icon">
+						<input
+							class="cdx-text-input__input mw-searchInput" autocomplete="off"
+							 type="search" name="search" placeholder="Search Wikipedia" aria-label="Search Wikipedia" autocapitalize="none" spellcheck="false" title="Search Wikipedia [f]" accesskey="f" id="searchInput"
+							>
+						<span class="cdx-text-input__icon cdx-text-input__start-icon"></span>
+					</div>
+					<input type="hidden" name="title" value="Special:Search">
+				</div>
+				<button class="cdx-button cdx-search-input__end-button">Search</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+			<nav class="vector-user-links vector-user-links-wide" aria-label="Personal tools">
+	<div class="vector-user-links-main">
+	
+<div id="p-vector-user-menu-preferences" class="vector-menu mw-portlet emptyPortlet"  >
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			
+			
+		</ul>
+		
+	</div>
+</div>
+
+	
+<div id="p-vector-user-menu-userpage" class="vector-menu mw-portlet emptyPortlet"  >
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			
+			
+		</ul>
+		
+	</div>
+</div>
+
+	<nav class="vector-appearance-landmark" aria-label="Appearance">
+		
+<div id="vector-appearance-dropdown" class="vector-dropdown "  title="Change the appearance of the page&#039;s font size, width, and color" >
+	<input type="checkbox" id="vector-appearance-dropdown-checkbox" role="button" aria-haspopup="true" data-event-name="ui.dropdown-vector-appearance-dropdown" class="vector-dropdown-checkbox "  aria-label="Appearance"   >
+	<label id="vector-appearance-dropdown-label" for="vector-appearance-dropdown-checkbox" class="vector-dropdown-label cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--icon-only " aria-hidden="true"  ><span class="vector-icon mw-ui-icon-appearance mw-ui-icon-wikimedia-appearance cdx-button__icon"></span>
+
+<span class="vector-dropdown-label-text">Appearance</span>
+	</label>
+	<div class="vector-dropdown-content">
+
+
+			<div id="vector-appearance-unpinned-container" class="vector-unpinned-container">
+				
+			</div>
+		
+	</div>
+</div>
+
+	</nav>
+	
+<div id="p-vector-user-menu-notifications" class="vector-menu mw-portlet emptyPortlet"  >
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			
+			
+		</ul>
+		
+	</div>
+</div>
+
+	
+<div id="p-vector-user-menu-overflow" class="vector-menu mw-portlet"  >
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			<li id="pt-sitesupport-2" class="mw-list-item vector-menu-item--collapsible"><a data-mw-interface  href="https://donate.wikimedia.org/?wmf_source=donate&amp;wmf_medium=sidebar&amp;wmf_campaign=en.wikipedia.org&amp;uselang=en" data-mw-donate-attempt="top_link" class=""><span>Donate</span></a>
+</li>
+<li id="pt-createaccount-2" class="mw-list-item vector-menu-item--collapsible"><a data-mw-interface  href="/w/index.php?title=Special:CreateAccount&amp;returnto=Twists+of+elliptic+curves" title="You are encouraged to create an account and log in; however, it is not mandatory" class=""><span>Create account</span></a>
+</li>
+<li id="pt-login-2" class="mw-list-item vector-menu-item--collapsible"><a data-mw-interface  href="/w/index.php?title=Special:UserLogin&amp;returnto=Twists+of+elliptic+curves" title="You&#039;re encouraged to log in; however, it&#039;s not mandatory. [o]" accesskey="o" class=""><span>Log in</span></a>
+</li>
+
+			
+		</ul>
+		
+	</div>
+</div>
+
+	</div>
+	
+<div id="vector-user-links-dropdown" class="vector-dropdown vector-user-menu vector-button-flush-right vector-user-menu-logged-out vector-user-links-dropdown--collapsible"  title="Log in and more options" >
+	<input type="checkbox" id="vector-user-links-dropdown-checkbox" role="button" aria-haspopup="true" data-event-name="ui.dropdown-vector-user-links-dropdown" class="vector-dropdown-checkbox "  aria-label="Personal tools"   >
+	<label id="vector-user-links-dropdown-label" for="vector-user-links-dropdown-checkbox" class="vector-dropdown-label cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--icon-only " aria-hidden="true"  ><span class="vector-icon mw-ui-icon-userAvatar mw-ui-icon-wikimedia-userAvatar cdx-button__icon"></span>
+
+<span class="vector-dropdown-label-text">Personal tools</span>
+	</label>
+	<div class="vector-dropdown-content">
+
+
+		
+<div id="p-personal" class="vector-menu mw-portlet mw-portlet-personal"  title="User menu" >
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			<li id="pt-sitesupport" class="mw-list-item vector-menu-item--collapsible"><a data-mw-interface  href="https://donate.wikimedia.org/?wmf_source=donate&amp;wmf_medium=sidebar&amp;wmf_campaign=en.wikipedia.org&amp;uselang=en" data-mw-donate-attempt="top_link" class=""><span class="vector-icon mw-ui-icon-heart mw-ui-icon-wikimedia-heart cdx-button__icon"></span>
+
+<span>Donate</span></a>
+</li>
+<li id="pt-createaccount" class="mw-list-item vector-menu-item--collapsible"><a data-mw-interface  href="/w/index.php?title=Special:CreateAccount&amp;returnto=Twists+of+elliptic+curves" title="You are encouraged to create an account and log in; however, it is not mandatory" class=""><span class="vector-icon mw-ui-icon-userAvatar mw-ui-icon-wikimedia-userAvatar cdx-button__icon"></span>
+
+<span>Create account</span></a>
+</li>
+<li id="pt-login" class="mw-list-item vector-menu-item--collapsible"><a data-mw-interface  href="/w/index.php?title=Special:UserLogin&amp;returnto=Twists+of+elliptic+curves" title="You&#039;re encouraged to log in; however, it&#039;s not mandatory. [o]" accesskey="o" class=""><span class="vector-icon mw-ui-icon-logIn mw-ui-icon-wikimedia-logIn cdx-button__icon"></span>
+
+<span>Log in</span></a>
+</li>
+
+			
+		</ul>
+		
+	</div>
+</div>
+
+	
+	</div>
+</div>
+
+</nav>
+
+		</div>
+	</header>
+</div>
+<div class="mw-page-container">
+	<div class="mw-page-container-inner">
+		<div class="vector-sitenotice-container">
+			<div id="siteNotice"><!-- CentralNotice --></div>
+		</div>
+		<div class="vector-column-start">
+			<div class="vector-main-menu-container">
+		<div id="mw-navigation">
+			<nav id="mw-panel" class="vector-main-menu-landmark" aria-label="Site">
+				<div id="vector-main-menu-pinned-container" class="vector-pinned-container">
+				
+				</div>
+		</nav>
+		</div>
+	</div>
+	<div class="vector-sticky-pinned-container">
+				<nav id="mw-panel-toc" aria-label="Contents" data-event-name="ui.sidebar-toc" class="mw-table-of-contents-container vector-toc-landmark">
+					<div id="vector-toc-pinned-container" class="vector-pinned-container">
+					<div id="vector-toc" class="vector-toc vector-pinnable-element">
+	<div
+	class="vector-pinnable-header vector-toc-pinnable-header vector-pinnable-header-pinned"
+	data-feature-name="toc-pinned"
+	data-pinnable-element-id="vector-toc"
+	data-pinned-container-id="vector-toc-pinned-container"
+	data-unpinned-container-id="vector-toc-unpinned-container"
+>
+	<h2 class="vector-pinnable-header-label">Contents</h2>
+	<button class="vector-pinnable-header-toggle-button vector-pinnable-header-pin-button" data-event-name="pinnable-header.vector-toc.pin" aria-label="Move Contents to sidebar">move to sidebar</button>
+	<button class="vector-pinnable-header-toggle-button vector-pinnable-header-unpin-button" data-event-name="pinnable-header.vector-toc.unpin" aria-label="Hide Contents">hide</button>
+</div>
+
+
+	<ul class="vector-toc-contents" id="mw-panel-toc-list">
+		<li id="toc-mw-content-text"
+			class="vector-toc-list-item vector-toc-level-1">
+			<a href="#" class="vector-toc-link">
+				<div class="vector-toc-text">(Top)</div>
+			</a>
+		</li>
+		<li id="toc-Quadratic_twist"
+		class="vector-toc-list-item vector-toc-level-1 vector-toc-list-item-expanded">
+		<a class="vector-toc-link" href="#Quadratic_twist">
+			<div class="vector-toc-text">
+				<span class="vector-toc-numb">1</span>
+				<span>Quadratic twist</span>
+			</div>
+		</a>
+		
+			<button aria-controls="toc-Quadratic_twist-sublist" class="cdx-button cdx-button--weight-quiet cdx-button--icon-only vector-toc-toggle">
+				<span class="vector-icon mw-ui-icon-wikimedia-expand"></span>
+				<span>Toggle Quadratic twist subsection</span>
+			</button>
+		
+		<ul id="toc-Quadratic_twist-sublist" class="vector-toc-list">
+			<li id="toc-Quadratic_twist_over_finite_fields"
+			class="vector-toc-list-item vector-toc-level-2">
+			<a class="vector-toc-link" href="#Quadratic_twist_over_finite_fields">
+				<div class="vector-toc-text">
+					<span class="vector-toc-numb">1.1</span>
+					<span>Quadratic twist over finite fields</span>
+				</div>
+			</a>
+			
+			<ul id="toc-Quadratic_twist_over_finite_fields-sublist" class="vector-toc-list">
+			</ul>
+		</li>
+	</ul>
+	</li>
+	<li id="toc-Quartic_twist"
+		class="vector-toc-list-item vector-toc-level-1 vector-toc-list-item-expanded">
+		<a class="vector-toc-link" href="#Quartic_twist">
+			<div class="vector-toc-text">
+				<span class="vector-toc-numb">2</span>
+				<span>Quartic twist</span>
+			</div>
+		</a>
+		
+		<ul id="toc-Quartic_twist-sublist" class="vector-toc-list">
+		</ul>
+	</li>
+	<li id="toc-Cubic_twist"
+		class="vector-toc-list-item vector-toc-level-1 vector-toc-list-item-expanded">
+		<a class="vector-toc-link" href="#Cubic_twist">
+			<div class="vector-toc-text">
+				<span class="vector-toc-numb">3</span>
+				<span>Cubic twist</span>
+			</div>
+		</a>
+		
+		<ul id="toc-Cubic_twist-sublist" class="vector-toc-list">
+		</ul>
+	</li>
+	<li id="toc-Generalization"
+		class="vector-toc-list-item vector-toc-level-1 vector-toc-list-item-expanded">
+		<a class="vector-toc-link" href="#Generalization">
+			<div class="vector-toc-text">
+				<span class="vector-toc-numb">4</span>
+				<span>Generalization</span>
+			</div>
+		</a>
+		
+		<ul id="toc-Generalization-sublist" class="vector-toc-list">
+		</ul>
+	</li>
+	<li id="toc-Examples"
+		class="vector-toc-list-item vector-toc-level-1 vector-toc-list-item-expanded">
+		<a class="vector-toc-link" href="#Examples">
+			<div class="vector-toc-text">
+				<span class="vector-toc-numb">5</span>
+				<span>Examples</span>
+			</div>
+		</a>
+		
+		<ul id="toc-Examples-sublist" class="vector-toc-list">
+		</ul>
+	</li>
+	<li id="toc-References"
+		class="vector-toc-list-item vector-toc-level-1 vector-toc-list-item-expanded">
+		<a class="vector-toc-link" href="#References">
+			<div class="vector-toc-text">
+				<span class="vector-toc-numb">6</span>
+				<span>References</span>
+			</div>
+		</a>
+		
+		<ul id="toc-References-sublist" class="vector-toc-list">
+		</ul>
+	</li>
+</ul>
+</div>
+
+					</div>
+		</nav>
+			</div>
+		</div>
+		<div class="mw-content-container">
+			<main id="content" class="mw-body">
+				<header class="mw-body-header vector-page-titlebar no-font-mode-scale">
+					<nav aria-label="Contents" class="vector-toc-landmark">
+						
+<div id="vector-page-titlebar-toc" class="vector-dropdown vector-page-titlebar-toc vector-button-flush-left"  title="Table of Contents" >
+	<input type="checkbox" id="vector-page-titlebar-toc-checkbox" role="button" aria-haspopup="true" data-event-name="ui.dropdown-vector-page-titlebar-toc" class="vector-dropdown-checkbox "  aria-label="Toggle the table of contents"   >
+	<label id="vector-page-titlebar-toc-label" for="vector-page-titlebar-toc-checkbox" class="vector-dropdown-label cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--icon-only " aria-hidden="true"  ><span class="vector-icon mw-ui-icon-listBullet mw-ui-icon-wikimedia-listBullet cdx-button__icon"></span>
+
+<span class="vector-dropdown-label-text">Toggle the table of contents</span>
+	</label>
+	<div class="vector-dropdown-content">
+
+
+							<div id="vector-page-titlebar-toc-unpinned-container" class="vector-unpinned-container">
+			</div>
+		
+	</div>
+</div>
+
+					</nav>
+					<h1 id="firstHeading" class="firstHeading mw-first-heading"><span lang="en" dir="ltr"><span class="mw-page-title-main">Twists of elliptic curves</span></span></h1>
+			
+<div id="p-lang-btn" class="vector-dropdown mw-portlet mw-portlet-lang"  >
+	<input type="checkbox" id="p-lang-btn-checkbox" role="button" aria-haspopup="true" data-event-name="ui.dropdown-p-lang-btn" class="vector-dropdown-checkbox mw-interlanguage-selector"  aria-label="Add languages" aria-description="This article is only available in this language. Add the article for other languages"  >
+	<label id="p-lang-btn-label" for="p-lang-btn-checkbox" class="vector-dropdown-label cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--action-progressive mw-portlet-lang-heading-0" aria-hidden="true"  ><span class="vector-icon mw-ui-icon-language-progressive mw-ui-icon-wikimedia-language-progressive cdx-button__icon"></span>
+
+<span class="vector-dropdown-label-text">Add languages</span>
+	</label>
+	<div class="vector-dropdown-content">
+
+		<div class="vector-menu-content">
+			
+			<ul class="vector-menu-content-list">
+				
+				
+			</ul>
+			<div class="after-portlet after-portlet-lang"><span class="uls-after-portlet-link"></span><span class="wb-langlinks-add wb-langlinks-link"><a href="https://www.wikidata.org/wiki/Special:EntityPage/Q7858596#sitelinks-wikipedia" title="Add interlanguage links" class="wbc-editpage">Add links</a></span></div>
+		</div>
+
+	</div>
+</div>
+</header>
+				<div class="vector-page-toolbar">
+					<div class="vector-page-toolbar-container">
+						<div id="left-navigation">
+							<nav aria-label="Namespaces">
+								
+<div id="p-associated-pages" class="vector-menu vector-menu-tabs mw-portlet mw-portlet-associated-pages"  >
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			<li id="ca-nstab-main" class="selected mw-list-item vector-tab-noicon"><a data-mw-interface  href="/wiki/Twists_of_elliptic_curves" title="View the content page [c]" accesskey="c" class=""><span>Article</span></a>
+</li>
+<li id="ca-talk" class="mw-list-item vector-tab-noicon"><a data-mw-interface  href="/wiki/Talk:Twists_of_elliptic_curves" rel="discussion" title="Discuss improvements to the content page [t]" accesskey="t" class=""><span>Talk</span></a>
+</li>
+
+			
+		</ul>
+		
+	</div>
+</div>
+
+								
+<div id="vector-variants-dropdown" class="vector-dropdown emptyPortlet"  >
+	<input type="checkbox" id="vector-variants-dropdown-checkbox" role="button" aria-haspopup="true" data-event-name="ui.dropdown-vector-variants-dropdown" class="vector-dropdown-checkbox " aria-label="Change language variant"    >
+	<label id="vector-variants-dropdown-label" for="vector-variants-dropdown-checkbox" class="vector-dropdown-label cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet" aria-hidden="true"  ><span class="vector-dropdown-label-text">English</span>
+	</label>
+	<div class="vector-dropdown-content">
+
+
+					
+<div id="p-variants" class="vector-menu mw-portlet mw-portlet-variants emptyPortlet"  >
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			
+			
+		</ul>
+		
+	</div>
+</div>
+
+				
+	</div>
+</div>
+
+							</nav>
+						</div>
+						<div id="right-navigation" class="vector-collapsible">
+							<nav aria-label="Views">
+			    
+<div id="p-views" class="vector-menu vector-menu-tabs mw-portlet mw-portlet-views"  >
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			<li id="ca-view" class="selected mw-list-item vector-menu-item--collapsible vector-tab-noicon"><a data-mw-interface  href="/wiki/Twists_of_elliptic_curves" class=""><span>Read</span></a>
+</li>
+<li id="ca-edit" class="mw-list-item vector-menu-item--collapsible vector-tab-noicon"><a data-mw-interface  href="/w/index.php?title=Twists_of_elliptic_curves&amp;action=edit" title="Edit this page [e]" accesskey="e" class=""><span>Edit</span></a>
+</li>
+<li id="ca-history" class="mw-list-item vector-menu-item--collapsible vector-tab-noicon"><a data-mw-interface  href="/w/index.php?title=Twists_of_elliptic_curves&amp;action=history" title="Past revisions of this page [h]" accesskey="h" class=""><span>View history</span></a>
+</li>
+
+			
+		</ul>
+		
+	</div>
+</div>
+
+			</nav>
+
+							<nav class="vector-page-tools-landmark" aria-label="Page tools">
+								
+<div id="vector-page-tools-dropdown" class="vector-dropdown vector-page-tools-dropdown"  >
+	<input type="checkbox" id="vector-page-tools-dropdown-checkbox" role="button" aria-haspopup="true" data-event-name="ui.dropdown-vector-page-tools-dropdown" class="vector-dropdown-checkbox "  aria-label="Tools"   >
+	<label id="vector-page-tools-dropdown-label" for="vector-page-tools-dropdown-checkbox" class="vector-dropdown-label cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--icon-only " aria-hidden="true"  ><span class="vector-icon mw-ui-icon-verticalEllipsis mw-ui-icon-wikimedia-verticalEllipsis cdx-button__icon"></span>
+
+<span class="vector-dropdown-label-text">Tools</span>
+	</label>
+	<div class="vector-dropdown-content">
+
+
+									<div id="vector-page-tools-unpinned-container" class="vector-unpinned-container">
+						
+<div id="vector-page-tools" class="vector-page-tools vector-pinnable-element">
+	<div
+	class="vector-pinnable-header vector-page-tools-pinnable-header vector-pinnable-header-unpinned"
+	data-feature-name="page-tools-pinned"
+	data-pinnable-element-id="vector-page-tools"
+	data-pinned-container-id="vector-page-tools-pinned-container"
+	data-unpinned-container-id="vector-page-tools-unpinned-container"
+>
+	<div class="vector-pinnable-header-label">Tools</div>
+	<button class="vector-pinnable-header-toggle-button vector-pinnable-header-pin-button" data-event-name="pinnable-header.vector-page-tools.pin" aria-label="Move Tools to sidebar">move to sidebar</button>
+	<button class="vector-pinnable-header-toggle-button vector-pinnable-header-unpin-button" data-event-name="pinnable-header.vector-page-tools.unpin" aria-label="Hide Tools">hide</button>
+</div>
+
+	
+<div id="p-cactions" class="vector-menu mw-portlet mw-portlet-cactions emptyPortlet vector-has-collapsible-items"  >
+	<div class="vector-menu-heading">
+		Actions
+	</div>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			<li id="ca-view-more" class="selected mw-list-item vector-menu-item--collapsible"><a data-mw-interface  href="/wiki/Twists_of_elliptic_curves" class=""><span class="vector-icon mw-ui-icon-eye mw-ui-icon-wikimedia-eye cdx-button__icon"></span>
+
+<span>Read</span></a>
+</li>
+<li id="ca-edit-more" class="mw-list-item vector-menu-item--collapsible"><a data-mw-interface  href="/w/index.php?title=Twists_of_elliptic_curves&amp;action=edit" title="Edit this page [e]" accesskey="e" class=""><span class="vector-icon mw-ui-icon-edit mw-ui-icon-wikimedia-edit cdx-button__icon"></span>
+
+<span>Edit</span></a>
+</li>
+<li id="ca-history-more" class="mw-list-item vector-menu-item--collapsible"><a data-mw-interface  href="/w/index.php?title=Twists_of_elliptic_curves&amp;action=history" title="Past revisions of this page [h]" accesskey="h" class=""><span class="vector-icon mw-ui-icon-history mw-ui-icon-wikimedia-history cdx-button__icon"></span>
+
+<span>View history</span></a>
+</li>
+
+			
+		</ul>
+		
+	</div>
+</div>
+
+<div id="p-tb" class="vector-menu mw-portlet mw-portlet-tb"  >
+	<div class="vector-menu-heading">
+		General
+	</div>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			
+			<li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Twists_of_elliptic_curves" title="List of all English Wikipedia pages containing links to this page [j]" accesskey="j"><span>What links here</span></a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Twists_of_elliptic_curves" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k"><span>Related changes</span></a></li><li id="t-upload" class="mw-list-item"><a href="//en.wikipedia.org/wiki/Wikipedia:File_Upload_Wizard" title="Upload files [u]" accesskey="u"><span>Upload file</span></a></li><li id="t-permalink" class="mw-list-item"><a href="/w/index.php?title=Twists_of_elliptic_curves&amp;oldid=1336152727" title="Permanent link to this revision of this page"><span>Permanent link</span></a></li><li id="t-info" class="mw-list-item"><a href="/w/index.php?title=Twists_of_elliptic_curves&amp;action=info" title="More information about this page"><span>Page information</span></a></li><li id="t-cite" class="mw-list-item"><a href="/w/index.php?title=Special:CiteThisPage&amp;page=Twists_of_elliptic_curves&amp;id=1336152727&amp;wpFormIdentifier=titleform" title="Information on how to cite this page"><span>Cite this page</span></a></li><li id="t-urlshortener" class="mw-list-item"><a href="/w/index.php?title=Special:UrlShortener&amp;url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FTwists_of_elliptic_curves"><span>Get shortened URL</span></a></li><li class="mw-list-item"><a href="/w/index.php?title=Twists_of_elliptic_curves&amp;useparsoid=0"><span>Switch to legacy parser</span></a></li>
+		</ul>
+		
+	</div>
+</div>
+
+<div id="p-coll-print_export" class="vector-menu mw-portlet mw-portlet-coll-print_export"  >
+	<div class="vector-menu-heading">
+		Print/export
+	</div>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			
+			<li id="coll-download-as-rl" class="mw-list-item"><a href="/w/index.php?title=Special:DownloadAsPdf&amp;page=Twists_of_elliptic_curves&amp;action=show-download-screen" title="Download this page as a PDF file"><span>Download as PDF</span></a></li><li id="t-print" class="mw-list-item"><a href="/w/index.php?title=Twists_of_elliptic_curves&amp;printable=yes" title="Printable version of this page [p]" accesskey="p"><span>Printable version</span></a></li>
+		</ul>
+		
+	</div>
+</div>
+
+<div id="p-wikibase-otherprojects" class="vector-menu mw-portlet mw-portlet-wikibase-otherprojects"  >
+	<div class="vector-menu-heading">
+		In other projects
+	</div>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			
+			<li id="t-wikibase" class="wb-otherproject-link wb-otherproject-wikibase-dataitem mw-list-item"><a href="https://www.wikidata.org/wiki/Special:EntityPage/Q7858596" title="Structured data on this page hosted by Wikidata [g]" accesskey="g"><span>Wikidata item</span></a></li>
+		</ul>
+		
+	</div>
+</div>
+
+</div>
+
+									</div>
+				
+	</div>
+</div>
+
+							</nav>
+						</div>
+					</div>
+				</div>
+				<div class="vector-column-end no-font-mode-scale">
+					<div class="vector-sticky-pinned-container">
+						<nav class="vector-page-tools-landmark" aria-label="Page tools">
+							<div id="vector-page-tools-pinned-container" class="vector-pinned-container">
+				
+							</div>
+		</nav>
+						<nav class="vector-appearance-landmark" aria-label="Appearance">
+							<div id="vector-appearance-pinned-container" class="vector-pinned-container">
+				<div id="vector-appearance" class="vector-appearance vector-pinnable-element">
+	<div
+	class="vector-pinnable-header vector-appearance-pinnable-header vector-pinnable-header-pinned"
+	data-feature-name="appearance-pinned"
+	data-pinnable-element-id="vector-appearance"
+	data-pinned-container-id="vector-appearance-pinned-container"
+	data-unpinned-container-id="vector-appearance-unpinned-container"
+>
+	<div class="vector-pinnable-header-label">Appearance</div>
+	<button class="vector-pinnable-header-toggle-button vector-pinnable-header-pin-button" data-event-name="pinnable-header.vector-appearance.pin" aria-label="Move Appearance to sidebar">move to sidebar</button>
+	<button class="vector-pinnable-header-toggle-button vector-pinnable-header-unpin-button" data-event-name="pinnable-header.vector-appearance.unpin" aria-label="Hide Appearance">hide</button>
+</div>
+
+
+</div>
+
+							</div>
+		</nav>
+					</div>
+				</div>
+				<div id="bodyContent" class="vector-body" aria-labelledby="firstHeading" data-mw-ve-target-container>
+					<div class="vector-body-before-content">
+							<div class="mw-indicators">
+		</div>
+
+						<div id="siteSub" class="noprint">From Wikipedia, the free encyclopedia</div>
+					</div>
+					<div id="contentSub"><div id="mw-content-subtitle"></div></div>
+					
+					
+					<div id="mw-content-text" class="mw-body-content"><div class="mw-content-ltr mw-parser-output" lang="en" dir="ltr" data-mw-parsoid-version="0.24.0.0-alpha21" data-mw-html-version="2.8.0"><section data-mw-section-id="0" id="mwAQ"><div class="shortdescription nomobile noexcerpt noprint searchaux" style="display:none" about="#mwt1" typeof="mw:Transclusion" id="mwAg" data-mw='{"parts":[{"template":{"target":{"wt":"Short description","href":"./Template:Short_description"},"params":{"1":{"wt":"Mathematical curves that are isomorphic over algebraic closures"}},"i":0}}]}'>Mathematical curves that are isomorphic over algebraic closures</div><span class="mw-empty-elt" about="#mwt1"><link rel="mw:PageProp/Category" href="./Category:Articles_with_short_description"/><link rel="mw:PageProp/Category" href="./Category:Short_description_matches_Wikidata"/></span>
+<p id="mwAw">In the <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Mathematics" title="Mathematics" id="mwBA">mathematical</a> field of  <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Algebraic_geometry" title="Algebraic geometry" id="mwBQ">algebraic geometry</a>, an <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Elliptic_curve" title="Elliptic curve" id="mwBg">elliptic curve</a> E over a <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Field_(mathematics)" title="Field (mathematics)" id="mwBw">field</a> K  has an associated <b id="mwCA">quadratic twist</b>, that is another elliptic curve which is <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Isomorphism" title="Isomorphism" id="mwCQ">isomorphic</a> to E over an <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Algebraic_closure" title="Algebraic closure" id="mwCg">algebraic closure</a> of K. In particular, an isomorphism between elliptic curves is an <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Isogeny" title="Isogeny" id="mwCw">isogeny</a> of degree 1, that is an invertible isogeny. Some curves have higher order twists such as <b id="mwDA">cubic</b> and <b id="mwDQ">quartic twists</b>. The curve and its twists have the same <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/J-invariant" title="J-invariant" id="mwDg">j-invariant</a>.</p>
+
+<p id="mwDw">Applications of twists include cryptography,<sup about="#mwt4" class="mw-ref reference" id="cite_ref-1" rel="dc:references" typeof="mw:Extension/ref" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-1"}}'><a href="#cite_note-1" id="mwEA"><span class="mw-reflink-text" id="mwEQ"><span class="cite-bracket" id="mwEg">[</span>1<span class="cite-bracket" id="mwEw">]</span></span></a></sup> the solution of <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Diophantine_equation" title="Diophantine equation" id="mwFA">Diophantine equations</a>,<sup about="#mwt7" class="mw-ref reference" id="cite_ref-2" rel="dc:references" typeof="mw:Extension/ref" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-2"}}'><a href="#cite_note-2" id="mwFQ"><span class="mw-reflink-text" id="mwFg"><span class="cite-bracket" id="mwFw">[</span>2<span class="cite-bracket" id="mwGA">]</span></span></a></sup><sup about="#mwt10" class="mw-ref reference" id="cite_ref-3" rel="dc:references" typeof="mw:Extension/ref" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-3"}}'><a href="#cite_note-3" id="mwGQ"><span class="mw-reflink-text" id="mwGg"><span class="cite-bracket" id="mwGw">[</span>3<span class="cite-bracket" id="mwHA">]</span></span></a></sup> and when generalized to <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Hyperelliptic_curve" title="Hyperelliptic curve" id="mwHQ">hyperelliptic curves</a>, the study of the <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Sato–Tate_conjecture" title="Sato–Tate conjecture" id="mwHg">Sato–Tate conjecture</a>.<sup about="#mwt13" class="mw-ref reference" id="cite_ref-LLG2019_4-0" rel="dc:references" typeof="mw:Extension/ref" data-mw='{"name":"ref","attrs":{"name":"LLG2019"},"body":{"id":"mw-reference-text-cite_note-LLG2019-4"}}'><a href="#cite_note-LLG2019-4" id="mwHw"><span class="mw-reflink-text" id="mwIA"><span class="cite-bracket" id="mwIQ">[</span>4<span class="cite-bracket" id="mwIg">]</span></span></a></sup></p>
+
+<meta property="mw:PageProp/toc" id="mwIw" data-mw='{"autoGenerated":true}'/></section><section data-mw-section-id="1" id="mwJA" aria-labelledby="Quadratic_twist"><div class="mw-heading mw-heading2"><h2 id="Quadratic_twist">Quadratic twist</h2><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Twists_of_elliptic_curves&amp;action=edit&amp;section=1" title="Edit section: Quadratic twist"><span>edit</span></a><span class="mw-editsection-bracket">]</span></span></div>
+
+<p id="mwJQ">First assume <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt14" id="mwJg" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"K"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle K}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>K</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle K}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2b76fce82a62ed5461908f0dc8f037de4e3686b0" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:2.066ex; height:2.176ex;" alt="{\displaystyle K}"/></span> is a field of <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Characteristic_(algebra)" title="Characteristic (algebra)" id="mwJw">characteristic</a> different from 2. Let <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt15" id="mwKA" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"E"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle E}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>E</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle E}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4232c9de2ee3eec0a9c0a19b15ab92daa6223f9b" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:1.776ex; height:2.176ex;" alt="{\displaystyle E}"/></span> be an <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Elliptic_curve" title="Elliptic curve" id="mwKQ">elliptic curve</a> over <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt16" id="mwKg" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"K"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle K}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>K</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle K}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2b76fce82a62ed5461908f0dc8f037de4e3686b0" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:2.066ex; height:2.176ex;" alt="{\displaystyle K}"/></span> of the form:</p>
+
+<dl id="mwKw"><dd id="mwLA"><span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt17" id="mwLQ" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"y^2 = x^3 + a_2 x^2 +a_4 x + a_6. \\, "}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle y^{2}=x^{3}+a_{2}x^{2}+a_{4}x+a_{6}.\,}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <msup>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>2</mn>
+          </mrow>
+        </msup>
+        <mo>=</mo>
+        <msup>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>3</mn>
+          </mrow>
+        </msup>
+        <mo>+</mo>
+        <msub>
+          <mi>a</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>2</mn>
+          </mrow>
+        </msub>
+        <msup>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>2</mn>
+          </mrow>
+        </msup>
+        <mo>+</mo>
+        <msub>
+          <mi>a</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>4</mn>
+          </mrow>
+        </msub>
+        <mi>x</mi>
+        <mo>+</mo>
+        <msub>
+          <mi>a</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>6</mn>
+          </mrow>
+        </msub>
+        <mo>.</mo>
+        <mspace width="thinmathspace"></mspace>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle y^{2}=x^{3}+a_{2}x^{2}+a_{4}x+a_{6}.\,}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/bee8a9eef6372ce1d8b9568efa2b4191d51c816d" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.671ex; width:27.818ex; height:3.009ex;" alt="{\displaystyle y^{2}=x^{3}+a_{2}x^{2}+a_{4}x+a_{6}.\,}"/></span></dd></dl>
+
+<p id="mwLg">Given <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt18" id="mwLw" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"d\\neq 0"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle d\neq 0}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>d</mi>
+        <mo>≠<!-- ≠ --></mo>
+        <mn>0</mn>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle d\neq 0}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/95dd6dbd67bfda5e8e2a73c50538849673935dd7" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.838ex; width:5.477ex; height:2.676ex;" alt="{\displaystyle d\neq 0}"/></span> not a square in <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt19" id="mwMA" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"K"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle K}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>K</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle K}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2b76fce82a62ed5461908f0dc8f037de4e3686b0" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:2.066ex; height:2.176ex;" alt="{\displaystyle K}"/></span>, the <b id="mwMQ">quadratic twist</b> of <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt20" id="mwMg" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"E"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle E}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>E</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle E}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4232c9de2ee3eec0a9c0a19b15ab92daa6223f9b" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:1.776ex; height:2.176ex;" alt="{\displaystyle E}"/></span> is the curve <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt21" id="mwMw" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"E^d"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle E^{d}}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <msup>
+          <mi>E</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>d</mi>
+          </mrow>
+        </msup>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle E^{d}}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/1b8e7e8fe89e400380329cde5c4ca1222533102e" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:2.886ex; height:2.676ex;" alt="{\displaystyle E^{d}}"/></span>, defined by the equation:</p>
+
+<dl id="mwNA"><dd id="mwNQ"><span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt22" id="mwNg" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"dy^2 = x^3 + a_2 x^2 + a_4 x + a_6. \\, "}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle dy^{2}=x^{3}+a_{2}x^{2}+a_{4}x+a_{6}.\,}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>d</mi>
+        <msup>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>2</mn>
+          </mrow>
+        </msup>
+        <mo>=</mo>
+        <msup>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>3</mn>
+          </mrow>
+        </msup>
+        <mo>+</mo>
+        <msub>
+          <mi>a</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>2</mn>
+          </mrow>
+        </msub>
+        <msup>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>2</mn>
+          </mrow>
+        </msup>
+        <mo>+</mo>
+        <msub>
+          <mi>a</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>4</mn>
+          </mrow>
+        </msub>
+        <mi>x</mi>
+        <mo>+</mo>
+        <msub>
+          <mi>a</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>6</mn>
+          </mrow>
+        </msub>
+        <mo>.</mo>
+        <mspace width="thinmathspace"></mspace>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle dy^{2}=x^{3}+a_{2}x^{2}+a_{4}x+a_{6}.\,}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/14f049ae8ccdfaa1a97689938192fb75f83e89fb" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.671ex; width:29.034ex; height:3.009ex;" alt="{\displaystyle dy^{2}=x^{3}+a_{2}x^{2}+a_{4}x+a_{6}.\,}"/></span></dd></dl>
+
+<p id="mwNw">or equivalently</p>
+
+<dl id="mwOA"><dd id="mwOQ"><span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt23" id="mwOg" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"y^2 = x^3 + d a_2 x^2 + d^2 a_4 x + d^3 a_6. \\, "}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle y^{2}=x^{3}+da_{2}x^{2}+d^{2}a_{4}x+d^{3}a_{6}.\,}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <msup>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>2</mn>
+          </mrow>
+        </msup>
+        <mo>=</mo>
+        <msup>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>3</mn>
+          </mrow>
+        </msup>
+        <mo>+</mo>
+        <mi>d</mi>
+        <msub>
+          <mi>a</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>2</mn>
+          </mrow>
+        </msub>
+        <msup>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>2</mn>
+          </mrow>
+        </msup>
+        <mo>+</mo>
+        <msup>
+          <mi>d</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>2</mn>
+          </mrow>
+        </msup>
+        <msub>
+          <mi>a</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>4</mn>
+          </mrow>
+        </msub>
+        <mi>x</mi>
+        <mo>+</mo>
+        <msup>
+          <mi>d</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>3</mn>
+          </mrow>
+        </msup>
+        <msub>
+          <mi>a</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>6</mn>
+          </mrow>
+        </msub>
+        <mo>.</mo>
+        <mspace width="thinmathspace"></mspace>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle y^{2}=x^{3}+da_{2}x^{2}+d^{2}a_{4}x+d^{3}a_{6}.\,}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a24181199a802a4643e1ea389dd8fc520acfef09" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.671ex; width:33.579ex; height:3.009ex;" alt="{\displaystyle y^{2}=x^{3}+da_{2}x^{2}+d^{2}a_{4}x+d^{3}a_{6}.\,}"/></span></dd></dl>
+
+<p id="mwOw">The two elliptic curves <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt24" id="mwPA" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"E"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle E}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>E</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle E}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4232c9de2ee3eec0a9c0a19b15ab92daa6223f9b" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:1.776ex; height:2.176ex;" alt="{\displaystyle E}"/></span> and <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt25" id="mwPQ" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"E^d"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle E^{d}}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <msup>
+          <mi>E</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>d</mi>
+          </mrow>
+        </msup>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle E^{d}}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/1b8e7e8fe89e400380329cde5c4ca1222533102e" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:2.886ex; height:2.676ex;" alt="{\displaystyle E^{d}}"/></span> are not isomorphic over <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt26" id="mwPg" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"K"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle K}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>K</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle K}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2b76fce82a62ed5461908f0dc8f037de4e3686b0" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:2.066ex; height:2.176ex;" alt="{\displaystyle K}"/></span>, but rather over the <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Field_extension" title="Field extension" id="mwPw">field extension</a> <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt27" id="mwQA" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"K(\\sqrt{d})"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle K({\sqrt {d}})}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>K</mi>
+        <mo stretchy="false">(</mo>
+        <mrow class="MJX-TeXAtom-ORD">
+          <msqrt>
+            <mi>d</mi>
+          </msqrt>
+        </mrow>
+        <mo stretchy="false">)</mo>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle K({\sqrt {d}})}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ee95bff4058559e65d19c87dbfac2759248f9052" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.838ex; width:7.027ex; height:3.176ex;" alt="{\displaystyle K({\sqrt {d}})}"/></span>. Qualitatively speaking, the arithmetic of a curve and its quadratic twist can look very different in the field <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt28" id="mwQQ" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"K"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle K}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>K</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle K}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2b76fce82a62ed5461908f0dc8f037de4e3686b0" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:2.066ex; height:2.176ex;" alt="{\displaystyle K}"/></span>, while the <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Complex_analysis" title="Complex analysis" id="mwQg">complex analysis</a> of the curves is the same; and so a family of curves related by twisting becomes a useful setting in which to study the arithmetic properties of elliptic curves.<sup about="#mwt31" class="mw-ref reference" id="cite_ref-5" rel="dc:references" typeof="mw:Extension/ref" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-5"}}'><a href="#cite_note-5" id="mwQw"><span class="mw-reflink-text" id="mwRA"><span class="cite-bracket" id="mwRQ">[</span>5<span class="cite-bracket" id="mwRg">]</span></span></a></sup></p>
+
+<p id="mwRw">Twists can also be defined when the base field <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt32" id="mwSA" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"K"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle K}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>K</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle K}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2b76fce82a62ed5461908f0dc8f037de4e3686b0" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:2.066ex; height:2.176ex;" alt="{\displaystyle K}"/></span> is of characteristic 2. Let <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt33" id="mwSQ" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"E"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle E}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>E</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle E}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4232c9de2ee3eec0a9c0a19b15ab92daa6223f9b" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:1.776ex; height:2.176ex;" alt="{\displaystyle E}"/></span> be an <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Elliptic_curve" title="Elliptic curve" id="mwSg">elliptic curve</a> over <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt34" id="mwSw" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"K"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle K}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>K</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle K}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2b76fce82a62ed5461908f0dc8f037de4e3686b0" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:2.066ex; height:2.176ex;" alt="{\displaystyle K}"/></span> of the form:</p>
+
+<dl id="mwTA"><dd id="mwTQ"><span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt35" id="mwTg" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"y^2 + a_1 x y +a_3 y = x^3 + a_2 x^2 +a_4 x + a_6. \\, "}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle y^{2}+a_{1}xy+a_{3}y=x^{3}+a_{2}x^{2}+a_{4}x+a_{6}.\,}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <msup>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>2</mn>
+          </mrow>
+        </msup>
+        <mo>+</mo>
+        <msub>
+          <mi>a</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>1</mn>
+          </mrow>
+        </msub>
+        <mi>x</mi>
+        <mi>y</mi>
+        <mo>+</mo>
+        <msub>
+          <mi>a</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>3</mn>
+          </mrow>
+        </msub>
+        <mi>y</mi>
+        <mo>=</mo>
+        <msup>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>3</mn>
+          </mrow>
+        </msup>
+        <mo>+</mo>
+        <msub>
+          <mi>a</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>2</mn>
+          </mrow>
+        </msub>
+        <msup>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>2</mn>
+          </mrow>
+        </msup>
+        <mo>+</mo>
+        <msub>
+          <mi>a</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>4</mn>
+          </mrow>
+        </msub>
+        <mi>x</mi>
+        <mo>+</mo>
+        <msub>
+          <mi>a</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>6</mn>
+          </mrow>
+        </msub>
+        <mo>.</mo>
+        <mspace width="thinmathspace"></mspace>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle y^{2}+a_{1}xy+a_{3}y=x^{3}+a_{2}x^{2}+a_{4}x+a_{6}.\,}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/033d10262e736354632b12515478d9487e22870f" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.671ex; width:41.708ex; height:3.009ex;" alt="{\displaystyle y^{2}+a_{1}xy+a_{3}y=x^{3}+a_{2}x^{2}+a_{4}x+a_{6}.\,}"/></span></dd></dl>
+
+<p id="mwTw">Given <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt36" id="mwUA" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"d\\in K"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle d\in K}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>d</mi>
+        <mo>∈<!-- ∈ --></mo>
+        <mi>K</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle d\in K}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/428cca81ed2f229fc0cfdec2b7c685b635e1b560" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:6.122ex; height:2.176ex;" alt="{\displaystyle d\in K}"/></span> such that <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt37" id="mwUQ" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"X^2+X+d"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle X^{2}+X+d}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <msup>
+          <mi>X</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>2</mn>
+          </mrow>
+        </msup>
+        <mo>+</mo>
+        <mi>X</mi>
+        <mo>+</mo>
+        <mi>d</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle X^{2}+X+d}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fa1a59367224d95f8a726362f499b493fdc74c13" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.505ex; width:11.928ex; height:2.843ex;" alt="{\displaystyle X^{2}+X+d}"/></span> is an <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Irreducible_polynomial" title="Irreducible polynomial" id="mwUg">irreducible polynomial</a> over <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt38" id="mwUw" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"K"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle K}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>K</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle K}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2b76fce82a62ed5461908f0dc8f037de4e3686b0" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:2.066ex; height:2.176ex;" alt="{\displaystyle K}"/></span>, the <b id="mwVA">quadratic twist</b> of <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt39" id="mwVQ" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"E"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle E}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>E</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle E}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4232c9de2ee3eec0a9c0a19b15ab92daa6223f9b" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:1.776ex; height:2.176ex;" alt="{\displaystyle E}"/></span> is the curve <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt40" id="mwVg" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"E^d"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle E^{d}}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <msup>
+          <mi>E</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>d</mi>
+          </mrow>
+        </msup>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle E^{d}}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/1b8e7e8fe89e400380329cde5c4ca1222533102e" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:2.886ex; height:2.676ex;" alt="{\displaystyle E^{d}}"/></span>, defined by the equation:</p>
+
+<dl id="mwVw"><dd id="mwWA"><span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt41" id="mwWQ" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"y^2 + a_1 x y +a_3 y = x^3 + (a_2 + d a_1^2) x^2 +a_4 x + a_6 + d a_3^2. \\, "}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle y^{2}+a_{1}xy+a_{3}y=x^{3}+(a_{2}+da_{1}^{2})x^{2}+a_{4}x+a_{6}+da_{3}^{2}.\,}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <msup>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>2</mn>
+          </mrow>
+        </msup>
+        <mo>+</mo>
+        <msub>
+          <mi>a</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>1</mn>
+          </mrow>
+        </msub>
+        <mi>x</mi>
+        <mi>y</mi>
+        <mo>+</mo>
+        <msub>
+          <mi>a</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>3</mn>
+          </mrow>
+        </msub>
+        <mi>y</mi>
+        <mo>=</mo>
+        <msup>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>3</mn>
+          </mrow>
+        </msup>
+        <mo>+</mo>
+        <mo stretchy="false">(</mo>
+        <msub>
+          <mi>a</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>2</mn>
+          </mrow>
+        </msub>
+        <mo>+</mo>
+        <mi>d</mi>
+        <msubsup>
+          <mi>a</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>1</mn>
+          </mrow>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>2</mn>
+          </mrow>
+        </msubsup>
+        <mo stretchy="false">)</mo>
+        <msup>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>2</mn>
+          </mrow>
+        </msup>
+        <mo>+</mo>
+        <msub>
+          <mi>a</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>4</mn>
+          </mrow>
+        </msub>
+        <mi>x</mi>
+        <mo>+</mo>
+        <msub>
+          <mi>a</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>6</mn>
+          </mrow>
+        </msub>
+        <mo>+</mo>
+        <mi>d</mi>
+        <msubsup>
+          <mi>a</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>3</mn>
+          </mrow>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>2</mn>
+          </mrow>
+        </msubsup>
+        <mo>.</mo>
+        <mspace width="thinmathspace"></mspace>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle y^{2}+a_{1}xy+a_{3}y=x^{3}+(a_{2}+da_{1}^{2})x^{2}+a_{4}x+a_{6}+da_{3}^{2}.\,}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/802213c2d327892e42c08f1489ade82ce4bb8dc4" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -1.005ex; width:56.197ex; height:3.343ex;" alt="{\displaystyle y^{2}+a_{1}xy+a_{3}y=x^{3}+(a_{2}+da_{1}^{2})x^{2}+a_{4}x+a_{6}+da_{3}^{2}.\,}"/></span></dd></dl>
+
+<p id="mwWg">The two elliptic curves <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt42" id="mwWw" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"E"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle E}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>E</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle E}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4232c9de2ee3eec0a9c0a19b15ab92daa6223f9b" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:1.776ex; height:2.176ex;" alt="{\displaystyle E}"/></span> and <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt43" id="mwXA" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"E^d"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle E^{d}}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <msup>
+          <mi>E</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>d</mi>
+          </mrow>
+        </msup>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle E^{d}}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/1b8e7e8fe89e400380329cde5c4ca1222533102e" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:2.886ex; height:2.676ex;" alt="{\displaystyle E^{d}}"/></span> are not isomorphic over <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt44" id="mwXQ" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"K"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle K}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>K</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle K}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2b76fce82a62ed5461908f0dc8f037de4e3686b0" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:2.066ex; height:2.176ex;" alt="{\displaystyle K}"/></span>, but over the <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Field_extension" title="Field extension" id="mwXg">field extension</a> <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt45" id="mwXw" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"K[X]/(X^2+X+d)"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle K[X]/(X^{2}+X+d)}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>K</mi>
+        <mo stretchy="false">[</mo>
+        <mi>X</mi>
+        <mo stretchy="false">]</mo>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mo>/</mo>
+        </mrow>
+        <mo stretchy="false">(</mo>
+        <msup>
+          <mi>X</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>2</mn>
+          </mrow>
+        </msup>
+        <mo>+</mo>
+        <mi>X</mi>
+        <mo>+</mo>
+        <mi>d</mi>
+        <mo stretchy="false">)</mo>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle K[X]/(X^{2}+X+d)}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/cb6fd4257e77f392ac0f5966ebc34a15fade4734" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.838ex; width:20.239ex; height:3.176ex;" alt="{\displaystyle K[X]/(X^{2}+X+d)}"/></span>.</p>
+
+<section data-mw-section-id="2" id="mwYA" aria-labelledby="Quadratic_twist_over_finite_fields"><div class="mw-heading mw-heading3"><h3 id="Quadratic_twist_over_finite_fields">Quadratic twist over finite fields</h3><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Twists_of_elliptic_curves&amp;action=edit&amp;section=2" title="Edit section: Quadratic twist over finite fields"><span>edit</span></a><span class="mw-editsection-bracket">]</span></span></div>
+
+<p id="mwYQ">If <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt46" id="mwYg" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"K"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle K}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>K</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle K}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2b76fce82a62ed5461908f0dc8f037de4e3686b0" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:2.066ex; height:2.176ex;" alt="{\displaystyle K}"/></span> is a <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Finite_field" title="Finite field" id="mwYw">finite field</a> with <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt47" id="mwZA" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"q"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle q}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>q</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle q}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/06809d64fa7c817ffc7e323f85997f783dbdf71d" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.671ex; width:1.07ex; height:2.009ex;" alt="{\displaystyle q}"/></span> elements, then for all <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt48" id="mwZQ" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"x"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle x}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>x</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle x}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/87f9e315fd7e2ba406057a97300593c4802b53e4" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:1.33ex; height:1.676ex;" alt="{\displaystyle x}"/></span> there exist a <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt49" id="mwZg" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"y"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle y}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>y</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle y}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b8a6208ec717213d4317e666f1ae872e00620a0d" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.671ex; width:1.155ex; height:2.009ex;" alt="{\displaystyle y}"/></span> such that the point <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt50" id="mwZw" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"(x,y)"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle (x,y)}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mo stretchy="false">(</mo>
+        <mi>x</mi>
+        <mo>,</mo>
+        <mi>y</mi>
+        <mo stretchy="false">)</mo>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle (x,y)}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/41cf50e4a314ca8e2c30964baa8d26e5be7a9386" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.838ex; width:5.328ex; height:2.843ex;" alt="{\displaystyle (x,y)}"/></span> belongs to <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt51" id="mwaA" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"E"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle E}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>E</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle E}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4232c9de2ee3eec0a9c0a19b15ab92daa6223f9b" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:1.776ex; height:2.176ex;" alt="{\displaystyle E}"/></span> or <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt52" id="mwaQ" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"E^d"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle E^{d}}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <msup>
+          <mi>E</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>d</mi>
+          </mrow>
+        </msup>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle E^{d}}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/1b8e7e8fe89e400380329cde5c4ca1222533102e" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:2.886ex; height:2.676ex;" alt="{\displaystyle E^{d}}"/></span> (or possibly both). In fact, if <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt53" id="mwag" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"(x,y)"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle (x,y)}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mo stretchy="false">(</mo>
+        <mi>x</mi>
+        <mo>,</mo>
+        <mi>y</mi>
+        <mo stretchy="false">)</mo>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle (x,y)}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/41cf50e4a314ca8e2c30964baa8d26e5be7a9386" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.838ex; width:5.328ex; height:2.843ex;" alt="{\displaystyle (x,y)}"/></span> is on just one of the curves, there is exactly one other <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt54" id="mwaw" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"y&apos;"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle y'}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <msup>
+          <mi>y</mi>
+          <mo>′</mo>
+        </msup>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle y'}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3a535de94a2183d7130731eab8a83531d7c35c6b" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.671ex; width:1.845ex; height:2.843ex;" alt="{\displaystyle y'}"/></span> on that same curve (which can happen if the characteristic is not <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt55" id="mwbA" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"2"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle 2}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mn>2</mn>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle 2}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/901fc910c19990d0dbaaefe4726ceb1a4e217a0f" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:1.162ex; height:2.176ex;" alt="{\displaystyle 2}"/></span>).</p>
+
+<p id="mwbQ">As a consequence, <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt56" id="mwbg" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" |E(K)|+|E^d(K)| = 2 q+2 "}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle |E(K)|+|E^{d}(K)|=2q+2}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mrow class="MJX-TeXAtom-ORD">
+          <mo stretchy="false">|</mo>
+        </mrow>
+        <mi>E</mi>
+        <mo stretchy="false">(</mo>
+        <mi>K</mi>
+        <mo stretchy="false">)</mo>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mo stretchy="false">|</mo>
+        </mrow>
+        <mo>+</mo>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mo stretchy="false">|</mo>
+        </mrow>
+        <msup>
+          <mi>E</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>d</mi>
+          </mrow>
+        </msup>
+        <mo stretchy="false">(</mo>
+        <mi>K</mi>
+        <mo stretchy="false">)</mo>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mo stretchy="false">|</mo>
+        </mrow>
+        <mo>=</mo>
+        <mn>2</mn>
+        <mi>q</mi>
+        <mo>+</mo>
+        <mn>2</mn>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle |E(K)|+|E^{d}(K)|=2q+2}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ddfb3b12a0dfa0fe1bae20aed04da7cd555625c0" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.838ex; width:27.173ex; height:3.176ex;" alt="{\displaystyle |E(K)|+|E^{d}(K)|=2q+2}"/></span> or equivalently <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt57" id="mwbw" data-mw='{"name":"math","attrs":{},"body":{"extsrc":" t_{E^d} = - t_E "}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle t_{E^{d}}=-t_{E}}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <msub>
+          <mi>t</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <msup>
+              <mi>E</mi>
+              <mrow class="MJX-TeXAtom-ORD">
+                <mi>d</mi>
+              </mrow>
+            </msup>
+          </mrow>
+        </msub>
+        <mo>=</mo>
+        <mo>−<!-- − --></mo>
+        <msub>
+          <mi>t</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>E</mi>
+          </mrow>
+        </msub>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle t_{E^{d}}=-t_{E}}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f5bd27029199605dce92a532059627d6e42449f1" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -1.005ex; width:10.437ex; height:2.676ex;" alt="{\displaystyle t_{E^{d}}=-t_{E}}"/></span>, where <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt58" id="mwcA" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"t_E"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle t_{E}}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <msub>
+          <mi>t</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>E</mi>
+          </mrow>
+        </msub>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle t_{E}}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/35b0a442eaa844c9b93e34e57a658c917bf4ecb3" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.671ex; width:2.327ex; height:2.343ex;" alt="{\displaystyle t_{E}}"/></span> is the trace of the <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Frobenius_endomorphism" title="Frobenius endomorphism" id="mwcQ">Frobenius endomorphism</a> of the curve.</p>
+
+</section></section><section data-mw-section-id="3" id="mwcg" aria-labelledby="Quartic_twist"><div class="mw-heading mw-heading2"><h2 id="Quartic_twist">Quartic twist</h2><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Twists_of_elliptic_curves&amp;action=edit&amp;section=3" title="Edit section: Quartic twist"><span>edit</span></a><span class="mw-editsection-bracket">]</span></span></div>
+
+<p id="mwcw">It is possible to "twist" elliptic curves with j-invariant equal to 1728 by quartic characters;<sup about="#mwt61" class="mw-ref reference" id="cite_ref-6" rel="dc:references" typeof="mw:Extension/ref" data-mw='{"name":"ref","attrs":{},"body":{"id":"mw-reference-text-cite_note-6"}}'><a href="#cite_note-6" id="mwdA"><span class="mw-reflink-text" id="mwdQ"><span class="cite-bracket" id="mwdg">[</span>6<span class="cite-bracket" id="mwdw">]</span></span></a></sup> twisting a curve <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt62" id="mweA" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"E"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle E}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>E</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle E}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4232c9de2ee3eec0a9c0a19b15ab92daa6223f9b" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:1.776ex; height:2.176ex;" alt="{\displaystyle E}"/></span> by a <b id="mweQ">quartic twist</b>, one obtains precisely four curves: one is isomorphic to <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt63" id="mweg" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"E"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle E}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>E</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle E}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4232c9de2ee3eec0a9c0a19b15ab92daa6223f9b" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:1.776ex; height:2.176ex;" alt="{\displaystyle E}"/></span>, one is its quadratic twist, and only the other two are really new. Also in this case, twisted curves are isomorphic over the field extension given by the twist degree.</p>
+
+</section><section data-mw-section-id="4" id="mwew" aria-labelledby="Cubic_twist"><div class="mw-heading mw-heading2"><h2 id="Cubic_twist">Cubic twist</h2><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Twists_of_elliptic_curves&amp;action=edit&amp;section=4" title="Edit section: Cubic twist"><span>edit</span></a><span class="mw-editsection-bracket">]</span></span></div>
+
+<p id="mwfA">Analogously to the quartic twist case, an elliptic curve over <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt64" id="mwfQ" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"K"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle K}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>K</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle K}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2b76fce82a62ed5461908f0dc8f037de4e3686b0" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:2.066ex; height:2.176ex;" alt="{\displaystyle K}"/></span> with j-invariant equal to zero can be twisted by cubic characters. The curves obtained are isomorphic to the starting curve over the field extension given by the twist degree.</p>
+
+</section><section data-mw-section-id="5" id="mwfg" aria-labelledby="Generalization"><div class="mw-heading mw-heading2"><h2 id="Generalization">Generalization</h2><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Twists_of_elliptic_curves&amp;action=edit&amp;section=5" title="Edit section: Generalization"><span>edit</span></a><span class="mw-editsection-bracket">]</span></span></div>
+<p id="mwfw">Twists can be defined for other smooth projective curves as well. Let <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt65" id="mwgA" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"K"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle K}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>K</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle K}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2b76fce82a62ed5461908f0dc8f037de4e3686b0" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:2.066ex; height:2.176ex;" alt="{\displaystyle K}"/></span> be a field and <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt66" id="mwgQ" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"C"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle C}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>C</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle C}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4fc55753007cd3c18576f7933f6f089196732029" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:1.766ex; height:2.176ex;" alt="{\displaystyle C}"/></span> be curve over that field, i.e., a <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Projective_variety" title="Projective variety" id="mwgg">projective variety</a> of dimension 1 over <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt67" id="mwgw" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"K"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle K}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>K</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle K}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2b76fce82a62ed5461908f0dc8f037de4e3686b0" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:2.066ex; height:2.176ex;" alt="{\displaystyle K}"/></span> that is irreducible and <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Geometrically_(algebraic_geometry)" title="Geometrically (algebraic geometry)" id="mwhA">geometrically</a> connected. Then a twist <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt68" id="mwhQ" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"C&apos;"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle C'}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <msup>
+          <mi>C</mi>
+          <mo>′</mo>
+        </msup>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle C'}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b3f732043ebc78ca911b9d7801fd8787b1291b2f" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:2.483ex; height:2.509ex;" alt="{\displaystyle C'}"/></span> of <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt69" id="mwhg" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"C"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle C}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>C</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle C}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4fc55753007cd3c18576f7933f6f089196732029" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:1.766ex; height:2.176ex;" alt="{\displaystyle C}"/></span> is another smooth projective curve for which there exists a <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt70" id="mwhw" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\bar{K}"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle {\bar {K}}}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mrow class="MJX-TeXAtom-ORD">
+          <mrow class="MJX-TeXAtom-ORD">
+            <mover>
+              <mi>K</mi>
+              <mo stretchy="false">¯<!-- ¯ --></mo>
+            </mover>
+          </mrow>
+        </mrow>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle {\bar {K}}}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/765c2b191b262ce7ed12de8b9fc45ef62e51ae73" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:2.066ex; height:2.509ex;" alt="{\displaystyle {\bar {K}}}"/></span>-isomorphism between <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt71" id="mwiA" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"C&apos;"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle C'}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <msup>
+          <mi>C</mi>
+          <mo>′</mo>
+        </msup>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle C'}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b3f732043ebc78ca911b9d7801fd8787b1291b2f" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:2.483ex; height:2.509ex;" alt="{\displaystyle C'}"/></span> and <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt72" id="mwiQ" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"C"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle C}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>C</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle C}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4fc55753007cd3c18576f7933f6f089196732029" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:1.766ex; height:2.176ex;" alt="{\displaystyle C}"/></span>, where the field <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt73" id="mwig" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"\\bar{K}"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle {\bar {K}}}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mrow class="MJX-TeXAtom-ORD">
+          <mrow class="MJX-TeXAtom-ORD">
+            <mover>
+              <mi>K</mi>
+              <mo stretchy="false">¯<!-- ¯ --></mo>
+            </mover>
+          </mrow>
+        </mrow>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle {\bar {K}}}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/765c2b191b262ce7ed12de8b9fc45ef62e51ae73" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:2.066ex; height:2.509ex;" alt="{\displaystyle {\bar {K}}}"/></span> is the algebraic closure of <span class="mwe-math-element mwe-math-element-inline" typeof="mw:Extension/math" about="#mwt74" id="mwiw" data-mw='{"name":"math","attrs":{},"body":{"extsrc":"K"}}'><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML" class="mathjax_ignore" alttext="{\displaystyle K}">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>K</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle K}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2b76fce82a62ed5461908f0dc8f037de4e3686b0" class="mwe-math-fallback-image-inline mw-invert skin-invert" aria-hidden="true" style="vertical-align: -0.338ex; width:2.066ex; height:2.176ex;" alt="{\displaystyle K}"/></span>.<sup about="#mwt75" class="mw-ref reference" id="cite_ref-LLG2019_4-1" rel="dc:references" typeof="mw:Extension/ref" data-mw='{"name":"ref","attrs":{"name":"LLG2019"}}'><a href="#cite_note-LLG2019-4" id="mwjA"><span class="mw-reflink-text" id="mwjQ"><span class="cite-bracket" id="mwjg">[</span>4<span class="cite-bracket" id="mwjw">]</span></span></a></sup></p>
+
+</section><section data-mw-section-id="6" id="mwkA" aria-labelledby="Examples"><div class="mw-heading mw-heading2"><h2 id="Examples">Examples</h2><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Twists_of_elliptic_curves&amp;action=edit&amp;section=6" title="Edit section: Examples"><span>edit</span></a><span class="mw-editsection-bracket">]</span></span></div>
+
+<ul id="mwkQ"><li id="mwkg"><a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Twisted_Hessian_curves" title="Twisted Hessian curves" id="mwkw">Twisted Hessian curves</a></li>
+<li id="mwlA"><a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Twisted_Edwards_curve" title="Twisted Edwards curve" id="mwlQ">Twisted Edwards curve</a></li>
+<li id="mwlg"><a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Tripling-oriented_Doche–Icart–Kohel_curve#Equivalence_with_Weierstrass_form" title="Tripling-oriented Doche–Icart–Kohel curve" id="mwlw">Twisted tripling-oriented Doche–Icart–Kohel curve</a></li></ul>
+
+</section><section data-mw-section-id="7" id="mwmA" aria-labelledby="References"><div class="mw-heading mw-heading2"><h2 id="References">References</h2><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Twists_of_elliptic_curves&amp;action=edit&amp;section=7" title="Edit section: References"><span>edit</span></a><span class="mw-editsection-bracket">]</span></span></div>
+<span class="mw-empty-elt" about="#mwt76" typeof="mw:Transclusion" id="mwmQ" data-mw='{"parts":[{"template":{"target":{"wt":"reflist","href":"./Template:Reflist"},"params":{},"i":0}}]}'><style data-mw-deduplicate="TemplateStyles:r1327269900" typeof="mw:Extension/templatestyles" about="#mwt77" data-mw='{"name":"templatestyles","attrs":{"src":"Reflist/styles.css"}}'>.mw-parser-output .reflist-columns-2{column-width:30em}.mw-parser-output .reflist-columns-3{column-width:25em}body.skin-vector-2022 .mw-parser-output .reflist-columns-2{column-width:27em}body.skin-vector-2022 .mw-parser-output .reflist-columns-3{column-width:22.5em}.mw-parser-output .references[data-mw-group=upper-alpha]{list-style-type:upper-alpha}.mw-parser-output .references[data-mw-group=upper-roman]{list-style-type:upper-roman}.mw-parser-output .references[data-mw-group=lower-alpha]{list-style-type:lower-alpha}.mw-parser-output .references[data-mw-group=lower-greek]{list-style-type:lower-greek}.mw-parser-output .references[data-mw-group=lower-roman]{list-style-type:lower-roman}.mw-parser-output div.reflist-liststyle-upper-alpha .references{list-style-type:upper-alpha}.mw-parser-output div.reflist-liststyle-upper-roman .references{list-style-type:upper-roman}.mw-parser-output div.reflist-liststyle-lower-alpha .references{list-style-type:lower-alpha}.mw-parser-output div.reflist-liststyle-lower-greek .references{list-style-type:lower-greek}.mw-parser-output div.reflist-liststyle-lower-roman .references{list-style-type:lower-roman}</style></span><div about="#mwt76" id="mwmg">
+<div class="mw-references-wrap" typeof="mw:Extension/references" about="#mwt78" id="mwmw" data-mw='{"name":"references","attrs":{"group":"","responsive":"1"},"body":{"extsrc":""}}'><ol class="mw-references references" id="mwnA"><li about="#cite_note-1" id="cite_note-1" data-mw-footnote-number="1"><span class="mw-cite-backlink" id="mwnQ"><a href="#cite_ref-1" rel="mw:referencedBy" id="mwng"><span class="mw-linkback-text" id="mwnw">↑</span></a></span> <span id="mw-reference-text-cite_note-1" class="mw-reference-text reference-text"><style data-mw-deduplicate="TemplateStyles:r1333433106" typeof="mw:Extension/templatestyles mw:Transclusion" about="#mwt2" id="mwoA" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"cite book ","href":"./Template:Cite_book"},"params":{"last1":{"wt":"Bos"},"first1":{"wt":"Joppe W."},"chapter":{"wt":"Elliptic Curve Cryptography in Practice"},"date":{"wt":"2014"},"chapter-url":{"wt":"http://link.springer.com/10.1007/978-3-662-45472-5_11"},"title":{"wt":"Financial Cryptography and Data Security"},"volume":{"wt":"8437"},"pages":{"wt":"157–175"},"editor-last":{"wt":"Christin"},"editor-first":{"wt":"Nicolas"},"place":{"wt":"Berlin, Heidelberg"},"publisher":{"wt":"Springer"},"doi":{"wt":"10.1007/978-3-662-45472-5_11"},"isbn":{"wt":"978-3-662-45471-8"},"access-date":{"wt":"2022-04-10"},"last2":{"wt":"Halderman"},"first2":{"wt":"J. Alex"},"last3":{"wt":"Heninger"},"first3":{"wt":"Nadia"},"last4":{"wt":"Moore"},"first4":{"wt":"Jonathan"},"last5":{"wt":"Naehrig"},"first5":{"wt":"Michael"},"last6":{"wt":"Wustrow"},"first6":{"wt":"Eric"},"series":{"wt":"Lecture Notes in Computer Science"},"editor2-last":{"wt":"Safavi-Naini"},"editor2-first":{"wt":"Reihaneh"}},"i":0}}]}'>.mw-parser-output cite.citation{font-style:inherit;word-wrap:break-word}.mw-parser-output .citation q{quotes:"\"""\"""'""'"}.mw-parser-output .citation:target{background-color:rgba(0,127,255,0.133)}.mw-parser-output .id-lock-free.id-lock-free a{background:url("//upload.wikimedia.org/wikipedia/commons/6/65/Lock-green.svg")right 0.1em center/9px no-repeat}.mw-parser-output .id-lock-limited.id-lock-limited a,.mw-parser-output .id-lock-registration.id-lock-registration a{background:url("//upload.wikimedia.org/wikipedia/commons/d/d6/Lock-gray-alt-2.svg")right 0.1em center/9px no-repeat}.mw-parser-output .id-lock-subscription.id-lock-subscription a{background:url("//upload.wikimedia.org/wikipedia/commons/a/aa/Lock-red-alt-2.svg")right 0.1em center/9px no-repeat}.mw-parser-output .cs1-ws-icon a{background:url("//upload.wikimedia.org/wikipedia/commons/4/4c/Wikisource-logo.svg")right 0.1em center/12px no-repeat}body:not(.skin-timeless):not(.skin-minerva) .mw-parser-output .id-lock-free a,body:not(.skin-timeless):not(.skin-minerva) .mw-parser-output .id-lock-limited a,body:not(.skin-timeless):not(.skin-minerva) .mw-parser-output .id-lock-registration a,body:not(.skin-timeless):not(.skin-minerva) .mw-parser-output .id-lock-subscription a,body:not(.skin-timeless):not(.skin-minerva) .mw-parser-output .cs1-ws-icon a{background-size:contain;padding:0 1em 0 0}.mw-parser-output .cs1-code{color:inherit;background:inherit;border:none;padding:inherit}.mw-parser-output .cs1-hidden-error{display:none;color:var(--color-error,#bf3c2c)}.mw-parser-output .cs1-visible-error{color:var(--color-error,#bf3c2c)}.mw-parser-output .cs1-maint{display:none;color:#085;margin-left:0.3em}.mw-parser-output .cs1-kern-left{padding-left:0.2em}.mw-parser-output .cs1-kern-right{padding-right:0.2em}.mw-parser-output .citation .mw-selflink{font-weight:inherit}@media screen{.mw-parser-output .cs1-format{font-size:95%}html.skin-theme-clientpref-night .mw-parser-output .cs1-maint{color:#18911f}}@media screen and (prefers-color-scheme:dark){html.skin-theme-clientpref-os .mw-parser-output .cs1-maint{color:#18911f}}</style><cite id="CITEREFBosHaldermanHeningerMoore2014" class="citation book cs1" about="#mwt2">Bos, Joppe W.; Halderman, J. Alex; Heninger, Nadia; Moore, Jonathan; Naehrig, Michael; Wustrow, Eric (2014). <a rel="mw:ExtLink nofollow" href="http://link.springer.com/10.1007/978-3-662-45472-5_11" class="external text" id="mwoQ">"Elliptic Curve Cryptography in Practice"</a>. In Christin, Nicolas; Safavi-Naini, Reihaneh (eds.). <i id="mwog">Financial Cryptography and Data Security</i>. Lecture Notes in Computer Science. Vol.<span typeof="mw:Entity" id="mwow"> </span>8437. Berlin, Heidelberg: Springer. pp.<span typeof="mw:Entity" id="mwpA"> </span><span class="nowrap" id="mwpQ">157–</span>175. <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Doi_(identifier)" title="Doi (identifier)" class="mw-redirect" id="mwpg">doi</a>:<a rel="mw:ExtLink nofollow" href="https://doi.org/10.1007%2F978-3-662-45472-5_11" class="external text" id="mwpw">10.1007/978-3-662-45472-5_11</a>. <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/ISBN_(identifier)" title="ISBN (identifier)" class="mw-redirect" id="mwqA">ISBN</a><span typeof="mw:Entity" id="mwqQ"> </span><a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Special:BookSources/978-3-662-45471-8" title="Special:BookSources/978-3-662-45471-8" id="mwqg"><bdi id="mwqw">978-3-662-45471-8</bdi></a><span class="reference-accessdate" id="mwrA">. Retrieved <span class="nowrap" id="mwrQ">2022-04-10</span></span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook&amp;rft.genre=bookitem&amp;rft.atitle=Elliptic+Curve+Cryptography+in+Practice&amp;rft.btitle=Financial+Cryptography+and+Data+Security&amp;rft.place=Berlin%2C+Heidelberg&amp;rft.series=Lecture+Notes+in+Computer+Science&amp;rft.pages=157-175&amp;rft.pub=Springer&amp;rft.date=2014&amp;rft_id=info%3Adoi%2F10.1007%2F978-3-662-45472-5_11&amp;rft.isbn=978-3-662-45471-8&amp;rft.aulast=Bos&amp;rft.aufirst=Joppe+W.&amp;rft.au=Halderman%2C+J.+Alex&amp;rft.au=Heninger%2C+Nadia&amp;rft.au=Moore%2C+Jonathan&amp;rft.au=Naehrig%2C+Michael&amp;rft.au=Wustrow%2C+Eric&amp;rft_id=http%3A%2F%2Flink.springer.com%2F10.1007%2F978-3-662-45472-5_11&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ATwists+of+elliptic+curves" class="Z3988" about="#mwt2" id="mwrg"></span></span></li>
+<li about="#cite_note-2" id="cite_note-2" data-mw-footnote-number="2"><span class="mw-cite-backlink" id="mwrw"><a href="#cite_ref-2" rel="mw:referencedBy" id="mwsA"><span class="mw-linkback-text" id="mwsQ">↑</span></a></span> <span id="mw-reference-text-cite_note-2" class="mw-reference-text reference-text"><link rel="mw-deduplicated-inline-style" href="mw-data:TemplateStyles:r1333433106" about="#mwt5" typeof="mw:Extension/templatestyles mw:Transclusion" id="mwsg" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"Cite journal ","href":"./Template:Cite_journal"},"params":{"last1":{"wt":"Mazur"},"first1":{"wt":"B."},"author-link":{"wt":"Barry Mazur"},"last2":{"wt":"Rubin"},"first2":{"wt":"K."},"author-link2":{"wt":"Karl Rubin"},"date":{"wt":"September 2010"},"title":{"wt":"Ranks of twists of elliptic curves and Hilbert&apos;s tenth problem"},"url":{"wt":"http://link.springer.com/10.1007/s00222-010-0252-0"},"journal":{"wt":"Inventiones Mathematicae"},"language":{"wt":"en"},"volume":{"wt":"181"},"issue":{"wt":"3"},"pages":{"wt":"541–575"},"arxiv":{"wt":"0904.3709"},"bibcode":{"wt":"2010InMat.181..541M"},"doi":{"wt":"10.1007/s00222-010-0252-0"},"s2cid":{"wt":"3394387"},"issn":{"wt":"0020-9910"}},"i":0}}]}'/><cite id="CITEREFMazurRubin2010" class="citation journal cs1" about="#mwt5"><a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Barry_Mazur" title="Barry Mazur" id="mwsw">Mazur, B.</a>; <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Karl_Rubin" title="Karl Rubin" id="mwtA">Rubin, K.</a> (September 2010). <a rel="mw:ExtLink nofollow" href="http://link.springer.com/10.1007/s00222-010-0252-0" class="external text" id="mwtQ">"Ranks of twists of elliptic curves and Hilbert's tenth problem"</a>. <i id="mwtg">Inventiones Mathematicae</i>. <b id="mwtw">181</b> (3): <span class="nowrap" id="mwuA">541–</span>575. <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/ArXiv_(identifier)" title="ArXiv (identifier)" class="mw-redirect" id="mwuQ">arXiv</a>:<span class="id-lock-free" title="Freely accessible" id="mwug"><a rel="mw:ExtLink nofollow" href="https://arxiv.org/abs/0904.3709" class="external text" id="mwuw">0904.3709</a></span>. <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Bibcode_(identifier)" title="Bibcode (identifier)" class="mw-redirect" id="mwvA">Bibcode</a>:<a rel="mw:ExtLink nofollow" href="https://ui.adsabs.harvard.edu/abs/2010InMat.181..541M" class="external text" id="mwvQ">2010InMat.181..541M</a>. <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Doi_(identifier)" title="Doi (identifier)" class="mw-redirect" id="mwvg">doi</a>:<a rel="mw:ExtLink nofollow" href="https://doi.org/10.1007%2Fs00222-010-0252-0" class="external text" id="mwvw">10.1007/s00222-010-0252-0</a>. <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/ISSN_(identifier)" title="ISSN (identifier)" class="mw-redirect" id="mwwA">ISSN</a><span typeof="mw:Entity" id="mwwQ"> </span><a rel="mw:ExtLink nofollow" href="https://search.worldcat.org/issn/0020-9910" class="external text" id="mwwg">0020-9910</a>. <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/S2CID_(identifier)" title="S2CID (identifier)" class="mw-redirect" id="mwww">S2CID</a><span typeof="mw:Entity" id="mwxA"> </span><a rel="mw:ExtLink nofollow" href="https://api.semanticscholar.org/CorpusID:3394387" class="external text" id="mwxQ">3394387</a>.</cite><span title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&amp;rft.jtitle=Inventiones+Mathematicae&amp;rft.atitle=Ranks+of+twists+of+elliptic+curves+and+Hilbert%27s+tenth+problem&amp;rft.volume=181&amp;rft.issue=3&amp;rft.pages=541-575&amp;rft.date=2010-09&amp;rft_id=https%3A%2F%2Fapi.semanticscholar.org%2FCorpusID%3A3394387%23id-name%3DS2CID&amp;rft_id=info%3Abibcode%2F2010InMat.181..541M&amp;rft_id=info%3Aarxiv%2F0904.3709&amp;rft.issn=0020-9910&amp;rft_id=info%3Adoi%2F10.1007%2Fs00222-010-0252-0&amp;rft.aulast=Mazur&amp;rft.aufirst=B.&amp;rft.au=Rubin%2C+K.&amp;rft_id=http%3A%2F%2Flink.springer.com%2F10.1007%2Fs00222-010-0252-0&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ATwists+of+elliptic+curves" class="Z3988" about="#mwt5" id="mwxg"></span></span></li>
+<li about="#cite_note-3" id="cite_note-3" data-mw-footnote-number="3"><span class="mw-cite-backlink" id="mwxw"><a href="#cite_ref-3" rel="mw:referencedBy" id="mwyA"><span class="mw-linkback-text" id="mwyQ">↑</span></a></span> <span id="mw-reference-text-cite_note-3" class="mw-reference-text reference-text"><link rel="mw-deduplicated-inline-style" href="mw-data:TemplateStyles:r1333433106" about="#mwt8" typeof="mw:Extension/templatestyles mw:Transclusion" id="mwyg" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"Cite journal ","href":"./Template:Cite_journal"},"params":{"last1":{"wt":"Poonen"},"first1":{"wt":"Bjorn"},"last2":{"wt":"Schaefer"},"first2":{"wt":"Edward F."},"last3":{"wt":"Stoll"},"first3":{"wt":"Michael"},"date":{"wt":"2007-03-15"},"title":{"wt":"Twists of X(7) and primitive solutions to x&lt;sup>2&lt;/sup>+y&lt;sup>3&lt;/sup>=z&lt;sup>7&lt;/sup>"},"url":{"wt":"https://projecteuclid.org/journals/duke-mathematical-journal/volume-137/issue-1/Twists-of-X7-and-primitive-solutions-to-x2y3z7/10.1215/S0012-7094-07-13714-1.full"},"journal":{"wt":"Duke Mathematical Journal"},"volume":{"wt":"137"},"issue":{"wt":"1"},"doi":{"wt":"10.1215/S0012-7094-07-13714-1"},"arxiv":{"wt":"math/0508174"},"s2cid":{"wt":"2326034"},"issn":{"wt":"0012-7094"}},"i":0}}]}'/><cite id="CITEREFPoonenSchaeferStoll2007" class="citation journal cs1" about="#mwt8">Poonen, Bjorn; Schaefer, Edward F.; Stoll, Michael (2007-03-15). <a rel="mw:ExtLink nofollow" href="https://projecteuclid.org/journals/duke-mathematical-journal/volume-137/issue-1/Twists-of-X7-and-primitive-solutions-to-x2y3z7/10.1215/S0012-7094-07-13714-1.full" class="external text" id="mwyw">"Twists of X(7) and primitive solutions to x<sup id="mwzA">2</sup>+y<sup id="mwzQ">3</sup>=z<sup id="mwzg">7</sup>"</a>. <i id="mwzw">Duke Mathematical Journal</i>. <b id="mw0A">137</b> (1). <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/ArXiv_(identifier)" title="ArXiv (identifier)" class="mw-redirect" id="mw0Q">arXiv</a>:<span class="id-lock-free" title="Freely accessible" id="mw0g"><a rel="mw:ExtLink nofollow" href="https://arxiv.org/abs/math/0508174" class="external text" id="mw0w">math/0508174</a></span>. <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Doi_(identifier)" title="Doi (identifier)" class="mw-redirect" id="mw1A">doi</a>:<a rel="mw:ExtLink nofollow" href="https://doi.org/10.1215%2FS0012-7094-07-13714-1" class="external text" id="mw1Q">10.1215/S0012-7094-07-13714-1</a>. <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/ISSN_(identifier)" title="ISSN (identifier)" class="mw-redirect" id="mw1g">ISSN</a><span typeof="mw:Entity" id="mw1w"> </span><a rel="mw:ExtLink nofollow" href="https://search.worldcat.org/issn/0012-7094" class="external text" id="mw2A">0012-7094</a>. <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/S2CID_(identifier)" title="S2CID (identifier)" class="mw-redirect" id="mw2Q">S2CID</a><span typeof="mw:Entity" id="mw2g"> </span><a rel="mw:ExtLink nofollow" href="https://api.semanticscholar.org/CorpusID:2326034" class="external text" id="mw2w">2326034</a>.</cite><span title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&amp;rft.jtitle=Duke+Mathematical+Journal&amp;rft.atitle=Twists+of+X%287%29+and+primitive+solutions+to+x%3Csup%3E2%3C%2Fsup%3E%2By%3Csup%3E3%3C%2Fsup%3E%3Dz%3Csup%3E7%3C%2Fsup%3E&amp;rft.volume=137&amp;rft.issue=1&amp;rft.date=2007-03-15&amp;rft_id=info%3Aarxiv%2Fmath%2F0508174&amp;rft_id=https%3A%2F%2Fapi.semanticscholar.org%2FCorpusID%3A2326034%23id-name%3DS2CID&amp;rft.issn=0012-7094&amp;rft_id=info%3Adoi%2F10.1215%2FS0012-7094-07-13714-1&amp;rft.aulast=Poonen&amp;rft.aufirst=Bjorn&amp;rft.au=Schaefer%2C+Edward+F.&amp;rft.au=Stoll%2C+Michael&amp;rft_id=https%3A%2F%2Fprojecteuclid.org%2Fjournals%2Fduke-mathematical-journal%2Fvolume-137%2Fissue-1%2FTwists-of-X7-and-primitive-solutions-to-x2y3z7%2F10.1215%2FS0012-7094-07-13714-1.full&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ATwists+of+elliptic+curves" class="Z3988" about="#mwt8" id="mw3A"></span></span></li>
+<li about="#cite_note-LLG2019-4" id="cite_note-LLG2019-4" data-mw-footnote-number="4"><span rel="mw:referencedBy" class="mw-cite-backlink" id="mw3Q"><a href="#cite_ref-LLG2019_4-0" id="mw3g"><span class="mw-linkback-text" id="mw3w">1</span></a> <a href="#cite_ref-LLG2019_4-1" id="mw4A"><span class="mw-linkback-text" id="mw4Q">2</span></a></span> <span id="mw-reference-text-cite_note-LLG2019-4" class="mw-reference-text reference-text"><link rel="mw-deduplicated-inline-style" href="mw-data:TemplateStyles:r1333433106" about="#mwt11" typeof="mw:Extension/templatestyles mw:Transclusion" id="mw4g" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"Cite journal ","href":"./Template:Cite_journal"},"params":{"last1":{"wt":"Lombardo"},"first1":{"wt":"Davide"},"last2":{"wt":"Lorenzo García"},"first2":{"wt":"Elisa"},"date":{"wt":"February 2019"},"title":{"wt":"Computing twists of hyperelliptic curves"},"url":{"wt":"https://linkinghub.elsevier.com/retrieve/pii/S0021869318305404"},"journal":{"wt":"Journal of Algebra"},"language":{"wt":"en"},"volume":{"wt":"519"},"pages":{"wt":"474–490"},"doi":{"wt":"10.1016/j.jalgebra.2018.08.035"},"arxiv":{"wt":"1611.04856"},"bibcode":{"wt":"2016arXiv161104856L"},"s2cid":{"wt":"119143097"}},"i":0}}]}'/><cite id="CITEREFLombardoLorenzo_García2019" class="citation journal cs1" about="#mwt11">Lombardo, Davide; Lorenzo García, Elisa (February 2019). <a rel="mw:ExtLink nofollow" href="https://linkinghub.elsevier.com/retrieve/pii/S0021869318305404" class="external text" id="mw4w">"Computing twists of hyperelliptic curves"</a>. <i id="mw5A">Journal of Algebra</i>. <b id="mw5Q">519</b>: <span class="nowrap" id="mw5g">474–</span>490. <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/ArXiv_(identifier)" title="ArXiv (identifier)" class="mw-redirect" id="mw5w">arXiv</a>:<span class="id-lock-free" title="Freely accessible" id="mw6A"><a rel="mw:ExtLink nofollow" href="https://arxiv.org/abs/1611.04856" class="external text" id="mw6Q">1611.04856</a></span>. <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Bibcode_(identifier)" title="Bibcode (identifier)" class="mw-redirect" id="mw6g">Bibcode</a>:<a rel="mw:ExtLink nofollow" href="https://ui.adsabs.harvard.edu/abs/2016arXiv161104856L" class="external text" id="mw6w">2016arXiv161104856L</a>. <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Doi_(identifier)" title="Doi (identifier)" class="mw-redirect" id="mw7A">doi</a>:<a rel="mw:ExtLink nofollow" href="https://doi.org/10.1016%2Fj.jalgebra.2018.08.035" class="external text" id="mw7Q">10.1016/j.jalgebra.2018.08.035</a>. <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/S2CID_(identifier)" title="S2CID (identifier)" class="mw-redirect" id="mw7g">S2CID</a><span typeof="mw:Entity" id="mw7w"> </span><a rel="mw:ExtLink nofollow" href="https://api.semanticscholar.org/CorpusID:119143097" class="external text" id="mw8A">119143097</a>.</cite><span title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&amp;rft.jtitle=Journal+of+Algebra&amp;rft.atitle=Computing+twists+of+hyperelliptic+curves&amp;rft.volume=519&amp;rft.pages=474-490&amp;rft.date=2019-02&amp;rft_id=info%3Aarxiv%2F1611.04856&amp;rft_id=https%3A%2F%2Fapi.semanticscholar.org%2FCorpusID%3A119143097%23id-name%3DS2CID&amp;rft_id=info%3Adoi%2F10.1016%2Fj.jalgebra.2018.08.035&amp;rft_id=info%3Abibcode%2F2016arXiv161104856L&amp;rft.aulast=Lombardo&amp;rft.aufirst=Davide&amp;rft.au=Lorenzo+Garc%C3%ADa%2C+Elisa&amp;rft_id=https%3A%2F%2Flinkinghub.elsevier.com%2Fretrieve%2Fpii%2FS0021869318305404&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ATwists+of+elliptic+curves" class="Z3988" about="#mwt11" id="mw8Q"></span></span></li>
+<li about="#cite_note-5" id="cite_note-5" data-mw-footnote-number="5"><span class="mw-cite-backlink" id="mw8g"><a href="#cite_ref-5" rel="mw:referencedBy" id="mw8w"><span class="mw-linkback-text" id="mw9A">↑</span></a></span> <span id="mw-reference-text-cite_note-5" class="mw-reference-text reference-text"><link rel="mw-deduplicated-inline-style" href="mw-data:TemplateStyles:r1333433106" about="#mwt29" typeof="mw:Extension/templatestyles mw:Transclusion" id="mw9Q" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"Cite journal ","href":"./Template:Cite_journal"},"params":{"last1":{"wt":"Rubin"},"first1":{"wt":"Karl"},"author-link":{"wt":"Karl Rubin"},"last2":{"wt":"Silverberg"},"first2":{"wt":"Alice"},"author-link2":{"wt":"Alice Silverberg"},"date":{"wt":"2002-07-08"},"title":{"wt":"Ranks of elliptic curves"},"url":{"wt":"https://www.ams.org/bull/2002-39-04/S0273-0979-02-00952-7/"},"journal":{"wt":"Bulletin of the American Mathematical Society"},"language":{"wt":"en"},"volume":{"wt":"39"},"issue":{"wt":"4"},"pages":{"wt":"455–474"},"doi":{"wt":"10.1090/S0273-0979-02-00952-7"},"issn":{"wt":"0273-0979"},"mr":{"wt":"1920278"},"doi-access":{"wt":"free"}},"i":0}}]}'/><cite id="CITEREFRubinSilverberg2002" class="citation journal cs1" about="#mwt29"><a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Karl_Rubin" title="Karl Rubin" id="mw9g">Rubin, Karl</a>; <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Alice_Silverberg" title="Alice Silverberg" id="mw9w">Silverberg, Alice</a> (2002-07-08). <a rel="mw:ExtLink nofollow" href="https://www.ams.org/bull/2002-39-04/S0273-0979-02-00952-7/" class="external text" id="mw-A">"Ranks of elliptic curves"</a>. <i id="mw-Q">Bulletin of the American Mathematical Society</i>. <b id="mw-g">39</b> (4): <span class="nowrap" id="mw-w">455–</span>474. <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Doi_(identifier)" title="Doi (identifier)" class="mw-redirect" id="mw_A">doi</a>:<span class="id-lock-free" title="Freely accessible" id="mw_Q"><a rel="mw:ExtLink nofollow" href="https://doi.org/10.1090%2FS0273-0979-02-00952-7" class="external text" id="mw_g">10.1090/S0273-0979-02-00952-7</a></span>. <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/ISSN_(identifier)" title="ISSN (identifier)" class="mw-redirect" id="mw_w">ISSN</a><span typeof="mw:Entity" id="mwAQA"> </span><a rel="mw:ExtLink nofollow" href="https://search.worldcat.org/issn/0273-0979" class="external text" id="mwAQE">0273-0979</a>. <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/MR_(identifier)" title="MR (identifier)" class="mw-redirect" id="mwAQI">MR</a><span typeof="mw:Entity" id="mwAQM"> </span><a rel="mw:ExtLink nofollow" href="https://mathscinet.ams.org/mathscinet-getitem?mr=1920278" class="external text" id="mwAQQ">1920278</a>.</cite><span title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&amp;rft.jtitle=Bulletin+of+the+American+Mathematical+Society&amp;rft.atitle=Ranks+of+elliptic+curves&amp;rft.volume=39&amp;rft.issue=4&amp;rft.pages=455-474&amp;rft.date=2002-07-08&amp;rft_id=https%3A%2F%2Fmathscinet.ams.org%2Fmathscinet-getitem%3Fmr%3D1920278%23id-name%3DMR&amp;rft.issn=0273-0979&amp;rft_id=info%3Adoi%2F10.1090%2FS0273-0979-02-00952-7&amp;rft.aulast=Rubin&amp;rft.aufirst=Karl&amp;rft.au=Silverberg%2C+Alice&amp;rft_id=https%3A%2F%2Fwww.ams.org%2Fbull%2F2002-39-04%2FS0273-0979-02-00952-7%2F&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ATwists+of+elliptic+curves" class="Z3988" about="#mwt29" id="mwAQU"></span></span></li>
+<li about="#cite_note-6" id="cite_note-6" data-mw-footnote-number="6"><span class="mw-cite-backlink" id="mwAQY"><a href="#cite_ref-6" rel="mw:referencedBy" id="mwAQc"><span class="mw-linkback-text" id="mwAQg">↑</span></a></span> <span id="mw-reference-text-cite_note-6" class="mw-reference-text reference-text"><link rel="mw-deduplicated-inline-style" href="mw-data:TemplateStyles:r1333433106" about="#mwt59" typeof="mw:Extension/templatestyles mw:Transclusion" id="mwAQk" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"cite journal ","href":"./Template:Cite_journal"},"params":{"first1":{"wt":"F."},"last1":{"wt":"Gouvêa"},"author-link1":{"wt":"Fernando Q. Gouvêa"},"year":{"wt":"1991"},"jstor":{"wt":"2939253"},"author-link2":{"wt":"Barry Mazur"},"title":{"wt":"The square-free sieve and the rank of elliptic curves"},"last2":{"wt":"Mazur"},"first2":{"wt":"B."},"journal":{"wt":"Journal of the American Mathematical Society"},"volume":{"wt":"4"},"number":{"wt":"1"},"pages":{"wt":"1–23"},"doi":{"wt":"10.1090/S0894-0347-1991-1080648-7"},"url":{"wt":"http://www.ams.org/jams/1991-04-01/S0894-0347-1991-1080648-7/S0894-0347-1991-1080648-7.pdf"}},"i":0}}]}'/><cite id="CITEREFGouvêaMazur1991" class="citation journal cs1" about="#mwt59"><a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Fernando_Q._Gouvêa" title="Fernando Q. Gouvêa" id="mwAQo">Gouvêa, F.</a>; <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Barry_Mazur" title="Barry Mazur" id="mwAQs">Mazur, B.</a> (1991). <a rel="mw:ExtLink nofollow" href="http://www.ams.org/jams/1991-04-01/S0894-0347-1991-1080648-7/S0894-0347-1991-1080648-7.pdf" class="external text" id="mwAQw">"The square-free sieve and the rank of elliptic curves"</a> <span class="cs1-format" id="mwAQ0">(PDF)</span>. <i id="mwAQ4">Journal of the American Mathematical Society</i>. <b id="mwAQ8">4</b> (1): <span class="nowrap" id="mwARA">1–</span>23. <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Doi_(identifier)" title="Doi (identifier)" class="mw-redirect" id="mwARE">doi</a>:<a rel="mw:ExtLink nofollow" href="https://doi.org/10.1090%2FS0894-0347-1991-1080648-7" class="external text" id="mwARI">10.1090/S0894-0347-1991-1080648-7</a>. <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/JSTOR_(identifier)" title="JSTOR (identifier)" class="mw-redirect" id="mwARM">JSTOR</a><span typeof="mw:Entity" id="mwARQ"> </span><a rel="mw:ExtLink nofollow" href="https://www.jstor.org/stable/2939253" class="external text" id="mwARU">2939253</a>.</cite><span title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&amp;rft.jtitle=Journal+of+the+American+Mathematical+Society&amp;rft.atitle=The+square-free+sieve+and+the+rank+of+elliptic+curves&amp;rft.volume=4&amp;rft.issue=1&amp;rft.pages=1-23&amp;rft.date=1991&amp;rft_id=info%3Adoi%2F10.1090%2FS0894-0347-1991-1080648-7&amp;rft_id=https%3A%2F%2Fwww.jstor.org%2Fstable%2F2939253%23id-name%3DJSTOR&amp;rft.aulast=Gouv%C3%AAa&amp;rft.aufirst=F.&amp;rft.au=Mazur%2C+B.&amp;rft_id=http%3A%2F%2Fwww.ams.org%2Fjams%2F1991-04-01%2FS0894-0347-1991-1080648-7%2FS0894-0347-1991-1080648-7.pdf&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ATwists+of+elliptic+curves" class="Z3988" about="#mwt59" id="mwARY"></span></span></li>
+</ol></div></div>
+<ul id="mwARc"><li id="mwARg"><link rel="mw-deduplicated-inline-style" href="mw-data:TemplateStyles:r1333433106" about="#mwt79" typeof="mw:Extension/templatestyles mw:Transclusion" id="mwARk" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"cite book\n ","href":"./Template:Cite_book"},"params":{"author":{"wt":"P. Stevenhagen"},"year":{"wt":"2008"},"title":{"wt":"Elliptic Curves"},"publisher":{"wt":"Universiteit Leiden"},"url":{"wt":"http://websites.math.leidenuniv.nl/algebra/ellcurves.pdf"}},"i":0}}]}'/><cite id="CITEREFP._Stevenhagen2008" class="citation book cs1" about="#mwt79">P. Stevenhagen (2008). <a rel="mw:ExtLink nofollow" href="http://websites.math.leidenuniv.nl/algebra/ellcurves.pdf" class="external text"><i>Elliptic Curves</i></a> <span class="cs1-format">(PDF)</span>. Universiteit Leiden.</cite><span title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook&amp;rft.genre=book&amp;rft.btitle=Elliptic+Curves&amp;rft.pub=Universiteit+Leiden&amp;rft.date=2008&amp;rft.au=P.+Stevenhagen&amp;rft_id=http%3A%2F%2Fwebsites.math.leidenuniv.nl%2Falgebra%2Fellcurves.pdf&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ATwists+of+elliptic+curves" class="Z3988" about="#mwt79" id="mwARo"></span></li>
+<li id="mwARs"><link rel="mw-deduplicated-inline-style" href="mw-data:TemplateStyles:r1333433106" about="#mwt81" typeof="mw:Extension/templatestyles mw:Transclusion" id="mwARw" data-mw='{"name":"templatestyles","attrs":{"src":"Module:Citation/CS1/styles.css"},"body":{"extsrc":""},"parts":[{"template":{"target":{"wt":"cite journal\n ","href":"./Template:Cite_journal"},"params":{"author":{"wt":"C. L. Stewart and J. Top"},"date":{"wt":"October 1995"},"title":{"wt":"On Ranks of Twists of Elliptic Curves and Power-Free Values of Binary Forms"},"journal":{"wt":"Journal of the American Mathematical Society"},"volume":{"wt":"8"},"issue":{"wt":"4"},"pages":{"wt":"943–973"},"doi":{"wt":"10.1090/S0894-0347-1995-1290234-5"},"jstor":{"wt":"2152834"},"doi-access":{"wt":"free"}},"i":0}}]}'/><cite id="CITEREFC._L._Stewart_and_J._Top1995" class="citation journal cs1" about="#mwt81">C. L. Stewart and J. Top (October 1995). <a rel="mw:ExtLink nofollow" href="https://doi.org/10.1090%2FS0894-0347-1995-1290234-5" class="external text">"On Ranks of Twists of Elliptic Curves and Power-Free Values of Binary Forms"</a>. <i>Journal of the American Mathematical Society</i>. <b>8</b> (4): <span class="nowrap">943–</span>973. <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/Doi_(identifier)" title="Doi (identifier)" class="mw-redirect">doi</a>:<span class="id-lock-free" title="Freely accessible"><a rel="mw:ExtLink nofollow" href="https://doi.org/10.1090%2FS0894-0347-1995-1290234-5" class="external text">10.1090/S0894-0347-1995-1290234-5</a></span>. <a rel="mw:WikiLink" href="https://en.wikipedia.org/wiki/JSTOR_(identifier)" title="JSTOR (identifier)" class="mw-redirect">JSTOR</a><span typeof="mw:Entity"> </span><a rel="mw:ExtLink nofollow" href="https://www.jstor.org/stable/2152834" class="external text">2152834</a>.</cite><span title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&amp;rft.jtitle=Journal+of+the+American+Mathematical+Society&amp;rft.atitle=On+Ranks+of+Twists+of+Elliptic+Curves+and+Power-Free+Values+of+Binary+Forms&amp;rft.volume=8&amp;rft.issue=4&amp;rft.pages=943-973&amp;rft.date=1995-10&amp;rft_id=info%3Adoi%2F10.1090%2FS0894-0347-1995-1290234-5&amp;rft_id=https%3A%2F%2Fwww.jstor.org%2Fstable%2F2152834%23id-name%3DJSTOR&amp;rft.au=C.+L.+Stewart+and+J.+Top&amp;rft_id=https%3A%2F%2Fdoi.org%2F10.1090%252FS0894-0347-1995-1290234-5&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ATwists+of+elliptic+curves" class="Z3988" about="#mwt81" id="mwAR0"></span></li></ul>
+
+<link rel="mw:PageProp/Category" href="./Category:Elliptic_curves" id="mwAR4"/>
+<link rel="mw:PageProp/Category" href="./Category:Elliptic_curve_cryptography" id="mwAR8"/></section>
+<!-- 
+NewPP limit report
+Parsed by mw‐web.codfw.main‐b664f4696‐ds8fv
+Cached time: 20260902181354
+Cache expiry: 2592000
+Cache expiry source: Module:Citation/CS1 (os.date(%Y))
+Reduced expiry: false
+Complications: [vary‐revision‐sha1, show‐toc, use‐parsoid]
+CPU time usage: 0.536 seconds
+Real time usage: 1.746 seconds
+Preprocessor visited node count: 801/1000000
+Revision size: 8321/2097152 bytes
+Post‐expand include size: 23690/2097152 bytes
+Template argument size: 740/2097152 bytes
+Highest expansion depth: 8/100
+Expensive parser function count: 1/500
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 21537/5000000 bytes
+Lua time usage: 0.083/10.000 seconds
+Lua memory usage: 5366211/52428800 bytes
+Number of Wikibase entities loaded: 0/500
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00% 1610.019      1 -total
+  3.57%   57.456      1 Template:Short_description
+  2.88%   46.333      2 Template:Cite_book
+  1.88%   30.303      2 Template:Pagetype
+  1.78%   28.693      6 Template:Cite_journal
+  1.09%   17.584      3 Template:Main_other
+  1.00%   16.056      1 Template:SDcat
+  0.14%    2.318      1 Template:Reflist
+  0.12%    1.880      1 Template:Short_description/lowercasecheck
+-->
+
+<!-- Render ID 0e786f7a-a6fa-11f1-81c1-4b4fe89ca77a -->
+
+<!-- Saved in parser cache with key enwiki:parsoid-pcache:25572033:|#|:idhash:useParsoid=1 and timestamp 20260902181354 and revision id 1336152727. Rendering was triggered because: page_view
+ -->
+
+<!-- Parsoid 0.24.0.0-alpha21 -->
+</div><!--
+Post‐processing cache key enwiki:postproc‐parsoid‐pcache:25572033:|#|:idhash:injectTOC=0!postproc=1!skin=vector‐2022!useParsoid=1!visibleLinks=wtsingle, generated at 20260902181354
+--><noscript><img src="https://en.wikipedia.org/wiki/Special:CentralAutoLogin/start?useformat=desktop&amp;type=1x1&amp;usesul3=1" alt="" width="1" height="1" style="border: none; position: absolute;"></noscript>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://en.wikipedia.org/w/index.php?title=Twists_of_elliptic_curves&amp;oldid=1336152727">https://en.wikipedia.org/w/index.php?title=Twists_of_elliptic_curves&amp;oldid=1336152727</a>"</div></div>
+					<div id="catlinks" class="catlinks" data-mw-interface=""><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Help:Category" title="Help:Category">Categories</a>: <ul><li><a href="/wiki/Category:Elliptic_curves" title="Category:Elliptic curves">Elliptic curves</a></li><li><a href="/wiki/Category:Elliptic_curve_cryptography" title="Category:Elliptic curve cryptography">Elliptic curve cryptography</a></li></ul></div><div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul><li><a href="/wiki/Category:Articles_with_short_description" title="Category:Articles with short description">Articles with short description</a></li><li><a href="/wiki/Category:Short_description_matches_Wikidata" title="Category:Short description matches Wikidata">Short description matches Wikidata</a></li></ul></div></div>
+				</div>
+			</main>
+			
+		</div>
+		<div class="mw-footer-container">
+			<footer id="footer" class="mw-footer" >
+				<ul id="footer-info" class="mw-portlet mw-portlet-footer-info">
+	<li id="footer-info-lastmod"> This page was last edited on 2 February 2026, at 05:19<span class="anonymous-show">&#160;(UTC)</span>.</li>
+	<li id="footer-info-renderedwith">Page was rendered with <a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Parsoid" class="extiw" title="mw:Special:MyLanguage/Parsoid">Parsoid</a>.</li>
+	<li id="footer-info-copyright">Text is available under the <a href="/wiki/Wikipedia:Text_of_the_Creative_Commons_Attribution-ShareAlike_4.0_International_License" title="Wikipedia:Text of the Creative Commons Attribution-ShareAlike 4.0 International License">Creative Commons Attribution-ShareAlike 4.0 License</a>;
+additional terms may apply. By using this site, you agree to the <a href="https://foundation.wikimedia.org/wiki/Special:MyLanguage/Policy:Terms_of_Use" class="extiw" title="foundation:Special:MyLanguage/Policy:Terms of Use">Terms of Use</a> and <a href="https://foundation.wikimedia.org/wiki/Special:MyLanguage/Policy:Privacy_policy" class="extiw" title="foundation:Special:MyLanguage/Policy:Privacy policy">Privacy Policy</a>. Wikipedia® is a registered trademark of the <a rel="nofollow" class="external text" href="https://wikimediafoundation.org/">Wikimedia Foundation, Inc.</a>, a non-profit organization.</li>
+</ul>
+
+				<ul id="footer-places" class="mw-portlet mw-portlet-footer-places">
+	<li id="footer-places-privacy"><a href="https://foundation.wikimedia.org/wiki/Special:MyLanguage/Policy:Privacy_policy">Privacy policy</a></li>
+	<li id="footer-places-about"><a href="/wiki/Wikipedia:About">About Wikipedia</a></li>
+	<li id="footer-places-disclaimers"><a href="/wiki/Wikipedia:General_disclaimer">Disclaimers</a></li>
+	<li id="footer-places-contact"><a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us">Contact Wikipedia</a></li>
+	<li id="footer-places-legal-safety-contacts"><a href="https://foundation.wikimedia.org/wiki/Special:MyLanguage/Legal:Wikimedia_Foundation_Legal_and_Safety_Contact_Information">Legal &amp; safety contacts</a></li>
+	<li id="footer-places-wm-codeofconduct"><a href="https://foundation.wikimedia.org/wiki/Special:MyLanguage/Policy:Universal_Code_of_Conduct">Code of Conduct</a></li>
+	<li id="footer-places-developers"><a href="https://developer.wikimedia.org">Developers</a></li>
+	<li id="footer-places-statslink"><a href="https://stats.wikimedia.org/#/en.wikipedia.org">Statistics</a></li>
+	<li id="footer-places-cookiestatement"><a href="https://foundation.wikimedia.org/wiki/Special:MyLanguage/Policy:Cookie_statement">Cookie statement</a></li>
+	<li id="footer-places-mobileview"><a href="//en.wikipedia.org/w/index.php?title=Twists_of_elliptic_curves&amp;mobileaction=toggle_view_mobile" class="noprint stopMobileRedirectToggle">Mobile view</a></li>
+</ul>
+
+				<ul id="footer-icons" class="mw-portlet mw-portlet-footer-icons noprint">
+	<li id="footer-copyrightico"><a href="https://www.wikimedia.org/" class="cdx-button cdx-button--fake-button cdx-button--size-large cdx-button--fake-button--enabled"><picture><source media="(min-width: 500px)" srcset="/static/images/footer/wikimedia-button.svg" width="84" height="29"><img src="/static/images/footer/wikimedia.svg" width="25" height="25" alt="Wikimedia Foundation" lang="en" loading="lazy"></picture></a></li>
+	<li id="footer-poweredbyico"><a href="https://www.mediawiki.org/" class="cdx-button cdx-button--fake-button cdx-button--size-large cdx-button--fake-button--enabled"><picture><source media="(min-width: 500px)" srcset="/w/resources/assets/poweredby_mediawiki.svg" width="88" height="31"><img src="/w/resources/assets/mediawiki_compact.svg" alt="Powered by MediaWiki" lang="en" width="25" height="25" loading="lazy"></picture></a></li>
+</ul>
+
+			</footer>
+		</div>
+	</div> 
+</div> 
+<div class="vector-header-container vector-sticky-header-container no-font-mode-scale">
+	<div id="vector-sticky-header" class="vector-sticky-header">
+		<div class="vector-sticky-header-start">
+			<div class="vector-sticky-header-icon-start vector-button-flush-left" aria-hidden="true">
+				<button class="cdx-button cdx-button--weight-quiet cdx-button--icon-only vector-sticky-header-search-toggle" tabindex="-1" data-event-name="ui.vector-sticky-search-form.icon"><span class="vector-icon mw-ui-icon-search mw-ui-icon-wikimedia-search cdx-button__icon"></span>
+
+<span>Search</span>
+			</button>
+		</div>
+			
+		<div role="search" class="vector-search-box-vue  vector-search-box-show-thumbnail vector-search-box">
+			<div class="vector-typeahead-search-container">
+				<div class="cdx-typeahead-search cdx-typeahead-search--show-thumbnail">
+					<form action="/w/index.php" id="vector-sticky-search-form" class="cdx-search-input cdx-search-input--has-end-button">
+						<div  class="cdx-search-input__input-wrapper"  data-search-loc="header-moved">
+							<div class="cdx-text-input cdx-text-input--has-start-icon">
+								<input
+									class="cdx-text-input__input mw-searchInput" autocomplete="off"
+									
+									type="search" name="search" placeholder="Search Wikipedia">
+								<span class="cdx-text-input__icon cdx-text-input__start-icon"></span>
+							</div>
+							<input type="hidden" name="title" value="Special:Search">
+						</div>
+						<button class="cdx-button cdx-search-input__end-button">Search</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="vector-sticky-header-context-bar">
+				<nav aria-label="Contents" class="vector-toc-landmark">
+						
+					<div id="vector-sticky-header-toc" class="vector-dropdown mw-portlet mw-portlet-sticky-header-toc vector-sticky-header-toc vector-button-flush-left"  >
+						<input type="checkbox" id="vector-sticky-header-toc-checkbox" role="button" aria-haspopup="true" data-event-name="ui.dropdown-vector-sticky-header-toc" class="vector-dropdown-checkbox "  aria-label="Toggle the table of contents"   >
+						<label id="vector-sticky-header-toc-label" for="vector-sticky-header-toc-checkbox" class="vector-dropdown-label cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--icon-only " aria-hidden="true"  ><span class="vector-icon mw-ui-icon-listBullet mw-ui-icon-wikimedia-listBullet cdx-button__icon"></span>
+
+<span class="vector-dropdown-label-text">Toggle the table of contents</span>
+						</label>
+						<div class="vector-dropdown-content">
+					
+						<div id="vector-sticky-header-toc-unpinned-container" class="vector-unpinned-container">
+						</div>
+					
+						</div>
+					</div>
+			</nav>
+				<div class="vector-sticky-header-context-bar-primary" aria-hidden="true" ><span lang="en" dir="ltr"><span class="mw-page-title-main">Twists of elliptic curves</span></span></div>
+			</div>
+		</div>
+		<div class="vector-sticky-header-end" aria-hidden="true">
+			<div class="vector-sticky-header-icons">
+				<a href="#" class="cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--icon-only" id="ca-talk-sticky-header" tabindex="-1" data-event-name="talk-sticky-header"><span class="vector-icon mw-ui-icon-speechBubbles mw-ui-icon-wikimedia-speechBubbles cdx-button__icon"></span>
+
+<span></span>
+			</a>
+			<a href="#" class="cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--icon-only" id="ca-subject-sticky-header" tabindex="-1" data-event-name="subject-sticky-header"><span class="vector-icon mw-ui-icon-article mw-ui-icon-wikimedia-article cdx-button__icon"></span>
+
+<span></span>
+			</a>
+			<a href="#" class="cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--icon-only" id="ca-history-sticky-header" tabindex="-1" data-event-name="history-sticky-header"><span class="vector-icon mw-ui-icon-wikimedia-history mw-ui-icon-wikimedia-wikimedia-history cdx-button__icon"></span>
+
+<span></span>
+			</a>
+			<a href="#" class="cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--icon-only mw-watchlink" id="ca-watchstar-sticky-header" tabindex="-1" data-event-name="watch-sticky-header"><span class="vector-icon mw-ui-icon-wikimedia-star mw-ui-icon-wikimedia-wikimedia-star cdx-button__icon"></span>
+
+<span></span>
+			</a>
+			<a href="#" class="cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--icon-only" id="ca-edit-sticky-header" tabindex="-1" data-event-name="wikitext-edit-sticky-header"><span class="vector-icon mw-ui-icon-wikimedia-wikiText mw-ui-icon-wikimedia-wikimedia-wikiText cdx-button__icon"></span>
+
+<span></span>
+			</a>
+			<a href="#" class="cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--icon-only" id="ca-ve-edit-sticky-header" tabindex="-1" data-event-name="ve-edit-sticky-header"><span class="vector-icon mw-ui-icon-wikimedia-edit mw-ui-icon-wikimedia-wikimedia-edit cdx-button__icon"></span>
+
+<span></span>
+			</a>
+			<a href="#" class="cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--icon-only" id="ca-viewsource-sticky-header" tabindex="-1" data-event-name="ve-edit-protected-sticky-header"><span class="vector-icon mw-ui-icon-wikimedia-editLock mw-ui-icon-wikimedia-wikimedia-editLock cdx-button__icon"></span>
+
+<span></span>
+			</a>
+		</div>
+			<div class="vector-sticky-header-buttons">
+				<button class="cdx-button cdx-button--weight-quiet mw-interlanguage-selector" id="p-lang-btn-sticky-header" tabindex="-1" data-event-name="ui.dropdown-p-lang-btn-sticky-header"><span class="vector-icon mw-ui-icon-wikimedia-language mw-ui-icon-wikimedia-wikimedia-language cdx-button__icon"></span>
+
+<span>Add languages</span>
+			</button>
+			<a href="#" class="cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--action-progressive" id="ca-addsection-sticky-header" tabindex="-1" data-event-name="addsection-sticky-header"><span class="vector-icon mw-ui-icon-speechBubbleAdd-progressive mw-ui-icon-wikimedia-speechBubbleAdd-progressive cdx-button__icon"></span>
+
+<span>Add topic</span>
+			</a>
+		</div>
+			<div class="vector-sticky-header-icon-end">
+				<div class="vector-user-links">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="mw-portlet mw-portlet-dock-bottom emptyPortlet" id="p-dock-bottom">
+	<ul>
+		
+	</ul>
+</div>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgHostname":"mw-web.eqiad.main-5b498488dc-xqtkr","wgBackendResponseTime":245,"wgPageParseReport":{"limitreport":{"cputime":"0.536","walltime":"1.746","ppvisitednodes":{"value":801,"limit":1000000},"revisionsize":{"value":8321,"limit":2097152},"postexpandincludesize":{"value":23690,"limit":2097152},"templateargumentsize":{"value":740,"limit":2097152},"expansiondepth":{"value":8,"limit":100},"expensivefunctioncount":{"value":1,"limit":500},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":21537,"limit":5000000},"entityaccesscount":{"value":0,"limit":500},"timingprofile":["100.00% 1610.019      1 -total","  3.57%   57.456      1 Template:Short_description","  2.88%   46.333      2 Template:Cite_book","  1.88%   30.303      2 Template:Pagetype","  1.78%   28.693      6 Template:Cite_journal","  1.09%   17.584      3 Template:Main_other","  1.00%   16.056      1 Template:SDcat","  0.14%    2.318      1 Template:Reflist","  0.12%    1.880      1 Template:Short_description/lowercasecheck"]},"scribunto":{"limitreport-timeusage":{"value":"0.083","limit":"10.000"},"limitreport-memusage":{"value":5366211,"limit":52428800}},"cachereport":{"origin":"mw-web.codfw.main-b664f4696-ds8fv","timestamp":"20260902181354","ttl":2592000,"transientcontent":false,"expiry-source":"Module:Citation/CS1 (os.date(%Y))"}}});});</script>
+<script type="application/ld+json">{"@context":"https:\/\/schema.org","@type":"Article","name":"Twists of elliptic curves","url":"https:\/\/en.wikipedia.org\/wiki\/Twists_of_elliptic_curves","sameAs":"http:\/\/www.wikidata.org\/entity\/Q7858596","mainEntity":"http:\/\/www.wikidata.org\/entity\/Q7858596","author":{"@type":"Organization","name":"Contributors to Wikimedia projects"},"publisher":{"@type":"Organization","name":"Wikimedia Foundation, Inc.","logo":{"@type":"ImageObject","url":"https:\/\/www.wikimedia.org\/static\/images\/wmf-hor-googpub.png"}},"datePublished":"2009-12-27T13:08:17Z","dateModified":"2026-02-02T05:19:17Z","headline":"mathematical curves that are isomorphic over algebraic closures"}</script>
+</body>
+</html>
