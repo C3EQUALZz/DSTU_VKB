@@ -1,21 +1,31 @@
 [
   {
+    "file": "01 Короченцев и др. Квантовые вычислительные системы 2020.pdf",
+    "url": "Локальный файл: Справочная информация/Вся Книга Квантовые вычислительные системы.pdf",
+    "bytes": 7053059,
+    "sha256": "306df66646d7f97f20a21b3d3cefaa9a6ca46a019a3e4a6c83f55f15b6b9d4f2",
+    "pdf_pages": 253
+  },
+  {
     "file": "02 Xu et al 2020 Secure quantum key distribution with realistic devices.pdf",
     "url": "https://arxiv.org/pdf/1903.09051",
     "bytes": 9558609,
-    "sha256": "acff52e806a3203c52c109ab06d06c4a863daa35fd7ce55175c2b0dde11f1175"
+    "sha256": "acff52e806a3203c52c109ab06d06c4a863daa35fd7ce55175c2b0dde11f1175",
+    "pdf_pages": 68
   },
   {
     "file": "03 Shor Preskill 2000 Simple Proof of Security of BB84.pdf",
     "url": "https://arxiv.org/pdf/quant-ph/0003004",
     "bytes": 119920,
-    "sha256": "58ea7973aafdd4090ef69370d46a6fd0c9a110890fed76f59b99f74e4add7b5c"
+    "sha256": "58ea7973aafdd4090ef69370d46a6fd0c9a110890fed76f59b99f74e4add7b5c",
+    "pdf_pages": 5
   },
   {
     "file": "04 Pirandola et al 2020 Advances in quantum cryptography.pdf",
     "url": "https://arxiv.org/pdf/1906.01645",
     "bytes": 3523508,
-    "sha256": "ef1cd2003e1a3a49d912a305a4ae3d04bf7a07e8cb84bdc497a921665ec96014"
+    "sha256": "ef1cd2003e1a3a49d912a305a4ae3d04bf7a07e8cb84bdc497a921665ec96014",
+    "pdf_pages": 118
   },
   {
     "file": "05 Chen et al 2021 Integrated space-to-ground quantum network.html",
@@ -27,13 +37,15 @@
     "file": "07 Primaatmaja et al 2023 Security of DI QKD protocols.pdf",
     "url": "https://quantum-journal.org/papers/q-2023-03-02-932/pdf/",
     "bytes": 1688555,
-    "sha256": "25e567d9bb5c3c1088a1dc3b2e7f7347059992f40e97ad1e196e285aa82de47a"
+    "sha256": "25e567d9bb5c3c1088a1dc3b2e7f7347059992f40e97ad1e196e285aa82de47a",
+    "pdf_pages": 47
   },
   {
     "file": "08 Liu et al 2023 Experimental Twin-Field QKD over 1000 km.pdf",
     "url": "https://harvest.aps.org/v2/journals/articles/10.1103/PhysRevLett.130.210801/fulltext",
     "bytes": 809855,
-    "sha256": "8c16d1893b340e3191c55a14dcfb00b5ae073cb2131a22d4c6c4355de28dc385"
+    "sha256": "8c16d1893b340e3191c55a14dcfb00b5ae073cb2131a22d4c6c4355de28dc385",
+    "pdf_pages": 6
   },
   {
     "file": "06 РЖД Годовой отчет 2021 Квантовая сеть.html",
