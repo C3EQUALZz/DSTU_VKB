@@ -45,24 +45,24 @@
 <path transform="matrix(1,0,0,-1,0,700)" d="M573 500H653V510H573Z" fill="#e4e7eb"/>
 <path transform="matrix(1,0,0,-1,0,700)" stroke-width="1.3" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#e4e7eb" d="M573 500H653V510H573Z"/>
 <path transform="matrix(1,0,0,-1,0,700)" stroke-width="6" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#e4e7eb" d="M653 510H573"/>
-<path transform="matrix(1,0,0,-1,0,700)" d="M316 500H455V510H316Z" fill="#e4e7eb"/>
-<path transform="matrix(1,0,0,-1,0,700)" stroke-width="1.3" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#e4e7eb" d="M316 500H455V510H316Z"/>
-<path transform="matrix(1,0,0,-1,0,700)" stroke-width="6" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#e4e7eb" d="M455 510H316"/>
-<path transform="matrix(1,0,0,-1,0,700)" d="M280 496H316V510H280Z" fill="#e4e7eb"/>
-<path transform="matrix(1,0,0,-1,0,700)" stroke-width="1.3" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#e4e7eb" d="M280 496H316V510H280Z"/>
-<path transform="matrix(1,0,0,-1,0,700)" stroke-width="6" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#e4e7eb" d="M316 510H280"/>
-<path transform="matrix(1,0,0,-1,0,700)" d="M170 500H280V510H170Z" fill="#e4e7eb"/>
-<path transform="matrix(1,0,0,-1,0,700)" stroke-width="1.3" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#e4e7eb" d="M170 500H280V510H170Z"/>
-<path transform="matrix(1,0,0,-1,0,700)" stroke-width="6" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#e4e7eb" d="M280 510H170"/>
+<path transform="matrix(1,0,0,-1,0,700)" d="M407 500H455V510H407Z" fill="#e4e7eb"/>
+<path transform="matrix(1,0,0,-1,0,700)" stroke-width="1.3" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#e4e7eb" d="M407 500H455V510H407Z"/>
+<path transform="matrix(1,0,0,-1,0,700)" stroke-width="6" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#e4e7eb" d="M455 510H407"/>
+<path transform="matrix(1,0,0,-1,0,700)" d="M371 496H407V510H371Z" fill="#e4e7eb"/>
+<path transform="matrix(1,0,0,-1,0,700)" stroke-width="1.3" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#e4e7eb" d="M371 496H407V510H371Z"/>
+<path transform="matrix(1,0,0,-1,0,700)" stroke-width="6" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#e4e7eb" d="M407 510H371"/>
+<path transform="matrix(1,0,0,-1,0,700)" d="M170 500H371V510H170Z" fill="#e4e7eb"/>
+<path transform="matrix(1,0,0,-1,0,700)" stroke-width="1.3" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#e4e7eb" d="M170 500H371V510H170Z"/>
+<path transform="matrix(1,0,0,-1,0,700)" stroke-width="6" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#e4e7eb" d="M371 510H170"/>
 <path transform="matrix(1,0,0,-1,0,700)" stroke-width="3" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#263547" d="M653 510V500"/>
 <path transform="matrix(1,0,0,-1,0,700)" stroke-width="3" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#263547" d="M653 500H573"/>
 <path transform="matrix(1,0,0,-1,0,700)" stroke-width="3" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#263547" d="M573 500V510"/>
 <path transform="matrix(1,0,0,-1,0,700)" stroke-width="3" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#263547" d="M455 510V500"/>
-<path transform="matrix(1,0,0,-1,0,700)" stroke-width="3" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#263547" d="M455 500H316"/>
-<path transform="matrix(1,0,0,-1,0,700)" stroke-width="3" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#263547" d="M316 500V496"/>
-<path transform="matrix(1,0,0,-1,0,700)" stroke-width="3" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#263547" d="M316 496H280"/>
-<path transform="matrix(1,0,0,-1,0,700)" stroke-width="3" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#263547" d="M280 496V500"/>
-<path transform="matrix(1,0,0,-1,0,700)" stroke-width="3" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#263547" d="M280 500H170"/>
+<path transform="matrix(1,0,0,-1,0,700)" stroke-width="3" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#263547" d="M455 500H407"/>
+<path transform="matrix(1,0,0,-1,0,700)" stroke-width="3" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#263547" d="M407 500V496"/>
+<path transform="matrix(1,0,0,-1,0,700)" stroke-width="3" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#263547" d="M407 496H371"/>
+<path transform="matrix(1,0,0,-1,0,700)" stroke-width="3" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#263547" d="M371 496V500"/>
+<path transform="matrix(1,0,0,-1,0,700)" stroke-width="3" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#263547" d="M371 500H170"/>
 <path transform="matrix(1,0,0,-1,0,700)" stroke-width="5" stroke-linecap="butt" stroke-miterlimit="10" stroke-linejoin="miter" fill="none" stroke="#263547" d="M170 510V470"/>
 <text fill="#263547" xml:space="preserve" transform="matrix(1 0 -0 1 0 700)" font-size="12" font-family="Arial"><tspan y="-447" x="187.19922 195.32321">&#x0414;2</tspan></text>
 <text fill="#89939f" xml:space="preserve" transform="matrix(1 0 -0 1 0 700)" font-size="11" font-family="Arial"><tspan y="-490" x="507.93849 515.8805">&#x041d;1</tspan></text>
