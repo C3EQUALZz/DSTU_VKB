@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name='robots' content='max-image-preview:large' />
+<title>Publications &#8211; Cryptography 101 with Alfred Menezes</title>
+<link rel='dns-prefetch' href='//secure.gravatar.com' />
+<link rel='dns-prefetch' href='//www.googletagmanager.com' />
+<link rel='dns-prefetch' href='//widgets.wp.com' />
+<link rel='dns-prefetch' href='//jetpack.wordpress.com' />
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//public-api.wordpress.com' />
+<link rel='dns-prefetch' href='//0.gravatar.com' />
+<link rel='dns-prefetch' href='//1.gravatar.com' />
+<link rel='dns-prefetch' href='//2.gravatar.com' />
+<link rel='preconnect' href='//i0.wp.com' />
+<link rel='preconnect' href='//c0.wp.com' />
+<link rel="alternate" type="application/rss+xml" title="Cryptography 101 with Alfred Menezes &raquo; Feed" href="https://cryptography101.ca/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Cryptography 101 with Alfred Menezes &raquo; Comments Feed" href="https://cryptography101.ca/comments/feed/" />
+<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="https://cryptography101.ca/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fcryptography101.ca%2Fpublications%2F" />
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="https://cryptography101.ca/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fcryptography101.ca%2Fpublications%2F&#038;format=xml" />
+<style id="wp-img-auto-sizes-contain-inline-css">
+img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
+/*# sourceURL=wp-img-auto-sizes-contain-inline-css */
+</style>
+<link rel='stylesheet' id='jetpack_related-posts-css' href='https://cryptography101.ca/wp-content/plugins/jetpack/modules/related-posts/related-posts.css?ver=20240116' media='all' />
+<style id="wp-block-image-inline-css">
+.wp-block-image>a,.wp-block-image>figure>a{display:inline-block}.wp-block-image img{box-sizing:border-box;height:auto;max-width:100%;vertical-align:bottom}@media not (prefers-reduced-motion){.wp-block-image img.hide{visibility:hidden}.wp-block-image img.show{animation:show-content-image .4s}}.wp-block-image[style*=border-radius] img,.wp-block-image[style*=border-radius]>a{border-radius:inherit}.wp-block-image.has-custom-border img{box-sizing:border-box}.wp-block-image.aligncenter{text-align:center}.wp-block-image.alignfull>a,.wp-block-image.alignwide>a{width:100%}.wp-block-image.alignfull img,.wp-block-image.alignwide img{height:auto;width:100%}.wp-block-image .aligncenter,.wp-block-image .alignleft,.wp-block-image .alignright,.wp-block-image.aligncenter,.wp-block-image.alignleft,.wp-block-image.alignright{display:table}.wp-block-image .aligncenter>figcaption,.wp-block-image .alignleft>figcaption,.wp-block-image .alignright>figcaption,.wp-block-image.aligncenter>figcaption,.wp-block-image.alignleft>figcaption,.wp-block-image.alignright>figcaption{caption-side:bottom;display:table-caption}.wp-block-image .alignleft{float:left;margin:.5em 1em .5em 0}.wp-block-image .alignright{float:right;margin:.5em 0 .5em 1em}.wp-block-image .aligncenter{margin-left:auto;margin-right:auto}.wp-block-image :where(figcaption){margin-bottom:1em;margin-top:.5em}.wp-block-image.is-style-circle-mask img{border-radius:9999px}@supports ((-webkit-mask-image:none) or (mask-image:none)) or (-webkit-mask-image:none){.wp-block-image.is-style-circle-mask img{border-radius:0;-webkit-mask-image:url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"/></svg>');mask-image:url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"/></svg>');mask-mode:alpha;-webkit-mask-position:center;mask-position:center;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-size:contain;mask-size:contain}}:root :where(.wp-block-image.is-style-rounded img,.wp-block-image .is-style-rounded img){border-radius:9999px}.wp-block-image figure{margin:0}.wp-lightbox-container{display:flex;flex-direction:column;position:relative}.wp-lightbox-container img{cursor:zoom-in}.wp-lightbox-container img:hover+button{opacity:1}.wp-lightbox-container button{align-items:center;backdrop-filter:blur(16px) saturate(180%);background-color:rgba(90,90,90,.25);border:none;border-radius:4px;cursor:zoom-in;display:flex;height:20px;justify-content:center;opacity:0;padding:0;position:absolute;right:16px;text-align:center;top:16px;width:20px;z-index:100}@media not (prefers-reduced-motion){.wp-lightbox-container button{transition:opacity .2s ease}}.wp-lightbox-container button:focus-visible{outline:3px auto rgba(90,90,90,.25);outline:3px auto -webkit-focus-ring-color;outline-offset:3px}.wp-lightbox-container button:hover{cursor:pointer;opacity:1}.wp-lightbox-container button:focus{opacity:1}.wp-lightbox-container button:focus,.wp-lightbox-container button:hover,.wp-lightbox-container button:not(:hover):not(:active):not(.has-background){background-color:rgba(90,90,90,.25);border:none}.wp-lightbox-overlay{box-sizing:border-box;cursor:zoom-out;height:100vh;left:0;overflow:hidden;position:fixed;top:0;visibility:hidden;width:100%;z-index:100000}.wp-lightbox-overlay .wp-lightbox-close-button{align-items:center;cursor:pointer;display:flex;font-family:inherit;gap:8px;justify-content:center;line-height:1;min-height:40px;min-width:40px;padding:0 4px;position:absolute;right:calc(env(safe-area-inset-right) + 16px);top:calc(env(safe-area-inset-top) + 16px);z-index:5000000}.wp-lightbox-overlay .wp-lightbox-close-button:focus,.wp-lightbox-overlay .wp-lightbox-close-button:hover,.wp-lightbox-overlay .wp-lightbox-close-button:not(:hover):not(:active):not(.has-background){background:none;border:none}.wp-lightbox-overlay .wp-lightbox-close-button:has(.wp-lightbox-close-text:not([hidden])) .wp-lightbox-close-icon svg{height:1em;width:1em}.wp-lightbox-overlay .wp-lightbox-close-icon svg{display:block}.wp-lightbox-overlay .wp-lightbox-navigation-button-next,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev{align-items:center;bottom:16px;cursor:pointer;display:flex;font-family:inherit;gap:4px;justify-content:center;line-height:1;min-height:40px;min-width:40px;padding:0 8px;position:absolute;z-index:2000002}.wp-lightbox-overlay .wp-lightbox-navigation-button-next[hidden],.wp-lightbox-overlay .wp-lightbox-navigation-button-prev[hidden]{display:none}@media (min-width:960px){.wp-lightbox-overlay .wp-lightbox-navigation-button-next,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev{bottom:50%;transform:translateY(-50%)}}.wp-lightbox-overlay .wp-lightbox-navigation-button-next:focus,.wp-lightbox-overlay .wp-lightbox-navigation-button-next:hover,.wp-lightbox-overlay .wp-lightbox-navigation-button-next:not(:hover):not(:active):not(.has-background),.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:focus,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:hover,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:not(:hover):not(:active):not(.has-background){background:none;border:none;padding:0 8px}.wp-lightbox-overlay .wp-lightbox-navigation-button-next:has(.wp-lightbox-navigation-text:not([hidden])) .wp-lightbox-navigation-icon svg,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:has(.wp-lightbox-navigation-text:not([hidden])) .wp-lightbox-navigation-icon svg{display:block;height:1.5em;width:1.5em}.wp-lightbox-overlay .wp-lightbox-navigation-button-prev{left:calc(env(safe-area-inset-left) + 16px)}.wp-lightbox-overlay .wp-lightbox-navigation-button-next{right:calc(env(safe-area-inset-right) + 16px)}.wp-lightbox-overlay .wp-lightbox-navigation-icon svg{vertical-align:middle}.wp-lightbox-overlay .lightbox-image-container{height:var(--wp--lightbox-container-height);left:50%;overflow:hidden;position:absolute;top:50%;transform:translate(-50%,-50%);transform-origin:top left;width:var(--wp--lightbox-container-width);z-index:2000001}.wp-lightbox-overlay .wp-block-image{align-items:center;box-sizing:border-box;display:flex;height:100%;justify-content:center;margin:0;position:relative;transform-origin:0 0;width:100%;z-index:3000000}.wp-lightbox-overlay .wp-block-image img{height:var(--wp--lightbox-image-height);min-height:var(--wp--lightbox-image-height);min-width:var(--wp--lightbox-image-width);width:var(--wp--lightbox-image-width)}.wp-lightbox-overlay .wp-block-image figcaption{display:none}.wp-lightbox-overlay button{background:none;border:none}.wp-lightbox-overlay .scrim{background-color:#fff;height:100%;opacity:.9;position:absolute;width:100%;z-index:2000000}.wp-lightbox-overlay.active{visibility:visible}@media not (prefers-reduced-motion){.wp-lightbox-overlay.active{animation:turn-on-visibility .25s both}.wp-lightbox-overlay.active img{animation:turn-on-visibility .35s both}.wp-lightbox-overlay.show-closing-animation:not(.active){animation:turn-off-visibility .35s both}.wp-lightbox-overlay.show-closing-animation:not(.active) img{animation:turn-off-visibility .25s both}.wp-lightbox-overlay.zoom.active{animation:none;opacity:1;visibility:visible}.wp-lightbox-overlay.zoom.active .lightbox-image-container{animation:lightbox-zoom-in .4s}.wp-lightbox-overlay.zoom.active .lightbox-image-container img{animation:none}.wp-lightbox-overlay.zoom.active .scrim{animation:turn-on-visibility .4s forwards}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active){animation:none}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active) .lightbox-image-container{animation:lightbox-zoom-out .4s}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active) .lightbox-image-container img{animation:none}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active) .scrim{animation:turn-off-visibility .4s forwards}}@keyframes show-content-image{0%{visibility:hidden}99%{visibility:hidden}to{visibility:visible}}@keyframes turn-on-visibility{0%{opacity:0}to{opacity:1}}@keyframes turn-off-visibility{0%{opacity:1;visibility:visible}99%{opacity:0;visibility:visible}to{opacity:0;visibility:hidden}}@keyframes lightbox-zoom-in{0%{transform:translate(calc((-100vw + var(--wp--lightbox-scrollbar-width))/2 + var(--wp--lightbox-initial-left-position)),calc(-50vh + var(--wp--lightbox-initial-top-position))) scale(var(--wp--lightbox-scale))}to{transform:translate(-50%,-50%) scale(1)}}@keyframes lightbox-zoom-out{0%{transform:translate(-50%,-50%) scale(1);visibility:visible}99%{visibility:visible}to{transform:translate(calc((-100vw + var(--wp--lightbox-scrollbar-width))/2 + var(--wp--lightbox-initial-left-position)),calc(-50vh + var(--wp--lightbox-initial-top-position))) scale(var(--wp--lightbox-scale));visibility:hidden}}
+/*# sourceURL=https://cryptography101.ca/wp-includes/blocks/image/style.min.css */
+</style>
+<style id="wp-block-site-title-inline-css">
+.wp-block-site-title{box-sizing:border-box}.wp-block-site-title :where(a){color:inherit;font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;letter-spacing:inherit;line-height:inherit;text-decoration:inherit}
+/*# sourceURL=https://cryptography101.ca/wp-includes/blocks/site-title/style.min.css */
+</style>
+<style id="wp-block-group-inline-css">
+.wp-block-group{box-sizing:border-box}:where(.wp-block-group.wp-block-group-is-layout-constrained){position:relative}
+/*# sourceURL=https://cryptography101.ca/wp-includes/blocks/group/style.min.css */
+</style>
+<style id="wp-block-navigation-link-inline-css">
+.wp-block-navigation .wp-block-navigation-item__label{overflow-wrap:break-word}.wp-block-navigation .wp-block-navigation-item__description{display:none}.link-ui-tools{outline:1px solid #f0f0f0;padding:8px}.link-ui-block-inserter{padding-top:8px}.link-ui-block-inserter__back{margin-left:8px;text-transform:uppercase}
+/*# sourceURL=https://cryptography101.ca/wp-includes/blocks/navigation-link/style.min.css */
+</style>
+<link rel='stylesheet' id='wp-block-navigation-css' href='https://c0.wp.com/c/7.1/wp-includes/blocks/navigation/style.min.css' media='all' />
+<style id="wp-block-columns-inline-css">
+.wp-block-columns{box-sizing:border-box;display:flex;flex-wrap:wrap!important}@media (min-width:782px){.wp-block-columns{flex-wrap:nowrap!important}}.wp-block-columns{align-items:normal!important}.wp-block-columns.are-vertically-aligned-top{align-items:flex-start}.wp-block-columns.are-vertically-aligned-center{align-items:center}.wp-block-columns.are-vertically-aligned-bottom{align-items:flex-end}@media (max-width:781px){.wp-block-columns:not(.is-not-stacked-on-mobile)>.wp-block-column{flex-basis:100%!important}}@media (min-width:782px){.wp-block-columns:not(.is-not-stacked-on-mobile)>.wp-block-column{flex-basis:0;flex-grow:1}.wp-block-columns:not(.is-not-stacked-on-mobile)>.wp-block-column[style*=flex-basis]{flex-grow:0}}.wp-block-columns.is-not-stacked-on-mobile{flex-wrap:nowrap!important}.wp-block-columns.is-not-stacked-on-mobile>.wp-block-column{flex-basis:0;flex-grow:1}.wp-block-columns.is-not-stacked-on-mobile>.wp-block-column[style*=flex-basis]{flex-grow:0}:where(.wp-block-columns){margin-bottom:1.75em}:where(.wp-block-columns.has-background){padding:1.25em 2.375em}.wp-block-column{flex-grow:1;min-width:0;overflow-wrap:break-word;word-break:break-word}.wp-block-column.is-vertically-aligned-top{align-self:flex-start}.wp-block-column.is-vertically-aligned-center{align-self:center}.wp-block-column.is-vertically-aligned-bottom{align-self:flex-end}.wp-block-column.is-vertically-aligned-stretch{align-self:stretch}.wp-block-column.is-vertically-aligned-bottom,.wp-block-column.is-vertically-aligned-center,.wp-block-column.is-vertically-aligned-top{width:100%}
+/*# sourceURL=https://cryptography101.ca/wp-includes/blocks/columns/style.min.css */
+</style>
+<style id="wp-block-spacer-inline-css">
+.wp-block-spacer{clear:both}
+/*# sourceURL=https://cryptography101.ca/wp-includes/blocks/spacer/style.min.css */
+</style>
+<style id="wp-block-post-title-inline-css">
+.wp-block-post-title{box-sizing:border-box;word-break:break-word}.wp-block-post-title :where(a){display:inline-block;font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;letter-spacing:inherit;line-height:inherit;text-decoration:inherit}
+/*# sourceURL=https://cryptography101.ca/wp-includes/blocks/post-title/style.min.css */
+</style>
+<style id="wp-block-paragraph-inline-css">
+.is-small-text{font-size:.875em}.is-regular-text{font-size:1em}.is-large-text{font-size:2.25em}.is-larger-text{font-size:3em}.has-drop-cap:not(:focus):first-letter{float:left;font-size:8.4em;font-style:normal;font-weight:100;line-height:.68;margin:.05em .1em 0 0;text-transform:uppercase}body.rtl .has-drop-cap:not(:focus):first-letter{float:none;margin-left:.1em}p.has-drop-cap.has-background{overflow:hidden}:root :where(p.has-background){padding:1.25em 2.375em}:where(p.has-text-color:not(.has-link-color)) a{color:inherit}p.has-text-align-left[style*="writing-mode:vertical-lr"],p.has-text-align-right[style*="writing-mode:vertical-rl"]{rotate:180deg}
+/*# sourceURL=https://cryptography101.ca/wp-includes/blocks/paragraph/style.min.css */
+</style>
+<link rel='stylesheet' id='jetpack-swiper-library-css' href='https://cryptography101.ca/wp-content/plugins/jetpack/_inc/blocks/swiper.css?ver=16.2-a.5' media='all' />
+<link rel='stylesheet' id='jetpack-carousel-css' href='https://cryptography101.ca/wp-content/plugins/jetpack/modules/carousel/jetpack-carousel.css?ver=16.2-a.5' media='all' />
+<style id="wp-block-post-content-inline-css">
+.wp-block-post-content{display:flow-root}
+/*# sourceURL=https://cryptography101.ca/wp-includes/blocks/post-content/style.min.css */
+</style>
+<style id="wp-emoji-styles-inline-css">
+
+	img.wp-smiley, img.emoji {
+		display: inline !important;
+		border: none !important;
+		box-shadow: none !important;
+		height: 1em !important;
+		width: 1em !important;
+		margin: 0 0.07em !important;
+		vertical-align: -0.1em !important;
+		background: none !important;
+		padding: 0 !important;
+	}
+/*# sourceURL=wp-emoji-styles-inline-css */
+</style>
+<style id="wp-block-library-inline-css">
+:root{--wp-block-synced-color:#7a00df;--wp-block-synced-color--rgb:122,0,223;--wp-bound-block-color:var(--wp-block-synced-color);--wp-editor-canvas-background:#ddd;--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,160.5;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px}@media (min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}.wp-element-button{cursor:pointer}:root .has-very-light-gray-background-color{background-color:#eee}:root .has-very-dark-gray-background-color{background-color:#313131}:root .has-very-light-gray-color{color:#eee}:root .has-very-dark-gray-color{color:#313131}:root .has-vivid-green-cyan-to-vivid-cyan-blue-gradient-background{background:linear-gradient(135deg,#00d084,#0693e3)}:root .has-purple-crush-gradient-background{background:linear-gradient(135deg,#34e2e4,#4721fb 50%,#ab1dfe)}:root .has-hazy-dawn-gradient-background{background:linear-gradient(135deg,#faaca8,#dad0ec)}:root .has-subdued-olive-gradient-background{background:linear-gradient(135deg,#fafae1,#67a671)}:root .has-atomic-cream-gradient-background{background:linear-gradient(135deg,#fdd79a,#004a59)}:root .has-nightshade-gradient-background{background:linear-gradient(135deg,#330968,#31cdcf)}:root .has-midnight-gradient-background{background:linear-gradient(135deg,#020381,#2874fc)}:root{--wp--preset--font-size--normal:16px;--wp--preset--font-size--huge:42px}.has-regular-font-size{font-size:1em}.has-larger-font-size{font-size:2.625em}.has-normal-font-size{font-size:var(--wp--preset--font-size--normal)}.has-huge-font-size{font-size:var(--wp--preset--font-size--huge)}:root .has-text-align-center{text-align:center}:root .has-text-align-left{text-align:left}:root .has-text-align-right{text-align:right}.has-fit-text{white-space:nowrap!important}#end-resizable-editor-section{display:none}.aligncenter{clear:both}.items-justified-left{justify-content:flex-start}.items-justified-center{justify-content:center}.items-justified-right{justify-content:flex-end}.items-justified-space-between{justify-content:space-between}.screen-reader-text{word-wrap:normal!important;border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-break:normal!important}.screen-reader-text:focus{background-color:#ddd;clip-path:none;color:#444;display:block;font-size:1em;height:auto;left:5px;line-height:normal;padding:15px 23px 14px;text-decoration:none;top:5px;width:auto;z-index:100000}html :where(.has-border-color){border-style:solid}html :where([style^=border-color],[style*=";border-color"],[style*="; border-color"]){border-style:solid}html :where([style^=border-top-color],[style*=";border-top-color"],[style*="; border-top-color"]){border-top-style:solid}html :where([style^=border-right-color],[style*=";border-right-color"],[style*="; border-right-color"]){border-right-style:solid}html :where([style^=border-bottom-color],[style*=";border-bottom-color"],[style*="; border-bottom-color"]){border-bottom-style:solid}html :where([style^=border-left-color],[style*=";border-left-color"],[style*="; border-left-color"]){border-left-style:solid}html :where([style^=border-width],[style*=";border-width"],[style*="; border-width"]){border-style:solid}html :where([style^=border-top-width],[style*=";border-top-width"],[style*="; border-top-width"]){border-top-style:solid}html :where([style^=border-right-width],[style*=";border-right-width"],[style*="; border-right-width"]){border-right-style:solid}html :where([style^=border-bottom-width],[style*=";border-bottom-width"],[style*="; border-bottom-width"]){border-bottom-style:solid}html :where([style^=border-left-width],[style*=";border-left-width"],[style*="; border-left-width"]){border-left-style:solid}html :where(img[class*=wp-image-]){height:auto;max-width:100%}:where(figure){margin:0 0 1em}html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:var(--wp-admin--admin-bar--height,0px)}@media screen and (max-width:600px){html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:0px}}
+.has-text-align-justify{text-align:justify;}
+/*# sourceURL=wp-block-library-inline-css */
+</style>
+<style id="global-styles-inline-css">
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb7c2fa;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #d22d2d;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--primary: #000000;--wp--preset--color--secondary: #767676;--wp--preset--color--foreground: #000000;--wp--preset--color--background: #f5f5f5;--wp--preset--color--tertiary: #e6e6e6;--wp--preset--color--custom-color-1: #000;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgb(6,147,227) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgb(252,185,0) 0%,rgb(255,105,0) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgb(255,105,0) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: clamp(0.825rem, 0.825rem + ((1vw - 0.2rem) * 1.002), 1.0625rem);--wp--preset--font-size--medium: clamp(1rem, 1rem + ((1vw - 0.2rem) * 1.053), 1.25rem);--wp--preset--font-size--large: clamp(1.75rem, 1.75rem + ((1vw - 0.2rem) * 1.053), 2rem);--wp--preset--font-size--x-large: clamp(2.5rem, 2.5rem + ((1vw - 0.2rem) * 2.105), 3rem);--wp--preset--font-family--albert-sans: Albert Sans;--wp--preset--font-family--alegreya: Alegreya, serif;--wp--preset--font-family--arvo: Arvo, serif;--wp--preset--font-family--bodoni-moda: 'Bodoni Moda', serif;--wp--preset--font-family--bricolage-grotesque: 'Bricolage Grotesque', sans-serif;--wp--preset--font-family--cabin: Cabin, sans-serif;--wp--preset--font-family--chivo: Chivo, sans-serif;--wp--preset--font-family--commissioner: Commissioner, sans-serif;--wp--preset--font-family--cormorant: Cormorant, serif;--wp--preset--font-family--courier-prime: 'Courier Prime', monospace;--wp--preset--font-family--crimson-pro: 'Crimson Pro', serif;--wp--preset--font-family--dm-mono: 'DM Mono', monospace;--wp--preset--font-family--dm-sans: 'DM Sans', sans-serif;--wp--preset--font-family--dm-serif-display: 'DM Serif Display', serif;--wp--preset--font-family--domine: Domine, serif;--wp--preset--font-family--eb-garamond: 'EB Garamond', serif;--wp--preset--font-family--epilogue: Epilogue;--wp--preset--font-family--fahkwang: Fahkwang, sans-serif;--wp--preset--font-family--figtree: Figtree, sans-serif;--wp--preset--font-family--fira-sans: 'Fira Sans', sans-serif;--wp--preset--font-family--fjalla-one: 'Fjalla One', sans-serif;--wp--preset--font-family--fraunces: Fraunces, serif;--wp--preset--font-family--gabarito: Gabarito, system-ui;--wp--preset--font-family--ibm-plex-mono: 'IBM Plex Mono', monospace;--wp--preset--font-family--ibm-plex-sans: 'IBM Plex Sans', sans-serif;--wp--preset--font-family--ibarra-real-nova: 'Ibarra Real Nova', serif;--wp--preset--font-family--instrument-serif: 'Instrument Serif', serif;--wp--preset--font-family--inter: Inter, sans-serif;--wp--preset--font-family--josefin-sans: 'Josefin Sans', sans-serif;--wp--preset--font-family--jost: Jost, sans-serif;--wp--preset--font-family--libre-baskerville: 'Libre Baskerville', serif;--wp--preset--font-family--libre-franklin: 'Libre Franklin', sans-serif;--wp--preset--font-family--literata: Literata, serif;--wp--preset--font-family--lora: Lora, serif;--wp--preset--font-family--merriweather: Merriweather, serif;--wp--preset--font-family--montserrat: Montserrat, sans-serif;--wp--preset--font-family--newsreader: Newsreader, serif;--wp--preset--font-family--noto-sans-mono: 'Noto Sans Mono', sans-serif;--wp--preset--font-family--nunito: Nunito, sans-serif;--wp--preset--font-family--open-sans: 'Open Sans', sans-serif;--wp--preset--font-family--overpass: Overpass, sans-serif;--wp--preset--font-family--pt-serif: 'PT Serif', serif;--wp--preset--font-family--petrona: Petrona, serif;--wp--preset--font-family--piazzolla: Piazzolla, serif;--wp--preset--font-family--playfair-display: 'Playfair Display', serif;--wp--preset--font-family--plus-jakarta-sans: 'Plus Jakarta Sans', sans-serif;--wp--preset--font-family--poppins: Poppins, sans-serif;--wp--preset--font-family--raleway: Raleway, sans-serif;--wp--preset--font-family--roboto: Roboto, sans-serif;--wp--preset--font-family--roboto-slab: 'Roboto Slab', serif;--wp--preset--font-family--rubik: Rubik, sans-serif;--wp--preset--font-family--rufina: Rufina, serif;--wp--preset--font-family--sora: Sora;--wp--preset--font-family--source-sans-3: 'Source Sans 3', sans-serif;--wp--preset--font-family--source-serif-4: 'Source Serif 4', serif;--wp--preset--font-family--space-mono: 'Space Mono', monospace;--wp--preset--font-family--syne: Syne, sans-serif;--wp--preset--font-family--texturina: Texturina, serif;--wp--preset--font-family--urbanist: Urbanist, sans-serif;--wp--preset--font-family--work-sans: 'Work Sans', sans-serif;--wp--preset--font-family--system-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgb(255, 255, 255), 6px 6px rgb(0, 0, 0);--wp--preset--shadow--crisp: 6px 6px 0px rgb(0, 0, 0);}.wp-block-button{--wp--preset--dimension--25: 25%;--wp--preset--dimension--50: 50%;--wp--preset--dimension--75: 75%;--wp--preset--dimension--100: 100%;}:root { --wp--style--global--content-size: 600px;--wp--style--global--wide-size: 700px; }:where(body) { margin: 0; }.wp-site-blocks { padding-top: var(--wp--style--root--padding-top); padding-bottom: var(--wp--style--root--padding-bottom); }.has-global-padding { padding-right: var(--wp--style--root--padding-right); padding-left: var(--wp--style--root--padding-left); }.has-global-padding > .alignfull { margin-right: calc(var(--wp--style--root--padding-right) * -1); margin-left: calc(var(--wp--style--root--padding-left) * -1); }.has-global-padding :where(:not(.alignfull.is-layout-flow) > .has-global-padding:not(.wp-block-block, .alignfull)) { padding-right: 0; padding-left: 0; }.has-global-padding :where(:not(.alignfull.is-layout-flow) > .has-global-padding:not(.wp-block-block, .alignfull)) > .alignfull { margin-left: 0; margin-right: 0; }.wp-site-blocks > .alignleft { float: left; margin-right: 2em; }.wp-site-blocks > .alignright { float: right; margin-left: 2em; }.wp-site-blocks > .aligncenter { justify-content: center; margin-left: auto; margin-right: auto; }:where(.wp-site-blocks) > * { margin-block-start: var(--wp--preset--spacing--30); margin-block-end: 0; }:where(.wp-site-blocks) > :first-child { margin-block-start: 0; }:where(.wp-site-blocks) > :last-child { margin-block-end: 0; }:root { --wp--style--block-gap: var(--wp--preset--spacing--30); }:root :where(.is-layout-flow) > :first-child{margin-block-start: 0;}:root :where(.is-layout-flow) > :last-child{margin-block-end: 0;}:root :where(.is-layout-flow) > *{margin-block-start: var(--wp--preset--spacing--30);margin-block-end: 0;}:root :where(.is-layout-constrained) > :first-child{margin-block-start: 0;}:root :where(.is-layout-constrained) > :last-child{margin-block-end: 0;}:root :where(.is-layout-constrained) > *{margin-block-start: var(--wp--preset--spacing--30);margin-block-end: 0;}:root :where(.is-layout-flex){gap: var(--wp--preset--spacing--30);}:root :where(.is-layout-grid){gap: var(--wp--preset--spacing--30);}.is-layout-flow > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}.is-layout-flow > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}.is-layout-flow > .aligncenter{margin-left: auto !important;margin-right: auto !important;}.is-layout-constrained > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}.is-layout-constrained > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}.is-layout-constrained > .aligncenter{margin-left: auto !important;margin-right: auto !important;}.is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){max-width: var(--wp--style--global--content-size);margin-left: auto !important;margin-right: auto !important;}.is-layout-constrained > .alignwide{max-width: var(--wp--style--global--wide-size);}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}body{background-color: var(--wp--preset--color--background);color: var(--wp--preset--color--foreground);font-family: var(--wp--preset--font-family--albert-sans);font-size: clamp(0.875rem, 0.875rem + ((1vw - 0.2rem) * 0.947), 1.1rem);font-style: normal;font-weight: 400;line-height: 1.4;--wp--style--root--padding-top: 0;--wp--style--root--padding-right: var(--wp--preset--spacing--40);--wp--style--root--padding-bottom: 0;--wp--style--root--padding-left: var(--wp--preset--spacing--40);}a:where(:not(.wp-element-button)){color: var(--wp--preset--color--primary);}:root :where(a:where(:not(.wp-element-button)):hover){text-decoration: none;}h1, h2, h3, h4, h5, h6{color: var(--wp--preset--color--primary);font-style: normal;font-weight: 300;letter-spacing: -0.02em;line-height: 1.3;}h1{font-size: var(--wp--preset--font-size--x-large);}h2{font-size: var(--wp--preset--font-size--large);}h3{font-size: clamp(1.188rem, 1.188rem + ((1vw - 0.2rem) * 2.914), 1.88rem);}h4{font-size: clamp(1.055rem, 1.055rem + ((1vw - 0.2rem) * 2.421), 1.63rem);}h5{font-size: clamp(0.918rem, 0.918rem + ((1vw - 0.2rem) * 1.945), 1.38rem);}h6{font-size: clamp(0.875rem, 0.875rem + ((1vw - 0.2rem) * 1.579), 1.25rem);}:root :where(.wp-element-button, .wp-block-button__link){background-color: var(--wp--preset--color--tertiary);border-radius: 0.25rem;border-width: 0;color: var(--wp--preset--color--primary);font-family: inherit;font-size: clamp(2.288rem, 2.288rem + ((1vw - 0.2rem) * 8.051), 4.2rem);font-style: inherit;font-weight: inherit;letter-spacing: inherit;line-height: inherit;padding-top: calc(0.667em + 2px);padding-right: calc(1.333em + 2px);padding-bottom: calc(0.667em + 2px);padding-left: calc(1.333em + 2px);text-decoration: none;text-transform: inherit;}:root :where(.wp-element-button:hover, .wp-block-button__link:hover){background-color: var(--wp--preset--color--secondary);color: var(--wp--preset--color--background);}:root :where(.wp-element-button:focus, .wp-block-button__link:focus){background-color: var(--wp--preset--color--primary);color: var(--wp--preset--color--background);outline-color: var(--wp--preset--color--primary);outline-offset: 2px;outline-style: dotted;outline-width: 1px;}:root :where(.wp-element-button:active, .wp-block-button__link:active){background-color: var(--wp--preset--color--primary);color: var(--wp--preset--color--background);}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-primary-color{color: var(--wp--preset--color--primary) !important;}.has-secondary-color{color: var(--wp--preset--color--secondary) !important;}.has-foreground-color{color: var(--wp--preset--color--foreground) !important;}.has-background-color{color: var(--wp--preset--color--background) !important;}.has-tertiary-color{color: var(--wp--preset--color--tertiary) !important;}.has-custom-color-1-color{color: var(--wp--preset--color--custom-color-1) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-primary-background-color{background-color: var(--wp--preset--color--primary) !important;}.has-secondary-background-color{background-color: var(--wp--preset--color--secondary) !important;}.has-foreground-background-color{background-color: var(--wp--preset--color--foreground) !important;}.has-background-background-color{background-color: var(--wp--preset--color--background) !important;}.has-tertiary-background-color{background-color: var(--wp--preset--color--tertiary) !important;}.has-custom-color-1-background-color{background-color: var(--wp--preset--color--custom-color-1) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-primary-border-color{border-color: var(--wp--preset--color--primary) !important;}.has-secondary-border-color{border-color: var(--wp--preset--color--secondary) !important;}.has-foreground-border-color{border-color: var(--wp--preset--color--foreground) !important;}.has-background-border-color{border-color: var(--wp--preset--color--background) !important;}.has-tertiary-border-color{border-color: var(--wp--preset--color--tertiary) !important;}.has-custom-color-1-border-color{border-color: var(--wp--preset--color--custom-color-1) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}.has-albert-sans-font-family{font-family: var(--wp--preset--font-family--albert-sans) !important;}.has-alegreya-font-family{font-family: var(--wp--preset--font-family--alegreya) !important;}.has-arvo-font-family{font-family: var(--wp--preset--font-family--arvo) !important;}.has-bodoni-moda-font-family{font-family: var(--wp--preset--font-family--bodoni-moda) !important;}.has-bricolage-grotesque-font-family{font-family: var(--wp--preset--font-family--bricolage-grotesque) !important;}.has-cabin-font-family{font-family: var(--wp--preset--font-family--cabin) !important;}.has-chivo-font-family{font-family: var(--wp--preset--font-family--chivo) !important;}.has-commissioner-font-family{font-family: var(--wp--preset--font-family--commissioner) !important;}.has-cormorant-font-family{font-family: var(--wp--preset--font-family--cormorant) !important;}.has-courier-prime-font-family{font-family: var(--wp--preset--font-family--courier-prime) !important;}.has-crimson-pro-font-family{font-family: var(--wp--preset--font-family--crimson-pro) !important;}.has-dm-mono-font-family{font-family: var(--wp--preset--font-family--dm-mono) !important;}.has-dm-sans-font-family{font-family: var(--wp--preset--font-family--dm-sans) !important;}.has-dm-serif-display-font-family{font-family: var(--wp--preset--font-family--dm-serif-display) !important;}.has-domine-font-family{font-family: var(--wp--preset--font-family--domine) !important;}.has-eb-garamond-font-family{font-family: var(--wp--preset--font-family--eb-garamond) !important;}.has-epilogue-font-family{font-family: var(--wp--preset--font-family--epilogue) !important;}.has-fahkwang-font-family{font-family: var(--wp--preset--font-family--fahkwang) !important;}.has-figtree-font-family{font-family: var(--wp--preset--font-family--figtree) !important;}.has-fira-sans-font-family{font-family: var(--wp--preset--font-family--fira-sans) !important;}.has-fjalla-one-font-family{font-family: var(--wp--preset--font-family--fjalla-one) !important;}.has-fraunces-font-family{font-family: var(--wp--preset--font-family--fraunces) !important;}.has-gabarito-font-family{font-family: var(--wp--preset--font-family--gabarito) !important;}.has-ibm-plex-mono-font-family{font-family: var(--wp--preset--font-family--ibm-plex-mono) !important;}.has-ibm-plex-sans-font-family{font-family: var(--wp--preset--font-family--ibm-plex-sans) !important;}.has-ibarra-real-nova-font-family{font-family: var(--wp--preset--font-family--ibarra-real-nova) !important;}.has-instrument-serif-font-family{font-family: var(--wp--preset--font-family--instrument-serif) !important;}.has-inter-font-family{font-family: var(--wp--preset--font-family--inter) !important;}.has-josefin-sans-font-family{font-family: var(--wp--preset--font-family--josefin-sans) !important;}.has-jost-font-family{font-family: var(--wp--preset--font-family--jost) !important;}.has-libre-baskerville-font-family{font-family: var(--wp--preset--font-family--libre-baskerville) !important;}.has-libre-franklin-font-family{font-family: var(--wp--preset--font-family--libre-franklin) !important;}.has-literata-font-family{font-family: var(--wp--preset--font-family--literata) !important;}.has-lora-font-family{font-family: var(--wp--preset--font-family--lora) !important;}.has-merriweather-font-family{font-family: var(--wp--preset--font-family--merriweather) !important;}.has-montserrat-font-family{font-family: var(--wp--preset--font-family--montserrat) !important;}.has-newsreader-font-family{font-family: var(--wp--preset--font-family--newsreader) !important;}.has-noto-sans-mono-font-family{font-family: var(--wp--preset--font-family--noto-sans-mono) !important;}.has-nunito-font-family{font-family: var(--wp--preset--font-family--nunito) !important;}.has-open-sans-font-family{font-family: var(--wp--preset--font-family--open-sans) !important;}.has-overpass-font-family{font-family: var(--wp--preset--font-family--overpass) !important;}.has-pt-serif-font-family{font-family: var(--wp--preset--font-family--pt-serif) !important;}.has-petrona-font-family{font-family: var(--wp--preset--font-family--petrona) !important;}.has-piazzolla-font-family{font-family: var(--wp--preset--font-family--piazzolla) !important;}.has-playfair-display-font-family{font-family: var(--wp--preset--font-family--playfair-display) !important;}.has-plus-jakarta-sans-font-family{font-family: var(--wp--preset--font-family--plus-jakarta-sans) !important;}.has-poppins-font-family{font-family: var(--wp--preset--font-family--poppins) !important;}.has-raleway-font-family{font-family: var(--wp--preset--font-family--raleway) !important;}.has-roboto-font-family{font-family: var(--wp--preset--font-family--roboto) !important;}.has-roboto-slab-font-family{font-family: var(--wp--preset--font-family--roboto-slab) !important;}.has-rubik-font-family{font-family: var(--wp--preset--font-family--rubik) !important;}.has-rufina-font-family{font-family: var(--wp--preset--font-family--rufina) !important;}.has-sora-font-family{font-family: var(--wp--preset--font-family--sora) !important;}.has-source-sans-3-font-family{font-family: var(--wp--preset--font-family--source-sans-3) !important;}.has-source-serif-4-font-family{font-family: var(--wp--preset--font-family--source-serif-4) !important;}.has-space-mono-font-family{font-family: var(--wp--preset--font-family--space-mono) !important;}.has-syne-font-family{font-family: var(--wp--preset--font-family--syne) !important;}.has-texturina-font-family{font-family: var(--wp--preset--font-family--texturina) !important;}.has-urbanist-font-family{font-family: var(--wp--preset--font-family--urbanist) !important;}.has-work-sans-font-family{font-family: var(--wp--preset--font-family--work-sans) !important;}.has-system-font-font-family{font-family: var(--wp--preset--font-family--system-font) !important;}.wp-block-navigation-submenu {
+	width: 230px;
+}
+:root :where(.wp-block-navigation){font-size: var(--wp--preset--font-size--small);font-style: normal;font-weight: 300;}:root :where(.wp-block-navigation-is-layout-flow) > :first-child{margin-block-start: 0;}:root :where(.wp-block-navigation-is-layout-flow) > :last-child{margin-block-end: 0;}:root :where(.wp-block-navigation-is-layout-flow) > *{margin-block-start: var(--wp--preset--spacing--40);margin-block-end: 0;}:root :where(.wp-block-navigation-is-layout-constrained) > :first-child{margin-block-start: 0;}:root :where(.wp-block-navigation-is-layout-constrained) > :last-child{margin-block-end: 0;}:root :where(.wp-block-navigation-is-layout-constrained) > *{margin-block-start: var(--wp--preset--spacing--40);margin-block-end: 0;}:root :where(.wp-block-navigation-is-layout-flex){gap: var(--wp--preset--spacing--40);}:root :where(.wp-block-navigation-is-layout-grid){gap: var(--wp--preset--spacing--40);}
+:root :where(.wp-block-navigation a:where(:not(.wp-element-button))){text-decoration: none;}
+:root :where(.wp-block-navigation a:where(:not(.wp-element-button)):hover){text-decoration: underline;}
+:root :where(p){letter-spacing: -0.01em;}
+:root :where(.wp-block-post-title){font-size: var(--wp--preset--font-size--large);margin-bottom: 0;}
+:root :where(.wp-block-post-title a:where(:not(.wp-element-button))){text-decoration: none;}
+:root :where(.wp-block-post-title a:where(:not(.wp-element-button)):hover){text-decoration: underline;}
+:root :where(.wp-block-site-title){font-size: var(--wp--preset--font-size--small);font-style: normal;font-weight: 300;}
+:root :where(.wp-block-site-title a:where(:not(.wp-element-button))){text-decoration: none;}
+:root :where(.wp-block-site-title a:where(:not(.wp-element-button)):hover){text-decoration: underline;}
+:root :where(.wp-block-navigation-link){text-decoration: none;text-transform: none;}
+/*# sourceURL=global-styles-inline-css */
+</style>
+<style id="core-block-supports-inline-css">
+.wp-container-content-9cfa9a5a{flex-grow:1;}.wp-container-core-group-is-layout-f01d84c1{justify-content:space-between;}.wp-container-content-32f88f0c{flex-basis:175px;}.wp-container-core-navigation-is-layout-149f5334{gap:10px;justify-content:space-between;}.wp-container-core-columns-is-layout-e4cf4769{flex-wrap:nowrap;}.wp-container-core-group-is-layout-be808a33 > .alignfull{margin-right:calc(0px * -1);margin-left:calc(0px * -1);}.wp-container-core-columns-is-layout-cb0a7ccb{flex-wrap:nowrap;}.wp-container-core-post-content-is-layout-059bc41c > :where(:not(.alignleft):not(.alignright):not(.alignfull)){margin-left:0 !important;}.wp-container-core-column-is-layout-e10e6827 > .alignfull{margin-right:calc(0px * -1);margin-left:calc(0px * -1);}.wp-container-core-column-is-layout-08fedc22 > .alignfull{margin-right:calc(var(--wp--preset--spacing--20) * -1);margin-left:calc(var(--wp--preset--spacing--20) * -1);}.wp-container-core-columns-is-layout-e2836618{flex-wrap:nowrap;gap:0 0;}.wp-container-core-columns-is-layout-c1ad717f{flex-wrap:nowrap;}
+/*# sourceURL=core-block-supports-inline-css */
+</style>
+<style id="wp-block-template-skip-link-inline-css">
+/*! This file is auto-generated */
+.skip-link.screen-reader-text{border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute!important;width:1px;word-wrap:normal!important;word-break:normal!important}.skip-link.screen-reader-text:focus{background-color:#eee;clip-path:none;color:#444;display:block;font-size:1em;height:auto;left:5px;line-height:normal;padding:15px 23px 14px;text-decoration:none;top:5px;width:auto;z-index:100000}
+/*# sourceURL=/wp-includes/css/wp-block-template-skip-link.min.css */
+</style>
+<style id="jetpack-stats-inline-css">
+img#wpstats{display:none}
+/*# sourceURL=jetpack-stats-inline-css */
+</style>
+<link rel='stylesheet' id='fewer-style-css' href='https://cryptography101.ca/wp-content/themes/fewer/style.css?ver=1.0.5' media='all' />
+<style id="jetpack_likes-inline-css">
+#jp-post-flair{padding-top:.5em}#content div.sharedaddy,#main div.sharedaddy,div.sharedaddy{clear:both}div.sharedaddy h3.sd-title{display:inline-block;font-size:9pt;font-weight:700;line-height:1.2;margin:0 0 1em}div.sharedaddy h3.sd-title:before{border-top:1px solid #dcdcde;content:"";display:block;margin-bottom:1em;min-width:30px;width:100%}div.jetpack-likes-widget-wrapper{min-height:50px;position:relative;width:100%}div.jetpack-likes-widget-wrapper .sd-link-color{font-size:12px}div.jetpack-comment-likes-widget-wrapper{min-height:31px;position:relative;width:100%}div.jetpack-comment-likes-widget-wrapper iframe{margin-bottom:0}#likes-other-gravatars{background-color:#fff;border:1px solid #dcdcde;border-radius:4px;box-shadow:none;display:none;height:auto;max-height:240px;min-width:220px;overflow:auto;padding:9px 12px 10px;position:absolute;z-index:1000}#likes-other-gravatars *{line-height:normal}#likes-other-gravatars .likes-text{color:#101517;font-size:12px;font-weight:500;padding-bottom:8px}#likes-other-gravatars :is(li,ul){list-style-type:none;margin:0;padding:0;text-indent:0}#likes-other-gravatars li:before{content:""}#likes-other-gravatars ul.wpl-avatars{display:block;max-height:190px;overflow:auto}#likes-other-gravatars ul.wpl-avatars li{float:none;height:28px;margin:0 0 4px;width:196px}#likes-other-gravatars ul.wpl-avatars li a{align-items:center;border-bottom:none!important;display:flex;gap:8px;margin:0 2px 0 0;text-decoration:none}#likes-other-gravatars ul.wpl-avatars li a span{color:#2c3338;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#likes-other-gravatars ul.wpl-avatars li a img{background:none;border:none;border-radius:50%;box-sizing:border-box;margin:0!important;padding:1px!important;position:static}div.sd-box{border-top:1px solid #00000021}.jetpack-likes-widget-loaded iframe,.jetpack-likes-widget-loading .likes-widget-placeholder,.jetpack-likes-widget-unloaded .likes-widget-placeholder{display:block}.jetpack-likes-widget-loaded .likes-widget-placeholder,.jetpack-likes-widget-loading iframe,.jetpack-likes-widget-unloaded iframe{display:none}.comment-likes-widget,.entry-content .post-likes-widget,.post-likes-widget{border-width:0;margin:0}.comment-likes-widget-placeholder,.post-likes-widget-placeholder{border-width:0;margin:0;position:relative}.comment-likes-widget-placeholder{display:flex;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;height:18px;position:absolute}.comment-likes-widget-placeholder:before{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath fill='%232ea2cc' d='m12 2 2.582 6.953L22 9.257l-5.822 4.602L18.18 21 12 16.89 5.82 21l2.002-7.14L2 9.256l7.418-.304'/%3E%3C/svg%3E");background-repeat:no-repeat;background-size:16px 16px;color:#2ea2cc;content:"";display:inline-block;height:16px;padding-right:5px;position:relative;top:3px;width:16px}.post-likes-widget-placeholder .button{display:none}:is(.comment-likes-widget-placeholder,.post-likes-widget-placeholder) .loading{color:#999;font-size:12px}.comment-likes-widget-placeholder .loading{align-self:center;color:#4e4e4e;margin-top:4px;padding-left:5px}div.sharedaddy.sd-like-enabled .sd-like h3{display:none}div.sharedaddy.sd-like-enabled .sd-like .post-likes-widget{float:none;position:absolute;top:0;width:100%}.comment-likes-widget{width:100%}.cs-rating,.pd-rating{display:block!important}.sd-gplus .sd-title{display:none}@media print{.jetpack-likes-widget-wrapper{display:none}}
+/*# sourceURL=https://cryptography101.ca/wp-content/plugins/jetpack/_inc/build/likes/style.min.css */
+</style>
+<style id="jetpack-global-styles-frontend-style-inline-css">
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+/*# sourceURL=jetpack-global-styles-frontend-style-inline-css */
+</style>
+<script id="jetpack-mu-wpcom-settings-js-before">
+var JETPACK_MU_WPCOM_SETTINGS = {"assetsUrl":"https://cryptography101.ca/wp-content/mu-plugins/wpcomsh/jetpack_vendor/automattic/jetpack-mu-wpcom/src/build/"};
+//# sourceURL=jetpack-mu-wpcom-settings-js-before
+</script>
+
+<!-- Google tag (gtag.js) snippet added by Site Kit -->
+<!-- Google Analytics snippet added by Site Kit -->
+<script id="google_gtagjs-js" src="https://www.googletagmanager.com/gtag/js?id=GT-PHXR5WKT" async></script>
+<script id="google_gtagjs-js-after">
+window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}
+gtag("set","linker",{"domains":["cryptography101.ca"]});
+gtag("js", new Date());
+gtag("set", "developer_id.dZTNiMT", true);
+gtag("config", "GT-PHXR5WKT");
+ window._googlesitekit = window._googlesitekit || {}; window._googlesitekit.throttledEvents = []; window._googlesitekit.gtagEvent = (name, data) => { var key = JSON.stringify( { name, data } ); if ( !! window._googlesitekit.throttledEvents[ key ] ) { return; } window._googlesitekit.throttledEvents[ key ] = true; setTimeout( () => { delete window._googlesitekit.throttledEvents[ key ]; }, 5 ); gtag( "event", name, { ...data, event_source: "site-kit" } ); }; 
+//# sourceURL=google_gtagjs-js-after
+</script>
+<link rel="https://api.w.org/" href="https://cryptography101.ca/wp-json/" /><link rel="alternate" title="JSON" type="application/json" href="https://cryptography101.ca/wp-json/wp/v2/pages/1510" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://cryptography101.ca/xmlrpc.php?rsd" />
+
+<link rel="canonical" href="https://cryptography101.ca/publications/" />
+<link rel='shortlink' href='https://wp.me/PfzPY8-om' />
+<meta name="generator" content="Site Kit by Google 1.186.0" /><script id="wp-importmap" type="importmap">
+{"imports":{"@wordpress/interactivity":"https://cryptography101.ca/wp-includes/js/dist/script-modules/interactivity/index.min.js?ver=efaa5193bbad9c60ffd1"}}
+</script>
+<link rel="modulepreload" href="https://cryptography101.ca/wp-includes/js/dist/script-modules/interactivity/index.min.js?ver=efaa5193bbad9c60ffd1" id="@wordpress/interactivity-js-modulepreload" fetchpriority="low">
+<meta name="description" content="NEW: A Gentle Introduction to Lattice-Based Cryptography NEW: Textbook of Applied Cryptography (in progress)(with Paul van Oorschot and Bart Preneel) NEW: The LLL lattice basis reduction algorithm(with S. Chatterjee)IEEE Security &amp; Privacy, 24-4 (2026), 71-74. Several sections on elliptic curve cryptography(with D. Hankerson)Encyclopedia of Cryptography, Security and Privacy (third edition), edited by S. Jajodia, P. Samarati&hellip;" />
+
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Publications" />
+<meta property="og:url" content="https://cryptography101.ca/publications/" />
+<meta property="og:description" content="NEW: A Gentle Introduction to Lattice-Based Cryptography NEW: Textbook of Applied Cryptography (in progress)(with Paul van Oorschot and Bart Preneel) NEW: The LLL lattice basis reduction algorithm(…" />
+<meta property="article:published_time" content="2025-04-20T08:11:33+00:00" />
+<meta property="article:modified_time" content="2026-09-04T17:13:09+00:00" />
+<meta property="og:site_name" content="Cryptography 101 with Alfred Menezes" />
+<meta property="og:image" content="https://cryptography101.ca/wp-content/uploads/2025/04/Menonites.png" />
+<meta property="og:image:width" content="1244" />
+<meta property="og:image:height" content="402" />
+<meta property="og:image:alt" content="" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:text:title" content="Publications" />
+<meta name="twitter:image" content="https://cryptography101.ca/wp-content/uploads/2025/04/Menonites.png?w=640" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<!-- End Jetpack Open Graph Tags -->
+<style class="wp-fonts-local">
+@font-face{font-family:"Albert Sans";font-style:normal;font-weight:100;font-display:fallback;src:url('https://fonts.wp.com/s/albertsans/v1/i7dZIFdwYjGaAMFtZd_QA3xXSKZqhr-TenSHq5L_qY32TxAj1g.woff2') format('woff2');}
+@font-face{font-family:"Albert Sans";font-style:normal;font-weight:200;font-display:fallback;src:url('https://fonts.wp.com/s/albertsans/v1/i7dZIFdwYjGaAMFtZd_QA3xXSKZqhr-TenSHK5P_qY32TxAj1g.woff2') format('woff2');}
+@font-face{font-family:"Albert Sans";font-style:normal;font-weight:300;font-display:fallback;src:url('https://fonts.wp.com/s/albertsans/v1/i7dZIFdwYjGaAMFtZd_QA3xXSKZqhr-TenSH9ZP_qY32TxAj1g.woff2') format('woff2');}
+@font-face{font-family:"Albert Sans";font-style:normal;font-weight:400;font-display:fallback;src:url('https://fonts.wp.com/s/albertsans/v1/i7dZIFdwYjGaAMFtZd_QA3xXSKZqhr-TenSHq5P_qY32TxAj1g.woff2') format('woff2');}
+@font-face{font-family:"Albert Sans";font-style:normal;font-weight:500;font-display:fallback;src:url('https://fonts.wp.com/s/albertsans/v1/i7dZIFdwYjGaAMFtZd_QA3xXSKZqhr-TenSHmZP_qY32TxAj1g.woff2') format('woff2');}
+@font-face{font-family:"Albert Sans";font-style:normal;font-weight:600;font-display:fallback;src:url('https://fonts.wp.com/s/albertsans/v1/i7dZIFdwYjGaAMFtZd_QA3xXSKZqhr-TenSHdZT_qY32TxAj1g.woff2') format('woff2');}
+@font-face{font-family:"Albert Sans";font-style:normal;font-weight:700;font-display:fallback;src:url('https://fonts.wp.com/s/albertsans/v1/i7dZIFdwYjGaAMFtZd_QA3xXSKZqhr-TenSHTJT_qY32TxAj1g.woff2') format('woff2');}
+@font-face{font-family:"Albert Sans";font-style:normal;font-weight:800;font-display:fallback;src:url('https://fonts.wp.com/s/albertsans/v1/i7dZIFdwYjGaAMFtZd_QA3xXSKZqhr-TenSHK5T_qY32TxAj1g.woff2') format('woff2');}
+@font-face{font-family:"Albert Sans";font-style:normal;font-weight:900;font-display:fallback;src:url('https://fonts.wp.com/s/albertsans/v1/i7dZIFdwYjGaAMFtZd_QA3xXSKZqhr-TenSHApT_qY32TxAj1g.woff2') format('woff2');}
+@font-face{font-family:"Albert Sans";font-style:italic;font-weight:100;font-display:fallback;src:url('https://fonts.wp.com/s/albertsans/v1/i7dfIFdwYjGaAMFtZd_QA1Zeelmy79QJ1HOSY9AX7of3bRUz1r5t.woff2') format('woff2');}
+@font-face{font-family:"Albert Sans";font-style:italic;font-weight:200;font-display:fallback;src:url('https://fonts.wp.com/s/albertsans/v1/i7dfIFdwYjGaAMFtZd_QA1Zeelmy79QJ1HOSY9CX74f3bRUz1r5t.woff2') format('woff2');}
+@font-face{font-family:"Albert Sans";font-style:italic;font-weight:300;font-display:fallback;src:url('https://fonts.wp.com/s/albertsans/v1/i7dfIFdwYjGaAMFtZd_QA1Zeelmy79QJ1HOSY9BJ74f3bRUz1r5t.woff2') format('woff2');}
+@font-face{font-family:"Albert Sans";font-style:italic;font-weight:400;font-display:fallback;src:url('https://fonts.wp.com/s/albertsans/v1/i7dfIFdwYjGaAMFtZd_QA1Zeelmy79QJ1HOSY9AX74f3bRUz1r5t.woff2') format('woff2');}
+@font-face{font-family:"Albert Sans";font-style:italic;font-weight:500;font-display:fallback;src:url('https://fonts.wp.com/s/albertsans/v1/i7dfIFdwYjGaAMFtZd_QA1Zeelmy79QJ1HOSY9Al74f3bRUz1r5t.woff2') format('woff2');}
+@font-face{font-family:"Albert Sans";font-style:italic;font-weight:600;font-display:fallback;src:url('https://fonts.wp.com/s/albertsans/v1/i7dfIFdwYjGaAMFtZd_QA1Zeelmy79QJ1HOSY9DJ6If3bRUz1r5t.woff2') format('woff2');}
+@font-face{font-family:"Albert Sans";font-style:italic;font-weight:700;font-display:fallback;src:url('https://fonts.wp.com/s/albertsans/v1/i7dfIFdwYjGaAMFtZd_QA1Zeelmy79QJ1HOSY9Dw6If3bRUz1r5t.woff2') format('woff2');}
+@font-face{font-family:"Albert Sans";font-style:italic;font-weight:800;font-display:fallback;src:url('https://fonts.wp.com/s/albertsans/v1/i7dfIFdwYjGaAMFtZd_QA1Zeelmy79QJ1HOSY9CX6If3bRUz1r5t.woff2') format('woff2');}
+@font-face{font-family:"Albert Sans";font-style:italic;font-weight:900;font-display:fallback;src:url('https://fonts.wp.com/s/albertsans/v1/i7dfIFdwYjGaAMFtZd_QA1Zeelmy79QJ1HOSY9C-6If3bRUz1r5t.woff2') format('woff2');}
+@font-face{font-family:"Albert Sans";font-style:normal;font-weight:500;font-display:fallback;src:url('https://cryptography101.ca/wp-content/themes/fewer/assets/fonts/albert-sans_normal_500.ttf') format('truetype');}
+@font-face{font-family:"Albert Sans";font-style:italic;font-weight:500;font-display:fallback;src:url('https://cryptography101.ca/wp-content/themes/fewer/assets/fonts/albert-sans_italic_500.ttf') format('truetype');}
+@font-face{font-family:"Albert Sans";font-style:normal;font-weight:400;font-display:fallback;src:url('https://cryptography101.ca/wp-content/themes/fewer/assets/fonts/albert-sans_normal_400.ttf') format('truetype');}
+@font-face{font-family:"Albert Sans";font-style:italic;font-weight:400;font-display:fallback;src:url('https://cryptography101.ca/wp-content/themes/fewer/assets/fonts/albert-sans_italic_400.ttf') format('truetype');}
+@font-face{font-family:"Albert Sans";font-style:normal;font-weight:600;font-display:fallback;src:url('https://cryptography101.ca/wp-content/themes/fewer/assets/fonts/albert-sans_normal_600.ttf') format('truetype');}
+@font-face{font-family:"Albert Sans";font-style:italic;font-weight:600;font-display:fallback;src:url('https://cryptography101.ca/wp-content/themes/fewer/assets/fonts/albert-sans_italic_600.ttf') format('truetype');}
+</style>
+<link rel="icon" href="https://s0.wp.com/i/webclip.png" sizes="32x32" />
+<link rel="icon" href="https://s0.wp.com/i/webclip.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://s0.wp.com/i/webclip.png" />
+<meta name="msapplication-TileImage" content="https://s0.wp.com/i/webclip.png" />
+		<!-- Jetpack Google Analytics -->
+		<script async src='https://www.googletagmanager.com/gtag/js?id=G-R3MYNFVEJG'></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() { dataLayer.push( arguments ); }
+			gtag( 'js', new Date() );
+			gtag( 'config', "G-R3MYNFVEJG" );
+					</script>
+		<!-- End Jetpack Google Analytics -->
+		</head>
+
+<body class="wp-singular page-template-default page page-id-1510 wp-embed-responsive wp-theme-fewer is-block-theme">
+<script id='jetpack-search-theme-token-sampler'>(function(){try{var c=getComputedStyle(document.body),r=document.documentElement,ink=c.color,bg=c.backgroundColor;if(ink){r.style.setProperty('--jp-search-page-ink',ink);}if(bg&&bg!==ink&&bg!=='rgba(0, 0, 0, 0)'&&bg!=='transparent'){r.style.setProperty('--jp-search-page-surface',bg);}}catch(e){}})();</script>
+<div class="wp-site-blocks"><header class="wp-block-template-part">
+<div class="wp-block-group has-background-background-color has-background has-global-padding is-layout-constrained wp-container-core-group-is-layout-be808a33 wp-block-group-is-layout-constrained" style="border-top-style:none;border-top-width:0px;border-right-style:none;border-right-width:0px;border-bottom-color:var(--wp--preset--color--primary);border-bottom-width:1px;border-left-style:none;border-left-width:0px;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0">
+<div class="wp-block-columns alignfull are-vertically-aligned-center is-not-stacked-on-mobile is-layout-flex wp-container-core-columns-is-layout-e4cf4769 wp-block-columns-is-layout-flex" style="padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--50)">
+<div class="wp-block-column is-vertically-aligned-center is-layout-flow wp-block-column-is-layout-flow" style="flex-basis:100%">
+<div class="wp-block-group is-content-justification-space-between is-layout-flex wp-container-core-group-is-layout-f01d84c1 wp-block-group-is-layout-flex">
+<figure class="wp-block-image size-full is-resized"><img fetchpriority="high" decoding="async" width="754" height="763" src="https://cryptography101.ca/wp-content/uploads/2024/11/Course-logo2-704577939-e1732197561106.png" alt="" class="wp-image-1101" style="width:63px;height:auto" srcset="https://i0.wp.com/cryptography101.ca/wp-content/uploads/2024/11/Course-logo2-704577939-e1732197561106.png?w=754&amp;ssl=1 754w, https://i0.wp.com/cryptography101.ca/wp-content/uploads/2024/11/Course-logo2-704577939-e1732197561106.png?resize=296%2C300&amp;ssl=1 296w" sizes="(max-width: 754px) 100vw, 754px" /></figure>
+
+
+<p style="font-size:clamp(0.984rem, 0.984rem + ((1vw - 0.2rem) * 2.173), 1.5rem)" class="wp-block-site-title wp-container-content-9cfa9a5a"><a href="https://cryptography101.ca" target="_self" rel="home">Cryptography 101 with Alfred Menezes</a></p></div>
+</div>
+
+
+
+<div class="wp-block-column is-vertically-aligned-center is-layout-flow wp-block-column-is-layout-flow" style="padding-right:0;padding-left:0;flex-basis:60%"><nav class="has-small-font-size is-responsive items-justified-space-between wp-block-navigation is-horizontal is-content-justification-space-between is-layout-flex wp-container-core-navigation-is-layout-149f5334 wp-block-navigation-is-layout-flex" aria-label="Header navigation" 
+		 data-wp-interactive="core/navigation" data-wp-context='{"overlayOpenedBy":{"click":false,"hover":false,"focus":false},"type":"overlay","roleAttribute":"","ariaLabel":"Menu"}'><button aria-haspopup="dialog" aria-label="Open menu" class="wp-block-navigation__responsive-container-open" 
+				data-wp-on--click="actions.openMenuOnClick"
+				data-wp-on--keydown="actions.handleMenuKeydown"
+			><svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7.5h16v1.5H4z"></path><path d="M4 15h16v1.5H4z"></path></svg></button>
+				<div class="wp-block-navigation__responsive-container has-text-color has-primary-color has-background has-tertiary-background-color"  id="modal-1" 
+				data-wp-class--has-modal-open="state.isMenuOpen"
+				data-wp-class--is-menu-open="state.isMenuOpen"
+				data-wp-watch="callbacks.initMenu"
+				data-wp-on--keydown="actions.handleMenuKeydown"
+				data-wp-on--focusout="actions.handleMenuFocusout"
+				tabindex="-1"
+			>
+					<div class="wp-block-navigation__responsive-close" tabindex="-1">
+						<div class="wp-block-navigation__responsive-dialog" 
+				data-wp-bind--aria-modal="state.ariaModal"
+				data-wp-bind--aria-label="state.ariaLabel"
+				data-wp-bind--role="state.roleAttribute"
+			>
+							<button aria-label="Close menu" class="wp-block-navigation__responsive-container-close" 
+				data-wp-on--click="actions.closeMenuOnClick"
+			><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="m13.06 12 6.47-6.47-1.06-1.06L12 10.94 5.53 4.47 4.47 5.53 10.94 12l-6.47 6.47 1.06 1.06L12 13.06l6.47 6.47 1.06-1.06L13.06 12Z"></path></svg></button>
+							<div class="wp-block-navigation__responsive-container-content" 
+				data-wp-watch="callbacks.focusFirstElement"
+			 id="modal-1-content">
+								<ul class="wp-block-navigation__container has-small-font-size is-responsive items-justified-space-between wp-block-navigation"><li class="wp-block-navigation-item wp-block-navigation-link wp-container-content-32f88f0c"><a class="wp-block-navigation-item__content"  href="https://cryptography101.ca/about/"><span class="wp-block-navigation-item__label">About  </span></a></li><li data-wp-context="{ &quot;submenuOpenedBy&quot;: { &quot;click&quot;: false, &quot;hover&quot;: false, &quot;focus&quot;: false }, &quot;type&quot;: &quot;submenu&quot;, &quot;modal&quot;: null, &quot;previousFocus&quot;: null }" data-wp-interactive="core/navigation" data-wp-on--focusout="actions.handleMenuFocusout" data-wp-on--keydown="actions.handleMenuKeydown" data-wp-on--pointerenter="actions.openMenuOnHover" data-wp-on--pointerleave="actions.closeMenuOnHover" data-wp-watch="callbacks.initMenu" tabindex="-1" class="wp-block-navigation-item has-child open-on-hover-click wp-block-navigation-submenu wp-container-content-32f88f0c"><a class="wp-block-navigation-item__content"><span class="wp-block-navigation-item__label">Courses</span></a><button data-wp-bind--aria-expanded="state.isSubmenuOpen" data-wp-on--click="actions.toggleMenuOnClick" aria-label="Courses submenu" class="wp-block-navigation__submenu-icon wp-block-navigation-submenu__toggle" ><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg></button><ul data-wp-on--focus="actions.openMenuOnFocus" class="wp-block-navigation__submenu-container has-text-color has-primary-color has-background has-tertiary-background-color wp-block-navigation-submenu"><li class="wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content"  href="https://cryptography101.ca/pqc"><span class="wp-block-navigation-item__label">Post-quantum cryptography explained</span></a></li><li class="wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content"  href="https://cryptography101.ca/kyber-dilithium/"><span class="wp-block-navigation-item__label">Kyber and Dilithium</span></a></li><li class="wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content"  href="https://cryptography101.ca/hash-based-signature-schemes/"><span class="wp-block-navigation-item__label">Hash-based signature schemes</span></a></li><li class="wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content"  href="https://cryptography101.ca/lattice-based-cryptography/"><span class="wp-block-navigation-item__label">Lattice-based cryptography </span></a></li><li class="wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content"  href="https://cryptography101.ca/lattice-basis-reduction/"><span class="wp-block-navigation-item__label">Lattice basis reduction</span></a></li><li class="wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content"  href="https://cryptography101.ca/crypto101-building-blocks"><span class="wp-block-navigation-item__label">Crypto 101: Building blocks</span></a></li><li class="wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content"  href="https://cryptography101.ca/crypto101-deployments"><span class="wp-block-navigation-item__label">Crypto 101: Real-world deployments</span></a></li><li class="wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content"  href="https://cryptography101.ca/codes/"><span class="wp-block-navigation-item__label">Error-correcting codes</span></a></li></ul></li><li data-wp-context="{ &quot;submenuOpenedBy&quot;: { &quot;click&quot;: false, &quot;hover&quot;: false, &quot;focus&quot;: false }, &quot;type&quot;: &quot;submenu&quot;, &quot;modal&quot;: null, &quot;previousFocus&quot;: null }" data-wp-interactive="core/navigation" data-wp-on--focusout="actions.handleMenuFocusout" data-wp-on--keydown="actions.handleMenuKeydown" data-wp-on--pointerenter="actions.openMenuOnHover" data-wp-on--pointerleave="actions.closeMenuOnHover" data-wp-watch="callbacks.initMenu" tabindex="-1" class="wp-block-navigation-item has-child open-on-hover-click wp-block-navigation-submenu"><a class="wp-block-navigation-item__content"><span class="wp-block-navigation-item__label">Teaching</span></a><button data-wp-bind--aria-expanded="state.isSubmenuOpen" data-wp-on--click="actions.toggleMenuOnClick" aria-label="Teaching submenu" class="wp-block-navigation__submenu-icon wp-block-navigation-submenu__toggle" ><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg></button><ul data-wp-on--focus="actions.openMenuOnFocus" class="wp-block-navigation__submenu-container has-text-color has-primary-color has-background has-tertiary-background-color wp-block-navigation-submenu"><li class="wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content"  href="https://cryptography101.ca/lecture-notes/"><span class="wp-block-navigation-item__label">Lecture notes</span></a></li><li class="wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content"  href="https://cryptography101.ca/resources-for-instructors/"><span class="wp-block-navigation-item__label">Resources for instructors</span></a></li><li class="wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content"  href="https://cryptography101.ca/teaching-experiences/"><span class="wp-block-navigation-item__label">Teaching Experiences</span></a></li></ul></li><li data-wp-context="{ &quot;submenuOpenedBy&quot;: { &quot;click&quot;: false, &quot;hover&quot;: false, &quot;focus&quot;: false }, &quot;type&quot;: &quot;submenu&quot;, &quot;modal&quot;: null, &quot;previousFocus&quot;: null }" data-wp-interactive="core/navigation" data-wp-on--focusout="actions.handleMenuFocusout" data-wp-on--keydown="actions.handleMenuKeydown" data-wp-on--pointerenter="actions.openMenuOnHover" data-wp-on--pointerleave="actions.closeMenuOnHover" data-wp-watch="callbacks.initMenu" tabindex="-1" class="wp-block-navigation-item has-child open-on-hover-click wp-block-navigation-submenu current-menu-ancestor wp-container-content-32f88f0c"><a class="wp-block-navigation-item__content"><span class="wp-block-navigation-item__label">Research</span></a><button data-wp-bind--aria-expanded="state.isSubmenuOpen" data-wp-on--click="actions.toggleMenuOnClick" aria-label="Research submenu" class="wp-block-navigation__submenu-icon wp-block-navigation-submenu__toggle" ><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg></button><ul data-wp-on--focus="actions.openMenuOnFocus" class="wp-block-navigation__submenu-container has-text-color has-primary-color has-background has-tertiary-background-color wp-block-navigation-submenu"><li class="wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content"  href="https://cryptography101.ca/another-look-at-provable-security/"><span class="wp-block-navigation-item__label">Another look at provable security</span></a></li><li class="wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content"  href="https://cryptography101.ca/books/"><span class="wp-block-navigation-item__label">Books</span></a></li><li class="wp-block-navigation-item current-menu-item wp-block-navigation-link"><a class="wp-block-navigation-item__content"  href="https://cryptography101.ca/publications/" aria-current="page"><span class="wp-block-navigation-item__label">Publications</span></a></li><li class="wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content"  href="https://cryptography101.ca/professional-activities/"><span class="wp-block-navigation-item__label">Professional activities</span></a></li></ul></li><li data-wp-context="{ &quot;submenuOpenedBy&quot;: { &quot;click&quot;: false, &quot;hover&quot;: false, &quot;focus&quot;: false }, &quot;type&quot;: &quot;submenu&quot;, &quot;modal&quot;: null, &quot;previousFocus&quot;: null }" data-wp-interactive="core/navigation" data-wp-on--focusout="actions.handleMenuFocusout" data-wp-on--keydown="actions.handleMenuKeydown" data-wp-on--pointerenter="actions.openMenuOnHover" data-wp-on--pointerleave="actions.closeMenuOnHover" data-wp-watch="callbacks.initMenu" tabindex="-1" class="wp-block-navigation-item has-child open-on-hover-click wp-block-navigation-submenu wp-container-content-32f88f0c"><a class="wp-block-navigation-item__content"><span class="wp-block-navigation-item__label">UWaterloo</span></a><button data-wp-bind--aria-expanded="state.isSubmenuOpen" data-wp-on--click="actions.toggleMenuOnClick" aria-label="UWaterloo submenu" class="wp-block-navigation__submenu-icon wp-block-navigation-submenu__toggle" ><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg></button><ul data-wp-on--focus="actions.openMenuOnFocus" class="wp-block-navigation__submenu-container has-text-color has-primary-color has-background has-tertiary-background-color wp-block-navigation-submenu"><li class="wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content"  href="https://cryptography101.ca/cacr-events/"><span class="wp-block-navigation-item__label">CACR events</span></a></li><li class="wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content"  href="https://cryptography101.ca/reference-letters/"><span class="wp-block-navigation-item__label">Reference letters</span></a></li><li class="wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content"  href="https://cryptography101.ca/graduate-studies/"><span class="wp-block-navigation-item__label">Graduate studies</span></a></li></ul></li><li class="wp-block-navigation-item wp-block-navigation-link wp-container-content-32f88f0c"><a class="wp-block-navigation-item__content"  href="https://cryptography101.ca/consulting/"><span class="wp-block-navigation-item__label">Consulting</span></a></li></ul>
+								
+							</div>
+						</div>
+					</div>
+				</div></nav></div>
+</div>
+</div>
+
+
+
+<div style="height:0px" aria-hidden="true" class="wp-block-spacer"></div>
+</header>
+
+
+<div class="wp-block-group has-global-padding is-layout-constrained wp-block-group-is-layout-constrained" style="border-style:none;border-width:0px;min-height:50vh">
+<div class="wp-block-columns alignfull is-layout-flex wp-container-core-columns-is-layout-e2836618 wp-block-columns-is-layout-flex" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--20);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--70);padding-left:var(--wp--preset--spacing--50)">
+<div class="wp-block-column has-global-padding is-layout-constrained wp-block-column-is-layout-constrained" style="flex-basis:15%"><h2 style="font-size:clamp(0.984rem, 0.984rem + ((1vw - 0.2rem) * 2.173), 1.5rem)" class="wp-block-post-title">Publications</h2></div>
+
+
+
+<div class="wp-block-column has-global-padding is-layout-constrained wp-container-core-column-is-layout-e10e6827 wp-block-column-is-layout-constrained" style="padding-right:0;padding-left:0;flex-basis:60%"><div style="min-height:50vh" class="entry-content wp-block-post-content has-global-padding is-content-justification-left is-layout-constrained wp-container-core-post-content-is-layout-059bc41c wp-block-post-content-is-layout-constrained">
+<div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-cb0a7ccb wp-block-columns-is-layout-flex">
+<div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" decoding="async" width="1024" height="331" data-attachment-id="1540" data-permalink="https://cryptography101.ca/publications/menonites/" data-orig-file="https://i0.wp.com/cryptography101.ca/wp-content/uploads/2025/04/Menonites.png?fit=1244%2C402&amp;ssl=1" data-orig-size="1244,402" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Menonites" data-image-description="" data-image-caption="" data-large-file="https://i0.wp.com/cryptography101.ca/wp-content/uploads/2025/04/Menonites.png?fit=1024%2C331&amp;ssl=1" src="https://i0.wp.com/cryptography101.ca/wp-content/uploads/2025/04/Menonites.png?resize=1024%2C331&#038;ssl=1" alt="" class="wp-image-1540" srcset="https://i0.wp.com/cryptography101.ca/wp-content/uploads/2025/04/Menonites.png?resize=1024%2C331&amp;ssl=1 1024w, https://i0.wp.com/cryptography101.ca/wp-content/uploads/2025/04/Menonites.png?resize=300%2C97&amp;ssl=1 300w, https://i0.wp.com/cryptography101.ca/wp-content/uploads/2025/04/Menonites.png?resize=768%2C248&amp;ssl=1 768w, https://i0.wp.com/cryptography101.ca/wp-content/uploads/2025/04/Menonites.png?resize=1200%2C388&amp;ssl=1 1200w, https://i0.wp.com/cryptography101.ca/wp-content/uploads/2025/04/Menonites.png?w=1244&amp;ssl=1 1244w" sizes="(max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<ol>
+<li>
+<p><strong><span style="color: #ff0000;">NEW</span></strong>: <a href="https://cryptography101.ca/latticecrypto"><strong>A Gentle Introduction to Lattice-Based Cryptography</strong></a></p>
+</li>
+<li><span style="color: #ff0000;"><strong>NEW</strong></span>: <strong><a href="https://sites.google.com/view/textbook-appliedcrypto/home">Textbook of Applied Cryptography</a> (in progress)<br /></strong>(with Paul van Oorschot and Bart Preneel)<br /><br /></li>
+<li><strong><span style="color: #ff0000;">NEW</span></strong>: <a href="https://doi.org/10.1109/MSEC.2026.3655449"><strong>The LLL lattice basis reduction algorithm</strong></a><br />(with S. Chatterjee)<br /><i>IEEE Security &amp; Privacy</i>, 24-4 (2026), 71-74.<br /><br /></li>
+<li><span style="color: #000000;"><strong>Several sections on elliptic curve cryptography</strong></span><br />(with D. Hankerson)<br /><a href="https://link.springer.com/referencework/10.1007/978-3-642-27739-9">Encyclopedia of Cryptography, Security and Privacy</a> (third edition), edited by S. Jajodia, P. Samarati and M. Yung, Springer-Verlag, 2025.<a href="https://doi.org/10.1007/978-3-642-27739-9_244-2">​<br /></a>
+<ol>
+<li>
+<div><a href="https://doi.org/10.1007/978-3-030-71522-9_244">Elliptic curves</a></div>
+</li>
+<li>
+<div><a href="https://doi.org/10.1007/978-3-030-71522-9_245">Elliptic curve cryptography</a></div>
+</li>
+<li>
+<div><a href="https://doi.org/10.1007/978-3-030-71522-9_248">Elliptic curve keys</a></div>
+</li>
+<li>
+<div><a href="https://doi.org/10.1007/978-3-030-71522-9_255">NIST elliptic curves</a></div>
+</li>
+<li>
+<div><a href="https://doi.org/10.1007/978-3-030-71522-9_872">Koblitz elliptic curves</a></div>
+</li>
+<li>
+<div><a href="https://doi.org/10.1007/978-3-030-71522-9_249">Elliptic curve point multiplication using halving</a></div>
+</li>
+<li>
+<div><a href="https://doi.org/10.1007/978-3-030-71522-9_246">Elliptic curve discrete logarithm problem</a></div>
+</li>
+<li>
+<div><a href="https://doi.org/10.1007/978-3-030-71522-9_250">Elliptic curve public-key encryption schemes</a></div>
+</li>
+<li>
+<div><a href="https://https//doi.org/10.1007/978-3-030-71522-9_247">Elliptic curve key agreement schemes</a></div>
+</li>
+<li>
+<div><a href="https://doi.org/10.1007/978-3-030-71522-9_251">Elliptic curve signature schemes</a></div>
+</li>
+<li>
+<div><a href="https://doi.org/10.1007/978-3-030-71522-9_254">Pairings</a></div>
+</li>
+</ol>
+</li>
+<li>
+<p><a href="https://dx.doi.org/10.1109/MSEC.2021.3107078"><strong>The Advanced Encryption Standard: 20 years later</strong></a><br />(with D. Stebila)<br /><i>IEEE Security &amp; Privacy</i>, 19-6 (2021), 98-102.</p>
+</li>
+<li>
+<p><a href="https://dx.doi.org/10.1109/MSEC.2021.3077403"><strong>End-to-end security: when do we have it?</strong></a><br />(with D. Stebila)<br /><i>IEEE Security &amp; Privacy</i>, 19-4 (2021), 60-64.</p>
+</li>
+<li>
+<p><strong><a href="https://dx.doi.org/10.1109/MSEC.2021.3049730">Challenges in cryptography</a></strong><br />(with D. Stebila)<br /><i>IEEE Security &amp; Privacy</i>, 19-2 (2021), 70-73.</p>
+</li>
+<li>
+<p><a href="https://dx.doi.org/10.3934/amc.2019034"><strong>Critical perspectives on provable security: Fifteen years of &#8220;Another Look&#8221; papers</strong></a><br />(with N. Koblitz)<br /><i>Advances in Mathematics of Communications</i>, 13 (2019), 517-558.<br /><a href="https://eprint.iacr.org/2019/1336">Updated paper</a>.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/978-3-030-10970-7_15"><strong>On the cost of computing isogenies between supersingular elliptic curves</strong></a><br />(with G. Adj, D. Cervantes-Vazquez, J. Chi-Dominguez and F. Rodriguez-Henriquez)<br /><i>SAC 2018</i>, 322-343.<br /><a href="http://eprint.iacr.org/2018/313">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.3934/amc.2019012"><strong>On the security of the WOTS-PRF signature scheme</strong></a><br />(with P. Lafrance)<br /><i>Advances in Mathematics of Communications</i>, 13 (2019), 185-193.<br /><a href="http://eprint.iacr.org/2017/938">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1016/j.ffa.2018.10.002"><strong>On isogeny graphs of supersingular elliptic curves over finite fields</strong></a><br />(with G. Adj and O. Ahmadi)<br /><i>Finite Fields and Their Applications</i>, 55 (2019), 267-283.<br /><a href="http://eprint.iacr.org/2018/132">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.3934/amc.2018044"><strong>Computing discrete logarithms in cryptographically-interesting characteristic-three finite fields</strong></a><br />(with G. Adj, I. Canales-Martinez, N. Cruz-Cortes, T. Oliveira, L. Rivera-Zamarripa and F. Rodriguez-Henriquez)<br /><i>Advances in Mathematics of Communications</i>, 12 (2018), 741-759.<br /><a href="http://eprint.iacr.org/2016/914">Preprint</a>.</p>
+</li>
+<li>
+<p><strong>Coding Theory</strong><br />(with P. van Oorschot, D. Joyner and T. Shaska)<br />chapter in <a href="https://dx.doi.org/10.1201/9781315156484">Handbook of Discrete and Combinatorial Mathematics</a>, second edition, CRC Press, 2018, pages 1023-1067.</p>
+</li>
+<li>
+<p><strong><a href="https://notes.math.ca/archives/Notesv49n5.pdf">Cryptographers prepare for a possible post-quantum future</a></strong><br />(with N. Koblitz)<br /><i>CMS Notes</i>, Vol. 49, No. 5 (2017), 16-17.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/978-3-319-61273-7_3"><strong>Another look at tightness II: practical issues in cryptography</strong></a><br />(with S. Chatterjee, N. Koblitz and P. Sarkar)<br /><i>Mycrypt 2016</i>, 21-55.<br /><a href="https://eprint.iacr.org/2016/360">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/978-3-319-61273-7_5"><strong>Challenges with assessing the impact of NFS advances on the security of pairing-based cryptography</strong></a><br />(with P. Sarkar and S. Singh)<br /><i>Mycrypt 2016</i>, 83-108.<br /><a href="https://eprint.iacr.org/2016/1102">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1109/TC.2016.2633340"><strong>On instantiating pairing-based protocols with elliptic curves of embedding degree one</strong></a><br />(with S. Chatterjee and F. Rodriguez-Henriquez)<br /><i>IEEE Transactions on Computers</i>, 66 (2017), 1061-1070.<br /><a href="http://math.uwaterloo.ca/~ajmeneze/publications/one.pdf">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://doi.ieeecomputersociety.org/10.1109/MSP.2016.120"><strong>A riddle wrapped in an enigma</strong></a><br />(with N. Koblitz)<br /><i>IEEE Security &amp; Privacy</i>, 14 (2016), 34-42.<br /><a href="https://eprint.iacr.org/2015/1018">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/s10623-015-0148-5"><strong>Cryptocash, cryptocurrencies, and cryptocontracts</strong></a><br />(with N. Koblitz)<br /><i>Designs, Codes and Cryptography</i>, 78 (2016), 87-102.<br /><a href="https://cryptography101.ca/wp-content/uploads/2025/04/cryptocash.pdf">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/978-3-662-48797-6_13"><strong>Type 2 structure-preserving signature schemes revisited</strong></a><br />(with S. Chatterjee)<br /><i>ASIACRYPT 2015</i>, 286-310.<br /><a href="http://eprint.iacr.org/2014/635">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="https://link.springer.com/article/10.1007/s10623-015-0094-2"><strong>The random oracle model: A twenty-year retrospective</strong></a><br />(with N. Koblitz)<br /><i>Designs, Codes and Cryptography</i>, 77 (2015), 587-610.<br /><a href="https://eprint.iacr.org/2015/140">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://link.springer.com/journal/10623/77/2/page/1"><strong>Special Issue on Cryptography, Codes, Designs and Finite Fields: In Memory of Scott A. Vanstone</strong></a><br />(edited with I. Blake and D. Stinson)<br /><i>Designs, Codes and Cryptography</i>, 77 (2-3), 2015.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1109/TC.2014.2339824"><strong>Fault attacks on pairing-based protocols revisited</strong></a><br />(with S. Chatterjee and K. Karabina)<br /><i>IEEE Transactions on Computers</i>, 64 (2015), 1707-1714.<br /><a href="http://eprint.iacr.org/2014/492">Preprint</a></p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/978-3-319-16295-9"><strong>Progress in Cryptology &#8211; LATINCRYPT 2014</strong></a><br />(edited with D. Aranha)<br />Lecture Notes in Computer Science, 8895, Springer-Verlag, 2015.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/978-3-319-16277-5_1"><strong>Computing discrete logarithms in <i>F<sub>3<sup>6 • 137</sup></sub></i> and <i>F<sub>3<sup>6 • 163</sup></sub></i> using Magma</strong></a><br />(with G. Adj, T. Oliveira and F. Rodriguez-Henriquez)<br /><i>WAIFI 2014</i>, 3-22.<br /><a href="http://eprint.iacr.org/2014/057">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1016/j.ffa.2014.10.009"><strong>Weakness of <i>F<sub>3<sup>6 • 1429</sup></sub></i> and <i>F<sub>2<sup>4 • 3041</sup></sub></i> for discrete logarithm cryptography</strong></a><br />(with G. Adj, T. Oliveira and F. Rodriguez-Henriquez)<br /><i>Finite Fields and Their Applications</i>, 32 (2015), 148-170.<br /><a href="http://eprint.iacr.org/2013/737">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/978-3-319-10683-0_4"><strong>Another look at security theorems for 1-key nested MACs</strong></a><br />(with N. Koblitz)<br />C.K. Koc (ed.), <i>Open Problems in Mathematics and Computational Science</i>, 2014, 69-89.<br /><a href="http://eprint.iacr.org/2013/248">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/978-3-319-04873-4_2"><strong>Weakness of <i>F<sub>3<sup>6 • 509</sup></sub></i> for discrete logarithm cryptography</strong></a><br />(with G. Adj, T. Oliveira and F. Rodriguez-Henriquez)<br /><i>Pairing-Based Cryptography &#8212; Pairing 2013</i>, 20-44.<br /><a href="http://eprint.iacr.org/2013/446">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1515/gcc-2013-0008"><strong>Another look at non-uniformity</strong></a><br />(with N. Koblitz)<br /><i>Groups Complexity Cryptology</i>, 5 (2013), 117-139.<br /><a href="http://eprint.iacr.org/2012/359">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1515/jmc-2013-5004"><strong>Another look at HMAC</strong></a><br />(with N. Koblitz)<br /><i>Journal of Mathematical Cryptology</i>, 7 (2013), 225-251.<br /><a href="http://eprint.iacr.org/2012/074">Preprint</a>.</p>
+</li>
+<li>
+<p><strong>Introduction to Cryptography</strong><br />Section 16.1 of <a href="https://www.routledge.com/Handbook-of-Finite-Fields/Mullen-Panario/p/book/9781439873786">Handbook of Finite Fields</a>, edited by G. Mullen and D. Panario, Chapman &amp; Hall/CRC, 2013</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/978-3-642-36334-4_11"><strong>Implementing pairings at the 192-bit security level</strong></a><br />(with D. Aranha, L. Fuentes-Castaneda, E. Knapp and F. Rodriguez-Henriquez)<br /><i>Pairing-Based Cryptography &#8212; Pairing 2012</i>, 177-195.<br /><a href="http://eprint.iacr.org/2012/232">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/doi:%2010.3934/amc.2013.7.103"><strong>Generalizations of Verheul&#8217;s theorem to asymmetric pairings</strong></a><br />(with K. Karabina and E. Knapp)<br /><i>Advances in Mathematics of Communications</i>, 7 (2013), 103-111.<br /><a href="https://cryptography101.ca/wp-content/uploads/2025/04/verheul.pdf">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://aimsciences.org/journals/displayArticlesnew.jsp?paperID=8249"><strong>Another look at security definitions</strong></a><br />(with N. Koblitz)<br /><i>Advances in Mathematics of Communications</i>, 7 (2013), 1-38.<br /><a href="http://eprint.iacr.org/2011/343">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/978-3-642-28496-0_18"><strong>Another look at tightness</strong></a><br />(with S. Chatterjee and P. Sarkar)<br /><i>Proceedings of SAC 2011</i>, 293-319.<br /><a href="http://eprint.iacr.org/2011/442">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/978-3-642-25516-8_17"><strong>Parallelizing the Weil and Tate pairings</strong></a><br />(with D. Aranha, E. Knapp and F. Rodriguez-Henriquez)<br /><i>Cryptography and Coding 2011</i>, 275-295.</p>
+</li>
+<li>
+<p><a href="http://www.math.ac.vn/publications/vjm/VJM_39/B2_Koblitz.pdf"><strong>Discrete logarithms, Diffie-Hellman, and reductions</strong></a><br />(with N. Koblitz and I. Shparlinski)<br /><i>Vietnam Journal of Mathematics</i>, 39 (2011), 267-285.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/978-3-642-22497-3_23"><strong>A generic variant of NIST&#8217;s KAS2 key agreement protocol</strong></a><br />(with S. Chatterjee and B. Ustaoglu)<br /><i>Proceedings of ACISP 2011</i>, 353-370.<br /><a href="https://cryptography101.ca/wp-content/uploads/2025/04/kas2.pdf">Full version</a>.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1016/j.jnt.2009.01.006"><strong>Elliptic curve cryptography: The serpentine course of a paradigm shift</strong></a><br />(with A. Hibner Koblitz and N. Koblitz)<br /><i>Journal of Number Theory</i>, 131 (2011), 781-814.<br /><a href="http://eprint.iacr.org/2008/390">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1016/j.dam.2011.04.021"><strong>On cryptographic protocols employing asymmetric pairings &#8211; The role of Ψ revisited</strong></a><br />(with S. Chatterjee)<br /><i>Discrete Applied Mathematics</i>, 159 (2011), 1311-1322.<br /><a href="http://eprint.iacr.org/2009/480">Preprint</a>.</p>
+</li>
+<li>
+<p><strong>Several sections on elliptic curve cryptography</strong><br />(with D. Hankerson)<br /><a href="http://www.springer.com/computer/security+and+cryptology/book/978-1-4419-5905-8">Encyclopedia of Cryptography and Security</a> (second edition), edited by H. van Tilborg and S. Jajodia, Springer-Verlag, 2011.</p>
+</li>
+<li>
+<p><a href="https://cryptography101.ca/wp-content/uploads/2025/04/ephemeral.pdf"><strong>On reusing ephemeral public keys in Diffie-Hellman key agreement protocols</strong></a><br />(with B. Ustaoglu)<br /><i>International Journal of Applied Cryptography</i>, 2 (2010), 154-158.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/978-3-642-17401-8_5"><strong>Combined security analysis of the one- and three-pass unified model key agreement protocols</strong></a><br />(with S. Chatterjee and B. Ustaoglu)<br /><i>Indocrypt 2010</i>, 49-68.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/978-3-642-13797-6_9"><strong>On the efficiency and security of pairing-based protocols in the Type 1 and Type 4 settings</strong></a><br />(with S. Chatterjee and D. Hankerson)<br /><i>WAIFI 2010</i>, 114-134.<br /><a href="http://eprint.iacr.org/2010/388">Full version</a>.</p>
+</li>
+<li>
+<p><a href="https://cryptography101.ca/wp-content/uploads/2025/04/weildescent.pdf"><strong>On the asymptotic effectiveness of Weil descent attacks</strong></a>  <br />(with K. Karabina, C. Pomerance and I. Shparlinski)<br /><i>Journal of Mathematical Cryptology</i>, 4 (2010), 175-191.</p>
+</li>
+<li>
+<p><a href="https://cryptography101.ca/wp-content/uploads/2025/04/dlog.pdf"><strong>Intractable problems in cryptography</strong></a><strong> </strong><br />(with N. Koblitz)<br />Revised version of a paper that appeared in <i>Finite Fields: Theory and Applications</i>, Contemporary Mathematics, 518 (2010), 279-300.<br />See also <a href="https://www.ams.org/notices/201003/rtx100300357p.pdf">The brave new world of bodacious assumptions in cryptography</a><br /><i>Notices of the AMS</i>, 57 (2010), 357-365.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/s10623-009-9334-7"><strong>Comparing two pairing-based aggregate signature schemes</strong></a><br />(with S. Chatterjee, D. Hankerson and E. Knapp)<br /><i>Designs, Codes and Cryptography</i>, 55 (2010), 141-167.<br /><a href="http://eprint.iacr.org/2009/060">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/978-3-642-10628-6_3"><strong>Reusing static keys in key agreement protocols</strong></a><br />(with S. Chatterjee and B. Ustaoglu)<br /><i>Indocrypt 2009</i>, 39-56.<br /><a href="https://cryptography101.ca/wp-content/uploads/2025/04/static.pdf">Full version</a>. </p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/978-3-642-10868-6_14"><strong>A new protocol for the nearby friend problem</strong></a><br />(with S. Chatterjee and K. Karabina)<br /><i>Cryptography and Coding 2009</i>, 236-251.</p>
+</li>
+<li>
+<p><a href="http://doi.ieeecomputersociety.org/10.1109/TC.2009.61"><strong>Analyzing the Galbraith-Lin-Scott point multiplication method for elliptic curves over binary fields</strong></a><br />(with D. Hankerson and K. Karabina)<br /><i>IEEE Transactions on Computers</i>, 58 (2009), 1411-1420.<br /><a href="http://eprint.iacr.org/2008/334">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="https://cryptography101.ca/wp-content/uploads/2025/04/pairings.pdf"><strong>An introduction to pairing-based cryptography</strong></a>  <br /><i>Recent Trends in Cryptography</i>, edited by I. Luengo, volume 477 of Contemporary Mathematics, AMS-RSME, 2009, 47-65.</p>
+</li>
+<li>
+<p><a href="https://cryptography101.ca/wp-content/uploads/2025/04/prepost.pdf"><strong>Comparing the pre- and post-specified peer models for key agreement</strong></a><br />(with B. Ustaoglu)<br /><i>International Journal of Applied Cryptography</i>, 1 (2009), 236-250.<br />An <a href="https://doi.org/10.1007/978-3-540-70500-0_5">earlier version</a> appeared in <i>Proceedings of ACISP 2008</i>, 53-68.</p>
+</li>
+<li>
+<p><a href="https://cryptography101.ca/wp-content/uploads/2025/04/pairings_software.pdf"><strong>Software implementation of pairings</strong></a><br />(with D. Hankerson and M. Scott)<br /><i>Identity-Based Cryptography</i>, edited by M. Joye and G. Neven, IOS Press, 2008, 188-206.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1515/JMC.2008.014"><strong>Another look at non-standard discrete log and Diffie-Hellman problems</strong></a><br />(with N. Koblitz)<br /><i>Journal of Mathematical Cryptology</i>, 4 (2008), 311-326.<br /><a href="http://eprint.iacr.org/2007/442">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="https://cryptography101.ca/wp-content/uploads/2025/04/um.pdf"><strong>Security arguments for the UM key agreement protocol in the NIST SP 800-56A standard</strong></a><br />(with B. Ustaoglu)<br /><i>Proceedings of ASIACCS &#8217;08</i>, ACM Press, 261-270.</p>
+</li>
+<li>
+<p><strong><a href="http://dx.doi.org/10.1007/978-3-540-73074-3_8">Software implementation of arithmetic in <i>F<sub>3<sup>m</sup></sub></i></a></strong><br />(with O. Ahmadi and D. Hankerson)<br /><i>Proceedings of WAIFI 2007</i>, 85-102.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/978-3-540-74143-5"><strong>Advances in Cryptology &#8211; CRYPTO 2007</strong></a><strong> </strong>(edited volume)<br />Lecture Notes in Computer Science, 4622, Springer-Verlag, 2007.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1016/j.dam.2006.06.004"><strong>Formulas for cube roots in <i>F<sub>3<sup>m</sup></sub></i></strong></a><br />(with O. Ahmadi and D. Hankerson)<br /><i>Discrete Applied Mathematics</i>, 155 (2007), 260-270.</p>
+</li>
+<li>
+<p><strong><a href="https://cryptography101.ca/wp-content/uploads/2025/04/weightn.pdf">Irreducible polynomials of maximum weight</a> </strong><br />(with O. Ahmadi)<br /><i>Utilitas Mathematica</i>, 72 (2007), 111-123.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1515/JMC.2007.004"><strong>Another look at HMQV</strong></a><br /><i>Journal of Mathematical Cryptology</i>, 1 (2007), 47-64.<br /><a href="http://eprint.iacr.org/2005/205">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.3934/amc.2007.1.13"><strong>Another look at generic groups</strong></a><br />(with N. Koblitz)<br /><i>Advances in Mathematics of Communications</i>, 1 (2007), 13-28.<br /><a href="http://eprint.iacr.org/2006/230">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/s00145-005-0432-z"><strong>Another look at &#8220;provable security&#8221;</strong></a><br />(with N. Koblitz)<br /><i>Journal of Cryptology</i>, 20 (2007), 3-37.<br /><a href="http://eprint.iacr.org/2004/152">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/11941378_12"><strong>Another look at &#8220;provable security&#8221;. II</strong></a><br />(with N. Koblitz)<br /><i>Progress in Cryptology &#8211; Indocrypt 2006</i>, 148-175.<br /><a href="http://delta.cs.cinvestav.mx/~francisco/al.pdf">Spanish translation</a> by Francisco Rodriguez-Henriquez.<br /><a href="http://eprint.iacr.org/2006/229">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/11941378_11"><strong>On the importance of public-key validation in the MQV and HMQV key agreement protocols</strong></a><br />(with B. Ustaoglu)<br /><i>Progress in Cryptology &#8211; Indocrypt 2006</i>, 133-147.</p>
+</li>
+<li>
+<p><a href="http://doi.ieeecomputersociety.org/10.1109/TC.2006.132"><strong>Software multiplication using Gaussian normal bases</strong></a><br />(with R. Dahab, D. Hankerson, F. Hu, M. Long and J. López)<br /><i>IEEE Transactions on Computers</i>, 55 (2006), 974-984.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/s00200-005-0186-8"><strong>Cryptographic implications of Hess&#8217; generalized GHS attack</strong></a><br />(with E. Teske)<br /><i>Applicable Algebra in Engineering, Communication and Computing</i>, 16 (2006), 439-460.<br /><a href="http://eprint.iacr.org/2004/235">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/s10623-004-4039-4"><strong>On the number of trace-one elements in polynomial bases for <i>GF(2 <sup>n</sup>)</i></strong></a><br />(with O. Ahmadi)<br /><i>Designs, Codes and Cryptography</i>, 37 (2005), 493-507.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/11586821_2"><strong>Pairing-based cryptography at high security levels</strong></a><br />(with N. Koblitz)<br /><i>Cryptography and Coding 2005</i>, 13-36.<br /><a href="http://eprint.iacr.org/2005/076">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1016/j.ffa.2005.05.001"><strong>Algebraic curves and cryptography</strong></a><br />(with S. Galbraith)<br /><i>Finite Fields and Their Applications</i>, 11 (2005), 544-577.</p>
+</li>
+<li>
+<p><strong>Several sections on elliptic curve cryptography</strong><br />(with D. Hankerson)<br />Encyclopedia of Cryptography and Security, edited by Henk van Tilborg, Springer-Verlag, 2005.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/b105222"><strong>Topics in Cryptology &#8211; CT-RSA 2005</strong></a> (edited volume)<br />Lecture Notes in Computer Science, 3376, Springer-Verlag, 2005.</p>
+</li>
+<li>
+<p><a href="https://cryptography101.ca/wp-content/uploads/2025/04/publickey.pdf"><strong>A survey of public-key cryptosystems</strong></a><br />(with N. Koblitz)<br /><i>SIAM Review</i>, 46 (2004), 599-634.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1023/B:DESI.0000036250.18062.3f"><strong>Security of signature schemes in a multi-user setting</strong></a><br />(with N. Smart)<br /><i>Designs, Codes and Cryptography</i>, 33 (2004), 261-274.</p>
+</li>
+<li>
+<p><strong><a href="https://cryptography101.ca/wp-content/uploads/2025/04/hcc.pdf">Hyperelliptic curves and cryptography</a></strong><br />(with M. Jacobson and A. Stein)<br /><i>High Primes and Misdemeanours: Lectures in Honour of the 60th Birthday of Hugh Cowie Williams</i>,<br />Fields Institute Communications Series, 41 (2004), 255-282.</p>
+</li>
+<li>
+<p><a href="https://doi.org/10.1090/S0025-5718-04-01637-0"><strong>Obstacles to the torsion-subgroup attack on the decision Diffie-Hellman problem</strong></a><br />(with N. Koblitz)<br /><i>Mathematics of Computation</i>, 73 (2004), 2027-2041.</p>
+</li>
+<li>
+<p><a href="http://doi.ieeecomputersociety.org/10.1109/TC.2004.43"><strong>Field inversion and point halving revisited</strong></a><br />(with K. Fong, D. Hankerson and J. López)<br /><i>IEEE Transactions on Computers</i>, 53 (2004), 1047-1059.</p>
+</li>
+<li>
+<p><a href="https://doi.org/10.1007/978-3-540-24660-2_28"><strong>Weak fields for ECC</strong></a><br />(with E. Teske and A. Weng)<br /><i>Topics in Cryptology &#8211; CT-RSA 2004</i>, 366-386.<br /><a href="http://eprint.iacr.org/2003/128">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://www.cacr.uwaterloo.ca/ecc/"><strong>Guide to Elliptic Curve Cryptography</strong></a><br />(with D. Hankerson and S. Vanstone)<br />Springer, 2004.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1023/a:1022595222606"><strong>An efficient protocol for authenticated key agreement</strong></a><br />(with L. Law, M. Qu, J. Solinas and S. Vanstone)<br /><i>Designs, Codes and Cryptography</i>, 28 (2003), 119-134.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/3-540-36288-6_16"><strong>Validation of elliptic curve public keys</strong></a><br />(with A. Antipa, D. Brown, R. Struik and S. Vanstone)<br /><i>Proceedings of PKC 2003</i>, 211-223.</p>
+</li>
+<li>
+<p><a href="https://cryptography101.ca/wp-content/uploads/2025/04/arazi.pdf"><strong>A small subgroup attack on a key agreement protocol of Arazi</strong></a><br />(with D. Brown)<br /><i>Bulletin of the ICA</i>, 37 (2003), 45-50.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/3-540-36231-2"><strong>Progress in Cryptology &#8211; INDOCRYPT 2002</strong></a><br />(edited with P. Sarkar)<br />Lecture Notes in Computer Science, 2551, Springer-Verlag, 2002.</p>
+</li>
+<li>
+<p><a href="https://doi.org/10.1112/S1461157000000723"><strong>Analysis of the GHS Weil descent attack on the ECDLP over characteristic two finite fields of composite degree</strong></a><br />(with M. Maurer and E. Teske)<br /><i>LMS Journal of Computation and Mathematics</i>, 5 (2002), 127-174<br />An earlier version appeared in <i>Proceedings of Indocrypt 2001</i>, 195-213.<br /><a href="http://eprint.iacr.org/2001/084">Preprint</a>.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/s002000100092"><strong>Isomorphism classes of genus-2 hyperelliptic curves over finite fields</strong></a><br />(with L. Encinas and J. Masque)<br /><i>Applicable Algebra in Engineering, Communication and Computing</i>, 13 (2002), 57-65.</p>
+</li>
+<li>
+<p><a href="http://eprint.iacr.org/2001/041"><strong>Solving elliptic curve discrete logarithm problems using Weil descent </strong></a><br />(with M. Jacobson and A. Stein)<br /><i>Journal of the Ramanujan Mathematical Society</i>, 16 (2001), 231-260.</p>
+</li>
+<li>
+<p><strong><a href="https://doi.org/10.1007/s102070100002">The elliptic curve digital signature algorithm (ECDSA)</a></strong><br />(with D. Johnson and S. Vanstone)<br /><i>International Journal on Information Security</i>, 1 (2001), 36-63.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/3-540-45353-9_19"><strong>Software implementation of the NIST elliptic curves over prime fields</strong></a><br />(with M. Brown, D. Hankerson and J. Hernandez)<br /><i>Topics in Cryptology &#8211; CT-RSA 2001</i>, 250-265.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/3-540-45353-9_23"><strong>Analysis of the Weil descent attack of Gaudry, Hess and Smart</strong></a><br />(with M. Qu)<br /><i>Topics in Cryptology &#8211; CT-RSA 2001</i>, 308-318.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/3-540-44499-8_1"><strong>Software implementation of elliptic curve cryptography over binary fields</strong></a><br />(with D. Hankerson and J. Hernandez)<br /><i>Proceedings of CHES 2000</i>, 1-24.</p>
+</li>
+<li>
+<p><a href="https://cryptography101.ca/wp-content/uploads/2025/04/pager.pdf"><strong>PGP in constrained wireless devices</strong></a><strong> </strong><br />(with M. Brown, D. Cheung, D. Hankerson, J. Hernandez and M. Kirkup)<br /><i>Proceedings of the 9th USENIX Security Symposium</i>, 2000, 247-261.</p>
+</li>
+<li>
+<p><strong><a href="http://dx.doi.org/10.1023/A:1008354106356">The state of elliptic curve cryptography</a></strong><br />(with N. Koblitz and S. Vanstone)<br /><i>Designs, Codes and Cryptography</i>, 19 (2000), 173-193.</p>
+</li>
+<li>
+<p><strong>Coding Theory and Cryptology</strong><br />(with P. van Oorschot)<br />chapter in <a href="http://www.amazon.com/exec/obidos/ASIN/0849301491/o/qid=939934318/sr=8-2/002-7324920-5817058">Handbook of Discrete and Combinatorial Mathematics</a>, CRC Press, 1999, pages 889-954.</p>
+</li>
+<li>
+<p><strong><a href="http://dx.doi.org/10.1007/3-540-48892-8_26">Authenticated Diffie-Hellman key agreement protocols</a></strong><br />(with S. Blake-Wilson)<br /><i>Proceedings of the 5th Annual Workshop on Selected Areas in Cryptography (SAC &#8217;98)</i>, 339-361.</p>
+</li>
+<li>
+<p><strong><a href="http://dx.doi.org/10.1007/3-540-49162-7_12">Unknown key-share attacks on the station-to-station (STS) protocol</a></strong><br />(with S. Blake-Wilson)<br /><i>Proceedings of PKC &#8217;99</i>, 154-170.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/BFb0028166"><strong>Entity authentication and authenticated key transport protocols employing asymmetric techniques</strong></a><br />(with S. Blake-Wilson)<br /><i>Proceedings of the 5th International Workshop on Security Protocols</i>, 1998, 137-158.</p>
+</li>
+<li>
+<p><a href="https://cryptography101.ca/wp-content/uploads/2025/04/glnq.pdf"><strong>The discrete logarithm problem in </strong><i><strong>GL(n,q)</strong> </i></a> <br />(with Yi-Hong Wu)<br /><i>Ars Combinatoria</i>, 47 (1998), 23-32.</p>
+</li>
+<li>
+<p><a href="https://cryptography101.ca/wp-content/uploads/2025/04/hyperelliptic.pdf"><strong>An elementary introduction to hyperelliptic curves</strong></a><strong> </strong><br />(with Yi-Hong Wu and R. Zuccherato)<br />appendix in <a href="https://doi.org/10.1007/978-3-662-03642-6">Algebraic Aspects of Cryptography</a> by Neal Koblitz, Springer-Verlag, 1998, pages 155-178.</p>
+</li>
+<li>
+<p><strong><a href="http://dx.doi.org/10.1007/BFb0024447">Key agreement protocols and their security analysis</a></strong><br />(with D. Johnson and S. Blake-Wilson)<br /><i>Proceedings of the Sixth IMA International Conference on Cryptography and Coding</i>, 1355 (1997), 30-45.<br /><a href="https://cryptography101.ca/wp-content/uploads/2025/04/agreement.pdf">Full version</a>.</p>
+</li>
+<li>
+<p><strong><a href="http://www.cacr.uwaterloo.ca/hac/">Handbook of Applied Cryptography</a></strong><br />(with P. van Oorschot and S. Vanstone)<br />CRC Press, 1997.</p>
+</li>
+<li>
+<p><strong>Elliptic curves and cryptography</strong><br />(with A. Jurisic)<br /><a href="http://www.ddj.com/">Dr. Dobb&#8217;s Journal</a>, April 1997, 23-36.</p>
+</li>
+<li>
+<p><strong>Some new key agreement protocols providing mutual implicit authentication</strong><br />(with M. Qu and S. Vanstone)<br /><i>Workshop on Selected Areas in Cryptography (SAC &#8217;95)</i>, 22-32, 1995.</p>
+</li>
+<li>
+<p><strong><a href="ftp://ftp.rsasecurity.com/pub/cryptobytes/crypto1n2.pdf">Elliptic curve cryptosystems</a></strong><br /><i>CryptoBytes &#8211; The Technical Newsletter of RSA Laboratories</i>, Volume 1, Number 2, Summer 1995, 1-4.</p>
+</li>
+<li>
+<p><a href="https://doi.org/10.1007/978-1-4615-3198-2"><strong>Elliptic Curve Public Key Cryptosystems</strong></a><br />Kluwer Academic Publishers, 1993.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1109/18.259647"><strong>Reducing elliptic curve logarithms to logarithms in a finite field</strong></a><br />(with T. Okamoto and S. Vanstone)<br /><i>IEEE Transactions on Information Theory</i>, 39 (1993), 1639-1646.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/BF00203817"><strong>Elliptic curve cryptosystems and their implementation</strong></a><br />(with S. Vanstone)<br /><i>Journal of Cryptology</i>, 6 (1993), 209-224</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/3-540-47555-9_14"><strong>Public-key cryptosystems with very small key lengths</strong></a><br />(with G. Harper and S. Vanstone)<br /><i>Advances in Cryptology &#8211; EUROCRYPT &#8217;92</i>, 163-173.</p>
+</li>
+<li>
+<p><a href="https://doi.org/10.1090/S0025-5718-1993-1153167-9"><strong>Counting points on elliptic curves over <i>F<sub>2<sup>m</sup></sub></i></strong></a><br />(with S. Vanstone and R. Zuccherato)<br /><i>Mathematics of Computation</i>, 60 (1993), 407-420.</p>
+</li>
+<li>
+<p><a href="https://doi.org/10.1007/978-1-4757-2226-0"><strong>Applications of Finite Fields</strong></a><br />(with I. Blake, S. Gao, R. Mullin, S. Vanstone and T. Yaghoobian)<br />Kluwer Academic Publishers, 1992.</p>
+</li>
+<li>
+<p><strong><a href="https://doi.org/10.1137/0221018">Subgroup refinement algorithms for root finding in <i>GF(q)</i></a></strong><br />(with P. van Oorschot and S. Vanstone)<br /><i>SIAM Journal on Computing</i>, 21 (1992), 228-239.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/BF01189025"><strong>A note on cyclic groups, finite fields, and the discrete logarithm problem</strong></a><br />(with S. Vanstone)<br /><i>Applicable Algebra in Engineering, Communication and Computing</i>, 3 (1992), 67-74.</p>
+</li>
+<li>
+<p><strong><a href="http://dx.doi.org/10.1007/3-540-38424-3">Advances in Cryptology &#8211; Proceedings of CRYPTO &#8217;90</a></strong><br />(edited with S. Vanstone)<br />Lecture Notes in Computer Science, 537, Springer-Verlag, 1991.</p>
+</li>
+<li>
+<p><a href="http://dx.doi.org/10.1007/BFb0030345"><strong>The implementation of elliptic curve cryptosystems</strong></a><br />(with S. Vanstone)<br /><i>Advances in Cryptology &#8211; AUSCRYPT &#8217;90</i>, 2-13.</p>
+</li>
+<li>
+<p><strong>Isomorphism classes of elliptic curves over finite fields of characteristic 2</strong><br />(with S. Vanstone)<br /><i>Utilitas Mathematica</i>, 38 (1990), 135-154.</p>
+</li>
+<li>
+<p><a href="https://doi.org/10.2307/2048357"><strong>On the number of self-dual bases of <i>GF(q<sup>m</sup>)</i> over <i>GF(q)</i></strong></a><br />(with D. Jungnickel and S. Vanstone)<br /><i>Proceedings of the American Mathematics Society</i>, 109 (1990), 23-29.</p>
+</li>
+<li>
+<p><strong><a href="http://dx.doi.org/10.1007/3-540-51084-2_24">Some computational aspects of root finding in <i>GF(q<sup>m</sup>)</i></a></strong><br />(with S. Vanstone and P. van Oorschot)<br /><i>Symbolic and Algebraic Computation</i>, Lecture Notes in Computer Science, 358 (1989), 259-270.</p>
+</li>
+</ol>
+
+
+
+<p class="wp-block-paragraph"></p>
+
+
+
+<div class="wp-block-group has-global-padding is-layout-constrained wp-block-group-is-layout-constrained"></div>
+</div>
+</div>
+</div></div>
+
+
+
+<div class="wp-block-column has-global-padding is-layout-constrained wp-container-core-column-is-layout-08fedc22 wp-block-column-is-layout-constrained" style="padding-top:0;padding-right:var(--wp--preset--spacing--20);padding-bottom:0;padding-left:var(--wp--preset--spacing--20);flex-basis:10%"></div>
+</div>
+</div>
+
+
+<footer class="wp-block-template-part">
+<div style="height:20px" aria-hidden="true" class="wp-block-spacer"></div>
+
+
+
+<div class="wp-block-group has-global-padding is-layout-constrained wp-block-group-is-layout-constrained" style="border-top-color:var(--wp--preset--color--primary);border-top-width:1px;border-right-style:none;border-right-width:0px;border-bottom-style:none;border-bottom-width:0px;border-left-style:none;border-left-width:0px">
+<div class="wp-block-columns alignfull is-layout-flex wp-container-core-columns-is-layout-c1ad717f wp-block-columns-is-layout-flex" style="padding-top:var(--wp--preset--spacing--60);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--60);padding-left:var(--wp--preset--spacing--50)">
+<div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow" style="border-style:none;border-width:0px;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0;flex-basis:175px">
+<p class="wp-block-paragraph">© Alfred Menezes</p>
+</div>
+
+
+
+<div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+<p class="has-text-align-left has-small-font-size wp-block-paragraph"><a href="http://www.linkedin.com/in/alfredmenezes">Linkedin</a><br><a href="https://en.wikipedia.org/wiki/Alfred_Menezes">Wikipedia</a><br><a href="https://scholar.google.com/citations?user=hkJ7xKwAAAAJ">Google Scholar</a><br><a href="http://anotherlook.ca">Another look at provable security</a><br><a href="https://sites.google.com/view/textbook-appliedcrypto/home">Textbook of Applied Cryptography</a><br><a href="https://cacr.uwaterloo.ca/hac/">Handbook of Applied Cryptography</a><br><a href="https://cacr.uwaterloo.ca/ecc/">Guide to Elliptic Curve Cryptography</a><a href="http://anotherlook.ca"><br></a></p>
+</div>
+
+
+
+<div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+<div style="height:100px" aria-hidden="true" class="wp-block-spacer"></div>
+</div>
+</div>
+</div>
+</footer></div>
+<!-- wpcom_wp_footer -->
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/fewer/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
+</script>
+<meta id="bilmur" property="bilmur:data" content="" data-customproperties="{&quot;woo_active&quot;:&quot;0&quot;,&quot;logged_in&quot;:&quot;0&quot;,&quot;wptheme&quot;:&quot;fewer&quot;,&quot;wptheme_is_block&quot;:&quot;1&quot;}" data-provider="wordpress.com" data-service="atomic"  data-site-tz="America/Toronto"  >
+<script defer src="https://s0.wp.com/wp-content/js/bilmur.min.js?m=202636"></script>
+<script data-wp-router-options="{&quot;loadOnClientNavigation&quot;:true}" fetchpriority="low" id="@wordpress/block-library/navigation/view-js-module" src="https://cryptography101.ca/wp-includes/js/dist/script-modules/block-library/navigation/view.min.js?ver=1bf28ded04f9f188bdcb" type="module"></script>
+<script id="wp-script-module-data-@wordpress/interactivity" type="application/json">
+{"state":{"jetpack-search":{"siteId":230186292,"apiRoot":"https://cryptography101.ca/wp-json/","nonce":"b7df72e083","isPrivateSite":false,"isWpcom":false,"isPhotonEnabled":true,"disableTracking":false,"isWooCommerceBlocksEnabled":false,"homeUrl":"https://cryptography101.ca","locale":"en-US","dateFormat":"F j, Y","searchQuery":"","hasSearchParam":false,"searchParamName":"q","sortOrder":"relevance","activeFilters":[],"filterLogic":[],"priceRange":null,"staticFilterSelections":{},"filterConfigs":[],"results":[],"aggregations":{},"retainedFilterOptions":{},"totalResults":0,"pageHandle":null,"isLoading":false,"isLoadingMore":false,"hasError":false,"resultsCountText":"","strings":{"searching":"Searching…","resultsCountSingle":"Found %d result","resultsCountPlural":"Found %d results","removeFilter":"Remove %s","ratingStarsTop":"5 stars","ratingStarsAndUpSingle":"%d star and up","ratingStarsAndUpPlural":"%d stars and up","priceRangeFromTo":"%1$s – %2$s","priceRangeFrom":"%s+","priceRangeUpTo":"Under %s","priceLabel":"Price","suggestionLabelQuery":"Suggestions","suggestionLabelTaxonomy":"Popular Filters","suggestionLabelPost":"Articles","aiErrorMessage":"Sorry, an error occurred while generating an answer.","aiErrorCode":"Error code: %s"},"priceCurrencySymbol":"$","aiExtendedLoadingHints":["Searching harder","Looking deeper into this","Finding a more complete answer","Analyzing additional sources","Gathering more details","Pulling in more context","Expanding the search","Rolling up my virtual sleeves","Digging through the archives","Putting on my reading glasses","Checking under the digital couch cushions","Consulting the oracle","Asking a smarter algorithm","Brewing a fresh batch of insights","Unleashing the full power of search"],"wcStockStatusLabels":{"instock":"In stock"},"highlightPhraseOnly":false,"highlightFilterStopwords":[],"highlightFields":null,"additionalBlogIds":[],"adminQueryFilter":null,"customResults":[]}}}
+</script>
+		<div id="jp-carousel-loading-overlay" style="display: none;">
+			<div id="jp-carousel-loading-wrapper">
+				<span id="jp-carousel-library-loading"><svg class="jetpack-spinner" width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="46" fill="none" stroke="#ddd" stroke-width="8"/><path d="M 50 4 A 46 46 0 0 1 96 50" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" dur="1.4s" from="0 50 50" to="360 50 50" repeatCount="indefinite"/></path></svg></span>
+			</div>
+		</div>
+		<div class="jp-carousel-overlay" style="display: none;">
+
+		<div class="jp-carousel-container">
+			<!-- The Carousel Swiper -->
+			<div
+				class="jp-carousel-wrap swiper jp-carousel-swiper-container jp-carousel-transitions"
+				itemscope
+				itemtype="https://schema.org/ImageGallery">
+				<div class="jp-carousel swiper-wrapper"></div>
+				<div class="jp-swiper-button-prev swiper-button-prev">
+					<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<mask id="maskPrev" mask-type="alpha" maskUnits="userSpaceOnUse" x="8" y="6" width="9" height="12">
+							<path d="M16.2072 16.59L11.6496 12L16.2072 7.41L14.8041 6L8.8335 12L14.8041 18L16.2072 16.59Z" fill="white"/>
+						</mask>
+						<g mask="url(#maskPrev)">
+							<rect x="0.579102" width="23.8823" height="24" fill="#FFFFFF"/>
+						</g>
+					</svg>
+				</div>
+				<div class="jp-swiper-button-next swiper-button-next">
+					<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<mask id="maskNext" mask-type="alpha" maskUnits="userSpaceOnUse" x="8" y="6" width="8" height="12">
+							<path d="M8.59814 16.59L13.1557 12L8.59814 7.41L10.0012 6L15.9718 12L10.0012 18L8.59814 16.59Z" fill="white"/>
+						</mask>
+						<g mask="url(#maskNext)">
+							<rect x="0.34375" width="23.8822" height="24" fill="#FFFFFF"/>
+						</g>
+					</svg>
+				</div>
+			</div>
+			<!-- The main close buton -->
+			<div class="jp-carousel-close-hint">
+				<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<mask id="maskClose" mask-type="alpha" maskUnits="userSpaceOnUse" x="5" y="5" width="15" height="14">
+						<path d="M19.3166 6.41L17.9135 5L12.3509 10.59L6.78834 5L5.38525 6.41L10.9478 12L5.38525 17.59L6.78834 19L12.3509 13.41L17.9135 19L19.3166 17.59L13.754 12L19.3166 6.41Z" fill="white"/>
+					</mask>
+					<g mask="url(#maskClose)">
+						<rect x="0.409668" width="23.8823" height="24" fill="#FFFFFF"/>
+					</g>
+				</svg>
+			</div>
+			<!-- Image info, comments and meta -->
+			<div class="jp-carousel-info">
+				<div class="jp-carousel-info-footer">
+					<div class="jp-carousel-pagination-container">
+						<div class="jp-swiper-pagination swiper-pagination"></div>
+						<div class="jp-carousel-pagination"></div>
+					</div>
+					<div class="jp-carousel-photo-title-container">
+						<div class="jp-carousel-photo-caption"></div>
+					</div>
+					<div class="jp-carousel-photo-icons-container">
+						<a href="#" class="jp-carousel-icon-btn jp-carousel-icon-info" aria-label="Toggle photo metadata visibility">
+							<span class="jp-carousel-icon">
+								<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<mask id="maskInfo" mask-type="alpha" maskUnits="userSpaceOnUse" x="2" y="2" width="21" height="20">
+										<path fill-rule="evenodd" clip-rule="evenodd" d="M12.7537 2C7.26076 2 2.80273 6.48 2.80273 12C2.80273 17.52 7.26076 22 12.7537 22C18.2466 22 22.7046 17.52 22.7046 12C22.7046 6.48 18.2466 2 12.7537 2ZM11.7586 7V9H13.7488V7H11.7586ZM11.7586 11V17H13.7488V11H11.7586ZM4.79292 12C4.79292 16.41 8.36531 20 12.7537 20C17.142 20 20.7144 16.41 20.7144 12C20.7144 7.59 17.142 4 12.7537 4C8.36531 4 4.79292 7.59 4.79292 12Z" fill="white"/>
+									</mask>
+									<g mask="url(#maskInfo)">
+										<rect x="0.8125" width="23.8823" height="24" fill="#FFFFFF"/>
+									</g>
+								</svg>
+							</span>
+						</a>
+												<a href="#" class="jp-carousel-icon-btn jp-carousel-icon-comments" aria-label="Toggle photo comments visibility">
+							<span class="jp-carousel-icon">
+								<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<mask id="maskComments" mask-type="alpha" maskUnits="userSpaceOnUse" x="2" y="2" width="21" height="20">
+										<path fill-rule="evenodd" clip-rule="evenodd" d="M4.3271 2H20.2486C21.3432 2 22.2388 2.9 22.2388 4V16C22.2388 17.1 21.3432 18 20.2486 18H6.31729L2.33691 22V4C2.33691 2.9 3.2325 2 4.3271 2ZM6.31729 16H20.2486V4H4.3271V18L6.31729 16Z" fill="white"/>
+									</mask>
+									<g mask="url(#maskComments)">
+										<rect x="0.34668" width="23.8823" height="24" fill="#FFFFFF"/>
+									</g>
+								</svg>
+
+								<span class="jp-carousel-has-comments-indicator" aria-label="This image has comments."></span>
+							</span>
+						</a>
+											</div>
+				</div>
+				<div class="jp-carousel-info-extra">
+					<div class="jp-carousel-info-content-wrapper">
+						<div class="jp-carousel-photo-title-container">
+							<div class="jp-carousel-photo-title"></div>
+						</div>
+						<div class="jp-carousel-comments-wrapper">
+															<div id="jp-carousel-comments-loading">
+									<span>Loading Comments...</span>
+								</div>
+								<div class="jp-carousel-comments"></div>
+								<div id="jp-carousel-comment-form-container">
+									<span id="jp-carousel-comment-form-spinner"><svg class="jetpack-spinner" width="20" height="20" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="46" fill="none" stroke="#ddd" stroke-width="8"/><path d="M 50 4 A 46 46 0 0 1 96 50" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" dur="1.4s" from="0 50 50" to="360 50 50" repeatCount="indefinite"/></path></svg></span>
+									<div id="jp-carousel-comment-post-results"></div>
+																														<form id="jp-carousel-comment-form">
+												<label for="jp-carousel-comment-form-comment-field" class="screen-reader-text">Write a Comment...</label>
+												<textarea
+													name="comment"
+													class="jp-carousel-comment-form-field jp-carousel-comment-form-textarea"
+													id="jp-carousel-comment-form-comment-field"
+													placeholder="Write a Comment..."
+												></textarea>
+												<div id="jp-carousel-comment-form-submit-and-info-wrapper">
+													<div id="jp-carousel-comment-form-commenting-as">
+																													<fieldset>
+																<label for="jp-carousel-comment-form-email-field">Email (Required)</label>
+																<input type="text" name="email" class="jp-carousel-comment-form-field jp-carousel-comment-form-text-field" id="jp-carousel-comment-form-email-field" />
+															</fieldset>
+															<fieldset>
+																<label for="jp-carousel-comment-form-author-field">Name (Required)</label>
+																<input type="text" name="author" class="jp-carousel-comment-form-field jp-carousel-comment-form-text-field" id="jp-carousel-comment-form-author-field" />
+															</fieldset>
+															<fieldset>
+																<label for="jp-carousel-comment-form-url-field">Website</label>
+																<input type="text" name="url" class="jp-carousel-comment-form-field jp-carousel-comment-form-text-field" id="jp-carousel-comment-form-url-field" />
+															</fieldset>
+																											</div>
+													<input
+														type="submit"
+														name="submit"
+														class="jp-carousel-comment-form-button"
+														id="jp-carousel-comment-form-button-submit"
+														value="Post Comment" />
+												</div>
+											</form>
+																											</div>
+													</div>
+						<div class="jp-carousel-image-meta">
+							<div class="jp-carousel-title-and-caption">
+								<div class="jp-carousel-photo-info">
+									<div class="jp-carousel-caption" itemprop="caption description"></div>
+								</div>
+
+								<div class="jp-carousel-photo-description"></div>
+							</div>
+							<a class="jp-carousel-image-download" href="#" aria-label="Download image" target="_blank" style="display: none;">
+								<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="3" y="3" width="19" height="18">
+										<path fill-rule="evenodd" clip-rule="evenodd" d="M5.84615 5V19H19.7775V12H21.7677V19C21.7677 20.1 20.8721 21 19.7775 21H5.84615C4.74159 21 3.85596 20.1 3.85596 19V5C3.85596 3.9 4.74159 3 5.84615 3H12.8118V5H5.84615ZM14.802 5V3H21.7677V10H19.7775V6.41L9.99569 16.24L8.59261 14.83L18.3744 5H14.802Z" fill="white"/>
+									</mask>
+									<g mask="url(#mask0)">
+										<rect x="0.870605" width="23.8823" height="24" fill="#FFFFFF"/>
+									</g>
+								</svg>
+								<span class="jp-carousel-download-text"></span>
+							</a>
+							<div class="jp-carousel-image-map" style="display: none;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		</div>
+		<script id="jetpack-carousel-js-extra">
+var jetpackSwiperLibraryPath = {"url":"https://cryptography101.ca/wp-content/plugins/jetpack/_inc/blocks/swiper.js"};
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"en","ajaxurl":"https://cryptography101.ca/wp-admin/admin-ajax.php","nonce":"c4a6886584","display_exif":"1","display_comments":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Comment","post_comment":"Post Comment","write_comment":"Write a Comment...","loading_comments":"Loading Comments...","image_label":"Open image in full-screen.","download_original":"View full size \u003Cspan class=\"photo-size\"\u003E{0}\u003Cspan class=\"photo-size-times\"\u003E\u00d7\u003C/span\u003E{1}\u003C/span\u003E","no_comment_text":"Please be sure to submit some text with your comment.","no_comment_email":"Please provide an email address to comment.","no_comment_author":"Please provide your name to comment.","comment_post_error":"Sorry, but there was an error posting your comment. Please try again later.","comment_approved":"Your comment was approved.","comment_unapproved":"Your comment is in moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter Speed","focal_length":"Focal Length","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"https://cryptography101.ca/wp-login.php?redirect_to=https%3A%2F%2Fcryptography101.ca%2Fpublications%2F","blog_id":"1","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"]};
+//# sourceURL=jetpack-carousel-js-extra
+</script>
+<script id="jetpack-carousel-js" src="https://cryptography101.ca/wp-content/plugins/jetpack/_inc/build/carousel/jetpack-carousel.min.js?ver=16.2-a.5"></script>
+<script id="googlesitekit-events-provider-content-events-js-before">
+window._googlesitekit = window._googlesitekit || {};
+window._googlesitekit.contentEvents = {"postID":1510,"isSinglePost":false};
+//# sourceURL=googlesitekit-events-provider-content-events-js-before
+</script>
+<script id="googlesitekit-events-provider-content-events-js" src="https://cryptography101.ca/wp-content/plugins/google-site-kit/dist/assets/js/googlesitekit-events-provider-content-events-33078016c5e1e9f07c35.js" defer></script>
+<script id="jetpack-stats-js-before">
+_stq = window._stq || [];
+_stq.push([ "view", {"v":"ext","blog":"230186292","post":"1510","tz":"-4","srv":"cryptography101.ca","hp":"atomic","ac":"2","amp":"0","j":"1:16.2-a.5"} ]);
+_stq.push([ "clickTrackerInit", "230186292", "1510" ]);
+//# sourceURL=jetpack-stats-js-before
+</script>
+<script data-wp-strategy="defer" defer fetchpriority="low" id="jetpack-stats-js" src="https://stats.wp.com/e-202636.js"></script>
+<script id="wp-emoji-settings" type="application/json">
+{"baseUrl":"https://s.w.org/images/core/emoji/17.0.2/72x72/","ext":".png","svgUrl":"https://s.w.org/images/core/emoji/17.0.2/svg/","svgExt":".svg","source":{"concatemoji":"https://cryptography101.ca/wp-includes/js/wp-emoji-release.min.js?ver=7.1"}}
+</script>
+<script type="module">
+/*! This file is auto-generated */
+var e="script#wp-emoji-settings",t=document.querySelector(e);if(!(t instanceof HTMLScriptElement))throw new Error("Element missing: "+e);const r=JSON.parse(t.text),s=(window._wpemojiSettings=r,"wpEmojiSettingsSupports"),o=["flag","emoji"];function i(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(s,JSON.stringify(t))}catch(e){}}function c(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data);e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0);const r=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data);return t.every((e,t)=>e===r[t])}function p(e,t){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var n=e.getImageData(16,16,1,1);for(let e=0;e<n.data.length;e++)if(0!==n.data[e])return!1;return!0}function u(e,t,n,r){switch(t){case"flag":return n(e,"\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!n(e,"\ud83c\udde8\ud83c\uddf6","\ud83c\udde8\u200b\ud83c\uddf6")&&!n(e,"\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!r(e,"\ud83e\u1fac8")}return!1}function f(e,t,n,r){let a;const s=(a="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):document.createElement("canvas")).getContext("2d",{willReadFrequently:!0}),o=(s.textBaseline="top",s.font="600 32px Arial",{});return e.forEach(e=>{o[e]=t(s,e,n,r)}),o}function a(e){var t=document.createElement("script");t.src=e,t.defer=!0,document.head.appendChild(t)}r.supports={everything:!0,everythingExceptFlag:!0},new Promise(t=>{let n=function(){try{var e=JSON.parse(sessionStorage.getItem(s));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+f.toString()+"("+[JSON.stringify(o),u.toString(),c.toString(),p.toString()].join(",")+"));",r=new Blob([e],{type:"text/javascript"});const a=new Worker(URL.createObjectURL(r),{name:"wpTestEmojiSupports"});return void(a.onmessage=e=>{i(n=e.data),a.terminate(),t(n)})}catch(e){}i(n=f(o,u,c,p))}t(n)}).then(e=>{for(const n in e)r.supports[n]=e[n],r.supports.everything=r.supports.everything&&r.supports[n],"flag"!==n&&(r.supports.everythingExceptFlag=r.supports.everythingExceptFlag&&r.supports[n]);var t;r.supports.everythingExceptFlag=r.supports.everythingExceptFlag&&!r.supports.flag,r.supports.everything||((t=r.source||{}).concatemoji?a(t.concatemoji):t.wpemoji&&t.twemoji&&(a(t.twemoji),a(t.wpemoji)))});
+//# sourceURL=https://cryptography101.ca/wp-includes/js/wp-emoji-loader.min.js
+</script>
+</body>
+</html>
+<!--
+	generated in 0.448 seconds
+	139209 bytes batcached for 300 seconds
+-->

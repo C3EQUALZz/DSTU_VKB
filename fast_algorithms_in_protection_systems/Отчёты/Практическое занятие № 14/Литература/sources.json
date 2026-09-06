@@ -40,5 +40,17 @@
     "source": "https://crypto.stanford.edu/pbc/notes/elliptic/tate.html",
     "bytes": 7869,
     "sha256": "147c864060eb25879a004f22d8329e672b0724021fabc5364b53a78bb3e1a871"
+  },
+  {
+    "file": "Boneh Lynn Shacham 2004 Short Signatures.pdf",
+    "source": "https://hovav.net/ucsd/dist/sigs.pdf",
+    "bytes": 306521,
+    "sha256": "045bf0160ce99b46328f0c49ae8ff1eea570af16ba081e82486265efff952c82"
+  },
+  {
+    "file": "Menezes Publications.html",
+    "source": "https://cryptography101.ca/publications/",
+    "bytes": 138440,
+    "sha256": "a8e321a8aac10079e209e1e6a2e4d6595483a5a5b3bc6c9a8ec08e14a6fb6441"
   }
 ]
