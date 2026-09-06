@@ -1,0 +1,345 @@
+<!DOCTYPE html><html lang='en'><head>
+<title>Elliptic Curves - The Weil Pairing</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/~blynn/b.png" type="image/png">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans%7CInconsolata%7CMuli' rel='stylesheet' type='text/css'>
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-1901330-2', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+<script src='https://polyfill.io/v3/polyfill.min.js?features=es6'></script><script id='MathJax-script' async src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'></script>
+<link rel="stylesheet" title="Default" type="text/css" href="/~blynn/css/book.css">
+<link rel="stylesheet" title="Default" type="text/css" href="/~blynn/css/pygments.css">
+</head><body>
+<script>
+var on=0;
+var darkcss=document.createElement('style');
+darkcss.innerHTML="html{background-color:black;color:#aaaaaa;};body{background-color:black;color:#aaaaaa;}textarea{color:#e6e1dc;background-color:#232323;}pre{color:#e6e1dc;background-color:#232323;}svg{filter:invert(100%);}";
+function lights() {
+if ("out" == sessionStorage.getItem("lights")) {
+sessionStorage.removeItem("lights");
+document.body.removeChild(darkcss);
+} else sessionStorage.setItem("lights", "out");
+checklights();
+}
+function checklights() {
+if ("out" == sessionStorage.getItem("lights")) document.body.appendChild(darkcss);
+}
+checklights();
+</script>
+
+<div class='main'><div class='plump'><div class='menu'>
+<div class="ulist">
+<ul>
+<li>
+<p><a href=".">Elliptic Curves</a></p>
+</li>
+<li>
+<p><a href="weier.html">Weierstrass Form</a></p>
+</li>
+<li>
+<p><a href="group.html">Group of Points</a></p>
+</li>
+<li>
+<p><a href="explicit.html">Explicit Formulas</a></p>
+</li>
+<li>
+<p><a href="funcfield.html">Rational Functions</a></p>
+</li>
+<li>
+<p><a href="divisor.html">Zeroes &amp; Poles</a></p>
+</li>
+<li>
+<p><a href="map.html">Rational Maps</a></p>
+</li>
+<li>
+<p><a href="torsion.html">Torsion Points</a></p>
+</li>
+<li>
+<p><a href="weil.html">Weil Pairing</a></p>
+</li>
+<li>
+<p><a href="weil2.html">Weil Pairing II</a></p>
+</li>
+<li>
+<p><a href="count.html">Counting Points</a></p>
+</li>
+<li>
+<p><a href="hyper.html">Hyperelliptic Curves</a></p>
+</li>
+<li>
+<p><a href="tate.html">Tate Pairing</a></p>
+</li>
+<li>
+<p><a href="movattack.html">MOV Attack</a></p>
+</li>
+<li>
+<p><a href="tracezero.html">Trace 0 Points</a></p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../">Notes</a></p>
+</li>
+<li>
+<p><a href="https://crypto.stanford.edu/~blynn/">Ben Lynn</a></p>
+</li>
+</ul>
+</div>
+
+</div></div><!-- menu, plump -->
+<div class='rside'>
+
+<div class='navbar'>
+<span class='link-prev'><a href='torsion.html'>&#9664; Torsion Points</a></span><span class='link-next'><a href='weil2.html'>Weil Pairing II &#9654;</a></span>
+<div class='link-contents'><a href='#contents'>Contents</a></div>
+</div> <!-- navbar -->
+
+
+<div class="sect1">
+<h2 id="_the_weil_pairing">The Weil Pairing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Consider the group of \(m\)-torsion points \(E[m]\) for some \(m\) coprime to
+\(q = \mathrm{char} K\).</p>
+</div>
+<div class="paragraph">
+<p>For a point \(T \in E[m]\), find a \(T_0\) such that \(m T_0 = T\)
+(i.e. \(T_0 \in [m]^{-1}(T)\)).
+Let \(g_T\) be a rational function with divisor</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[
+\langle g_T \rangle =
+\sum_{R\in E[m]} \langle T_0 + R \rangle - \langle R \rangle
+\]
+</div>
+</div>
+<div class="paragraph">
+<p>Let \(\tau_S\) be the translation-by-\(S\) map for some \(m\)-torsion point \(S\).
+Then define the Weil pairing to be</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[
+e(S,T) = \frac{g_T \cdot \tau_s }{ g_T }
+\]
+</div>
+</div>
+<div class="paragraph">
+<p>Since \(R, S\) are both elements of the group \(E[m]\):</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[
+\langle g_T \cdot \tau_S (P) \rangle =
+\sum_{R\in E[m]} \langle T_0 + R - S \rangle - \langle R - S \rangle
+= \langle g_T \rangle
+\]
+</div>
+</div>
+<div class="paragraph">
+<p>So \(g_T\) and \(g_T \cdot \tau_S\) have the same divisor which implies
+\(e(S, T) = g_T \cdot \tau_S / g_T = \mu\)
+for some constant \(\mu\) (recall that \(g_T\)
+is unique up to a constant).</p>
+</div>
+<div class="paragraph">
+<p>Repeating this argument gives
+\(g_T \cdot \tau_S^i = \mu^i g_T\).
+Since \(m\) translations by \(S\) is the identity (since \(S \in E[m]\))
+we find \(\mu^m = 1\), when \(i = m\).
+In other words \(e(S,T) = \mu\) is an \(m\)th root of unity.</p>
+</div>
+<div class="paragraph">
+<p>So we may view the Weil pairing as a map</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[
+e : E[m] \times E[m] \rightarrow \mu_m
+\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(\mu_m\) is the group of the \(m\)th roots of unity.</p>
+</div>
+<div class="paragraph">
+<p>Note this definition of the Weil pairing is not suitable for
+practical computations as the representations
+of the functions \(g_T(P), g_T(P+S)\)
+grow quickly with \(m\). (There are \(2m^2\) poles and zeroes
+for each function, which means each function is a product
+of \(2m^2\) line equations.)
+Fortunately <a href="weil2.html">an alternative definition
+of the Weil pairing</a> lends itself well to explicit computation.</p>
+</div>
+<div class="sect2">
+<h3 id="_pullback_of_divisors">Pullback of Divisors</h3>
+<div class="paragraph">
+<p>This is another way to view this definition of the Weil pairing.</p>
+</div>
+<div class="paragraph">
+<p>Suppose \(\alpha\) is an endomorphism, and \(g\) is a rational function.
+Then a natural construct is to compose \(g\) and \(\alpha\),
+i.e. \(g \cdot \alpha\).</p>
+</div>
+<div class="paragraph">
+<p>For example, if \(\alpha\) is translation by a point \(T\), then
+\(g \cdot \alpha (P)= g(P+T)\).</p>
+</div>
+<div class="paragraph">
+<p>The map \(\alpha\) also induces a map on the divisors
+\(\alpha^* : Div(E) \rightarrow Div(E)\) that takes
+the divisor of \(g\) to the divisor of \(g \cdot \alpha\).</p>
+</div>
+<div class="paragraph">
+<p>For example, if \(\alpha\) is translation by \(T\), then
+\(\alpha^*\) takes a divisor \(\sum m_P \langle P \rangle\) to
+\(\sum m_P \langle P - T \rangle\).</p>
+</div>
+<div class="paragraph">
+<p>Then the function \(g_T\) in the Weil pairing may be defined as
+a function such that</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[
+\langle g_T \rangle = [m]^*(\langle T \rangle - \langle O \rangle)
+\]
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_properties_of_the_weil_pairing">Properties of The Weil Pairing</h3>
+<div class="paragraph">
+<p>The Weil pairing is nondegenerate, alternating and bilinear.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>\(e(S_1 + S_2, T) = e(S_1, T) e(S_2, T)\)</p>
+</li>
+<li>
+<p>\(e(S, T_1 + T_2) = e(S, T_1) e(S, T_2)\)</p>
+</li>
+<li>
+<p>\(e(S, S) = 1\)</p>
+</li>
+<li>
+<p>\(e(S, T) = e(T, S)^{-1}\)</p>
+</li>
+<li>
+<p>\(e(S, T) = 1\) for all \(T\) if and only if \(S = O\)</p>
+</li>
+<li>
+<p>\(e(S, T) = 1\) for all \(S\) if and only if \(T = O\)</p>
+</li>
+<li>
+<p>For any nonzero endomorphism \(\alpha\),
+\(e(\alpha(S), \alpha(T)) = e(S,T)^{\deg \alpha}\)
++
+[TODO: define degree of endomorphism]</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div class='navbar'>
+<span class='link-prev'><a href='torsion.html'>&#9664; Torsion Points</a></span><span class='link-next'><a href='weil2.html'>Weil Pairing II &#9654;</a></span>
+<div class='link-contents'><a href='#contents'>Contents</a></div>
+</div> <!-- navbar -->
+
+
+<hr>
+<div class="skinny" id="contents">
+<div class="menu">
+<h2>Contents</h2>
+<div class="ulist">
+<ul>
+<li>
+<p><a href=".">Elliptic Curves</a></p>
+</li>
+<li>
+<p><a href="weier.html">Weierstrass Form</a></p>
+</li>
+<li>
+<p><a href="group.html">Group of Points</a></p>
+</li>
+<li>
+<p><a href="explicit.html">Explicit Formulas</a></p>
+</li>
+<li>
+<p><a href="funcfield.html">Rational Functions</a></p>
+</li>
+<li>
+<p><a href="divisor.html">Zeroes &amp; Poles</a></p>
+</li>
+<li>
+<p><a href="map.html">Rational Maps</a></p>
+</li>
+<li>
+<p><a href="torsion.html">Torsion Points</a></p>
+</li>
+<li>
+<p><a href="weil.html">Weil Pairing</a></p>
+</li>
+<li>
+<p><a href="weil2.html">Weil Pairing II</a></p>
+</li>
+<li>
+<p><a href="count.html">Counting Points</a></p>
+</li>
+<li>
+<p><a href="hyper.html">Hyperelliptic Curves</a></p>
+</li>
+<li>
+<p><a href="tate.html">Tate Pairing</a></p>
+</li>
+<li>
+<p><a href="movattack.html">MOV Attack</a></p>
+</li>
+<li>
+<p><a href="tracezero.html">Trace 0 Points</a></p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../">Notes</a></p>
+</li>
+<li>
+<p><a href="https://crypto.stanford.edu/~blynn/">Ben Lynn</a></p>
+</li>
+</ul>
+</div>
+
+[<a href="#">back to top</a>]
+</div> <!-- "menu" -->
+<br>
+<br>
+<br>
+</div> <!-- "skinny" -->
+<a href='/~blynn/'>Ben Lynn</a> <i>blynn@cs.stanford.edu</i> <span id='lightswitch' onclick='lights();'>&#x1f4a1;</span>
+</div> <!-- "rside" -->
+</div> <!-- "main" -->
+
+</body></html>

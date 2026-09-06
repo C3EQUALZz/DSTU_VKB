@@ -1,0 +1,37 @@
+[
+  {
+    "file": "NIST FIPS 186-5 2023.pdf",
+    "url": "https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-5.pdf",
+    "sha256": "fbb9c7c2ba442f03c57b63b43c888311903c9d0f29f89b06efdebd9b619140c5"
+  },
+  {
+    "file": "NIST SP 800-57 Part 1 Rev 5 2020.pdf",
+    "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf",
+    "sha256": "cc32391022c1382ac7c91490f6bcc8838e0f889925270da23ef4e800e2ecb7ad"
+  },
+  {
+    "file": "NIST SP 800-186 2023.pdf",
+    "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-186.pdf",
+    "sha256": "53c7cf3340528aaa0a7bbeaef947f2099568192367d4341a7d4abceb55f78432"
+  },
+  {
+    "file": "Komlo Goldberg 2020 FROST.pdf",
+    "url": "https://eprint.iacr.org/2020/852.pdf",
+    "sha256": "803fa2302e3f9c555155c5f578c3aa00203513a3d0f82e07c39ce51a093bcf42"
+  },
+  {
+    "file": "RFC 9180 HPKE 2022.pdf",
+    "url": "https://www.rfc-editor.org/rfc/rfc9180.pdf",
+    "sha256": "6b2fe0ad177752d43d1de4a53b79ebcd244cb8d62843d65a889ebac78cff3adb"
+  },
+  {
+    "file": "RFC 9380 Hashing to Elliptic Curves 2023.pdf",
+    "url": "https://www.rfc-editor.org/rfc/rfc9380.pdf",
+    "sha256": "13df469614c21fa6c4ca323129a1d0baaa2a55fe854043235487fc4a07af944b"
+  },
+  {
+    "file": "SEC 1 Elliptic Curve Cryptography 2009.pdf",
+    "url": "https://www.secg.org/sec1-v2.pdf",
+    "sha256": "54687189af3de645756a30a801b596fd14c6566992c13bfd58eede399f324a89"
+  }
+]

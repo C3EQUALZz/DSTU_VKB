@@ -1,0 +1,44 @@
+[
+  {
+    "file": "Ишмухаметов Рубцова Математические основы защиты информации.pdf",
+    "source": "Отчёты/Практическое занятие № 12/Литература/Ишмухаметов Рубцова Математические основы защиты информации.pdf",
+    "bytes": 522676,
+    "sha256": "938c5176c4fead024ca502e283b2a07afc461a92ed673d2473757f97b8ed9869"
+  },
+  {
+    "file": "Анохин Спаривание Вейля и его применение.pdf",
+    "source": "Справочная информация/Спаривание Вейля и Тейта weil_pairing_anokhin.pdf",
+    "bytes": 237126,
+    "sha256": "216f85becfa93f71910c2d92215c050328a15615d9fca7cd4d579d94aa84ec7c"
+  },
+  {
+    "file": "Guillevic 2020 A short-list of pairing-friendly curves.pdf",
+    "source": "https://www.iacr.org/archive/pkc2020/12110162/12110162.pdf",
+    "bytes": 533140,
+    "sha256": "e11f8a0bab2a9f6b56cd4e858b6bd9ee8724822d9a5d77b4e428e115cdfc9b8a"
+  },
+  {
+    "file": "Fouotsa El Mrabet Pecha 2020 Optimal Ate Pairing.pdf",
+    "source": "https://arxiv.org/pdf/2002.11920",
+    "bytes": 429700,
+    "sha256": "67a59992519955de1f40742e35e5685f3f1f6b63f115c5e257b7daf837150d1b"
+  },
+  {
+    "file": "Chairattana-Apirom et al 2022 PI-Cut-Choo.pdf",
+    "source": "https://eprint.iacr.org/2022/007.pdf",
+    "bytes": 1066908,
+    "sha256": "7ec4cbe8ba00001fb4f58742781720943318bc39dccd6931e2f0ed327cd640ff"
+  },
+  {
+    "file": "Ben Lynn The Weil Pairing.html",
+    "source": "https://crypto.stanford.edu/pbc/notes/elliptic/weil.html",
+    "bytes": 9304,
+    "sha256": "16a2ad491f90ea6385262758bc05323c1226c8e714a8c6989cec18e1cf0d2f38"
+  },
+  {
+    "file": "Ben Lynn Computing the Tate Pairing.html",
+    "source": "https://crypto.stanford.edu/pbc/notes/elliptic/tate.html",
+    "bytes": 7869,
+    "sha256": "147c864060eb25879a004f22d8329e672b0724021fabc5364b53a78bb3e1a871"
+  }
+]
