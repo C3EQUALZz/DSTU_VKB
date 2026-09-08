@@ -21,3 +21,4 @@ class FormattingPlan:
     line_lengths: tuple[int, ...] = field(default_factory=tuple)
     font_name: str | None = None
     font_size: str | None = None
+    source_docx: bytes | None = field(default=None, repr=False)

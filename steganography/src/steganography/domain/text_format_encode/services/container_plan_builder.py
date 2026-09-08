@@ -56,4 +56,5 @@ class ContainerPlanBuilder:
             line_lengths=cover.line_lengths,
             font_name=cover.font_name,
             font_size=cover.font_size,
+            source_docx=cover.source_docx,
         )

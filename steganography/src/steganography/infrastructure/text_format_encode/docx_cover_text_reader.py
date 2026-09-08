@@ -1,17 +1,12 @@
-"""Чтение текста-контейнера из docx с сохранением построчной структуры.
+"""Read cover text and retain a DOCX snapshot for formatting-preserving output.
 
-Обходит word/document.xml через :mod:`lxml`. Каждый абзац (``w:p``) и
-каждый явный перевод строки (``w:br`` / ``w:cr``) внутри него становится
-отдельной строкой :class:`CoverText`. Из первого run-а с заданным шрифтом
-считываются имя шрифта (``w:rFonts/@w:ascii``) и размер (``w:sz/@w:val``),
-чтобы писатель воссоздал контейнер в исходном оформлении.
-
-Поток видимых символов (``w:t``) при этом не меняется — переносы строк в
-OOXML не являются символами, поэтому встраивание и последующее
-декодирование остаются побитово согласованными.
+Paragraphs and explicit breaks define lines; only w:t text carries bits.
+The original package travels with the cover so styles, relationships and
+non-text content remain available when the writer applies the plan.
 """
 
 import zipfile
+from io import BytesIO
 from pathlib import Path
 from typing import Final
 
@@ -35,8 +30,9 @@ class DocxCoverTextReaderImpl(CoverTextReader):
     """Реализация порта чтения cover-текста из docx."""
 
     def read(self, path: Path) -> CoverText:
+        source_docx = path.read_bytes()
         with (
-            zipfile.ZipFile(path) as archive,
+            zipfile.ZipFile(BytesIO(source_docx)) as archive,
             archive.open("word/document.xml") as document_xml,
         ):
             root = etree.parse(document_xml).getroot()
@@ -64,4 +60,5 @@ class DocxCoverTextReaderImpl(CoverTextReader):
             lines=tuple(lines),
             font_name=font_name,
             font_size=font_size,
+            source_docx=source_docx,
         )
