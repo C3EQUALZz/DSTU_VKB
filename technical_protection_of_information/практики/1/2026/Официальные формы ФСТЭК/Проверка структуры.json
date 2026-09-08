@@ -1,0 +1,90 @@
+[
+  {
+    "appendix": 1,
+    "file": "24. Приложение 1 к заявлению — Сведения о персонале.docx",
+    "tables": 2,
+    "column_counts": [
+      9,
+      5
+    ],
+    "header_and_merge_check": "passed"
+  },
+  {
+    "appendix": 2,
+    "file": "25. Приложение 2 к заявлению — Защищаемые помещения.docx",
+    "tables": 3,
+    "column_counts": [
+      4,
+      8,
+      5
+    ],
+    "header_and_merge_check": "passed"
+  },
+  {
+    "appendix": 3,
+    "file": "26. Приложение 3 к заявлению — Аттестованные АС.docx",
+    "tables": 4,
+    "column_counts": [
+      9,
+      8,
+      7,
+      5
+    ],
+    "header_and_merge_check": "passed"
+  },
+  {
+    "appendix": 4,
+    "file": "27. Приложение 4 к заявлению — Описание техпроцесса.docx",
+    "tables": 1,
+    "column_counts": [
+      5
+    ],
+    "header_and_merge_check": "passed"
+  },
+  {
+    "appendix": 5,
+    "file": "28. Приложение 5 к заявлению — Перечень защищаемых ресурсов.docx",
+    "tables": 2,
+    "column_counts": [
+      3,
+      5
+    ],
+    "header_and_merge_check": "passed"
+  },
+  {
+    "appendix": 6,
+    "file": "29. Приложение 6 к заявлению — Сведения об оборудовании.docx",
+    "tables": 5,
+    "column_counts": [
+      9,
+      7,
+      8,
+      8,
+      5
+    ],
+    "header_and_merge_check": "passed"
+  },
+  {
+    "appendix": 7,
+    "file": "30. Приложение 7 к заявлению — Техдокументация и стандарты.docx",
+    "tables": 2,
+    "column_counts": [
+      5,
+      5
+    ],
+    "header_and_merge_check": "passed"
+  },
+  {
+    "appendix": 8,
+    "file": "31. Приложение 8 к заявлению — Опись прилагаемых документов.docx",
+    "tables": 5,
+    "column_counts": [
+      4,
+      3,
+      5,
+      3,
+      5
+    ],
+    "header_and_merge_check": "passed"
+  }
+]
