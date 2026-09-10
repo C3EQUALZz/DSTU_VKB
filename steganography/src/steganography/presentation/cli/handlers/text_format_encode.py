@@ -22,6 +22,9 @@ from steganography.domain.text_format_encode.ports.cover_text_reader import (
 from steganography.domain.text_format_encode.services.hiding_value_defaults import (
     HidingValueDefaults,
 )
+from steganography.domain.text_format_encode.value_objects.char_formatting import (
+    AUTO_VALUE,
+)
 from steganography.domain.text_format_encode.value_objects.cover_text import (
     CoverText,
 )
@@ -96,18 +99,37 @@ def cmd_encode(  # noqa: PLR0913
         return
 
     formatting_param = FormattingParam(param)
-    default_zero, default_one = defaults.for_param(formatting_param)
+    resolved_zero, resolved_one = _resolve_values(
+        zero_value, one_value, resolved_cover, formatting_param, defaults,
+    )
     command = EncodeSecretCommand(
         secret_text=secret,
         cover=resolved_cover,
         encoding_name=encoding_name,
         param=formatting_param,
-        zero_value=zero_value or default_zero,
-        one_value=one_value or default_one,
+        zero_value=resolved_zero,
+        one_value=resolved_one,
         output_path=output_path,
     )
     view: EncodeSecretView = asyncio.run(interactor(command))
     click.echo(presenter.render(view))
+
+
+def _resolve_values(
+    zero_value: str | None,
+    one_value: str | None,
+    cover: CoverText,
+    param: FormattingParam,
+    defaults: HidingValueDefaults,
+) -> tuple[str, str]:
+    if zero_value is not None or one_value is not None:
+        default_zero, default_one = defaults.for_param(param)
+        return zero_value or default_zero, one_value or default_one
+    if cover.source_docx is not None:
+        # Существующий docx: считать значения от исходного форматирования,
+        # чтобы контейнер остался визуально неотличимым от оригинала.
+        return AUTO_VALUE, AUTO_VALUE
+    return defaults.for_param(param)
 
 
 def _resolve_cover(
