@@ -1,0 +1,41 @@
+Проверка лабораторной работы № 2
+Python 3.9.6
+
+$ python3 main.py
+В популяции нет бактерий, удалять нечего
+Добавлена одна бактерия. Бактерий в колонии: 1
+Добавлена одна бактерия. Бактерий в колонии: 2
+Добавлена одна бактерия. Бактерий в колонии: 3
+Нет места под новую бактерию
+Одна бактерия удалена. Бактерий в колонии: 2
+
+Код завершения: 0
+
+$ python3 task2.py
+Нельзя добавить ядовитый гриб
+Подосиновик, Белый
+Подосиновик, Белый
+Лисичка
+
+Код завершения: 0
+
+$ python3 -m unittest -v test_lab2
+test_all_operation_sequences (test_lab2.BacteriaTests) ... ok
+test_create_and_limit_messages (test_lab2.BacteriaTests) ... ok
+test_delete_and_empty_messages (test_lab2.BacteriaTests) ... ok
+test_independent_colonies (test_lab2.BacteriaTests) ... ok
+test_initial_state (test_lab2.BacteriaTests) ... ok
+test_zero_capacity (test_lab2.BacteriaTests) ... ok
+test_edible_names_and_order (test_lab2.MushroomTests) ... ok
+test_empty_basket (test_lab2.MushroomTests) ... ok
+test_independent_baskets (test_lab2.MushroomTests) ... ok
+test_poisonous_names (test_lab2.MushroomTests) ... ok
+test_rejection_preserves_contents (test_lab2.MushroomTests) ... ok
+test_repeated_mushrooms (test_lab2.MushroomTests) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.011s
+
+OK
+
+Код завершения: 0
