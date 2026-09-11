@@ -53,11 +53,7 @@ class CodeDecoder:
         chars: list[FormattedChar],
         method: FormattingMethod,
     ) -> DecodedMessage | None:
-        inverted: FormattingMethod = FormattingMethod(
-            param=method.param,
-            zero_value=method.one_value,
-            one_value=method.zero_value,
-        )
+        inverted = self._inverted(method, chars)
         candidates: list[tuple[float, DecodedMessage]] = []
         for variant_method in (method, inverted):
             bits: str = build_bit_sequence(chars, variant_method)
@@ -87,6 +83,30 @@ class CodeDecoder:
             return None
         candidates.sort(key=lambda item: -item[0])
         return candidates[0][1]
+
+    @staticmethod
+    def _inverted(
+        method: FormattingMethod,
+        chars: list[FormattedChar],
+    ) -> FormattingMethod:
+        """Метод с перевернутыми ролями 0/1 для перебора гипотез."""
+        if method.one_values is None:
+            return FormattingMethod(
+                param=method.param,
+                zero_value=method.one_value,
+                one_value=method.zero_value,
+            )
+        # Парный режим: инверсия — все наблюдаемые значения вне one_values.
+        observed = {c.attrs.get(method.param) for c in chars}
+        return FormattingMethod(
+            param=method.param,
+            zero_value=method.one_value,
+            one_value=method.zero_value,
+            one_values=frozenset(
+                value for value in observed - method.one_values
+                if value is not None
+            ),
+        )
 
     def _confidence(
         self, text: str, score: float, encoding: Encoding,

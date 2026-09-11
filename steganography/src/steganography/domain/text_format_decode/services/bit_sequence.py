@@ -22,7 +22,7 @@ def build_bit_sequence(
     bits: list[str] = []
     for c in chars:
         value: str | None = c.attrs.get(method.param)
-        bits.append("1" if value == method.one_value else "0")
+        bits.append("1" if method.is_one(value) else "0")
     return "".join(bits)
 
 
