@@ -1,0 +1,100 @@
+uv run --frozen ruff format --check .
+21 files already formatted
+uv run --frozen ruff check .
+All checks passed!
+just static-analysis
+uv run --frozen mypy
+Success: no issues found in 18 source files
+uv run --frozen bandit -c pyproject.toml -r src
+[main]	INFO	profile include tests: None
+[main]	INFO	profile exclude tests: None
+[main]	INFO	cli include tests: None
+[main]	INFO	cli exclude tests: None
+[main]	INFO	using config: pyproject.toml
+[main]	INFO	running on Python 3.14.3
+Run started:2026-09-11 13:13:15.924715+00:00
+
+Test results:
+	No issues identified.
+
+Code scanned:
+	Total lines of code: 104
+	Total lines skipped (#nosec): 0
+	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0
+		Low: 0
+		Medium: 0
+		High: 0
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 0
+		Medium: 0
+		High: 0
+Files skipped (0):
+uv run --frozen lint-imports
+
+╔══╗─────────▶╔╗ ╔╗      ╔╗◀───┐
+╚╣╠╝◀─────┐  ╔╝╚╗║║────▶╔╝╚╗   │
+ ║║   ╔══╦══╦╩╗╔╝║║  ╔╦═╩╗╔╝╔═╦══╗
+ ║║╔══╣╔╗║╔╗║╔╣║ ║║ ╔╬╣╔╗║║ ║│║╔═╝
+╔╣╠╣║║║╚╝║╚╝║║║╚╗║╚═╝║║║║║╚╗║═╣║
+╚══╩╩╩╣╔═╩══╩╝╚═╝╚═══╩╩╝╚╩═╩╩═╩╝
+  └──▶║║                    ▲
+      ╚╝────────────────────┘
+
+
+---------
+Contracts
+---------
+
+Analyzed 22 files, 22 dependencies.
+-----------------------------------
+
+Presentation depends on application and domain KEPT
+Inner layers are framework independent KEPT
+HTTP does not import infrastructure or setup KEPT
+Infrastructure does not import HTTP or setup KEPT
+
+Contracts: 4 kept, 0 broken.
+just test
+uv run --frozen pytest --cov --cov-report=term-missing
+============================= test session starts ==============================
+platform darwin -- Python 3.14.3, pytest-9.1.1, pluggy-1.6.0
+rootdir: /Users/arti/PycharmProjects/DSTU_VKB/development_of_secure_web_resources/2026/1
+configfile: pyproject.toml
+testpaths: tests
+plugins: cov-7.1.0
+collected 15 items
+
+tests/integration/presentation/http/test_pages.py ..............         [ 93%]
+tests/unit/setup/test_config.py .                                        [100%]
+
+================================ tests coverage ================================
+_______________ coverage: platform darwin, python 3.14.3-final-0 _______________
+
+Name                                                   Stmts   Miss Branch BrPart  Cover   Missing
+--------------------------------------------------------------------------------------------------
+src/blast_furnace/__init__.py                              0      0      0      0   100%
+src/blast_furnace/app.py                                   5      5      2      0     0%   3-9
+src/blast_furnace/application/__init__.py                  0      0      0      0   100%
+src/blast_furnace/application/get_blast_reference.py       4      0      0      0   100%
+src/blast_furnace/domain/__init__.py                       0      0      0      0   100%
+src/blast_furnace/domain/reference.py                      5      0      0      0   100%
+src/blast_furnace/infrastructure/__init__.py               0      0      0      0   100%
+src/blast_furnace/presentation/__init__.py                 0      0      0      0   100%
+src/blast_furnace/presentation/http/__init__.py            0      0      0      0   100%
+src/blast_furnace/presentation/http/routes.py             15      0      0      0   100%
+src/blast_furnace/setup/__init__.py                        0      0      0      0   100%
+src/blast_furnace/setup/app_factory.py                    16      0      0      0   100%
+src/blast_furnace/setup/cli.py                             4      4      0      0     0%   1-7
+src/blast_furnace/setup/config.py                         12      0      0      0   100%
+src/blast_furnace/setup/ioc.py                             4      0      0      0   100%
+--------------------------------------------------------------------------------------------------
+TOTAL                                                     65      9      2      0    84%
+============================== 15 passed in 0.08s ==============================
+NAME                       IMAGE                    COMMAND                  SERVICE   CREATED          STATUS                    PORTS
+blast-furnace-lab1-app-1   blast-furnace-lab1-app   "gunicorn --bind 0.0…"   app       11 minutes ago   Up 11 minutes (healthy)   127.0.0.1:5001->8080/tcp
+uid=10001(app) gid=10001(app) groups=10001(app)

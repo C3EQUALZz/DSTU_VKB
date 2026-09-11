@@ -1,0 +1,46 @@
+default:
+    @just --list
+
+install:
+    uv sync --frozen
+
+run:
+    uv run --frozen blast-furnace run --host 127.0.0.1 --port 5000
+
+dev:
+    uv run --frozen blast-furnace run --debug --host 127.0.0.1 --port 5000
+
+lint:
+    uv run --frozen ruff format .
+    uv run --frozen ruff check --fix .
+
+mypy:
+    uv run --frozen mypy
+
+static-analysis: mypy
+    uv run --frozen bandit -c pyproject.toml -r src
+    uv run --frozen lint-imports
+
+test:
+    uv run --frozen pytest --cov --cov-report=term-missing
+
+check:
+    uv run --frozen ruff format --check .
+    uv run --frozen ruff check .
+    just static-analysis
+    just test
+
+export:
+    uv export --frozen --no-dev --no-emit-project --format requirements-txt --output-file requirements.txt
+
+up:
+    docker compose up --build -d --wait
+
+up-dev:
+    docker compose -f docker-compose.yaml -f docker-compose.dev.yaml up --build -d --wait
+
+down:
+    docker compose down
+
+logs:
+    docker compose logs -f app

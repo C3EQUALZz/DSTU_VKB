@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Технологические расчёты доменной плавки{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('pages.static', filename='styles.css') }}">
+</head>
+<body>
+    <a class="skip-link" href="#content">Перейти к содержимому</a>
+    <header class="container">
+        <p class="eyebrow">Доменная плавка · Технологический справочник</p>
+        <h1>Технологические расчёты<br>доменной плавки</h1>
+        <nav aria-label="Основная навигация">
+            <ul>
+                <li><a href="{{ url_for('pages.index') }}" {% if request.endpoint == 'pages.index' %}aria-current="page"{% endif %}>Главная</a></li>
+                <li><a href="{{ url_for('pages.temperature') }}" {% if request.endpoint == 'pages.temperature' %}aria-current="page"{% endif %}>Расчёт ТТГ</a></li>
+                <li><span aria-disabled="true">Расчёт рудной нагрузки</span></li>
+                <li><span aria-disabled="true">Документация</span></li>
+            </ul>
+        </nav>
+    </header>
+    <main id="content" class="container">
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="container">
+        <p>&copy; {{ config.COPYRIGHT_YEAR }} {{ config.AUTHOR_NAME }}</p>
+        <p>Лабораторная работа № 1 · ДГТУ</p>
+    </footer>
+</body>
+</html>

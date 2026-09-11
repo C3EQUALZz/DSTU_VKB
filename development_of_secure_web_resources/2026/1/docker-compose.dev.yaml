@@ -1,0 +1,8 @@
+# Overlay: docker compose -f docker-compose.yaml -f docker-compose.dev.yaml up --build
+services:
+  app:
+    command: ["flask", "--app", "blast_furnace.app", "run", "--debug", "--host", "0.0.0.0", "--port", "8080"]
+    environment:
+      PYTHONPATH: /app/src
+    volumes:
+      - ./src:/app/src:ro

@@ -1,0 +1,56 @@
+[project]
+name = "blast-furnace"
+version = "0.1.0"
+description = "ЛР1: технологические расчёты доменной плавки на Flask"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "flask>=3.1,<4",
+    "dishka>=1.7,<2",
+    "gunicorn>=23,<26",
+]
+
+[project.scripts]
+blast-furnace = "blast_furnace.setup.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.14", "mypy>=1.18", "pytest>=8.4", "pytest-cov>=7",
+    "import-linter>=2.10", "bandit>=1.8", "beautifulsoup4>=4.13",
+    "types-beautifulsoup4>=4.12",
+]
+report = [
+    "playwright>=1.62.0",
+    "python-docx>=1.2.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/blast_furnace"]
+
+[tool.ruff]
+target-version = "py314"
+line-length = 90
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "ANN", "RUF"]
+allowed-confusables = ["С", "с", "В", "Т", "Н", "Р", "р", "о", "а", "е", "х", "К", "г", "–"]
+
+[tool.mypy]
+python_version = "3.14"
+strict = true
+files = ["src", "tests"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+
+[tool.coverage.run]
+source = ["blast_furnace"]
+branch = true
+
+[tool.bandit]
+exclude_dirs = ["tests"]

@@ -1,0 +1,25 @@
+name: blast-furnace-lab1
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile
+    ports:
+      - "127.0.0.1:${APP_PORT:-5001}:8080"
+    environment:
+      AUTHOR_NAME: ${AUTHOR_NAME:-Ковалев Данил Петрович}
+    init: true
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/', timeout=3).close()"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

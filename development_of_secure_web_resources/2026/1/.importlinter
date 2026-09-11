@@ -1,0 +1,40 @@
+[importlinter]
+root_package = blast_furnace
+include_external_packages = True
+
+[importlinter:contract:layers]
+name = Presentation depends on application and domain
+type = layers
+layers =
+    blast_furnace.presentation
+    blast_furnace.application
+    blast_furnace.domain
+
+[importlinter:contract:inner]
+name = Inner layers are framework independent
+type = forbidden
+source_modules =
+    blast_furnace.domain
+    blast_furnace.application
+forbidden_modules =
+    blast_furnace.infrastructure
+    blast_furnace.presentation
+    blast_furnace.setup
+    flask
+    dishka
+
+[importlinter:contract:http]
+name = HTTP does not import infrastructure or setup
+type = forbidden
+source_modules = blast_furnace.presentation
+forbidden_modules =
+    blast_furnace.infrastructure
+    blast_furnace.setup
+
+[importlinter:contract:infrastructure]
+name = Infrastructure does not import HTTP or setup
+type = forbidden
+source_modules = blast_furnace.infrastructure
+forbidden_modules =
+    blast_furnace.presentation
+    blast_furnace.setup

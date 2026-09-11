@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<section aria-labelledby="reference-title">
+    <p class="eyebrow">01 / Справочные данные</p>
+    <h2 id="reference-title">Влияние параметров на показатели плавки</h2>
+    <p class="intro">Изменение расхода кокса и производительности печи при изменении параметров дутья и свойств кокса.</p>
+    <div class="table-scroll" role="region" aria-label="Справочная таблица" tabindex="0">
+        <table>
+            <caption>Значения из методических указаний, рисунок 2</caption>
+            <thead>
+                <tr>
+                    <th scope="col">№</th>
+                    <th scope="col">Показатель</th>
+                    <th scope="col">Изменение</th>
+                    <th scope="col">Изменение расхода кокса</th>
+                    <th scope="col">Изменение производительности</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for effect in effects %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <th scope="row">{{ effect.parameter }}</th>
+                    <td>{{ effect.change | decimal_ru }}</td>
+                    <td>{{ effect.coke_consumption_change | decimal_ru }}</td>
+                    <td>{{ effect.productivity_change | decimal_ru }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <p class="note">Таблица носит справочный характер. Единицы измерения и направления изменений в исходной таблице не указаны.</p>
+</section>
+<aside class="next-step">
+    <div>
+        <h2>Теоретическая температура горения</h2>
+        <p>Страница подготовлена для следующей части работы.</p>
+    </div>
+    <a class="button" href="{{ url_for('pages.temperature') }}">Расчёт ТТГ <span aria-hidden="true">→</span></a>
+</aside>
+{% endblock %}
