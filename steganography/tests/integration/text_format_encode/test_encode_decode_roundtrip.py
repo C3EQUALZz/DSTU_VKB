@@ -4,6 +4,7 @@ import asyncio
 from pathlib import Path
 
 import pytest
+from docx import Document
 
 from steganography.application.commands.text_format_decode.decode import (
     DetectSecretCommand,
@@ -40,8 +41,36 @@ from steganography.infrastructure.text_format_decode.docx_reader import (
 from steganography.infrastructure.text_format_encode.docx_container_writer import (
     DocxContainerWriterImpl,
 )
+from steganography.infrastructure.text_format_encode.docx_cover_text_reader import (
+    DocxCoverTextReaderImpl,
+)
+from steganography.domain.text_format_encode.value_objects.char_formatting import AUTO_VALUE
 
 _COVER = "Верба зацвела весной апрель верба верба весна апрель зацвела. " * 8
+
+
+@pytest.mark.parametrize("param", [
+    FormattingParam.SIZE, FormattingParam.COLOR,
+    FormattingParam.SCALE, FormattingParam.SPACING,
+])
+def test_relative_formatting_roundtrip(tmp_path: Path, param: FormattingParam) -> None:
+    source = tmp_path / "cover.docx"
+    output = tmp_path / "encoded.docx"
+    document = Document()
+    document.add_paragraph(_COVER)
+    document.save(source)
+    result = asyncio.run(_encode_handler()(EncodeSecretCommand(
+        secret_text="Ветер дует.",
+        cover=DocxCoverTextReaderImpl().read(source),
+        encoding_name="Windows-1251", param=param,
+        zero_value=AUTO_VALUE, one_value=AUTO_VALUE, output_path=output,
+    )))
+    assert result.success, result.error
+    decoded = asyncio.run(_decode_handler()(DetectSecretCommand(docx_path=output)))
+    assert decoded.success, decoded.error
+    assert decoded.message == "Ветер дует."
+    assert decoded.method is not None
+    assert decoded.method.param is param
 
 
 def _encode_handler() -> EncodeSecretCommandHandler:
