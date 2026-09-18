@@ -4,6 +4,7 @@
 ``docs/reports/2025/3/ПР3.docx``. В таблицу попадают реальные результаты
 прогона классификатора по эталонному файлу resources/linguistic_samples/
 input.txt (10 строк «ДА» + 10 строк «НЕТ»).
+Исходный алгоритм по чётности гласных дополнен проверкой длины первого слова.
 """
 
 import asyncio
@@ -68,13 +69,12 @@ _GOAL = (
 
 
 _METHOD_DESCRIPTION = (
-    "В качестве лингвистического параметра выбрана чётность числа русских "
+    "В качестве исходного лингвистического параметра сохранена чётность числа русских "
     "гласных букв в строке. Множество гласных: А, Е, Ё, И, О, У, Ы, Э, Ю, "
-    "Я (в любом регистре). Если число гласных V(S) чётное, строка S "
-    "относится к подмножеству Y (бит «1», ответ «ДА»); если нечётное — к "
-    "подмножеству N (бит «0», ответ «НЕТ»). Любая осмысленная русская "
-    "строка попадает в одно из двух подмножеств, поэтому метод определён "
-    "на всём множестве предложений естественного языка."
+    "Я (в любом регистре). Алгоритм дополнен проверкой длины первого слова. "
+    "Строка S относится к подмножеству Y (бит «1», ответ «ДА»), если число "
+    "гласных V(S) чётное и первое слово содержит больше 5 букв. В остальных "
+    "случаях строка относится к подмножеству N (бит «0», ответ «НЕТ»)."
 )
 
 
@@ -92,9 +92,9 @@ _ARCH_BULLETS = (
     "domain/linguistic_bit_in_string/services/vowel_counter.py — подсчёт "
     "русских гласных в строке.",
     "domain/linguistic_bit_in_string/services/parity_classifier.py — "
-    "доменный сервис классификации по чётности числа гласных.",
+    "доменный сервис классификации по чётности числа гласных и длине первого слова.",
     "domain/linguistic_bit_in_string/value_objects/string_classification.py "
-    "— VO результата (строка + бит + ответ + значение признака).",
+    "— VO результата (строка + бит + ответ + значения двух признаков).",
     "domain/linguistic_bit_in_string/ports/ — Protocol-порты "
     "StringReader и ClassificationWriter.",
     "infrastructure/linguistic_bit_in_string/ — файловые реализации портов.",
@@ -107,19 +107,25 @@ _ARCH_BULLETS = (
 
 _PARITY_LISTING = '''\
 class ParityClassifier:
-    """Относит строку к Y или N по чётности числа русских гласных."""
+    """Относит строку к Y или N по двум условиям."""
 
     def __init__(self, vowel_counter: VowelCounter) -> None:
         self._vowel_counter = vowel_counter
 
     def classify(self, text: str) -> StringClassification:
         vowels = self._vowel_counter.count(text)
-        is_even = vowels % 2 == 0
+        first_word_match = _FIRST_WORD_PATTERN.search(text)
+        first_word_length = (
+            sum(ch.isalpha() for ch in first_word_match.group())
+            if first_word_match is not None else 0
+        )
+        belongs_to_y = vowels % 2 == 0 and first_word_length > 5
         return StringClassification(
             text=text,
-            bit=1 if is_even else 0,
-            answer="ДА" if is_even else "НЕТ",
+            bit=1 if belongs_to_y else 0,
+            answer="ДА" if belongs_to_y else "НЕТ",
             feature_value=vowels,
+            first_word_length=first_word_length,
         )
 '''
 
@@ -143,12 +149,12 @@ $ steganography linguistic-bit-in-string classify \\
 +------------------------------------------------------------+
 |          Классификация input.txt (ДА: 10, НЕТ: 10)         |
 +---+-------+---------+--------------------------------------+
-| # | Ответ | Гласных | Строка                               |
+| # | Ответ | Гласных | Первое слово | Строка                 |
 +---+-------+---------+--------------------------------------+
-| 1 | ДА    |       6 | Мама мыла раму                       |
-| 2 | ДА    |       6 | Без труда нет плода                  |
+| 1 | ДА    |       4 |            9 | Верёвочка             |
+| 2 | ДА    |       8 |            6 | Пришла весна на улице |
 | ...                                                        |
-| 20| НЕТ   |       9 | Утро мудренее вечера                 |
+| 20| НЕТ   |       7 |            5 | Вышла Лидочка вперед. |
 +---+-------+---------+--------------------------------------+
 """
 
@@ -182,9 +188,8 @@ def _build(view: ClassifyStringsView) -> None:
     add_para(
         doc,
         "Чтобы передать желаемый бит, отправитель формулирует осмысленную "
-        "строку с подходящей чётностью числа гласных. При необходимости "
-        "чётность корректируется минимальной правкой: заменой слова "
-        "синонимом, добавлением или удалением частицы.",
+        "строку с чётным числом гласных и первым словом длиннее пяти букв. "
+        "Для передачи нулевого бита достаточно нарушить хотя бы одно условие.",
     )
 
     add_heading(doc, "3. Задание на выполнение")
@@ -206,7 +211,7 @@ def _build(view: ClassifyStringsView) -> None:
     add_heading(doc, "5. Ключевые фрагменты кода", level=2)
     add_label(doc, "Листинг 1 — подсчёт русских гласных")
     add_listing(doc, _VOWEL_LISTING)
-    add_label(doc, "Листинг 2 — классификатор по чётности")
+    add_label(doc, "Листинг 2 — дополненный классификатор")
     add_listing(doc, _PARITY_LISTING)
 
     add_page_break(doc)
@@ -218,9 +223,17 @@ def _build(view: ClassifyStringsView) -> None:
         f"строк с ответом «ДА» и {view.no_count} строк с ответом «НЕТ», что "
         f"соответствует требованию условия (10 + 10).",
     )
-    rows = [["#", "Ответ", "Гласных", "Строка"]]
+    rows = [["#", "Ответ", "Гласных", "Первое слово", "Строка"]]
     for index, item in enumerate(view.classifications, start=1):
-        rows.append([str(index), item.answer, str(item.feature_value), item.text])
+        rows.append(
+            [
+                str(index),
+                item.answer,
+                str(item.feature_value),
+                str(item.first_word_length),
+                item.text,
+            ],
+        )
     add_table_simple(
         doc,
         rows=rows,
@@ -234,7 +247,8 @@ def _build(view: ClassifyStringsView) -> None:
     add_para(
         doc,
         "В рамках практической работы предложен метод сокрытия одного бита "
-        "в текстовой строке через чётность числа русских гласных букв. "
+        "в текстовой строке через чётность числа русских гласных букв, "
+        "дополненную проверкой длины первого слова. "
         "Метод определён на всём множестве осмысленных предложений русского "
         "языка, легко применим и обратим. Реализация программы выполнена в "
         "стиле Clean Architecture с инжектом зависимостей через dishka, "

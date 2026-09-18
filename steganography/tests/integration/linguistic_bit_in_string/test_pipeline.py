@@ -48,8 +48,11 @@ def test_sample_file_has_ten_yes_and_ten_no(tmp_path: Path) -> None:
     lines = output.read_text(encoding="utf-8").splitlines()
     assert len(lines) == 20
     for line in lines:
-        answer, _, _ = line.partition("\t")
+        answer, vowels, first_word_length, text = line.split("\t", maxsplit=3)
         assert answer in {"ДА", "НЕТ"}
+        assert vowels.isdigit()
+        assert first_word_length.isdigit()
+        assert text
 
 
 def test_writer_creates_parents(tmp_path: Path) -> None:

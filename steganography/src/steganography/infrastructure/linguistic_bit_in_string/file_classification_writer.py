@@ -1,7 +1,7 @@
 """Запись результатов классификации в текстовый файл.
 
-Формат строки: ``<ответ>\\t<гласных>\\t<строка>`` — удобен для дальнейшей
-обработки и одновременно человекочитаем.
+Формат строки: ``<ответ>\\t<гласных>\\t<длина первого слова>\\t<строка>`` —
+удобен для дальнейшей обработки и одновременно человекочитаем.
 """
 
 from pathlib import Path
@@ -22,7 +22,8 @@ class FileClassificationWriter(ClassificationWriter):
     ) -> None:
         path.parent.mkdir(parents=True, exist_ok=True)
         lines = [
-            f"{item.answer}\t{item.feature_value}\t{item.text}"
+            f"{item.answer}\t{item.feature_value}\t"
+            f"{item.first_word_length}\t{item.text}"
             for item in classifications
         ]
         path.write_text("\n".join(lines) + "\n", encoding="utf-8")

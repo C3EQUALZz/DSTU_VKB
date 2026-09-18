@@ -33,7 +33,7 @@ def _make_handler(
 
 
 def test_handler_counts_yes_and_no() -> None:
-    reader = FakeStringReader(["Мама мыла раму", "Знание сила"])
+    reader = FakeStringReader(["Верёвочка", "Знание сила"])
     writer = FakeClassificationWriter()
     handler = _make_handler(reader, writer)
 

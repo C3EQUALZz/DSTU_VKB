@@ -1,4 +1,4 @@
-"""Тесты ParityClassifier — отнесение строки к Y или N по чётности гласных."""
+"""Тесты классификации по чётности гласных и длине первого слова."""
 
 import pytest
 
@@ -16,11 +16,12 @@ def classifier() -> ParityClassifier:
 
 
 def test_even_vowels_yield_yes(classifier: ParityClassifier) -> None:
-    # «Мама мыла раму» — 6 гласных (чётное)
-    result = classifier.classify("Мама мыла раму")
+    # «Верёвочка» — 4 гласных; первое слово содержит 9 букв.
+    result = classifier.classify("Верёвочка")
     assert result.bit == 1
     assert result.answer == "ДА"
-    assert result.feature_value == 6
+    assert result.feature_value == 4
+    assert result.first_word_length == 9
 
 
 def test_odd_vowels_yield_no(classifier: ParityClassifier) -> None:
@@ -29,13 +30,29 @@ def test_odd_vowels_yield_no(classifier: ParityClassifier) -> None:
     assert result.bit == 0
     assert result.answer == "НЕТ"
     assert result.feature_value == 5
+    assert result.first_word_length == 6
 
 
 @pytest.mark.parametrize("text", ["", "xyz", "123"])
-def test_strings_without_vowels_are_yes(
+def test_text_without_a_long_first_word_yields_no(
     classifier: ParityClassifier, text: str,
 ) -> None:
-    # 0 гласных — чётное → ДА
     result = classifier.classify(text)
-    assert result.bit == 1
-    assert result.answer == "ДА"
+    assert result.bit == 0
+    assert result.answer == "НЕТ"
+
+
+def test_even_vowels_with_short_first_word_yield_no(
+    classifier: ParityClassifier,
+) -> None:
+    result = classifier.classify("Весна, весна на улице,")
+    assert result.feature_value == 8
+    assert result.first_word_length == 5
+    assert result.answer == "НЕТ"
+
+
+def test_first_word_ignores_punctuation_and_counts_hyphenated_letters(
+    classifier: ParityClassifier,
+) -> None:
+    result = classifier.classify("«Когда-нибудь» всё получится")
+    assert result.first_word_length == 11

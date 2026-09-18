@@ -19,10 +19,11 @@ class ClassificationResultPresenter:
             f"Классификация {view.input_path.name} "
             f"(ДА: {view.yes_count}, НЕТ: {view.no_count})"
         )
-        table.field_names = ["#", "Ответ", "Гласных", "Строка"]
+        table.field_names = ["#", "Ответ", "Гласных", "Первое слово", "Строка"]
         table.align["#"] = "r"
         table.align["Ответ"] = "l"
         table.align["Гласных"] = "r"
+        table.align["Первое слово"] = "r"
         table.align["Строка"] = "l"
         for index, item in enumerate(view.classifications, start=1):
             table.add_row(
@@ -30,6 +31,7 @@ class ClassificationResultPresenter:
                     str(index),
                     item.answer,
                     str(item.feature_value),
+                    str(item.first_word_length),
                     item.text,
                 ],
             )
