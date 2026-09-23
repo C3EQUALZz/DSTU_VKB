@@ -61,6 +61,9 @@ pub fn divisible_by_small_prime(n: &BigUint) -> bool {
 ///   если 1 при j>0 — составное.
 pub fn is_probably_prime<R: RandomSource>(p: &BigUint, t: u32, rng: &mut R) -> bool {
     info!(candidate = %p, rounds = t, "проверка Рабина–Миллера");
+    if t == 0 {
+        return false;
+    }
     if *p < BigUint::from(2u32) {
         return false;
     }
@@ -150,6 +153,9 @@ pub fn generate_prime<R: RandomSource>(
     }
     if bits < 65 {
         return Err(DomainError::NotLargeEnough { got: bits });
+    }
+    if t < 5 {
+        return Err(DomainError::TooFewRounds { got: t });
     }
 
     let mut stats = PrimeGenStats {
@@ -244,5 +250,13 @@ mod tests {
         let mut rng = SeededRng::new(7);
         let err = generate_prime(64, 4, 100, &mut rng).unwrap_err();
         assert!(matches!(err, DomainError::NotLargeEnough { got: 64 }));
+    }
+
+    #[test]
+    fn zero_rounds_cannot_accept_composite() {
+        let mut rng = SeededRng::new(7);
+        assert!(!is_probably_prime(&BigUint::from(9u32), 0, &mut rng));
+        let err = generate_prime(128, 0, 100, &mut rng).unwrap_err();
+        assert!(matches!(err, DomainError::TooFewRounds { got: 0 }));
     }
 }

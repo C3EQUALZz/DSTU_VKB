@@ -2,6 +2,7 @@
 
 pub mod dh;
 pub mod errors;
+pub mod group;
 pub mod prime;
 pub mod primitive_root;
 pub mod rng;

@@ -7,7 +7,7 @@ use tracing_subscriber::{EnvFilter, fmt, prelude::*};
 /// Инициализирует pretty-логгер и color-eyre отчёты.
 ///
 /// Использует переменную `RUST_LOG` для фильтра. По умолчанию — `INFO`.
-/// Пример: `RUST_LOG=debug cargo run -p lab_01_dh`.
+/// Пример: `RUST_LOG=debug cargo run -p diffie_hellman`.
 pub fn init() -> Result<()> {
     init_with_default(Level::INFO)
 }

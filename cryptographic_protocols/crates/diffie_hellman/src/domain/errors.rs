@@ -13,6 +13,9 @@ pub enum DomainError {
     #[error("по условию большие числа должны превышать 2^64, поэтому n_bits ≥ 65 (получено {got})")]
     NotLargeEnough { got: u32 },
 
+    #[error("тест Рабина–Миллера требует не менее 5 раундов, получено {got}")]
+    TooFewRounds { got: u32 },
+
     #[error("первообразный корень не существует для модуля n = {n}")]
     NoPrimitiveRoot { n: String },
 
@@ -21,4 +24,10 @@ pub enum DomainError {
 
     #[error("секретный показатель X должен лежать в [2; n-2], получено {value}")]
     PrivateOutOfRange { value: String },
+
+    #[error("недопустимые параметры группы Диффи–Хеллмана: {reason}")]
+    InvalidGroup { reason: &'static str },
+
+    #[error("недопустимое открытое значение другого участника")]
+    InvalidPeerPublic,
 }

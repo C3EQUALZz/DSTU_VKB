@@ -41,7 +41,7 @@ install-prek:
 # ===== Запуск работ =====
 
 lab-01 *args="":
-    cargo run -p lab_01_dh -- {{args}}
+    cargo run -p diffie_hellman -- {{args}}
 
 lab-02 *args="":
     cargo run -p lab_02_secret_sharing -- {{args}}

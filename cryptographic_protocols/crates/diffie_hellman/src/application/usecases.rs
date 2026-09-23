@@ -8,6 +8,7 @@ use tracing::info;
 
 use crate::domain::dh::{Party, PublicParameters, shared_secret};
 use crate::domain::errors::DomainError;
+use crate::domain::group::DhGroup;
 use crate::domain::prime::{
     PrimeGenStats, divisible_by_small_prime, generate_prime, is_probably_prime,
 };
@@ -150,6 +151,34 @@ pub fn dh_exchange_random<R: RandomSource>(
     }
 }
 
+/// Случайные p, g, X_A и X_B для однопроцессной демонстрации большого DH.
+pub fn dh_exchange_generated<R: RandomSource>(
+    bits: u32,
+    rounds: u32,
+    rng: &mut R,
+) -> Result<DhExchangeReport, DomainError> {
+    let started = Instant::now();
+    let (group, stats) = DhGroup::generate(bits, rounds, 1000, rng)?;
+    info!(
+        bits,
+        q_candidates = stats.q_candidates,
+        p_candidates = stats.p_candidates,
+        elapsed = ?started.elapsed(),
+        "случайная группа DH создана"
+    );
+    let alice = group.random_party(rounds, rng)?;
+    let bob = group.random_party(rounds, rng)?;
+    let shared_alice = shared_secret(&alice.x, &bob.y, &group.params.n);
+    let shared_bob = shared_secret(&bob.x, &alice.y, &group.params.n);
+    Ok(DhExchangeReport {
+        params: group.params,
+        alice,
+        bob,
+        shared_alice,
+        shared_bob,
+    })
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -193,5 +222,14 @@ mod tests {
         .unwrap();
         assert!(report.keys_match());
         assert_eq!(report.shared_alice, BigUint::from(75u32));
+    }
+
+    #[test]
+    fn generated_dh_uses_large_prime_exponents() {
+        let mut rng = SeededRng::new(12);
+        let report = dh_exchange_generated(67, 8, &mut rng).unwrap();
+        assert!(report.keys_match());
+        assert!(report.alice.x.bits() > 64);
+        assert!(report.bob.x.bits() > 64);
     }
 }

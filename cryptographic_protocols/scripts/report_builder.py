@@ -1,7 +1,7 @@
 """Генератор docx-отчётов по лабораторным курса «Криптографические протоколы».
 
 Шаблон титульного листа повторяет эталон из методов и средств защиты информации.
-Преподаватель — Драпей Ярослав Русланович, год — 2026, студент — Ковалев Д.П. ВКБ43.
+Преподаватель и год задаются в метаданных отчёта, студент — Ковалев Д.П. ВКБ43.
 
 Формулы вставляются как OMML-объекты Word (математическая вставка), а не как
 тексты — функция `add_math` принимает OMML-XML и инжектит его прямо в параграф.
@@ -23,10 +23,9 @@ LOGO_PATH = Path(__file__).resolve().parents[1] / "docs" / "assets" / "dstu_logo
 
 STUDENT_NAME = "Ковалев Данил Петрович"
 STUDENT_GROUP = "ВКБ43"
-TEACHER = "Драпей Ярослав Русланович"
+TEACHER = "Дубровина А.С."
 DISCIPLINE = "Криптографические протоколы"
 CITY = "Ростов-на-Дону"
-YEAR = "2026"
 
 BODY_FONT = "Times New Roman"
 BODY_SIZE = Pt(14)
@@ -42,6 +41,9 @@ class LabMeta:
     number: int
     title: str  # тема работы
     variant: int | None = None
+    year: int = 2026
+    teacher: str = TEACHER
+    student_group: str = STUDENT_GROUP
 
 
 def _setup_default_style(doc: _Document) -> None:
@@ -54,8 +56,8 @@ def _setup_default_style(doc: _Document) -> None:
     pf.space_after = Pt(0)
 
 
-def _set_first_page_footer_with_city_year(doc: _Document) -> None:
-    """Прибивает «Ростов-на-Дону / 2026» к низу титульника через footer первой страницы."""
+def _set_first_page_footer_with_city_year(doc: _Document, year: int) -> None:
+    """Прибивает город и год к низу титульника через footer первой страницы."""
     section = doc.sections[0]
     section.different_first_page_header_footer = True
     footer = section.first_page_footer
@@ -74,7 +76,7 @@ def _set_first_page_footer_with_city_year(doc: _Document) -> None:
     second.alignment = WD_ALIGN_PARAGRAPH.CENTER
     second.paragraph_format.first_line_indent = Cm(0)
     second.paragraph_format.line_spacing_rule = WD_LINE_SPACING.SINGLE
-    run2 = second.add_run(YEAR)
+    run2 = second.add_run(str(year))
     run2.font.name = BODY_FONT
     run2.font.size = BODY_SIZE
 
@@ -156,13 +158,13 @@ def add_title_page(doc: _Document, meta: LabMeta) -> None:
     _add_centered(doc, f"На тему «{meta.title}»{variant_suffix}", bold=True)
     for _ in range(5):
         _add_blank_single(doc)
-    _add_right(doc, f"Выполнил обучающийся гр. {STUDENT_GROUP}")
+    _add_right(doc, f"Выполнил обучающийся гр. {meta.student_group}")
     _add_right(doc, STUDENT_NAME)
     _add_blank_single(doc)
     _add_right(doc, "Проверил:")
-    _add_right(doc, TEACHER)
+    _add_right(doc, meta.teacher)
     # Город и год — в footer первой страницы (гарантировано прибиты к низу).
-    _set_first_page_footer_with_city_year(doc)
+    _set_first_page_footer_with_city_year(doc, meta.year)
 
 
 def add_heading(doc: _Document, text: str, *, level: int = 1) -> None:

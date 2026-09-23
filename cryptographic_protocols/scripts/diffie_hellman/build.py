@@ -1,7 +1,8 @@
-"""Отчёт по лаб 1 — Диффи-Хеллман с полным ручным решением."""
+"""Отчёты 2025/2026 по Диффи–Хеллману с ручным решением и сетевым опытом."""
 
 from __future__ import annotations
 
+import argparse
 import sys
 from pathlib import Path
 
@@ -30,11 +31,24 @@ from report_builder import (  # noqa: E402
 
 
 def read_artifact(name: str) -> str:
-    return (ROOT / "artifacts" / "lab_01_dh" / name).read_text(encoding="utf-8")
+    return (ROOT / "artifacts" / "diffie_hellman" / name).read_text(encoding="utf-8")
 
 
 def read_source(rel: str) -> str:
-    return (ROOT / "crates" / "lab_01_dh" / "src" / rel).read_text(encoding="utf-8")
+    source = (ROOT / "crates" / "diffie_hellman" / "src" / rel).read_text(encoding="utf-8")
+    return source.split("#[cfg(test)]", 1)[0].rstrip()
+
+
+def network_log_excerpt(name: str, markers: tuple[str, ...]) -> str:
+    """Выбирает основные события из полного вывода реального процесса."""
+    lines = read_artifact(name).splitlines()
+    selected = [lines[0]]
+    for line in lines[1:]:
+        if " INFO " in line and any(marker in line for marker in markers):
+            selected.append(line.split(" INFO ", 1)[1])
+        elif line.startswith("Ответ сервера:"):
+            selected.append(line)
+    return "\n".join(selected)
 
 
 # ---------- ручные расчёты ----------
@@ -244,8 +258,16 @@ CONTROL_QA = [
 ]
 
 
-def main() -> None:
-    meta = LabMeta(number=1, title="Обмен ключами по схеме Диффи-Хеллмана")
+def main(year: int) -> None:
+    number = 1 if year == 2025 else 2
+    teacher = "Драпей Ярослав Русланович" if year == 2025 else "Дубровина А.С."
+    meta = LabMeta(
+        number=number,
+        title="Обмен ключами по схеме Диффи–Хеллмана",
+        year=year,
+        teacher=teacher,
+        student_group="ВКБ53",
+    )
     doc = make_doc()
     add_title_page(doc, meta)
     add_page_break(doc)
@@ -260,7 +282,23 @@ def main() -> None:
         doc,
         "Цель работы: освоить методы генерации больших простых чисел (тест "
         "Рабина-Миллера), методы построения первообразных корней по модулю n и "
-        "реализовать обмен ключами по схеме Диффи-Хеллмана на числах, превышающих 2⁶⁴.",
+        "реализовать обмен ключами по схеме Диффи–Хеллмана на числах, превышающих 2⁶⁴, "
+        "и проверить передачу сообщений между двумя процессами.",
+    )
+
+    add_heading(doc, "Задание", level=2)
+    add_para(
+        doc,
+        "Сгенерировать n-битное простое число по заданным числу раундов Рабина–Миллера и "
+        "разрядности; показать число попыток и время. Найти все простые числа в заданном "
+        "диапазоне и первые 100 первообразных корней. Выполнить обмен Диффи–Хеллмана с "
+        "случайными большими простыми n, X_A, X_B и с параметрами пользователя.",
+    )
+    add_para(
+        doc,
+        "Дополнительная демонстрация: два отдельных процесса согласуют общий секрет через "
+        "TCP на localhost, затем клиент отправляет несколько зашифрованных сообщений. "
+        "Сервер преобразует текст в верхний регистр и отправляет зашифрованный ответ.",
     )
 
     add_heading(doc, "Теоретические сведения", level=2)
@@ -289,12 +327,33 @@ def main() -> None:
             m_op(" mod n"),
         ]),
     )
+    add_para(
+        doc,
+        "Для сетевого опыта генерируем безопасное простое n = 2q + 1, где q также простое. "
+        "При известном разложении n − 1 = 2q генератор проверяется двумя сравнениями: "
+        "g² mod n ≠ 1 и g^q mod n ≠ 1. Оба закрытых показателя X_A, X_B выбираются "
+        "как случайные простые числа больше 2⁶⁴ и меньше q.",
+    )
+    add_para(
+        doc,
+        "Из общего секрета стороны выводят два ключа по HKDF-SHA-256, отдельно для каждого "
+        "направления. Сообщения шифруются ChaCha20-Poly1305; счётчики сообщений входят в "
+        "проверяемые данные. Параметры и открытые значения проверяются, закрытые показатели "
+        "и общий секрет в журнал не записываются.",
+    )
+    add_para(
+        doc,
+        "Эксперимент проводится только на localhost. Обмен Диффи–Хеллмана без проверки "
+        "подлинности участников уязвим к активной подмене сообщений; шифрование ответов "
+        "само по себе не решает эту задачу. 128-битный модуль выбран для учебного опыта, "
+        "а не для защиты реальных данных.",
+    )
 
     add_heading(doc, "Ручное решение примера методички")
     add_para(
         doc,
-        "Параметры протокола Диффи-Хеллмана из примера методички: n = 97 (большое "
-        "простое), g = 5 (первообразный корень по модулю 97), X_A = 36 (секрет Алисы), "
+        "Параметры иллюстративного примера методички: n = 97 (малое простое), "
+        "g = 5 (первообразный корень по модулю 97), X_A = 36 (секрет Алисы), "
         "X_B = 58 (секрет Боба). Ожидаемый общий ключ K = 75.",
     )
     add_dh_steps(doc)
@@ -307,21 +366,27 @@ def main() -> None:
 
     add_page_break(doc)
     add_heading(doc, "Программная проверка")
+    if year == 2025:
+        add_para(
+            doc,
+            "Ниже приведён повторный запуск после обновления программы в 2026 году; "
+            "год на титульном листе обозначает учебную работу 2025 года.",
+        )
     add_listing(
         doc,
-        "$ cargo run --release -p lab_01_dh -- --seed 42 gen-prime --bits 128 --rounds 32\n"
+        "$ cargo run --release -p diffie_hellman -- --seed 42 gen-prime --bits 128 --rounds 32\n"
         + read_artifact("01_gen_prime_128.txt"),
         caption="Листинг 1 — генерация 128-битного простого",
     )
     add_listing(
         doc,
-        "$ cargo run --release -p lab_01_dh -- --seed 42 gen-prime --bits 256 --rounds 32\n"
+        "$ cargo run --release -p diffie_hellman -- --seed 42 gen-prime --bits 256 --rounds 32\n"
         + read_artifact("02_gen_prime_256.txt"),
         caption="Листинг 2 — генерация 256-битного простого",
     )
     add_listing(
         doc,
-        "$ cargo run --release -p lab_01_dh -- range-primes --from 1000 --to 1100\n"
+        "$ cargo run --release -p diffie_hellman -- range-primes --from 1000 --to 1100\n"
         + read_artifact("03_range_primes.txt"),
         caption="Листинг 3 — простые числа в диапазоне [1000; 1100)",
     )
@@ -330,23 +395,66 @@ def main() -> None:
     tail = "\n".join(roots[-3:])
     add_listing(
         doc,
-        "$ cargo run --release -p lab_01_dh -- roots --n 1009 --count 100\n"
+        "$ cargo run --release -p diffie_hellman -- roots --n 1009 --count 100\n"
         + head
-        + "\n... (полный вывод — в artifacts/lab_01_dh/04_roots_1009.txt) ...\n"
+        + "\n... (полный вывод — в artifacts/diffie_hellman/04_roots_1009.txt) ...\n"
         + tail,
         caption="Листинг 4 — первообразные корни по модулю 1009",
     )
     add_listing(
         doc,
-        "$ cargo run --release -p lab_01_dh -- --seed 42 dh --n 97 --g 5 --xa 36 --xb 58\n"
+        "$ cargo run --release -p diffie_hellman -- --seed 42 dh --n 97 --g 5 --xa 36 --xb 58\n"
         + read_artifact("05_dh_methodichka.txt"),
         caption="Листинг 5 — обмен Диффи-Хеллмана (пример методички, K = 75)",
     )
     add_listing(
         doc,
-        "$ cargo run --release -p lab_01_dh -- --seed 7 dh --n 1009 --g 11\n"
-        + read_artifact("06_dh_1009.txt"),
-        caption="Листинг 6 — обмен на n = 1009 со случайными X",
+        "$ cargo run --release -p diffie_hellman -- --seed 7 dh --bits 128 --rounds 32\n"
+        + read_artifact("06_dh_generated_128.txt"),
+        caption="Листинг 6 — случайные большие простые p, X_A, X_B",
+    )
+
+    add_heading(doc, "Обмен между двумя процессами")
+    add_para(
+        doc,
+        "Сборка: cargo build --release -p diffie_hellman. В первом терминале запущен "
+        "сервер serve --once; во втором — клиент connect с двумя параметрами --message. "
+        "Скрипт scripts/diffie_hellman/capture.py запускает оба процесса, подбирает "
+        "свободный локальный порт и сохраняет полный вывод в artifacts/diffie_hellman/.",
+    )
+    add_listing(
+        doc,
+        network_log_excerpt(
+            "07_server.txt",
+            (
+                "сервер ожидает", "клиент подключился", "параметры DH сгенерированы",
+                "сервер отправляет открытые", "сервер получил открытое",
+                "сервер вывел ключи", "сервер получил текст",
+                "сервер преобразовал", "сеанс клиента завершён",
+            ),
+        ),
+        caption="Листинг 7 — реальный журнал процесса сервера",
+    )
+    add_listing(
+        doc,
+        network_log_excerpt(
+            "08_client.txt",
+            (
+                "клиент подключился", "клиент проверил параметры",
+                "клиент отправил своё", "клиент вывел ключи",
+                "клиент отправляет текст", "клиент получил обработанный",
+                "сеанс связи завершён",
+            ),
+        ),
+        caption="Листинг 8 — реальный журнал процесса клиента и ответы",
+    )
+    add_para(
+        doc,
+        "Оба журнала показывают одну и ту же пару открытых значений. После независимого "
+        "вывода ключей сервер успешно расшифровал два последовательных сообщения и отправил "
+        "ответы. У клиента получены «ПРИВЕТ, БОБ!» и «КАНАЛ РАБОТАЕТ». Проверка тега "
+        "ChaCha20-Poly1305 при приёме подтверждает, что стороны согласовали совместимые "
+        "ключи для каждого направления.",
     )
 
     add_page_break(doc)
@@ -363,9 +471,10 @@ def main() -> None:
         "первообразных корней (для p = 41 получили 6 — наименьший первообразный корень) "
         "и схема Диффи-Хеллмана (n = 97, g = 5, X_A = 36, X_B = 58 → K = 75). "
         "Программная реализация на Rust с длинной арифметикой num-bigint генерирует "
-        "128-битные простые за миллисекунды; обмен ключами на n больше 2⁶⁴ работает "
-        "корректно. Доменный слой не зависит от инфраструктуры, источник случайности "
-        "инжектируется через trait, что обеспечивает воспроизводимость через --seed.",
+        "128-битные простые; обмен ключами на n больше 2⁶⁴ работает корректно. "
+        "В двух процессах подтверждена обработка двух зашифрованных сообщений в одном "
+        "соединении. В сетевом режиме каждый участник знает только свой закрытый показатель; "
+        "проверка подлинности участников оставлена за рамками учебного опыта.",
     )
 
     add_page_break(doc)
@@ -373,21 +482,26 @@ def main() -> None:
     add_para(
         doc,
         "Реализация на Rust 2024 (Cargo workspace), архитектура Clean Architecture: "
-        "доменный слой содержит чистые алгоритмы, прикладной — сценарии, "
-        "презентационный — CLI на clap.",
+        "доменный слой содержит алгоритмы, прикладной — сценарии и защищённые сообщения, "
+        "инфраструктурный — TCP, презентационный — CLI на clap.",
     )
     for caption, rel in [
-        ("Листинг 7 — тест Рабина-Миллера (src/domain/prime.rs)", "domain/prime.rs"),
-        ("Листинг 8 — поиск первообразных корней (src/domain/primitive_root.rs)", "domain/primitive_root.rs"),
-        ("Листинг 9 — обмен Диффи-Хеллмана (src/domain/dh.rs)", "domain/dh.rs"),
-        ("Листинг 10 — usecases (src/application/usecases.rs)", "application/usecases.rs"),
+        ("Листинг 9 — тест Рабина–Миллера (src/domain/prime.rs)", "domain/prime.rs"),
+        ("Листинг 10 — генерация группы DH (src/domain/group.rs)", "domain/group.rs"),
+        ("Листинг 11 — сетевой сценарий (src/application/channel.rs)", "application/channel.rs"),
+        ("Листинг 12 — кадры TCP (src/infrastructure/tcp.rs)", "infrastructure/tcp.rs"),
     ]:
         add_listing(doc, read_source(rel), caption=caption)
 
-    out = ROOT / "docs" / "reports" / "lab_01_dh" / "Ковалев Д.П. ВКБ43 1 лаба.docx"
+    out = (
+        ROOT / "docs" / "reports" / str(year) / "diffie_hellman"
+        / f"Ковалев Д.П. ВКБ53 {number} лаба.docx"
+    )
     save(doc, out)
     print(f"saved: {out}")
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--year", type=int, choices=(2025, 2026), required=True)
+    main(parser.parse_args().year)
