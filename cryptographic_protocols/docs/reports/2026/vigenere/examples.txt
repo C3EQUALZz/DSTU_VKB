@@ -1,0 +1,23 @@
+$ cargo run --quiet -p vigenere -- encrypt --scheme progressive --alphabet en --key MODE --text CRYPTOGRAPHY
+OFBTGDKWOFME
+
+$ cargo run --quiet -p vigenere -- decrypt --scheme progressive --alphabet en --key MODE --text OFBTGDKWOFME
+CRYPTOGRAPHY
+
+$ cargo run --quiet -p vigenere -- encrypt --scheme progressive --alphabet ru-yo --key 'КЛЮЧ' --text 'КРИПТОГРАФИЯ'
+ХЬЖЖЮЫВИМВИШ
+
+$ cargo run --quiet -p vigenere -- decrypt --scheme progressive --alphabet ru-yo --key 'КЛЮЧ' --text 'ХЬЖЖЮЫВИМВИШ'
+КРИПТОГРАФИЯ
+
+$ cargo run --quiet -p vigenere -- encrypt --scheme standard --alphabet ru-yo --key 'КЛЮЧ' --text 'КРИПТОГРАФИЯ'
+ХЬЖЖЭЪБЗКАЖЦ
+
+$ cargo run --quiet -p vigenere -- decrypt --scheme standard --alphabet ru-yo --key 'КЛЮЧ' --text 'ХЬЖЖЭЪБЗКАЖЦ'
+КРИПТОГРАФИЯ
+
+$ cargo run --quiet -p vigenere -- encrypt --scheme autokey --alphabet ru-yo --key 'КЛЮЧ' --text 'КРИПТОГРАФИЯ'
+ХЬЖЖЭЯЛАТГЛП
+
+$ cargo run --quiet -p vigenere -- decrypt --scheme autokey --alphabet ru-yo --key 'КЛЮЧ' --text 'ХЬЖЖЭЯЛАТГЛП'
+КРИПТОГРАФИЯ

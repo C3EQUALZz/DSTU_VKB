@@ -37,7 +37,7 @@ from report_builder import (  # noqa: E402
 )
 
 CIPHER_DIR = ROOT / "artifacts" / "lab_04_vigenere" / "cipher_texts"
-CRATE_SRC = ROOT / "crates" / "lab_04_vigenere" / "src"
+CRATE_SRC = ROOT / "crates" / "vigenere" / "src"
 
 
 def read_cipher(n: int) -> str:
@@ -265,8 +265,8 @@ def build_variant(n: int) -> None:
         f"Запуск программы на Rust подтверждает результат: длина ключа {L}, ключ «{key}».",
     )
     prog_out = (
-        f"$ cargo run --release -p lab_04_vigenere -- break \"<шифртекст>\" --min-key 2 --max-key 8\n"
-        f"Восстановленный ключ: «{key}»\n"
+        f"$ cargo run --release -p vigenere -- break \"<шифртекст>\" --scheme standard --alphabet ru-no-yo --min-key 2 --max-key 8\n"
+        f"Восстановленный ключ: {key}\n"
         f"Расшифрованный текст: {plain[:200]} …"
     )
     add_listing(doc, prog_out, caption="Листинг 1 — результат криптоанализа")
@@ -293,15 +293,15 @@ def build_variant(n: int) -> None:
     add_page_break(doc)
     add_heading(doc, "Листинг исходного кода")
     for caption, rel in [
-        ("Листинг 2 — шифр Виженера (src/domain/cipher.rs)", "domain/cipher.rs"),
-        ("Листинг 3 — криптоанализ: IC и χ² (src/domain/cryptanalysis.rs)", "domain/cryptanalysis.rs"),
-        ("Листинг 4 — сценарии (src/application/usecases.rs)", "application/usecases.rs"),
+        ("Листинг 2 — три схемы Виженера (src/domain/scheme.rs)", "domain/scheme.rs"),
+        ("Листинг 3 — статистический криптоанализ (src/domain/attack.rs)", "domain/attack.rs"),
+        ("Листинг 4 — сценарий обычной схемы (src/application/standard.rs)", "application/standard.rs"),
         ("Листинг 5 — CLI (src/presentation/cli.rs)", "presentation/cli.rs"),
     ]:
         add_listing(doc, read_source(rel), caption=caption)
 
     out = (
-        ROOT / "docs" / "reports" / "lab_04_vigenere" / f"var_{n:02d}"
+        ROOT / "docs" / "reports" / "2025" / "lab_04_vigenere" / f"var_{n:02d}"
         / "Ковалев Д.П. ВКБ43 4 лаба.docx"
     )
     save(doc, out)

@@ -50,7 +50,10 @@ lab-03 *args="":
     cargo run -p lab_03_substitution -- {{args}}
 
 lab-04 *args="":
-    cargo run -p lab_04_vigenere -- {{args}}
+    cargo run -p vigenere -- {{args}}
+
+vigenere *args="":
+    cargo run -p vigenere -- {{args}}
 
 lab-05 *args="":
     cargo run -p lab_05_xor -- {{args}}
