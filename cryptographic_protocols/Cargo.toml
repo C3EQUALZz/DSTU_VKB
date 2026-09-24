@@ -8,6 +8,7 @@ members = [
     "crates/lab_03_substitution",
     "crates/lab_05_xor",
     "crates/lab_06_crt_sharing",
+    "crates/shamir_blakley",
 ]
 
 [workspace.package]
