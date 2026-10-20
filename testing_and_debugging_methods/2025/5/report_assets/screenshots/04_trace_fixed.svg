@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1034.86" height="471.29">
+<rect width="986.86" height="423.29" fill="#0d1117" rx="12.00" ry="12.00" filter="url(#shadow)" x="24.00px" y="24.00px" />
+<g font-family="FiraCode Nerd Font" font-size="16.00px" fill="#e6edf3" clip-path="url(#terminalMask)">
+<text x="46.00px" y="82.60px" xml:space="preserve">$ PYTHONPATH=src .venv/bin/python -m fifth_laboratory --version fixed --log-level DEBUG --log-file
+</text><text x="46.00px" y="104.20px" xml:space="preserve">report_assets/logs/fixed.log --check
+</text><text x="46.00px" y="125.80px" xml:space="preserve">
+</text><text x="46.00px" y="147.40px" xml:space="preserve">19:09:14 | INFO    | lab5.cli | version=fixed
+</text><text x="46.00px" y="169.00px" xml:space="preserve">19:09:14 | INFO    | lab5.order | order=LAB5-001 discount_percent=10
+</text><text x="46.00px" y="190.60px" xml:space="preserve">19:09:14 | DEBUG   | lab5.order | item=Keyboard price=1200.00 qty=2 line_total=2400.00
+</text><text x="46.00px" y="212.20px" xml:space="preserve">19:09:14 | DEBUG   | lab5.order | item=Mouse price=1600.00 qty=1 line_total=1600.00
+</text><text x="46.00px" y="233.80px" xml:space="preserve">19:09:14 | DEBUG   | lab5.order | subtotal=4000.00
+</text><text x="46.00px" y="255.40px" xml:space="preserve">19:09:14 | DEBUG   | lab5.order | discount_percent=10 rate=0.1
+</text><text x="46.00px" y="277.00px" xml:space="preserve">19:09:14 | DEBUG   | lab5.order | discount_amount=400.00 total=3600.00
+</text><text x="46.00px" y="298.60px" xml:space="preserve">Order: LAB5-001 | version: fixed
+</text><text x="46.00px" y="320.20px" xml:space="preserve">Total: 3600.00 RUB
+</text><text x="46.00px" y="341.80px" xml:space="preserve">19:09:14 | INFO    | lab5.cli | CHECK PASSED expected=3600.00 actual=3600.00
+</text><text x="46.00px" y="363.40px" xml:space="preserve">CHECK: PASS
+</text><text x="46.00px" y="385.00px" xml:space="preserve">
+</text><text x="46.00px" y="406.60px" xml:space="preserve">[exit code: 0]
+</text>
+</g>
+<svg x="24.00px" y="24.00px"><circle cx="13.50" cy="12.00" r="5.50" fill="#FF5A54" /><circle cx="32.50" cy="12.00" r="5.50" fill="#E6BF29" /><circle cx="51.50" cy="12.00" r="5.50" fill="#52C12B" /></svg><defs><filter id="shadow" filterUnits="userSpaceOnUse"><feGaussianBlur in="SourceAlpha" stdDeviation="12.00" /><feOffset result="offsetblur" dx="0.00" dy="5.00" /><feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge></filter></defs><defs><clipPath id="terminalMask"><rect width="1034.86" height="471.29" /></clipPath></defs></svg>

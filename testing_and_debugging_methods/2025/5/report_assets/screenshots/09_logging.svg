@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="882.48" height="471.29">
+<rect width="834.48" height="423.29" fill="#0d1117" rx="12.00" ry="12.00" filter="url(#shadow)" x="24.00px" y="24.00px" />
+<g font-family="FiraCode Nerd Font" font-size="16.00px" fill="#e6edf3" clip-path="url(#terminalMask)">
+<text x="46.00px" y="82.60px" xml:space="preserve"><tspan fill="#ff7b72">import</tspan> <tspan fill="#ff7b72">logging</tspan>
+</text><text x="46.00px" y="104.20px" xml:space="preserve"><tspan fill="#ff7b72">from</tspan> <tspan fill="#ff7b72">pathlib</tspan> <tspan fill="#ff7b72">import</tspan> Path
+</text><text x="46.00px" y="125.80px" xml:space="preserve">
+</text><text x="46.00px" y="147.40px" xml:space="preserve"><tspan fill="#ff7b72">def</tspan> <tspan fill="#d2a8ff" font-weight="bold">configure_logging</tspan>(level: str, log_file: Path <tspan fill="#ff7b72" font-weight="bold">|</tspan> <tspan fill="#79c0ff">None</tspan>) <tspan fill="#ff7b72" font-weight="bold">-&gt;</tspan> <tspan fill="#79c0ff">None</tspan>:
+</text><text x="46.00px" y="169.00px" xml:space="preserve">    handlers: list[logging<tspan fill="#ff7b72" font-weight="bold">.</tspan>Handler] <tspan fill="#ff7b72" font-weight="bold">=</tspan> [logging<tspan fill="#ff7b72" font-weight="bold">.</tspan>StreamHandler()]
+</text><text x="46.00px" y="190.60px" xml:space="preserve">    <tspan fill="#ff7b72">if</tspan> log_file <tspan fill="#ff7b72" font-weight="bold">is</tspan> <tspan fill="#ff7b72" font-weight="bold">not</tspan> <tspan fill="#79c0ff">None</tspan>:
+</text><text x="46.00px" y="212.20px" xml:space="preserve">        log_file<tspan fill="#ff7b72" font-weight="bold">.</tspan>parent<tspan fill="#ff7b72" font-weight="bold">.</tspan>mkdir(parents<tspan fill="#ff7b72" font-weight="bold">=</tspan><tspan fill="#79c0ff">True</tspan>, exist_ok<tspan fill="#ff7b72" font-weight="bold">=</tspan><tspan fill="#79c0ff">True</tspan>)
+</text><text x="46.00px" y="233.80px" xml:space="preserve">        handlers<tspan fill="#ff7b72" font-weight="bold">.</tspan>append(logging<tspan fill="#ff7b72" font-weight="bold">.</tspan>FileHandler(log_file, mode<tspan fill="#ff7b72" font-weight="bold">=</tspan><tspan fill="#a5d6ff">"w"</tspan>, encoding<tspan fill="#ff7b72" font-weight="bold">=</tspan><tspan fill="#a5d6ff">"utf-8"</tspan>))
+</text><text x="46.00px" y="255.40px" xml:space="preserve">    logging<tspan fill="#ff7b72" font-weight="bold">.</tspan>basicConfig(
+</text><text x="46.00px" y="277.00px" xml:space="preserve">        level<tspan fill="#ff7b72" font-weight="bold">=</tspan>level,
+</text><text x="46.00px" y="298.60px" xml:space="preserve">        format<tspan fill="#ff7b72" font-weight="bold">=</tspan><tspan fill="#a5d6ff">"</tspan><tspan fill="#a5d6ff">%(asctime)s</tspan><tspan fill="#a5d6ff"> | </tspan><tspan fill="#a5d6ff">%(levelname)-7s</tspan><tspan fill="#a5d6ff"> | </tspan><tspan fill="#a5d6ff">%(name)s</tspan><tspan fill="#a5d6ff"> | </tspan><tspan fill="#a5d6ff">%(message)s</tspan><tspan fill="#a5d6ff">"</tspan>,
+</text><text x="46.00px" y="320.20px" xml:space="preserve">        datefmt<tspan fill="#ff7b72" font-weight="bold">=</tspan><tspan fill="#a5d6ff">"%H:%M:%S"</tspan>,
+</text><text x="46.00px" y="341.80px" xml:space="preserve">        handlers<tspan fill="#ff7b72" font-weight="bold">=</tspan>handlers,
+</text><text x="46.00px" y="363.40px" xml:space="preserve">        force<tspan fill="#ff7b72" font-weight="bold">=</tspan><tspan fill="#79c0ff">True</tspan>,
+</text><text x="46.00px" y="385.00px" xml:space="preserve">    )
+</text><text x="46.00px" y="406.60px" xml:space="preserve">
+</text>
+</g>
+<svg x="24.00px" y="24.00px"><circle cx="13.50" cy="12.00" r="5.50" fill="#FF5A54" /><circle cx="32.50" cy="12.00" r="5.50" fill="#E6BF29" /><circle cx="51.50" cy="12.00" r="5.50" fill="#52C12B" /></svg><defs><filter id="shadow" filterUnits="userSpaceOnUse"><feGaussianBlur in="SourceAlpha" stdDeviation="12.00" /><feOffset result="offsetblur" dx="0.00" dy="5.00" /><feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge></filter></defs><defs><clipPath id="terminalMask"><rect width="882.48" height="471.29" /></clipPath></defs></svg>

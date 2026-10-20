@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+report_assets/font-cache/
+report_assets/fonts.conf
+report_assets/page_*.png
+report_assets/contact_sheet.png
+!report_assets/logs/
+!report_assets/logs/**

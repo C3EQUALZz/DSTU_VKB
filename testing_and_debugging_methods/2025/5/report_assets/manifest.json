@@ -1,0 +1,51 @@
+[
+  {
+    "name": "01_reproduce",
+    "command": "PYTHONPATH=src .venv/bin/python -m fifth_laboratory --version legacy --check",
+    "exit_code": 1,
+    "expected_exit_code": 1,
+    "snapshot": false
+  },
+  {
+    "name": "02_trace_legacy",
+    "command": "PYTHONPATH=src .venv/bin/python -m fifth_laboratory --version legacy --log-level DEBUG --log-file report_assets/logs/legacy.log --check",
+    "exit_code": 1,
+    "expected_exit_code": 1,
+    "snapshot": false
+  },
+  {
+    "name": "03_regression_before",
+    "command": "PYTHONPATH=src .venv/bin/python -m pytest tests/test_order.py::test_discount_regression -q --tb=short -o console_output_style=classic",
+    "exit_code": 1,
+    "expected_exit_code": 1,
+    "snapshot": true
+  },
+  {
+    "name": "04_trace_fixed",
+    "command": "PYTHONPATH=src .venv/bin/python -m fifth_laboratory --version fixed --log-level DEBUG --log-file report_assets/logs/fixed.log --check",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "snapshot": false
+  },
+  {
+    "name": "05_regression_after",
+    "command": "PYTHONPATH=src .venv/bin/python -m pytest tests/test_order.py::test_discount_regression -q --tb=short -o console_output_style=classic",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "snapshot": false
+  },
+  {
+    "name": "06_tests",
+    "command": "PYTHONPATH=src .venv/bin/python -m pytest -vv --tb=short -o console_output_style=classic",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "snapshot": false
+  },
+  {
+    "name": "07_info",
+    "command": "PYTHONPATH=src .venv/bin/python -m fifth_laboratory --check",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "snapshot": false
+  }
+]

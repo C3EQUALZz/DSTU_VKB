@@ -1,0 +1,16 @@
+$ PYTHONPATH=src .venv/bin/python -m pytest tests/test_order.py::test_discount_regression -q --tb=short -o console_output_style=classic
+
+F
+=========================================== FAILURES ===========================================
+___________________________________ test_discount_regression ___________________________________
+tests/test_order.py:18: in test_discount_regression
+    assert calculate_total(make_order()) == Decimal("3600.00")
+E   AssertionError: assert Decimal('4000.00') == Decimal('3600.00')
+E    +  where Decimal('4000.00') = calculate_total(Order(order_id='TEST-001', items=(Item(name='Keyboard', price=Decimal('1200'), quantity=2), Item(name='Mouse', price=Decimal('1600'), quantity=1)), discount_percent=Decimal('10')))
+E    +    where Order(order_id='TEST-001', items=(Item(name='Keyboard', price=Decimal('1200'), quantity=2), Item(name='Mouse', price=Decimal('1600'), quantity=1)), discount_percent=Decimal('10')) = make_order()
+E    +  and   Decimal('3600.00') = Decimal('3600.00')
+=================================== short test summary info ====================================
+FAILED tests/test_order.py::test_discount_regression - AssertionError: assert Decimal('4000.0...
+1 failed in 0.02s
+
+[exit code: 1]

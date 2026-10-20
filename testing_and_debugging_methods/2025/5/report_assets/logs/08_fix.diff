@@ -1,0 +1,10 @@
+--- order.py (before)
++++ order.py (after)
+@@ -58,6 +58,6 @@
+     """Исправленная версия: сохраняет дробную часть коэффициента скидки."""
+     logger.info("order=%s discount_percent=%s", order.order_id, order.discount_percent)
+     amount = subtotal(order)
+-    rate = Decimal(int(order.discount_percent / Decimal("100")))
++    rate = order.discount_percent / Decimal("100")
+     logger.debug("discount_percent=%s rate=%s", order.discount_percent, rate)
+     return apply_discount(amount, rate)

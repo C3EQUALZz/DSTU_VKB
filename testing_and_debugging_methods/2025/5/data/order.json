@@ -1,0 +1,9 @@
+{
+  "order_id": "LAB5-001",
+  "items": [
+    {"name": "Keyboard", "price": "1200.00", "quantity": 2},
+    {"name": "Mouse", "price": "1600.00", "quantity": 1}
+  ],
+  "discount_percent": "10",
+  "expected_total": "3600.00"
+}

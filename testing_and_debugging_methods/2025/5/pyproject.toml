@@ -1,0 +1,20 @@
+[project]
+name = "fifth-laboratory"
+version = "1.0.0"
+description = "Лабораторная №5: отладка расчёта заказа с помощью logging"
+requires-python = ">=3.12"
+dependencies = []
+
+[dependency-groups]
+dev = ["pytest>=8.3"]
+report = [
+    "python-docx>=1.1",
+    "pymupdf>=1.24",
+    "pillow>=10",
+    "cairosvg>=2.9.1",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-ra -q --strict-markers"

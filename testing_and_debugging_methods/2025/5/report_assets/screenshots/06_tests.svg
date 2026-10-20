@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1015.81" height="860.86">
+<rect width="967.81" height="812.86" fill="#0d1117" rx="12.00" ry="12.00" filter="url(#shadow)" x="24.00px" y="24.00px" />
+<g font-family="FiraCode Nerd Font" font-size="16.00px" fill="#e6edf3" clip-path="url(#terminalMask)">
+<text x="46.00px" y="82.60px" xml:space="preserve">$ PYTHONPATH=src .venv/bin/python -m pytest -vv --tb=short -o console_output_style=classic
+</text><text x="46.00px" y="104.20px" xml:space="preserve">
+</text><text x="46.00px" y="125.80px" xml:space="preserve">===================================== test session starts ======================================
+</text><text x="46.00px" y="147.40px" xml:space="preserve">platform darwin -- Python 3.14.3, pytest-9.1.1, pluggy-1.7.0 --
+</text><text x="46.00px" y="169.00px" xml:space="preserve">/Users/arti/PycharmProjects/DSTU_VKB/testing_and_debugging_methods/2025/5/.venv/bin/python
+</text><text x="46.00px" y="190.60px" xml:space="preserve">cachedir: .pytest_cache
+</text><text x="46.00px" y="212.20px" xml:space="preserve">rootdir: /Users/arti/PycharmProjects/DSTU_VKB/testing_and_debugging_methods/2025/5
+</text><text x="46.00px" y="233.80px" xml:space="preserve">configfile: pyproject.toml
+</text><text x="46.00px" y="255.40px" xml:space="preserve">testpaths: tests
+</text><text x="46.00px" y="277.00px" xml:space="preserve">collecting ... collected 19 items
+</text><text x="46.00px" y="298.60px" xml:space="preserve">
+</text><text x="46.00px" y="320.20px" xml:space="preserve">tests/test_cli.py::test_cli_check_and_log_file[legacy-1-CHECK: FAIL] PASSED
+</text><text x="46.00px" y="341.80px" xml:space="preserve">tests/test_cli.py::test_cli_check_and_log_file[fixed-0-CHECK: PASS] PASSED
+</text><text x="46.00px" y="363.40px" xml:space="preserve">tests/test_cli.py::test_cli_invalid_input PASSED
+</text><text x="46.00px" y="385.00px" xml:space="preserve">tests/test_order.py::test_discount_regression PASSED
+</text><text x="46.00px" y="406.60px" xml:space="preserve">tests/test_order.py::test_legacy_reproduces_defect PASSED
+</text><text x="46.00px" y="428.20px" xml:space="preserve">tests/test_order.py::test_discount_boundaries[0-4000.00] PASSED
+</text><text x="46.00px" y="449.80px" xml:space="preserve">tests/test_order.py::test_discount_boundaries[0.5-3980.00] PASSED
+</text><text x="46.00px" y="471.40px" xml:space="preserve">tests/test_order.py::test_discount_boundaries[10-3600.00] PASSED
+</text><text x="46.00px" y="493.00px" xml:space="preserve">tests/test_order.py::test_discount_boundaries[25-3000.00] PASSED
+</text><text x="46.00px" y="514.60px" xml:space="preserve">tests/test_order.py::test_discount_boundaries[100-0.00] PASSED
+</text><text x="46.00px" y="536.20px" xml:space="preserve">tests/test_order.py::test_rounding_to_kopeck PASSED
+</text><text x="46.00px" y="557.80px" xml:space="preserve">tests/test_order.py::test_invalid_discount[-1] PASSED
+</text><text x="46.00px" y="579.40px" xml:space="preserve">tests/test_order.py::test_invalid_discount[101] PASSED
+</text><text x="46.00px" y="601.00px" xml:space="preserve">tests/test_order.py::test_invalid_discount[NaN] PASSED
+</text><text x="46.00px" y="622.60px" xml:space="preserve">tests/test_order.py::test_invalid_quantity[0] PASSED
+</text><text x="46.00px" y="644.20px" xml:space="preserve">tests/test_order.py::test_invalid_quantity[-1] PASSED
+</text><text x="46.00px" y="665.80px" xml:space="preserve">tests/test_order.py::test_invalid_quantity[1.5] PASSED
+</text><text x="46.00px" y="687.40px" xml:space="preserve">tests/test_order.py::test_invalid_quantity[True] PASSED
+</text><text x="46.00px" y="709.00px" xml:space="preserve">tests/test_order.py::test_trace_contains_intermediate_values PASSED
+</text><text x="46.00px" y="730.60px" xml:space="preserve">
+</text><text x="46.00px" y="752.20px" xml:space="preserve">====================================== 19 passed in 0.14s ======================================
+</text><text x="46.00px" y="773.80px" xml:space="preserve">
+</text><text x="46.00px" y="795.40px" xml:space="preserve">[exit code: 0]
+</text>
+</g>
+<svg x="24.00px" y="24.00px"><circle cx="13.50" cy="12.00" r="5.50" fill="#FF5A54" /><circle cx="32.50" cy="12.00" r="5.50" fill="#E6BF29" /><circle cx="51.50" cy="12.00" r="5.50" fill="#52C12B" /></svg><defs><filter id="shadow" filterUnits="userSpaceOnUse"><feGaussianBlur in="SourceAlpha" stdDeviation="12.00" /><feOffset result="offsetblur" dx="0.00" dy="5.00" /><feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge></filter></defs><defs><clipPath id="terminalMask"><rect width="1015.81" height="860.86" /></clipPath></defs></svg>

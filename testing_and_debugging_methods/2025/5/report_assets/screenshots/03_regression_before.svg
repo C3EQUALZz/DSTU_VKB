@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1053.90" height="579.29">
+<rect width="1005.90" height="531.29" fill="#0d1117" rx="12.00" ry="12.00" filter="url(#shadow)" x="24.00px" y="24.00px" />
+<g font-family="FiraCode Nerd Font" font-size="16.00px" fill="#e6edf3" clip-path="url(#terminalMask)">
+<text x="46.00px" y="82.60px" xml:space="preserve">$ PYTHONPATH=src .venv/bin/python -m pytest tests/test_order.py::test_discount_regression -q --
+</text><text x="46.00px" y="104.20px" xml:space="preserve">tb=short -o console_output_style=classic
+</text><text x="46.00px" y="125.80px" xml:space="preserve">
+</text><text x="46.00px" y="147.40px" xml:space="preserve">F
+</text><text x="46.00px" y="169.00px" xml:space="preserve">=========================================== FAILURES ===========================================
+</text><text x="46.00px" y="190.60px" xml:space="preserve">___________________________________ test_discount_regression ___________________________________
+</text><text x="46.00px" y="212.20px" xml:space="preserve">tests/test_order.py:18: in test_discount_regression
+</text><text x="46.00px" y="233.80px" xml:space="preserve">    assert calculate_total(make_order()) == Decimal("3600.00")
+</text><text x="46.00px" y="255.40px" xml:space="preserve">E   AssertionError: assert Decimal('4000.00') == Decimal('3600.00')
+</text><text x="46.00px" y="277.00px" xml:space="preserve">E    +  where Decimal('4000.00') = calculate_total(Order(order_id='TEST-001',
+</text><text x="46.00px" y="298.60px" xml:space="preserve">items=(Item(name='Keyboard', price=Decimal('1200'), quantity=2), Item(name='Mouse',
+</text><text x="46.00px" y="320.20px" xml:space="preserve">price=Decimal('1600'), quantity=1)), discount_percent=Decimal('10')))
+</text><text x="46.00px" y="341.80px" xml:space="preserve">E    +    where Order(order_id='TEST-001', items=(Item(name='Keyboard', price=Decimal('1200'),
+</text><text x="46.00px" y="363.40px" xml:space="preserve">quantity=2), Item(name='Mouse', price=Decimal('1600'), quantity=1)), discount_percent=Decimal('10'))
+</text><text x="46.00px" y="385.00px" xml:space="preserve">= make_order()
+</text><text x="46.00px" y="406.60px" xml:space="preserve">E    +  and   Decimal('3600.00') = Decimal('3600.00')
+</text><text x="46.00px" y="428.20px" xml:space="preserve">=================================== short test summary info ====================================
+</text><text x="46.00px" y="449.80px" xml:space="preserve">FAILED tests/test_order.py::test_discount_regression - AssertionError: assert Decimal('4000.0...
+</text><text x="46.00px" y="471.40px" xml:space="preserve">1 failed in 0.02s
+</text><text x="46.00px" y="493.00px" xml:space="preserve">
+</text><text x="46.00px" y="514.60px" xml:space="preserve">[exit code: 1]
+</text>
+</g>
+<svg x="24.00px" y="24.00px"><circle cx="13.50" cy="12.00" r="5.50" fill="#FF5A54" /><circle cx="32.50" cy="12.00" r="5.50" fill="#E6BF29" /><circle cx="51.50" cy="12.00" r="5.50" fill="#52C12B" /></svg><defs><filter id="shadow" filterUnits="userSpaceOnUse"><feGaussianBlur in="SourceAlpha" stdDeviation="12.00" /><feOffset result="offsetblur" dx="0.00" dy="5.00" /><feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge></filter></defs><defs><clipPath id="terminalMask"><rect width="1053.90" height="579.29" /></clipPath></defs></svg>

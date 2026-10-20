@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1006.29" height="255.29">
+<rect width="958.29" height="207.29" fill="#0d1117" rx="12.00" ry="12.00" filter="url(#shadow)" x="24.00px" y="24.00px" />
+<g font-family="FiraCode Nerd Font" font-size="16.00px" fill="#e6edf3" clip-path="url(#terminalMask)">
+<text x="46.00px" y="82.60px" xml:space="preserve">$ PYTHONPATH=src .venv/bin/python -m pytest tests/test_order.py::test_discount_regression -q --
+</text><text x="46.00px" y="104.20px" xml:space="preserve">tb=short -o console_output_style=classic
+</text><text x="46.00px" y="125.80px" xml:space="preserve">
+</text><text x="46.00px" y="147.40px" xml:space="preserve">.
+</text><text x="46.00px" y="169.00px" xml:space="preserve">
+</text><text x="46.00px" y="190.60px" xml:space="preserve">[exit code: 0]
+</text>
+</g>
+<svg x="24.00px" y="24.00px"><circle cx="13.50" cy="12.00" r="5.50" fill="#FF5A54" /><circle cx="32.50" cy="12.00" r="5.50" fill="#E6BF29" /><circle cx="51.50" cy="12.00" r="5.50" fill="#52C12B" /></svg><defs><filter id="shadow" filterUnits="userSpaceOnUse"><feGaussianBlur in="SourceAlpha" stdDeviation="12.00" /><feOffset result="offsetblur" dx="0.00" dy="5.00" /><feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge></filter></defs><defs><clipPath id="terminalMask"><rect width="1006.29" height="255.29" /></clipPath></defs></svg>
