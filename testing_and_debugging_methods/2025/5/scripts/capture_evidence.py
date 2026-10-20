@@ -17,7 +17,7 @@ from xml.etree import ElementTree as ET
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / "report_assets"
 LOGS = ASSETS / "logs"
-SCREENS = ASSETS / "screenshots"
+SCREENS = ROOT.parent / "docs/screenshots/lab_05"
 BEFORE = 'rate = Decimal(int(order.discount_percent / Decimal("100")))'
 AFTER = 'rate = order.discount_percent / Decimal("100")'
 

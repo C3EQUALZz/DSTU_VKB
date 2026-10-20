@@ -14,7 +14,7 @@ sys.path.insert(0, str(ROOT.parent / "scripts"))
 from report_builder import (LabMeta, add_heading, add_image, add_listing, add_page_break,
                             add_para, add_table_simple, add_title_page, make_doc, save)
 
-SCREENS = ROOT / "report_assets/screenshots"
+SCREENS = ROOT.parent / "docs/screenshots/lab_05"
 OUTPUT = ROOT.parent / "docs/reports/lab_05/Ковалев Д.П. ВКБ43 5 лаба.docx"
 
 

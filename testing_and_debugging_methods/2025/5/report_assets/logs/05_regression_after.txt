@@ -1,5 +1,0 @@
-$ PYTHONPATH=src .venv/bin/python -m pytest tests/test_order.py::test_discount_regression -q --tb=short -o console_output_style=classic
-
-.
-
-[exit code: 0]
