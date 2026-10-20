@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="987.24" height="428.86">
+<rect width="939.24" height="380.86" fill="#0d1117" rx="12.00" ry="12.00" x="24.00px" y="24.00px" />
+<g font-family="FiraCode Nerd Font" font-size="16.00px" fill="#e6edf3" clip-path="url(#terminalMask)">
+<text x="46.00px" y="82.60px" xml:space="preserve">$ .venv/bin/python -m pytest tests/test_average.py::test_regression_includes_last_element -q 
+</text><text x="46.00px" y="104.20px" xml:space="preserve">--tb=short
+</text><text x="46.00px" y="125.80px" xml:space="preserve">
+</text><text x="46.00px" y="147.40px" xml:space="preserve">F                                                                                [100%]
+</text><text x="46.00px" y="169.00px" xml:space="preserve">======================================= FAILURES =======================================
+</text><text x="46.00px" y="190.60px" xml:space="preserve">________________________ test_regression_includes_last_element _________________________
+</text><text x="46.00px" y="212.20px" xml:space="preserve">tests/test_average.py:10: in test_regression_includes_last_element
+</text><text x="46.00px" y="233.80px" xml:space="preserve">    assert average([10, 20, 30, 40]) == 25.0
+</text><text x="46.00px" y="255.40px" xml:space="preserve">E   assert 15.0 == 25.0
+</text><text x="46.00px" y="277.00px" xml:space="preserve">E    +  where 15.0 = average([10, 20, 30, 40])
+</text><text x="46.00px" y="298.60px" xml:space="preserve">=============================== short test summary info ================================
+</text><text x="46.00px" y="320.20px" xml:space="preserve">FAILED tests/test_average.py::test_regression_includes_last_element - assert 15.0 == ...
+</text><text x="46.00px" y="341.80px" xml:space="preserve">
+</text><text x="46.00px" y="363.40px" xml:space="preserve">[exit code: 1]
+</text>
+</g>
+<svg x="24.00px" y="24.00px"><circle cx="13.50" cy="12.00" r="5.50" fill="#FF5A54" /><circle cx="32.50" cy="12.00" r="5.50" fill="#E6BF29" /><circle cx="51.50" cy="12.00" r="5.50" fill="#52C12B" /></svg><defs><clipPath id="terminalMask"><rect width="987.24" height="428.86" /></clipPath></defs></svg>

@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="958.67" height="709.14">
+<rect width="910.67" height="661.14" fill="#0d1117" rx="12.00" ry="12.00" x="24.00px" y="24.00px" />
+<g font-family="FiraCode Nerd Font" font-size="16.00px" fill="#e6edf3" clip-path="url(#terminalMask)">
+<text x="46.00px" y="82.60px" xml:space="preserve">$ .venv/bin/python -m pytest -vv --tb=short
+</text><text x="46.00px" y="104.20px" xml:space="preserve">
+</text><text x="46.00px" y="125.80px" xml:space="preserve">================================= test session starts ==================================
+</text><text x="46.00px" y="147.40px" xml:space="preserve">platform darwin -- Python 3.14.3, pytest-9.1.1, pluggy-1.7.0 --
+</text><text x="46.00px" y="169.00px" xml:space="preserve">/Users/arti/PycharmProjects/DSTU_VKB/testing_and_debugging_methods/2025/6/.venv/bin/python
+</text><text x="46.00px" y="190.60px" xml:space="preserve">cachedir: .pytest_cache
+</text><text x="46.00px" y="212.20px" xml:space="preserve">rootdir: /Users/arti/PycharmProjects/DSTU_VKB/testing_and_debugging_methods/2025/6
+</text><text x="46.00px" y="233.80px" xml:space="preserve">configfile: pyproject.toml
+</text><text x="46.00px" y="255.40px" xml:space="preserve">testpaths: tests
+</text><text x="46.00px" y="277.00px" xml:space="preserve">collecting ... collected 12 items
+</text><text x="46.00px" y="298.60px" xml:space="preserve">
+</text><text x="46.00px" y="320.20px" xml:space="preserve">tests/test_average.py::test_regression_includes_last_element PASSED              [  8%]
+</text><text x="46.00px" y="341.80px" xml:space="preserve">tests/test_average.py::test_legacy_reproduces_missing_last_element PASSED        [ 16%]
+</text><text x="46.00px" y="363.40px" xml:space="preserve">tests/test_average.py::test_average_cases[values0-40.0] PASSED                   [ 25%]
+</text><text x="46.00px" y="385.00px" xml:space="preserve">tests/test_average.py::test_average_cases[values1-20.0] PASSED                   [ 33%]
+</text><text x="46.00px" y="406.60px" xml:space="preserve">tests/test_average.py::test_average_cases[values2-30.0] PASSED                   [ 41%]
+</text><text x="46.00px" y="428.20px" xml:space="preserve">tests/test_average.py::test_average_cases[values3--20.0] PASSED                  [ 50%]
+</text><text x="46.00px" y="449.80px" xml:space="preserve">tests/test_average.py::test_average_cases[values4-0.0] PASSED                    [ 58%]
+</text><text x="46.00px" y="471.40px" xml:space="preserve">tests/test_average.py::test_average_cases[values5-2.0] PASSED                    [ 66%]
+</text><text x="46.00px" y="493.00px" xml:space="preserve">tests/test_average.py::test_average_cases[values6-0.0] PASSED                    [ 75%]
+</text><text x="46.00px" y="514.60px" xml:space="preserve">tests/test_average.py::test_average_cases[values7-2.0] PASSED                    [ 83%]
+</text><text x="46.00px" y="536.20px" xml:space="preserve">tests/test_average.py::test_empty_list_is_rejected PASSED                        [ 91%]
+</text><text x="46.00px" y="557.80px" xml:space="preserve">tests/test_average.py::test_input_is_not_modified PASSED                         [100%]
+</text><text x="46.00px" y="579.40px" xml:space="preserve">
+</text><text x="46.00px" y="601.00px" xml:space="preserve">================================== 12 passed in 0.01s ==================================
+</text><text x="46.00px" y="622.60px" xml:space="preserve">
+</text><text x="46.00px" y="644.20px" xml:space="preserve">[exit code: 0]
+</text>
+</g>
+<svg x="24.00px" y="24.00px"><circle cx="13.50" cy="12.00" r="5.50" fill="#FF5A54" /><circle cx="32.50" cy="12.00" r="5.50" fill="#E6BF29" /><circle cx="51.50" cy="12.00" r="5.50" fill="#52C12B" /></svg><defs><clipPath id="terminalMask"><rect width="958.67" height="709.14" /></clipPath></defs></svg>

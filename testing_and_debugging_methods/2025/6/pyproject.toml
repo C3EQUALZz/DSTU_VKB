@@ -1,0 +1,15 @@
+[project]
+name = "sixth-laboratory"
+version = "1.0.0"
+description = "Отладка Python-программы в pdb и PyCharm"
+requires-python = ">=3.12"
+dependencies = []
+
+[dependency-groups]
+dev = ["pytest>=8.3", "pexpect>=4.9"]
+report = ["python-docx>=1.1", "pillow>=10", "cairosvg>=2.9.1", "pymupdf>=1.24"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra -q --strict-markers"

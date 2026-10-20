@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="977.71" height="644.86">
+<rect width="929.71" height="596.86" fill="#0d1117" rx="12.00" ry="12.00" x="24.00px" y="24.00px" />
+<g font-family="FiraCode Nerd Font" font-size="16.00px" fill="#e6edf3" clip-path="url(#terminalMask)">
+<text x="46.00px" y="82.60px" xml:space="preserve">(Pdb) b average_legacy.py:9
+</text><text x="46.00px" y="104.20px" xml:space="preserve">Breakpoint 1 at
+</text><text x="46.00px" y="125.80px" xml:space="preserve">/Users/arti/PycharmProjects/DSTU_VKB/testing_and_debugging_methods/2025/6/average_legacy.py:
+</text><text x="46.00px" y="147.40px" xml:space="preserve">9
+</text><text x="46.00px" y="169.00px" xml:space="preserve">(Pdb) c
+</text><text x="46.00px" y="190.60px" xml:space="preserve">&gt;
+</text><text x="46.00px" y="212.20px" xml:space="preserve">/Users/arti/PycharmProjects/DSTU_VKB/testing_and_debugging_methods/2025/6/average_legacy.py(
+</text><text x="46.00px" y="233.80px" xml:space="preserve">9)average()
+</text><text x="46.00px" y="255.40px" xml:space="preserve">-&gt; for index in range(len(values) - 1):
+</text><text x="46.00px" y="277.00px" xml:space="preserve">(Pdb) p values
+</text><text x="46.00px" y="298.60px" xml:space="preserve">[10, 20, 30, 40]
+</text><text x="46.00px" y="320.20px" xml:space="preserve">(Pdb) p list(range(len(values) - 1))
+</text><text x="46.00px" y="341.80px" xml:space="preserve">[0, 1, 2]
+</text><text x="46.00px" y="363.40px" xml:space="preserve">(Pdb) display total
+</text><text x="46.00px" y="385.00px" xml:space="preserve">display total: 0.0
+</text><text x="46.00px" y="406.60px" xml:space="preserve">(Pdb) n
+</text><text x="46.00px" y="428.20px" xml:space="preserve">&gt;
+</text><text x="46.00px" y="449.80px" xml:space="preserve">/Users/arti/PycharmProjects/DSTU_VKB/testing_and_debugging_methods/2025/6/average_legacy.py(
+</text><text x="46.00px" y="471.40px" xml:space="preserve">10)average()
+</text><text x="46.00px" y="493.00px" xml:space="preserve">-&gt; total += values[index]
+</text><text x="46.00px" y="514.60px" xml:space="preserve">(Pdb) p index
+</text><text x="46.00px" y="536.20px" xml:space="preserve">0
+</text><text x="46.00px" y="557.80px" xml:space="preserve">(Pdb) n
+</text><text x="46.00px" y="579.40px" xml:space="preserve">&gt;</text>
+</g>
+<svg x="24.00px" y="24.00px"><circle cx="13.50" cy="12.00" r="5.50" fill="#FF5A54" /><circle cx="32.50" cy="12.00" r="5.50" fill="#E6BF29" /><circle cx="51.50" cy="12.00" r="5.50" fill="#52C12B" /></svg><defs><clipPath id="terminalMask"><rect width="977.71" height="644.86" /></clipPath></defs></svg>

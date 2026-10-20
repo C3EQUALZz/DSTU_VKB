@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="977.71" height="795.29">
+<rect width="929.71" height="747.29" fill="#0d1117" rx="12.00" ry="12.00" x="24.00px" y="24.00px" />
+<g font-family="FiraCode Nerd Font" font-size="16.00px" fill="#e6edf3" clip-path="url(#terminalMask)">
+<text x="46.00px" y="82.60px" xml:space="preserve">$ .venv/bin/python -m pdb demo.py --version fixed
+</text><text x="46.00px" y="104.20px" xml:space="preserve">
+</text><text x="46.00px" y="125.80px" xml:space="preserve">&gt;
+</text><text x="46.00px" y="147.40px" xml:space="preserve">/Users/arti/PycharmProjects/DSTU_VKB/testing_and_debugging_methods/2025/6/demo.py(1)&lt;module&gt;
+</text><text x="46.00px" y="169.00px" xml:space="preserve">()
+</text><text x="46.00px" y="190.60px" xml:space="preserve">-&gt; """Одинаковый сценарий для pdb, PyCharm и обычного запуска."""
+</text><text x="46.00px" y="212.20px" xml:space="preserve">(Pdb) b average.py:11
+</text><text x="46.00px" y="233.80px" xml:space="preserve">Breakpoint 1 at
+</text><text x="46.00px" y="255.40px" xml:space="preserve">/Users/arti/PycharmProjects/DSTU_VKB/testing_and_debugging_methods/2025/6/average.py:11
+</text><text x="46.00px" y="277.00px" xml:space="preserve">(Pdb) c
+</text><text x="46.00px" y="298.60px" xml:space="preserve">&gt;
+</text><text x="46.00px" y="320.20px" xml:space="preserve">/Users/arti/PycharmProjects/DSTU_VKB/testing_and_debugging_methods/2025/6/average.py(11)aver
+</text><text x="46.00px" y="341.80px" xml:space="preserve">age()
+</text><text x="46.00px" y="363.40px" xml:space="preserve">-&gt; return total / len(values)
+</text><text x="46.00px" y="385.00px" xml:space="preserve">(Pdb) p (index, total, len(values))
+</text><text x="46.00px" y="406.60px" xml:space="preserve">(3, 100.0, 4)
+</text><text x="46.00px" y="428.20px" xml:space="preserve">(Pdb) p list(range(len(values)))
+</text><text x="46.00px" y="449.80px" xml:space="preserve">[0, 1, 2, 3]
+</text><text x="46.00px" y="471.40px" xml:space="preserve">(Pdb) p total / len(values)
+</text><text x="46.00px" y="493.00px" xml:space="preserve">25.0
+</text><text x="46.00px" y="514.60px" xml:space="preserve">(Pdb) c
+</text><text x="46.00px" y="536.20px" xml:space="preserve">Version: fixed
+</text><text x="46.00px" y="557.80px" xml:space="preserve">Values: [10, 20, 30, 40]
+</text><text x="46.00px" y="579.40px" xml:space="preserve">Average: 25.00; expected: 25.00
+</text><text x="46.00px" y="601.00px" xml:space="preserve">The program exited via sys.exit(). Exit status: 0
+</text><text x="46.00px" y="622.60px" xml:space="preserve">The program finished and will be restarted
+</text><text x="46.00px" y="644.20px" xml:space="preserve">&gt;
+</text><text x="46.00px" y="665.80px" xml:space="preserve">/Users/arti/PycharmProjects/DSTU_VKB/testing_and_debugging_methods/2025/6/demo.py(1)&lt;module&gt;
+</text><text x="46.00px" y="687.40px" xml:space="preserve">()
+</text><text x="46.00px" y="709.00px" xml:space="preserve">-&gt; """Одинаковый сценарий для pdb, PyCharm и обычного запуска."""
+</text><text x="46.00px" y="730.60px" xml:space="preserve">(Pdb) q
+</text>
+</g>
+<svg x="24.00px" y="24.00px"><circle cx="13.50" cy="12.00" r="5.50" fill="#FF5A54" /><circle cx="32.50" cy="12.00" r="5.50" fill="#E6BF29" /><circle cx="51.50" cy="12.00" r="5.50" fill="#52C12B" /></svg><defs><clipPath id="terminalMask"><rect width="977.71" height="795.29" /></clipPath></defs></svg>
