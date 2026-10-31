@@ -1,0 +1,11 @@
+$ just ci
+fmt-check: OK
+Clippy --workspace --all-targets --all-features: OK
+cargo test --workspace --all-features: OK
+Код завершения: 0
+
+$ cargo test -p practice_02
+23 passed; 0 failed
+
+Независимая сверка Python: 33 passed
+Проверено: 2026-10-31T12:43:29+03:00

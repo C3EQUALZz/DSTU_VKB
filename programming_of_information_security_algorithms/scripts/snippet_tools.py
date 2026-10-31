@@ -27,7 +27,8 @@ WIDTH = 110  # символов в строке (для языкового ре�
 
 
 def _run(cmd: list[str]) -> None:
-    proc = subprocess.run(cmd, capture_output=True, text=True)
+    # freeze выбирает stdin вместо файла, если родитель запущен из pipe/heredoc.
+    proc = subprocess.run(cmd, stdin=subprocess.DEVNULL, capture_output=True, text=True)
     if proc.returncode != 0:
         raise RuntimeError(
             f"freeze failed (exit {proc.returncode}):\n"
@@ -104,6 +105,8 @@ def render_term(
         cmd: list[str] = [
             FREEZE,
             str(tmp_path),
+            # Терминальный текст без ANSI-кодов не всегда распознаётся автоматически.
+            "--language", "ansi",
             "--theme", theme,
             "--output", str(out_png),
             "--font.size", str(font_size),

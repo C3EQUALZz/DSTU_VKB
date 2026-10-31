@@ -1,0 +1,49 @@
+$ practice_02 --p 15 info
+Error:
+   0: [91mмодуль p должен быть простым числом > 3, получено 15[0m
+
+Location:
+   [35mcrates/practice_02/src/presentation/mod.rs[0m:[35m139[0m
+
+Backtrace omitted. Run with RUST_BACKTRACE=1 environment variable to display it.
+Run with RUST_BACKTRACE=full to include source snippets.
+Код завершения: 1
+
+$ practice_02 --a 0 --b 0 info
+Error:
+   0: [91mвырожденная кривая: 4a³ + 27b² ≡ 0 (mod p)[0m
+
+Location:
+   [35mcrates/practice_02/src/presentation/mod.rs[0m:[35m139[0m
+
+Backtrace omitted. Run with RUST_BACKTRACE=1 environment variable to display it.
+Run with RUST_BACKTRACE=full to include source snippets.
+Код завершения: 1
+
+$ practice_02 check 1,1
+E: y² = x³ + 2x + 2 (mod 17)
+P = (1, 1); принадлежит кривой: false
+
+$ practice_02 add 1,1 O
+E: y² = x³ + 2x + 2 (mod 17)
+Error:
+   0: [91mточка (1, 1) не принадлежит кривой или её координаты не канонические[0m
+
+Location:
+   [35mcrates/practice_02/src/presentation/mod.rs[0m:[35m142[0m
+
+Backtrace omitted. Run with RUST_BACKTRACE=1 environment variable to display it.
+Run with RUST_BACKTRACE=full to include source snippets.
+Код завершения: 1
+
+$ practice_02 --p 10007 points
+E: y² = x³ + 2x + 2 (mod 10007)
+Error:
+   0: [91mполный перебор точек разрешён только при p ≤ 10000[0m
+
+Location:
+   [35mcrates/practice_02/src/presentation/mod.rs[0m:[35m142[0m
+
+Backtrace omitted. Run with RUST_BACKTRACE=1 environment variable to display it.
+Run with RUST_BACKTRACE=full to include source snippets.
+Код завершения: 1

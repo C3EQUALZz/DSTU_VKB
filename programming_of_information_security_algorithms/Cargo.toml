@@ -3,6 +3,7 @@ resolver = "2"
 members = [
     "crates/shared",
     "crates/practice_01",
+    "crates/practice_02",
     "crates/lab_01_rsa",
     "crates/lab_02_sha256",
     "crates/lab_03_prng",

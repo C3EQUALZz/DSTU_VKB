@@ -1,0 +1,16 @@
+// crates/practice_02/src/domain/field.rs
+    pub fn add(self, a: u64, b: u64) -> u64 {
+        ((u128::from(a) + u128::from(b)) % u128::from(self.modulus)) as u64
+    }
+
+    pub fn sub(self, a: u64, b: u64) -> u64 {
+        self.normalize(i128::from(a) - i128::from(b))
+    }
+
+    pub fn mul(self, a: u64, b: u64) -> u64 {
+        mul_mod(a, b, self.modulus)
+    }
+
+    pub fn pow(self, base: u64, exponent: u64) -> u64 {
+        pow_mod(base, exponent, self.modulus)
+    }

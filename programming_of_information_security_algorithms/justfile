@@ -58,6 +58,14 @@ install-prek:
 practice-01 *args="":
     cargo run -p practice_01 -- {{args}}
 
+# Практика 2: калькулятор на эллиптических кривых. Пример: just practice-02 demo.
+practice-02 *args="":
+    cargo run -p practice_02 -- {{args}}
+
+# Пересоздать DOCX практики 2 с реальными результатами запусков и проверок.
+report-practice-02:
+    python3 scripts/practice_02/build.py
+
 # Лаб 1: RSA. Подкоманды генерируются в самом CLI.
 lab-01 *args="":
     cargo run -p lab_01_rsa -- {{args}}
@@ -124,7 +132,7 @@ docs:
 
 # Извлечь текст из docx условий (для быстрого reference).
 read-conditions:
-    @python3 -c '
+    #!/usr/bin/env python3
     import sys, zipfile, xml.etree.ElementTree as ET
     ns = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}"
     for f in ["docs/conditions/1 Практика.docx", "docs/conditions/Laboratornye_po_kursu_Programmirovanie_algoritmov_zaschity_informatsii.docx"]:
@@ -134,4 +142,3 @@ read-conditions:
                 root = ET.fromstring(fh.read())
                 for p in root.iter(ns+"p"):
                     print("".join(t.text or "" for t in p.iter(ns+"t")))
-    '

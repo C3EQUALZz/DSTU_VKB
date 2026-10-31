@@ -69,7 +69,7 @@ pub fn run(cli: Cli) -> Result<()> {
             println!(
                 "✓ зашифровано: provider = «{}», {} байт plaintext → {} байт шифртекста",
                 provider.name(),
-                std::fs::metadata(&input).map(|m| m.len()).unwrap_or(0),
+                std::fs::metadata(&input).map_or(0, |m| m.len()),
                 n
             );
         }

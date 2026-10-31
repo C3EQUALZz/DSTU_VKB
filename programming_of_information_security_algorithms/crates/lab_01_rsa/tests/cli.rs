@@ -8,8 +8,7 @@ fn unique_tmp(name: &str) -> PathBuf {
     let pid = std::process::id();
     let nanos = std::time::SystemTime::now()
         .duration_since(std::time::UNIX_EPOCH)
-        .map(|d| d.subsec_nanos())
-        .unwrap_or(0);
+        .map_or(0, |d| d.subsec_nanos());
     std::env::temp_dir().join(format!("psia_lab01_cli_{name}_{pid}_{nanos}"))
 }
 

@@ -1,0 +1,19 @@
+// crates/practice_02/src/domain/curve.rs
+    fn add_valid(self, left: Point, right: Point) -> Result<Point, Error> {
+        let (Point::Affine { x: x1, y: y1 }, Point::Affine { x: x2, y: y2 }) = (left, right) else {
+            return Ok(if left == Point::Infinity { right } else { left });
+        };
+        let f = self.field;
+        if x1 == x2 && f.add(y1, y2) == 0 {
+            return Ok(Point::Infinity);
+        }
+        let (numerator, denominator) = if left == right {
+            (f.add(f.mul(3, f.mul(x1, x1)), self.a), f.mul(2, y1))
+        } else {
+            (f.sub(y2, y1), f.sub(x2, x1))
+        };
+        let slope = f.mul(numerator, f.inverse(denominator)?);
+        let x3 = f.sub(f.sub(f.mul(slope, slope), x1), x2);
+        let y3 = f.sub(f.mul(slope, f.sub(x1, x3)), y1);
+        Ok(Point::Affine { x: x3, y: y3 })
+    }

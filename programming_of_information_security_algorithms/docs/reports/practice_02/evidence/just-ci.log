@@ -1,0 +1,449 @@
+
+running 38 tests
+test domain::bigint::tests::add_and_sub_round_trip ... ok
+test domain::bigint::tests::bytes_round_trip ... ok
+test domain::bigint::tests::divrem_basic ... ok
+test domain::bigint::tests::divrem_when_a_less_than_b ... ok
+test domain::bigint::tests::gcd_known ... ok
+test domain::bigint::tests::mod_inverse_known ... ok
+test domain::bigint::tests::mod_inverse_none_when_not_coprime ... ok
+test domain::bigint::tests::mod_inverse_textbook_rsa_params ... ok
+test domain::bigint::tests::mod_pow_with_modulus_one_is_zero ... ok
+test domain::bigint::tests::mod_pow_known_value ... ok
+test domain::bigint::tests::mul_matches_u128_for_small ... ok
+test domain::bigint::tests::parse_dec_and_hex ... ok
+test domain::bigint::tests::random_with_exact_bits_has_right_length ... ok
+test domain::bigint::tests::to_bytes_be_pads ... ok
+test domain::primes::tests::carmichael_561_is_rejected ... ok
+test domain::primes::tests::carmichael_8911_is_rejected ... ok
+test domain::primes::tests::is_coprime_basic ... ok
+test domain::rng::tests::deterministic_rng_is_reproducible ... ok
+test domain::rng::tests::deterministic_rng_varies_by_seed ... ok
+test domain::primes::tests::small_composites_are_rejected ... ok
+test domain::rng::tests::os_rng_provides_non_zero_bytes ... ok
+test domain::primes::tests::small_primes_are_recognized ... ok
+test domain::bigint::property_tests::mul_matches_u128 ... ok
+test domain::bigint::property_tests::add_matches_u128 ... ok
+test infrastructure::storage::tests::missing_field_is_reported ... ok
+test domain::rsa::tests::textbook_rsa_round_trip ... ok
+test domain::primes::tests::generate_small_prime_returns_prime ... ok
+test domain::bigint::property_tests::divrem_matches_u128 ... ok
+test domain::bigint::property_tests::mod_inverse_matches_definition ... ok
+test domain::bigint::property_tests::mod_pow_matches_u128 ... ok
+test infrastructure::storage::tests::private_key_round_trips_through_disk ... ok
+test domain::rsa::tests::invalid_ciphertext_too_short_is_reported ... ok
+test domain::rsa::tests::empty_plaintext_round_trips ... ok
+test infrastructure::storage::tests::public_key_round_trips_through_disk ... ok
+test domain::rsa::tests::generated_key_round_trips_small_modulus ... ok
+test application::usecases::tests::end_to_end_through_disk ... ok
+test domain::rsa::tests::ciphertext_corruption_changes_plaintext ... ok
+test domain::rsa::tests::generated_key_round_trips_multi_block ... ok
+
+test result: ok. 38 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 4 tests
+test help_lists_three_subcommands ... ok
+test key_files_are_human_readable ... ok
+test gen_encrypt_decrypt_round_trip ... ok
+test decrypt_with_wrong_key_does_not_equal_plaintext ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.77s
+
+
+running 16 tests
+test domain::sha256::tests::hex_round_trip ... ok
+test domain::sha256::tests::nist_test_vectors ... ok
+test domain::sha256::tests::message_of_56_bytes ... ok
+test domain::sha256::tests::sixty_four_a_bytes ... ok
+test domain::sha256::tests::streaming_matches_one_shot ... ok
+test infrastructure::hash_io::tests::empty_file_is_rejected ... ok
+test domain::sha256::tests::from_hex_rejects_bad_input ... ok
+test domain::sha256::tests::empty_input_yields_known_digest ... ok
+test domain::sha256::tests::message_of_55_bytes ... ok
+test infrastructure::hash_io::tests::loads_from_shasum_compatible_file ... ok
+test infrastructure::hash_io::tests::save_and_load_round_trip ... ok
+test domain::sha256::property_tests::hex_round_trips ... ok
+test domain::sha256::tests::one_million_a_streamed_in_chunks ... ok
+test domain::sha256::tests::one_million_a_single_shot ... ok
+test domain::sha256::property_tests::streaming_equals_oneshot ... ok
+test domain::sha256::property_tests::digest_is_32_bytes ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.31s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 7 tests
+test hash_writes_shasum_compatible_output ... ok
+test shasum_compatible_file_is_readable ... ok
+test help_lists_two_subcommands ... ok
+test hash_of_abc_matches_known_vector ... ok
+test verify_matching_file_exits_zero ... ok
+test verify_modified_file_exits_nonzero ... ok
+test hash_large_file_streams_correctly ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.86s
+
+
+running 16 tests
+test domain::prng::tests::ascii_matches_binary_bitwise ... ok
+test domain::prng::tests::binary_representation_has_expected_length ... ok
+test domain::prng::tests::different_seeds_diverge_quickly ... ok
+test domain::prng::tests::fill_bytes_round_trips_with_next_u64 ... ok
+test application::usecases::tests::rejects_count_below_minimum - should panic ... ok
+test application::usecases::tests::generates_both_files ... ok
+test domain::prng::tests::ascii_representation_has_expected_length_and_alphabet ... ok
+test domain::prng::tests::same_seed_yields_same_sequence ... ok
+test domain::prng::tests::zero_seed_is_replaced_with_fallback ... ok
+test infrastructure::file_sink::tests::save_binary_produces_correct_size ... ok
+test presentation::cli::tests::parse_seed_accepts_hex_and_dec ... ok
+test presentation::cli::tests::parse_seed_rejects_bad_input ... ok
+test domain::prng::tests::ones_ratio_is_near_half_on_12800_bits ... ok
+test infrastructure::file_sink::tests::save_ascii_produces_correct_size ... ok
+test domain::prng::property_tests::same_seed_property ... ok
+test domain::prng::property_tests::ascii_and_binary_are_consistent ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 6 tests
+test invalid_seed_returns_nonzero ... ok
+test dec_seed_is_accepted ... ok
+test count_below_200_fails_with_panic_message ... ok
+test help_shows_gen_subcommand ... ok
+test gen_produces_binary_and_ascii_with_expected_sizes ... ok
+test same_seed_yields_byte_identical_files ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.45s
+
+
+running 19 tests
+test domain::erfc::tests::erfc_at_zero_is_one ... ok
+test domain::erfc::tests::erfc_is_antisymmetric_around_one ... ok
+test domain::erfc::tests::erfc_known_values ... ok
+test domain::stat_tests::tests::monobit_accepts_alternating ... ok
+test domain::stat_tests::tests::monobit_matches_nist_example_pi_prefix ... ok
+test domain::stat_tests::tests::monobit_rejects_all_ones ... ok
+test domain::stat_tests::tests::monobit_rejects_all_zeros ... ok
+test application::usecases::tests::analyse_accepts_alternating_bits_with_monobit ... ok
+test domain::stat_tests::tests::runs_matches_nist_example_pi_prefix ... ok
+test domain::stat_tests::tests::runs_rejects_all_zeros_via_pre_test ... ok
+test application::usecases::tests::writes_report_file ... ok
+test application::usecases::tests::analyse_rejects_constant_bits ... ok
+test domain::stat_tests::tests::runs_rejects_alternating ... ok
+test infrastructure::loader::tests::detect_known_extensions ... ok
+test infrastructure::loader::tests::ascii_rejects_garbage ... ok
+test infrastructure::report::tests::report_contains_expected_fields ... ok
+test infrastructure::loader::tests::loads_ascii_ignoring_whitespace ... ok
+test infrastructure::loader::tests::empty_file_is_rejected ... ok
+test infrastructure::loader::tests::loads_binary_msb_first ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 5 tests
+test alternating_sequence_passes_monobit_only ... ok
+test help_shows_check_subcommand ... ok
+test xorshift64star_from_lab03_passes_both_tests ... ok
+test writes_report_to_file ... ok
+test constant_zeros_fails_both_tests ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.42s
+
+
+running 15 tests
+test domain::cipher::tests::constant_time_eq_basic ... ok
+test domain::key::tests::bad_magic_is_reported ... ok
+test domain::key::tests::debug_does_not_leak_key_bytes ... ok
+test domain::key::tests::round_trip_serializes_to_expected_size ... ok
+test domain::key::tests::wrong_length_is_reported ... ok
+test domain::key::tests::round_trip_through_bytes ... ok
+test infrastructure::providers::macos::tests::aes_cbc_one_block_against_known_vector ... ok
+test infrastructure::providers::macos::tests::aes_cbc_round_trip_basic ... ok
+test infrastructure::providers::macos::tests::fill_random_returns_non_zero_bytes ... ok
+test infrastructure::providers::macos::tests::hmac_sha256_against_rfc4231 ... ok
+test infrastructure::storage::tests::ciphertext_round_trip_through_disk ... ok
+test infrastructure::storage::tests::bad_ciphertext_magic_reported ... ok
+test application::usecases::tests::corrupted_ciphertext_fails_mac ... ok
+test infrastructure::storage::tests::key_round_trip_through_disk ... ok
+test application::usecases::tests::end_to_end_through_active_provider ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 3 tests
+test help_lists_three_subcommands ... ok
+test corrupted_ciphertext_returns_nonzero ... ok
+test gen_encrypt_decrypt_round_trip ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.44s
+
+
+running 8 tests
+test domain::keys::tests::debug_for_private_key_redacts_der ... ok
+test domain::keys::tests::bad_magic_rejected ... ok
+test domain::keys::tests::pack_unpack_private_round_trip ... ok
+test domain::keys::tests::pack_unpack_ciphertext_round_trip ... ok
+test domain::keys::tests::pack_unpack_public_round_trip ... ok
+test infrastructure::providers::openssl_provider::tests::corrupted_ciphertext_is_rejected ... ok
+test infrastructure::providers::openssl_provider::tests::generate_and_round_trip_2048 ... ok
+test application::usecases::tests::end_to_end_through_active_provider ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 3 tests
+test help_lists_three_subcommands ... ok
+test gen_keys_encrypt_decrypt_round_trip ... ok
+test cross_key_decrypt_returns_nonzero ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.52s
+
+
+running 29 tests
+test application::verify::tests::very_large_add_has_no_builtin_check ... ok
+test application::verify::tests::small_add_is_checked_against_i128 ... ok
+test application::verify::tests::parse_error_is_propagated ... ok
+test application::verify::tests::small_sub_is_checked_against_i128 ... ok
+test domain::bigint::tests::add_cancels_to_zero ... ok
+test domain::bigint::tests::add_mixed_sign ... ok
+test domain::bigint::tests::add_same_sign ... ok
+test domain::bigint::tests::bit_length_basic ... ok
+test domain::bigint::tests::parse_hex ... ok
+test domain::bigint::tests::decimal_digits_basic ... ok
+test domain::bigint::tests::parse_and_display_round_trip ... ok
+test domain::bigint::tests::parse_rejects_bad_input ... ok
+test domain::bigint::tests::parse_with_underscores ... ok
+test domain::bigint::tests::sub_basic ... ok
+test domain::bigint::tests::sub_negative_result ... ok
+test domain::bigint::tests::to_i128_returns_none_when_too_big ... ok
+test domain::bigint::tests::to_i128_round_trip ... ok
+test domain::bigint::tests::zero_displays_as_zero ... ok
+test domain::bigint::property_tests::subtracting_self_is_zero ... ok
+test domain::bigint::property_tests::zero_is_additive_identity ... ok
+test domain::bigint::property_tests::sub_anti_commutes ... ok
+test domain::bigint::property_tests::sub_matches_i128 ... ok
+test domain::bigint::property_tests::parse_format_round_trip ... ok
+test domain::bigint::property_tests::negate_is_involution ... ok
+test domain::bigint::property_tests::add_sub_round_trip ... ok
+test domain::bigint::property_tests::add_matches_i128 ... ok
+test domain::bigint::property_tests::add_is_commutative ... ok
+test domain::bigint::property_tests::add_is_associative ... ok
+test domain::bigint::property_tests::parse_random_decimal_string ... ok
+
+test result: ok. 29 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 12 tests
+test add_is_commutative_on_big_numbers ... ok
+test add_is_associative_on_big_numbers ... ok
+test borrow_propagates_through_many_limbs ... ok
+test add_two_70_digit_numbers ... ok
+test carry_propagates_through_many_limbs ... ok
+test parse_hex_with_64_hex_digits_round_trips_to_decimal ... ok
+test sub_brings_70_digit_number_below_70_digits ... ok
+test sub_yields_negative_when_subtrahend_is_larger ... ok
+test sub_is_inverse_of_add_on_big_numbers ... ok
+test verify_service_matches_i128_within_range ... ok
+test verify_service_marks_big_numbers_as_unchecked ... ok
+test add_of_mixed_signs_cancels_high_limbs ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 9 tests
+test missing_arguments_returns_nonzero_exit_code ... ok
+test invalid_operand_returns_nonzero_exit_code ... ok
+test sub_long_numbers_negative_result ... ok
+test add_small_prints_result_and_checks_against_i128 ... ok
+test help_subcommand_lists_operations ... ok
+test demo_runs_to_completion_without_error ... ok
+test add_long_numbers_succeeds_and_reports_unchecked ... ok
+test hex_input_is_accepted ... ok
+test sub_small_prints_negative_when_b_gt_a ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.43s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 6 tests
+test normalization_and_negative_coefficients ... ok
+test demo_and_help ... ok
+test alternate_curve_and_table ... ok
+test group_commands ... ok
+test arithmetic_commands ... ok
+test errors_have_nonzero_exit_status ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.35s
+
+
+running 17 tests
+test addition_table_has_identity_and_is_symmetric ... ok
+test expensive_operations_have_explicit_limits ... ok
+test field_operations_do_not_overflow_at_u64_boundary ... ok
+test infinity_inverse_and_vertical_tangent ... ok
+test invalid_points_are_checked_even_for_zero_scalars ... ok
+test cyclic_subgroup_and_discrete_log ... ok
+test multiples_match_hand_computed_vector ... ok
+test ecdh_known_example_and_invalid_secrets ... ok
+test singular_and_composite_parameters_are_rejected ... ok
+test signed_input_and_minimum_scalar_are_supported ... ok
+test enumeration_matches_independent_exhaustive_equation_check ... ok
+test exhaustive_associativity_on_demo_group ... ok
+test primality_matches_trial_division_and_rejects_pseudoprimes ... ok
+test inverse_and_closure ... ok
+test field_inverse_for_any_nonzero_u64_residue ... ok
+test scalar_composition ... ok
+test scalar_distributivity ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 1 test
+test crates/lab_02_sha256/src/domain/sha256.rs - domain::sha256::Sha256 (line 130) ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+all doctests ran in 0.47s; merged doctests compilation took 0.14s
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+cargo fmt --all -- --check
+cargo clippy --workspace --all-targets --all-features -- -D warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.04s
+cargo test --workspace --all-features
+   Compiling foreign-types-shared v0.1.1
+   Compiling openssl-sys v0.9.116
+   Compiling shared v0.1.0 (/Users/arti/PycharmProjects/DSTU_VKB/programming_of_information_security_algorithms/crates/shared)
+   Compiling lab_03_prng v0.1.0 (/Users/arti/PycharmProjects/DSTU_VKB/programming_of_information_security_algorithms/crates/lab_03_prng)
+   Compiling practice_01 v0.1.0 (/Users/arti/PycharmProjects/DSTU_VKB/programming_of_information_security_algorithms/crates/practice_01)
+   Compiling lab_06_sym v0.1.0 (/Users/arti/PycharmProjects/DSTU_VKB/programming_of_information_security_algorithms/crates/lab_06_sym)
+   Compiling lab_01_rsa v0.1.0 (/Users/arti/PycharmProjects/DSTU_VKB/programming_of_information_security_algorithms/crates/lab_01_rsa)
+   Compiling lab_02_sha256 v0.1.0 (/Users/arti/PycharmProjects/DSTU_VKB/programming_of_information_security_algorithms/crates/lab_02_sha256)
+   Compiling lab_04_nist v0.1.0 (/Users/arti/PycharmProjects/DSTU_VKB/programming_of_information_security_algorithms/crates/lab_04_nist)
+   Compiling practice_02 v0.1.0 (/Users/arti/PycharmProjects/DSTU_VKB/programming_of_information_security_algorithms/crates/practice_02)
+   Compiling foreign-types v0.3.2
+   Compiling openssl v0.10.80
+   Compiling lab_07_asym v0.1.0 (/Users/arti/PycharmProjects/DSTU_VKB/programming_of_information_security_algorithms/crates/lab_07_asym)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.03s
+     Running unittests src/lib.rs (target/debug/deps/lab_01_rsa-6a6fa0e334a166d4)
+     Running unittests src/main.rs (target/debug/deps/lab_01_rsa-e200030df1b9116d)
+     Running tests/cli.rs (target/debug/deps/cli-7bb9f5c5651243cc)
+     Running unittests src/lib.rs (target/debug/deps/lab_02_sha256-6932830ed981d8b5)
+     Running unittests src/main.rs (target/debug/deps/lab_02_sha256-5714b466a3aa2907)
+     Running tests/cli.rs (target/debug/deps/cli-01d853d6390836d6)
+     Running unittests src/lib.rs (target/debug/deps/lab_03_prng-b6cf5bb94e4e04c5)
+     Running unittests src/main.rs (target/debug/deps/lab_03_prng-fca3b6fad72ae1f6)
+     Running tests/cli.rs (target/debug/deps/cli-32dada1a50d4a929)
+     Running unittests src/lib.rs (target/debug/deps/lab_04_nist-61514666b942780e)
+     Running unittests src/main.rs (target/debug/deps/lab_04_nist-f7655397110cec97)
+     Running tests/cli.rs (target/debug/deps/cli-81c1d34f51fbc1c3)
+     Running unittests src/lib.rs (target/debug/deps/lab_06_sym-216fb7f25ca0f8e4)
+     Running unittests src/main.rs (target/debug/deps/lab_06_sym-67d08eb43df468b1)
+     Running tests/cli.rs (target/debug/deps/cli-59952e3bc055dea2)
+     Running unittests src/lib.rs (target/debug/deps/lab_07_asym-27cdc30448a25bb7)
+     Running unittests src/main.rs (target/debug/deps/lab_07_asym-d127554731a5d124)
+     Running tests/cli.rs (target/debug/deps/cli-327ada9f6864c9da)
+     Running unittests src/lib.rs (target/debug/deps/practice_01-3430f3ad280e6206)
+     Running unittests src/main.rs (target/debug/deps/practice_01-2139664f19b85f90)
+     Running tests/big_numbers.rs (target/debug/deps/big_numbers-00cbf607d3c391bc)
+     Running tests/cli.rs (target/debug/deps/cli-585d09c30dba5ce5)
+     Running unittests src/lib.rs (target/debug/deps/practice_02-aaff32326cd241c0)
+     Running unittests src/main.rs (target/debug/deps/practice_02-cd1ddb8ecc089fd6)
+     Running tests/cli.rs (target/debug/deps/cli-339dd2f97896858d)
+     Running tests/domain.rs (target/debug/deps/domain-8f48afdc17dca699)
+     Running unittests src/lib.rs (target/debug/deps/shared-99494915449ecb00)
+   Doc-tests lab_01_rsa
+   Doc-tests lab_02_sha256
+   Doc-tests lab_03_prng
+   Doc-tests lab_04_nist
+   Doc-tests lab_06_sym
+   Doc-tests lab_07_asym
+   Doc-tests practice_01
+   Doc-tests practice_02
+   Doc-tests shared

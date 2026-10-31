@@ -1,0 +1,7 @@
+{
+  "checked_at": "2026-10-31T12:43:29+03:00",
+  "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+  "practice_tests": 23,
+  "reference_cases": 33,
+  "just_ci_exit_code": 0
+}

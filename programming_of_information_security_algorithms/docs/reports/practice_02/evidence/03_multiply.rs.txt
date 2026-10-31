@@ -1,0 +1,21 @@
+// crates/practice_02/src/domain/curve.rs
+    pub fn multiply(self, point: Point, scalar: i128) -> Result<Point, Error> {
+        self.validate(point)?;
+        let mut base = if scalar < 0 {
+            self.negate_valid(point)
+        } else {
+            point
+        };
+        let mut bits = scalar.unsigned_abs();
+        let mut result = Point::Infinity;
+        while bits != 0 {
+            if bits & 1 != 0 {
+                result = self.add_valid(result, base)?;
+            }
+            bits >>= 1;
+            if bits != 0 {
+                base = self.add_valid(base, base)?;
+            }
+        }
+        Ok(result)
+    }

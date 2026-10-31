@@ -1,6 +1,6 @@
 # Программирование алгоритмов защиты информации
 
-Курс лабораторных по дисциплине «Программирование алгоритмов защиты информации» (ДГТУ, ВКБ). 1 практическая + 7 лабораторных работ, реализованных на **Rust** в виде [Cargo workspace](#структура-репозитория).
+Курс лабораторных по дисциплине «Программирование алгоритмов защиты информации» (ДГТУ, ВКБ). 2 практические + 7 лабораторных работ, реализованных на **Rust** в виде [Cargo workspace](#структура-репозитория).
 
 > Условия преподавателя — в [`docs/conditions/`](docs/conditions). Поясняющие README по каждой работе — в [`docs/explanations/`](docs/explanations). Внутренние заметки агентам — в [`AGENTS.md`](AGENTS.md).
 
@@ -9,6 +9,7 @@
 | №          | Crate / каталог                                | Тема                                                   | Инструкция                                                                            |
 |------------|------------------------------------------------|--------------------------------------------------------|---------------------------------------------------------------------------------------|
 | Практика 1 | [`crates/practice_01`](crates/practice_01)     | Длинная арифметика (≥ 64 разрядов), сложение/вычитание | [`docs/explanations/practice_01/`](docs/explanations/practice_01/README.md)           |
+| Практика 2 | [`crates/practice_02`](crates/practice_02) | Калькулятор на эллиптических кривых | [`docs/explanations/practice_02/`](docs/explanations/practice_02/README.md) |
 | Лаб 1      | [`crates/lab_01_rsa`](crates/lab_01_rsa)       | RSA с нуля                                             | [`docs/explanations/lab_01_rsa/`](docs/explanations/lab_01_rsa/README.md)             |
 | Лаб 2      | [`crates/lab_02_sha256`](crates/lab_02_sha256) | SHA-2-256 по FIPS 180-4                                | [`docs/explanations/lab_02_sha256/`](docs/explanations/lab_02_sha256/README.md)       |
 | Лаб 3      | [`crates/lab_03_prng`](crates/lab_03_prng)     | ПДСЧ + проверка через NIST STS 2.1.2                   | [`docs/explanations/lab_03_prng/`](docs/explanations/lab_03_prng/README.md)           |

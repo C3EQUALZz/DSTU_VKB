@@ -102,7 +102,7 @@ pub fn generate_prime<R: RandomSource>(bits: usize, rng: &mut R) -> BigUint {
         }
         // Гарантируем, что второй с конца бит установлен — `n = p*q` тогда имеет
         // длину ровно `2*bits` бит (см. https://crypto.stackexchange.com/a/1812).
-        let high_pair = (bits - 2).max(0);
+        let high_pair = bits - 2;
         if !candidate.bit(high_pair) {
             // Установка бита не должна выходить за пределы.
             let two_to_high = {
