@@ -1,0 +1,23 @@
+[
+  {
+    "file": "01_ГОСТ_Р_51583-2014_полный_текст.pdf",
+    "source": "https://meganorm.ru/Data2/1/4293772/4293772843.pdf",
+    "pages": 18,
+    "bytes": 352288,
+    "sha256": "9c3ff15a405e54b595ab76c28ce962d2e4387cb92ac150018f5a2b17bc8c4a77"
+  },
+  {
+    "file": "02_ГОСТ_Р_59793-2021_стадии_создания.pdf",
+    "source": "локальный файл report_assets/sources/gost_59793_mirror.pdf",
+    "pages": 8,
+    "bytes": 720893,
+    "sha256": "63491694f95c54370a654343e66fb53179852a2172da54d1e395828f25833e92"
+  },
+  {
+    "file": "03_ГОСТ_34.602-2020_техническое_задание.pdf",
+    "source": "локальный файл report_assets/sources/gost_34602_2020.pdf",
+    "pages": 12,
+    "bytes": 3966620,
+    "sha256": "64bc8bb263f33c5208dc531069bdd31b0792d869767b3a3a591024d4500104cb"
+  }
+]
