@@ -1198,3 +1198,681 @@ protection_of_computer_networks/*/artifacts/
 *.img
 *.vmdk
 *.qcow2
+/technical_protection_of_information/практики/3/2026/Исходные_документы_ТехноЩит/01_Перечень_конфиденциальных_сведений.docx
+/methods_and_means_of_protecting_information_from_computer_viruses/Практики/1/отчет/sections/01_цель.md
+/methods_and_means_of_protecting_information_from_computer_viruses/Практики/2/отчет/sections/01_цель.md
+/technical_protection_of_information/практики/3/2026/Исходные_документы_ТехноЩит/02_Модель_нарушителя.docx
+/methods_and_means_of_protecting_information_from_computer_viruses/Практики/1/отчет/sections/02_теория.md
+/methods_and_means_of_protecting_information_from_computer_viruses/Практики/2/отчет/sections/02_теория.md
+/methods_and_means_of_protecting_information_from_computer_viruses/Практики/1/отчет/sections/03_литература.md
+/methods_and_means_of_protecting_information_from_computer_viruses/Практики/2/отчет/sections/03_литература.md
+/technical_protection_of_information/практики/3/2026/Исходные_документы_ТехноЩит/03_Паспорт_защищаемого_помещения.docx
+/technical_protection_of_information/практики/3/2026/Исходные_документы_ТехноЩит/04_Акт_классификации_АС.docx
+/methods_and_means_of_protecting_information_from_computer_viruses/Практики/1/отчет/sections/04_ответы.md
+/methods_and_means_of_protecting_information_from_computer_viruses/Практики/2/отчет/sections/04_ответы.md
+/methods_and_means_of_protecting_information_from_computer_viruses/Практики/1/отчет/sections/05_выводы.md
+/methods_and_means_of_protecting_information_from_computer_viruses/Практики/2/отчет/sections/05_выводы.md
+/technical_protection_of_information/практики/3/2026/Исходные_документы_ТехноЩит/05_Технический_паспорт_АС.docx
+/methods_and_means_of_protecting_information_from_computer_viruses/Практики/1/отчет/sections/06_источники.md
+/methods_and_means_of_protecting_information_from_computer_viruses/Практики/2/отчет/sections/06_источники.md
+/technical_protection_of_information/практики/3/2026/Исходные_документы_ТехноЩит/06_Экспликация_помещений.docx
+/technical_protection_of_information/практики/3/2026/Исходные_документы_ТехноЩит/07_Допуск_в_помещения_и_к_АС.docx
+/technical_protection_of_information/практики/3/2026/Исходные_документы_ТехноЩит/08_Учет_носителей.docx
+/technical_protection_of_information/практики/3/2026/Исходные_документы_ТехноЩит/09_Резервное_копирование.docx
+/technical_protection_of_information/практики/3/2026/Исходные_документы_ТехноЩит/10_Описание_технологического_процесса.docx
+/technical_protection_of_information/практики/3/2026/Исходные_документы_ТехноЩит/11_Приказ_об_обеспечении_защиты.docx
+/technical_protection_of_information/практики/3/2026/Исходные_документы_ТехноЩит/12_Перечень_средств_защиты.docx
+/technical_protection_of_information/практики/3/2026/Исходные_документы_ТехноЩит/13_Положение_о_коммерческой_тайне.docx
+/technical_protection_of_information/практики/3/2026/Исходные_документы_ТехноЩит/14_Спецификация_материально_технической_базы.docx
+/technical_protection_of_information/практики/2/2026/Документы/40. Экспликация и исходные данные для Visio.docx
+/technical_protection_of_information/практики/2/2026/Документы/41. Приказ и список допуска в помещения и к АС.docx
+/technical_protection_of_information/практики/1/2026/2026-09-17 18.16.55.jpg
+/technical_protection_of_information/курсовая/analysis/acoustic_99.csv
+/technical_protection_of_information/практики/4/2026/report_assets/add_financing_table.py
+/technical_protection_of_information/практики/4/2026/report_assets/align_functions_and_software.py
+/technical_protection_of_information/практики/4/2026/report_assets/align_protection_goals.py
+/technical_protection_of_information/практики/4/2026/report_assets/align_template_presentation.py
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/appendix_image-000.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/appendix_image-001.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/appendix_image-002.png
+/technical_protection_of_information/курсовая/analysis/source_text/assignment.txt
+/technical_protection_of_information/курсовая/analysis/source_text/assignment_page-03.png
+/technical_protection_of_information/курсовая/analysis/source_text/assignment_page-04.png
+/technical_protection_of_information/практики/4/2026/report_assets/sources/astra_2557_2026.pdf
+/technical_protection_of_information/практики/4/2026/report_assets/sources/astra_2557_2026.pdf.png
+/technical_protection_of_information/практики/4/2026/report_assets/sources/astra_2557_2026.txt
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/boxes.html
+/technical_protection_of_information/курсовая/analysis/build_analysis.py
+/methods_and_means_of_protecting_information_from_computer_viruses/Практики/1/отчет/build_docx.py
+/methods_and_means_of_protecting_information_from_computer_viruses/Практики/2/отчет/build_docx.py
+/protection_of_computer_networks/1/scripts/build_manual.py
+/protection_of_computer_networks/3/scripts/build_manual.py
+/technical_protection_of_information/лабораторные/ЛР 5/2026/report_assets/build_report.py
+/technical_protection_of_information/практики/4/2025/report_assets/build_report.py
+/technical_protection_of_information/практики/4/2026/report_assets/build_report.py
+/technical_protection_of_information/курсовая/analysis/calculate_variant99.py
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/calculations.json
+/technical_protection_of_information/лабораторные/ЛР 5/2026/report_assets/calculations.json
+/protection_of_computer_networks/3/scripts/check_snlsp.sh
+/technical_protection_of_information/практики/4/2026/report_assets/clarify_controlled_zone.py
+/technical_protection_of_information/практики/4/2026/report_assets/close_matching_saved_report.applescript
+/technical_protection_of_information/практики/4/2026/report_assets/close_saved_report.applescript
+/technical_protection_of_information/практики/4/2026/report_assets/compact_financing_section.py
+/technical_protection_of_information/практики/3/2026/report_assets/complete_appendix3_example.py
+/technical_protection_of_information/практики/4/2026/report_assets/complete_application_stack.py
+/technical_protection_of_information/практики/4/2026/report_assets/complete_equipment_records.py
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/conclusion.png
+/technical_protection_of_information/практики/4/2025/report_assets/preview/contact-1.png
+/technical_protection_of_information/практики/4/2025/report_assets/preview_final/contact-1.png
+/technical_protection_of_information/практики/4/2025/report_assets/preview/contact-2.png
+/technical_protection_of_information/практики/4/2025/report_assets/preview_final/contact-2.png
+/technical_protection_of_information/практики/4/2025/report_assets/preview/contact-3.png
+/technical_protection_of_information/практики/4/2025/report_assets/preview_final/contact-3.png
+/technical_protection_of_information/практики/4/2025/report_assets/preview/contact-4.png
+/technical_protection_of_information/практики/4/2026/report_assets/contact_sheets/contact_01.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_final_contacts/contact_01.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_layout_review/contact_01.png
+/technical_protection_of_information/практики/4/2026/report_assets/contact_sheets/contact_02.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_final_contacts/contact_02.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_layout_review/contact_02.png
+/technical_protection_of_information/практики/4/2026/report_assets/contact_sheets/contact_03.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_final_contacts/contact_03.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_layout_review/contact_03.png
+/technical_protection_of_information/практики/4/2026/report_assets/contact_sheets/contact_04.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_final_contacts/contact_04.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_layout_review/contact_04.png
+/technical_protection_of_information/практики/4/2026/report_assets/contact_sheets/contact_05.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_final_contacts/contact_05.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_layout_review/contact_05.png
+/technical_protection_of_information/практики/4/2026/report_assets/contact_sheets/contact_06.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_final_contacts/contact_06.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_layout_review/contact_06.png
+/technical_protection_of_information/практики/4/2026/report_assets/contact_sheets/contact_07.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_final_contacts/contact_07.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_layout_review/contact_07.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_final_contacts/contact_08.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_layout_review/contact_08.png
+/technical_protection_of_information/практики/4/2026/report_assets/contents_pages.json
+/technical_protection_of_information/курсовая/CONTEXT.md
+/technical_protection_of_information/практики/4/2026/report_assets/contract_contents_pages.json
+/technical_protection_of_information/практики/4/2026/report_assets/contract_revision.json
+/technical_protection_of_information/практики/4/2026/report_assets/contract_template_audit.json
+/technical_protection_of_information/практики/4/2026/report_assets/contract_verification.json
+/technical_protection_of_information/практики/4/2026/report_assets/controlled_zone.json
+/technical_protection_of_information/практики/4/2026/report_assets/controlled_zone.png
+/technical_protection_of_information/практики/4/2026/report_assets/controlled_zone.svg
+/technical_protection_of_information/практики/4/2026/report_assets/controlled_zone.svg.png
+/technical_protection_of_information/практики/3/2026/report_assets/detail_appendix3_hardware.py
+/technical_protection_of_information/практики/3/2026/report_assets/diagrams.py
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/doc0_text.txt
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/doc1_text.txt
+/protection_of_computer_networks/3/docs/assets/dstu_logo.png
+/technical_protection_of_information/практики/4/2026/report_assets/equipment_identification.json
+/technical_protection_of_information/практики/3/2026/report_assets/expand_methodology_sections.py
+/technical_protection_of_information/практики/4/2026/report_assets/expand_workstation_processing.py
+/technical_protection_of_information/практики/3/2026/report_assets/export_appendices.applescript
+/technical_protection_of_information/практики/3/2026/report_assets/export_appendices_legacy.applescript
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/export_final.applescript
+/technical_protection_of_information/практики/3/2026/report_assets/export_legacy.applescript
+/technical_protection_of_information/лабораторные/ЛР 5/2026/report_assets/export_pdf.applescript
+/technical_protection_of_information/практики/3/2026/report_assets/export_pz3.applescript
+/technical_protection_of_information/практики/4/2026/report_assets/export_pz4.applescript
+/technical_protection_of_information/практики/4/2025/report_assets/export_report.applescript
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/export_sources.applescript
+/technical_protection_of_information/практики/4/2026/report_assets/external_developer_contents_pages.json
+/technical_protection_of_information/практики/4/2026/report_assets/external_developer_revision.json
+/technical_protection_of_information/практики/4/2026/report_assets/external_developer_template_audit.json
+/technical_protection_of_information/практики/4/2026/report_assets/external_developer_verification.json
+/protection_of_computer_networks/1/docs/assets/manual/fig01.jpg
+/protection_of_computer_networks/3/docs/assets/manual/fig01.png
+/protection_of_computer_networks/1/docs/assets/manual/fig02.jpg
+/protection_of_computer_networks/3/docs/assets/manual/fig02.png
+/protection_of_computer_networks/1/docs/assets/manual/fig03.jpg
+/protection_of_computer_networks/3/docs/assets/manual/fig03.png
+/protection_of_computer_networks/1/docs/assets/manual/fig04.jpg
+/protection_of_computer_networks/3/docs/assets/manual/fig04.png
+/protection_of_computer_networks/1/docs/assets/manual/fig05.jpg
+/protection_of_computer_networks/3/docs/assets/manual/fig05.png
+/protection_of_computer_networks/1/docs/assets/manual/fig06.jpg
+/protection_of_computer_networks/3/docs/assets/manual/fig06.png
+/protection_of_computer_networks/1/docs/assets/manual/fig07.jpg
+/protection_of_computer_networks/3/docs/assets/manual/fig07.png
+/protection_of_computer_networks/1/docs/assets/manual/fig08.jpg
+/protection_of_computer_networks/3/docs/assets/manual/fig08.png
+/protection_of_computer_networks/1/docs/assets/manual/fig09.jpg
+/protection_of_computer_networks/1/docs/assets/manual/fig10.jpg
+/protection_of_computer_networks/1/docs/assets/manual/fig11.jpg
+/protection_of_computer_networks/1/docs/assets/manual/fig12.png
+/protection_of_computer_networks/1/docs/assets/manual/fig13.png
+/technical_protection_of_information/практики/4/2026/report_assets/fill_generated_serials.py
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-01.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-02.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-03.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-04.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-05.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-06.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-07.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-08.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-09.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-10.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-11.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-12.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-13.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-14.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-15.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-16.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-17.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-18.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-19.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-20.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-21.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-22.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-23.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-24.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-25.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-26.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-27.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final-28.png
+/technical_protection_of_information/практики/4/2026/report_assets/final_pdf_format_review.py
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/final_text.txt
+/technical_protection_of_information/практики/4/2026/report_assets/finalize_contents.py
+/technical_protection_of_information/практики/4/2026/report_assets/finalize_pz3_contents.py
+/technical_protection_of_information/практики/4/2026/report_assets/financial_totals.json
+/technical_protection_of_information/практики/4/2026/report_assets/financing_contents_pages.json
+/technical_protection_of_information/практики/4/2026/report_assets/sources/financing_example_bsk.pdf
+/technical_protection_of_information/практики/4/2026/report_assets/sources/financing_example_bsk.txt
+/technical_protection_of_information/практики/4/2026/report_assets/sources/financing_example_bsk_security.pdf
+/technical_protection_of_information/практики/4/2026/report_assets/sources/financing_example_bsk_security.txt
+/technical_protection_of_information/практики/4/2026/report_assets/financing_format_research.json
+/technical_protection_of_information/практики/4/2026/report_assets/financing_revision.json
+/technical_protection_of_information/практики/4/2026/report_assets/financing_template_audit.json
+/technical_protection_of_information/практики/4/2026/report_assets/financing_verification.json
+/technical_protection_of_information/практики/3/2026/report_assets/fix_agreement_covers.py
+/technical_protection_of_information/практики/4/2026/report_assets/fix_appendix_format.py
+/technical_protection_of_information/практики/3/2026/report_assets/icons/floorplanner_desk.svg
+/technical_protection_of_information/практики/3/2026/report_assets/icons/floorplanner_dining_chair.svg
+/technical_protection_of_information/практики/3/2026/report_assets/icons/floorplanner_dining_table.svg
+/technical_protection_of_information/практики/3/2026/report_assets/icons/floorplanner_office_chair.svg
+/technical_protection_of_information/практики/3/2026/report_assets/icons/floorplanner_office_set.svg
+/technical_protection_of_information/практики/3/2026/report_assets/icons/floorplanner_sink_base_36.svg
+/technical_protection_of_information/практики/3/2026/report_assets/icons/floorplanner_storage_shelves.svg
+/technical_protection_of_information/практики/3/2026/report_assets/icons/floorplanner_toilet.svg
+/technical_protection_of_information/практики/3/2026/report_assets/icons/floorplanner_wardrobe.svg
+/technical_protection_of_information/практики/4/2026/report_assets/sources/fstec_21.pdf
+/technical_protection_of_information/практики/4/2026/report_assets/sources/fstec_21.txt
+/technical_protection_of_information/практики/4/2026/report_assets/sources/fstec_77_2026.html
+/technical_protection_of_information/практики/4/2026/report_assets/sources/fstec_77_2026.txt
+/technical_protection_of_information/практики/4/2026/report_assets/functions_pz3_contents_pages.json
+/technical_protection_of_information/практики/4/2026/report_assets/functions_pz3_verification.json
+/technical_protection_of_information/практики/4/2026/report_assets/functions_pz4_contents_pages.json
+/technical_protection_of_information/практики/4/2026/report_assets/functions_pz4_verification.json
+/technical_protection_of_information/практики/4/2026/report_assets/functions_revision.json
+/technical_protection_of_information/практики/4/2026/report_assets/functions_template_audit.json
+/technical_protection_of_information/практики/4/2026/report_assets/generated_serials.json
+/technical_protection_of_information/практики/4/2026/report_assets/goals_revision.json
+/technical_protection_of_information/практики/4/2026/report_assets/goals_template_audit.json
+/technical_protection_of_information/практики/4/2026/report_assets/goals_verification.json
+/technical_protection_of_information/практики/4/2026/report_assets/sources/gost_34602_2020.pdf
+/technical_protection_of_information/практики/4/2026/report_assets/sources/gost_34602_2020.txt
+/technical_protection_of_information/практики/4/2026/report_assets/sources/gost_51583_2014.pdf
+/technical_protection_of_information/практики/4/2026/report_assets/sources/gost_51583_2014.txt
+/technical_protection_of_information/практики/4/2026/report_assets/sources/gost_59793_2021.pdf
+/technical_protection_of_information/практики/4/2026/report_assets/sources/gost_59793_2021.txt
+/technical_protection_of_information/практики/4/2026/report_assets/sources/gost_59793_mirror.pdf
+/technical_protection_of_information/курсовая/analysis/source_text/image1.jpeg
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/image1.jpeg
+/technical_protection_of_information/практики/4/2026/report_assets/image1.jpeg
+/technical_protection_of_information/лабораторные/ЛР 5/2026/report_assets/image1.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/image2.emf
+/technical_protection_of_information/курсовая/analysis/source_text/image2.jpeg
+/technical_protection_of_information/лабораторные/ЛР 5/2026/report_assets/image2.png
+/technical_protection_of_information/практики/4/2026/report_assets/image2.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/image3.jpg
+/technical_protection_of_information/курсовая/analysis/source_text/image3.png
+/technical_protection_of_information/практики/4/2026/report_assets/image3.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/image4.jpg
+/technical_protection_of_information/курсовая/analysis/source_text/image4.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/image5.jpeg
+/technical_protection_of_information/курсовая/analysis/source_text/image5.png
+/technical_protection_of_information/курсовая/analysis/source_text/image6.png
+/technical_protection_of_information/курсовая/analysis/source_text/image7.png
+/technical_protection_of_information/курсовая/analysis/source_text/image8.png
+/technical_protection_of_information/курсовая/analysis/source_text/image9.png
+/technical_protection_of_information/курсовая/analysis/source_text/image10.png
+/technical_protection_of_information/курсовая/analysis/source_text/image11.png
+/technical_protection_of_information/курсовая/analysis/source_text/image12.png
+/technical_protection_of_information/курсовая/analysis/source_text/image13.png
+/technical_protection_of_information/курсовая/analysis/source_text/image14.png
+/technical_protection_of_information/курсовая/analysis/source_text/image15.png
+/technical_protection_of_information/курсовая/analysis/source_text/image16.png
+/technical_protection_of_information/курсовая/analysis/source_text/image17.png
+/technical_protection_of_information/курсовая/analysis/source_text/image18.png
+/technical_protection_of_information/курсовая/analysis/source_text/image19.png
+/technical_protection_of_information/курсовая/analysis/source_text/image20.png
+/technical_protection_of_information/практики/4/2026/report_assets/inspect_pdf.swift
+/protection_of_computer_networks/3/scripts/install_snlsp.sh
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/kz_plan.png
+/technical_protection_of_information/курсовая/analysis/source_text/lab1.txt
+/technical_protection_of_information/курсовая/analysis/source_text/lab2.txt
+/technical_protection_of_information/курсовая/analysis/source_text/lab2_page-26.png
+/technical_protection_of_information/курсовая/analysis/source_text/lab2_page-27.png
+/technical_protection_of_information/курсовая/analysis/source_text/lab3.txt
+/technical_protection_of_information/курсовая/analysis/source_text/lab3_method.txt
+/technical_protection_of_information/курсовая/analysis/lab3_p12-12.png
+/technical_protection_of_information/курсовая/analysis/source_text/lab4.txt
+/technical_protection_of_information/курсовая/analysis/source_text/lab4_method.txt
+/technical_protection_of_information/курсовая/analysis/lab4_p-22.png
+/technical_protection_of_information/курсовая/analysis/lab4_p-23.png
+/technical_protection_of_information/курсовая/analysis/source_text/lab5.txt
+/technical_protection_of_information/курсовая/analysis/source_text/lab_report1.txt
+/technical_protection_of_information/курсовая/analysis/source_text/lab_report2.txt
+/technical_protection_of_information/курсовая/analysis/source_text/lab_report3.txt
+/steganography/mathcad/pr6/laba.mcdx
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/last_table.png
+/technical_protection_of_information/практики/3/2026/report_assets/icons/LICENSE_FloorPlanner_CC0.txt
+/technical_protection_of_information/практики/3/2026/report_assets/icons/LICENSE_Lucide.txt
+/technical_protection_of_information/практики/4/2026/report_assets/list_word_documents.applescript
+/cryptographic_protocols/docs/explanations/LOGGING.md
+/technical_protection_of_information/практики/3/2026/report_assets/icons/lucide_cctv.svg
+/technical_protection_of_information/практики/3/2026/report_assets/icons/lucide_key-round.svg
+/technical_protection_of_information/практики/3/2026/report_assets/icons/lucide_lock-keyhole.svg
+/technical_protection_of_information/практики/3/2026/report_assets/icons/lucide_monitor.svg
+/technical_protection_of_information/практики/3/2026/report_assets/icons/lucide_printer.svg
+/technical_protection_of_information/практики/3/2026/report_assets/icons/lucide_server.svg
+/protection_of_computer_networks/1/scripts/manual_builder.py
+/protection_of_computer_networks/3/scripts/manual_builder.py
+/technical_protection_of_information/практики/4/2026/report_assets/manufacturer_sources.json
+/technical_protection_of_information/лабораторные/ЛР 5/2026/report_assets/measurement_layout_variant5.jpg
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/method.txt
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/method-20.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/method-21.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/method-22.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/method-23.png
+/technical_protection_of_information/лабораторные/ЛР 5/2026/report_assets/method_p27.png
+/technical_protection_of_information/лабораторные/ЛР 5/2026/report_assets/method_p30.png
+/technical_protection_of_information/практики/4/2026/report_assets/sources/method_pz3.txt
+/technical_protection_of_information/практики/4/2026/report_assets/sources/method_pz4.txt
+/technical_protection_of_information/практики/4/2026/report_assets/network.svg
+/technical_protection_of_information/практики/4/2026/report_assets/network.svg.png
+/technical_protection_of_information/практики/4/2026/report_assets/network_render.svg
+/technical_protection_of_information/практики/4/2026/report_assets/network_render.svg.png
+/technical_protection_of_information/практики/4/2026/report_assets/network_resource_names.png
+/technical_protection_of_information/практики/4/2026/report_assets/network_resource_names.svg
+/technical_protection_of_information/практики/4/2026/report_assets/network_resource_names.svg.png
+/technical_protection_of_information/практики/4/2026/report_assets/network_resource_names_render.svg
+/technical_protection_of_information/практики/4/2026/report_assets/network_resource_names_render.svg.png
+/technical_protection_of_information/практики/4/2026/report_assets/normative_section_1_4.json
+/technical_protection_of_information/практики/4/2026/report_assets/office_software.json
+/technical_protection_of_information/практики/4/2026/report_assets/open_word_hfs.applescript
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/origimg-000.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/origimg-001.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/origimg-002.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/origimg-003.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/original.pdf
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/origpage-05.png
+/technical_protection_of_information/практики/4/2025/report_assets/preview/page-1.png
+/technical_protection_of_information/практики/4/2025/report_assets/preview_final/page-1.png
+/technical_protection_of_information/практики/4/2025/report_assets/preview/page-2.png
+/technical_protection_of_information/практики/4/2025/report_assets/preview_final/page-2.png
+/technical_protection_of_information/практики/4/2025/report_assets/preview/page-8.png
+/technical_protection_of_information/практики/4/2025/report_assets/preview_final/page-8.png
+/technical_protection_of_information/практики/4/2025/report_assets/preview/page-13.png
+/technical_protection_of_information/практики/4/2025/report_assets/preview_final/page-13.png
+/technical_protection_of_information/практики/4/2025/report_assets/preview_final/page-25.png
+/technical_protection_of_information/практики/4/2025/report_assets/preview/page-28.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_001.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_002.png
+/technical_protection_of_information/практики/4/2026/report_assets/financing_examples_security_review/page_003.png
+/technical_protection_of_information/практики/4/2026/report_assets/financing_examples_review/page_005.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_010.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_011.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_012.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_detail_review/page_012.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_013.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_014.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_015.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_016.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_017.png
+/technical_protection_of_information/практики/4/2026/report_assets/reference_preview/page_017.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_018.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_019.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_020.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_021.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_022.png
+/technical_protection_of_information/практики/4/2026/report_assets/resources_visual4/page_022.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_023.png
+/technical_protection_of_information/практики/4/2026/report_assets/functions_visual4/page_024.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_024.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_027.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_028.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_029.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_032.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_034.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_035.png
+/technical_protection_of_information/практики/4/2026/report_assets/contract_review/page_036.png
+/technical_protection_of_information/практики/4/2026/report_assets/external_developer_review/page_036.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_037.png
+/technical_protection_of_information/практики/4/2026/report_assets/financing_final_layout/page_038.png
+/technical_protection_of_information/практики/4/2026/report_assets/financing_layout_review/page_038.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_038.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_detail_review/page_038.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_final_review/page_038.png
+/technical_protection_of_information/практики/4/2026/report_assets/schedule_pz4_review/page_038.png
+/technical_protection_of_information/практики/4/2026/report_assets/financing_final_layout/page_039.png
+/technical_protection_of_information/практики/4/2026/report_assets/financing_layout_review/page_039.png
+/technical_protection_of_information/практики/4/2026/report_assets/functions_pz4_review/page_039.png
+/technical_protection_of_information/практики/4/2026/report_assets/functions_visual4/page_039.png
+/technical_protection_of_information/практики/4/2026/report_assets/goals_layout_review/page_039.png
+/technical_protection_of_information/практики/4/2026/report_assets/functions_pz4_review/page_041.png
+/technical_protection_of_information/практики/4/2026/report_assets/functions_visual3/page_041.png
+/technical_protection_of_information/практики/4/2026/report_assets/functions_visual4/page_041.png
+/technical_protection_of_information/практики/4/2026/report_assets/resources_visual4/page_041.png
+/technical_protection_of_information/практики/4/2026/report_assets/reference_preview/page_042.png
+/technical_protection_of_information/практики/4/2026/report_assets/functions_pz4_review/page_043.png
+/technical_protection_of_information/практики/4/2026/report_assets/functions_visual4/page_043.png
+/technical_protection_of_information/практики/4/2026/report_assets/reference_preview/page_043.png
+/technical_protection_of_information/практики/4/2026/report_assets/functions_visual4/page_044.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_044.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_045.png
+/technical_protection_of_information/практики/4/2026/report_assets/resources_visual4/page_045.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_046.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_047.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_048.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_049.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_050.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_final_review/page_050.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_051.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_052.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_053.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_054.png
+/technical_protection_of_information/практики/4/2026/report_assets/resources_visual4/page_054.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_055.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_056.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_057.png
+/technical_protection_of_information/практики/4/2026/report_assets/schedule_pz4_review/page_057.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_058.png
+/technical_protection_of_information/практики/4/2026/report_assets/schedule_pz4_review/page_058.png
+/technical_protection_of_information/практики/4/2026/report_assets/external_developer_review/page_059.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_059.png
+/technical_protection_of_information/практики/4/2026/report_assets/functions_pz3_review/page_060.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_060.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_061.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_detail_review/page_061.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_final_review/page_061.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_062.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_064.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_066.png
+/technical_protection_of_information/практики/4/2026/report_assets/contract_review/page_068.png
+/technical_protection_of_information/практики/4/2026/report_assets/external_developer_review/page_071.png
+/technical_protection_of_information/практики/4/2026/report_assets/functions_visual3_final/page_071.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_071.png
+/technical_protection_of_information/практики/4/2026/report_assets/functions_pz3_review/page_072.png
+/technical_protection_of_information/практики/4/2026/report_assets/functions_visual3/page_072.png
+/technical_protection_of_information/практики/4/2026/report_assets/resources_visual3/page_072.png
+/technical_protection_of_information/практики/4/2026/report_assets/resources_visual3/page_074.png
+/technical_protection_of_information/практики/4/2026/report_assets/functions_pz4_review/page_075.png
+/technical_protection_of_information/практики/4/2026/report_assets/functions_visual4/page_075.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_075.png
+/technical_protection_of_information/практики/4/2026/report_assets/resources_visual3/page_075.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_076.png
+/technical_protection_of_information/практики/4/2026/report_assets/resources_visual3/page_076.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_077.png
+/technical_protection_of_information/практики/4/2026/report_assets/preview/page_078.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_detail_review/page_080.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_detail_review/page_085.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_final_review/page_085.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_detail_review/page_086.png
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_final_review/page_086.png
+/technical_protection_of_information/практики/4/2026/report_assets/schedule_pz3_final_review/page_086.png
+/technical_protection_of_information/практики/4/2026/report_assets/schedule_pz3_review/page_086.png
+/technical_protection_of_information/практики/4/2026/report_assets/functions_visual3/page_087.png
+/technical_protection_of_information/практики/4/2026/report_assets/functions_visual3_final/page_087.png
+/technical_protection_of_information/практики/4/2026/report_assets/schedule_pz3_final_review/page_087.png
+/technical_protection_of_information/практики/4/2026/report_assets/schedule_pz3_review/page_087.png
+/technical_protection_of_information/практики/4/2026/report_assets/functions_visual3/page_088.png
+/technical_protection_of_information/практики/4/2026/report_assets/resources_visual3/page_088.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/prepare_report.py
+/technical_protection_of_information/лабораторные/ЛР 5/2026/report_assets/preview_before_pagination.pdf
+/technical_protection_of_information/лабораторные/ЛР 5/2026/report_assets/preview_page6.png
+/technical_protection_of_information/лабораторные/ЛР 5/2026/report_assets/preview_questions.png
+/technical_protection_of_information/лабораторные/ЛР 5/2026/report_assets/preview_results.png
+/technical_protection_of_information/лабораторные/ЛР 5/2026/report_assets/preview_scheme.png
+/technical_protection_of_information/практики/4/2026/report_assets/price_refresh_2026_11_07.json
+/technical_protection_of_information/практики/4/2026/report_assets/publish_calendar_dates.py
+/technical_protection_of_information/практики/4/2026/report_assets/publish_financing.py
+/technical_protection_of_information/практики/4/2026/report_assets/publish_functions_and_software.py
+/technical_protection_of_information/практики/4/2026/report_assets/publish_pz3.py
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_blocks.json
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_contents_pages.json
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_cost_revision.json
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_original_state.json
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_text.txt
+/technical_protection_of_information/практики/4/2026/report_assets/pz3_verification.json
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/ref-01.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/ref-02.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/reference.pdf
+/technical_protection_of_information/практики/3/2026/report_assets/reformat_assignment_appendices.py
+/technical_protection_of_information/практики/4/2026/report_assets/refresh_price_research.py
+/technical_protection_of_information/практики/4/2026/report_assets/remove_pz3_reference.py
+/technical_protection_of_information/практики/4/2026/report_assets/removed_educational_notes.json
+/technical_protection_of_information/практики/4/2026/report_assets/removed_pz3_reference.json
+/technical_protection_of_information/практики/4/2025/report_assets/render_pdf.swift
+/technical_protection_of_information/практики/4/2026/report_assets/render_pdf.swift
+/technical_protection_of_information/практики/4/2026/report_assets/rendered_text.txt
+/technical_protection_of_information/практики/4/2026/report_assets/replace_resource_codes.py
+/technical_protection_of_information/практики/4/2026/report_assets/report_body.py
+/technical_protection_of_information/практики/4/2026/report_assets/report_data.py
+/technical_protection_of_information/практики/4/2026/report_assets/report_data_before_2026_11_07.py
+/technical_protection_of_information/практики/4/2026/report_assets/report_data_before_removing_pz3.py
+/technical_protection_of_information/лабораторные/ЛР 5/2026/report_assets/report_text.txt
+/technical_protection_of_information/курсовая/analysis/source_text/report_with_math.txt
+/technical_protection_of_information/практики/4/2026/report_assets/resources_manufacturer_sources.json
+/technical_protection_of_information/практики/4/2026/report_assets/resources_pz3_contents_pages.json
+/technical_protection_of_information/практики/4/2026/report_assets/resources_pz4_contents_pages.json
+/technical_protection_of_information/практики/4/2026/report_assets/resources_pz4_verification.json
+/technical_protection_of_information/практики/4/2026/report_assets/resources_revision.json
+/technical_protection_of_information/практики/4/2026/report_assets/resources_template_audit.json
+/technical_protection_of_information/практики/4/2026/report_assets/resources_workstation_processing.json
+/technical_protection_of_information/практики/4/2026/report_assets/restore_template_wording.py
+/technical_protection_of_information/практики/4/2026/report_assets/restored_title_changes.json
+/technical_protection_of_information/практики/4/2026/report_assets/restructure_audit.json
+/technical_protection_of_information/практики/4/2026/report_assets/restructure_report.py
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/review-01.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/review-02.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/review-03.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/review-04.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/review-05.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/review-06.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/review-07.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/review-08.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/review-09.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/review-10.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/review-11.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/review-12.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/review-13.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/review-14.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/review-15.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/review-16.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/review-17.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/review-18.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/review-19.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/review-20.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/review-21.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/review-22.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/review-23.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/review-24.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/review-25.png
+/technical_protection_of_information/практики/3/2026/report_assets/revise_pz3.py
+/technical_protection_of_information/практики/3/2026/report_assets/revise_pz3_app3_20261003.py
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/room.png
+/technical_protection_of_information/практики/4/2026/report_assets/schedule_pz3_contents_pages.json
+/technical_protection_of_information/практики/4/2026/report_assets/schedule_pz3_verification.json
+/technical_protection_of_information/практики/4/2026/report_assets/schedule_pz4_contents_pages.json
+/technical_protection_of_information/практики/4/2026/report_assets/schedule_pz4_verification.json
+/technical_protection_of_information/практики/4/2026/report_assets/schedule_revision.json
+/technical_protection_of_information/практики/4/2026/report_assets/schedule_template_audit.json
+/technical_protection_of_information/практики/4/2026/report_assets/set_calendar_dates.py
+/technical_protection_of_information/практики/4/2026/report_assets/set_contract_details.py
+/technical_protection_of_information/практики/4/2026/report_assets/set_external_developer.py
+/technical_protection_of_information/лабораторные/ЛР 5/2026/report_assets/source_1.txt
+/technical_protection_of_information/лабораторные/ЛР 5/2026/report_assets/source_1_document.xml
+/technical_protection_of_information/лабораторные/ЛР 5/2026/report_assets/source_2.txt
+/technical_protection_of_information/лабораторные/ЛР 5/2026/report_assets/source_2_document.xml
+/technical_protection_of_information/курсовая/analysis/source_sha256.json
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/stand-04.png
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/standimg-000.png
+/technical_protection_of_information/практики/4/2026/report_assets/sources/strk_2002_user.txt
+/technical_protection_of_information/практики/4/2026/report_assets/template_presentation_audit.json
+/technical_protection_of_information/практики/4/2026/report_assets/template_section_titles.json
+/technical_protection_of_information/практики/4/2026/report_assets/update_normative_list.py
+/technical_protection_of_information/практики/4/2026/report_assets/update_pz3_costs.py
+/technical_protection_of_information/курсовая/analysis/variant99_calculations.json
+/technical_protection_of_information/практики/4/2026/report_assets/verification.json
+/technical_protection_of_information/практики/3/2026/report_assets/verify_appendices_legacy.applescript
+/technical_protection_of_information/практики/3/2026/report_assets/verify_legacy.applescript
+/technical_protection_of_information/практики/4/2026/report_assets/verify_pz3_revision.py
+/technical_protection_of_information/практики/4/2026/report_assets/verify_report.py
+/technical_protection_of_information/курсовая/analysis/vibration_99.csv
+/technical_protection_of_information/практики/4/2026/report_assets/word_document_status.applescript
+/technical_protection_of_information/практики/4/2026/report_assets/word_export_diagnostic.png
+/technical_protection_of_information/практики/4/2026/report_assets/workstation_processing.json
+/technical_protection_of_information/практики/4/2026/report_assets/workstation_processing_до_финансовой_таблицы.json
+/technical_protection_of_information/курсовая/analysis/Анализ_курсовой_99.docx
+/technical_protection_of_information/практики/4/2026/report_assets/до_внешнего_разработчика_contents_pages.json
+/technical_protection_of_information/практики/4/2026/report_assets/до_внешнего_разработчика_template_presentation_audit.json
+/technical_protection_of_information/лабораторные/ЛР 4/2026/КовалевДП_ВКБ53_ЛР4_исправлено.pdf
+/technical_protection_of_information/курсовая/analysis/Лист_обмеров_1-499.docx
+/technical_protection_of_information/практики/1/2026/Материалы третьей роли.md
+/technical_protection_of_information/курсовая/analysis/source_text/отчет.txt
+/technical_protection_of_information/практики/1/2026/Резервные копии/До обновления отчета ВКБ53 20260908/Отчет_ПЗ1_Ковалев_ВКБ51.docx
+/technical_protection_of_information/практики/1/2026/Резервные копии/До обновления отчета ВКБ53 20260908/Отчет_ПЗ1_Ковалев_ВКБ51_исходный.docx
+/technical_protection_of_information/практики/1/2026/Резервные копии/До обновления отчета ВКБ53 20260908/Отчет_ПЗ1_Ковалев_ВКБ53.docx
+/technical_protection_of_information/практики/1/2026/Резервные копии/До обновления отчета ВКБ53 20260908/Отчет_ПЗ1_Ковалев_ВКБ53_исправленный.docx
+/technical_protection_of_information/курсовая/analysis/source_text/отчет_с_титульником.txt
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ3_без_кодов_ресурсов.docx
+/technical_protection_of_information/практики/3/2026/report_assets/ПЗ3_до_детализации_оборудования_20261003.docx
+/technical_protection_of_information/практики/3/2026/report_assets/ПЗ3_до_дословных_ответов_СТР-К_20261015.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ3_до_замены_кодов_ресурсов.docx
+/technical_protection_of_information/практики/3/2026/report_assets/ПЗ3_до_исправления_согласования_20261003.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ3_до_обновления_расчёта.docx
+/technical_protection_of_information/практики/3/2026/report_assets/ПЗ3_до_переработки_приложения3_20261003.docx
+/technical_protection_of_information/практики/3/2026/report_assets/ПЗ3_до_правки_раздела_11_и_сверки_20261003.docx
+/technical_protection_of_information/практики/3/2026/report_assets/ПЗ3_до_правки_терминов_20261003.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ3_до_уточнения_сроков.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ3_до_уточнения_функций_и_ПО.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ3_проверка_верстки.pdf
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ3_ресурсы_проверка.pdf
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ3_с_календарными_датами.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ3_сроки_проверка.pdf
+/technical_protection_of_information/практики/3/2026/ПЗ3_СТР-К_Ковалев_Данил_ВКБ53_2026.doc
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ3_СТР-К_Ковалев_Данил_ВКБ53_2026.docx
+/technical_protection_of_information/практики/3/2026/ПЗ3_СТР-К_Ковалев_Данил_ВКБ53_2026.pdf
+/technical_protection_of_information/практики/3/2026/report_assets/ПЗ3_СТР-К_Ковалев_Данил_ВКБ53_2026_до_переформатирования_приложений.docx
+/technical_protection_of_information/практики/3/2026/report_assets/ПЗ3_СТР-К_Ковалев_Данил_ВКБ53_2026_до_приложений.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ3_функции_и_ПО.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ3_функции_проверка.pdf
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_без_кодов_ресурсов.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_до_восстановления_формулировок.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_до_восстановления_формулировок.pdf
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_до_замены_кодов_ресурсов.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_до_замены_организации_разработчика.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_до_заполнения_серийных_номеров.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_до_описания_всех_АРМ.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_до_описания_всех_АРМ.pdf
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_до_оформления_финансирования.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_до_переноса_расчётов_и_удаления_приложений_3_5.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_до_правки_1_4_и_удаления_учебных_пометок.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_до_правки_комплектации.pdf
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_до_правки_пункта_1_4.pdf
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_до_сверки_оформления_пунктов.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_до_сверки_подачи_с_образцом.pdf
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_до_серийных_номеров_и_комплектации.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_до_удаления_ПЗ3_из_источников.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_до_удаления_полей_и_сверки_с_PDF.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_до_удаления_ссылки_ПЗ3.pdf
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_до_указания_договора.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_до_уточнения_границ_КЗ.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_до_уточнения_КЗ.pdf
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_до_уточнения_сроков.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_до_уточнения_функций_и_ПО.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_до_уточнения_целей.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_договор_проверка.pdf
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_пользовательская_версия_до_правки_приложений.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_проверка_верстки.pdf
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_ресурсы_проверка.pdf
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_с_внешним_разработчиком.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_с_календарными_датами.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_с_реквизитами_договора.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_сроки_проверка.pdf
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_финансирование.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_финансирование_проверка.pdf
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_функции_и_ПО.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_функции_проверка.pdf
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_цели.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_цели_проверка.pdf
+/technical_protection_of_information/практики/3/2026/Иллюстрации/План_офиса_ТехноЩит.png
+/technical_protection_of_information/практики/3/2026/Иллюстрации/План_офиса_ТехноЩит.svg
+/steganography/docs/reports/2025/2/11/ПР2.pdf
+/steganography/docs/reports/2025/6/ПР6.pdf
+/technical_protection_of_information/лабораторные/ЛР 4/2026/report_assets/Проверка.txt
+/technical_protection_of_information/практики/3/2026/Иллюстрации/Схема_АС_ТехноЩит.png
+/technical_protection_of_information/практики/3/2026/Иллюстрации/Схема_АС_ТехноЩит.svg
+/technical_protection_of_information/практики/1/2026/Официальные формы ФСТЭК/Текущая версия.md
+/technical_protection_of_information/практики/2/2026/Чек Лист.docx
+/technical_protection_of_information/практики/4/2026/report_assets/resources_visual4_final/page_045.png
+/technical_protection_of_information/практики/4/2026/report_assets/align_classification_and_4_1.py
+/technical_protection_of_information/практики/4/2026/report_assets/align_early_appendix_fonts.py
+/technical_protection_of_information/практики/4/2026/report_assets/align_remainder_to_method.py
+/technical_protection_of_information/практики/4/2026/report_assets/classification_contents_pages.json
+/technical_protection_of_information/практики/4/2026/report_assets/classification_normative_catalog.json
+/technical_protection_of_information/практики/4/2026/report_assets/classification_normative_section.json
+/technical_protection_of_information/практики/4/2026/report_assets/classification_revision.json
+/technical_protection_of_information/практики/4/2026/report_assets/classification_template_audit.json
+/technical_protection_of_information/практики/4/2026/report_assets/classification_verification.json
+/technical_protection_of_information/практики/4/2026/report_assets/finalize_method_alignment.py
+/technical_protection_of_information/практики/4/2026/report_assets/fonts_contents_pages.json
+/technical_protection_of_information/практики/4/2026/report_assets/fonts_revision.json
+/technical_protection_of_information/практики/4/2026/report_assets/fonts_template_audit.json
+/technical_protection_of_information/практики/4/2026/report_assets/fonts_verification.json
+/technical_protection_of_information/практики/4/2026/report_assets/formatting_baseline.json
+/technical_protection_of_information/практики/4/2026/report_assets/method_alignment_review.json
+/technical_protection_of_information/практики/4/2026/report_assets/method_appendix_fonts.json
+/technical_protection_of_information/практики/4/2026/report_assets/normative_measure_names.json
+/technical_protection_of_information/практики/4/2026/report_assets/method_alignment_final_visual/page_020.png
+/technical_protection_of_information/практики/4/2026/report_assets/method_alignment_visual/page_020.png
+/technical_protection_of_information/практики/4/2026/report_assets/appendix_font_visual/page_043.png
+/technical_protection_of_information/практики/4/2026/report_assets/classification_visual/page_045.png
+/technical_protection_of_information/практики/4/2026/report_assets/classification_visual/page_046.png
+/technical_protection_of_information/практики/4/2026/report_assets/appendix_font_visual/page_047.png
+/technical_protection_of_information/практики/4/2026/report_assets/classification_visual/page_047.png
+/technical_protection_of_information/практики/4/2026/report_assets/appendix_font_visual/page_050.png
+/technical_protection_of_information/практики/4/2026/report_assets/appendix_font_visual/page_051.png
+/technical_protection_of_information/практики/4/2026/report_assets/appendix_font_visual/page_054.png
+/technical_protection_of_information/практики/4/2026/report_assets/method_alignment_visual/page_054.png
+/technical_protection_of_information/практики/4/2026/report_assets/method_alignment_visual/page_055.png
+/technical_protection_of_information/практики/4/2026/report_assets/method_alignment_visual/page_056.png
+/technical_protection_of_information/практики/4/2026/report_assets/method_alignment_visual/page_067.png
+/technical_protection_of_information/практики/4/2026/report_assets/method_alignment_final_visual/page_069.png
+/technical_protection_of_information/практики/4/2026/report_assets/method_alignment_visual/page_069.png
+/technical_protection_of_information/практики/4/2026/report_assets/method_alignment_final_visual/page_070.png
+/technical_protection_of_information/практики/4/2026/report_assets/method_alignment_visual/page_070.png
+/technical_protection_of_information/практики/4/2026/report_assets/method_alignment_final_visual/page_071.png
+/technical_protection_of_information/практики/4/2026/report_assets/method_alignment_visual/page_071.png
+/technical_protection_of_information/практики/4/2026/report_assets/method_alignment_final_visual/page_072.png
+/technical_protection_of_information/практики/4/2026/report_assets/method_alignment_visual/page_072.png
+/technical_protection_of_information/практики/4/2026/report_assets/resources_visual3_final/page_072.png
+/technical_protection_of_information/практики/4/2026/report_assets/resources_visual3_final/page_075.png
+/technical_protection_of_information/практики/4/2026/report_assets/resources_visual3_final/page_076.png
+/technical_protection_of_information/практики/4/2026/report_assets/resources_visual3_final/page_088.png
+/technical_protection_of_information/практики/4/2026/report_assets/publish_appendix_fonts.py
+/technical_protection_of_information/практики/4/2026/report_assets/publish_method_alignment.py
+/technical_protection_of_information/практики/4/2026/report_assets/publish_resource_names.py
+/technical_protection_of_information/практики/4/2026/report_assets/report_data_before_method_alignment.py
+/technical_protection_of_information/практики/4/2026/report_assets/resources_pz3_verification.json
+/technical_protection_of_information/практики/4/2026/report_assets/restore_remaining_tz_sections.py
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_до_оформления_3_9_и_4_1.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_до_сверки_шрифтов_приложений.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_классификация_и_4_1.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_классификация_проверка.pdf
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_шрифты_приложений.docx
+/technical_protection_of_information/практики/4/2026/report_assets/ПЗ4_шрифты_проверка.pdf
