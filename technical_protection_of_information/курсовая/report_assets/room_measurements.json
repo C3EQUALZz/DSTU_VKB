@@ -1,0 +1,38 @@
+{
+  "room": "ДГТУ, аудитория 1-499",
+  "source": "drawing/-2147483648_-213333.jpeg",
+  "clarifications_date": "2026-11-08",
+  "unit": "mm",
+  "confirmed": {
+    "height": 3380,
+    "overall_width": 6385,
+    "door_width": 1200,
+    "door_height": 2228,
+    "corridor_wall_left_of_door": 770,
+    "left_return_depth_towards_room": 390,
+    "left_outer_segment": 455,
+    "corridor_wall_right_of_door": 680,
+    "central_projection_width": 1165,
+    "central_projection_depth": 380,
+    "far_right_segment": 2030,
+    "right_wall_from_top": [1938, 580, 1790, 1025, 360],
+    "right_wall_projection_depth": 895,
+    "right_wall_window_segment": 1025
+  },
+  "horizontal_closure": {
+    "measured_chain_sum": 6300,
+    "overall_width": 6385,
+    "difference": 85,
+    "user_explanation": "Стены кривые, обмеры имеют погрешность; пользователь разрешил небольшое согласование размеров для схемы.",
+    "applied_correction": null,
+    "note": "На текущем этапе выполняются расчёты. Геометрическая поправка не распределялась: план будет строиться позднее в Visio."
+  },
+  "current_state": {
+    "suspended_ceiling": "Виден на фотографиях",
+    "fire_alarm": "В учебном исходном состоянии отсутствует по условию задания; последнее уточнение пользователя отменяет прежнее указание считать существующей",
+    "detector_models": "По фотографиям не установлены",
+    "security_alarm": "В учебном исходном состоянии отсутствует по условию задания",
+    "actual_computer_count": "На фото различим один ПК; расчётный состав по условию курсовой — не менее трёх"
+  },
+  "next_stage": "Планы и схемы будут подготовлены в Visio на Windows с MCP. Сейчас пользователь попросил выполнить расчёты."
+}
