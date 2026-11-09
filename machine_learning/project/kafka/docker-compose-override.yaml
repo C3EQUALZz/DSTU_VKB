@@ -1,6 +1,6 @@
 services:
   broker:
-    image: bitnami/kafka:3.9.0
+    image: soldevelo/kafka:3.9.2
     container_name: broker
     restart: unless-stopped
     networks:
@@ -29,7 +29,7 @@ services:
       retries: 60
   
   kafka-init:
-    image: bitnami/kafka:3.9.0
+    image: soldevelo/kafka:3.9.2
     container_name: kafka-init
     restart: "no"
     networks:
