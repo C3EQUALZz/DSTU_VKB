@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Расчёт ТТГ · Доменная плавка{% endblock %}
+{% block content %}
+<section aria-labelledby="calculation-title">
+    <p class="eyebrow">02 / Расчёт ТТГ</p>
+    <h2 id="calculation-title">Теоретическая температура горения</h2>
+    <p class="intro">Введите параметры дутья, чтобы рассчитать температуру в горне доменной печи. Результат и комментарий сохраняются в журнал расчётов.</p>
+    {% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}
+    <form action="{{ url_for('pages.temperature') }}" method="POST" class="calculation-form">
+        <fieldset>
+            <legend>Параметры дутья</legend>
+            <div class="fields">
+                {% for name, label, hint in [
+                    ('t_blast', 'Температура дутья, °C', 'От 900 до 1300 °C'),
+                    ('humidity', 'Влажность дутья, г/м³', 'От 1 до 40 г/м³'),
+                    ('oxygen', 'Содержание кислорода, %', 'От 21 до 35 %'),
+                    ('gas', 'Расход природного газа, м³/100 м³', 'От 0 до 15 м³ на 100 м³ дутья')
+                ] %}
+                <div class="field">
+                    <label for="{{ name }}">{{ label }}</label>
+                    <input type="text" inputmode="decimal" id="{{ name }}" name="{{ name }}" value="{{ values[name] }}" aria-describedby="{{ name }}-hint" required>
+                    <small id="{{ name }}-hint">{{ hint }}</small>
+                </div>
+                {% endfor %}
+            </div>
+        </fieldset>
+        <div class="field">
+            <label for="comment">Комментарий к расчёту <span class="optional">(необязательно)</span></label>
+            <input type="text" id="comment" name="comment" value="{{ values.comment }}" maxlength="500">
+        </div>
+        <button class="button" type="submit">Рассчитать</button>
+    </form>
+    {% if tempr is not none %}
+    <section class="result" aria-labelledby="result-title" role="status">
+        <p class="eyebrow">Результат расчёта</p>
+        <h2 id="result-title">Теоретическая температура горения</h2>
+        <p class="temperature"><output id="temperature-result">{{ '%.1f' | format(tempr) | replace('.', ',') }}</output> <span>°C</span></p>
+        <p>Комментарий: <span id="result-comment">{{ values.comment or 'Не указан' }}</span></p>
+        <p class="note">Расчёт сохранён в журнал.</p>
+    </section>
+    {% endif %}
+    <p class="note formula">Тг = 2405 + 0,75 · (Тд − 1200) − 5,40 · Wд + 43 · (w − 21) − 52 · Vпг</p>
+    <a href="{{ url_for('pages.index') }}">Вернуться к справочной таблице</a>
+</section>
+{% endblock %}
