@@ -1,0 +1,24 @@
+const { chromium } = require('playwright');
+const fs = require('fs');
+const path = require('path');
+const root = path.resolve(__dirname, '..');
+fs.mkdirSync(path.join(root,'assets'), {recursive:true});
+(async()=>{
+ const browser = await chromium.launch({executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true});
+ const page = await browser.newPage({viewport:{width:1600,height:1300},deviceScaleFactor:2,locale:'en-US'});
+ await page.goto('https://cwe.mitre.org/data/definitions/89.html',{waitUntil:'domcontentloaded',timeout:60000});
+ const cell=page.locator('#Description td').first();
+ await cell.scrollIntoViewIfNeeded();
+ const d=await cell.evaluate(el=>{const r=document.createRange();r.selectNodeContents(el);const b=r.getBoundingClientRect();return {x:b.x,y:b.y,width:b.width,height:b.height};});
+ await page.screenshot({path:path.join(root,'assets/cwe89.png'),clip:{x:d.x-3,y:d.y-3,width:d.width+6,height:d.height+6}});
+ await page.goto('https://microsoft.github.io/graphrag/',{waitUntil:'networkidle',timeout:60000});
+ const figure=page.locator('img[src*="GraphRag-Figure1"]').first();
+ await figure.scrollIntoViewIfNeeded();
+ await page.waitForTimeout(500);
+ const b=await figure.boundingBox();
+ const a=await page.locator('article.md-content__inner').boundingBox();
+ await page.screenshot({path:path.join(root,'assets/graphrag-docs.png'),clip:{x:a.x,y:Math.max(0,b.y-12),width:a.width,height:Math.min(b.height+70,1300-Math.max(0,b.y-12))}});
+ fs.writeFileSync(path.join(root,'assets/screenshots.json'),JSON.stringify({captured:new Date().toISOString(),sources:[{file:'cwe89.png',url:'https://cwe.mitre.org/data/definitions/89.html'},{file:'graphrag-docs.png',url:'https://microsoft.github.io/graphrag/'}]},null,2));
+ await browser.close();
+ console.log('Captured two real English source screenshots.');
+})();

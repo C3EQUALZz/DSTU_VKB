@@ -1,0 +1,13 @@
+{
+  "captured": "2026-11-13T11:42:08.487Z",
+  "sources": [
+    {
+      "file": "cwe89.png",
+      "url": "https://cwe.mitre.org/data/definitions/89.html"
+    },
+    {
+      "file": "graphrag-docs.png",
+      "url": "https://microsoft.github.io/graphrag/"
+    }
+  ]
+}

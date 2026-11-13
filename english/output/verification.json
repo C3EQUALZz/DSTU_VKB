@@ -1,0 +1,31 @@
+{
+  "slides": 12,
+  "charts": 2,
+  "transitions": 12,
+  "animated_slides": {
+    "1": 8,
+    "4": 29,
+    "5": 19,
+    "6": 4,
+    "7": 12,
+    "8": 20,
+    "10": 4,
+    "11": 1
+  },
+  "author": "Danil Kovalev",
+  "group": "VKB53",
+  "grammar_examples_verified": 7,
+  "english_word_count": 1277,
+  "visual_review": "All 12 slides reviewed; final changes on slides 2 and 6 reviewed separately.",
+  "playback_review": "Native PowerPoint: slides 4 and 8, initial hidden state and first click build observed; slide did not advance.",
+  "speaking_notes_pages": 16,
+  "speaking_notes_visual_review": "All 16 native Word PDF pages reviewed: pages 1-8 by independent reviewer, pages 9-16 by primary agent.",
+  "pptx_ooxml_validation": "PASSED",
+  "docx_ooxml_validation": "PASSED",
+  "final_files": [
+    "RAG_for_Secure_Code.pptx",
+    "RAG_for_Secure_Code.pdf",
+    "RAG_Speaking_Notes_EN_RU.docx",
+    "RAG_Speaking_Notes_EN_RU.pdf"
+  ]
+}

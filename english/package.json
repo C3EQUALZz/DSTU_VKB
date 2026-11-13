@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "docx": "^9.15.3",
+    "playwright": "^1.65.0",
+    "pptxgenjs": "^4.0.1"
+  }
+}

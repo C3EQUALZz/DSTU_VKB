@@ -1,0 +1,9 @@
+node_modules/
+.venv/
+src/*.applescript
+output/*
+!output/RAG_for_Secure_Code.pptx
+!output/RAG_for_Secure_Code.pdf
+!output/RAG_Speaking_Notes_EN_RU.docx
+!output/RAG_Speaking_Notes_EN_RU.pdf
+!output/verification.json
