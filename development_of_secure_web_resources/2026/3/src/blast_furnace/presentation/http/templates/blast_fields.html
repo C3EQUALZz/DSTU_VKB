@@ -1,0 +1,15 @@
+{% macro blast_fields(fields, values, prefix='', legend='Параметры дутья') %}
+<fieldset>
+    <legend>{{ legend }}</legend>
+    <div class="fields">
+        {% for name, label, hint in fields %}
+        {% set id = prefix + name %}
+        <div class="field">
+            <label for="{{ id }}">{{ label }}</label>
+            <input type="text" inputmode="decimal" id="{{ id }}" name="{{ id }}" value="{{ values[name] }}" aria-describedby="{{ id }}-hint" required>
+            <small id="{{ id }}-hint">{{ hint }}</small>
+        </div>
+        {% endfor %}
+    </div>
+</fieldset>
+{% endmacro %}

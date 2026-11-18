@@ -1,0 +1,12 @@
+Google Chrome, http://127.0.0.1:5003
+Гость /tempr → HTTP 302 /login → HTTP 200
+Гость /compare → HTTP 302 /login → HTTP 200
+Регистрация с email и автоматический вход подтверждены
+cookie session: HttpOnly=True, SameSite=Lax, Secure=False (локальный HTTP)
+Поля cookie: {"session_id":"[скрыт]", "_permanent":true}
+/tempr: 2201,0 °C
+/compare: 2201,0 °C и 2080,0 °C, разница −121,0 °C
+На /compare при ширине 390 px нет горизонтального переполнения
+После выхода cookie удалена, /tempr перенаправляет на /login
+Неверный пароль отклонён с общим сообщением об ошибке
+Повторный вход с верным паролем подтверждён

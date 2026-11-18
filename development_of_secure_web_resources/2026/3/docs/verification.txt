@@ -1,0 +1,94 @@
+Python 3.14.3
+42 files already formatted
+All checks passed!
+Success: no issues found in 34 source files
+[main]	INFO	profile include tests: None
+[main]	INFO	profile exclude tests: None
+[main]	INFO	cli include tests: None
+[main]	INFO	cli exclude tests: None
+[main]	INFO	using config: pyproject.toml
+[main]	INFO	running on Python 3.14.3
+Run started:2026-11-18 18:04:46.070720+00:00
+
+Test results:
+	No issues identified.
+
+Code scanned:
+	Total lines of code: 583
+	Total lines skipped (#nosec): 0
+	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0
+		Low: 0
+		Medium: 0
+		High: 0
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 0
+		Medium: 0
+		High: 0
+Files skipped (0):
+
+╔══╗─────────▶╔╗ ╔╗      ╔╗◀───┐
+╚╣╠╝◀─────┐  ╔╝╚╗║║────▶╔╝╚╗   │
+ ║║   ╔══╦══╦╩╗╔╝║║  ╔╦═╩╗╔╝╔═╦══╗
+ ║║╔══╣╔╗║╔╗║╔╣║ ║║ ╔╬╣╔╗║║ ║│║╔═╝
+╔╣╠╣║║║╚╝║╚╝║║║╚╗║╚═╝║║║║║╚╗║═╣║
+╚══╩╩╩╣╔═╩══╩╝╚═╝╚═══╩╩╝╚╩═╩╩═╩╝
+  └──▶║║                    ▲
+      ╚╝────────────────────┘
+
+
+---------
+Contracts
+---------
+
+Analyzed 44 files, 70 dependencies.
+-----------------------------------
+
+Presentation depends on application and domain KEPT
+Inner layers are framework independent KEPT
+HTTP does not import infrastructure or setup KEPT
+Infrastructure does not import HTTP or setup KEPT
+
+Contracts: 4 kept, 0 broken.
+0002 (head)
+No new upgrade operations detected.
+No new upgrade operations detected.
+........................................................................ [ 98%]
+.                                                                        [100%]
+================================ tests coverage ================================
+_______________ coverage: platform darwin, python 3.14.3-final-0 _______________
+
+Name                                                     Stmts   Miss Branch BrPart  Cover   Missing
+----------------------------------------------------------------------------------------------------
+src/blast_furnace/__init__.py                                0      0      0      0   100%
+src/blast_furnace/app.py                                     5      5      2      0     0%   3-9
+src/blast_furnace/application/__init__.py                    0      0      0      0   100%
+src/blast_furnace/application/calculate_temperature.py      10      0      0      0   100%
+src/blast_furnace/application/get_blast_reference.py         4      0      0      0   100%
+src/blast_furnace/application/identity.py                    7      0      0      0   100%
+src/blast_furnace/domain/__init__.py                         0      0      0      0   100%
+src/blast_furnace/domain/reference.py                        5      0      0      0   100%
+src/blast_furnace/domain/services/__init__.py                0      0      0      0   100%
+src/blast_furnace/domain/services/calculations.py            2      0      0      0   100%
+src/blast_furnace/domain/temperature.py                     11      0      4      0   100%
+src/blast_furnace/infrastructure/__init__.py                 0      0      0      0   100%
+src/blast_furnace/infrastructure/calculation_log.py         15      0      0      0   100%
+src/blast_furnace/infrastructure/database.py                28      0      0      0   100%
+src/blast_furnace/infrastructure/identity.py                63      1     10      1    97%   41
+src/blast_furnace/presentation/__init__.py                   0      0      0      0   100%
+src/blast_furnace/presentation/http/__init__.py              0      0      0      0   100%
+src/blast_furnace/presentation/http/auth.py                 56      0     14      1    99%   64->68
+src/blast_furnace/presentation/http/middleware.py           42      0     14      0   100%
+src/blast_furnace/presentation/http/routes.py               64      0     12      0   100%
+src/blast_furnace/setup/__init__.py                          0      0      0      0   100%
+src/blast_furnace/setup/app_factory.py                      26      2      0      0    92%   41-42
+src/blast_furnace/setup/cli.py                               4      4      0      0     0%   1-7
+src/blast_furnace/setup/config.py                           22      0      2      0   100%
+src/blast_furnace/setup/ioc.py                              23      1      0      0    96%   33
+----------------------------------------------------------------------------------------------------
+TOTAL                                                      387     13     58      2    96%
+73 passed in 4.54s

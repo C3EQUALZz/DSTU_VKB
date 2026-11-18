@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% from "blast_fields.html" import blast_fields %}
+{% block title %}Расчёт ТТГ · Доменная плавка{% endblock %}
+{% block content %}
+<section aria-labelledby="calculation-title">
+    <h2 id="calculation-title">Теоретическая температура горения</h2>
+    <p class="intro">Введите параметры дутья, чтобы рассчитать температуру в горне доменной печи. Результат и комментарий сохраняются в журнал расчётов.</p>
+    {% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}
+    <form action="{{ url_for('pages.temperature') }}" method="POST" class="calculation-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        {{ blast_fields(fields, values) }}
+        <div class="field">
+            <label for="comment">Комментарий к расчёту <span class="optional">(необязательно)</span></label>
+            <input type="text" id="comment" name="comment" value="{{ comment }}" maxlength="500">
+        </div>
+        <button class="button" type="submit">Рассчитать</button>
+    </form>
+    {% if tempr is not none %}
+    <section class="result" aria-labelledby="result-title" role="status">
+        <h2 id="result-title">Теоретическая температура горения</h2>
+        <p class="temperature"><output id="temperature-result">{{ '%.1f' | format(tempr) | replace('.', ',') }}</output> <span>°C</span></p>
+        <p>Комментарий: <span id="result-comment">{{ comment or 'Не указан' }}</span></p>
+        <p class="note">Расчёт сохранён в журнал.</p>
+    </section>
+    {% endif %}
+    <p class="note formula">Тг = 2405 + 0,75 · (Тд − 1200) − 5,40 · Wд + 43 · (w − 21) − 52 · Vпг</p>
+    <a href="{{ url_for('pages.index') }}">Вернуться к справочной таблице</a>
+</section>
+{% endblock %}

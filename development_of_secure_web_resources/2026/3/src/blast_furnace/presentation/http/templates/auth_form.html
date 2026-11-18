@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% set title = 'Регистрация' if registering else 'Вход' %}
+{% block title %}{{ title }} · SecureDev{% endblock %}
+{% block content %}
+<section aria-labelledby="auth-title">
+    <h2 id="auth-title">{{ title }}</h2>
+    {% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}
+    <form class="calculation-form auth-form" method="POST" action="{{ url_for('auth.register' if registering else 'auth.login') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="field">
+            <label for="username">Имя пользователя</label>
+            <input type="text" id="username" name="username" value="{{ username }}" autocomplete="username" maxlength="50" required>
+        </div>
+        {% if registering %}
+        <div class="field">
+            <label for="email">Электронная почта</label>
+            <input type="email" id="email" name="email" value="{{ email }}" autocomplete="email" maxlength="254" required>
+        </div>
+        {% endif %}
+        <div class="field">
+            <label for="password">Пароль</label>
+            <input type="password" id="password" name="password" autocomplete="{{ 'new-password' if registering else 'current-password' }}" maxlength="128" {% if registering %}minlength="12" aria-describedby="password-hint"{% endif %} required>
+            {% if registering %}<small id="password-hint">От 12 до 128 символов.</small>{% endif %}
+        </div>
+        {% if registering %}
+        <div class="field">
+            <label for="password-confirm">Повторите пароль</label>
+            <input type="password" id="password-confirm" name="password_confirm" autocomplete="new-password" maxlength="128" required>
+        </div>
+        {% endif %}
+        <button class="button" type="submit">{{ 'Зарегистрироваться' if registering else 'Войти' }}</button>
+    </form>
+    {% if not g.current_user %}
+    <p class="auth-alternative">
+        {% if registering %}<a href="{{ url_for('auth.login') }}">Уже есть учётная запись? Войти</a>
+        {% else %}<a href="{{ url_for('auth.register') }}">Создать учётную запись</a>{% endif %}
+    </p>
+    {% endif %}
+</section>
+{% endblock %}

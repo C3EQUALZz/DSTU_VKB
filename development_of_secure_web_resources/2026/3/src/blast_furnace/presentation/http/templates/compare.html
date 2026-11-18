@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% from "blast_fields.html" import blast_fields %}
+{% block title %}Сравнение режимов · SecureDev{% endblock %}
+{% block content %}
+<section aria-labelledby="comparison-title">
+    <h2 id="comparison-title">Сравнение режимов дутья</h2>
+    <p class="intro">Введите параметры двух режимов, чтобы сравнить теоретическую температуру горения.</p>
+    {% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}
+    <form action="{{ url_for('pages.compare') }}" method="POST" class="calculation-form comparison-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="comparison-fields">
+            {{ blast_fields(fields, first, 'first_', 'Режим 1') }}
+            {{ blast_fields(fields, second, 'second_', 'Режим 2') }}
+        </div>
+        <button class="button" type="submit">Сравнить</button>
+    </form>
+    {% if result is not none %}
+    <section class="result comparison-result" role="status" aria-labelledby="comparison-result-title">
+        <h2 id="comparison-result-title">Теоретическая температура горения</h2>
+        <dl class="comparison-values">
+            <div><dt>Режим 1</dt><dd><output id="first-temperature">{{ '%.1f' | format(result[0]) | replace('.', ',') }}</output> °C</dd></div>
+            <div><dt>Режим 2</dt><dd><output id="second-temperature">{{ '%.1f' | format(result[1]) | replace('.', ',') }}</output> °C</dd></div>
+            <div><dt>Разница (2 − 1)</dt><dd><output id="temperature-difference">{{ '%.1f' | format(result[2]) | replace('.', ',') }}</output> °C</dd></div>
+        </dl>
+    </section>
+    {% endif %}
+</section>
+{% endblock %}
