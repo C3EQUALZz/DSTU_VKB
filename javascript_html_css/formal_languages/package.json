@@ -55,7 +55,7 @@
     "minimatch": "^9.0.3",
     "minipass": "^7.0.4",
     "mz": "^2.7.0",
-    "nanoid": "^3.3.7",
+    "nanoid": "^3.3.11",
     "normalize-path": "^3.0.0",
     "object-assign": "^4.1.1",
     "object-hash": "^3.0.0",
