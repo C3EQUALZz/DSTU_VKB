@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Три курса программирования и ИИ-консультант, который поможет выбрать свой путь.">
+  <title>Код / Курсы — начните с интереса</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar wrap">
+    <a class="brand" href="/" aria-label="Код Курсы — главная"><span class="brand-mark">&lt;/&gt;</span> код<span class="brand-slash">/</span>курсы</a>
+    <a class="nav-link" href="#consultant">Помочь с выбором <span aria-hidden="true">↗</span></a>
+  </header>
+  <main class="wrap">
+    <section class="intro" aria-labelledby="page-title">
+      <div><p class="eyebrow"><span class="dot"></span> МАЛЕНЬКИЙ ШАГ В БОЛЬШОЙ КОД</p>
+        <h1 id="page-title">Начните с интереса.<br><span>Продолжите с кодом.</span></h1>
+        <p class="intro-text">От первой программы до своего приложения с ИИ.<br>Три понятных курса — выберите следующий шаг.</p>
+      </div>
+      <div class="intro-note"><span aria-hidden="true">{ }</span><p>Учитесь в своем темпе.<br>Практикуйтесь с первого дня.</p></div>
+    </section>
+    <section aria-labelledby="catalog-title">
+      <div class="section-heading"><h2 id="catalog-title">Ваш следующий навык</h2><span>01 — 03 / Каталог</span></div>
+      <div id="courses" class="courses" aria-live="polite"><p>Загружаем курсы…</p></div>
+      <div id="terms" class="terms" aria-live="polite"></div>
+    </section>
+    <section id="consultant" class="consultant" aria-labelledby="chat-title">
+      <div class="chat-intro"><p class="eyebrow">ДАВАЙТЕ РАЗБЕРЕМСЯ ВМЕСТЕ</p><h2 id="chat-title">Есть вопросы?<br>Начнем с них.</h2><p>Расскажите, что хотите научиться делать. ИИ-консультант поможет сравнить курсы и выбрать подходящий.</p><div class="suggestions"><button type="button" data-question="Я новичок. С какого курса начать?">Я новичок. С чего начать? ↗</button><button type="button" data-question="Сравни курсы FastAPI и языковых моделей через API.">Чем отличаются курсы? ↗</button><button type="button" data-question="Как оплатить курс?">Как проходит оплата? ↗</button></div><p class="ai-note">Отвечает языковая модель. Она может ошибаться — точные цены и темы указаны в каталоге.</p></div>
+      <div class="chat-panel"><div class="chat-header"><span><span class="dot"></span> Консультант по курсам</span><button id="clear-chat" type="button">Очистить чат</button></div>
+        <div id="messages" class="messages" role="log" aria-label="История диалога" aria-live="polite"></div>
+        <form id="chat-form"><label for="question" class="sr-only">Ваш вопрос о курсах</label><div class="input-row"><textarea id="question" rows="2" maxlength="2000" placeholder="Например: хочу научиться создавать сайты…" required></textarea><button id="send" type="submit" aria-label="Отправить вопрос">↑</button></div><div class="input-help"><span>Enter — отправить · Shift + Enter — новая строка</span><span id="char-count">0 / 2000</span></div></form>
+        <p id="chat-status" class="chat-status" role="status"></p>
+      </div>
+    </section>
+    <noscript>Для загрузки каталога и работы чата включите JavaScript.</noscript>
+  </main>
+  <footer class="wrap footer"><span>код / курсы</span><span>Учебный проект · FastAPI + языковые модели</span><span>Сделайте первый шаг ↗</span></footer>
+</body>
+</html>
