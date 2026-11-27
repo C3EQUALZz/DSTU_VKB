@@ -23,7 +23,7 @@ class Settings:
     @classmethod
     def from_env(cls) -> Settings:
         return cls(
-            secret_key=os.environ.get("SECRET_KEY", ""),
+            secret_key=os.environ.get("SECRET_KEY", "qowrkgjfbhnvkahiuyqi74988273984kbkldbvkqjwrb823y4912y349823hksaklgjnakjsg"),
             author_name=os.environ.get("AUTHOR_NAME", "Ковалев Данил Петрович"),
             log_path=Path(os.environ.get("CALC_LOG_PATH", "logs/calc_log.txt")).resolve(),
             secure_cookies=os.environ.get("SESSION_COOKIE_SECURE") == "1",
